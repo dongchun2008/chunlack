@@ -75,6 +75,7 @@ try {
   config = {
     httpPort: 3721,
     enablePublicMemory: false,
+    llmProvider: "ollama",
     defaultModel: "qwen2.5:0.5b",
     embeddingModel: "nomic-embed-text:latest",
     fallbackModels: ["phi3:mini", "tinyllama"],
@@ -121,6 +122,7 @@ try {
 }
 const PORT = config.httpPort || 3721;
 const OLLAMA_URL = 'http://localhost:11434';
+const DEFAULT_LLM_PROVIDER = config.llmProvider || "ollama";
 const DEFAULT_MODEL = config.defaultModel || "qwen2.5:0.5b";
 const EMBEDDING_MODEL = config.embeddingModel || "nomic-embed-text:latest";
 const FALLBACK_MODELS = config.fallbackModels || ["phi3:mini", "tinyllama"];
@@ -316,6 +318,7 @@ function dbLoadAllAgents() {
             id: row.id,
             name: row.name,
             model: row.model,
+            provider: row.provider || DEFAULT_LLM_PROVIDER,
             systemPrompt: row.system_prompt,
             channels: JSON.parse(row.channels || '[]'),
             strictChannel: row.strict_channel,
@@ -494,12 +497,11 @@ function simpleTfidfSimilarity(text1, text2) {
 async function getEmbedding(text) {
   const cached = getCachedEmbedding(text);
   if (cached) return cached;
+  const provider = resolveLlmProviderForAgent(null);
+  if (!provider || typeof provider.embed !== 'function') return null;
   try {
-    const res = await axios.post('http://localhost:11434/api/embeddings', {
-      model: EMBEDDING_MODEL,
-      prompt: text.slice(0, 2000)
-    });
-    const emb = res.data.embedding;
+    const emb = await provider.embed(text, EMBEDDING_MODEL);
+    if (!emb) return null;
     setCachedEmbedding(text, emb);
     return emb;
   } catch (e) {
@@ -2925,7 +2927,8 @@ wss.on('connection', (ws) => {
               const lastTps = metrics && metrics.tpsHistory.length ? metrics.tpsHistory[metrics.tpsHistory.length-1] : 0;
               const lastJspace = metrics && metrics.jspaceCoherence.length ? metrics.jspaceCoherence[metrics.jspaceCoherence.length-1] : 0;
               return {
-                id: a.id, name: a.name, model: a.model, systemPrompt: a.systemPrompt, channels: a.channels,
+                id: a.id, name: a.name, model: a.model, provider: a.provider || DEFAULT_LLM_PROVIDER,
+                systemPrompt: a.systemPrompt, channels: a.channels,
                 status: a.status, strictChannel: a.strictChannel,
                 isCodeModerator: a.isCodeModerator || false,
                 weights: mem ? mem.weights : { exploitation: 0.6, exploration: 0.4 },
@@ -2967,16 +2970,17 @@ wss.on('connection', (ws) => {
           client.username = data.username.substring(0, 20).replace(/[<>]/g, '');
           break;
         case 'spawn_agent': {
-          const { name, model, systemPrompt, channels: agentChannels, strictChannel } = data;
+          const { name, model, provider, systemPrompt, channels: agentChannels, strictChannel } = data;
+          const safeProvider = provider || DEFAULT_LLM_PROVIDER;
           const id = uuidv4().slice(0,8);
           const newAgent = {
-            id, name, model,
+            id, name, model, provider: safeProvider,
             systemPrompt: BASE_SYSTEM_PROMPT + '\n\n' + (systemPrompt || ''),
             channels: agentChannels, strictChannel: strictChannel || null,
             lastResponseTime: new Map(), status: 'online', statusMessage: ''
           };
           agents.set(id, newAgent);
-          config.agents.push({ id, name, model, systemPrompt: newAgent.systemPrompt, channels: agentChannels, strictChannel: strictChannel || null });
+          config.agents.push({ id, name, model, provider: safeProvider, systemPrompt: newAgent.systemPrompt, channels: agentChannels, strictChannel: strictChannel || null });
           try {
             const tmp = configPath + '.tmp';
             fs.writeFileSync(tmp, JSON.stringify(config, null, 2));
@@ -2999,12 +3003,13 @@ wss.on('connection', (ws) => {
             }
             agent.name = data.name;
             agent.model = data.model;
+            agent.provider = data.provider || agent.provider || DEFAULT_LLM_PROVIDER;
             agent.systemPrompt = fullPrompt;
             agent.channels = data.channels;
             agent.strictChannel = data.strictChannel || null;
             const idx = config.agents.findIndex(a => a.id === data.id);
             if (idx !== -1) {
-              config.agents[idx] = { id: data.id, name: data.name, model: data.model, systemPrompt: fullPrompt, channels: data.channels, strictChannel: data.strictChannel || null };
+              config.agents[idx] = { id: data.id, name: data.name, model: data.model, provider: agent.provider, systemPrompt: fullPrompt, channels: data.channels, strictChannel: data.strictChannel || null };
               try {
                 const tmp = configPath + '.tmp';
                 fs.writeFileSync(tmp, JSON.stringify(config, null, 2));
@@ -3548,6 +3553,39 @@ async function getOllamaModels() {
   }
 }
 
+async function getEmbeddingFromOllama(text, model = EMBEDDING_MODEL) {
+  const res = await axios.post(`${OLLAMA_URL}/api/embeddings`, {
+    model,
+    prompt: text.slice(0, 2000)
+  });
+  return res.data.embedding;
+}
+
+function resolveLlmProviderName(name) {
+  return (name || DEFAULT_LLM_PROVIDER || 'ollama').toString().trim() || 'ollama';
+}
+
+function resolveLlmProviderForAgent(agentId = null) {
+  const agent = agentId ? agents.get(agentId) : null;
+  const providerName = resolveLlmProviderName(agent ? agent.provider : config.llmProvider);
+  return llmProviders[providerName] || llmProviders.ollama;
+}
+
+const llmProviders = {
+  ollama: {
+    name: 'ollama',
+    async listModels() {
+      return getOllamaModels();
+    },
+    async generate({ model, prompt, systemPrompt = '', temperature = 0.7, agentId = null }) {
+      return queryOllamaEngine(model, prompt, systemPrompt, temperature, agentId);
+    },
+    async embed(text, model = EMBEDDING_MODEL) {
+      return getEmbeddingFromOllama(text, model);
+    }
+  }
+};
+
 function markOllamaDown() {
   if (!ollamaCircuitOpen) {
     ollamaCircuitOpen = true;
@@ -3573,9 +3611,10 @@ function getNumPredict(model, degraded = false) {
 
 async function queryOllamaWithRetry(model, prompt, systemPrompt = '', temperature = 0.7, agentId = null, retries = 3) {
   let lastError = null;
+  const provider = resolveLlmProviderForAgent(agentId);
   for (let attempt = 0; attempt < retries; attempt++) {
     try {
-      const result = await queryOllama(model, prompt, systemPrompt, temperature, agentId);
+      const result = await provider.generate({ model, prompt, systemPrompt, temperature, agentId });
       if (!result.startsWith('[OLLAMA_ERROR]')) return result;
       const delay = Math.min(5000, 500 * Math.pow(2, attempt));
       await new Promise(r => setTimeout(r, delay));
@@ -3587,7 +3626,7 @@ async function queryOllamaWithRetry(model, prompt, systemPrompt = '', temperatur
     if (fallback === model) continue;
     try {
       console.log(`[LACK] Falling back to model "${fallback}" for agent ${agentId}`);
-      const result = await queryOllama(fallback, prompt, systemPrompt, temperature, agentId);
+      const result = await provider.generate({ model: fallback, prompt, systemPrompt, temperature, agentId });
       if (!result.startsWith('[OLLAMA_ERROR]')) {
         return result;
       }
@@ -3596,7 +3635,7 @@ async function queryOllamaWithRetry(model, prompt, systemPrompt = '', temperatur
   return `[OLLAMA_ERROR] All models failed. Last error: ${lastError ? lastError.message : 'Unknown'}`;
 }
 
-async function queryOllama(model, prompt, systemPrompt = '', temperature = 0.7, agentId = null) {
+async function queryOllamaEngine(model, prompt, systemPrompt = '', temperature = 0.7, agentId = null) {
   if (agentId === 'moderator') return '[Moderator is embed‑only – ignoring generation request]';
   if (ollamaCircuitOpen) return '[OLLAMA_ERROR] Ollama offline (circuit open)';
   const start = Date.now();
@@ -3667,6 +3706,12 @@ async function queryOllama(model, prompt, systemPrompt = '', temperature = 0.7, 
   } else {
     return doQuery();
   }
+}
+
+async function queryOllama(model, prompt, systemPrompt = '', temperature = 0.7, agentId = null) {
+  const provider = resolveLlmProviderForAgent(agentId);
+  if (!provider || typeof provider.generate !== 'function') return '[OLLAMA_ERROR] Unsupported LLM provider.';
+  return provider.generate({ model, prompt, systemPrompt, temperature, agentId });
 }
 
 function extractCodeBlocks(text) {
@@ -3780,6 +3825,7 @@ const moderator = {
   id: "moderator",
   name: "Moderator",
   model: "nomic-embed-text:latest",
+  provider: "ollama",
   systemPrompt: "Embedding only – not for chat.",
   channels: ["general", "siphon", "code"],
   isEmbedOperator: true,
@@ -3804,8 +3850,10 @@ const moderator = {
 // Load agents from DB or config
 function loadAgents() {
   const dbAgents = dbLoadAllAgents();
-  if (Object.keys(dbAgents).length > 0) {
+    if (Object.keys(dbAgents).length > 0) {
     for (const [id, agent] of Object.entries(dbAgents)) {
+      const cfgCfg = (config.agents || []).find(a => a.id === id);
+      if (cfgCfg && cfgCfg.provider) agent.provider = cfgCfg.provider;
       if (!agent.systemPrompt.startsWith(BASE_SYSTEM_PROMPT.slice(0, 50))) {
         agent.systemPrompt = BASE_SYSTEM_PROMPT + '\n\n' + agent.systemPrompt;
       }
@@ -3815,6 +3863,7 @@ function loadAgents() {
     config.agents.forEach(agentCfg => {
       const agent = {
         ...agentCfg,
+        provider: agentCfg.provider || DEFAULT_LLM_PROVIDER,
         systemPrompt: BASE_SYSTEM_PROMPT + '\n\n' + (agentCfg.systemPrompt || ''),
         lastResponseTime: new Map(),
         status: 'online',
@@ -4986,6 +5035,7 @@ window.onload = init;
 CONFIG_JSON = r'''{
   "httpPort": 3721,
   "enablePublicMemory": false,
+  "llmProvider": "ollama",
   "defaultModel": "qwen2.5:0.5b",
   "embeddingModel": "nomic-embed-text:latest",
   "fallbackModels": ["phi3:mini", "tinyllama"],
