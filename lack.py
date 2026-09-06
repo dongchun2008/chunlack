@@ -122,7 +122,19 @@ try {
 }
 const PORT = config.httpPort || 3721;
 const OLLAMA_URL = 'http://localhost:11434';
-const DEFAULT_LLM_PROVIDER = config.llmProvider || "ollama";
+const LLM_PROVIDER_ALLOWLIST = ['ollama'];
+
+function sanitizeLlmProviderName(name, fallback) {
+  const candidate = (name || fallback || 'ollama').toString().trim().toLowerCase();
+  if (LLM_PROVIDER_ALLOWLIST.includes(candidate)) return candidate;
+  const safeFallback = (fallback || 'ollama').toString().trim().toLowerCase() || 'ollama';
+  if (candidate && candidate !== safeFallback) {
+    console.warn(`[LACK] Unsupported llmProvider '${candidate}', fallback to '${safeFallback}'.`);
+  }
+  return safeFallback;
+}
+
+const DEFAULT_LLM_PROVIDER = sanitizeLlmProviderName(config.llmProvider, "ollama");
 const DEFAULT_MODEL = config.defaultModel || "qwen2.5:0.5b";
 const EMBEDDING_MODEL = config.embeddingModel || "nomic-embed-text:latest";
 const FALLBACK_MODELS = config.fallbackModels || ["phi3:mini", "tinyllama"];
@@ -297,11 +309,11 @@ function dbGetMessages(storeId, limit = 1000) {
 function dbSaveAgent(agent) {
     const stmt = db.prepare(`
         INSERT OR REPLACE INTO agents 
-        (id, name, model, system_prompt, channels, strict_channel, status, is_embed_operator, is_code_moderator)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+        (id, name, model, provider, system_prompt, channels, strict_channel, status, is_embed_operator, is_code_moderator)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
     stmt.run(
-        agent.id, agent.name, agent.model, agent.systemPrompt,
+        agent.id, agent.name, agent.model, sanitizeLlmProviderName(agent.provider, DEFAULT_LLM_PROVIDER), agent.systemPrompt,
         JSON.stringify(agent.channels || []), agent.strictChannel || null,
         agent.status || 'online',
         agent.isEmbedOperator ? 1 : 0,
@@ -318,7 +330,7 @@ function dbLoadAllAgents() {
             id: row.id,
             name: row.name,
             model: row.model,
-            provider: row.provider || DEFAULT_LLM_PROVIDER,
+            provider: sanitizeLlmProviderName(row.provider, DEFAULT_LLM_PROVIDER),
             systemPrompt: row.system_prompt,
             channels: JSON.parse(row.channels || '[]'),
             strictChannel: row.strict_channel,
@@ -2927,7 +2939,7 @@ wss.on('connection', (ws) => {
               const lastTps = metrics && metrics.tpsHistory.length ? metrics.tpsHistory[metrics.tpsHistory.length-1] : 0;
               const lastJspace = metrics && metrics.jspaceCoherence.length ? metrics.jspaceCoherence[metrics.jspaceCoherence.length-1] : 0;
               return {
-                id: a.id, name: a.name, model: a.model, provider: a.provider || DEFAULT_LLM_PROVIDER,
+                id: a.id, name: a.name, model: a.model, provider: sanitizeLlmProviderName(a.provider, DEFAULT_LLM_PROVIDER),
                 systemPrompt: a.systemPrompt, channels: a.channels,
                 status: a.status, strictChannel: a.strictChannel,
                 isCodeModerator: a.isCodeModerator || false,
@@ -2971,7 +2983,7 @@ wss.on('connection', (ws) => {
           break;
         case 'spawn_agent': {
           const { name, model, provider, systemPrompt, channels: agentChannels, strictChannel } = data;
-          const safeProvider = provider || DEFAULT_LLM_PROVIDER;
+          const safeProvider = sanitizeLlmProviderName(provider, DEFAULT_LLM_PROVIDER);
           const id = uuidv4().slice(0,8);
           const newAgent = {
             id, name, model, provider: safeProvider,
@@ -3003,7 +3015,7 @@ wss.on('connection', (ws) => {
             }
             agent.name = data.name;
             agent.model = data.model;
-            agent.provider = data.provider || agent.provider || DEFAULT_LLM_PROVIDER;
+            agent.provider = sanitizeLlmProviderName(data.provider, agent.provider || DEFAULT_LLM_PROVIDER);
             agent.systemPrompt = fullPrompt;
             agent.channels = data.channels;
             agent.strictChannel = data.strictChannel || null;
@@ -3562,7 +3574,7 @@ async function getEmbeddingFromOllama(text, model = EMBEDDING_MODEL) {
 }
 
 function resolveLlmProviderName(name) {
-  return (name || DEFAULT_LLM_PROVIDER || 'ollama').toString().trim() || 'ollama';
+  return sanitizeLlmProviderName(name, DEFAULT_LLM_PROVIDER);
 }
 
 function resolveLlmProviderForAgent(agentId = null) {
@@ -3853,7 +3865,7 @@ function loadAgents() {
     if (Object.keys(dbAgents).length > 0) {
     for (const [id, agent] of Object.entries(dbAgents)) {
       const cfgCfg = (config.agents || []).find(a => a.id === id);
-      if (cfgCfg && cfgCfg.provider) agent.provider = cfgCfg.provider;
+      if (cfgCfg && cfgCfg.provider) agent.provider = sanitizeLlmProviderName(cfgCfg.provider, DEFAULT_LLM_PROVIDER);
       if (!agent.systemPrompt.startsWith(BASE_SYSTEM_PROMPT.slice(0, 50))) {
         agent.systemPrompt = BASE_SYSTEM_PROMPT + '\n\n' + agent.systemPrompt;
       }
@@ -3863,7 +3875,7 @@ function loadAgents() {
     config.agents.forEach(agentCfg => {
       const agent = {
         ...agentCfg,
-        provider: agentCfg.provider || DEFAULT_LLM_PROVIDER,
+        provider: sanitizeLlmProviderName(agentCfg.provider, DEFAULT_LLM_PROVIDER),
         systemPrompt: BASE_SYSTEM_PROMPT + '\n\n' + (agentCfg.systemPrompt || ''),
         lastResponseTime: new Map(),
         status: 'online',
@@ -5179,9 +5191,16 @@ def init_db():
                   content TEXT, timestamp INTEGER, parent_id TEXT, thread_id TEXT, 
                   reply_count INTEGER, reactions TEXT)''')
     c.execute('''CREATE TABLE IF NOT EXISTS agents 
-                 (id TEXT PRIMARY KEY, name TEXT, model TEXT, system_prompt TEXT, 
+                 (id TEXT PRIMARY KEY, name TEXT, model TEXT, provider TEXT, system_prompt TEXT, 
                   channels TEXT, strict_channel TEXT, status TEXT, 
                   is_embed_operator INTEGER, is_code_moderator INTEGER)''')
+
+    c.execute("PRAGMA table_info(agents)")
+    existing_agent_cols = c.fetchall()
+    existing_agent_col_names = [row[1] for row in existing_agent_cols]
+    if 'provider' not in existing_agent_col_names:
+        c.execute("ALTER TABLE agents ADD COLUMN provider TEXT")
+    c.execute("UPDATE agents SET provider = 'ollama' WHERE provider IS NULL OR provider = ''")
     c.execute('''CREATE TABLE IF NOT EXISTS agent_memory 
                  (agent_id TEXT PRIMARY KEY, e_pool TEXT, x_pool TEXT, weights TEXT, 
                   stats TEXT, last_update INTEGER)''')
