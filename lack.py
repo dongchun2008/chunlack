@@ -77,6 +77,11 @@ try {
     enablePublicMemory: false,
     llmProvider: "ollama",
     openaiApiBaseUrl: "https://api.openai.com/v1",
+    llmCloudProviders: [
+      { id: "openrouter", name: "OpenRouter", type: "openai-compatible", baseUrl: "https://openrouter.ai/api/v1", apiKeyEnv: "OPENROUTER_API_KEY", models: [] },
+      { id: "deepseek", name: "DeepSeek", type: "openai-compatible", baseUrl: "https://api.deepseek.com/v1", apiKeyEnv: "DEEPSEEK_API_KEY", models: [] },
+      { id: "groq", name: "Groq", type: "openai-compatible", baseUrl: "https://api.groq.com/openai/v1", apiKeyEnv: "GROQ_API_KEY", models: [] }
+    ],
     defaultModel: "qwen2.5:0.5b",
     embeddingModel: "nomic-embed-text:latest",
     fallbackModels: ["phi3:mini", "tinyllama"],
@@ -123,14 +128,56 @@ try {
 }
 const PORT = config.httpPort || 3721;
 const OLLAMA_URL = 'http://localhost:11434';
-const LLM_PROVIDER_ALLOWLIST = ['ollama', 'openai'];
 const OPENAI_API_KEY = (process.env.OPENAI_API_KEY || config.openaiApiKey || '').toString().trim();
 const OPENAI_API_BASE_URL = (process.env.OPENAI_API_BASE_URL || config.openaiApiBaseUrl || 'https://api.openai.com/v1').toString().trim().replace(/\/+$/, '');
+
+function normalizeCloudProviderConfig(rawProvider) {
+  if (!rawProvider || typeof rawProvider !== 'object') return null;
+  const id = String(rawProvider.id || '').trim().toLowerCase();
+  if (!/^[a-z][a-z0-9_-]{1,31}$/.test(id) || id === 'ollama') return null;
+  const type = String(rawProvider.type || 'openai-compatible').trim().toLowerCase();
+  if (type !== 'openai-compatible') return null;
+  const envPrefix = id.toUpperCase().replace(/[^A-Z0-9]/g, '_');
+  const apiKeyEnv = String(rawProvider.apiKeyEnv || `${envPrefix}_API_KEY`).trim();
+  const baseUrlEnv = String(rawProvider.baseUrlEnv || `${envPrefix}_API_BASE_URL`).trim();
+  const baseUrl = String(process.env[baseUrlEnv] || rawProvider.baseUrl || '').trim().replace(/\/+$/, '');
+  if (!/^https?:\/\//i.test(baseUrl)) return null;
+  return {
+    id,
+    name: String(rawProvider.name || id).trim(),
+    type,
+    baseUrl,
+    apiKeyEnv,
+    apiKey: String(process.env[apiKeyEnv] || '').trim(),
+    models: Array.isArray(rawProvider.models) ? rawProvider.models.filter(Boolean).map(String) : [],
+    embeddingModel: rawProvider.embeddingModel ? String(rawProvider.embeddingModel) : '',
+    headers: rawProvider.headers && typeof rawProvider.headers === 'object' ? rawProvider.headers : {}
+  };
+}
+
+const CLOUD_PROVIDER_CONFIGS = new Map();
+const openaiProviderConfig = normalizeCloudProviderConfig({
+  id: 'openai',
+  name: 'OpenAI',
+  baseUrl: OPENAI_API_BASE_URL,
+  apiKeyEnv: 'OPENAI_API_KEY',
+  embeddingModel: config.openaiEmbeddingModel || 'text-embedding-3-small'
+});
+if (openaiProviderConfig) {
+  openaiProviderConfig.apiKey = OPENAI_API_KEY;
+  CLOUD_PROVIDER_CONFIGS.set('openai', openaiProviderConfig);
+}
+for (const rawProvider of (Array.isArray(config.llmCloudProviders) ? config.llmCloudProviders : [])) {
+  const providerConfig = normalizeCloudProviderConfig(rawProvider);
+  if (providerConfig) CLOUD_PROVIDER_CONFIGS.set(providerConfig.id, providerConfig);
+}
+const LLM_PROVIDER_ALLOWLIST = ['ollama', ...CLOUD_PROVIDER_CONFIGS.keys()];
 
 function sanitizeLlmProviderName(name, fallback) {
   const candidate = (name || fallback || 'ollama').toString().trim().toLowerCase();
   if (LLM_PROVIDER_ALLOWLIST.includes(candidate)) return candidate;
-  const safeFallback = (fallback || 'ollama').toString().trim().toLowerCase() || 'ollama';
+  const requestedFallback = (fallback || 'ollama').toString().trim().toLowerCase();
+  const safeFallback = LLM_PROVIDER_ALLOWLIST.includes(requestedFallback) ? requestedFallback : 'ollama';
   if (candidate && candidate !== safeFallback) {
     console.warn(`[LACK] Unsupported llmProvider '${candidate}', fallback to '${safeFallback}'.`);
   }
@@ -2745,11 +2792,11 @@ app.get('/api/models', async (req, res) => {
   res.json({ provider: providerName, models });
 });
 app.get('/api/llm-providers', (req, res) => {
-  const providers = Object.keys(llmProviders).map(id => {
-    if (id === 'ollama') return { id, name: 'ollama', configured: true };
-    if (id === 'openai') return { id, name: 'openai', configured: !!OPENAI_API_KEY };
-    return { id, name: id, configured: true };
-  });
+  const providers = Object.entries(llmProviders).map(([id, provider]) => ({
+    id,
+    name: provider.displayName || provider.name || id,
+    configured: provider.configured !== false
+  }));
   res.json({ providers, defaultProvider: DEFAULT_LLM_PROVIDER });
 });
 app.get('/api/research/sessions', (req, res) => {
@@ -2878,19 +2925,21 @@ server.listen(PORT, async () => {
       await runMaintenanceTask('publicMemory', () => updatePublicMemorySummary());
     }, 60 * 60 * 1000);
   }
-  const models = await getOllamaModels();
-  if (!models.includes(DEFAULT_MODEL)) {
-    console.warn(`[LACK] Default model "${DEFAULT_MODEL}" not found. Attempting to pull...`);
-    try {
-      await axios.post(`${OLLAMA_URL}/api/pull`, { model: DEFAULT_MODEL }, { timeout: 300000 });
-      console.log(`[LACK] Pulled "${DEFAULT_MODEL}"`);
-    } catch (e) {
-      console.warn(`[LACK] Failed to pull "${DEFAULT_MODEL}". Please run 'ollama pull ${DEFAULT_MODEL}' manually.`);
+  if (DEFAULT_LLM_PROVIDER === 'ollama') {
+    const models = await getOllamaModels();
+    if (!models.includes(DEFAULT_MODEL)) {
+      console.warn(`[LACK] Default model "${DEFAULT_MODEL}" not found. Attempting to pull...`);
+      try {
+        await axios.post(`${OLLAMA_URL}/api/pull`, { model: DEFAULT_MODEL }, { timeout: 300000 });
+        console.log(`[LACK] Pulled "${DEFAULT_MODEL}"`);
+      } catch (e) {
+        console.warn(`[LACK] Failed to pull "${DEFAULT_MODEL}". Please run 'ollama pull ${DEFAULT_MODEL}' manually.`);
+      }
     }
-  }
-  if (!models.includes(EMBEDDING_MODEL)) {
-    console.warn(`[LACK] Embedding model "${EMBEDDING_MODEL}" not found. Embedding will fallback to TF‑IDF.`);
-    console.log("  To enable embedding, run: ollama pull " + EMBEDDING_MODEL);
+    if (!models.includes(EMBEDDING_MODEL)) {
+      console.warn(`[LACK] Embedding model "${EMBEDDING_MODEL}" not found. Embedding will fallback to TF‑IDF.`);
+      console.log("  To enable embedding, run: ollama pull " + EMBEDDING_MODEL);
+    }
   }
   if (!fs.existsSync(REVERSE_SKILL_ROOT)) {
     console.warn('[LACK] reverse-skill not found. Some features (reverse-skill router) will be disabled.');
@@ -3612,30 +3661,29 @@ async function getEmbeddingFromOllama(text, model = EMBEDDING_MODEL) {
   return res.data.embedding;
 }
 
-async function getOpenAIModels() {
-  if (!OPENAI_API_KEY) {
-    console.warn('[LACK] OPENAI_API_KEY is not set. Skip OpenAI model listing.');
-    return [];
-  }
+async function getOpenAICompatibleModels(providerConfig) {
+  if (!providerConfig.apiKey) return providerConfig.models;
   try {
-    const res = await axios.get(`${OPENAI_API_BASE_URL}/models`, {
+    const res = await axios.get(`${providerConfig.baseUrl}/models`, {
       timeout: 3000,
       headers: {
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
+        ...providerConfig.headers,
+        Authorization: `Bearer ${providerConfig.apiKey}`,
         'Content-Type': 'application/json'
       }
     });
-    return (res.data?.data || []).map(m => m.id).filter(Boolean);
+    const remoteModels = (res.data?.data || []).map(m => m.id).filter(Boolean);
+    return remoteModels.length ? remoteModels : providerConfig.models;
   } catch (e) {
-    logError({ context: 'getOpenAIModels', error: e.message });
-    return [];
+    logError({ context: `getModels:${providerConfig.id}`, error: e.message });
+    return providerConfig.models;
   }
 }
 
-async function generateWithOpenAI(model, prompt, systemPrompt = '', temperature = 0.7, agentId = null) {
-  if (!OPENAI_API_KEY) return '[OLLAMA_ERROR] OPENAI_API_KEY is not set.';
+async function generateWithOpenAICompatible(providerConfig, model, prompt, systemPrompt = '', temperature = 0.7, agentId = null) {
+  if (!providerConfig.apiKey) return `[OLLAMA_ERROR] ${providerConfig.apiKeyEnv} is not set.`;
   try {
-    const response = await axios.post(`${OPENAI_API_BASE_URL}/chat/completions`, {
+    const response = await axios.post(`${providerConfig.baseUrl}/chat/completions`, {
       model,
       messages: [
         { role: 'system', content: systemPrompt },
@@ -3646,7 +3694,8 @@ async function generateWithOpenAI(model, prompt, systemPrompt = '', temperature 
     }, {
       timeout: 30000,
       headers: {
-        Authorization: `Bearer ${OPENAI_API_KEY}`,
+        ...providerConfig.headers,
+        Authorization: `Bearer ${providerConfig.apiKey}`,
         'Content-Type': 'application/json'
       }
     });
@@ -3658,19 +3707,37 @@ async function generateWithOpenAI(model, prompt, systemPrompt = '', temperature 
   }
 }
 
-async function getEmbeddingFromOpenAI(text, model = EMBEDDING_MODEL) {
-  if (!OPENAI_API_KEY) return null;
-  const res = await axios.post(`${OPENAI_API_BASE_URL}/embeddings`, {
-    model,
+async function getEmbeddingFromOpenAICompatible(providerConfig, text) {
+  if (!providerConfig.apiKey || !providerConfig.embeddingModel) return null;
+  const res = await axios.post(`${providerConfig.baseUrl}/embeddings`, {
+    model: providerConfig.embeddingModel,
     input: text.slice(0, 2000)
   }, {
     timeout: 3000,
     headers: {
-      Authorization: `Bearer ${OPENAI_API_KEY}`,
+      ...providerConfig.headers,
+      Authorization: `Bearer ${providerConfig.apiKey}`,
       'Content-Type': 'application/json'
     }
   });
   return res.data?.data?.[0]?.embedding || null;
+}
+
+function createOpenAICompatibleProvider(providerConfig) {
+  return {
+    name: providerConfig.id,
+    displayName: providerConfig.name,
+    configured: Boolean(providerConfig.apiKey),
+    async listModels() {
+      return getOpenAICompatibleModels(providerConfig);
+    },
+    async generate({ model, prompt, systemPrompt = '', temperature = 0.7, agentId = null }) {
+      return generateWithOpenAICompatible(providerConfig, model, prompt, systemPrompt, temperature, agentId);
+    },
+    async embed(text) {
+      return getEmbeddingFromOpenAICompatible(providerConfig, text);
+    }
+  };
 }
 
 function resolveLlmProviderName(name) {
@@ -3686,6 +3753,8 @@ function resolveLlmProviderForAgent(agentId = null) {
 const llmProviders = {
   ollama: {
     name: 'ollama',
+    displayName: 'Ollama',
+    configured: true,
     async listModels() {
       return getOllamaModels();
     },
@@ -3695,20 +3764,12 @@ const llmProviders = {
     async embed(text, model = EMBEDDING_MODEL) {
       return getEmbeddingFromOllama(text, model);
     }
-  },
-  openai: {
-    name: 'openai',
-    async listModels() {
-      return getOpenAIModels();
-    },
-    async generate({ model, prompt, systemPrompt = '', temperature = 0.7, agentId = null }) {
-      return generateWithOpenAI(model, prompt, systemPrompt, temperature, agentId);
-    },
-    async embed(text, model = EMBEDDING_MODEL) {
-      return getEmbeddingFromOpenAI(text, model);
-    }
   }
 };
+
+for (const [providerId, providerConfig] of CLOUD_PROVIDER_CONFIGS) {
+  llmProviders[providerId] = createOpenAICompatibleProvider(providerConfig);
+}
 
 function markOllamaDown() {
   if (!ollamaCircuitOpen) {
@@ -5223,6 +5284,11 @@ CONFIG_JSON = r'''{
   "enablePublicMemory": false,
   "llmProvider": "ollama",
   "openaiApiBaseUrl": "https://api.openai.com/v1",
+  "llmCloudProviders": [
+    { "id": "openrouter", "name": "OpenRouter", "type": "openai-compatible", "baseUrl": "https://openrouter.ai/api/v1", "apiKeyEnv": "OPENROUTER_API_KEY", "models": [] },
+    { "id": "deepseek", "name": "DeepSeek", "type": "openai-compatible", "baseUrl": "https://api.deepseek.com/v1", "apiKeyEnv": "DEEPSEEK_API_KEY", "models": [] },
+    { "id": "groq", "name": "Groq", "type": "openai-compatible", "baseUrl": "https://api.groq.com/openai/v1", "apiKeyEnv": "GROQ_API_KEY", "models": [] }
+  ],
   "defaultModel": "qwen2.5:0.5b",
   "embeddingModel": "nomic-embed-text:latest",
   "fallbackModels": ["phi3:mini", "tinyllama"],
@@ -5267,6 +5333,7 @@ CONFIG_JSON = r'''{
 BIN_LACK_JS = r'''#!/usr/bin/env node
 const { spawn } = require('child_process');
 const path = require('path');
+const fs = require('fs');
 const projectRoot = path.resolve(__dirname, '..');
 process.chdir(projectRoot);
 async function checkOllama() {
@@ -5277,10 +5344,23 @@ async function checkOllama() {
     req.setTimeout(1000, () => resolve(false));
   });
 }
+function getDefaultProvider() {
+  try {
+    const config = JSON.parse(fs.readFileSync(path.join(projectRoot, 'config', 'lack.config.json'), 'utf8'));
+    return String(config.llmProvider || 'ollama').trim().toLowerCase();
+  } catch (err) {
+    return 'ollama';
+  }
+}
 async function main() {
   console.log('\x1b[36m[ LACK v4.2.2 ] Starting – Musing & Triangulation Enhanced\x1b[0m');
-  if (!await checkOllama()) { console.error('\x1b[31m✗ Ollama not running\x1b[0m'); process.exit(1); }
-  console.log('\x1b[32m✓ Ollama detected\x1b[0m');
+  const defaultProvider = getDefaultProvider();
+  if (defaultProvider === 'ollama') {
+    if (!await checkOllama()) { console.error('\x1b[31m✗ Ollama not running\x1b[0m'); process.exit(1); }
+    console.log('\x1b[32m✓ Ollama detected\x1b[0m');
+  } else {
+    console.log(`\x1b[32m✓ Cloud provider selected: ${defaultProvider}\x1b[0m`);
+  }
   const server = spawn('node', ['server.js'], { stdio: 'inherit', cwd: projectRoot });
   server.on('error', (err) => { console.error('Failed to start server:', err); process.exit(1); });
   process.on('SIGINT', () => { server.kill('SIGINT'); process.exit(); });
