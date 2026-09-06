@@ -76,6 +76,7 @@ try {
     httpPort: 3721,
     enablePublicMemory: false,
     llmProvider: "ollama",
+    openaiApiBaseUrl: "https://api.openai.com/v1",
     defaultModel: "qwen2.5:0.5b",
     embeddingModel: "nomic-embed-text:latest",
     fallbackModels: ["phi3:mini", "tinyllama"],
@@ -122,7 +123,9 @@ try {
 }
 const PORT = config.httpPort || 3721;
 const OLLAMA_URL = 'http://localhost:11434';
-const LLM_PROVIDER_ALLOWLIST = ['ollama'];
+const LLM_PROVIDER_ALLOWLIST = ['ollama', 'openai'];
+const OPENAI_API_KEY = (process.env.OPENAI_API_KEY || config.openaiApiKey || '').toString().trim();
+const OPENAI_API_BASE_URL = (process.env.OPENAI_API_BASE_URL || config.openaiApiBaseUrl || 'https://api.openai.com/v1').toString().trim().replace(/\/+$/, '');
 
 function sanitizeLlmProviderName(name, fallback) {
   const candidate = (name || fallback || 'ollama').toString().trim().toLowerCase();
@@ -235,6 +238,7 @@ db.exec(`
     id TEXT PRIMARY KEY,
     name TEXT,
     model TEXT,
+    provider TEXT,
     system_prompt TEXT,
     channels TEXT,
     strict_channel TEXT,
@@ -275,6 +279,11 @@ db.exec(`
     last_update INTEGER
   );
 `);
+
+const existingAgentColumns = db.prepare("PRAGMA table_info(agents)").all();
+if (!existingAgentColumns.some(c => c.name === 'provider')) {
+  db.exec('ALTER TABLE agents ADD COLUMN provider TEXT');
+}
 
 function dbSaveMessage(msg, storeId) {
     const stmt = db.prepare(`
@@ -2729,7 +2738,20 @@ app.get('/api/tree', async (req, res) => {
   res.json(tree);
 });
 
-app.get('/api/models', async (req, res) => { res.json({ models: await getOllamaModels() }); });
+app.get('/api/models', async (req, res) => {
+  const providerName = sanitizeLlmProviderName(req.query.provider, DEFAULT_LLM_PROVIDER);
+  const provider = llmProviders[providerName] || llmProviders.ollama;
+  const models = provider && provider.listModels ? await provider.listModels() : [];
+  res.json({ provider: providerName, models });
+});
+app.get('/api/llm-providers', (req, res) => {
+  const providers = Object.keys(llmProviders).map(id => {
+    if (id === 'ollama') return { id, name: 'ollama', configured: true };
+    if (id === 'openai') return { id, name: 'openai', configured: !!OPENAI_API_KEY };
+    return { id, name: id, configured: true };
+  });
+  res.json({ providers, defaultProvider: DEFAULT_LLM_PROVIDER });
+});
 app.get('/api/research/sessions', (req, res) => {
   res.json({ sessions: Array.from(researchSessions.values()).map(s => ({
     id: s.id, topic: s.topic, phase: s.phase, metric: s.metric,
@@ -3034,7 +3056,12 @@ wss.on('connection', (ws) => {
           break;
         }
         case 'get_models':
-          ws.send(JSON.stringify({ type: 'models_list', models: await getOllamaModels() }));
+          {
+            const providerName = sanitizeLlmProviderName(data?.provider, DEFAULT_LLM_PROVIDER);
+            const provider = llmProviders[providerName] || llmProviders.ollama;
+            const models = provider && provider.listModels ? await provider.listModels() : [];
+            ws.send(JSON.stringify({ type: 'models_list', provider: providerName, models }));
+          }
           break;
         case 'add_reaction': {
           const { messageId, emoji, storeId: reactStoreId } = data;
@@ -3434,8 +3461,20 @@ async function onHumanMessage(channelId, messageObj, ws) {
         addMessage(channelId, 'System', 'system', `🧬 **Ralph loop started**\nGoal: ${goal}\nWill converge when recurrence conditions met.`);
         broadcastToStore(channelId, { sender: 'System', content: `Ralph evolution started: ${goal}`, senderType: 'system' });
       } else if (cmd === 'stop') { stopLoop(channelId); }
-      else if (cmd === 'list') { const models = await getOllamaModels(); const listText = models.length ? 'Available Ollama models:\n' + models.join('\n') : 'No Ollama models found.'; addMessage(channelId, 'System', 'system', listText); broadcastToStore(channelId, { sender: 'System', content: listText, senderType: 'system' }); }
-      else if (cmd === 'spawn') { ws.send(JSON.stringify({ type: 'models_list', models: await getOllamaModels() })); }
+      else if (cmd === 'list') {
+        const providerName = sanitizeLlmProviderName(args[0], DEFAULT_LLM_PROVIDER);
+        const provider = llmProviders[providerName] || llmProviders.ollama;
+        const models = provider && provider.listModels ? await provider.listModels() : [];
+        const label = providerName === 'ollama' ? 'Ollama' : providerName.toUpperCase();
+        const listText = models.length ? `Available ${label} models:\n` + models.join('\n') : `No models found for ${label}.`;
+        addMessage(channelId, 'System', 'system', listText); broadcastToStore(channelId, { sender: 'System', content: listText, senderType: 'system' });
+      }
+      else if (cmd === 'spawn') {
+        const spawnProviderName = DEFAULT_LLM_PROVIDER;
+        const spawnProvider = llmProviders[spawnProviderName] || llmProviders.ollama;
+        const spawnModels = spawnProvider && spawnProvider.listModels ? await spawnProvider.listModels() : [];
+        ws.send(JSON.stringify({ type: 'models_list', provider: spawnProviderName, models: spawnModels }));
+      }
       else if (cmd === 'siphon') { 
         const topic = args.join(' ') || 'general research topic';
         const sessionId = uuidv4();
@@ -3573,6 +3612,67 @@ async function getEmbeddingFromOllama(text, model = EMBEDDING_MODEL) {
   return res.data.embedding;
 }
 
+async function getOpenAIModels() {
+  if (!OPENAI_API_KEY) {
+    console.warn('[LACK] OPENAI_API_KEY is not set. Skip OpenAI model listing.');
+    return [];
+  }
+  try {
+    const res = await axios.get(`${OPENAI_API_BASE_URL}/models`, {
+      timeout: 3000,
+      headers: {
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    return (res.data?.data || []).map(m => m.id).filter(Boolean);
+  } catch (e) {
+    logError({ context: 'getOpenAIModels', error: e.message });
+    return [];
+  }
+}
+
+async function generateWithOpenAI(model, prompt, systemPrompt = '', temperature = 0.7, agentId = null) {
+  if (!OPENAI_API_KEY) return '[OLLAMA_ERROR] OPENAI_API_KEY is not set.';
+  try {
+    const response = await axios.post(`${OPENAI_API_BASE_URL}/chat/completions`, {
+      model,
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: prompt }
+      ],
+      temperature,
+      stream: false
+    }, {
+      timeout: 30000,
+      headers: {
+        Authorization: `Bearer ${OPENAI_API_KEY}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    const text = response?.data?.choices?.[0]?.message?.content;
+    return text || "I'm sorry, I couldn't generate a response.";
+  } catch (err) {
+    if (agentId) updateAgentMetrics(agentId, 0, false, 0);
+    return `[OLLAMA_ERROR] ${err.message}`;
+  }
+}
+
+async function getEmbeddingFromOpenAI(text, model = EMBEDDING_MODEL) {
+  if (!OPENAI_API_KEY) return null;
+  const res = await axios.post(`${OPENAI_API_BASE_URL}/embeddings`, {
+    model,
+    input: text.slice(0, 2000)
+  }, {
+    timeout: 3000,
+    headers: {
+      Authorization: `Bearer ${OPENAI_API_KEY}`,
+      'Content-Type': 'application/json'
+    }
+  });
+  return res.data?.data?.[0]?.embedding || null;
+}
+
 function resolveLlmProviderName(name) {
   return sanitizeLlmProviderName(name, DEFAULT_LLM_PROVIDER);
 }
@@ -3594,6 +3694,18 @@ const llmProviders = {
     },
     async embed(text, model = EMBEDDING_MODEL) {
       return getEmbeddingFromOllama(text, model);
+    }
+  },
+  openai: {
+    name: 'openai',
+    async listModels() {
+      return getOpenAIModels();
+    },
+    async generate({ model, prompt, systemPrompt = '', temperature = 0.7, agentId = null }) {
+      return generateWithOpenAI(model, prompt, systemPrompt, temperature, agentId);
+    },
+    async embed(text, model = EMBEDDING_MODEL) {
+      return getEmbeddingFromOpenAI(text, model);
     }
   }
 };
@@ -4238,7 +4350,7 @@ INDEX_HTML = r'''<!DOCTYPE html>
 <div class="bottom-bar"><span>LACK · Musing & Triangulation · Real‑time graph | /bash in #general</span><span id="statusText">CONNECTED</span></div>
 <div id="agentThinkingToast" class="agent-thinking-overlay" style="display:none;"><i class="fas fa-spinner fa-pulse"></i> Agent is thinking...</div>
 
-<div id="agentModal" class="modal"><div class="modal-content"><h3>Agent Details & Edit</h3><input type="text" id="editAgentId" hidden><label>Name:</label><input type="text" id="editAgentName"><label>Model:</label><select id="editAgentModel"></select><label>System Prompt:</label><textarea id="editAgentPrompt" rows="3"></textarea><label>Channels (comma):</label><input type="text" id="editAgentChannels"><label>Strict Channel (optional):</label><input type="text" id="editAgentStrictChannel" placeholder="Leave empty for all"><div class="modal-buttons"><button id="removeAgentBtn">Remove Agent</button><button id="saveAgentBtn">Save</button><button id="closeModalBtn">Cancel</button></div></div></div>
+<div id="agentModal" class="modal"><div class="modal-content"><h3>Agent Details & Edit</h3><input type="text" id="editAgentId" hidden><label>Name:</label><input type="text" id="editAgentName"><label>LLM Provider:</label><select id="editAgentProvider"></select><label>Model:</label><select id="editAgentModel"></select><label>System Prompt:</label><textarea id="editAgentPrompt" rows="3"></textarea><label>Channels (comma):</label><input type="text" id="editAgentChannels"><label>Strict Channel (optional):</label><input type="text" id="editAgentStrictChannel" placeholder="Leave empty for all"><div class="modal-buttons"><button id="removeAgentBtn">Remove Agent</button><button id="saveAgentBtn">Save</button><button id="closeModalBtn">Cancel</button></div></div></div>
 <div id="quickSwitcherModal" class="modal"><div class="modal-content"><input type="text" id="switcherInput" placeholder="Jump... Ctrl+K"><div class="shortcut-hint">Ctrl+K</div></div></div>
 <div id="graphModal" class="modal"><div class="modal-content" style="width:98vw; height:92vh; display:flex; flex-direction:column; padding:0.5rem; max-width:98vw; max-height:92vh;">
   <div style="display:flex; justify-content:space-between; padding:4px 8px; align-items:center;">
@@ -4266,7 +4378,7 @@ INDEX_HTML = r'''<!DOCTYPE html>
 <div id="toast" class="toast"></div>
 
 <script>
-let ws, currentStoreId = 'general', username = localStorage.getItem('lack_username') || 'human_' + Math.floor(Math.random()*1000), userId = '', agents = [], researchSessions = [], channels = [], currentThreadId = null, graphInterval = null, graphCanvas, graphCtx, resizeListener = false;
+let ws, currentStoreId = 'general', username = localStorage.getItem('lack_username') || 'human_' + Math.floor(Math.random()*1000), userId = '', agents = [], researchSessions = [], channels = [], currentThreadId = null, graphInterval = null, graphCanvas, graphCtx, resizeListener = false, availableLlmProviders = [];
 let pendingFile = null;
 let moderatorState = false;
 const jspaceEnabled = true;
@@ -4344,6 +4456,7 @@ function initGraphWorker() {
 
 function init() {
   connect();
+  loadLlmProviders();
   document.getElementById('sendBtn').onclick = sendMessage;
   document.getElementById('messageInput').onkeypress = e => { if(e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } };
   document.getElementById('messageInput').addEventListener('input', autoGrow);
@@ -4387,10 +4500,11 @@ function init() {
     const id = document.getElementById('editAgentId').value;
     const name = document.getElementById('editAgentName').value;
     const model = document.getElementById('editAgentModel').value;
+    const provider = document.getElementById('editAgentProvider').value;
     const prompt = document.getElementById('editAgentPrompt').value;
     const chans = document.getElementById('editAgentChannels').value.split(',').map(s=>s.trim());
     const strictChannel = document.getElementById('editAgentStrictChannel').value.trim() || null;
-    ws.send(JSON.stringify({type:'update_agent',id,name,model,systemPrompt:prompt,channels:chans,strictChannel}));
+    ws.send(JSON.stringify({type:'update_agent',id,name,model,provider,systemPrompt:prompt,channels:chans,strictChannel}));
     document.getElementById('agentModal').style.display='none';
     showToast(`Agent "${name}" updated`, 'success');
   };
@@ -4458,6 +4572,18 @@ function connect() {
     }
   };
   ws.onclose = () => { document.getElementById('statusText').innerText = 'DISCONNECTED'; setTimeout(connect,3000); };
+}
+
+async function loadLlmProviders() {
+  try {
+    const res = await fetch('/api/llm-providers');
+    const data = await res.json();
+    availableLlmProviders = data.providers || [];
+    return availableLlmProviders;
+  } catch (err) {
+    availableLlmProviders = [];
+    return [];
+  }
 }
 
 function populateModelSelect(models) {
@@ -4658,25 +4784,73 @@ function fetchResearchSessions() { fetch('/api/research/sessions').then(r=>r.jso
 function openEditModal(agentId) {
   const agent = agents.find(a => a.id === agentId);
   if (!agent) return;
+  const loadModels = async (providerId) => {
+    const res = await fetch(`/api/models?provider=${encodeURIComponent(providerId)}`);
+    const data = await res.json();
+    const models = data.models || [];
+    populateModelSelect(models);
+    const modelSelect = document.getElementById('editAgentModel');
+    if (agent.model && models.includes(agent.model)) {
+      modelSelect.value = agent.model;
+    } else if (models.length) {
+      modelSelect.value = models[0];
+    }
+    return models;
+  };
+  const initModal = async () => {
+    const providers = availableLlmProviders.length ? availableLlmProviders : await loadLlmProviders();
+    const providerSelect = document.getElementById('editAgentProvider');
+    providerSelect.innerHTML = '';
+    (providers || []).forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p.id;
+      opt.textContent = `${p.id}${p.configured ? '' : ' (unconfigured)'}`;
+      opt.disabled = !p.configured;
+      providerSelect.appendChild(opt);
+    });
+    const defaultProvider = (agent.provider && providers.some(p => p.id === agent.provider)) ? agent.provider : (providers.find(p => p.configured) || providers[0] || {id: 'ollama'}).id;
+    providerSelect.value = defaultProvider;
+    providerSelect.onchange = () => { loadModels(providerSelect.value); };
+    await loadModels(defaultProvider);
+    return defaultProvider;
+  };
+
   document.getElementById('editAgentId').value = agent.id;
   document.getElementById('editAgentName').value = agent.name;
   document.getElementById('editAgentPrompt').value = agent.systemPrompt;
   document.getElementById('editAgentChannels').value = agent.channels.join(',');
   document.getElementById('editAgentStrictChannel').value = agent.strictChannel || '';
-  fetch('/api/models').then(r=>r.json()).then(data => {
-    const sel = document.getElementById('editAgentModel');
-    sel.innerHTML = '';
-    (data.models||[]).forEach(m => {
-      const opt = document.createElement('option');
-      opt.value = m; opt.textContent = m;
-      if (m === agent.model) opt.selected = true;
-      sel.appendChild(opt);
-    });
-  });
+  initModal().catch(() => showToast('Failed to load provider/model list', 'error'));
   document.getElementById('agentModal').style.display = 'block';
   document.getElementById('agentDetailPopup').classList.remove('show');
 }
-function handleSpawn() { ws.send(JSON.stringify({type:'get_models'})); const orig = ws.onmessage; ws.onmessage = e => { const d = JSON.parse(e.data); if(d.type === 'models_list') { if(!d.models.length) alert('No Ollama models'); else { const name = prompt('Agent name:'); if(name) { const model = prompt('Model:',d.models[0]); const promptText = prompt('System prompt:','You are helpful.'); const chans = prompt('Channels (comma):','general,siphon,code').split(',').map(s=>s.trim()); const strict = prompt('Strict channel (optional, leave empty):', ''); ws.send(JSON.stringify({type:'spawn_agent',name,model,systemPrompt:promptText,channels:chans,strictChannel:strict || null})); } } ws.onmessage = orig; } else if(orig) orig(e); }; }
+async function handleSpawn() {
+  const providers = availableLlmProviders.length ? availableLlmProviders : await loadLlmProviders();
+  const configured = providers.filter(p => p.configured);
+  if (!configured.length) { alert('No configured LLM provider found.'); return; }
+  const provider = prompt('Provider:', configured[0].id);
+  if (!provider) return;
+  const selectedProvider = configured.find(p => p.id === provider) ? provider : configured[0].id;
+  const modelRes = await fetch(`/api/models?provider=${encodeURIComponent(selectedProvider)}`);
+  const data = await modelRes.json();
+  const models = data.models || [];
+  if (!models.length) { alert(`No models found for ${selectedProvider}.`); return; }
+  const name = prompt('Agent name:');
+  if (!name) return;
+  const model = prompt('Model:', models[0]);
+  const promptText = prompt('System prompt:','You are helpful.');
+  const chans = prompt('Channels (comma):','general,siphon,code').split(',').map(s=>s.trim());
+  const strict = prompt('Strict channel (optional, leave empty):', '');
+  ws.send(JSON.stringify({
+    type:'spawn_agent',
+    provider: selectedProvider,
+    name,
+    model,
+    systemPrompt: promptText,
+    channels: chans,
+    strictChannel: strict || null
+  }));
+}
 function escapeHtml(s) { return s.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
 
 function updateModeratorButton() {
@@ -5048,6 +5222,7 @@ CONFIG_JSON = r'''{
   "httpPort": 3721,
   "enablePublicMemory": false,
   "llmProvider": "ollama",
+  "openaiApiBaseUrl": "https://api.openai.com/v1",
   "defaultModel": "qwen2.5:0.5b",
   "embeddingModel": "nomic-embed-text:latest",
   "fallbackModels": ["phi3:mini", "tinyllama"],
