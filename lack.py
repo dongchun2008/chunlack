@@ -127,7 +127,8 @@ try {
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 }
 const PORT = config.httpPort || 3721;
-const OLLAMA_URL = 'http://localhost:11434';
+const OLLAMA_URL = (process.env.OLLAMA_URL || config.ollamaUrl || 'http://localhost:11434').replace(/\/+$/, '');
+const LLM_TIMEOUT_MS = Math.max(100, Math.min(300000, Number(config.llmTimeoutMs) || 30000));
 const OPENAI_API_KEY = (process.env.OPENAI_API_KEY || config.openaiApiKey || '').toString().trim();
 const OPENAI_API_BASE_URL = (process.env.OPENAI_API_BASE_URL || config.openaiApiBaseUrl || 'https://api.openai.com/v1').toString().trim().replace(/\/+$/, '');
 
@@ -141,17 +142,31 @@ function normalizeCloudProviderConfig(rawProvider) {
   const apiKeyEnv = String(rawProvider.apiKeyEnv || `${envPrefix}_API_KEY`).trim();
   const baseUrlEnv = String(rawProvider.baseUrlEnv || `${envPrefix}_API_BASE_URL`).trim();
   const baseUrl = String(process.env[baseUrlEnv] || rawProvider.baseUrl || '').trim().replace(/\/+$/, '');
-  if (!/^https?:\/\//i.test(baseUrl)) return null;
+  let endpoint;
+  try { endpoint = new URL(baseUrl); } catch { throw new Error(`Invalid endpoint for provider ${id}`); }
+  if (!['http:', 'https:'].includes(endpoint.protocol) || endpoint.username || endpoint.password || endpoint.search || endpoint.hash) {
+    throw new Error(`Invalid endpoint for provider ${id}`);
+  }
+  if (endpoint.protocol !== 'https:' && rawProvider.local !== true) {
+    throw new Error(`Cloud provider ${id} requires HTTPS`);
+  }
+  const local = rawProvider.local === true;
   return {
     id,
     name: String(rawProvider.name || id).trim(),
     type,
+    local,
+    requiresApiKey: !local || rawProvider.requiresApiKey !== false,
+    timeoutMs: Math.max(100, Math.min(300000, Number(rawProvider.timeoutMs) || LLM_TIMEOUT_MS)),
+    maxTokens: Math.max(1, Math.min(32768, Number(rawProvider.maxTokens) || 2048)),
+    fallbackModels: Array.isArray(rawProvider.fallbackModels) ? rawProvider.fallbackModels.filter(m => typeof m === 'string' && m) : [],
     baseUrl,
     apiKeyEnv,
     apiKey: String(process.env[apiKeyEnv] || '').trim(),
     models: Array.isArray(rawProvider.models) ? rawProvider.models.filter(Boolean).map(String) : [],
     embeddingModel: rawProvider.embeddingModel ? String(rawProvider.embeddingModel) : '',
-    headers: rawProvider.headers && typeof rawProvider.headers === 'object' ? rawProvider.headers : {}
+    headers: Object.fromEntries(Object.entries(rawProvider.headers || {}).filter(([key, value]) =>
+      ['http-referer', 'x-title'].includes(key.toLowerCase()) && typeof value === 'string' && !/[\r\n]/.test(value)))
   };
 }
 
@@ -167,7 +182,7 @@ if (openaiProviderConfig) {
   openaiProviderConfig.apiKey = OPENAI_API_KEY;
   CLOUD_PROVIDER_CONFIGS.set('openai', openaiProviderConfig);
 }
-for (const rawProvider of (Array.isArray(config.llmCloudProviders) ? config.llmCloudProviders : [])) {
+for (const rawProvider of [...(config.llmCloudProviders || []), ...(config.llmProviders || [])]) {
   const providerConfig = normalizeCloudProviderConfig(rawProvider);
   if (providerConfig) CLOUD_PROVIDER_CONFIGS.set(providerConfig.id, providerConfig);
 }
@@ -176,12 +191,7 @@ const LLM_PROVIDER_ALLOWLIST = ['ollama', ...CLOUD_PROVIDER_CONFIGS.keys()];
 function sanitizeLlmProviderName(name, fallback) {
   const candidate = (name || fallback || 'ollama').toString().trim().toLowerCase();
   if (LLM_PROVIDER_ALLOWLIST.includes(candidate)) return candidate;
-  const requestedFallback = (fallback || 'ollama').toString().trim().toLowerCase();
-  const safeFallback = LLM_PROVIDER_ALLOWLIST.includes(requestedFallback) ? requestedFallback : 'ollama';
-  if (candidate && candidate !== safeFallback) {
-    console.warn(`[LACK] Unsupported llmProvider '${candidate}', fallback to '${safeFallback}'.`);
-  }
-  return safeFallback;
+  throw new Error('Unsupported LLM provider. Check provider configuration.');
 }
 
 const DEFAULT_LLM_PROVIDER = sanitizeLlmProviderName(config.llmProvider, "ollama");
@@ -331,6 +341,7 @@ const existingAgentColumns = db.prepare("PRAGMA table_info(agents)").all();
 if (!existingAgentColumns.some(c => c.name === 'provider')) {
   db.exec('ALTER TABLE agents ADD COLUMN provider TEXT');
 }
+db.exec("UPDATE agents SET provider = 'ollama' WHERE provider IS NULL OR provider = ''");
 
 function dbSaveMessage(msg, storeId) {
     const stmt = db.prepare(`
@@ -405,7 +416,7 @@ const CACHE_MAX_SIZE = 500;
 const CACHE_TTL_MS = 60 * 60 * 1000;
 
 function getCachedEmbedding(text) {
-    const key = text.slice(0, 500);
+    const key = getEmbeddingNamespace() + ':' + text;
     const entry = embeddingCache.get(key);
     if (entry && (Date.now() - entry.timestamp) < CACHE_TTL_MS) {
         return entry.embedding;
@@ -414,7 +425,7 @@ function getCachedEmbedding(text) {
     return null;
 }
 function setCachedEmbedding(text, embedding) {
-    const key = text.slice(0, 500);
+    const key = getEmbeddingNamespace() + ':' + text;
     if (embeddingCache.size >= CACHE_MAX_SIZE) {
         const firstKey = embeddingCache.keys().next().value;
         embeddingCache.delete(firstKey);
@@ -550,8 +561,8 @@ function simpleTfidfSimilarity(text1, text2) {
   const words1 = text1.toLowerCase().split(/\W+/);
   const words2 = text2.toLowerCase().split(/\W+/);
   const set = new Set([...words1, ...words2]);
-  const vec1 = set.size ? set.map(w => words1.includes(w) ? 1 : 0) : [];
-  const vec2 = set.size ? set.map(w => words2.includes(w) ? 1 : 0) : [];
+  const vec1 = Array.from(set, w => words1.includes(w) ? 1 : 0);
+  const vec2 = Array.from(set, w => words2.includes(w) ? 1 : 0);
   let dot=0, norm1=0, norm2=0;
   for (let i=0; i<vec1.length; i++) {
     dot += vec1[i]*vec2[i];
@@ -562,10 +573,18 @@ function simpleTfidfSimilarity(text1, text2) {
   return dot / (Math.sqrt(norm1)*Math.sqrt(norm2));
 }
 
+function getEmbeddingNamespace() {
+  const id = config.embeddingProvider || 'ollama';
+  const cloud = CLOUD_PROVIDER_CONFIGS.get(id);
+  return JSON.stringify([id, cloud ? cloud.baseUrl : OLLAMA_URL, cloud ? cloud.embeddingModel : EMBEDDING_MODEL]);
+}
+
 async function getEmbedding(text) {
+  if (config.embeddingProvider === 'none') return null;
   const cached = getCachedEmbedding(text);
   if (cached) return cached;
-  const provider = resolveLlmProviderForAgent(null);
+  // Memory never follows a chat provider change implicitly.
+  const provider = llmProviders[config.embeddingProvider || 'ollama'];
   if (!provider || typeof provider.embed !== 'function') return null;
   try {
     const emb = await provider.embed(text, EMBEDDING_MODEL);
@@ -586,7 +605,7 @@ function cosineSimilarity(v1, v2) {
     mag1 += v1[i] * v1[i];
     mag2 += v2[i] * v2[i];
   }
-  return dot / (Math.sqrt(mag1) * Math.sqrt(mag2));
+  return mag1 && mag2 ? dot / (Math.sqrt(mag1) * Math.sqrt(mag2)) : 0;
 }
 
 async function scanAndReindexTemplates() {
@@ -829,6 +848,11 @@ function initAgentMemory(agentId) {
       memory = { ...memory, ...loaded };
     } catch(e) { logError({ context: 'initAgentMemory', error: e.message, agentId }); }
   }
+  if (memory.embeddingNamespace !== getEmbeddingNamespace()) {
+    for (const entry of [...memory.ePool, ...memory.xPool]) entry.embedding = null;
+    memory.jspaceHistory = [];
+  }
+  memory.embeddingNamespace = getEmbeddingNamespace();
   agentMemories.set(agentId, memory);
   saveAgentMemory(agentId);
 }
@@ -1151,7 +1175,22 @@ const WORKSPACE_ROOT = path.join(__dirname, 'workspace');
 fs.mkdirSync(WORKSPACE_ROOT, { recursive: true });
 
 function securePath(relPath) {
-  return path.resolve(relPath);
+  if (typeof relPath !== 'string' || !relPath) throw new Error('A workspace path is required');
+  const target = path.resolve(WORKSPACE_ROOT, relPath);
+  const relative = path.relative(WORKSPACE_ROOT, target);
+  if (relative === '..' || relative.startsWith('..' + path.sep) || path.isAbsolute(relative)) {
+    throw new Error('Path is outside the workspace');
+  }
+  let current = WORKSPACE_ROOT;
+  for (const part of relative.split(path.sep).filter(Boolean)) {
+    current = path.join(current, part);
+    try {
+      if (fs.lstatSync(current).isSymbolicLink()) throw new Error('Symbolic links are not permitted in tool paths');
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+    }
+  }
+  return target;
 }
 
 const ALLOWED_COMMANDS = [];
@@ -1160,6 +1199,7 @@ const TOOL_TIMEOUT_MS = 60000;
 async function executeTool(toolName, args, agentId = null) {
   // Restriction: only Moderator can execute commands (execute_command)
   if (toolName === 'execute_command') {
+    if (process.env.LACK_ALLOW_SHELL !== 'true') return 'Shell execution is disabled by deployment policy.';
     const agent = agentId ? agents.get(agentId) : null;
     const isModerator = agent && agent.id === 'moderator';
     if (!isModerator) {
@@ -2207,7 +2247,7 @@ const ollamaSemaphore = new Map();
 async function rateLimitedQuery(agentId, fn) {
   if (!ollamaSemaphore.has(agentId)) ollamaSemaphore.set(agentId, Promise.resolve());
   const queue = ollamaSemaphore.get(agentId);
-  const next = queue.then(() => fn());
+  const next = queue.catch(() => {}).then(() => fn());
   ollamaSemaphore.set(agentId, next);
   return next;
 }
@@ -2777,6 +2817,7 @@ app.get('/health', (req, res) => {
 
 app.get('/api/tree', async (req, res) => {
   const root = req.query.root || 'thread_repos';
+  if (!['thread_repos', 'workspace', 'lack_repos'].includes(root)) return res.status(400).json({ error: 'Unsupported tree root' });
   const fullPath = path.join(__dirname, root);
   if (!fs.existsSync(fullPath)) {
     return res.json([]);
@@ -2786,7 +2827,9 @@ app.get('/api/tree', async (req, res) => {
 });
 
 app.get('/api/models', async (req, res) => {
-  const providerName = sanitizeLlmProviderName(req.query.provider, DEFAULT_LLM_PROVIDER);
+  let providerName;
+  try { providerName = sanitizeLlmProviderName(req.query.provider, DEFAULT_LLM_PROVIDER); }
+  catch { return res.status(400).json({ error: 'Unknown provider' }); }
   const provider = llmProviders[providerName] || llmProviders.ollama;
   const models = provider && provider.listModels ? await provider.listModels() : [];
   res.json({ provider: providerName, models });
@@ -2908,7 +2951,7 @@ app.get('/api/jspace', async (req, res) => {
 });
 
 // ==================== WEBSOCKET SERVER ====================
-server.listen(PORT, async () => {
+server.listen(PORT, process.env.LACK_BIND_HOST || '127.0.0.1', async () => {
   await ensureGitRepo();
   pruneLineageFiles();
   for (const storeId of [...channels.keys()]) {
@@ -2927,7 +2970,7 @@ server.listen(PORT, async () => {
   }
   if (DEFAULT_LLM_PROVIDER === 'ollama') {
     const models = await getOllamaModels();
-    if (!models.includes(DEFAULT_MODEL)) {
+    if (config.autoPullModels !== false && !models.includes(DEFAULT_MODEL)) {
       console.warn(`[LACK] Default model "${DEFAULT_MODEL}" not found. Attempting to pull...`);
       try {
         await axios.post(`${OLLAMA_URL}/api/pull`, { model: DEFAULT_MODEL }, { timeout: 300000 });
@@ -3152,7 +3195,7 @@ wss.on('connection', (ws) => {
     const lastTps = metrics && metrics.tpsHistory.length ? metrics.tpsHistory[metrics.tpsHistory.length-1] : 0;
     const lastJspace = metrics && metrics.jspaceCoherence.length ? metrics.jspaceCoherence[metrics.jspaceCoherence.length-1] : 0;
     return {
-      id: a.id, name: a.name, model: a.model, systemPrompt: a.systemPrompt, channels: a.channels,
+      id: a.id, name: a.name, model: a.model, provider: a.provider, systemPrompt: a.systemPrompt, channels: a.channels,
       status: a.status, strictChannel: a.strictChannel,
       isCodeModerator: a.isCodeModerator || false,
       weights: mem ? mem.weights : { exploitation: 0.6, exploration: 0.4 },
@@ -3657,31 +3700,35 @@ async function getEmbeddingFromOllama(text, model = EMBEDDING_MODEL) {
   const res = await axios.post(`${OLLAMA_URL}/api/embeddings`, {
     model,
     prompt: text.slice(0, 2000)
-  });
+  }, { timeout: LLM_TIMEOUT_MS, maxRedirects: 0 });
   return res.data.embedding;
 }
 
 async function getOpenAICompatibleModels(providerConfig) {
-  if (!providerConfig.apiKey) return providerConfig.models;
+  if (providerConfig.requiresApiKey && !providerConfig.apiKey) return providerConfig.models;
   try {
     const res = await axios.get(`${providerConfig.baseUrl}/models`, {
       timeout: 3000,
+      maxRedirects: 0,
       headers: {
         ...providerConfig.headers,
-        Authorization: `Bearer ${providerConfig.apiKey}`,
+        ...(providerConfig.apiKey ? { Authorization: `Bearer ${providerConfig.apiKey}` } : {}),
         'Content-Type': 'application/json'
       }
     });
     const remoteModels = (res.data?.data || []).map(m => m.id).filter(Boolean);
     return remoteModels.length ? remoteModels : providerConfig.models;
   } catch (e) {
-    logError({ context: `getModels:${providerConfig.id}`, error: e.message });
+    logError({ context: `getModels:${providerConfig.id}`, error: 'Model discovery failed' });
     return providerConfig.models;
   }
 }
 
 async function generateWithOpenAICompatible(providerConfig, model, prompt, systemPrompt = '', temperature = 0.7, agentId = null) {
-  if (!providerConfig.apiKey) return `[OLLAMA_ERROR] ${providerConfig.apiKeyEnv} is not set.`;
+  if (providerConfig.requiresApiKey && !providerConfig.apiKey) {
+    const error = new Error('Provider API key is not configured'); error.retryable = false; throw error;
+  }
+  const started = Date.now();
   try {
     const response = await axios.post(`${providerConfig.baseUrl}/chat/completions`, {
       model,
@@ -3690,33 +3737,41 @@ async function generateWithOpenAICompatible(providerConfig, model, prompt, syste
         { role: 'user', content: prompt }
       ],
       temperature,
+      max_tokens: providerConfig.maxTokens,
       stream: false
     }, {
-      timeout: 30000,
+      timeout: providerConfig.timeoutMs,
+      maxRedirects: 0,
       headers: {
         ...providerConfig.headers,
-        Authorization: `Bearer ${providerConfig.apiKey}`,
+        ...(providerConfig.apiKey ? { Authorization: `Bearer ${providerConfig.apiKey}` } : {}),
         'Content-Type': 'application/json'
       }
     });
     const text = response?.data?.choices?.[0]?.message?.content;
-    return text || "I'm sorry, I couldn't generate a response.";
+    if (typeof text !== 'string' || !text.trim()) throw new Error('Empty model response');
+    if (agentId) updateAgentMetrics(agentId, Date.now() - started, true, 0);
+    return text;
   } catch (err) {
     if (agentId) updateAgentMetrics(agentId, 0, false, 0);
-    return `[OLLAMA_ERROR] ${err.message}`;
+    const status = Number(err.response?.status) || 0;
+    const error = new Error(status ? `Provider HTTP ${status}` : 'Provider request failed or timed out');
+    error.retryable = !status || status === 429 || status >= 500;
+    throw error;
   }
 }
 
 async function getEmbeddingFromOpenAICompatible(providerConfig, text) {
-  if (!providerConfig.apiKey || !providerConfig.embeddingModel) return null;
+  if ((providerConfig.requiresApiKey && !providerConfig.apiKey) || !providerConfig.embeddingModel) return null;
   const res = await axios.post(`${providerConfig.baseUrl}/embeddings`, {
     model: providerConfig.embeddingModel,
     input: text.slice(0, 2000)
   }, {
     timeout: 3000,
+    maxRedirects: 0,
     headers: {
       ...providerConfig.headers,
-      Authorization: `Bearer ${providerConfig.apiKey}`,
+      ...(providerConfig.apiKey ? { Authorization: `Bearer ${providerConfig.apiKey}` } : {}),
       'Content-Type': 'application/json'
     }
   });
@@ -3727,12 +3782,15 @@ function createOpenAICompatibleProvider(providerConfig) {
   return {
     name: providerConfig.id,
     displayName: providerConfig.name,
-    configured: Boolean(providerConfig.apiKey),
+    local: providerConfig.local,
+    fallbackModels: providerConfig.fallbackModels,
+    configured: !providerConfig.requiresApiKey || Boolean(providerConfig.apiKey),
     async listModels() {
       return getOpenAICompatibleModels(providerConfig);
     },
     async generate({ model, prompt, systemPrompt = '', temperature = 0.7, agentId = null }) {
-      return generateWithOpenAICompatible(providerConfig, model, prompt, systemPrompt, temperature, agentId);
+      const call = () => generateWithOpenAICompatible(providerConfig, model, prompt, systemPrompt, temperature, agentId);
+      return agentId ? rateLimitedQuery(agentId, call) : call();
     },
     async embed(text) {
       return getEmbeddingFromOpenAICompatible(providerConfig, text);
@@ -3753,6 +3811,8 @@ function resolveLlmProviderForAgent(agentId = null) {
 const llmProviders = {
   ollama: {
     name: 'ollama',
+    local: true,
+    fallbackModels: FALLBACK_MODELS,
     displayName: 'Ollama',
     configured: true,
     async listModels() {
@@ -3795,29 +3855,39 @@ function getNumPredict(model, degraded = false) {
 }
 
 async function queryOllamaWithRetry(model, prompt, systemPrompt = '', temperature = 0.7, agentId = null, retries = 3) {
-  let lastError = null;
-  const provider = resolveLlmProviderForAgent(agentId);
-  for (let attempt = 0; attempt < retries; attempt++) {
-    try {
-      const result = await provider.generate({ model, prompt, systemPrompt, temperature, agentId });
-      if (!result.startsWith('[OLLAMA_ERROR]')) return result;
-      const delay = Math.min(5000, 500 * Math.pow(2, attempt));
-      await new Promise(r => setTimeout(r, delay));
-    } catch (e) {
-      lastError = e;
+  let primary;
+  try { primary = resolveLlmProviderForAgent(agentId); }
+  catch { return '[OLLAMA_ERROR] Unknown provider configuration'; }
+  const policy = config.agentRouting?.[agentId] || {};
+  const routes = [{ provider: primary.name, model }];
+  for (const fallback of primary.fallbackModels || []) {
+    if (fallback !== model) routes.push({ provider: primary.name, model: fallback });
+  }
+  if (policy.fallback) routes.push(policy.fallback);
+  let lastError = 'No permitted route';
+  for (const [index, route] of routes.entries()) {
+    const provider = llmProviders[route.provider];
+    if (!provider || !route.model) { lastError = 'Unknown fallback route'; continue; }
+    if ((policy.localOnly && !provider.local) || (index > 0 && provider.name !== primary.name && !provider.local && policy.allowCloudFallback !== true)) {
+      lastError = 'Cloud route blocked by policy'; continue;
+    }
+    if (!provider.configured) { lastError = 'Provider API key is not configured'; continue; }
+    for (let attempt = 0; attempt < Math.max(1, Math.min(3, retries)); attempt++) {
+      const started = Date.now();
+      try {
+        const result = await provider.generate({ model: route.model, prompt, systemPrompt, temperature, agentId });
+        if (typeof result !== 'string' || !result || result.startsWith('[OLLAMA_ERROR]')) throw new Error('Model generation failed');
+        console.log(JSON.stringify({ event: 'llm_route', agentId, provider: route.provider, model: route.model, fallback: index > 0, attempt, ok: true, durationMs: Date.now() - started }));
+        return result;
+      } catch (error) {
+        lastError = error.retryable === false ? 'Provider rejected the request' : 'Model request failed or timed out';
+        console.log(JSON.stringify({ event: 'llm_route', agentId, provider: route.provider, model: route.model, fallback: index > 0, attempt, ok: false, durationMs: Date.now() - started }));
+        if (error.retryable === false) break;
+        if (attempt + 1 < Math.min(3, retries)) await new Promise(r => setTimeout(r, Math.min(2000, 500 * 2 ** attempt)));
+      }
     }
   }
-  for (const fallback of FALLBACK_MODELS) {
-    if (fallback === model) continue;
-    try {
-      console.log(`[LACK] Falling back to model "${fallback}" for agent ${agentId}`);
-      const result = await provider.generate({ model: fallback, prompt, systemPrompt, temperature, agentId });
-      if (!result.startsWith('[OLLAMA_ERROR]')) {
-        return result;
-      }
-    } catch (e) {}
-  }
-  return `[OLLAMA_ERROR] All models failed. Last error: ${lastError ? lastError.message : 'Unknown'}`;
+  return `[OLLAMA_ERROR] ${lastError}`;
 }
 
 async function queryOllamaEngine(model, prompt, systemPrompt = '', temperature = 0.7, agentId = null) {
@@ -3837,7 +3907,7 @@ async function queryOllamaEngine(model, prompt, systemPrompt = '', temperature =
         const response = await axios.post(`${OLLAMA_URL}/api/generate`, {
           model, prompt, system: systemPrompt, stream: false,
           options: { temperature, num_predict: numPredict }
-        });
+        }, { timeout: LLM_TIMEOUT_MS, maxRedirects: 0 });
         const duration = Date.now() - start;
         const evalCount = response.data.eval_count || 0;
         const tps = duration > 0 ? (evalCount / (duration / 1000)) : 0;
@@ -3877,7 +3947,7 @@ async function queryOllamaEngine(model, prompt, systemPrompt = '', temperature =
         const response = await axios.post(`${OLLAMA_URL}/api/generate`, {
           model, prompt, system: systemPrompt, stream: false,
           options: { temperature, num_predict: numPredict }
-        });
+        }, { timeout: LLM_TIMEOUT_MS, maxRedirects: 0 });
         return response.data.response || "I'm sorry, I couldn't generate a response.";
       } catch (err) {
         if (err.code === 'ECONNREFUSED' || err.code === 'ENOTFOUND') markOllamaDown();
@@ -3894,9 +3964,7 @@ async function queryOllamaEngine(model, prompt, systemPrompt = '', temperature =
 }
 
 async function queryOllama(model, prompt, systemPrompt = '', temperature = 0.7, agentId = null) {
-  const provider = resolveLlmProviderForAgent(agentId);
-  if (!provider || typeof provider.generate !== 'function') return '[OLLAMA_ERROR] Unsupported LLM provider.';
-  return provider.generate({ model, prompt, systemPrompt, temperature, agentId });
+  return queryOllamaWithRetry(model, prompt, systemPrompt, temperature, agentId, 1);
 }
 
 function extractCodeBlocks(text) {
@@ -4237,7 +4305,7 @@ function broadcastAgents() {
     const lastTps = metrics && metrics.tpsHistory.length ? metrics.tpsHistory[metrics.tpsHistory.length-1] : 0;
     const lastJspace = metrics && metrics.jspaceCoherence.length ? metrics.jspaceCoherence[metrics.jspaceCoherence.length-1] : 0;
     return {
-      id: a.id, name: a.name, model: a.model,
+      id: a.id, name: a.name, model: a.model, provider: a.provider,
       systemPrompt: a.systemPrompt, channels: a.channels,
       status: a.status, statusMessage: a.statusMessage,
       strictChannel: a.strictChannel,
@@ -4849,6 +4917,7 @@ function openEditModal(agentId) {
     const res = await fetch(`/api/models?provider=${encodeURIComponent(providerId)}`);
     const data = await res.json();
     const models = data.models || [];
+    if (providerId === agent.provider && agent.model && !models.includes(agent.model)) models.unshift(agent.model);
     populateModelSelect(models);
     const modelSelect = document.getElementById('editAgentModel');
     if (agent.model && models.includes(agent.model)) {
@@ -5488,7 +5557,8 @@ def main():
     print("Generating files...")
     write_file("server.js", SERVER_JS)
     write_file("public/index.html", INDEX_HTML)
-    write_file("config/lack.config.json", CONFIG_JSON)
+    if not Path("config/lack.config.json").exists():
+        write_file("config/lack.config.json", CONFIG_JSON)
     write_file("bin/lack.js", BIN_LACK_JS)
     make_executable("bin/lack.js")
 
@@ -5507,8 +5577,12 @@ def main():
 
     print("Checking Ollama...")
     try:
-        models_data = check_ollama_with_retry()
-        if models_data is not None:
+        with open("config/lack.config.json", encoding="utf-8") as f:
+            startup_config = json.load(f)
+        models_data = check_ollama_with_retry() if startup_config.get("llmProvider", "ollama") == "ollama" else None
+        if startup_config.get("llmProvider", "ollama") != "ollama":
+            print("Cloud default selected; skipping Ollama provisioning.")
+        elif models_data is not None:
             print("✓ Ollama is running.")
             model_names = [m['name'] for m in models_data.get('models', [])]
             with open("config/lack.config.json") as f:

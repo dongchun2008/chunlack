@@ -1,0 +1,8 @@
+**
+!lack.py
+!package.json
+!package-lock.json
+!scripts/
+!scripts/materialize.py
+!deploy/
+!deploy/entrypoint.cjs

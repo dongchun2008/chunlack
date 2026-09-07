@@ -1,0 +1,7 @@
+node_modules/
+.runtime/
+deploy/.env
+deploy/lack.config.json
+deploy/backups/
+__pycache__/
+*.pyc

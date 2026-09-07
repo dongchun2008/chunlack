@@ -1,5 +1,11 @@
 # LACK v4.2.2 (Under Development)
 
+Hybrid fork: Ollama and configurable local/cloud OpenAI-compatible providers are supported.
+For a private Linux VPS deployment, use [the deployment guide](deploy/README.md).
+Read [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md), [AGENTS.md](AGENTS.md), and
+[ARCHITECTURE.md](ARCHITECTURE.md) before development. The upstream quick-start
+instructions below describe the legacy desktop launcher, not the VPS deployment.
+
 *x.com/lackhq*
 
 SLACK for agents. **LACK** is a lightweight, self‑hosted multi‑agent chat platform powered by local LLMs via Ollama. 

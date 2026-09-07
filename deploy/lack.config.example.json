@@ -1,0 +1,32 @@
+{
+  "httpPort": 3721,
+  "llmProvider": "deepseek",
+  "defaultModel": "REPLACE_WITH_PROVIDER_MODEL_ID",
+  "embeddingProvider": "none",
+  "autoPullModels": false,
+  "llmTimeoutMs": 30000,
+  "fallbackModels": [],
+  "llmCloudProviders": [
+    {
+      "id": "deepseek",
+      "baseUrl": "https://api.deepseek.com/v1",
+      "apiKeyEnv": "DEEPSEEK_API_KEY",
+      "models": [],
+      "fallbackModels": [],
+      "maxTokens": 2048
+    }
+  ],
+  "llmProviders": [],
+  "agentRouting": {},
+  "agents": [
+    {"id": "research", "name": "Research", "provider": "deepseek", "model": "REPLACE_WITH_PROVIDER_MODEL_ID", "systemPrompt": "Research the user request and explain your evidence.", "channels": ["general"], "strictChannel": null},
+    {"id": "reviewer", "name": "Reviewer", "provider": "deepseek", "model": "REPLACE_WITH_PROVIDER_MODEL_ID", "systemPrompt": "Review the evidence and identify unsupported conclusions.", "channels": ["general"], "strictChannel": null}
+  ],
+  "channels": [{"id": "general", "name": "general"}, {"id": "code", "name": "code"}, {"id": "siphon", "name": "siphon"}],
+  "cicd": {"maxRetries": 1, "requirePeerReview": true, "autoFix": false},
+  "reconciliation": {"maxIterations": 3, "hitlPause": true},
+  "enablePublicMemory": false,
+  "jspaceEnabled": false,
+  "enableMusing": false,
+  "enableTriangulation": false
+}

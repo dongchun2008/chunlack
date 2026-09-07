@@ -1,0 +1,50 @@
+name: chunlack
+services:
+  lack:
+    image: chunlack:${LACK_IMAGE_TAG:-local}
+    build:
+      context: ..
+      dockerfile: Dockerfile
+    init: true
+    restart: unless-stopped
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    pids_limit: 128
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    mem_limit: ${LACK_MEMORY_LIMIT:-1g}
+    cpus: ${LACK_CPUS:-1.0}
+    ports:
+      - "127.0.0.1:${LACK_PORT:-3721}:3721"
+    env_file:
+      - .env
+    environment:
+      LACK_ALLOW_SHELL: "false"
+      LACK_BIND_HOST: "0.0.0.0"
+    volumes:
+      - data:/data
+      - type: bind
+        source: ./lack.config.json
+        target: /run/lack-seed.json
+        read_only: true
+        bind:
+          create_host_path: false
+    tmpfs:
+      - /tmp:size=128m,mode=1777
+    healthcheck:
+      test: [CMD, node, -e, "fetch('http://127.0.0.1:3721/health',{signal:AbortSignal.timeout(3000)}).then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    stop_grace_period: 30s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+volumes:
+  data:
+    name: ${LACK_DATA_VOLUME:-chunlack_data}
