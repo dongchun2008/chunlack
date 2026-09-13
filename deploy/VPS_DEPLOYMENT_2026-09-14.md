@@ -31,7 +31,8 @@ separately; the deployed application revision remains the one above.
   After owner approval, corrected code to root-owned/group-readable and directories
   group-searchable. Config remains mode 600 and data root mode 700. Startup passed.
 - Only `127.0.0.1:3721` is listening for the application. No firewall, Tailscale,
-  SSH, DNS or existing service configuration was changed. No public exposure.
+  SSH, DNS or existing service configuration was changed. No public listener
+  was configured.
 
 ## Verification results
 
@@ -59,6 +60,19 @@ separately; the deployed application revision remains the one above.
 The first disposable test-client attempt connected before its service was ready
 and failed ECONNREFUSED. Re-running after explicit HTTP readiness passed. This is
 recorded separately from the genuine history-restoration failure.
+
+### External access check
+
+The operator-side TCP probe reported a connection to public port 3721, but a
+direct HTTP request timed out after five seconds with zero received bytes.
+The stopped test port 3722 exhibited the same TCP behavior and HTTP timeout.
+Therefore a TCP connect result from this network cannot establish application
+reachability; an intermediary is possible but was not identified. On the VPS,
+3721 listens only on loopback, 3722 has no listener, the private-interface HTTP
+connection is refused, both inspected route_localnet settings are zero and the
+IPv4 NAT table has no inbound forwarding rule. SSH-tunneled HTTP and the browser
+both work. No public HTTP access to LACK was demonstrated; this is not an
+independent multi-network penetration test.
 
 ## History-restoration defect
 
