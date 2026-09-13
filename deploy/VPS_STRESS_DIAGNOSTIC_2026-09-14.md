@@ -1,5 +1,9 @@
 # First pressure-test diagnostic: capacity conclusion withheld
 
+Historical first attempt. The owner subsequently approved the corrected test;
+see [the completed second-run report](VPS_PRESSURE_VERIFICATION_2026-09-14.md).
+The invalid first attempt below is retained as evidence, not used for sizing.
+
 ## Status
 
 The initial pressure test was stopped safely. It does NOT establish a sustainable
