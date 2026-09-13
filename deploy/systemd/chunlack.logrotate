@@ -1,0 +1,10 @@
+/var/lib/chunlack/logs/*.log {
+    su chunlack chunlack
+    daily
+    maxsize 10M
+    rotate 3
+    compress
+    missingok
+    notifempty
+    copytruncate
+}
