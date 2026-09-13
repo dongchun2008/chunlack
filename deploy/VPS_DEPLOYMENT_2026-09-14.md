@@ -41,7 +41,7 @@ separately; the deployed application revision remains the one above.
 | Provider/routing/tool regression suite | PASS, 15/15 on the VPS |
 | Existing real HTTP/WebSocket smoke test | PASS, two synthetic providers and Agent SQLite persistence |
 | Isolated service startup and health | PASS |
-| Browser via local SSH tunnel | PASS, LACK v4.2.2 and CONNECTED, zero production Agents |
+| Browser via local SSH tunnel | PASS, LACK v4.2.2 and CONNECTED; built-in Moderator visible after initialization, no configured worker Agents |
 | Dedicated fixture, five synthetic Agents | PASS, five provider routes and replies, shared prior response context |
 | Five WebSocket clients | PASS |
 | 100 HTTP health requests, concurrency five | PASS; measured batch 106 ms, not a production benchmark |
@@ -110,7 +110,8 @@ that earlier host OOM causes have been permanently eliminated.
 ## Operator handoff
 
 See `systemd/README.md` for paths, access, limits, rollback and repeatable testing.
-Production is intentionally a zero-Agent, no-real-provider standby. The absent
+Production is intentionally a no-worker-Agent, no-real-provider standby; the
+application's built-in Moderator still appears in the UI. The absent
 Ollama endpoint produces an expected startup discovery warning. Embeddings and
 auto-pull remain disabled. Configure model endpoints/secrets separately, fix the
 history defect, and then validate real collaboration before important workloads.

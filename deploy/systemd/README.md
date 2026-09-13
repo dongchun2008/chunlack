@@ -84,8 +84,10 @@ journalctl -u chunlack --since '10 minutes ago'
 ```
 
 No public port, reverse proxy, API credentials or real model was configured.
-The live config intentionally has zero Agents, embeddings disabled and model
-auto-pull disabled. The dormant Ollama default is retained for compatibility;
+The live config intentionally has zero configured worker Agents, embeddings
+disabled and model auto-pull disabled. The application still creates its built-in
+Moderator, which appears in the UI after initialization. The dormant Ollama
+default is retained for compatibility;
 its startup discovery reports ECONNREFUSED because there is no local Ollama.
 This warning does not mean a working model backend exists. Configure approved
 providers and Agents separately before real workloads. Codex/OpenClaw connectors
