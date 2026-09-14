@@ -30,10 +30,11 @@ are unchanged. The Studio label is a presentation name, not a backend upgrade.
 
 ## Delivery status
 
-Source changes only. No production files, data, services or Tailscale settings
-were changed. No tests, browser validation or VPS deployment were performed as
-part of this visual-edit request. Existing history restoration and admission
-control limitations are not fixed by this change.
+The initial visual-edit request delivered source only. After the user's explicit
+approval, release `6c37342` was tested and deployed on 2026-09-14. See
+[the release acceptance record](UI_STUDIO_RELEASE_2026-09-14.md) for measured
+results, test limitations, backup and rollback information. Existing history
+restoration and admission-control limitations are not fixed by this change.
 
 ## Next approval-gated acceptance and release
 
@@ -46,4 +47,4 @@ control limitations are not fixed by this change.
    retain rollback. Verify LACK and the unchanged Tailscale relay afterward.
 
 Do not run the legacy installer or overwrite the live VPS configuration to
-publish this UI. Until an approved release, the VPS continues to serve its old UI.
+publish this UI. Future releases must repeat the backup and acceptance process.
