@@ -4343,7 +4343,7 @@ function broadcastRalphStatus(storeId) {
 # HTML Frontend (unchanged, but slash suggestions include /bash and new commands)
 # ----------------------------------------------------------------------
 INDEX_HTML = r'''<!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -4439,34 +4439,254 @@ INDEX_HTML = r'''<!DOCTYPE html>
     .graph-label { display: flex; align-items: center; gap: 4px; }
     .graph-label .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; }
     .graph-label .spike { background: #ff0000; width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-left: 4px; }
+    /* LACK Studio: presentation only; retain the existing interaction hooks. */
+    :root {
+      --white: #fffefb; --off-white: #faf7ee; --light-gray: #e5e0d3;
+      --gray: #8a887e; --dark-gray: #68675f; --black: #23251f;
+      --accent: #f5dc49; --pink: #eea0b9; --blue: #9ed7e5;
+      --ink: #23251f; --line: #dcd8cb; --shadow-dark: rgba(35,37,31,.14);
+      --ui-font: 'Bahnschrift', 'DIN Alternate', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    }
+    .dark-mode {
+      --white: #242722; --off-white: #1c1f1b; --light-gray: #41463c;
+      --gray: #a2a997; --dark-gray: #bcc1b3; --black: #f4f1e6;
+      --line: #454a3f; --shadow-dark: rgba(0,0,0,.3);
+    }
+    body { font-family: var(--ui-font); height: 100dvh; background: var(--off-white); -webkit-font-smoothing: antialiased; }
+    button, input, textarea, select { font: inherit; }
+    button { color: var(--black); cursor: pointer; }
+    button:focus-visible, summary:focus-visible, textarea:focus-visible, input:focus-visible, select:focus-visible, label:focus-within { outline: 3px solid #368da5; outline-offset: 3px; }
+    button:disabled { opacity: .5; cursor: not-allowed; }
+    ::selection { background: #f5dc49; color: #23251f; }
+    .neuro-menu { height: 72px; padding: 0 28px; gap: 16px; flex-wrap: nowrap; background: var(--accent); color: var(--ink); border-bottom: 2px solid var(--ink); z-index: 3000; }
+    .brand { display: flex; align-items: center; gap: 13px; min-width: 0; }
+    .brand-mark { width: 35px; height: 35px; display: grid; place-items: center; border: 2px solid var(--ink); background: var(--ink); color: var(--accent); font-size: 25px; font-weight: 900; box-shadow: 3px 3px 0 #fffefb; transform: rotate(-5deg); }
+    .brand-name { font-size: 26px; letter-spacing: -1px; font-weight: 900; line-height: 1; }
+    .brand-caption { border-left: 1px solid #9c8d36; margin-left: 8px; padding-left: 20px; font-size: 12px; letter-spacing: .08em; }
+    .neuro-status { gap: 12px; flex-wrap: nowrap; font-size: 12px; }
+    #agentCount { font-variant-numeric: tabular-nums; }
+    .top-btn, .ground-btn, .moderator-btn, .cron-btn, .dark-mode-toggle, .studio-button { border: 1.5px solid var(--ink); border-radius: 3px; padding: 9px 14px; font-size: 12px; font-weight: 600; background: #fffefb; color: var(--ink); }
+    .top-btn:hover, .ground-btn:hover, .studio-button:hover { box-shadow: 2px 2px 0 var(--ink); }
+    #groundBtn { background: var(--pink); box-shadow: 3px 3px 0 var(--ink); }
+    #groundBtn:active, .studio-primary:active { transform: translate(2px,2px); box-shadow: none; }
+    .dark-mode-toggle { width: 36px; height: 36px; padding: 0; font-size: 20px; }
+    .management-menu { position: relative; }
+    .management-menu summary { cursor: pointer; font-size: 12px; padding: 10px; list-style: none; font-weight: 600; }
+    .management-menu summary::-webkit-details-marker { display: none; }
+    .management-menu summary::after { content: ' +'; }
+    .management-menu[open] summary::after { content: ' -'; }
+    .management-popover { position: absolute; right: 0; top: calc(100% + 12px); width: 224px; padding: 14px; display: grid; gap: 9px; background: var(--white); border: 1px solid var(--black); box-shadow: 4px 4px 0 var(--shadow-dark); color: var(--black); }
+    .management-popover button { text-align: left; }
+    .management-popover small { color: var(--dark-gray); font-size: 11px; line-height: 1.6; }
+    .moderator-btn.on { background: #e3ecd5; border-color: #61764c; color: #34452a; }
+    .moderator-btn.off { background: #f6e2d1; border-color: #b38863; color: #704a2c; }
+    .cron-btn { background: #fff0ed; border-color: #cfa79e; color: #943e32; }
+    .ralph-badge { background: var(--blue); color: var(--ink); border-radius: 3px; }
+    .neuro-desktop { top: 72px; bottom: 30px; padding: 22px 26px; background: radial-gradient(circle, var(--line) .7px, transparent .8px) 0 0 / 16px 16px; }
+    .chat-container { border: 1px solid var(--black); border-radius: 5px; box-shadow: 5px 5px 0 var(--shadow-dark); }
+    .workspace-rail { width: 244px; flex-shrink: 0; display: flex; flex-direction: column; min-height: 0; background: var(--off-white); border-right: 1px solid var(--line); }
+    .workspace-caption { padding: 25px 22px 20px; border-bottom: 1px solid var(--line); }
+    .eyebrow { font-size: 10px; letter-spacing: .16em; font-weight: 600; color: var(--dark-gray); }
+    .workspace-caption h2 { font-size: 18px; margin: 11px 0 18px; font-weight: 600; }
+    .workspace-caption .studio-button { width: 100%; text-align: left; background: var(--white); color: var(--black); border-color: var(--line); padding: 10px 12px; }
+    .workspace-caption .studio-button span { float: right; }
+    .sidebar { width: 100%; min-width: 0; max-width: none; flex: 1; border: 0; background: transparent; padding: 12px 10px; }
+    .sidebar-section { border-bottom: 0; margin-bottom: 16px; }
+    .sidebar-header { padding: 10px 12px; background: transparent; color: var(--dark-gray); letter-spacing: .1em; font-size: 10px; }
+    .channel-list { padding: 0; }
+    .channel-item, .agent-item, .research-item { border-radius: 4px; font-size: 13px; padding: 11px 12px; margin: 3px 0; gap: 9px; }
+    .channel-item:hover, .agent-item:hover, .research-item:hover { background: var(--light-gray); }
+    .channel-item.active { background: var(--accent); color: var(--ink); border-color: var(--ink); }
+    .agent-info { min-width: 0; overflow-wrap: anywhere; }
+    .remove-agent { padding: 4px; color: #ac594b; }
+    .rail-footer { padding: 17px 22px; border-top: 1px solid var(--line); color: var(--dark-gray); font-size: 11px; line-height: 1.8; }
+    .rail-footer strong { display: block; color: var(--black); font-weight: 500; }
+    .main-chat { min-height: 0; }
+    .chat-heading { min-height: 73px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 28px; border-bottom: 1px solid var(--line); }
+    .chat-header { padding: 0; border: 0; font-size: 17px; letter-spacing: -.02em; }
+    .chat-subtitle { font-size: 11px; color: var(--dark-gray); margin-top: 5px; }
+    .quiet-button { border: 0; background: transparent; color: var(--dark-gray); padding: 8px; font-size: 12px; white-space: nowrap; }
+    .quiet-button:hover { color: var(--black); text-decoration: underline; }
+    .messages-area { background: var(--white); padding: 24px 30px; gap: 15px; min-height: 0; }
+    .message-group { width: 100%; max-width: 920px; margin: 0 auto; }
+    .message { gap: 14px; padding: 10px 0; }
+    .message-avatar { width: 34px; height: 34px; border: 1px solid var(--ink); border-radius: 3px; background: var(--blue); color: var(--ink); font-size: 13px; box-shadow: 2px 2px 0 var(--shadow-dark); }
+    .message-group:nth-child(3n + 2) .message-avatar { background: var(--pink); }
+    .message-group:nth-child(3n) .message-avatar { background: var(--accent); }
+    .message-sender { font-size: 13px; margin-bottom: 6px; }
+    .message-timestamp { margin-left: 10px; font-size: 10px; font-weight: 400; }
+    .message-text { font-size: 14px; line-height: 1.85; white-space: pre-wrap; }
+    .message-text pre { background: #242922; color: #e5ebda; padding: 16px; border-radius: 4px; font: 12px/1.7 'Cascadia Code', 'SFMono-Regular', Consolas, monospace; white-space: pre; }
+    .message-actions { min-height: 25px; }
+    .message:focus-within .message-actions { display: flex; }
+    .action-icon { border-radius: 3px; padding: 5px 7px; color: var(--dark-gray); }
+    .siphon-research { border-left-color: #61a7b7; background: #9ed7e516; padding-left: 12px; }
+    .reflection-message { border-left-color: #96a875; background: #96a87514; padding-left: 12px; }
+    .welcome-panel { display: none; flex: 1; min-height: 0; overflow-y: auto; padding: 35px 28px; align-items: center; justify-content: center; background: radial-gradient(ellipse at 50% 25%, #f5dc4910, transparent 70%), var(--white); }
+    .main-chat:has(.messages-area:empty) .welcome-panel { display: flex; }
+    .main-chat:has(.messages-area:empty) .messages-area { display: none; }
+    .welcome-inner { width: 100%; max-width: 650px; margin: auto; }
+    .welcome-art { display: flex; align-items: center; gap: 10px; margin-bottom: 27px; }
+    .pixel-tile { display: grid; grid-template-columns: repeat(3, 7px); grid-template-rows: repeat(3, 7px); gap: 3px; padding: 10px; border: 2px solid var(--ink); background: var(--accent); box-shadow: 3px 3px 0 var(--shadow-dark); transform: rotate(-6deg); }
+    .pixel-tile i { background: var(--ink); }
+    .pixel-tile i:nth-child(2), .pixel-tile i:nth-child(5), .pixel-tile i:nth-child(8) { background: transparent; }
+    .pixel-tile.second { background: var(--blue); transform: rotate(6deg); margin-left: 2px; }
+    .pixel-tile.second i:nth-child(odd) { background: transparent; }
+    .pixel-tile.second i:nth-child(even) { background: var(--ink); }
+    .art-connector { height: 1px; width: 28px; background: var(--line); }
+    .welcome-inner h1 { margin: 12px 0 16px; font-size: clamp(27px, 3.2vw, 44px); line-height: 1.35; font-weight: 750; letter-spacing: -.045em; }
+    .welcome-inner h1 span { box-shadow: inset 0 -.28em 0 #f5dc4970; }
+    .welcome-copy { color: var(--dark-gray); font-size: 13px; line-height: 1.9; max-width: 500px; }
+    .starter-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 28px; }
+    .starter-card { padding: 16px; text-align: left; background: var(--white); border: 1px solid var(--line); border-radius: 4px; color: var(--black); }
+    .starter-card:hover { border-color: var(--black); box-shadow: 3px 3px 0 var(--shadow-dark); }
+    .starter-card .card-number { font-size: 10px; color: var(--dark-gray); }
+    .starter-card strong { display: block; font-size: 13px; margin: 12px 0 7px; font-weight: 600; }
+    .starter-card small { font-size: 11px; line-height: 1.7; color: var(--dark-gray); }
+    .welcome-note { margin-top: 20px; font-size: 11px; line-height: 1.8; color: var(--dark-gray); }
+    .composer-shell { padding: 14px 28px 12px; background: var(--white); }
+    .input-area { border: 1px solid var(--line); border-radius: 6px; padding: 13px 14px; gap: 10px; align-items: center; flex-wrap: wrap; box-shadow: 0 3px 12px #23251f05; }
+    .input-area:focus-within { border-color: var(--black); }
+    .input-area textarea { border: 0; padding: 7px 2px; background: transparent; font-family: var(--ui-font); font-size: 13px; line-height: 1.65; resize: none; min-width: 90px; max-height: 200px; color: var(--black); }
+    .input-area textarea:focus { outline: none; }
+    .input-area:has(textarea:focus-visible) { outline: 2px solid #368da5; outline-offset: 2px; }
+    .input-area button { background: var(--accent); color: var(--ink); border: 1px solid var(--ink); border-radius: 3px; padding: 9px 17px; font-size: 12px; box-shadow: 2px 2px 0 var(--ink); }
+    .file-upload-btn { font-size: 19px; padding: 7px; flex-shrink: 0; }
+    #filePreview:empty { display: none !important; }
+    #filePreview:not(:empty) { order: -1; width: 100%; overflow-wrap: anywhere; }
+    .composer-hint { padding-top: 9px; color: var(--dark-gray); font-size: 10px; display: flex; justify-content: space-between; gap: 12px; }
+    .thread-panel { width: 330px; max-width: 45%; border-left: 1px solid var(--line); min-height: 0; }
+    .thread-header { padding: 22px 18px; border-bottom: 1px solid var(--line); font-size: 13px; }
+    .thread-input textarea { font-family: var(--ui-font); background: var(--off-white); color: var(--black); border: 1px solid var(--line); border-radius: 4px; }
+    .thread-input button, .modal-buttons button, .agent-detail-popup button { border: 1px solid var(--black); border-radius: 3px; padding: 8px 16px; background: var(--white); color: var(--black); }
+    .modal { background: #171c1966; backdrop-filter: blur(3px); }
+    .modal-content { border: 1px solid var(--black); border-radius: 5px; box-shadow: 6px 6px 0 var(--shadow-dark); margin: 5vh auto; max-height: 88dvh; padding: 28px; font-size: 13px; }
+    .modal-content h3 { margin-bottom: 20px; font-size: 18px; }
+    .modal-content label { color: var(--dark-gray); font-size: 12px; }
+    .modal-content input, .modal-content select, .modal-content textarea { border: 1px solid var(--line); border-radius: 3px; padding: 10px; background: var(--off-white); color: var(--black); margin: 7px 0 16px; }
+    #saveAgentBtn { background: var(--accent); color: var(--ink); }
+    #removeAgentBtn { color: #af584a; border-color: #cfa79e; }
+    .agent-detail-popup { border: 1px solid var(--black); border-radius: 5px; box-shadow: 5px 5px 0 var(--shadow-dark); font-size: 13px; line-height: 1.9; }
+    .file-tree a { color: #38829a; }
+    .slash-suggestions { min-width: 190px; border: 1px solid var(--line); border-radius: 4px; padding: 8px; max-height: 220px; box-shadow: 3px 3px 0 var(--shadow-dark); }
+    .slash-suggestions li { font-size: 12px; padding: 7px 10px; }
+    .slash-suggestions li:hover { background: var(--off-white); }
+    .bottom-bar { min-height: 30px; padding: 8px 28px; font-size: 10px; color: var(--dark-gray); border-color: var(--line); z-index: 2500; }
+    #statusText { letter-spacing: .07em; font-size: 9px; font-weight: 600; }
+    .agent-thinking-overlay { bottom: 39px; background: var(--ink); color: #f5dc49; border-radius: 4px; }
+    .toast { bottom: 45px; border-radius: 4px; }
+    .sidebar-toggle { display: none; }
+    .welcome-inner { animation: studio-arrive .4s ease-out both; }
+    @keyframes studio-arrive { from { opacity: 0; transform: translateY(9px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 1000px) {
+      .brand-caption { display: none; }
+      .neuro-desktop { padding: 14px; }
+      .workspace-rail { width: 210px; }
+      .chat-heading, .messages-area { padding-left: 20px; padding-right: 20px; }
+      .composer-shell { padding: 12px 20px; }
+      .welcome-panel { padding: 25px 22px; }
+      .starter-grid { gap: 8px; }
+      .starter-card { padding: 12px; }
+    }
+    @media (max-width: 700px) {
+      .neuro-menu { height: 62px; padding: 0 14px; gap: 8px; }
+      .brand { gap: 9px; }
+      .brand-name { font-size: 22px; }
+      .brand-mark { width: 28px; height: 28px; font-size: 20px; }
+      .neuro-status { gap: 7px; }
+      #agentCount, .ralph-badge { display: none !important; }
+      #groundBtn { padding: 8px 10px; font-size: 11px; }
+      .management-menu summary { padding: 7px; }
+      .neuro-desktop { top: 62px; padding: 0; bottom: 28px; }
+      .chat-container { border: 0; border-radius: 0; box-shadow: none; }
+      .workspace-rail { display: none; position: absolute; top: 0; bottom: 0; left: 0; width: min(280px, 86vw); z-index: 2200; border-right: 1px solid var(--black); box-shadow: 8px 0 18px #0002; }
+      .sidebar-open .workspace-rail { display: flex; }
+      .sidebar-toggle { display: inline-block; }
+      .chat-heading { padding: 13px 16px; min-height: 67px; gap: 8px; }
+      .chat-heading > div { margin-right: auto; min-width: 0; overflow-wrap: anywhere; }
+      .chat-header { font-size: 15px; }
+      .chat-subtitle { font-size: 10px; }
+      .messages-area { padding: 16px; }
+      .message-text { font-size: 13px; }
+      .message-actions { display: flex; }
+      .welcome-panel { padding: 26px 20px; }
+      .welcome-art { margin-bottom: 20px; }
+      .welcome-inner h1 { font-size: 30px; }
+      .starter-grid { grid-template-columns: 1fr; margin-top: 20px; }
+      .starter-card { display: grid; grid-template-columns: 23px 1fr; gap: 4px 10px; padding: 12px; }
+      .starter-card .card-number { grid-row: span 2; padding-top: 2px; }
+      .starter-card strong { margin: 0; }
+      .composer-shell { padding: 10px 12px; }
+      .composer-hint { font-size: 9px; }
+      .composer-hint span:last-child { display: none; }
+      .input-area { padding: 9px; gap: 6px; }
+      .input-area button { padding: 8px 12px; }
+      .thread-panel.open { top: 62px; bottom: 28px; width: 94%; max-width: 420px; z-index: 2400; }
+      .bottom-bar { padding: 7px 14px; min-height: 28px; font-size: 9px; }
+      .modal-content { padding: 22px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+    }
   </style>
 </head>
 <body>
 <div class="neuro-menu">
-  <div class="menu-item">LACK v4.2.2</div>
+  <div class="brand"><span class="brand-mark" aria-hidden="true">L</span><span class="brand-name">LACK</span><span class="brand-caption">人与 AGENT 的协作空间</span></div>
   <div class="neuro-status">
     <span id="agentCount">Agents: 0</span>
     <span id="ralphStatusBadge" class="ralph-badge">🧬 Ralph active</span>
-    <button class="top-btn" id="treeBtn">🌳 Tree</button>
-    <button class="ground-btn" id="groundBtn">🌍 GROUND</button>
-    <button class="ground-btn" id="graphBtn">📈 GRAPH</button>
-    <button class="moderator-btn off" id="moderatorBtn">🔧 Moderator OFF</button>
-    <button class="cron-btn" id="cronBtn">💣 CRON</button>
-    <div class="dark-mode-toggle" id="darkModeToggle">🌓</div>
+    <button class="ground-btn" id="groundBtn" title="调用当前频道的 Agent，可能产生模型费用">发起协作 &nearr;</button>
+    <details class="management-menu">
+      <summary>工作台</summary>
+      <div class="management-popover">
+        <button class="top-btn" id="treeBtn">项目文件</button>
+        <button class="ground-btn" id="graphBtn">运行图表</button>
+        <button class="moderator-btn off" id="moderatorBtn">Moderator OFF</button>
+        <button class="cron-btn" id="cronBtn">重置数据 / CRON</button>
+        <small>重置操作会清除数据，请谨慎使用。</small>
+      </div>
+    </details>
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="切换明暗主题" title="切换明暗主题">&#9680;</button>
   </div>
 </div>
 <div class="neuro-desktop">
   <div class="chat-container">
-    <div class="sidebar" id="sidebar"></div>
+    <aside class="workspace-rail" aria-label="频道与 Agent 导航">
+      <div class="workspace-caption"><div class="eyebrow">YOUR WORKSPACE / 01</div><h2>我的协作空间</h2><button class="studio-button" id="studioSpawnBtn">添加 Agent <span aria-hidden="true">+</span></button></div>
+      <div class="sidebar" id="sidebar"></div>
+      <div class="rail-footer"><strong>不同模型，同一个团队。</strong>通过频道共享上下文与想法。</div>
+    </aside>
     <div class="main-chat">
-      <div class="chat-header" id="currentChatName">#general</div>
+      <div class="chat-heading">
+        <button class="quiet-button sidebar-toggle" id="sidebarToggle" aria-controls="workspaceRail" aria-expanded="false" aria-label="打开或关闭频道导航">&#9776;</button>
+        <div><div class="chat-header" id="currentChatName">#general</div><p class="chat-subtitle">交流想法，让协作发生。</p></div>
+        <button class="quiet-button" data-draft="/help">命令帮助 &nearr;</button>
+      </div>
+      <section class="welcome-panel" aria-label="开始协作">
+        <div class="welcome-inner">
+          <div class="welcome-art" aria-hidden="true"><span class="pixel-tile"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="art-connector"></span><span class="pixel-tile second"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+          <div class="eyebrow">A SPACE FOR YOUR NEXT IDEA</div>
+          <h1>一起把想法，<br>变成<span>值得交付的成果。</span></h1>
+          <p class="welcome-copy">为 Agent 分配不同角色，在同一个频道交换观点。<br>由你提出目标，让团队从一次清晰的讨论开始。</p>
+          <div class="starter-grid">
+            <button class="starter-card" data-draft="请围绕以下主题展开讨论，各自提出观点与依据，最后列出分歧。仅讨论，不执行工具。主题："><span class="card-number">01 /</span><strong>讨论一个想法 &nearr;</strong><small>多一种视角，少一个盲点。</small></button>
+            <button class="starter-card" data-draft="请把以下目标拆解为可执行步骤，标注依赖、风险和验收标准。本轮只输出计划，不执行工具。目标："><span class="card-number">02 /</span><strong>拆解一项任务 &nearr;</strong><small>把模糊目标变成具体步骤。</small></button>
+            <button class="starter-card" data-draft="请审查以下方案，指出缺失信息、风险和改进建议。仅讨论，不执行工具。方案："><span class="card-number">03 /</span><strong>找一位审查伙伴 &nearr;</strong><small>在执行之前，先问好问题。</small></button>
+          </div>
+          <p class="welcome-note">当前暂无可显示的消息。首次使用请先配置模型服务并添加 Agent。<br>点击上方卡片只会填入草稿，发送后才会提交任务。</p>
+        </div>
+      </section>
       <div class="messages-area" id="messagesArea"></div>
+      <div class="composer-shell">
       <div class="input-area">
-        <label class="file-upload-btn"><i class="fas fa-paperclip"></i><input type="file" id="fileInput" style="display:none" accept=".txt,.md,.json,.csv,.log,.py,.js,.html,.css"></label>
+        <label class="file-upload-btn" title="添加文本附件"><span aria-hidden="true">+</span><input type="file" id="fileInput" aria-label="添加文本附件" style="display:none" accept=".txt,.md,.json,.csv,.log,.py,.js,.html,.css"></label>
         <div id="filePreview" style="display:flex; align-items:center; gap:4px;"></div>
-        <textarea id="messageInput" rows="1" placeholder="Type /help ..."></textarea>
-        <button id="sendBtn">SEND</button>
+        <textarea id="messageInput" rows="1" aria-label="消息或任务" placeholder="描述你的想法或任务，输入 / 查看命令…"></textarea>
+        <button id="sendBtn">发送 &uarr;</button>
         <div id="uploadSpinner" class="spinner" style="display:none;"></div>
+      </div>
+      <div class="composer-hint"><span>Enter 发送 · Shift + Enter 换行</span><span>发送前，请确认参与频道的 Agent 与模型。</span></div>
       </div>
     </div>
     <div class="thread-panel" id="threadPanel">
@@ -4476,7 +4696,7 @@ INDEX_HTML = r'''<!DOCTYPE html>
     </div>
   </div>
 </div>
-<div class="bottom-bar"><span>LACK · Musing & Triangulation · Real‑time graph | /bash in #general</span><span id="statusText">CONNECTED</span></div>
+<div class="bottom-bar"><span>LACK STUDIO / v4.2.2 · 混合模型协作工作台</span><span id="statusText" role="status" aria-live="polite">CONNECTING</span></div>
 <div id="agentThinkingToast" class="agent-thinking-overlay" style="display:none;"><i class="fas fa-spinner fa-pulse"></i> Agent is thinking...</div>
 
 <div id="agentModal" class="modal"><div class="modal-content"><h3>Agent Details & Edit</h3><input type="text" id="editAgentId" hidden><label>Name:</label><input type="text" id="editAgentName"><label>LLM Provider:</label><select id="editAgentProvider"></select><label>Model:</label><select id="editAgentModel"></select><label>System Prompt:</label><textarea id="editAgentPrompt" rows="3"></textarea><label>Channels (comma):</label><input type="text" id="editAgentChannels"><label>Strict Channel (optional):</label><input type="text" id="editAgentStrictChannel" placeholder="Leave empty for all"><div class="modal-buttons"><button id="removeAgentBtn">Remove Agent</button><button id="saveAgentBtn">Save</button><button id="closeModalBtn">Cancel</button></div></div></div>
@@ -4586,6 +4806,7 @@ function initGraphWorker() {
 function init() {
   connect();
   loadLlmProviders();
+  initStudioControls();
   document.getElementById('sendBtn').onclick = sendMessage;
   document.getElementById('messageInput').onkeypress = e => { if(e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } };
   document.getElementById('messageInput').addEventListener('input', autoGrow);
@@ -4655,6 +4876,42 @@ function init() {
   }, 500);
 
   initGraphWorker();
+}
+
+function initStudioControls() {
+  const rail = document.querySelector('.workspace-rail');
+  rail.id = 'workspaceRail';
+  const toggle = document.getElementById('sidebarToggle');
+  const setNavigation = open => {
+    document.body.classList.toggle('sidebar-open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+  toggle.onclick = () => setNavigation(!document.body.classList.contains('sidebar-open'));
+  document.getElementById('sidebar').addEventListener('click', event => {
+    if (event.target.closest('.channel-item, .agent-item, .research-item')) setNavigation(false);
+  });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') {
+      setNavigation(false);
+      document.querySelector('.management-menu').open = false;
+    }
+  });
+  document.querySelectorAll('[data-draft]').forEach(button => {
+    button.onclick = () => {
+      const input = document.getElementById('messageInput');
+      if (input.value.trim() && !confirm('替换当前未发送的草稿？')) return;
+      input.value = button.dataset.draft;
+      input.focus();
+      autoGrow();
+    };
+  });
+  document.getElementById('studioSpawnBtn').onclick = () => {
+    if (!ws || ws.readyState !== WebSocket.OPEN) {
+      showToast('尚未连接服务，请稍后再试。', 'error');
+      return;
+    }
+    handleSpawn().catch(() => showToast('无法添加 Agent，请检查模型服务配置。', 'error'));
+  };
 }
 
 function readFileAsBase64(file) {
@@ -4990,7 +5247,7 @@ function updateModeratorButton() {
     const on = mod.isCodeModerator;
     btn.classList.remove('on', 'off');
     btn.classList.add(on ? 'on' : 'off');
-    btn.innerText = on ? '🔧 Moderator ON' : '🔧 Moderator OFF';
+    btn.innerText = on ? 'Moderator ON' : 'Moderator OFF';
     moderatorState = on;
   }
 }
