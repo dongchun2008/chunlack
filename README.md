@@ -2,6 +2,7 @@
 
 Hybrid fork: Ollama and configurable local/cloud OpenAI-compatible providers are supported.
 For a private Linux VPS deployment, use [the deployment guide](deploy/README.md).
+For the deployed Studio interface, start with the [Chinese user guide / 中文使用手册](docs/USER_GUIDE.zh-CN.md).
 Read [PROJECT_CONTEXT.md](PROJECT_CONTEXT.md), [AGENTS.md](AGENTS.md), and
 [ARCHITECTURE.md](ARCHITECTURE.md) before development. The upstream quick-start
 instructions below describe the legacy desktop launcher, not the VPS deployment.
