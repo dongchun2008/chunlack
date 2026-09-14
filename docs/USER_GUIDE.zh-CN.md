@@ -58,7 +58,7 @@ VPS 上运行的 LACK
 Windows 打开 PowerShell，Mac 打开终端。将下方 `VPS_HOST` 替换为你的 VPS 地址，然后执行：
 
 ```bash
-ssh -N -L 13721:127.0.0.1:3721 -o ExitOnForwardFailure=yes -p 22 root@VPS_HOST
+ssh -N -L 13721:127.0.0.1:3721 -o ExitOnForwardFailure=yes -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -p 22 root@VPS_HOST
 ```
 
 1. 首次连接如出现主机指纹提示，先与服务器的可信记录核对。
@@ -68,6 +68,8 @@ ssh -N -L 13721:127.0.0.1:3721 -o ExitOnForwardFailure=yes -p 22 root@VPS_HOST
 5. 在执行命令的同一台电脑打开 [LACK 页面](http://127.0.0.1:13721/)。
 
 如果已由 Codex 建立隧道，可以直接打开页面，无需再开一条同端口隧道。隧道断开后需要重新连接。
+
+日常使用建议在自己的 PowerShell 或终端中保持这条命令运行，不要只依赖临时的助手连接。关闭终端、电脑休眠或网络中断可能导致隧道失效；浏览器仍可能显示已经加载的界面，但新的文件树和聊天请求会失败。上述保活参数用于探测连接，不会在进程退出后自动重连。
 
 每台 Windows/Mac 都要建立自己的隧道。手机不能使用另一台电脑的 `127.0.0.1`；手机直连需要另行配置受控的私有访问入口。
 
@@ -322,6 +324,7 @@ VPS 上的 LACK → 本地机器的私有网络地址 → 本地模型服务
 | 浏览器打不开页面 | SSH 隧道是否连接；本机端口是否一致 | 不要直接开放公网 `3721` |
 | `Address already in use` | 原隧道是否仍在运行；必要时换本机端口 | 不要随意结束不认识的进程 |
 | 页面显示 `DISCONNECTED` | SSH 连接和 LACK 服务状态 | 不要先清数据库 |
+| 项目文件显示 `Failed to load tree.` | 先确认本机 SSH 隧道仍在，再由管理员检查 `/api/tree?root=thread_repos`；正常空目录返回 `[]`，当前界面会显示空白列表 | 不要因空列表重置数据或放宽目录权限 |
 | `CONNECTED` 但 Agent 不回复 | 模型是否真实接通、成员是否加入频道、错误日志 | 不要把连接状态当成模型健康状态 |
 | 没有可用模型 | Provider 地址、密钥、模型 ID 与发现接口 | 不要在提示词里填写 API Key |
 | 添加 Agent 失败 | 是否准确选择已配置 Provider，模型列表是否有效 | 不要把界面创建流程当成供应商安装器 |
