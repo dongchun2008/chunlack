@@ -3,6 +3,7 @@
 import argparse
 import ast
 import json
+import shutil
 from pathlib import Path
 
 
@@ -29,6 +30,11 @@ def main():
         target = args.output / relative
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(sources[key], encoding="utf-8", newline="\n")
+    for directory in ("gateway", "sdk"):
+        origin = Path(__file__).resolve().parents[1] / directory
+        target = args.output / directory
+        if origin.resolve() != target.resolve():
+            shutil.copytree(origin, target, dirs_exist_ok=True)
     config_path = args.output / "config/lack.config.json"
     if not config_path.exists():
         config = json.loads(args.config.read_text(encoding="utf-8-sig") if args.config else sources["CONFIG_JSON"])

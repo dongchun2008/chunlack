@@ -5,6 +5,8 @@ COPY package.json package-lock.json ./
 RUN npm ci --omit=dev && npm cache clean --force
 COPY lack.py ./
 COPY scripts/materialize.py scripts/materialize.py
+COPY gateway gateway
+COPY sdk sdk
 RUN python3 scripts/materialize.py --output /app
 
 FROM node:24-bookworm-slim
