@@ -41,3 +41,24 @@ node scripts/open-webui-node-pilot.cjs
 脚本独立获取 Open WebUI 官方公开资料，用临时内存数据库和回环网关，执行一个真实核验任务，再通过现有 LACK 证据门禁。原始网页不可达、模型输出不合规或证据不足时失败退出，没有 synthetic facts 兜底。没有模型密钥进入任务或报告。
 
 该试点不等于 VPS 已启用、节点已经永久配对，也不证明真实多角色协作或私有知识库可用。VPS 接入需要另行完成私有网关部署和持久配对。
+
+## 可复现的人工提供原文试点
+
+若本机无法直接抓取官方 HTTPS 文档，可显式使用仓库内的公开短摘录：
+
+```powershell
+$env:OPEN_WEBUI_URL = 'http://192.168.10.88:3000'
+$env:OPEN_WEBUI_MODEL = 'local-active'
+$env:OPEN_WEBUI_API_KEY_FILE = 'C:\Users\dongc\Documents\vps\localapikey.txt'
+$env:OPEN_WEBUI_ALLOW_LAN_HTTP = 'true'
+$env:OPEN_WEBUI_PILOT_EXCERPT_FILE = (Resolve-Path 'docs/examples/open-webui-models-excerpt.txt').Path
+node scripts/open-webui-node-pilot.cjs
+```
+
+摘录来自 [Open WebUI 官方 API 文档](https://docs.openwebui.com/reference/api-endpoints/)，2026-10-08 经独立网页工具读取。此模式验证真实模型、临时节点任务和引文匹配，但脚本不验证文件内容的发布者真实性，必须由操作人核对原文；不要将不可信 Agent 输出作为这个文件。SHA256 仅验证内容一致性，不证明来源真实。
+
+报告必须显示 `sourceMode: operator-provided` 和 `originalSourceAcquired: false`，不能把这次测试称为自动网页检索成功。移除该环境变量后恢复直接 HTTPS 抓取，失败不会静默使用摘录。
+
+试点使用临时 loopback 网关，不需要长期节点凭据，不会接入或重启 VPS。长期 worker 仍需先完成真实网关配对。HTTP 局域网例外不加密，只在可信 LAN 使用；跨网应采用受保护隧道或 HTTPS。
+
+Muse / dots 的不同接入方向与尚未实现项见 [专用说明](MUSE_DOTS_INTEGRATION.zh-CN.md)。

@@ -4,6 +4,13 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
+async function waitUntil(predicate) {
+  const deadline=Date.now()+2000;
+  while(!predicate()) {
+    if(Date.now()>=deadline)throw new Error('Timed out waiting for gateway state');
+    await new Promise(resolve=>setTimeout(resolve,10));
+  }
+}
 function fixture(t) {
   const {createGatewayStore} = require('../gateway/store.cjs');
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lack-gateway-'));
@@ -65,7 +72,7 @@ test('pause, cancellation acknowledgement and manual retry keep attempts distinc
 
 test('HTTP isolates admin permissions, wakes polls and removes disconnected waiters', async t => {
   const {createAgentGateway}=require('../gateway/server.cjs');const {once}=require('node:events');
-  const r=fixture(t),adminToken='a'.repeat(43),gateway=createAgentGateway({store:r.store,adminToken,pollMs:80});
+  const r=fixture(t),adminToken='a'.repeat(43),gateway=createAgentGateway({store:r.store,adminToken,pollMs:3000});
   gateway.server.listen(0,'127.0.0.1');await once(gateway.server,'listening');t.after(()=>gateway.close());
   const url=`http://127.0.0.1:${gateway.server.address().port}`;
   const headers={Authorization:'Bearer '+r.paired.token,'Content-Type':'application/json'};
@@ -73,11 +80,12 @@ test('HTTP isolates admin permissions, wakes polls and removes disconnected wait
   assert.equal((await fetch(url+'/v1/manifest',{headers:{...headers,Origin:'https://evil.example'}})).status,403);
   assert.equal((await fetch(url+'/v1/manifest',{headers})).status,200);
   const pending=fetch(url+'/v1/tasks/claim',{method:'POST',headers,body:'{}'});
-  await new Promise(resolve=>setTimeout(resolve,20));assert.equal(gateway.waitingCount(),1);
+  pending.catch(()=>{});
+  await waitUntil(()=>gateway.waitingCount()===1);
   r.store.enqueueTask(r.input);const claim=await (await pending).json();assert.equal(claim.taskType,'research.verify');
   assert.equal(gateway.waitingCount(),0);
   const aborted=new AbortController();const polling=fetch(url+'/v1/tasks/claim',{method:'POST',headers,body:'{}',signal:aborted.signal}).catch(()=>null);
-  await new Promise(resolve=>setTimeout(resolve,20));aborted.abort();await polling;await new Promise(resolve=>setTimeout(resolve,20));
+  await waitUntil(()=>gateway.waitingCount()===1);aborted.abort();await polling;await waitUntil(()=>gateway.waitingCount()===0);
   assert.equal(gateway.waitingCount(),0);
   assert.equal((await fetch(url+'/v1/tasks/claim',{method:'POST',headers,body:'{}'})).status,204);
   assert.equal((await fetch(url+'/v1/agents/me/heartbeat',{method:'POST',headers,body:JSON.stringify({capabilities:['shell']})})).status,400);

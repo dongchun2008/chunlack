@@ -1,0 +1,1 @@
+Endpoint: GET /api/models. Description: Fetches all models created or added via Open WebUI.
