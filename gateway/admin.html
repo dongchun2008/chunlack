@@ -7,6 +7,20 @@
 <p id="error" role="status"></p><div id="panel" hidden><section><h2>添加节点</h2><label>名称 <input id="name" maxlength="80" placeholder="例如：Mac 核验员"></label><label>任务范围 <input id="scope" value="public"></label><label>能力 <select id="capability"><option value="research.verify">核验资料</option><option value="research.summarize">汇总结论</option><option value="research.retrieve">收集资料</option></select></label><button id="create" class="primary">生成配对码</button><pre id="pairing" hidden></pre><p class="muted">配对码有效期 5 分钟，只能使用一次。连接器在本地终端中运行。</p></section>
 <section><h2>节点 <button id="refresh">刷新</button><button id="logout">退出管理</button></h2><div class="scroll"><table><thead><tr><th>名称</th><th>状态</th><th>能力</th><th>最近错误</th><th>管理</th></tr></thead><tbody id="nodes"></tbody></table></div></section>
 <section><h2>任务</h2><div class="scroll"><table><thead><tr><th>任务</th><th>类型</th><th>状态</th><th>尝试</th><th>操作</th></tr></thead><tbody id="tasks"></tbody></table></div><button id="previous">上一页</button><button id="next">下一页</button><pre id="result" hidden style="white-space:pre-wrap;overflow-wrap:anywhere"></pre><p class="muted">取消请求需要节点确认。撤销凭据无法强制结束远端进程。</p></section></div></main>
+<style>
+button{white-space:nowrap}
+.scroll table{min-width:680px}
+td,th{vertical-align:top}
+td:last-child{min-width:120px}
+[hidden]{display:none!important}
+@media(max-width:640px){
+  .scroll{max-width:100%;overscroll-behavior-x:contain}
+  td button{min-height:44px}
+  label{display:block;margin-right:0}
+  label input,label select{width:100%;margin-top:6px}
+  h2 button{font-size:16px;min-height:44px}
+}
+</style>
 <script>
 'use strict';let token='',offset=0;const $=id=>document.getElementById(id);let refreshTimer;
 async function api(route,data){const response=await fetch('/admin/v1/'+route,{method:data===undefined?'GET':'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'application/json'},body:data===undefined?undefined:JSON.stringify(data)});const value=await response.json();if(!response.ok)throw new Error(value.error||'请求失败');return value;}
@@ -17,7 +31,7 @@ function showPair(value){$('pairing').hidden=false;$('pairing').textContent='节
 async function refresh(){const [a,b]=await Promise.all([api('nodes'),api('tasks?offset='+offset)]);$('nodes').replaceChildren();for(const node of a.nodes){const row=document.createElement('tr');cell(row,node.name);cell(row,node.revoked?'已撤销':node.paused?'已暂停':node.lastSeen&&Date.now()-node.lastSeen<90000?'近期在线':'等待连接');cell(row,node.capabilities.join(', '));cell(row,node.recentError||'');const td=cell(row,'');if(!node.revoked){action(td,node.paused?'恢复派单':'暂停派单',async()=>{await api('nodes/'+node.id+'/'+(node.paused?'resume':'pause'),{});await refresh();});action(td,'重新配对',async()=>{if(confirm('重新配对将立即使旧凭据失效，继续？'))showPair(await api('nodes/'+node.id+'/pair',{}));});action(td,'撤销',async()=>{if(confirm('撤销该节点凭据并停止派单？远端进程可能仍在执行。')){await api('nodes/'+node.id+'/revoke',{});await refresh();}});}$('nodes').append(row);}
  const names={queued:'等待领取',leased:'已领取',running:'执行中',succeeded:'结果已保存',failed:'失败',cancel_requested:'取消未确认',cancelled:'已取消',needs_attention:'需要处理'};$('tasks').replaceChildren();for(const task of b.tasks){const row=document.createElement('tr');cell(row,task.id.slice(0,8));cell(row,task.task_type);cell(row,names[task.status]||task.status);cell(row,task.attempt);const td=cell(row,'');action(td,'查看结果',async()=>{const details=await api('tasks/'+task.id);$('result').hidden=false;$('result').textContent=JSON.stringify(details.result||{status:names[details.status],error:details.last_error},null,2);});if(['queued','leased','running'].includes(task.status))action(td,'请求取消',async()=>{await api('tasks/'+task.id+'/cancel',{});await refresh();});if(['failed','cancelled','needs_attention'].includes(task.status)&&task.attempt<3)action(td,'重试',async()=>{if(confirm('请先确认旧执行已停止，再重试。继续？')){await api('tasks/'+task.id+'/retry',{});await refresh();}});$('tasks').append(row);}}
 $('connect').onclick=async()=>{token=$('credential').value;$('credential').value='';try{await refresh();$('panel').hidden=false;$('login').hidden=true;$('error').textContent='';refreshTimer=setInterval(()=>refresh().catch(showError),30000);}catch(error){token='';showError(error);}};
-$('logout').onclick=()=>{token='';clearInterval(refreshTimer);clearTimeout(showPair.timer);$('panel').hidden=true;$('login').hidden=false;$('pairing').textContent='';$('result').textContent='';$('nodes').replaceChildren();$('tasks').replaceChildren();};
+$('logout').onclick=()=>{token='';clearInterval(refreshTimer);clearTimeout(showPair.timer);$('panel').hidden=true;$('login').hidden=false;$('pairing').textContent='';$('pairing').hidden=true;$('result').textContent='';$('result').hidden=true;$('nodes').replaceChildren();$('tasks').replaceChildren();};
 $('create').onclick=async()=>{try{showPair(await api('nodes',{name:$('name').value,capabilities:[$('capability').value],scopes:[$('scope').value]}));await refresh();}catch(error){showError(error);}};
 $('refresh').onclick=()=>refresh().catch(showError);$('next').onclick=()=>{offset=Math.min(offset+50,950);refresh().catch(showError);};$('previous').onclick=()=>{offset=Math.max(offset-50,0);refresh().catch(showError);};
 </script></html>
