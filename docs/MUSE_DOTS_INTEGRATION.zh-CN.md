@@ -52,3 +52,29 @@ ChunLACK 已有带配对、租约、取消和权限边界的节点协议与 Node
 5. 真实产品任务闭环后才标记“已接通”。
 
 资源策略：沿用轻量队列与一个并发执行槽，不引入额外 Redis、消息代理或 GPU 服务。五个节点在线不代表五个任务同时生成。
+
+## 2026-10-09 补充：Muse Gadgets 是另一条路径
+
+用户已有 Muse Gadget SDK token。本机仅确认文档目录下 muse_gadgets_sdkkey.txt 存在，没有读取、打印或提交密钥。token 不是模型 API key，也不是 Muse Connector Platform 的应用凭据。
+
+官方 [Linux Device SDK](https://github.com/facebookincubator/muse-gadget-sdk/tree/main/linux) 提供设备配对、消息发送以及设备命令；它不等于已实现的 LACK 同步模型接口。Linux 节点需要 Bluetooth LE，并在 Muse 手机应用的 Settings > Devices 启用 Developer mode 完成配对。
+
+重要风险：官方默认命令包含 system.run、file.read、file.write。Muse 获得安装账户的权限，如果该账户可以 sudo，Muse 也可以。因此不能直接将默认 SDK 安装到现有 VPS 的 root 账户，也不能仅靠提示词声明来限制 shell。
+
+建议的新适配范围（待用户确认，不是已实现功能）：隔离 Linux 节点，专用无 sudo 账户，修改执行器使其只允许有限研究任务与状态操作；禁止默认 shell 和任意文件访问。研究结果仍通过 LACK 的来源与引文校验，发送聊天消息不作为任务成功证据。设备云会话、任务关联、超时、取消和恢复必须实际验证后才交付。
+
+参考 [SDK token 使用条款](https://gadgets.muse.ai/sdk-terms)：个人、非商业用途，限自己的 Muse 账户；SDK 为实验性、非受支持产品。不得用个人 token 构建访问其他人 Muse 数据的共享服务。这里建议的隔离限制只是待验证设计，不声称已经有效实施。
+
+### dots 的 Slack 入口意味着什么
+
+官方 [dots 入门说明](https://help.openai.com/en/articles/20001530-getting-started-with-your-dot) 确认可以在桌面端配置 Slack 消息通道。看到连接入口说明产品有此功能，不证明你的账户已完成授权、能实际回复或 LACK 已接通。
+
+区分三个验收层级：
+
+1. 官方功能：dots 可以连接 Slack。
+2. 账户连通：在专用测试会话发送一条无敏感数据的消息，收到本人 dot 的回复，确认会话身份与权限。
+3. LACK 自动协作：还需要 LACK 的 Slack 适配、任务关联、可靠结果回传、取消及权限校验。本项目尚未实现这层。
+
+不要将普通 @ChatGPT 企业 Slack 助手、Codex Slack 集成和自己的 dot 视作同一套认证或执行入口。也不要未经产品支持确认，就假设另一个 Slack bot 发出的消息一定会触发 dot。
+
+首轮推荐人工监督 Slack 对话；自动桥接方案必须在该账户实测后再设计，避免消息循环、重复派单或把无依据聊天回复当作已核验结论。
