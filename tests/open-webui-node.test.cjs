@@ -21,9 +21,17 @@ test('real HTTP handler reads a local credential and returns validated structure
  let received;const server=http.createServer(async(req,res)=>{let body='';for await(const chunk of req)body+=chunk;received={route:req.url,authorization:req.headers.authorization,body:JSON.parse(body)};res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify({choices:[{finish_reason:'stop',message:{content:JSON.stringify(output())}}]}));});
  server.listen(0,'127.0.0.1');await once(server,'listening');t.after(()=>new Promise(resolve=>{server.closeAllConnections();server.close(resolve);}));
  const handler=createOpenWebUIHandler({baseUrl:'http://127.0.0.1:'+server.address().port,model:'test-model',apiKeyFile:file});assert.deepEqual(await handler({task:task()}),output());
- assert.equal(received.route,'/api/chat/completions');assert.equal(received.authorization,'Bearer '+key);assert.equal(received.body.model,'test-model');assert.equal(received.body.tools,undefined);assert.equal(received.body.files,undefined);
+ assert.equal(received.route,'/api/chat/completions');assert.equal(received.authorization,'Bearer '+key);assert.equal(received.body.model,'test-model');assert.deepEqual(received.body.tools,[]);assert.equal(received.body.tool_choice,'none');assert.deepEqual(received.body.response_format,{type:'json_object'});assert.equal(received.body.files,undefined);
  await assert.rejects(()=>handler({task:{...task(),scopeId:'private'}}),/private/);
  await assert.rejects(()=>handler({task:{...task(),taskType:'research.retrieve'}}),/private/);
  await assert.rejects(()=>handler({task:{...task(),input:{...task().input,command:'shell'}}}),/unsupported_field/);
  const cancelled=new AbortController();cancelled.abort();await assert.rejects(()=>handler({task:task(),signal:cancelled.signal}));
+});
+
+test('unsolicited tool calls are rejected even when accompanied by valid verification JSON',async t=>{
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'lack-webui-tools-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));const file=path.join(dir,'key.txt');fs.writeFileSync(file,'sk-'+'f'.repeat(32),{mode:0o600});
+ for(const finish of ['tool_calls','stop']){
+  const handler=createOpenWebUIHandler({baseUrl:'http://127.0.0.1:3000',model:'test-model',apiKeyFile:file,fetch:async()=>new Response(JSON.stringify({choices:[{finish_reason:finish,message:{content:JSON.stringify(output()),tool_calls:[{id:'fixture',type:'function',function:{name:'never_execute',arguments:'{}'}}]}}]}),{status:200})});
+  await assert.rejects(()=>handler({task:task()}),/model_requested_tools/);
+ }
 });
