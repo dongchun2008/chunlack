@@ -18,6 +18,13 @@ function createGatewayStore({dbPath,now=Date.now}){
     CREATE INDEX IF NOT EXISTS tasks_expiry ON tasks(status,lease_until,deadline_at);
     CREATE INDEX IF NOT EXISTS events_task ON events(task_id);
     CREATE INDEX IF NOT EXISTS events_node_seq ON events(node_id,seq);`);
+  db.transaction(()=>{
+    const columns=new Set(db.prepare('PRAGMA table_info(tasks)').all().map(column=>column.name));
+    if(!columns.has('trace_id'))db.exec('ALTER TABLE tasks ADD COLUMN trace_id TEXT');
+    if(!columns.has('research_session_id'))db.exec('ALTER TABLE tasks ADD COLUMN research_session_id TEXT');
+    const update=db.prepare('UPDATE tasks SET trace_id=? WHERE id=?');
+    for(const task of db.prepare('SELECT id FROM tasks WHERE trace_id IS NULL').all())update.run(randomUUID(),task.id);
+  }).immediate();
   const changes=new EventEmitter();changes.setMaxListeners(40);
   const q=sql=>db.prepare(sql), parse=row=>row?{...row,input:JSON.parse(row.input),result:row.result?JSON.parse(row.result):null}:null;
   const mutate=(fn,notify=true)=>{const result=db.transaction(fn).immediate();if(notify)changes.emit('change');return result;};
@@ -52,15 +59,18 @@ function createGatewayStore({dbPath,now=Date.now}){
   function enqueueTask(input){
     P.fields(input,['targetNodeId','scopeId','taskType','input','deadlineAt','traceId','researchSessionId']);P.id(input.targetNodeId);P.id(input.scopeId);
     if(!P.TYPES.includes(input.taskType))P.fail('unsupported_task');const encoded=P.bounded(P.object(input.input));
+    if(input.traceId!==undefined)P.id(input.traceId);if(input.researchSessionId!==undefined)P.id(input.researchSessionId);
     if(!Number.isFinite(input.deadlineAt)||input.deadlineAt<=now()||input.deadlineAt>now()+300000)P.fail('invalid_deadline');
     return mutate(()=>{
       const n=liveNode(input.targetNodeId);if(!n.capabilities.includes(input.taskType))P.fail('capability_denied',403);if(!n.scopes.includes(input.scopeId))P.fail('scope_denied',403);
       if(q('SELECT COUNT(*) AS n FROM tasks').get().n>=P.LIMITS.tasks)P.fail('task_capacity',429);
-      const id=randomUUID(),t=now();q('INSERT INTO tasks(id,node_id,scope_id,task_type,input,status,deadline_at,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?)').run(id,n.id,input.scopeId,input.taskType,encoded,'queued',input.deadlineAt,t,t);
-      return {taskId:id,status:'queued'};
+      if(q('SELECT COUNT(*) AS n FROM events').get().n+eventReservations()+3>P.LIMITS.events)P.fail('event_capacity',429);
+      const id=randomUUID(),t=now(),traceId=input.traceId||randomUUID();q('INSERT INTO tasks(id,node_id,scope_id,task_type,input,status,deadline_at,created_at,updated_at,trace_id,research_session_id) VALUES(?,?,?,?,?,?,?,?,?,?,?)').run(id,n.id,input.scopeId,input.taskType,encoded,'queued',input.deadlineAt,t,t,traceId,input.researchSessionId??null);
+      return {taskId:id,status:'queued',traceId,researchSessionId:input.researchSessionId??null};
     });
   }
-  function leaseEnvelope(task){return {protocolVersion:1,taskId:task.id,taskType:task.task_type,targetNodeId:task.node_id,scopeId:task.scope_id,input:task.input,deadlineAt:task.deadline_at,leaseId:task.lease_id,leaseUntil:task.lease_until,attempt:task.attempt};}
+  function eventReservations(){return q("SELECT COALESCE(SUM(MAX(0,CASE WHEN status IN ('leased','running','cancel_requested') THEN 4-attempt ELSE 3-attempt END)),0) AS n FROM tasks").get().n;}
+  function leaseEnvelope(task){return {protocolVersion:1,taskId:task.id,taskType:task.task_type,targetNodeId:task.node_id,scopeId:task.scope_id,input:task.input,deadlineAt:task.deadline_at,leaseId:task.lease_id,leaseUntil:task.lease_until,attempt:task.attempt,traceId:task.trace_id,researchSessionId:task.research_session_id};}
   function claimTask(nodeId){return mutate(()=>{
     const n=liveNode(nodeId);sweepInternal();q('UPDATE nodes SET last_seen=? WHERE id=?').run(now(),nodeId);
     if(n.paused||q("SELECT COUNT(*) AS n FROM tasks WHERE status IN ('leased','running','cancel_requested')").get().n>=P.LIMITS.activeTasks)return null;
@@ -86,7 +96,11 @@ function createGatewayStore({dbPath,now=Date.now}){
       liveNode(nodeId);const previous=q('SELECT * FROM events WHERE node_id=? AND event_id=?').get(nodeId,body.eventId);
       if(previous){if(previous.content_hash!==digest||previous.task_id!==body.taskId)P.fail('event_conflict',409);return JSON.parse(previous.ack);}
       const task=owned(nodeId,body,!result);
-      if(q('SELECT COUNT(*) AS n FROM events').get().n>=P.LIMITS.events||q('SELECT COUNT(*) AS n FROM events WHERE task_id=?').get(task.id).n>=P.LIMITS.eventsPerTask)P.fail('event_capacity',429);
+      const totalEvents=q('SELECT COUNT(*) AS n FROM events').get().n,taskEvents=q('SELECT COUNT(*) AS n FROM events WHERE task_id=?').get(task.id).n;
+      const terminal=result||body.type==='cancelled';
+      // Reserve one terminal acknowledgement per remaining allowed attempt.
+      // Terminal recording consumes a reservation; progress cannot consume it.
+      if(totalEvents>=P.LIMITS.events||taskEvents>=P.LIMITS.eventsPerTask||(!terminal&&(totalEvents+1+eventReservations()>P.LIMITS.events||taskEvents+1+(4-task.attempt)>P.LIMITS.eventsPerTask)))P.fail('event_capacity',429);
       const t=now();let state=task.status;
       if(result){if(!['succeeded','failed'].includes(body.status))P.fail('invalid_result_status');P.object(body.output);state=body.status;q('UPDATE tasks SET status=?,result=?,updated_at=?,last_error=? WHERE id=?').run(state,serialized,t,state==='failed'?'node_reported_failure':null,task.id);}
       else {if(!['started','progress','cancelled'].includes(body.type))P.fail('invalid_event_type');if(body.message!==undefined)P.text(body.message,2000);if(body.type==='cancelled'){if(task.status!=='cancel_requested')P.fail('cancellation_not_requested',409);state='cancelled';}else if(task.status==='leased')state='running';q('UPDATE tasks SET status=?,updated_at=? WHERE id=?').run(state,t,task.id);}
@@ -99,7 +113,7 @@ function createGatewayStore({dbPath,now=Date.now}){
   function setNodePaused(id,paused){return mutate(()=>{liveNode(id);q('UPDATE nodes SET paused=? WHERE id=?').run(paused?1:0,id);return publicNode(node(id));});}
   function heartbeat(nodeId,capabilities=[]){const n=liveNode(nodeId);if(!Array.isArray(capabilities)||capabilities.some(c=>!P.TYPES.includes(c)))P.fail('invalid_capability');q('UPDATE nodes SET last_seen=? WHERE id=?').run(now(),nodeId);return {...publicNode(n),lastSeen:now(),matchedCapabilities:capabilities.filter(c=>n.capabilities.includes(c))};}
   function listNodes(){return q('SELECT id FROM nodes ORDER BY created_at').all().map(row=>({...publicNode(node(row.id)),currentTask:q("SELECT id,status,task_type FROM tasks WHERE node_id=? AND status IN ('leased','running','cancel_requested') LIMIT 1").get(row.id)||null,recentError:q('SELECT last_error FROM tasks WHERE node_id=? AND last_error IS NOT NULL ORDER BY updated_at DESC LIMIT 1').get(row.id)?.last_error||null}));}
-  function listTasks(offset=0){if(!Number.isInteger(offset)||offset<0||offset>1000)P.fail('invalid_offset');return q('SELECT id,node_id,scope_id,task_type,status,attempt,deadline_at,created_at,updated_at,last_error FROM tasks ORDER BY created_at DESC LIMIT 50 OFFSET ?').all(offset);}
+  function listTasks(offset=0){if(!Number.isInteger(offset)||offset<0||offset>1000)P.fail('invalid_offset');return q('SELECT id,node_id,scope_id,task_type,status,attempt,deadline_at,created_at,updated_at,last_error,trace_id,research_session_id FROM tasks ORDER BY created_at DESC LIMIT 50 OFFSET ?').all(offset);}
   function nodeEvents(nodeId,cursor=0){liveNode(nodeId);if(!Number.isSafeInteger(cursor)||cursor<0)P.fail('invalid_cursor');const events=q('SELECT seq,task_id,type,message,created_at FROM events WHERE node_id=? AND seq>? ORDER BY seq LIMIT 50').all(nodeId,cursor);return {events,cursor:events.at(-1)?.seq||cursor,cancellations:q("SELECT id AS taskId,lease_id AS leaseId,attempt FROM tasks WHERE node_id=? AND status='cancel_requested' LIMIT 1").all(nodeId)};}
   function cleanup(){mutate(()=>{sweepInternal();const cutoff=now()-7*86400000;const ids=q("SELECT id FROM tasks WHERE status IN ('succeeded','failed','cancelled') AND updated_at<? LIMIT 50").all(cutoff);for(const {id} of ids){q('DELETE FROM events WHERE task_id=?').run(id);q('DELETE FROM tasks WHERE id=?').run(id);}});db.pragma('wal_checkpoint(PASSIVE)');}
   return {changes,createNode,pair,rePair,authenticate,getNode:id=>publicNode(node(id)),enqueueTask,claimTask,renewLease,appendEvent:(id,body)=>record(id,body,false),submitResult:(id,body)=>record(id,body,true),getTask,cancelTask,retryTask,revokeNode,setNodePaused,heartbeat,listNodes,listTasks,nodeEvents,sweep:()=>mutate(sweepInternal),cleanup,close:()=>{changes.removeAllListeners();db.close();}};

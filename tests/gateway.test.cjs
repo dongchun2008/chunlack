@@ -85,6 +85,39 @@ test('HTTP isolates admin permissions, wakes polls and removes disconnected wait
   assert.throws(()=>gateway.server.listen(0,'0.0.0.0'),/loopback/);
 });
 
+test('trace and research session survive reopening and manual retries', t=>{
+  const r=fixture(t),task=r.store.enqueueTask({...r.input,traceId:'trace-1',researchSessionId:'session-1'});
+  let lease=r.store.claimTask(r.paired.nodeId);
+  assert.equal(lease.traceId,'trace-1');assert.equal(lease.researchSessionId,'session-1');
+  r.store.submitResult(r.paired.nodeId,{protocolVersion:1,taskId:lease.taskId,leaseId:lease.leaseId,attempt:lease.attempt,eventId:'trace-failed',status:'failed',output:{}});
+  r.store.retryTask(task.taskId);lease=r.store.claimTask(r.paired.nodeId);
+  assert.equal(lease.traceId,'trace-1');assert.equal(lease.researchSessionId,'session-1');
+  const {createGatewayStore}=require('../gateway/store.cjs');const reopened=createGatewayStore({dbPath:path.join(r.dir,'gateway.db')});
+  try{assert.equal(reopened.getTask(task.taskId).trace_id,'trace-1');assert.equal(reopened.listTasks()[0].research_session_id,'session-1');}finally{reopened.close();}
+  assert.throws(()=>r.store.enqueueTask({...r.input,traceId:'invalid trace'}),/invalid_id/);
+});
+
+test('progress saturation reserves terminal results for all three attempts', t=>{
+  const r=fixture(t);r.store.enqueueTask(r.input);let lease=r.store.claimTask(r.paired.nodeId);
+  const envelope=eventId=>({protocolVersion:1,taskId:lease.taskId,leaseId:lease.leaseId,attempt:lease.attempt,eventId});
+  for(let i=0;i<97;i++)r.store.appendEvent(r.paired.nodeId,{...envelope('progress-'+i),type:'progress'});
+  for(let attempt=1;attempt<=3;attempt++){
+    assert.throws(()=>r.store.appendEvent(r.paired.nodeId,{...envelope('overflow-'+attempt),type:'progress'}),/event_capacity/);
+    const result={...envelope('terminal-'+attempt),status:attempt===3?'succeeded':'failed',output:{}};
+    const ack=r.store.submitResult(r.paired.nodeId,result);assert.deepEqual(r.store.submitResult(r.paired.nodeId,result),ack);
+    if(attempt<3){r.store.retryTask(lease.taskId);lease=r.store.claimTask(r.paired.nodeId);}
+  }
+  assert.equal(r.store.getTask(lease.taskId).status,'succeeded');
+});
+
+test('saturated progress still permits cancellation acknowledgement', t=>{
+  const r=fixture(t);r.store.enqueueTask(r.input);const lease=r.store.claimTask(r.paired.nodeId);
+  const body={protocolVersion:1,taskId:lease.taskId,leaseId:lease.leaseId,attempt:lease.attempt};
+  for(let i=0;i<97;i++)r.store.appendEvent(r.paired.nodeId,{...body,eventId:'cancel-progress-'+i,type:'progress'});
+  r.store.cancelTask(lease.taskId);
+  assert.equal(r.store.appendEvent(r.paired.nodeId,{...body,eventId:'cancel-terminal',type:'cancelled'}).status,'cancelled');
+});
+
 test('closed gateway releases pending connections', async t=>{
   const {createAgentGateway}=require('../gateway/server.cjs');const {once}=require('node:events');
   const r=fixture(t),gateway=createAgentGateway({store:r.store,adminToken:'a'.repeat(43)});
