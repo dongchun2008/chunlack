@@ -1,5 +1,17 @@
 # Muse / dots 接入说明
 
+## 2026-10-09 私有云端电脑接入方向更新
+
+本节优先于下文较早的路线建议。Slack 和 raft.build 仅作为产品设计参考，不是接入依赖；不推进 Slack 桥接。Muse Gadgets 设备路线与 Muse 云端电脑路线不同，不能把前者的蓝牙要求套用到后者。
+
+用户提供的 Muse 帮助原文明确：其 tailscale 是平台封装命令，不是上游 CLI；私网通过运行环境外的 3130 HTTP 代理访问，只出站、TCP、不接受入站。不要自行安装 tailscaled。首次目标访问需要用户批准，批准可能覆盖同一地址的其他端口，因此必须另设私网服务级访问限制。运行时替换后的身份保留和自建程序恢复尚未验证。
+
+用户提供的 dots 输出只确认命令环境具备 Node/Python，工作目录权限检查可写、三次公开 HTTPS 请求成功；不能确认该环境就是持久云端电脑，也不能确认长期运行。目标是当前 dot 接到任务后实际操作自身云端电脑，不是 worker 代替 dot 执行。
+
+[MCP Events](https://developers.openai.com/plugins/build/mcp-events) 官方说明支持 dots，要求 MCP 2.0、持久订阅存储及出站 webhook；[Secure MCP Tunnel](https://developers.openai.com/api/docs/guides/secure-mcp-tunnels) 提供私网侧出站连接，不需要私有服务公开监听。但当前账号权限、隧道与事件组合、真实电脑执行及结果回传均待验证。MCP 隧道不赋予浏览器通用私网访问，云端接入仍意味着选定任务数据进入供应商系统。
+
+当前代码没有上述代理适配、MCP Events 服务或浏览器任务类型。详细范围、接口边界与验收见 [双路线试点设计](superpowers/specs/2026-10-09-private-cloud-agent-pilot-design.md)。该设计待审阅，不代表实现、部署或入网已完成。
+
 核对日期：2026-10-08。Muse 指 muse.ai 的 Meta Muse；dots 暂按 OpenAI ChatGPT dots 理解。如果指其他同名产品，需要确认产品地址。
 
 ## 当前边界
