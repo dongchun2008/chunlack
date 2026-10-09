@@ -241,6 +241,76 @@ function createIdentityStore({dbPath, now = Date.now}) {
       listeners.add(listener);
       return () => listeners.delete(listener);
     },
+    bootstrapIdentity({login, passwordHash, workspaceName}) {
+      return db.transaction(() => {
+        if (db.prepare('SELECT COUNT(*) AS count FROM users').get().count !== 0) throw new IdentityError('already_initialized', 409);
+        const user = api.createUser({login, passwordHash});
+        const workspace = api.createWorkspace({name: workspaceName, ownerId: user.id});
+        return {user, workspace};
+      }).immediate();
+    },
+    listMembers(actor, {workspaceId = actor?.workspaceId} = {}) {
+      if (!actor || actor.workspaceId !== workspaceId) throw new IdentityError('not_found', 404);
+      authorize(api.requireMembership(actor.userId, workspaceId), 'member.read');
+      return db.prepare(`SELECT u.id AS userId,u.login,m.role,m.version FROM memberships m
+        JOIN users u ON u.id=m.user_id WHERE m.workspace_id=? AND u.disabled_at IS NULL
+        ORDER BY u.login,u.id`).all(workspaceId);
+    },
+    createInviteRecord(actor, {workspaceId, login, role, tokenHash, expiresAt = null}) {
+      digestValue(tokenHash);
+      const normalized = normalizeLogin(login);
+      if (!['owner', 'member', 'viewer'].includes(role)) throw new IdentityError('invalid_role', 400);
+      return db.transaction(() => {
+        if (!actor || actor.workspaceId !== workspaceId) throw new IdentityError('not_found', 404);
+        authorize(api.requireMembership(actor.userId, workspaceId), 'invite.create');
+        const time = now();
+        expiresAt ??= time + 24 * 60 * 60 * 1000;
+        if (!Number.isSafeInteger(expiresAt) || expiresAt <= time || expiresAt > time + 24 * 60 * 60 * 1000) throw new IdentityError('invalid_expiry', 400);
+        const user = api.findUserForLogin(normalized);
+        if (user?.disabled) throw new IdentityError('not_found', 404);
+        if (user && db.prepare('SELECT 1 FROM memberships WHERE workspace_id=? AND user_id=?').get(workspaceId, user.id)) throw new IdentityError('already_member', 409);
+        db.prepare('UPDATE invites SET consumed_at=? WHERE workspace_id=? AND login=? AND consumed_at IS NULL').run(time, workspaceId, normalized);
+        const id = randomUUID();
+        db.prepare('INSERT INTO invites(id,token_hash,workspace_id,login,role,created_by,created_at,expires_at) VALUES(?,?,?,?,?,?,?,?)').run(id, tokenHash, workspaceId, normalized, role, actor.userId, time, expiresAt);
+        db.prepare('INSERT INTO audit(id,workspace_id,actor_id,target_id,action,metadata,created_at) VALUES(?,?,?,?,?,?,?)').run(randomUUID(), workspaceId, actor.userId, user?.id || null, 'invite.created', JSON.stringify({role}), time);
+        return {id, expiresAt};
+      }).immediate();
+    },
+    findInviteRecord(tokenHash) {
+      digestValue(tokenHash);
+      const record = db.prepare(`SELECT i.* FROM invites i JOIN workspaces w ON w.id=i.workspace_id
+        WHERE i.token_hash=? AND i.consumed_at IS NULL AND i.expires_at>? AND w.disabled_at IS NULL`).get(tokenHash, now());
+      if (!record) return null;
+      try {
+        if (api.requireMembership(record.created_by, record.workspace_id).role !== 'owner') return null;
+      } catch (error) {
+        if (error instanceof IdentityError && [401, 404].includes(error.statusCode)) return null;
+        throw error;
+      }
+      return record;
+    },
+    acceptInvite({tokenHash, passwordHash = null, userId = null}) {
+      digestValue(tokenHash);
+      return db.transaction(() => {
+        const record = api.findInviteRecord(tokenHash);
+        if (!record) throw new IdentityError('not_found', 404);
+        let user = api.findUserForLogin(record.login);
+        if (user) {
+          if (user.disabled) throw new IdentityError('not_found', 404);
+          if (!userId) throw new IdentityError('unauthorized', 401);
+          if (userId !== user.id) throw new IdentityError('invite_account_mismatch', 403);
+        } else {
+          if (userId) throw new IdentityError('invite_account_mismatch', 403);
+          user = api.createUser({login: record.login, passwordHash});
+        }
+        if (db.prepare('SELECT 1 FROM memberships WHERE workspace_id=? AND user_id=?').get(record.workspace_id, user.id)) throw new IdentityError('already_member', 409);
+        const time = now();
+        db.prepare('INSERT INTO memberships(workspace_id,user_id,role,version,created_at,updated_at) VALUES(?,?,?,?,?,?)').run(record.workspace_id, user.id, record.role, 1, time, time);
+        db.prepare('UPDATE invites SET consumed_at=? WHERE id=? AND consumed_at IS NULL').run(time, record.id);
+        db.prepare('INSERT INTO audit(id,workspace_id,actor_id,target_id,action,metadata,created_at) VALUES(?,?,?,?,?,?,?)').run(randomUUID(), record.workspace_id, user.id, user.id, 'invite.accepted', JSON.stringify({role: record.role}), time);
+        return {user: api.getUser(user.id), membership: api.requireMembership(user.id, record.workspace_id), created: passwordHash !== null && userId === null};
+      }).immediate();
+    },
     createSessionRecord({userId, tokenHash, csrfHash, expectedPasswordHash, expiresAt}) {
       digestValue(tokenHash); digestValue(csrfHash);
       return db.transaction(() => {
