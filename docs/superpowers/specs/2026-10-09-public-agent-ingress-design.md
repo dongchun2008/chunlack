@@ -1,10 +1,12 @@
-# ChunLACK 公网 Agent 接入设计
+# ChunLACK 双域名公网访问与 Agent 接入设计
 
 日期：2026-10-09。状态：待用户审阅的设计，不是已部署记录。
 
 ## 目标与授权范围
 
-用户选择公网 HTTPS 接入、提供域名 chunclaw.top，要求保护既有服务并尽量减少硬件消耗。新增公开范围仅为有鉴权的节点 REST/MCP 接口；LACK 页面、WebSocket、管理 API、配对、模型接口、文件系统与命令执行仍私有。保留 Ollama 和供应商中立模型路由。
+用户选择公网 HTTPS 接入、提供域名 chunclaw.top，并同意分别使用 lack.chunclaw.top 作为网页入口、agents.chunclaw.top 作为 Agent 接口。要求保护既有服务并尽量减少硬件消耗。新增公开范围为经过独立所有者鉴权的 LACK 页面及必要 HTTP/WebSocket 路径，以及经过节点鉴权的受限 REST/MCP 接口。底层服务继续仅监听 loopback；网关管理、配对、模型接口、任意文件访问与任意命令执行不得成为公开的无约束接口。保留 Ollama 和供应商中立模型路由。
+
+本阶段网页面向一个可信所有者，不承诺多人工作区、细粒度网页权限或完整 Tool Gateway。网页中的既有操作仍须逐项映射和测试，不能因为套上登录就宣称所有执行边界已完善。外部 Agent 不得通过节点凭据进入所有者网页。
 
 公网接入是对上一阶段“不开放公网端口”的明确范围变更，不意味着允许改变任何现有服务。真实账号凭据录入、绑定和安全授权仍采用供应商支持方式，不将密钥放入聊天、源码、日志或本设计。
 
@@ -20,7 +22,7 @@
 
 ## 部署选项与选择
 
-推荐旁路部署：一个轻量 HTTPS 入口和一个独立受限网关进程，既有 LACK 和 Relay 不重启、不接管端口。新进程复用现有 store/artifacts/MCP/SDK 模块，不另写任务协议，不引入 Redis、Docker、消息代理、模型或浏览器服务。
+推荐旁路部署：一个轻量 HTTPS 入口承载两个虚拟站点，一个独立受限网关进程承载节点接口和必要的访问防护。网页代理到已确认身份的现有 loopback LACK 服务。既有 LACK 和 Relay 不重启、不接管端口。新进程复用现有 store/artifacts/MCP/SDK 模块，不另写任务协议，不引入 Redis、Docker、消息代理、模型或浏览器服务。
 
 另一选项是把接口集成到现有 LACK Node 进程，少一个进程，但部署通常需要一次 LACK 更新与重启；不符合默认“不影响现有服务”的要求，除非用户另行批准维护窗口，否则不采用。
 
@@ -28,13 +30,29 @@
 
 ## 域名、证书与连接
 
-建议新建 agents.chunclaw.top，仅作为候选名称，须确认未被使用并经用户确认后新增 DNS。不得改 chunclaw.top、books.chunclaw.top 或其他既有记录。新记录目标是上述 VPS 公网地址；IPv6 未验证时不新增 AAAA。
+域名用途已获用户同意：lack.chunclaw.top 用于所有者网页，agents.chunclaw.top 用于节点 REST/MCP。二者都是 ChunLACK 的入口，不是两套系统。实施前仍须在用户的权威 DNS 管理中确认两条记录是否已有用途；不能覆盖未知用途的记录。公开 DNS 对 lack.chunclaw.top 的本轮 A 查询返回 NXDOMAIN，HTTPS 探测超时；这不证明该名称在 DNS 管理中无人使用，也不证明服务已经部署。不得改 chunclaw.top、books.chunclaw.top 或其他既有记录。经确认后，两条新记录目标是上述 VPS 公网地址；IPv6 未验证时不新增 AAAA。
 
-路径：Muse REST 或 dots MCP -> 公网 TCP 443 / 可信 HTTPS -> 独立 loopback 节点入口 -> 同一个网关 store 与附件模块。管理入口使用不同的 loopback 端口，不暴露到外网。
+网页路径：所有者浏览器 -> lack.chunclaw.top TCP 443 / 可信 HTTPS -> 登录与请求边界校验 -> 现有 loopback LACK HTTP/WebSocket 服务。
+
+节点路径：Muse REST 或 dots MCP -> agents.chunclaw.top TCP 443 / 可信 HTTPS -> 独立 loopback 节点入口 -> 同一个网关 store 与附件模块。网关管理入口使用不同的 loopback 端口，不暴露到外网。两个域名不得默认回落到同一个后端，也不得通过修改 Host 获得另一个入口的权限。
 
 证书采用标准自动续期；优先评估仅 TCP 443 的 TLS-ALPN-01，禁用 HTTP challenge、自动 HTTP 跳转及 HTTP/3，避免隐式新增 TCP 80 或 UDP 443。DNS、443 占用、CAA 或中间代理使该方案不可用时停止并报告，不自动改用开放 80、通配证书、DNS 凭据或跳过 TLS 校验。
 
 内部 HTTP 仅限 127.0.0.1 的明确新增模式；既有默认 HTTPS 门面的校验保持不变。公网不信任调用者的 Host、Forwarded、X-Forwarded-* 身份声明，不能让反向代理扩大路径或主体验证范围。
+
+## 所有者网页的登录与请求边界
+
+建议初期使用标准 Caddy basic_auth，仅在可信 HTTPS 上启用，保护整个网页站点，包括静态资源、HTTP 接口和 WebSocket 握手。使用浏览器原生登录提示，不在现有前端新增一套账号系统。该具体登录方式作为本次书面设计供用户审阅；若需要多人权限、可靠的会话退出或独立登录页面，应另立设计，不将 Basic Auth 描述为这些功能的替代品。
+
+所有者凭据必须新建，与 SSH 密码、模型密钥、Muse/dots 账号和节点 Bearer 凭据分离。Caddy 配置只保存受支持的密码哈希，放在服务器私有配置中，不提交 Git，不在命令参数、聊天和日志中暴露明文。节点接口不接受所有者网页凭据；网页入口不接受节点 Bearer 凭据。反向代理验证后移除所有者 Authorization，不把密码继续传给 LACK。
+
+Basic Auth 本身不解决 CSRF 或跨站 WebSocket 劫持。网页入口必须校验精确 Host；所有有副作用的 HTTP 请求及每一次 WebSocket Upgrade 均只接受 https://lack.chunclaw.top 的精确 Origin，拒绝跨站、null 和缺失 Origin。正常无 Origin 的页面导航仅限已鉴权、经过确认无副作用的读取路径。实施前梳理现有 HTTP 方法和路径，不假定所有 GET 都安全，不依赖宽泛 CORS 或 Referer 代替鉴权。现有前端按 location.host 建立 WebSocket，因此须真实验证同域 WSS，而非只验证 health。
+
+在密码哈希验证之前落实有界全局及来源流量准入，避免错误密码请求消耗 VPS。准入逻辑可复用独立网关进程的 loopback 内部接口，不公开该接口，不引入第三方 Caddy 插件。具体 Caddy 指令顺序、准入计数生命周期及 HTTP/WSS 连接上限在实施计划中明确，并通过错误密码洪泛、来源缓存容量和 Relay 对照测试验收；仅设置鉴权后的节点限速不算满足要求。
+
+Basic Auth 的浏览器凭据缓存不能提供可靠的点击退出。初期撤销通过服务器停用或轮换所有者凭据，并单独验证已建立的公开 WebSocket 也被断开；不得假定密码变化会自动撤销已有连接。撤销流程只作用于新增公网入口，不重启原 LACK 或 tailscaled。若无法实现和验证有效撤销，网页入口不得启用公网。
+
+网页代理只开放已梳理的必要路径，限制请求体、超时和连接数，不公开新增网关管理或配对路径。保留现有网页风格，不将本阶段扩大为前端重构。登录是访问边界，不扩大网页用户或任何 Agent 原有的工具执行权限。
 
 ## 网关与任务边界
 
@@ -44,7 +62,7 @@
 
 旁路接口就绪不等于原 LACK 页面已能完整编排新节点。交付必须分别记录：公网入口通过、老镇真实执行通过、玄玑真实执行通过、LACK 任务发起与结果呈现通过。最后一项若需更新原 LACK，只能另行批准维护窗口；未完成时明确标为整个平台尚未交付，不用手工试点冒充自动协作。
 
-只允许现有明确白名单的节点 REST 路径、OpenAPI 和 POST /mcp；管理、配对、任意代理、文件下载、shell 与 Git 操作一律不公开。控制 JSON 256 KiB、截图 2 MiB、附件总量 20 MiB/七天，保持内容验证。部署运行入口负责有界 sweep、附件清理、事件投递和正常关闭，不依赖测试脚本常驻。
+agents.chunclaw.top 只允许现有明确白名单的节点 REST 路径、OpenAPI 和 POST /mcp；网关管理、配对、任意代理、任意文件下载、shell 与 Git 操作一律不公开。授权任务的截图附件仍经既有受限上传及内容验证流程处理，不等于开放文件系统。控制 JSON 256 KiB、截图 2 MiB、附件总量 20 MiB/七天，保持内容验证。部署运行入口负责有界 sweep、附件清理、事件投递和正常关闭，不依赖测试脚本常驻。网页入口采用上一节的独立所有者边界，不借用节点白名单作为网页鉴权。
 
 公网新增鉴权前的有界并发/流量防护，不能只依赖登录后每节点限速。来源缓存有容量与过期上限；不以第三方 Caddy 限流插件增加维护负担。设置超时、连接数和 body 上限；日志不记录授权头、正文、回调签名或查询凭据。默认拒绝查询参数凭据和异常路径。
 
@@ -75,6 +93,7 @@
 
 - 新增 deploy/public/ 下的反向代理配置模板、独立 systemd 单元、预检和操作说明。
 - 新增 gateway/public-runtime.cjs：统一生命周期与 loopback 入口，不新增任务协议。
+- 新增必要的网页入口边界模块及测试：Host/Origin、HTTP/WebSocket 鉴权覆盖、鉴权前准入和连接撤销。最终文件名与内部接口在实施计划中确定，不改现有 LACK 的默认监听与模型路由。
 - 小范围适配 gateway/node-facade.cjs 和 integrations/mcp/pilot-server.cjs，以复用既有鉴权与路由；默认 loopback/TLS 约束不弱化。
 - 新增公网入口及 runtime 的真实本地集成测试；继续使用现有 SDK、store、artifacts、events 与 webhook transport。
 - 原 LACK 的运行桥接与 UI 更新单独设计和批准，不作为“旁路部署”中的隐含改动。
@@ -84,6 +103,14 @@
 
 保留旧 LACK/Relay 运行状态不变。新服务在专用目录中独立停用，恢复仅本机监听；撤销测试节点和订阅。DNS 恢复只针对此次新记录，证据与私有备份保留，不自动删除。若只有本地测试或公网 health 通过，交付仍为部分完成。
 
-必须证明：可信公网 HTTPS、未授权拒绝、管理路径不可达、有效任务链路、撤销/取消/重试正确、真实 Muse/dots 浏览器证据、数据留存、LACK 发起与结果呈现、原服务对照及独立回滚。不能把健康检查或模拟图片当成整个系统验收。
+必须证明：两个域名的可信公网 HTTPS、所有者网页登录及静态资源保护、真实同域 WSS 连接、跨站 HTTP/WebSocket 拒绝、两类凭据隔离、错误密码请求的资源防护、所有者撤销及既有公开连接断开、节点未授权拒绝、网关管理路径不可达、有效任务链路、节点撤销/取消/重试正确、真实 Muse/dots 浏览器证据、数据留存、LACK 发起与结果呈现、原服务对照及独立回滚。节点测试还须证明其凭据不能访问网页或网关管理路径。不能把健康检查、仅浏览器能打开网页或模拟图片当成整个系统验收。
 
 官方参考：[Caddy 自动 HTTPS](https://caddyserver.com/docs/automatic-https)、[Caddy TLS](https://caddyserver.com/docs/caddyfile/directives/tls)。选择仅 443 的签发方式仍须验证 DNS 与现有代理环境；证书维护不替代应用授权。
+
+登录方案依据：[Caddy basic_auth](https://caddyserver.com/docs/caddyfile/directives/basic_auth)。代理配置依据：[Caddy reverse_proxy](https://caddyserver.com/docs/caddyfile/directives/reverse_proxy)。这些文档提供配置能力，不证明本项目已经完成登录、Origin 防护、连接撤销或低资源实测。
+
+## 本次设计更新与实施门槛
+
+本次仅补充已同意的双域名用途、单所有者网页访问建议、HTTP/WebSocket 防护与交付要求，没有修改产品代码、DNS、凭据或 VPS 配置，也没有重新执行产品测试。既有 139 项测试与 smoke 的通过记录属于上一次本地版本，不能证明本次公网设计已经实现。
+
+下一步在用户审阅本次书面设计后形成明确的实施计划，再按批准的计划进行本地开发和验证。上线之前必须取得受支持的服务器操作入口、刷新生产基线、确认权威 DNS 和 TCP 443 未冲突。此前 SSH 工作流被执行工具拒绝，尚未建立可信远程会话；不得换一种工具绕过拒绝，也不得把提供私钥或重新输入密码视为已经解决该问题。任何未满足的上线条件都明确列为阻塞，不以计划或本地测试冒充生产完成。
