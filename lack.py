@@ -301,7 +301,7 @@ function workspaceServices() {
       if (typeof sql !== 'string' || businessTables.test(sql)) throw new Error('workspace_sql_required');
       return rawDb.exec(sql);
     };
-    workspaceRuntimeServices = {identity, store, registry, close() {registry.close(); store.close(); identity.close();}};
+    workspaceRuntimeServices = {identity, store, registry, close() {this.transport?.close(); this.sessions?.close(); registry.close(); store.close(); identity.close();}};
   }
   return workspaceRuntimeServices;
 }
@@ -313,6 +313,33 @@ function workspaceMap(name) {
   const services = workspaceServices();
   // Private legacy materializations do not load the new modules implicitly.
   return services ? require('./collaboration/state.cjs').createScopedMap(name, {registry: services.registry, mode: 'multi-user'}) : new Map();
+}
+function workspaceTransport() {
+  const services = workspaceServices();
+  if (!services) return null;
+  if (!services.transport) {
+    if (!process.env.LACK_WEB_ORIGIN) throw new Error('web_origin_required');
+    services.sessions = require('./identity/sessions.cjs').createSessionService({store: services.identity, onRevoke: event => services.transport?.revoke(event)});
+    try {services.transport = require('./collaboration/transport.cjs').createWorkspaceTransport({identity: services.identity, sessions: services.sessions, state: services.registry, webOrigin: process.env.LACK_WEB_ORIGIN});}
+    catch (error) {services.sessions.close(); throw error;}
+  }
+  return services.transport;
+}
+function workspaceClients() {const transport = workspaceTransport(); return transport ? transport.scopedClients() : clients;}
+function initializeWorkspace(actor) {
+  const services = workspaceServices();
+  return require('./collaboration/context.cjs').runWithWorkspace(actor, () => {
+    const state = services.registry.get();
+    if (state.runtimeFlags.get('initialized')) return;
+    state.channels.set('general', {id: 'general', name: 'general', messages: services.store.forWorkspace(actor).getMessages('general'), researchActive: false, researchTopic: null, abstractActive: false, loopTimer: null, pinned: new Set()});
+    for (const agent of services.store.forWorkspace(actor).loadAgents()) {
+      state.agents.set(agent.id, {...agent, systemPrompt: agent.systemPrompt || '', lastResponseTime: new Map(), status: agent.status || 'online'});
+      state.agentMemories.set(agent.id, services.store.forWorkspace(actor).loadAgentMemory(agent.id) || {ePool: [], xPool: [], weights: {exploitation: 0.6, exploration: 0.4}, stats: {}, jspaceHistory: []});
+      state.agentMetrics.set(agent.id, {cpu: [], mem: [], activity: [], timestamps: [], ePoolHistory: [], xPoolHistory: [], tpsHistory: [], jspaceCoherence: [], spikes: []});
+      state.jsonFailCount.set(agent.id, 0);
+    }
+    state.runtimeFlags.set('initialized', true);
+  });
 }
 if (typeof process !== 'undefined' && process.env?.LACK_MULTI_USER === '1') {
   workspaceServices();
@@ -1360,6 +1387,7 @@ const loopHealth = workspaceMap('loopHealth'); // loopId -> scoped loop state
 function getUserId(ws) {
   let client = clients.get(ws);
   if (!client) {
+    if (process.env.LACK_MULTI_USER === '1') throw new Error('authenticated_client_required');
     const id = `human_${uuidv4().slice(0,4)}`;
     clients.set(ws, { username: id, channelId: 'general', userId: id });
     client = clients.get(ws);
@@ -1367,7 +1395,7 @@ function getUserId(ws) {
   return client.userId;
 }
 
-config.channels.forEach(ch => {
+if (process.env.LACK_MULTI_USER !== '1') config.channels.forEach(ch => {
   channels.set(ch.id, {
     id: ch.id, name: ch.name, messages: [],
     researchActive: false, researchTopic: null, abstractActive: false,
@@ -2798,7 +2826,7 @@ async function runResearch(sessionId, topic, channelId, agentId = null) {
   if (!session) return;
   const update = (updates) => {
     Object.assign(session, updates);
-    for (let [ws, client] of clients.entries()) {
+    for (let [ws, client] of workspaceClients().entries()) {
       if (client.channelId === channelId && ws.readyState === WebSocket.OPEN)
         ws.send(JSON.stringify({ type: 'research_update', sessionId, data: session }));
     }
@@ -3052,10 +3080,22 @@ async function buildFileTree(dir) {
 const app = express();
 const http = require('http');
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
+const transport = workspaceTransport();
+const wss = new WebSocket.Server({ server, maxPayload: transport ? 65536 : 1048576, perMessageDeflate: false,
+  verifyClient: transport ? (info, done) => {
+    try {Object.defineProperty(info.req, 'workspacePrincipal', {value: transport.authorizeUpgrade(info.req)}); done(true);}
+    catch (error) {done(false, error.statusCode || 403, 'Rejected');}
+  } : undefined
+});
+
+if (transport) {
+  const services = workspaceServices();
+  app.use(require('./identity/http.cjs').createIdentityRouter({store: services.identity, sessions: services.sessions, webOrigin: process.env.LACK_WEB_ORIGIN}));
+  app.use('/api', transport.httpContext, (req, res, next) => {initializeWorkspace(req.workspace); next();});
+}
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.json({ limit: '1mb' }));
+app.use(express.json({ limit: transport ? '64kb' : '1mb' }));
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', version: '4.2.2', uptime: process.uptime() });
@@ -3158,7 +3198,7 @@ app.post('/api/heartbeat', (req, res) => { console.log(`[HEARTBEAT] ${req.query.
 app.post('/api/cron/wipe', async (req, res) => {
   try {
     await wipeAllCronJobs(); await addHeartbeatCronJobs(); await resetApplicationData();
-    for (let [ws] of clients.entries()) if (ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ type: 'cron_reset' }));
+    for (let [ws] of workspaceClients().entries()) if (ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ type: 'cron_reset' }));
     res.json({ success: true });
   } catch(err) { logError({ source: 'cron_wipe', error: err.message }); res.status(500).json({ error: err.message }); }
 });
@@ -3198,6 +3238,10 @@ app.get('/api/jspace', async (req, res) => {
 
 // ==================== WEBSOCKET SERVER ====================
 server.listen(PORT, process.env.LACK_BIND_HOST || '127.0.0.1', async () => {
+  if (transport) {
+    console.log('[LACK] Workspace-authenticated runtime listening on its configured private bind. Global legacy maintenance is disabled.');
+    return;
+  }
   if (config.agentGateway?.enabled === true) {
     try { agentGateway = await require('./gateway/runtime.cjs').startAgentGateway({config, dataRoot: __dirname}); }
     catch { logError({context: 'agentGateway', error: 'Gateway could not start. Existing LACK service remains available.'}); }
@@ -3282,12 +3326,25 @@ jobs:
   console.log(`\x1b[32m✓ LACK v4.2.2 – Musing & Triangulation – running at http://localhost:${PORT}\x1b[0m`);
 });
 
-wss.on('connection', (ws) => {
-  const userId = `human_${uuidv4().slice(0,4)}`;
-  clients.set(ws, { username: userId, channelId: 'general', userId, openThreadId: null });
-  ws.on('message', async (raw) => {
+wss.on('connection', (ws, request) => {
+  let connectionActor;
+  if (transport) {
     try {
-      const data = JSON.parse(raw);
+      const client = transport.attach(ws, request.workspacePrincipal);
+      connectionActor = transport.actor(ws);
+      initializeWorkspace(connectionActor);
+      clients.set(ws, client);
+    } catch {ws.close(1008, 'Access denied'); return;}
+  } else {
+    const userId = `human_${uuidv4().slice(0,4)}`;
+    clients.set(ws, { username: userId, channelId: 'general', userId, openThreadId: null });
+  }
+  const installHandlers = () => {
+  ws.on('message', async (raw) => {
+    const dispatch = async () => {
+    try {
+      const parsed = JSON.parse(raw);
+      const data = transport ? transport.authorizeMessage(ws, parsed).message : parsed;
       const client = clients.get(ws);
       if (!client) return;
       switch (data.type) {
@@ -3343,7 +3400,7 @@ wss.on('connection', (ws) => {
           }
           break;
         case 'set_username':
-          client.username = data.username.substring(0, 20).replace(/[<>]/g, '');
+          if (!transport) client.username = data.username.substring(0, 20).replace(/[<>]/g, '');
           break;
         case 'spawn_agent': {
           const { name, model, provider, systemPrompt, channels: agentChannels, strictChannel } = data;
@@ -3356,15 +3413,18 @@ wss.on('connection', (ws) => {
             lastResponseTime: new Map(), status: 'online', statusMessage: ''
           };
           agents.set(id, newAgent);
+          if (!transport) {
           config.agents.push({ id, name, model, provider: safeProvider, systemPrompt: newAgent.systemPrompt, channels: agentChannels, strictChannel: strictChannel || null });
           try {
             const tmp = configPath + '.tmp';
             fs.writeFileSync(tmp, JSON.stringify(config, null, 2));
             fs.renameSync(tmp, configPath);
           } catch (e) {}
-          agentMetrics.set(id, generateSyntheticMetrics());
+          }
+          agentMetrics.set(id, transport ? {cpu: [], mem: [], activity: [], timestamps: [], ePoolHistory: [], xPoolHistory: [], tpsHistory: [], jspaceCoherence: [], spikes: []} : generateSyntheticMetrics());
           jsonFailCount.set(id, 0);
-          initAgentMemory(id);
+          if (!transport) initAgentMemory(id);
+          else agentMemories.set(id, {ePool: [], xPool: [], weights: {exploitation: 0.6, exploration: 0.4}, stats: {}, jspaceHistory: []});
           dbSaveAgent(newAgent);
           broadcastAgents();
           ws.send(JSON.stringify({ type: 'spawn_confirm', agent: newAgent }));
@@ -3384,7 +3444,7 @@ wss.on('connection', (ws) => {
             agent.channels = data.channels;
             agent.strictChannel = data.strictChannel || null;
             const idx = config.agents.findIndex(a => a.id === data.id);
-            if (idx !== -1) {
+            if (!transport && idx !== -1) {
               config.agents[idx] = { id: data.id, name: data.name, model: data.model, provider: agent.provider, systemPrompt: fullPrompt, channels: data.channels, strictChannel: data.strictChannel || null };
               try {
                 const tmp = configPath + '.tmp';
@@ -3411,7 +3471,11 @@ wss.on('connection', (ws) => {
           const msgReactions = userReactions.get(messageId);
           if (!msgReactions.has(emoji)) msgReactions.set(emoji, new Set());
           msgReactions.get(emoji).add(client.userId);
-          for (let [otherWs] of clients.entries()) {
+          if (transport) {
+            transport.broadcast({workspaceId: client.workspaceId, channelId: client.channelId, payload: {type: 'reaction_update', messageId, emoji, userId: client.userId, add: true}});
+            break;
+          }
+          for (let [otherWs] of workspaceClients().entries()) {
             if (otherWs.readyState === WebSocket.OPEN) otherWs.send(JSON.stringify({ type: 'reaction_update', messageId, emoji, userId: client.userId, add: true }));
           }
           break;
@@ -3424,17 +3488,31 @@ wss.on('connection', (ws) => {
           break;
       }
     } catch(err) {
-      const preview = typeof raw === 'string' ? raw.substring(0, 60).replace(/[\n\r]/g, ' ') : '[binary]';
-      logError({ source: 'websocket_parse', error: err.message, preview });
-      try { ws.send(JSON.stringify({ type: 'error', message: 'Invalid message format – check JSON syntax' })); } catch(_) {}
+      if (transport) {
+        try {ws.send(JSON.stringify({type: 'error', code: err.code || 'invalid_request', message: 'Request denied'}));} catch (_) {}
+      } else {
+        const preview = typeof raw === 'string' ? raw.substring(0, 60).replace(/[\n\r]/g, ' ') : '[binary]';
+        logError({ source: 'websocket_parse', error: err.message, preview });
+        try { ws.send(JSON.stringify({ type: 'error', message: 'Invalid message format – check JSON syntax' })); } catch(_) {}
+      }
     }
+    };
+    if (!transport) return dispatch();
+    try {return await require('./collaboration/context.cjs').runWithWorkspace(transport.actor(ws), dispatch);}
+    catch {ws.close(1008, 'Access denied');}
   });
   ws.on('close', () => {
     const client = clients.get(ws);
+    clients.delete(ws);
+    if (transport) {
+      if (client) {
+        try {const actor = workspaceServices().identity.requireMembership(client.userId, client.workspaceId); require('./collaboration/context.cjs').runWithWorkspace(actor, () => {if (client.channelId) cleanupStore(client.channelId);});} catch {}
+      }
+      return;
+    }
     if (client) {
       if (client.channelId) cleanupStore(client.channelId);
     }
-    clients.delete(ws);
   });
   ws.send(JSON.stringify({ type: 'channels', channels: Array.from(channels.values()).map(c => ({ id: c.id, name: c.name })) }));
   ws.send(JSON.stringify({ type: 'agents_list', agents: Array.from(agents.values()).map(a => {
@@ -3454,10 +3532,14 @@ wss.on('connection', (ws) => {
       lastCpu, lastMem, lastTps, lastJspace
     };
   }) }));
+  };
+  if (transport) require('./collaboration/context.cjs').runWithWorkspace(connectionActor, installHandlers);
+  else installHandlers();
 });
 
 // ==================== MESSAGE HANDLERS ====================
 async function onHumanMessage(channelId, messageObj, ws) {
+  if (typeof process !== 'undefined' && process.env?.LACK_MULTI_USER === '1') workspaceTransport().authorizeCommand(require('./collaboration/context.cjs').requireWorkspaceContext(), messageObj.content);
   const channel = channels.get(channelId);
   if (!channel) return;
   const content = messageObj.content;
@@ -4387,9 +4469,9 @@ function loadAgents() {
   }
 }
 
-loadAgents();
+if (process.env.LACK_MULTI_USER !== '1') loadAgents();
 
-for (const [id, agent] of agents) {
+if (process.env.LACK_MULTI_USER !== '1') for (const [id, agent] of agents) {
   agentMetrics.set(id, generateSyntheticMetrics());
   jsonFailCount.set(id, 0);
   initAgentMemory(id);
@@ -4525,8 +4607,9 @@ function getThreadMessages(storeId, threadId) {
 }
 
 function broadcastToStore(storeId, message, excludeWs = null) {
+  if (process.env.LACK_MULTI_USER === '1') return workspaceTransport().broadcast({workspaceId: require('./collaboration/context.cjs').requireWorkspaceContext().workspaceId, channelId: storeId, payload: {type: 'new_message', channelId: storeId, message}, excludeWs});
   const isChannel = channels.has(storeId);
-  for (let [ws, client] of clients.entries()) {
+  for (let [ws, client] of workspaceClients().entries()) {
     if (ws === excludeWs) continue;
     if (ws.readyState !== WebSocket.OPEN) continue;
     if (isChannel && client.channelId === storeId) {
@@ -4537,7 +4620,8 @@ function broadcastToStore(storeId, message, excludeWs = null) {
 
 function broadcastThreadUpdate(storeId, threadId, excludeWs = null) {
   const threadMsgs = getThreadMessages(storeId, threadId);
-  for (let [ws, client] of clients.entries()) {
+  if (process.env.LACK_MULTI_USER === '1') return workspaceTransport().broadcast({workspaceId: require('./collaboration/context.cjs').requireWorkspaceContext().workspaceId, channelId: storeId, threadId, payload: {type: 'thread_update', storeId, threadId, messages: threadMsgs}, excludeWs});
+  for (let [ws, client] of workspaceClients().entries()) {
     if (ws !== excludeWs && client.openThreadId === threadId && ws.readyState === WebSocket.OPEN) {
       ws.send(JSON.stringify({ type: 'thread_update', storeId, threadId, messages: threadMsgs }));
     }
@@ -4567,7 +4651,8 @@ function broadcastAgents() {
       lastCpu, lastMem, lastTps, lastJspace
     };
   });
-  for (let [ws] of clients.entries()) {
+  if (process.env.LACK_MULTI_USER === '1') return workspaceTransport().broadcast({workspaceId: require('./collaboration/context.cjs').requireWorkspaceContext().workspaceId, payload: {type: 'agents_list', agents: slim}});
+  for (let [ws] of workspaceClients().entries()) {
     if (ws.readyState === WebSocket.OPEN) ws.send(JSON.stringify({ type: 'agents_list', agents: slim }));
   }
 }
@@ -4581,7 +4666,8 @@ function broadcastRalphStatus(storeId) {
   const gen = ralphGenerations.get(storeId) || 0;
   const goal = ralphGoals.get(storeId) || '';
   const snippet = goal.length > 30 ? goal.substring(0,30)+'…' : goal;
-  for (let [ws, client] of clients.entries()) {
+  if (process.env.LACK_MULTI_USER === '1') return workspaceTransport().broadcast({workspaceId: require('./collaboration/context.cjs').requireWorkspaceContext().workspaceId, channelId: storeId, payload: {type: 'ralph_status', storeId, active, generation: gen, goal: snippet}});
+  for (let [ws, client] of workspaceClients().entries()) {
     if (ws.readyState === WebSocket.OPEN && client.channelId === storeId) {
       ws.send(JSON.stringify({ type: 'ralph_status', storeId, active, generation: gen, goal: snippet }));
     }

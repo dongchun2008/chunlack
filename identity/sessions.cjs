@@ -85,14 +85,14 @@ function createSessionService({store, now = Date.now, onRevoke = () => {}, admis
         return {token, csrfToken, sessionId: record.sessionId, user: store.getUser(account.id)};
       } finally {release();}
     },
-    authenticate(token) {
+    authenticate(token, {touch = true} = {}) {
       ensureOpen();
       const row = find(token), time = clock();
       if (row.user_disabled_at !== null || row.expires_at <= time || row.last_seen_at + idleMs <= time || row.last_seen_at > time) {
         notifySessions(store.revokeSessionRecord(row.id), 'expired');
         throw new IdentityError('unauthorized', 401);
       }
-      if (!store.touchSessionRecord(row.id)) throw new IdentityError('unauthorized', 401);
+      if (touch && !store.touchSessionRecord(row.id)) throw new IdentityError('unauthorized', 401);
       return Object.freeze({sessionId: row.id, userId: row.user_id, user: store.getUser(row.user_id), csrfToken: csrf(token)});
     },
     validateCsrf(token, supplied) {

@@ -49,3 +49,12 @@
 目前完成账号、权限、密码、会话、邀请、身份 HTTP 和工作区数据/状态基础，但尚未接入完整的公开运行入口。真人登录页面、HTTP/WebSocket 连接隔离、文件与模型授权、节点授权桥接、生产迁移及真实 Muse/dots 验收尚未完成。未提供可用的多人网页，不将上述测试称为完整交付。
 
 未修改 VPS、DNS、凭据、既有 LACK 或 Tailscale Relay。继续按 Task 5 实现 HTTP/WebSocket 的身份、消息权限与连接撤销；生产切换仍须满足计划中的单独安全条件。
+
+## 2026-10-10 Task 5: verified workspace HTTP and WebSocket boundary
+
+- Implemented authoritative session/membership/Origin/CSRF checks, server-owned sender identity, action allowlists and workspace/channel/thread-scoped delivery.
+- Passive push and sweep do not extend idle sessions; removal, disable and logout revoke live connections. Connection/frame bounds are enforced.
+- Real certificate-verified HTTPS/WSS fixtures and an isolated real embedded LACK child-process test passed. This is local validation with mock models, not VPS or real external-agent acceptance.
+- Full suite: 224 passed, 0 failed, 0 skipped. Smoke: passed (HTTP/WS, two mock backends, SQLite restart persistence, private bind, config preservation).
+- Public shell/Git, global maintenance and unscoped filesystem/summary interfaces remain denied pending resource guards. Member-owned cancellation requires server task ownership in Task 8.
+- Remaining delivery work: Tasks 6-12. Production cutover and real Muse/dots computer execution are not yet accepted.

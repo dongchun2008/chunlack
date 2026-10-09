@@ -51,7 +51,8 @@ function runtime(options = {}) {
     broadcastToStore() {},
     async gitCommit() { assert.fail('Research must not invoke Git'); }
   });
-  const api = vm.runInContext(section('function formatResearchSummary(', '// ==================== CLEANUP') + '\n({runResearch, formatResearchSummary})', context);
+  context.workspaceTransport = () => null;
+  const api = vm.runInContext(section('function workspaceClients()', 'function initializeWorkspace(') + section('function formatResearchSummary(', '// ==================== CLEANUP') + '\n({runResearch, formatResearchSummary})', context);
   return {api, session, calls, writes, messages, scraped};
 }
 

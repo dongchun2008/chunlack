@@ -6,7 +6,7 @@ const workspaceMapNames = Object.freeze([
   'pinnedMessages', 'userReactions', 'agentMetrics', 'jsonFailCount', 'embeddingCache',
   'ralphActive', 'ralphGenerations', 'ralphGoals', 'ralphTimers', 'ralphCancel',
   'ralphStagnation', 'ralphNextAgentIdx', 'ralphLastBroadcast', 'loopHealth',
-  'activeStackRepo', 'maintenanceCircuit', 'ollamaSemaphore', 'scrapeBlocklist', 'agentDegraded', 'proactiveThrottle'
+  'activeStackRepo', 'maintenanceCircuit', 'ollamaSemaphore', 'scrapeBlocklist', 'agentDegraded', 'proactiveThrottle', 'runtimeFlags'
 ]);
 function createWorkspaceState(workspaceId) {
   if (typeof workspaceId !== 'string' || !/^[A-Za-z0-9_.-]{1,128}$/.test(workspaceId) || workspaceId === '.' || workspaceId === '..') throw new IdentityError('invalid_workspace', 400);
