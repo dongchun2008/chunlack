@@ -76,10 +76,11 @@ function createGatewayStore({dbPath,now=Date.now}){
   }
   function eventReservations(){return q("SELECT COALESCE(SUM(MAX(0,CASE WHEN status IN ('leased','running','cancel_requested') THEN 4-attempt ELSE 3-attempt END)),0) AS n FROM tasks").get().n;}
   function leaseEnvelope(task){return {protocolVersion:1,taskId:task.id,taskType:task.task_type,targetNodeId:task.node_id,scopeId:task.scope_id,input:task.input,deadlineAt:task.deadline_at,leaseId:task.lease_id,leaseUntil:task.lease_until,attempt:task.attempt,traceId:task.trace_id,researchSessionId:task.research_session_id};}
-  function claimTask(nodeId){return mutate(()=>{
+  function claimTask(nodeId,pilotTaskId){return mutate(()=>{
     const n=liveNode(nodeId);sweepInternal();q('UPDATE nodes SET last_seen=? WHERE id=?').run(now(),nodeId);
+    if(pilotTaskId!==undefined)authorizePilotTask(nodeId,pilotTaskId);
     if(n.paused||q("SELECT COUNT(*) AS n FROM tasks WHERE status IN ('leased','running','cancel_requested')").get().n>=P.LIMITS.activeTasks)return null;
-    const row=q("SELECT * FROM tasks WHERE node_id=? AND status='queued' ORDER BY created_at,rowid LIMIT 1").get(nodeId);if(!row)return null;
+    const row=pilotTaskId===undefined?q("SELECT * FROM tasks WHERE node_id=? AND status='queued' ORDER BY created_at,rowid LIMIT 1").get(nodeId):q("SELECT * FROM tasks WHERE node_id=? AND id=? AND status='queued'").get(nodeId,pilotTaskId);if(!row)return null;
     if(!n.capabilities.includes(row.task_type)||!n.scopes.includes(row.scope_id))P.fail('scope_denied',403);
     const lease=randomUUID(),t=now();q("UPDATE tasks SET status='leased',lease_id=?,lease_until=?,attempt=attempt+1,updated_at=? WHERE id=?").run(lease,Math.min(t+P.LIMITS.leaseMs,row.deadline_at),t,row.id);
     return leaseEnvelope(getTask(row.id));
@@ -129,6 +130,7 @@ function createGatewayStore({dbPath,now=Date.now}){
     P.id(lease.taskId);P.id(lease.leaseId);if(!Number.isInteger(lease.attempt))P.fail('invalid_attempt');
     const task=owned(nodeId,lease);if(task.task_type!==Pilot.TYPE||task.scope_id!=='public')P.fail('pilot_task_required',403);return task;
   }
+  function authorizePilotTask(nodeId,taskId){const n=liveNode(nodeId),task=getTask(taskId);if(task.node_id!==nodeId||task.task_type!==Pilot.TYPE||task.scope_id!=='public'||!n.scopes.includes('public')||!n.capabilities.includes(Pilot.TYPE))P.fail('pilot_task_owner_denied',403);return task;}
   function publicArtifact(row){return row?{artifactId:row.id,nodeId:row.node_id,taskId:row.task_id,eventId:row.event_id,sha256:row.sha256,sizeBytes:row.size_bytes,width:row.width,height:row.height,contentType:row.content_type,createdAt:row.created_at}:null;}
   function listPilotArtifacts(){return q('SELECT * FROM pilot_artifacts').all().map(publicArtifact);}
   function getPilotArtifact(id){P.id(id);return publicArtifact(q('SELECT * FROM pilot_artifacts WHERE id=?').get(id));}
@@ -150,6 +152,6 @@ function createGatewayStore({dbPath,now=Date.now}){
   function verifyArtifact(nodeId,taskId,id){authorizePilotArtifact(nodeId,taskId,id);if(!artifactReader)P.fail('artifact_service_unavailable',503);artifactReader(nodeId,taskId,id);}
   function getPilotAcceptance(taskId){const task=getTask(taskId);if(task.task_type!==Pilot.TYPE)P.fail('pilot_task_required');const row=q('SELECT * FROM pilot_acceptance WHERE task_id=?').get(taskId);return {state:row.state,artifactId:row.artifact_id,acceptedAt:row.accepted_at};}
   function acceptPilotTask(taskId){return mutate(()=>{const task=getTask(taskId),state=getPilotAcceptance(taskId);if(task.status!=='succeeded'||!['evidence_checked','accepted'].includes(state.state))P.fail('pilot_acceptance_denied',409);verifyArtifact(task.node_id,taskId,state.artifactId);q("UPDATE pilot_acceptance SET state='accepted',accepted_at=COALESCE(accepted_at,?) WHERE task_id=?").run(now(),taskId);return getPilotAcceptance(taskId);},false);}
-  return {changes,createNode,pair,rePair,authenticate,getNode:id=>publicNode(node(id)),enqueueTask,claimTask,renewLease,appendEvent:(id,body)=>record(id,body,false),submitResult:(id,body)=>record(id,body,true),getTask,cancelTask,retryTask,revokeNode,setNodePaused,heartbeat,listNodes,listTasks,nodeEvents,sweep:()=>mutate(sweepInternal),cleanup,assertPilotLease,listPilotArtifacts,getPilotArtifact,findPilotArtifact,savePilotArtifact,authorizePilotArtifact,expiredPilotArtifacts,forgetPilotArtifact,registerPilotArtifactReader,getPilotAcceptance,acceptPilotTask,close:()=>{changes.removeAllListeners();db.close();}};
+  return {changes,createNode,pair,rePair,authenticate,getNode:id=>publicNode(node(id)),enqueueTask,claimTask,claimPilotTask:(nodeId,taskId)=>{P.id(taskId);return claimTask(nodeId,taskId);},authorizePilotTask,renewLease,appendEvent:(id,body)=>record(id,body,false),submitResult:(id,body)=>record(id,body,true),getTask,cancelTask,retryTask,revokeNode,setNodePaused,heartbeat,listNodes,listTasks,nodeEvents,sweep:()=>mutate(sweepInternal),cleanup,assertPilotLease,listPilotArtifacts,getPilotArtifact,findPilotArtifact,savePilotArtifact,authorizePilotArtifact,expiredPilotArtifacts,forgetPilotArtifact,registerPilotArtifactReader,getPilotAcceptance,acceptPilotTask,close:()=>{changes.removeAllListeners();db.close();}};
 }
 module.exports={createGatewayStore};
