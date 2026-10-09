@@ -1,6 +1,7 @@
 'use strict';
 const https=require('node:https');
 const P=require('./protocol.cjs');
+const {createPilotOpenApi}=require('./pilot-openapi.cjs');
 function createPilotNodeFacade({store,artifacts,tls,allowedNodeIds}){
   if(!Array.isArray(allowedNodeIds)||!allowedNodeIds.length||allowedNodeIds.length>5||!tls?.key||!tls?.cert)P.fail('invalid_facade_configuration');allowedNodeIds.forEach(P.id);const allowed=new Set(allowedNodeIds),rates=new Map(),sockets=new Set();let closed=false;
   function respond(res,status,value){if(res.destroyed||res.writableEnded)return;res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store','X-Content-Type-Options':'nosniff',Connection:'close'});res.end(status===204?undefined:JSON.stringify(value));}
@@ -12,13 +13,17 @@ function createPilotNodeFacade({store,artifacts,tls,allowedNodeIds}){
     if(req.headers.origin||req.headers['sec-fetch-site']==='cross-site')P.fail('cross_origin_denied',403);
     const route=req.url;if(typeof route!=='string'||/[?%#\\]/.test(route))P.fail('not_found',404);
     if(req.method==='GET'&&route==='/health'){respond(res,200,{status:'ok',mode:'pilot_only'});return;}
-    const validGet=['/v1/manifest','/v1/agents/me'],validPost=['/v1/agents/me/heartbeat','/v1/tasks/claim'];const match=route.match(/^\/v1\/tasks\/([a-zA-Z0-9_-]{1,100})\/(heartbeat|events|result)$/),upload=route.match(/^\/v1\/pilot\/tasks\/([a-zA-Z0-9_-]{1,100})\/artifact$/);
-    if(!(req.method==='GET'&&validGet.includes(route))&&!(req.method==='POST'&&(validPost.includes(route)||match||upload)))P.fail('not_found',404);
+    const validGet=['/v1/manifest','/v1/agents/me','/v1/openapi.json'],validPost=['/v1/agents/me/heartbeat','/v1/tasks/claim'];const read=route.match(/^\/v1\/tasks\/([a-zA-Z0-9_-]{1,100})$/),match=route.match(/^\/v1\/tasks\/([a-zA-Z0-9_-]{1,100})\/(heartbeat|events|result)$/),upload=route.match(/^\/v1\/pilot\/tasks\/([a-zA-Z0-9_-]{1,100})\/artifact$/);
+    if(!(req.method==='GET'&&(validGet.includes(route)||read))&&!(req.method==='POST'&&(validPost.includes(route)||match||upload)))P.fail('not_found',404);
     const n=node(req);
-    if(req.method==='GET'){respond(res,200,route==='/v1/manifest'?{protocolVersion:1,nodeId:n.id,capabilities:n.capabilities,scopes:n.scopes,limits:P.LIMITS}:n);return;}
+    if(req.method==='GET'){
+      if(read){const value=store.authorizePilotTask(n.id,read[1]);respond(res,200,{taskId:value.id,taskType:value.task_type,scopeId:'public',status:value.status,input:value.input,deadlineAt:value.deadline_at,acceptance:store.getPilotAcceptance(value.id)});}
+      else respond(res,200,route==='/v1/openapi.json'?createPilotOpenApi():route==='/v1/manifest'?{protocolVersion:1,nodeId:n.id,capabilities:n.capabilities,scopes:n.scopes,limits:P.LIMITS}:n);
+      return;
+    }
     if(upload){task(n.id,upload[1]);const attempt=req.headers['x-pilot-attempt'];if(typeof attempt!=='string'||! /^[1-3]$/.test(attempt))P.fail('invalid_attempt');const lease={taskId:upload[1],leaseId:req.headers['x-pilot-lease-id'],attempt:Number(attempt)};store.assertPilotLease(n.id,lease);const bytes=await body(req,2097152,false);if(!req.complete||req.aborted||res.destroyed)P.fail('upload_disconnected',409);respond(res,201,artifacts.put(n.id,lease,{eventId:req.headers['x-pilot-event-id'],contentType:req.headers['content-type'],bytes}));return;}
     const data=await body(req,P.LIMITS.bodyBytes);
-    if(route==='/v1/tasks/claim'){P.fields(data,[]);const value=store.claimTask(n.id);respond(res,value?200:204,value);return;}
+    if(route==='/v1/tasks/claim'){P.fields(data,['taskId']);if(data.taskId!==undefined)P.id(data.taskId);const value=data.taskId===undefined?store.claimTask(n.id):store.claimPilotTask(n.id,data.taskId);respond(res,value?200:204,value);return;}
     if(route==='/v1/agents/me/heartbeat'){P.fields(data,['capabilities']);if(data.capabilities!==undefined&&(!Array.isArray(data.capabilities)||data.capabilities.some(c=>c!=='browser.public_read')))P.fail('invalid_capability');respond(res,200,store.heartbeat(n.id,data.capabilities||[]));return;}
     task(n.id,match[1]);if(data.taskId!==match[1])P.fail('task_id_mismatch');
     if(match[2]==='heartbeat'){P.fields(data,['taskId','leaseId','attempt']);respond(res,200,store.renewLease(n.id,data.taskId,data.leaseId,data.attempt));}

@@ -8,6 +8,10 @@
 
 `gateway/node-facade.cjs` 提供仅限公开网页试点的 HTTPS 节点接口，使用预批准节点列表和节点凭据。当前只允许监听 `127.0.0.1`，不直接部署在 Tailscale 地址或公网地址上。
 
+自定义连接器可使用认证的 `GET /v1/openapi.json` 获取接口说明，使用 `GET /v1/tasks/{taskId}` 只读核对任务，然后通过 `POST /v1/tasks/claim` 的 `taskId` 参数精确领取。旧版 `{}` 请求保持兼容。指定任务不可领取时返回 204，不会转而领取其他任务。
+
+详细约定见同目录的 `MUSE_CUSTOM_CONNECTOR_PREFLIGHT.zh-CN.md`。接口准备完成不代表真实 Muse 连接器已验证兼容；当前仍没有实际私网服务地址可交付。
+
 ## 本地验证
 
 在仓库根目录运行，要求项目依赖和 Node.js 已安装：

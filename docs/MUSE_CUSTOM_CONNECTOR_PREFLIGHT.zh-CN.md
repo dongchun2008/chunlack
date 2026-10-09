@@ -43,8 +43,10 @@ Meta 的说明确认：可以要求 Muse 为列表外的服务创建 Custom Conn
 | --- | --- | --- |
 | GET `/health` | 无凭据 | 状态和 `pilot_only` 标识；不代表模型或 Agent 可用 |
 | GET `/v1/manifest` | 节点 Bearer 凭据 | 协议版本、节点能力、范围、限制；适合作为获批后的首个认证只读检查 |
+| GET `/v1/openapi.json` | 节点 Bearer 凭据 | OpenAPI 3.0.3 接口说明，不内嵌服务器地址或凭据；实际 Muse 导入兼容性待验证 |
 | GET `/v1/agents/me` | 节点 Bearer 凭据 | 当前节点信息；仅在确有需要时使用 |
-| POST `/v1/tasks/claim` | JSON `{}` | 领取该节点最早排队任务；这是写操作，不是连通性探测。无任务时 HTTP 204 |
+| GET `/v1/tasks/{taskId}` | 节点 Bearer 凭据 | 只读查看自己的公开任务、截止时间和验收状态，不返回租约或领取任务 |
+| POST `/v1/tasks/claim` | JSON `{"taskId":"<approved taskId>"}`，旧调用可用 `{}` | 有 taskId 时只领取指定任务；不会退回其他任务。空对象仍按旧队列规则领取。无任务或执行槽位不可用时 HTTP 204 |
 | POST `/v1/tasks/{taskId}/heartbeat` | JSON `taskId`、`leaseId`、`attempt` | 续租并查询取消状态 |
 | POST `/v1/tasks/{taskId}/events` | 协议事件 JSON | 记录开始、进度或取消；带稳定事件编号 |
 | POST `/v1/pilot/tasks/{taskId}/artifact` | 原始 PNG/JPEG | 上传实际截图，不接受图片 URL、SVG 或模型生成图片代替证据 |
@@ -52,7 +54,9 @@ Meta 的说明确认：可以要求 Muse 为列表外的服务创建 Custom Conn
 
 除 `/health` 外，以上接口使用 `Authorization: Bearer <node credential>`。JSON 请求使用 `Content-Type: application/json`。节点必须在预批准列表内，且只有 `browser.public_read` 能力和 `public` 范围；不给 Muse 管理员或配对接口权限。
 
-当前 HTTPS facade 不提供 GET 指定任务接口，也不支持在 claim 请求中指定 taskId。MCP 试点另有精确任务领取工具，但不能直接假定 Muse 自定义连接器支持那个 MCP 协议。REST 首次试点必须由管理员确保该专用节点只有一个批准的排队任务，并核对返回任务；不匹配就停止。若需要多任务精确领取，应另行确认最小接口修改，不在本阶段默默新增。
+REST 试点现在支持先读取指定任务，再按批准的 taskId 精确领取。新增接口复用原任务归属和领取检查，不新增管理员权限。指定任务已被领取、已取消、已结束、已过期或执行槽位占用时，不改领其他排队任务。调用者不得把 HTTP 204 当成重新执行或改领其他任务的授权。
+
+OpenAPI 的认证和接口能力不等于 Muse 已支持导入。服务地址须在真实私网配置获批后单独设置，不使用测试证书部署。该说明提供受限连接器操作契约，结果提交只描述有实际证据的成功分支；不要求用假结果掩盖执行失败，也不为真实 Muse 自动唤醒提供接口。
 
 ## 任务与证据约定
 
@@ -105,4 +109,4 @@ X-Pilot-Event-Id: <stable unique upload event ID>
 
 ## 当前尚未完成
 
-真实 Muse 自定义连接器兼容性、私网部署、可信证书、凭据配置、图片上传与自身电脑执行均未验证。本轮只新增接入前说明；未改运行代码、未运行新测试，也未读取真实凭据或操作 VPS。此前本地模拟测试不能替代这些验证。
+真实 Muse 自定义连接器兼容性、私网部署、可信证书、凭据配置、实际截图上传与自身电脑执行均未验证。本阶段已新增本地任务读取、精确领取和 OpenAPI 接口及回归测试，但未读取真实凭据或操作 VPS。本地模拟测试不能替代真实接入验收。

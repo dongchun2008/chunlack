@@ -41,3 +41,20 @@ from the private-key-marker check; all real credentials must remain out of Git.
 
 Integration instructions: MUSE_PRIVATE_TRANSPORT.zh-CN.md and
 DOTS_PRIVATE_COMPUTER.zh-CN.md in this directory.
+
+## Subsequent REST connector interface validation
+
+The later REST enhancement adds authenticated GET /v1/tasks/{taskId}, optional
+taskId selection on POST /v1/tasks/claim, and authenticated GET /v1/openapi.json.
+It reuses existing task ownership and exact-claim logic. Legacy empty claims remain
+compatible. The OpenAPI document contains no server origin or real credentials.
+
+Six new actual HTTPS-through-CONNECT regression tests cover read-only task views,
+exact selection without FIFO fallback, duplicate/slot behavior, cancelled/expired
+tasks, foreign/revoked access, malformed selectors, authenticated OpenAPI schemas,
+and the legacy claim flow. JSON references and operation IDs are checked locally;
+this is not certification by an external OpenAPI validator or real Muse import.
+
+Latest full run: 133 passed, 0 failed, 0 cancelled, 0 skipped; exit 0. The existing
+HTTP/WebSocket/SQLite smoke test also passed; exit 0. Real Muse/dots verification,
+private deployment and all production limitations above remain unchanged.
