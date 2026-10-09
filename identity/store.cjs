@@ -39,6 +39,7 @@ function createIdentityStore({dbPath, now = Date.now}) {
   }
   const db = new Database(dbPath);
   let closed = false;
+  const listeners = new Set();
   const clock = () => {
     const value = now();
     if (!Number.isSafeInteger(value) || value < 0) throw new IdentityError('invalid_clock', 500);
@@ -139,6 +140,15 @@ function createIdentityStore({dbPath, now = Date.now}) {
     const row = db.prepare('SELECT role FROM memberships WHERE workspace_id=? AND user_id=?').get(workspaceId, userId);
     if (row?.role === 'owner' && ownerCount(workspaceId) <= 1) throw new IdentityError('last_owner', 409);
   }
+  function digestValue(value) {
+    if (typeof value !== 'string' || !/^[a-f0-9]{64}$/.test(value)) throw new IdentityError('invalid_digest', 400);
+    return value;
+  }
+  function revokeAll(userId, time) {
+    const rows = db.prepare('SELECT id,user_id FROM sessions WHERE user_id=? AND revoked_at IS NULL').all(userId);
+    db.prepare('UPDATE sessions SET revoked_at=? WHERE user_id=? AND revoked_at IS NULL').run(time, userId);
+    return rows.map(row => ({sessionId: row.id, userId: row.user_id}));
+  }
 
   const api = {
     createUser({login, passwordHash}) {
@@ -226,6 +236,103 @@ function createIdentityStore({dbPath, now = Date.now}) {
         return safeUser(userRow(userId));
       }).immediate();
     },
+    onIdentityChange(listener) {
+      if (typeof listener !== 'function') throw new IdentityError('invalid_listener', 400);
+      listeners.add(listener);
+      return () => listeners.delete(listener);
+    },
+    createSessionRecord({userId, tokenHash, csrfHash, expectedPasswordHash, expiresAt}) {
+      digestValue(tokenHash); digestValue(csrfHash);
+      return db.transaction(() => {
+        const user = activeUser(userId, 'unauthorized'), time = clock();
+        if (user.password_hash !== expectedPasswordHash) throw new IdentityError('unauthorized', 401);
+        if (!Number.isSafeInteger(expiresAt) || expiresAt <= time || expiresAt > time + 12 * 60 * 60 * 1000) {
+          throw new IdentityError('invalid_expiry', 400);
+        }
+        const old = db.prepare('SELECT id,user_id FROM sessions WHERE user_id=? AND revoked_at IS NULL ORDER BY created_at,id').all(userId);
+        const revoked = old.slice(0, Math.max(0, old.length - 9)).map(row => ({sessionId: row.id, userId: row.user_id}));
+        for (const row of revoked) db.prepare('UPDATE sessions SET revoked_at=? WHERE id=?').run(time, row.sessionId);
+        const sessionId = randomUUID();
+        db.prepare('INSERT INTO sessions(id,token_hash,csrf_hash,user_id,created_at,last_seen_at,expires_at) VALUES (?,?,?,?,?,?,?)')
+          .run(sessionId, tokenHash, csrfHash, userId, time, time, expiresAt);
+        recordAudit({targetId: userId, action: 'session.created'});
+        return {sessionId, userId, revoked};
+      }).immediate();
+    },
+    findSessionRecord(tokenHash) {
+      digestValue(tokenHash);
+      return db.prepare('SELECT s.*,u.disabled_at AS user_disabled_at FROM sessions s JOIN users u ON u.id=s.user_id WHERE s.token_hash=?').get(tokenHash) || null;
+    },
+    touchSessionRecord(sessionId) {
+      const time = clock();
+      return db.prepare(`UPDATE sessions SET last_seen_at=? WHERE id=? AND revoked_at IS NULL AND expires_at>?
+        AND last_seen_at>? AND last_seen_at<=? AND EXISTS(SELECT 1 FROM users u WHERE u.id=sessions.user_id AND u.disabled_at IS NULL)`)
+        .run(time, sessionId, time, time - 30 * 60 * 1000, time).changes === 1;
+    },
+    revokeSessionRecord(sessionId) {
+      return db.transaction(() => {
+        const row = db.prepare('SELECT id,user_id FROM sessions WHERE id=? AND revoked_at IS NULL').get(sessionId);
+        if (!row) return [];
+        db.prepare('UPDATE sessions SET revoked_at=? WHERE id=?').run(clock(), sessionId);
+        recordAudit({targetId: row.user_id, action: 'session.revoked'});
+        return [{sessionId: row.id, userId: row.user_id}];
+      }).immediate();
+    },
+    revokeUserSessions(userId) {
+      return db.transaction(() => {
+        const rows = revokeAll(userId, clock());
+        if (rows.length) recordAudit({targetId: userId, action: 'sessions.revoked'});
+        return rows;
+      }).immediate();
+    },
+    issueResetRecord({userId, tokenHash, expiresAt}) {
+      digestValue(tokenHash);
+      return db.transaction(() => {
+        activeUser(userId, 'unauthorized');
+        const time = clock();
+        if (!Number.isSafeInteger(expiresAt) || expiresAt <= time || expiresAt > time + 30 * 60 * 1000) {
+          throw new IdentityError('invalid_expiry', 400);
+        }
+        db.prepare('UPDATE reset_tokens SET consumed_at=? WHERE user_id=? AND consumed_at IS NULL').run(time, userId);
+        db.prepare('INSERT INTO reset_tokens(id,token_hash,user_id,created_at,expires_at) VALUES (?,?,?,?,?)')
+          .run(randomUUID(), tokenHash, userId, time, expiresAt);
+        recordAudit({targetId: userId, action: 'password_reset.issued'});
+      }).immediate();
+    },
+    findResetRecord(tokenHash) {
+      digestValue(tokenHash);
+      return db.prepare(`SELECT r.user_id,u.login FROM reset_tokens r JOIN users u ON u.id=r.user_id
+        WHERE r.token_hash=? AND r.consumed_at IS NULL AND r.expires_at>? AND u.disabled_at IS NULL`)
+        .get(tokenHash, clock()) || null;
+    },
+    consumePasswordReset({tokenHash, passwordHash}) {
+      digestValue(tokenHash);
+      if (typeof passwordHash !== 'string' || passwordHash.length < 32 || passwordHash.length > 1024) {
+        throw new IdentityError('invalid_password_hash', 400);
+      }
+      return db.transaction(() => {
+        const row = api.findResetRecord(tokenHash);
+        if (!row) throw new IdentityError('unauthorized', 401);
+        const time = clock();
+        db.prepare('UPDATE users SET password_hash=? WHERE id=?').run(passwordHash, row.user_id);
+        db.prepare('UPDATE reset_tokens SET consumed_at=? WHERE user_id=? AND consumed_at IS NULL').run(time, row.user_id);
+        const revoked = revokeAll(row.user_id, time);
+        recordAudit({targetId: row.user_id, action: 'password_reset.consumed'});
+        return {userId: row.user_id, revoked};
+      }).immediate();
+    },
+    sweepAuthRecords() {
+      return db.transaction(() => {
+        const time = clock(), cutoff = time - 7 * 24 * 60 * 60 * 1000;
+        const rows = db.prepare(`SELECT s.id,s.user_id FROM sessions s JOIN users u ON u.id=s.user_id
+          WHERE s.revoked_at IS NULL AND (s.expires_at<=? OR s.last_seen_at<=? OR u.disabled_at IS NOT NULL)
+          ORDER BY s.expires_at,s.id LIMIT 100`).all(time, time - 30 * 60 * 1000);
+        for (const row of rows) db.prepare('UPDATE sessions SET revoked_at=? WHERE id=?').run(time, row.id);
+        db.prepare('DELETE FROM sessions WHERE id IN (SELECT id FROM sessions WHERE revoked_at IS NOT NULL AND revoked_at<? LIMIT 100)').run(cutoff);
+        db.prepare('DELETE FROM reset_tokens WHERE id IN (SELECT id FROM reset_tokens WHERE expires_at<? LIMIT 100)').run(cutoff);
+        return rows.map(row => ({sessionId: row.id, userId: row.user_id}));
+      }).immediate();
+    },
     listAudit(actor, {limit = 100} = {}) {
       const current = managementActor(actor, actor?.workspaceId, 'audit.read');
       if (!Number.isInteger(limit) || limit < 1 || limit > 200) throw new IdentityError('invalid_limit', 400);
@@ -236,9 +343,16 @@ function createIdentityStore({dbPath, now = Date.now}) {
   };
   const guarded = Object.fromEntries(Object.entries(api).map(([name, fn]) => [name, (...args) => {
     if (closed) throw new IdentityError('store_closed', 503);
-    return fn(...args);
+    const result = fn(...args);
+    let event;
+    if (name === 'disableUser') event = {type: 'account_disabled', userId: args[0]};
+    if (name === 'setMembership' || name === 'removeMembership') {
+      event = {type: 'membership', workspaceId: args[1].workspaceId, userId: args[1].userId};
+    }
+    if (event) for (const listener of listeners) listener(Object.freeze(event));
+    return result;
   }]));
-  guarded.close = () => {if (!closed) {db.close(); closed = true;}};
+  guarded.close = () => {if (!closed) {db.close(); listeners.clear(); closed = true;}};
   return Object.freeze(guarded);
 }
 

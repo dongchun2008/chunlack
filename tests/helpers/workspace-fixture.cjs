@@ -4,7 +4,7 @@ const os = require('node:os');
 const path = require('node:path');
 const syntheticHash = '$scrypt$test-only$' + 'a'.repeat(64);
 
-function workspaceFixture(t) {
+function workspaceFixture(t, {passwordHash = syntheticHash} = {}) {
   const {createIdentityStore} = require('../../identity/store.cjs');
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'lack-identity-'));
   const dbPath = path.join(dir, 'identity.db');
@@ -26,7 +26,7 @@ function workspaceFixture(t) {
   });
   const store = open();
   const users = Object.fromEntries(['alice', 'bob', 'carol'].map(login =>
-    [login, store.createUser({login, passwordHash: syntheticHash})]));
+    [login, store.createUser({login, passwordHash})]));
   const workspaces = {
     a: store.createWorkspace({name: 'Workspace A', ownerId: users.alice.id}),
     b: store.createWorkspace({name: 'Workspace B', ownerId: users.bob.id})
@@ -34,7 +34,7 @@ function workspaceFixture(t) {
   const actor = (user, workspace) => store.requireMembership(users[user].id, workspaces[workspace].id);
   store.setMembership(actor('alice', 'a'), {workspaceId: workspaces.a.id, userId: users.bob.id, role: 'member'});
   store.setMembership(actor('bob', 'b'), {workspaceId: workspaces.b.id, userId: users.carol.id, role: 'viewer'});
-  return {dir, dbPath, store, users, workspaces, actor, open, advance: ms => {time += ms;}};
+  return {dir, dbPath, store, users, workspaces, actor, open, now: () => time, advance: ms => {time += ms;}};
 }
 
 function throwsCode(fn, code) {
