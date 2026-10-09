@@ -10,7 +10,13 @@
 
 [MCP Events](https://developers.openai.com/plugins/build/mcp-events) 官方说明支持 dots，要求 MCP 2.0、持久订阅存储及出站 webhook；[Secure MCP Tunnel](https://developers.openai.com/api/docs/guides/secure-mcp-tunnels) 提供私网侧出站连接，不需要私有服务公开监听。但当前账号权限、隧道与事件组合、真实电脑执行及结果回传均待验证。MCP 隧道不赋予浏览器通用私网访问，云端接入仍意味着选定任务数据进入供应商系统。
 
-2026-10-09 公共基础已在开发分支实现：browser.public_read、公开目标校验、本地受限截图存储、结果证据绑定与本机人工验收。代理适配、MCP Events 服务、远程附件接口和真实云端 Agent 闭环仍未实现。使用边界见 [公共基础说明](CLOUD_AGENT_FOUNDATION.zh-CN.md)，测试证据见 [本地验证记录](validation/2026-10-09-cloud-agent-foundation.md)。详细接口边界见 [双路线试点设计](superpowers/specs/2026-10-09-private-cloud-agent-pilot-design.md)。本地测试通过不代表已部署或入网。
+2026-10-09 当前状态：公共基础、Muse 显式 TLS CONNECT 运输、受限 HTTPS/REST/OpenAPI 门面、dots MCP / Events、受限截图上传和 SDK 指定任务能力均已在开发分支实现。本轮完整测试 139/139 通过，HTTP/WebSocket/SQLite 冒烟和两个独立本地试点通过。真实云端 Agent 闭环、正式私网部署与凭据集成仍未完成。使用入口见 [当前交付清单](CLOUD_AGENT_DELIVERY_2026-10-09.zh-CN.md)、[SDK 说明](SDK_PUBLIC_PILOT.zh-CN.md)、[Muse 运输](MUSE_PRIVATE_TRANSPORT.zh-CN.md) 和 [dots 云端电脑](DOTS_PRIVATE_COMPUTER.zh-CN.md)。本地测试通过不代表已部署、入网或真实云端电脑已执行。
+
+Muse 的名称是老镇；初心是用户在中转消息中的签名，不是另一个 Agent。dots 的玄玑需要以真实事件和电脑活动单独验收。本项目不会把编程会话交给 dots。
+
+## 历史路线资料
+
+以下 2026-10-08 的说明保留为历史背景，其中“未实现”表示当时状态，不能用于判断当前接口。Slack 不再作为接入目标；Gadgets token 不用于云端电脑连接，也不替代 ChunLACK 节点令牌。当前以以上更新和交付清单为准。
 
 核对日期：2026-10-08。Muse 指 muse.ai 的 Meta Muse；dots 暂按 OpenAI ChatGPT dots 理解。如果指其他同名产品，需要确认产品地址。
 

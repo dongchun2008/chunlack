@@ -1,6 +1,17 @@
 'use strict';
 const {randomUUID}=require('node:crypto');
 const {setTimeout:sleep}=require('node:timers/promises');
+function safeId(value){
+  if(typeof value!=='string'||!/^[A-Za-z0-9_-]{1,100}$/.test(value))throw new Error('Invalid gateway identifier');
+  return value;
+}
+async function readResponse(response){
+  if(response.status===204)return null;
+  const text=await response.text();if(Buffer.byteLength(text)>262144)throw new Error('Gateway response too large');
+  let value;try{value=JSON.parse(text);}catch{throw new Error('Invalid gateway response');}
+  if(!response.ok){const error=new Error(typeof value?.error==='string'?value.error:'Gateway request failed');error.status=response.status;throw error;}
+  return value;
+}
 function validateBaseUrl(value){
   const url=new URL(value);
   if(url.username||url.password||url.search||url.hash||url.pathname!=='/')throw new Error('Use a gateway origin without credentials or paths');
@@ -12,15 +23,35 @@ class AgentClient{
   async request(route,{method='GET',body,signal}={}){
     const signals=[AbortSignal.timeout(40000)];if(signal)signals.push(signal);
     const response=await this.transport(this.baseUrl+route,{method,redirect:'error',headers:{'Content-Type':'application/json',...(this.token?{Authorization:'Bearer '+this.token}:{})},body:body===undefined?undefined:JSON.stringify(body),signal:AbortSignal.any(signals)});
-    if(response.status===204)return null;
-    const text=await response.text();if(Buffer.byteLength(text)>262144)throw new Error('Gateway response too large');
-    let value;try{value=JSON.parse(text);}catch{throw new Error('Invalid gateway response');}
-    if(!response.ok){const error=new Error(typeof value.error==='string'?value.error:'Gateway request failed');error.status=response.status;throw error;}
-    return value;
+    return readResponse(response);
   }
   manifest(){return this.request('/v1/manifest');}
   status(){return this.request('/v1/agents/me');}
   claim(signal){return this.request('/v1/tasks/claim',{method:'POST',body:{},signal});}
+  readTask(taskId,signal){return this.request(`/v1/tasks/${safeId(taskId)}`,{signal});}
+  claimTask(taskId,signal){return this.request('/v1/tasks/claim',{method:'POST',body:{taskId:safeId(taskId)},signal});}
+  async uploadArtifact(task,{bytes,contentType='image/png',eventId=randomUUID()}={},signal){
+    signal?.throwIfAborted();
+    safeId(task.taskId);safeId(task.leaseId);safeId(eventId);
+    if(!Number.isInteger(task.attempt)||task.attempt<1||task.attempt>3)throw new Error('Invalid lease attempt');
+    if(!(bytes instanceof Uint8Array)||bytes.byteLength===0||bytes.byteLength>2097152)throw new Error('Artifact must contain 1 to 2097152 image bytes');
+    if(!['image/png','image/jpeg'].includes(contentType))throw new Error('Unsupported artifact content type');
+    const body=Buffer.from(bytes),route=`/v1/pilot/tasks/${task.taskId}/artifact`;
+    const headers={'Content-Type':contentType,'X-Pilot-Lease-Id':task.leaseId,'X-Pilot-Attempt':String(task.attempt),'X-Pilot-Event-Id':eventId,...(this.token?{Authorization:'Bearer '+this.token}:{})};
+    for(let attempt=0;;attempt++){
+      try{
+        signal?.throwIfAborted();
+        const signals=[AbortSignal.timeout(40000)];if(signal)signals.push(signal);
+        const response=await this.transport(this.baseUrl+route,{method:'POST',redirect:'error',headers,body,signal:AbortSignal.any(signals)});
+        const value=await readResponse(response);
+        if(!value||typeof value.artifactId!=='string')throw new Error('Invalid artifact acknowledgment');
+        return value;
+      }catch(error){
+        if(signal?.aborted||[400,401,403,409,413,415,429].includes(error.status)||attempt>=2)throw error;
+        await this.pause(1000*2**attempt,undefined,{signal});
+      }
+    }
+  }
   heartbeat(task,signal){return this.request(`/v1/tasks/${task.taskId}/heartbeat`,{method:'POST',body:{taskId:task.taskId,leaseId:task.leaseId,attempt:task.attempt},signal});}
   async send(task,envelope,result,signal){
     const payload={protocolVersion:1,taskId:task.taskId,leaseId:task.leaseId,attempt:task.attempt,eventId:randomUUID(),...envelope};

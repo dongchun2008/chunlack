@@ -6,7 +6,9 @@
 
 已实现的边界：独立 browser.public_read 能力、仅 public scope、固定 https://example.com/、任务随机校验码、既有节点身份和租约、独立 PNG/JPEG 附件存储、结果证据绑定和本机人工验收。研究任务与 Ollama / 供应商中立路由保持原路径。
 
-没有实现或开启：Muse 代理运输、私网门面、dots MCP / Events、远程附件上传接口、真实云端账号配对、VPS 部署和后台恢复。
+2026-10-09 更新：Muse 显式 TLS CONNECT 运输、loopback HTTPS 节点门面、dots MCP / Events 和两种受限附件上传路径已经实现并完成本地测试。SDK 已支持指定任务读取、精确领取及原始截图上传。真实云端账号配对、生产私网部署、后台恢复及真实云端电脑闭环仍未完成。
+
+请按 [当前接入交付清单](CLOUD_AGENT_DELIVERY_2026-10-09.zh-CN.md) 区分本地接口就绪与真实节点可用，不使用早期阶段描述判断当前状态。
 
 ## 运行本地模拟
 
@@ -28,7 +30,7 @@ node scripts/cloud-agent-foundation-pilot.cjs
 - gateway/store.cjs：复用 enqueueTask、claimTask、renewLease、submitResult；增加 assertPilotLease、getPilotAcceptance、acceptPilotTask 和内部附件元数据方法。
 - gateway/pilot-artifacts.cjs：createPilotArtifacts({store, root, now}) 返回 put、get、removeExpired。root 必须是专用目录；每次访问检查链接和文件完整性。初始化注册证据读取器，未初始化时成功结果拒绝。
 
-现有 HTTP 网关没有新增附件路由，不能现在让远程节点提交带截图的任务。acceptPilotTask 只供可信本机操作者调用，不暴露为节点工具。
+既有 HTTP 网关不开放通用附件路由；独立 HTTPS 节点门面已提供受限原始截图上传，MCP 门面已提供受限分块上传。它们在本地测试中可用，不代表已经部署到 VPS。acceptPilotTask 只供可信本机操作者调用，不暴露为节点工具。
 
 ## 容量、格式与验收
 

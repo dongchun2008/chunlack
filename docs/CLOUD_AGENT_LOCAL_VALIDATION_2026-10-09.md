@@ -58,3 +58,24 @@ this is not certification by an external OpenAPI validator or real Muse import.
 Latest full run: 133 passed, 0 failed, 0 cancelled, 0 skipped; exit 0. The existing
 HTTP/WebSocket/SQLite smoke test also passed; exit 0. Real Muse/dots verification,
 private deployment and all production limitations above remain unchanged.
+
+## SDK delivery update (2026-10-09)
+
+Added readTask, claimTask and uploadArtifact to the existing AgentClient without
+changing legacy claim/run entry points. Six SDK tests cover real local TLS over
+CONNECT, exact-task selection, PNG upload/result round trip, lost acknowledgments
+with stable event identity and byte snapshots, cancelled upload rejection, local
+input/abort guards, and the three-send retry bound. The boolean leak assertion
+was corrected from numeric 0 to boolean false before the final suite.
+
+Fresh full run: 139 passed, 0 failed, 0 cancelled, 0 skipped; exit 0.
+HTTP/WebSocket/SQLite smoke: PASS; exit 0.
+Muse transport pilot: synthetic_fixture, proxyVerified=true,
+museAgentVerified=false, acceptance=evidence_checked, cleanup=true; exit 0.
+Dots MCP pilot: mock_dot, dotsAgentVerified=false, event/task/artifact/result and
+subscription cleanup verified, humanAccepted=false, cleanup=true; exit 0.
+
+No real vendor credentials, live subscriptions, VPS deployment, public ports or
+production service changes were performed. Local interface delivery is not full
+real-node acceptance. See CLOUD_AGENT_DELIVERY_2026-10-09.zh-CN.md for remaining
+account, transport, lifecycle and operational acceptance gates.
