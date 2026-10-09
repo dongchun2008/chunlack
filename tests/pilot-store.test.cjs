@@ -1,0 +1,7 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict');
+const {input,setup}=require('./helpers/pilot-fixture.cjs');
+test('explicit pilot node claims a fixed public browser task',t=>{const f=setup(t),task=f.task();assert.equal(task.taskType,'browser.public_read');assert.equal(task.attempt,1);assert.deepEqual(task.input,input);});
+test('pilot rejects nonpublic scope and unapproved targets',t=>{const f=setup(t);assert.throws(()=>f.task({scopeId:'private'}));assert.throws(()=>f.task({input:{...input,url:'https://other.example/'}}));});
+test('old research nodes keep their capabilities without gaining browser access',t=>{const f=setup(t);const n=f.store.createNode({name:'research',capabilities:['research.retrieve','research.verify','research.summarize'],scopes:['public']});assert.throws(()=>f.store.enqueueTask({targetNodeId:n.id,scopeId:'public',taskType:'browser.public_read',input,deadlineAt:f.now()+300000}));for(const taskType of ['research.retrieve','research.verify','research.summarize'])assert.equal(f.store.enqueueTask({targetNodeId:n.id,scopeId:'public',taskType,input:{query:'public'},deadlineAt:f.now()+300000}).status,'queued');});
+test('pilot lease guard rejects expired, revoked and cancelled ownership',t=>{const f=setup(t),task=f.task();assert.equal(f.store.assertPilotLease(f.nodeId,task).id,task.taskId);assert.throws(()=>f.store.assertPilotLease('other',task));f.store.cancelTask(task.taskId);assert.throws(()=>f.store.assertPilotLease(f.nodeId,task));});

@@ -10,7 +10,7 @@
 
 [MCP Events](https://developers.openai.com/plugins/build/mcp-events) 官方说明支持 dots，要求 MCP 2.0、持久订阅存储及出站 webhook；[Secure MCP Tunnel](https://developers.openai.com/api/docs/guides/secure-mcp-tunnels) 提供私网侧出站连接，不需要私有服务公开监听。但当前账号权限、隧道与事件组合、真实电脑执行及结果回传均待验证。MCP 隧道不赋予浏览器通用私网访问，云端接入仍意味着选定任务数据进入供应商系统。
 
-当前代码没有上述代理适配、MCP Events 服务或浏览器任务类型。详细范围、接口边界与验收见 [双路线试点设计](superpowers/specs/2026-10-09-private-cloud-agent-pilot-design.md)。该设计待审阅，不代表实现、部署或入网已完成。
+2026-10-09 公共基础已在开发分支实现：browser.public_read、公开目标校验、本地受限截图存储、结果证据绑定与本机人工验收。代理适配、MCP Events 服务、远程附件接口和真实云端 Agent 闭环仍未实现。使用边界见 [公共基础说明](CLOUD_AGENT_FOUNDATION.zh-CN.md)，测试证据见 [本地验证记录](validation/2026-10-09-cloud-agent-foundation.md)。详细接口边界见 [双路线试点设计](superpowers/specs/2026-10-09-private-cloud-agent-pilot-design.md)。本地测试通过不代表已部署或入网。
 
 核对日期：2026-10-08。Muse 指 muse.ai 的 Meta Muse；dots 暂按 OpenAI ChatGPT dots 理解。如果指其他同名产品，需要确认产品地址。
 

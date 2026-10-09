@@ -1,6 +1,6 @@
 'use strict';
 const crypto = require('node:crypto');
-const TYPES = Object.freeze(['research.retrieve','research.verify','research.summarize']);
+const TYPES = Object.freeze(['research.retrieve','research.verify','research.summarize','browser.public_read']);
 const LIMITS = Object.freeze({nodes:5,activeTasks:1,tasks:1000,events:10000,eventsPerTask:100,bodyBytes:262144,leaseMs:90000,pairMs:300000,pollMs:30000});
 class GatewayError extends Error {
   constructor(code,status=400){super(code);this.code=code;this.status=status;}
