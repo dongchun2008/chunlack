@@ -156,7 +156,7 @@ function createCollaborationStore({db, identity}) {
         },
         loadProjectState(storeId) {check('task.read'); identifier(storeId); const row = db.prepare('SELECT state FROM project_states WHERE workspace_id=? AND store_id=?').get(workspaceId, storeId); return row ? JSON.parse(row.state) : null;},
         saveAgentMemory(agentId, memory) {
-          check('agent.manage'); identifier(agentId);
+          check('task.execute'); identifier(agentId);
           db.prepare(`INSERT INTO agent_memory(workspace_id,agent_id,e_pool,x_pool,weights,stats,last_update,data) VALUES(?,?,?,?,?,?,?,?)
             ON CONFLICT(workspace_id,agent_id) DO UPDATE SET e_pool=excluded.e_pool,x_pool=excluded.x_pool,weights=excluded.weights,stats=excluded.stats,last_update=excluded.last_update,data=excluded.data`).run(workspaceId, agentId, encode(memory.ePool || []), encode(memory.xPool || []), encode(memory.weights || {}), encode(memory.stats || {}), Date.now(), encode(memory));
         },
@@ -178,11 +178,15 @@ function createCollaborationStore({db, identity}) {
           check('task.execute'); identifier(id);
           db.prepare('INSERT INTO research_sessions(workspace_id,id,data,timestamp) VALUES(?,?,?,?) ON CONFLICT(workspace_id,id) DO UPDATE SET data=excluded.data,timestamp=excluded.timestamp').run(workspaceId, id, encode(data), Date.now());
         },
+        loadResearchSessions() {check('task.read'); return db.prepare('SELECT data FROM research_sessions WHERE workspace_id=? ORDER BY timestamp DESC,rowid DESC LIMIT 100').all(workspaceId).map(row => JSON.parse(row.data));},
         saveResearchSource(source) {
           check('task.execute'); identifier(source.id); identifier(source.researchId); content(source.url, 4096);
           let url; try {url = new URL(source.url);} catch {throw new IdentityError('invalid_source', 400);}
           if (!['https:', 'http:'].includes(url.protocol) || url.username || url.password) throw new IdentityError('invalid_source', 400);
-          db.prepare('INSERT INTO research_sources(workspace_id,id,research_id,url,title,excerpt,timestamp) VALUES(?,?,?,?,?,?,?)').run(workspaceId, source.id, source.researchId, source.url, content(source.title, 1024), content(source.excerpt), Date.now());
+          const result = db.prepare(`INSERT INTO research_sources(workspace_id,id,research_id,url,title,excerpt,timestamp) VALUES(?,?,?,?,?,?,?)
+            ON CONFLICT(workspace_id,id) DO UPDATE SET title=excluded.title,excerpt=excluded.excerpt,timestamp=excluded.timestamp
+            WHERE research_sources.research_id=excluded.research_id AND research_sources.url=excluded.url`).run(workspaceId, source.id, source.researchId, source.url, content(source.title, 1024), content(source.excerpt), Date.now());
+          if (!result.changes) throw new IdentityError('invalid_source', 400);
         },
         getResearchSources(researchId) {check('task.read'); identifier(researchId); return db.prepare('SELECT id,research_id AS researchId,url,title,excerpt,timestamp FROM research_sources WHERE workspace_id=? AND research_id=? ORDER BY rowid').all(workspaceId, researchId);},
         exportWorkspace() {

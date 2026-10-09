@@ -3,6 +3,8 @@ const {test}=require('node:test');const assert=require('node:assert/strict');con
 const {createGatewayStore}=require('../gateway/store.cjs');const {createAgentGateway}=require('../gateway/server.cjs');const {createResearchBridge,normalizeExternalRetrieval}=require('../gateway/research-bridge.cjs');const {AgentClient}=require('../sdk/agent-client.cjs');
 const root=path.resolve(__dirname,'..'),sources=JSON.parse(execFileSync(process.env.PYTHON||'python',['-c','import json,runpy; print(json.dumps(runpy.run_path("scripts/materialize.py")["embedded_sources"]()))'],{cwd:root,encoding:'utf8'}));
 const start=sources.SERVER_JS.indexOf('function formatResearchSummary('),end=sources.SERVER_JS.indexOf('async function runResearch(',start);
+const settingsStart=sources.SERVER_JS.indexOf('function workspaceSetting('),settingsEnd=sources.SERVER_JS.indexOf('function workspaceTransport(',settingsStart);
+assert.ok(settingsStart>=0&&settingsEnd>settingsStart);
 test('actual external verification uses the existing evidence gate; invented quotes fail',async t=>{
  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'lack-bridge-'));const store=createGatewayStore({dbPath:path.join(dir,'gateway.db')});
  const node=store.createNode({name:'Verifier',capabilities:['research.verify'],scopes:['public']}),paired=store.pair(node.pairingCode),gateway=createAgentGateway({store,adminToken:'a'.repeat(43),pollMs:40}),bridge=createResearchBridge({store});
@@ -10,7 +12,7 @@ test('actual external verification uses the existing evidence gate; invented quo
  let invented=false;const worker=client.run(async({task})=>({decisions:task.input.claims.map(claim=>({claimId:claim.claimId,status:'supported',reason:'Fixture evidence.',evidence:[{sourceId:claim.sourceId,quote:invented?'The fixture launched in 2099.':'The fixture launched in 2020.'}]}))}),{signal:stop.signal});
  t.after(async()=>{stop.abort();await worker.catch(()=>{});bridge.close();await gateway.close();store.close();fs.rmSync(dir,{recursive:true,force:true});});
  const role={kind:'external',nodeId:paired.nodeId};const material={question:'When did the fixture launch?',sources:[{sourceId:'S1',url:'https://example.org/fixture',excerpt:'The fixture launched in 2020.'}],claims:[{claimId:'C1',sourceId:'S1',text:'The fixture launched in 2020.'}]};
- const api=vm.runInNewContext(sources.SERVER_JS.slice(start,end)+'\n({validateResearchDecisions,dispatchResearchStage})',{config:{researchPublicOnly:true},agentGateway:{dispatchResearchStage:bridge.dispatchResearchStage},Date,Map,Set});
+ const api=vm.runInNewContext(sources.SERVER_JS.slice(settingsStart,settingsEnd)+sources.SERVER_JS.slice(start,end)+'\n({validateResearchDecisions,dispatchResearchStage})',{workspaceServices:()=>null,config:{researchPublicOnly:true},agentGateway:{dispatchResearchStage:bridge.dispatchResearchStage},Date,Map,Set});
  const raw=await api.dispatchResearchStage({sessionId:'fixture',stage:'verify',role,input:material});const note={sources:material.sources,evidence:material.claims};assert.equal(api.validateResearchDecisions(raw,note)[0].status,'supported');
  invented=true;const bad=await api.dispatchResearchStage({sessionId:'fixture',stage:'verify',role,input:material});assert.throws(()=>api.validateResearchDecisions(bad,note),/saved source/);
  await assert.rejects(()=>bridge.dispatchResearchStage({sessionId:'fixture',stage:'verify',role,input:material,privacy:'private'}),/public/);

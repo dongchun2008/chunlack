@@ -58,3 +58,14 @@
 - Full suite: 224 passed, 0 failed, 0 skipped. Smoke: passed (HTTP/WS, two mock backends, SQLite restart persistence, private bind, config preservation).
 - Public shell/Git, global maintenance and unscoped filesystem/summary interfaces remain denied pending resource guards. Member-owned cancellation requires server task ownership in Task 8.
 - Remaining delivery work: Tasks 6-12. Production cutover and real Muse/dots computer execution are not yet accepted.
+
+## 2026-10-10 Task 6: workspace resource and model boundaries verified locally
+
+- Added private workspace resource paths, traversal/symlink/junction rejection, separate personal user directories, bounded atomic JSON writes and credential-shaped payload rejection.
+- Model catalog summaries contain only granted IDs/models and safe metadata. Primary generation, embeddings and every fallback revalidate membership and model grants before transport. Viewers may read metadata but cannot generate; workspace owners are not platform credential administrators.
+- Embedding and J-space caches include workspace/user boundaries; shared-memory summaries and captured maintenance callbacks are workspace-scoped. Maintenance remains opt-in. Shell/Git/unreviewed Agent tool actions remain disabled in multi-user mode, including when shell permission is otherwise enabled.
+- Research snapshots are persisted with original URLs and acquired excerpts, updated without source URL substitution, and restored on workspace initialization. Existing no-synthetic-facts and missing-evidence regressions remain intact. Research roles and routing do not inherit legacy global assignments.
+- Local validation: 73 named resource/provider/research/store/runtime tests passed; the external research gateway compatibility regression passed 4/4; complete suite passed 237/237, zero skips. Smoke passed HTTP/WS, two mock model backends, SQLite restart persistence, private bind and config preservation.
+- Fixed observed regressions: pre-database initialization ordering, isolated legacy VM helper dependencies, stale saved research excerpts, personal-directory access and model execution versus metadata permission separation. Test assertions were retained.
+- Private operator configuration: workspaceModelGrants[workspaceId][providerId] = {models: [exactModelId, ...]}; omission denies access. workspaceSettings[workspaceId] or workspaces/<workspaceId>/settings.json selects researchAgentId/researchRoles/researchPublicOnly/agentRouting. These grant/settings snapshots currently require runtime restart to refresh; member/role/session revocation is checked live. UI administration follows Task 9.
+- Remaining: Tasks 7-12, including gateway/MCP/SDK workspace identity, global capacity, UI, materialization/public ingress, migration and real VPS/model/Muse/dots acceptance. No production cutover, credential change or VPS/Peer Relay modification was performed in this task. Passing local mock tests is not final delivery.

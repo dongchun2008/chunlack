@@ -31,17 +31,17 @@ test('actual embedded process enforces human identity, viewer denial and workspa
     const accounts = {};
     for (const name of ['alice', 'bob', 'carol']) accounts[name] = await sessions.login({login: name, password, source: 'runtime-fixture-' + name});
     let modelRequests = 0;
-    backend = http.createServer((req, res) => {modelRequests++; res.setHeader('Content-Type', 'application/json'); res.end(JSON.stringify({choices: [{message: {content: 'fixture-only reply'}}]}));});
+    backend = http.createServer((req, res) => {modelRequests++; res.setHeader('Content-Type', 'application/json'); res.end(JSON.stringify(req.method === 'GET' ? {data: [{id: 'fixture-model'}, {id: 'ungranted-model'}]} : {choices: [{message: {content: 'fixture-only reply'}}]}));});
     await new Promise(resolve => backend.listen(0, '127.0.0.1', resolve));
     const reservation = net.createServer(); await new Promise(resolve => reservation.listen(0, '127.0.0.1', resolve));
     const port = reservation.address().port; await new Promise(resolve => reservation.close(resolve));
     const sources = JSON.parse(execFileSync(process.env.PYTHON || 'python', ['-c', 'import json,runpy; print(json.dumps(runpy.run_path("scripts/materialize.py")["embedded_sources"]()))'], {cwd: root, encoding: 'utf8', timeout: 10000}));
     fs.writeFileSync(path.join(directory, 'server.js'), sources.SERVER_JS);
     fs.mkdirSync(path.join(directory, 'config')); fs.mkdirSync(path.join(directory, 'public'));
-    const config = {...JSON.parse(sources.CONFIG_JSON), httpPort: port, llmProvider: 'local-test', embeddingProvider: 'none', autoPullModels: false, enablePublicMemory: false, agentGateway: {enabled: false}, agents: [], llmProviders: [{id: 'local-test', local: true, requiresApiKey: false, baseUrl: `http://127.0.0.1:${backend.address().port}/v1`, models: ['fixture-model']}]};
+    const config = {...JSON.parse(sources.CONFIG_JSON), httpPort: port, llmProvider: 'local-test', embeddingProvider: 'none', autoPullModels: false, enablePublicMemory: false, agentGateway: {enabled: false}, agents: [], workspaceModelGrants: {[a.id]: {'local-test': {models: ['fixture-model']}}}, llmProviders: [{id: 'local-test', local: true, requiresApiKey: false, baseUrl: `http://127.0.0.1:${backend.address().port}/v1`, models: ['fixture-model']}]};
     const configFile = path.join(directory, 'config', 'lack.config.json'); fs.writeFileSync(configFile, JSON.stringify(config));
     const configBefore = fs.readFileSync(configFile);
-    for (const [folder, names] of Object.entries({identity: ['store', 'policy', 'sessions', 'passwords', 'admission', 'http'], collaboration: ['store', 'state', 'context', 'transport']})) {
+    for (const [folder, names] of Object.entries({identity: ['store', 'policy', 'sessions', 'passwords', 'admission', 'http'], collaboration: ['store', 'state', 'context', 'transport', 'resources']})) {
       fs.mkdirSync(path.join(directory, folder));
       for (const name of names) fs.copyFileSync(path.join(root, folder, name + '.cjs'), path.join(directory, folder, name + '.cjs'));
     }
@@ -83,6 +83,14 @@ test('actual embedded process enforces human identity, viewer denial and workspa
     viewer.ws.send(JSON.stringify({type: 'message', content: '/ground'}));
     assert.equal((await frame(viewer, value => value.type === 'error')).code, 'forbidden');
     assert.equal(modelRequests, 0);
+    assert.equal((await request('/api/models?provider=local-test', 'bob', b.id)).status, 403);
+    assert.equal(modelRequests, 0, 'Ungranted workspace must not discover models over the network');
+    const models = await request('/api/models?provider=local-test', 'alice', a.id);
+    assert.deepEqual(models.body.models, ['fixture-model']);
+    const requestsAfterDiscovery = modelRequests;
+    peerA.ws.send(JSON.stringify({type: 'spawn_agent', name: 'Forbidden-agent', model: 'ungranted-model', provider: 'local-test', channels: ['general']}));
+    assert.equal((await frame(peerA, value => value.type === 'error')).code, 'model_not_authorized');
+    assert.equal(modelRequests, requestsAfterDiscovery);
     peerA.ws.send(JSON.stringify({type: 'spawn_agent', name: 'A-agent', model: 'fixture-model', provider: 'local-test', channels: ['general'], systemPrompt: 'fixture prompt'}));
     const spawned = await frame(peerA, value => value.type === 'spawn_confirm');
     assert.ok(spawned.agent.id);

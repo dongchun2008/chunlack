@@ -39,7 +39,8 @@ const cheerio = require('cheerio');
 const simpleGit = require('simple-git');
 const { exec } = require('child_process');
 const util = require('util');
-const execPromise = util.promisify(exec);
+const legacyExecPromise = util.promisify(exec);
+const execPromise = (...args) => {if (workspaceServices()) return Promise.reject(new Error('public_tools_disabled')); return legacyExecPromise(...args);};
 const sqlite3 = require('better-sqlite3');
 const { ESLint } = require('eslint');
 let agentGateway = null;
@@ -203,7 +204,7 @@ const RESEARCH_DIR = path.join(__dirname, 'research');
 const LOG_DIR = path.join(__dirname, 'logs');
 const ERROR_LOG_PATH = path.join(LOG_DIR, 'error.log');
 fs.mkdirSync(LOG_DIR, { recursive: true });
-fs.mkdirSync(path.join(__dirname, 'lineage'), { recursive: true });
+if (process.env.LACK_MULTI_USER !== '1') fs.mkdirSync(path.join(__dirname, 'lineage'), { recursive: true });
 const GIT = simpleGit();
 
 const JSPACE_ENABLED = config.jspaceEnabled !== undefined ? config.jspaceEnabled : true;
@@ -220,7 +221,7 @@ const TRIANGULATE_PERSPECTIVES = config.triangulatePerspectives || 3;
 const JSPACE_DIR = path.join(__dirname, 'jspace');
 const JSPACE_DATA_PATH = path.join(JSPACE_DIR, 'qwen2.5_0.5b_jspace.json');
 let jspaceDirections = {};
-let jspaceCache = new Map();
+const jspaceCache = workspaceLazyMap('jspaceCache');
 
 function loadJspace() {
     if (!fs.existsSync(JSPACE_DIR)) fs.mkdirSync(JSPACE_DIR, { recursive: true });
@@ -301,7 +302,7 @@ function workspaceServices() {
       if (typeof sql !== 'string' || businessTables.test(sql)) throw new Error('workspace_sql_required');
       return rawDb.exec(sql);
     };
-    workspaceRuntimeServices = {identity, store, registry, close() {this.transport?.close(); this.sessions?.close(); registry.close(); store.close(); identity.close();}};
+    workspaceRuntimeServices = {identity, store, registry, close() {this.transport?.close(); this.sessions?.close(); for (const timer of this.resourceTimers || []) clearInterval(timer); registry.close(); store.close(); identity.close();}};
   }
   return workspaceRuntimeServices;
 }
@@ -309,10 +310,106 @@ function workspaceDbScope() {
   const context = require('./collaboration/context.cjs').requireWorkspaceContext();
   return workspaceServices().store.forWorkspace(context);
 }
+
+function workspaceResources() {
+  const services = workspaceServices();
+  if (!services) return null;
+  if (!services.resources) {
+    const grants = config.workspaceModelGrants || {};
+    const providerCatalog = Object.entries(llmProviders).map(([id, provider]) => ({id, name: provider.displayName || id, local: provider.local, configured: provider.configured,
+      grants: Object.fromEntries(Object.entries(grants).filter(([, value]) => value && Object.hasOwn(value, id)).map(([workspaceId, value]) => [workspaceId, value[id]]))}));
+    services.resources = require('./collaboration/resources.cjs').createWorkspaceResources({dataRoot: process.env.LACK_DATA_ROOT || __dirname, identity: services.identity, providerCatalog});
+  }
+  return services.resources;
+}
+function scopedResourceDir(kind, legacy) {
+  const resources = workspaceResources();
+  return resources ? resources.paths(require('./collaboration/context.cjs').requireWorkspaceContext())[kind] : legacy;
+}
+function workspaceAuthorizeModel(providerId, modelId = null, options = {}) {
+  const resources = workspaceResources();
+  return resources ? resources.authorizeProvider(require('./collaboration/context.cjs').requireWorkspaceContext(), providerId, modelId, options) : null;
+}
+async function workspaceModelList(providerName) {
+  workspaceAuthorizeModel(providerName);
+  const provider = llmProviders[providerName];
+  const models = provider && provider.listModels ? await provider.listModels() : [];
+  const resources = workspaceResources();
+  return resources ? resources.filterModels(require('./collaboration/context.cjs').requireWorkspaceContext(), providerName, models) : models;
+}
+function workspaceProviderList() {
+  const resources = workspaceResources();
+  return resources ? resources.listProviders(require('./collaboration/context.cjs').requireWorkspaceContext()) : Object.entries(llmProviders).map(([id, provider]) => ({id, name: provider.displayName || provider.name || id, configured: provider.configured !== false}));
+}
+function workspaceLazyMap(name) {
+  const legacy = new Map();
+  return new Proxy(legacy, {get(target, key) {
+    const services = workspaceServices();
+    if (services) {
+      const flags = services.registry.get().runtimeFlags;
+      if (!flags.has(name)) flags.set(name, new Map());
+      target = flags.get(name);
+    }
+    const value = target[key];
+    if (typeof value !== 'function') return value;
+    return (...args) => {
+      if (services && ['get', 'set', 'has', 'delete'].includes(key)) args[0] = workspaceResources().cacheKey(require('./collaboration/context.cjs').requireWorkspaceContext(), {kind: name, resourceId: String(args[0])});
+      return value.apply(target, args);
+    };
+  }});
+}
+function workspaceSummary(legacy) {
+  return new Proxy(legacy, {get(target, key) {return summary()[key];}, set(target, key, value) {summary()[key] = value; return true;}});
+  function summary() {
+    const services = workspaceServices(); if (!services) return legacy;
+    const flags = services.registry.get().runtimeFlags;
+    if (!flags.has('publicMemory')) flags.set('publicMemory', {lastUpdated: 0, summary: '', embeddings: null, enabled: false});
+    return flags.get('publicMemory');
+  }
+}
+function persistWorkspaceResearch(session) {
+  const resources = workspaceResources();
+  if (!resources) return false;
+  const actor = require('./collaboration/context.cjs').requireWorkspaceContext();
+  const scoped = workspaceServices().store.forWorkspace(actor);
+  scoped.saveResearch(session.id, session);
+  for (const source of session.sources || []) {
+    const id = session.id + '-' + source.sourceId;
+    scoped.saveResearchSource({id, researchId: session.id, url: source.url, title: source.title || '', excerpt: source.excerpt || ''});
+  }
+  resources.writeJson(actor, 'research/' + session.id + '.json', session);
+  return true;
+}
+function scheduleWorkspaceMaintenance(actor) {
+  const services = workspaceServices(), state = services.registry.get();
+  if (config.multiUser?.maintenanceEnabled !== true || actor.role !== 'owner' || state.runtimeFlags.has('maintenanceTimer')) return;
+  const timer = setInterval(() => require('./collaboration/context.cjs').runWithWorkspace(actor, async () => {
+    require('./identity/policy.cjs').authorize(services.identity.requireMembership(actor.userId, actor.workspaceId), 'task.execute');
+    for (const agent of agents.values()) await runMaintenanceTask('prune_' + agent.id, () => pruneAgentMemory(agent.id));
+    if (PUBLIC_MEMORY_SUMMARY.enabled) await runMaintenanceTask('publicMemory', () => updatePublicMemorySummary());
+  }).catch(() => console.warn('[LACK] Workspace maintenance stopped or failed.')), 24 * 60 * 60 * 1000);
+  timer.unref?.(); state.runtimeFlags.set('maintenanceTimer', timer);
+  if (!services.resourceTimers) services.resourceTimers = new Set();
+  services.resourceTimers.add(timer);
+}
+
 function workspaceMap(name) {
   const services = workspaceServices();
   // Private legacy materializations do not load the new modules implicitly.
   return services ? require('./collaboration/state.cjs').createScopedMap(name, {registry: services.registry, mode: 'multi-user'}) : new Map();
+}
+
+function workspaceSetting(key, legacy) {
+  const services = workspaceServices();
+  if (!services) return legacy;
+  const actor = require('./collaboration/context.cjs').requireWorkspaceContext();
+  const flags = services.registry.get().runtimeFlags;
+  if (!flags.has('settings')) {
+    const settings = workspaceResources().readJson(actor, 'settings.json') || config.workspaceSettings?.[actor.workspaceId] || {};
+    const allowed = ['researchAgentId', 'researchRoles', 'researchPublicOnly', 'agentRouting'];
+    flags.set('settings', JSON.parse(JSON.stringify(Object.fromEntries(allowed.filter(name => Object.hasOwn(settings, name)).map(name => [name, settings[name]])))));
+  }
+  return flags.get('settings')[key];
 }
 function workspaceTransport() {
   const services = workspaceServices();
@@ -330,14 +427,17 @@ function initializeWorkspace(actor) {
   const services = workspaceServices();
   return require('./collaboration/context.cjs').runWithWorkspace(actor, () => {
     const state = services.registry.get();
+    scheduleWorkspaceMaintenance(actor);
     if (state.runtimeFlags.get('initialized')) return;
     state.channels.set('general', {id: 'general', name: 'general', messages: services.store.forWorkspace(actor).getMessages('general'), researchActive: false, researchTopic: null, abstractActive: false, loopTimer: null, pinned: new Set()});
     for (const agent of services.store.forWorkspace(actor).loadAgents()) {
+      if (agent.retired === true) continue;
       state.agents.set(agent.id, {...agent, systemPrompt: agent.systemPrompt || '', lastResponseTime: new Map(), status: agent.status || 'online'});
-      state.agentMemories.set(agent.id, services.store.forWorkspace(actor).loadAgentMemory(agent.id) || {ePool: [], xPool: [], weights: {exploitation: 0.6, exploration: 0.4}, stats: {}, jspaceHistory: []});
+      state.agentMemories.set(agent.id, services.store.forWorkspace(actor).loadAgentMemory(agent.id) || {ePool: [], xPool: [], weights: {exploitation: 0.6, exploration: 0.4}, stats: {totalJudgements: 0, avgScore: 50, lastJudgeTime: 0}, jspaceHistory: []});
       state.agentMetrics.set(agent.id, {cpu: [], mem: [], activity: [], timestamps: [], ePoolHistory: [], xPoolHistory: [], tpsHistory: [], jspaceCoherence: [], spikes: []});
       state.jsonFailCount.set(agent.id, 0);
     }
+    for (const session of services.store.forWorkspace(actor).loadResearchSessions()) state.researchSessions.set(session.id, session);
     state.runtimeFlags.set('initialized', true);
   });
 }
@@ -490,7 +590,8 @@ const CACHE_MAX_SIZE = 500;
 const CACHE_TTL_MS = 60 * 60 * 1000;
 
 function getCachedEmbedding(text) {
-    const key = getEmbeddingNamespace() + ':' + text;
+    const resources = workspaceResources();
+    const key = resources ? resources.cacheKey(require('./collaboration/context.cjs').requireWorkspaceContext(), {kind: 'embedding', resourceId: getEmbeddingNamespace() + ':' + text}) : getEmbeddingNamespace() + ':' + text;
     const entry = embeddingCache.get(key);
     if (entry && (Date.now() - entry.timestamp) < CACHE_TTL_MS) {
         return entry.embedding;
@@ -499,7 +600,8 @@ function getCachedEmbedding(text) {
     return null;
 }
 function setCachedEmbedding(text, embedding) {
-    const key = getEmbeddingNamespace() + ':' + text;
+    const resources = workspaceResources();
+    const key = resources ? resources.cacheKey(require('./collaboration/context.cjs').requireWorkspaceContext(), {kind: 'embedding', resourceId: getEmbeddingNamespace() + ':' + text}) : getEmbeddingNamespace() + ':' + text;
     if (embeddingCache.size >= CACHE_MAX_SIZE) {
         const firstKey = embeddingCache.keys().next().value;
         embeddingCache.delete(firstKey);
@@ -627,8 +729,8 @@ process.on('SIGINT', () => { console.log('[LACK] SIGINT received, shutting down.
 const STACK_ROOT = path.join(__dirname, 'lack_repos');
 const TEMPLATES_DIR = path.join(STACK_ROOT, 'templates');
 const MANIFEST_PATH = path.join(TEMPLATES_DIR, 'manifest.json');
-fs.mkdirSync(STACK_ROOT, { recursive: true });
-fs.mkdirSync(TEMPLATES_DIR, { recursive: true });
+if (process.env.LACK_MULTI_USER !== '1') fs.mkdirSync(STACK_ROOT, { recursive: true });
+if (process.env.LACK_MULTI_USER !== '1') fs.mkdirSync(TEMPLATES_DIR, { recursive: true });
 let stackManifest = {};
 
 function simpleTfidfSimilarity(text1, text2) {
@@ -655,6 +757,7 @@ function getEmbeddingNamespace() {
 
 async function getEmbedding(text) {
   if (config.embeddingProvider === 'none') return null;
+  try {const id = config.embeddingProvider || 'ollama'; workspaceAuthorizeModel(id, CLOUD_PROVIDER_CONFIGS.get(id)?.embeddingModel || EMBEDDING_MODEL);} catch {return null;}
   const cached = getCachedEmbedding(text);
   if (cached) return cached;
   // Memory never follows a chat provider change implicitly.
@@ -718,7 +821,7 @@ async function scanAndReindexTemplates() {
 }
 
 async function stackBuild(repoName) {
-  const repoPath = path.join(STACK_ROOT, repoName);
+  const repoPath = path.join(scopedResourceDir('stack', STACK_ROOT), repoName);
   if (fs.existsSync(repoPath)) return `⚠️ Repository ${repoName} already exists.`;
   fs.mkdirSync(repoPath, { recursive: true });
   await execPromise(`git init && git checkout -b main`, { cwd: repoPath });
@@ -746,7 +849,7 @@ async function stackAdd(intent, storeId) {
     }
     if (best && bestScore > 0) {
       const activeRepo = activeStackRepo.get(storeId) || 'default';
-      const repoPath = path.join(STACK_ROOT, activeRepo);
+      const repoPath = path.join(scopedResourceDir('stack', STACK_ROOT), activeRepo);
       if (!fs.existsSync(repoPath)) return `No active repository. Use /stack set <repo> first.`;
       for (const [relPath, content] of Object.entries(best.files)) {
         const target = path.join(repoPath, relPath);
@@ -766,7 +869,7 @@ async function stackAdd(intent, storeId) {
   }
   if (best && bestScore > 0.45) {
     const activeRepo = activeStackRepo.get(storeId) || 'default';
-    const repoPath = path.join(STACK_ROOT, activeRepo);
+    const repoPath = path.join(scopedResourceDir('stack', STACK_ROOT), activeRepo);
     if (!fs.existsSync(repoPath)) return `No active repository. Use /stack set <repo> first.`;
     for (const [relPath, content] of Object.entries(best.files)) {
       const target = path.join(repoPath, relPath);
@@ -901,13 +1004,19 @@ function getChannelPersonality(channelName) {
 
 // ==================== DECENTMEM ====================
 const AGENT_MEMORY_DIR = path.join(__dirname, 'agent_memories');
-fs.mkdirSync(AGENT_MEMORY_DIR, { recursive: true });
+if (process.env.LACK_MULTI_USER !== '1') fs.mkdirSync(AGENT_MEMORY_DIR, { recursive: true });
 
 const agentMemories = workspaceMap('agentMemories');
-const PUBLIC_MEMORY_SUMMARY = { lastUpdated: 0, summary: '', embeddings: null, enabled: config.enablePublicMemory || false };
+const PUBLIC_MEMORY_SUMMARY = workspaceSummary({ lastUpdated: 0, summary: '', embeddings: null, enabled: config.enablePublicMemory || false });
 
 function initAgentMemory(agentId) {
-  const memPath = path.join(AGENT_MEMORY_DIR, `${agentId}.json`);
+  if (typeof workspaceResources === 'function' && workspaceResources()) {
+    const actor = require('./collaboration/context.cjs').requireWorkspaceContext();
+    const memory = workspaceServices().store.forWorkspace(actor).loadAgentMemory(agentId) || {ePool: [], xPool: [], weights: {exploitation: 0.6, exploration: 0.4}, stats: {totalJudgements: 0, avgScore: 50, lastJudgeTime: 0}, lastUpdate: Date.now(), jspaceHistory: []};
+    if (memory.embeddingNamespace !== getEmbeddingNamespace()) {for (const entry of [...memory.ePool, ...memory.xPool]) entry.embedding = null; memory.jspaceHistory = [];}
+    memory.embeddingNamespace = getEmbeddingNamespace(); agentMemories.set(agentId, memory); return;
+  }
+  const memPath = path.join(scopedResourceDir('memory', AGENT_MEMORY_DIR), `${agentId}.json`);
   let memory = {
     ePool: [],
     xPool: [],
@@ -934,7 +1043,8 @@ function initAgentMemory(agentId) {
 function saveAgentMemory(agentId) {
   const mem = agentMemories.get(agentId);
   if (!mem) return;
-  const memPath = path.join(AGENT_MEMORY_DIR, `${agentId}.json`);
+  if (typeof workspaceResources === 'function' && workspaceResources()) {workspaceServices().store.forWorkspace(require('./collaboration/context.cjs').requireWorkspaceContext()).saveAgentMemory(agentId, mem); return;}
+  const memPath = path.join(scopedResourceDir('memory', AGENT_MEMORY_DIR), `${agentId}.json`);
   try {
     fs.writeFileSync(memPath, JSON.stringify(mem, null, 2));
   } catch(e) { logError({ context: 'saveAgentMemory', error: e.message, agentId }); }
@@ -1233,7 +1343,16 @@ function getPublicMemorySummary() {
 }
 
 async function togglePublicMemory(enabled) {
+  if (workspaceServices()) {
+    const actor = require('./collaboration/context.cjs').requireWorkspaceContext();
+    require('./identity/policy.cjs').authorize(workspaceServices().identity.requireMembership(actor.userId, actor.workspaceId), 'workspace.manage');
+  }
   PUBLIC_MEMORY_SUMMARY.enabled = enabled;
+  if (workspaceServices()) {
+    require('./identity/policy.cjs').authorize(workspaceServices().identity.requireMembership(require('./collaboration/context.cjs').requireWorkspaceContext().userId, require('./collaboration/context.cjs').requireWorkspaceContext().workspaceId), 'workspace.manage');
+    if (enabled) await updatePublicMemorySummary();
+    return enabled;
+  }
   config.enablePublicMemory = enabled;
   try {
     const tmp = configPath + '.tmp';
@@ -1246,9 +1365,10 @@ async function togglePublicMemory(enabled) {
 
 // ==================== TOOL DEFINITIONS (with restriction) ====================
 const WORKSPACE_ROOT = path.join(__dirname, 'workspace');
-fs.mkdirSync(WORKSPACE_ROOT, { recursive: true });
+if (process.env.LACK_MULTI_USER !== '1') fs.mkdirSync(WORKSPACE_ROOT, { recursive: true });
 
 function securePath(relPath) {
+  if (typeof workspaceResources === 'function' && workspaceResources()) return workspaceResources().safePath(require('./collaboration/context.cjs').requireWorkspaceContext(), 'workspace/' + relPath);
   if (typeof relPath !== 'string' || !relPath) throw new Error('A workspace path is required');
   const target = path.resolve(WORKSPACE_ROOT, relPath);
   const relative = path.relative(WORKSPACE_ROOT, target);
@@ -1271,6 +1391,7 @@ const ALLOWED_COMMANDS = [];
 const TOOL_TIMEOUT_MS = 60000;
 
 async function executeTool(toolName, args, agentId = null) {
+  if (typeof workspaceServices === 'function' && workspaceServices()) return 'Tools are disabled in multi-user mode pending bounded workspace execution approval.';
   // Restriction: only Moderator can execute commands (execute_command)
   if (toolName === 'execute_command') {
     if (process.env.LACK_ALLOW_SHELL !== 'true') return 'Shell execution is disabled by deployment policy.';
@@ -1295,7 +1416,7 @@ async function executeTool(toolName, args, agentId = null) {
       }
       case 'execute_command': {
         const command = args.command;
-        const { stdout, stderr } = await execPromise(command, { cwd: WORKSPACE_ROOT, timeout: TOOL_TIMEOUT_MS });
+        const { stdout, stderr } = await execPromise(command, { cwd: scopedResourceDir('workspace', WORKSPACE_ROOT), timeout: TOOL_TIMEOUT_MS });
         return stdout || stderr || "Command executed (no output)";
       }
       default: return `❌ Unknown tool: ${toolName}`;
@@ -1307,12 +1428,12 @@ async function executeTool(toolName, args, agentId = null) {
 }
 
 const SKILLS_DIR = path.join(WORKSPACE_ROOT, '.skills');
-fs.mkdirSync(SKILLS_DIR, { recursive: true });
+if (process.env.LACK_MULTI_USER !== '1') fs.mkdirSync(SKILLS_DIR, { recursive: true });
 
 function loadSkills() {
-  if (!fs.existsSync(SKILLS_DIR)) return '';
-  const files = fs.readdirSync(SKILLS_DIR).filter(f => f.endsWith('.md'));
-  return files.map(f => fs.readFileSync(path.join(SKILLS_DIR, f), 'utf-8')).join('\n\n---\n\n');
+  if (!fs.existsSync(scopedResourceDir('skills', SKILLS_DIR))) return '';
+  const files = fs.readdirSync(scopedResourceDir('skills', SKILLS_DIR)).filter(f => f.endsWith('.md'));
+  return files.map(f => fs.readFileSync(path.join(scopedResourceDir('skills', SKILLS_DIR), f), 'utf-8')).join('\n\n---\n\n');
 }
 
 async function saveSkill(summary, toolCalls) {
@@ -1323,28 +1444,29 @@ async function saveSkill(summary, toolCalls) {
 // ==================== GIT HELPERS ====================
 async function ensureGitRepo() {
   try {
-    if (!fs.existsSync(RESEARCH_DIR)) fs.mkdirSync(RESEARCH_DIR, { recursive: true });
-    const gitDir = path.join(RESEARCH_DIR, '.git');
+    if (!fs.existsSync(scopedResourceDir('research', RESEARCH_DIR))) fs.mkdirSync(scopedResourceDir('research', RESEARCH_DIR), { recursive: true });
+    const gitDir = path.join(scopedResourceDir('research', RESEARCH_DIR), '.git');
     if (!fs.existsSync(gitDir)) {
-      await GIT.cwd(RESEARCH_DIR).init();
-      await GIT.cwd(RESEARCH_DIR).addConfig('user.name', 'LACK SIPHON');
-      await GIT.cwd(RESEARCH_DIR).addConfig('user.email', 'lack@localhost');
-      await GIT.cwd(RESEARCH_DIR).commit('Initial research repo', { '--allow-empty': null });
-      console.log('[LACK] Git repo initialised at', RESEARCH_DIR);
+      await GIT.cwd(scopedResourceDir('research', RESEARCH_DIR)).init();
+      await GIT.cwd(scopedResourceDir('research', RESEARCH_DIR)).addConfig('user.name', 'LACK SIPHON');
+      await GIT.cwd(scopedResourceDir('research', RESEARCH_DIR)).addConfig('user.email', 'lack@localhost');
+      await GIT.cwd(scopedResourceDir('research', RESEARCH_DIR)).commit('Initial research repo', { '--allow-empty': null });
+      console.log('[LACK] Git repo initialised at', scopedResourceDir('research', RESEARCH_DIR));
     }
   } catch (err) { console.error('Git init failed:', err.message); }
 }
 async function gitCommit(message) {
+  if (workspaceServices()) return 'Git is disabled in multi-user mode pending bounded workspace execution approval.';
   try {
-    const gitDir = path.join(RESEARCH_DIR, '.git');
+    const gitDir = path.join(scopedResourceDir('research', RESEARCH_DIR), '.git');
     if (!fs.existsSync(gitDir)) {
       console.warn('[LACK] Git repo missing – re-initialising before commit');
       await ensureGitRepo();
     }
-    await GIT.cwd(RESEARCH_DIR).add('.');
-    const status = await GIT.cwd(RESEARCH_DIR).status();
+    await GIT.cwd(scopedResourceDir('research', RESEARCH_DIR)).add('.');
+    const status = await GIT.cwd(scopedResourceDir('research', RESEARCH_DIR)).status();
     if (status.files.length > 0) {
-      await GIT.cwd(RESEARCH_DIR).commit(message);
+      await GIT.cwd(scopedResourceDir('research', RESEARCH_DIR)).commit(message);
       console.log(`Git commit: ${message}`);
     }
   } catch (e) { throw new Error(`Git commit failed: ${e.message}`); }
@@ -1428,9 +1550,10 @@ const CODE_BLOCK_REGEX = /```(\w*)\n([\s\S]*?)```/g;
 const LINT_TIMEOUT_MS = 10000;
 
 function getThreadRepoPath(threadId) {
-  return path.join(THREAD_REPO_ROOT, threadId);
+  return path.join(scopedResourceDir('threads', THREAD_REPO_ROOT), threadId);
 }
 async function ensureThreadRepo(threadId) {
+  if (workspaceServices()) throw new Error('public_tools_disabled');
   const repoPath = getThreadRepoPath(threadId);
   if (!fs.existsSync(repoPath)) {
     fs.mkdirSync(repoPath, { recursive: true });
@@ -1584,7 +1707,7 @@ async function runReverseSkill(code, language) {
     'text': '.txt',
   };
   const ext = extMap[language.toLowerCase()] || '.txt';
-  const tempFile = path.join(WORKSPACE_ROOT, `temp_rev_${Date.now()}${ext}`);
+  const tempFile = path.join(scopedResourceDir('workspace', WORKSPACE_ROOT), `temp_rev_${Date.now()}${ext}`);
   fs.writeFileSync(tempFile, code, 'utf-8');
 
   const isWindows = process.platform === 'win32';
@@ -2413,6 +2536,7 @@ async function agentRespond(agent, storeId, triggerMessage, isLoop = false, pare
 }
 
 async function executeAction(agent, storeId, action, parentId = null) {
+  if (typeof workspaceServices === 'function' && workspaceServices() && !['message', 'research'].includes(action.type)) return {error: 'public_tools_disabled', reason: 'This action requires a bounded workspace execution policy.'};
   const { type, payload } = action;
   switch (type) {
     case 'message': await handleAgentResponse(agent, storeId, payload.content, parentId); break;
@@ -2766,7 +2890,7 @@ function resolveResearchRole(reference) {
 
 async function dispatchResearchStage({sessionId, stage, role, input, prompt, system, scopeId = 'public'}) {
   if (role.kind === 'external') {
-    if (config.researchPublicOnly !== true || !agentGateway) throw new Error('External research requires public material and an enabled gateway');
+    if (workspaceSetting('researchPublicOnly', config.researchPublicOnly) !== true || !agentGateway) throw new Error('External research requires public material and an enabled gateway');
     const result = await agentGateway.dispatchResearchStage({sessionId, stage, role, input, scopeId, privacy: 'public', deadlineAt: Date.now() + 120000});
     return JSON.stringify(result.output);
   }
@@ -2826,6 +2950,7 @@ async function runResearch(sessionId, topic, channelId, agentId = null) {
   if (!session) return;
   const update = (updates) => {
     Object.assign(session, updates);
+    if (typeof persistWorkspaceResearch === 'function' && workspaceServices()) {try {persistWorkspaceResearch(session);} catch {session.persistenceError = true;}}
     for (let [ws, client] of workspaceClients().entries()) {
       if (client.channelId === channelId && ws.readyState === WebSocket.OPEN)
         ws.send(JSON.stringify({ type: 'research_update', sessionId, data: session }));
@@ -2837,7 +2962,7 @@ async function runResearch(sessionId, topic, channelId, agentId = null) {
     }
   };
   update({ phase: 'Generating questions', metric: 0, logs: [`Starting research on: ${topic}`], facts: [], notes: [], sources: [], evidence: [], verifiedCount: 0, evidenceStatus: 'insufficient_evidence' });
-  const researchAgentId = agentId || config.researchRoles?.retriever || config.researchAgentId;
+  const researchAgentId = agentId || workspaceSetting('researchRoles', config.researchRoles)?.retriever || workspaceSetting('researchAgentId', config.researchAgentId);
   let researchAgent;
   try { researchAgent = resolveResearchRole(researchAgentId); }
   catch { researchAgent = null; }
@@ -2846,17 +2971,17 @@ async function runResearch(sessionId, topic, channelId, agentId = null) {
     return;
   }
   let researchRoles = null;
-  if (config.researchRoles != null) {
-    const mapping = config.researchRoles;
+  if (workspaceSetting('researchRoles', config.researchRoles) != null) {
+    const mapping = workspaceSetting('researchRoles', config.researchRoles);
     let verifier, summarizer;
     try { verifier = resolveResearchRole(mapping.verifier); summarizer = resolveResearchRole(mapping.summarizer); }
     catch { verifier = null; summarizer = null; }
     const roleAgents = [researchAgent, verifier, summarizer];
     const hasExternal = roleAgents.some(agent => agent?.kind === 'external');
     const validAgents = roleAgents.every((agent, index) => agent && !agent.isEmbedOperator && (agent.model || (agent.kind === 'external' && agent.capabilities.includes(['research.retrieve','research.verify','research.summarize'][index])))) && new Set(roleAgents.map(agent => agent.id)).size === 3;
-    const anyLocalOnly = roleAgents.some(agent => agent && config.agentRouting?.[agent.id]?.localOnly === true);
-    const consistentPrivacy = !anyLocalOnly || roleAgents.every(agent => agent && config.agentRouting?.[agent.id]?.localOnly === true);
-    if (!validAgents || !consistentPrivacy || (hasExternal && (anyLocalOnly || config.researchPublicOnly !== true))) {
+    const anyLocalOnly = roleAgents.some(agent => agent && workspaceSetting('agentRouting', config.agentRouting)?.[agent.id]?.localOnly === true);
+    const consistentPrivacy = !anyLocalOnly || roleAgents.every(agent => agent && workspaceSetting('agentRouting', config.agentRouting)?.[agent.id]?.localOnly === true);
+    if (!validAgents || !consistentPrivacy || (hasExternal && (anyLocalOnly || workspaceSetting('researchPublicOnly', config.researchPublicOnly) !== true))) {
       update({phase: 'Failed', evidenceStatus: 'configuration_error', logs: [...session.logs, 'Research requires three distinct configured Agents. If any role is local-only, all three roles must explicitly be local-only. No model request was sent.']});
       return;
     }
@@ -2873,7 +2998,7 @@ async function runResearch(sessionId, topic, channelId, agentId = null) {
     } catch {
       update({phase: 'Failed', evidenceStatus: 'external_retrieval_failed', logs: [...session.logs, 'External retrieval failed or returned invalid material.']});
     }
-    try { fs.writeFileSync(path.join(RESEARCH_DIR, `${sessionId}.json`), JSON.stringify(session, null, 2)); }
+    try { if (!persistWorkspaceResearch(session)) fs.writeFileSync(path.join(scopedResourceDir('research', RESEARCH_DIR), `${sessionId}.json`), JSON.stringify(session, null, 2)); }
     catch { update({persistenceError: true}); }
     return;
   }
@@ -2952,10 +3077,12 @@ async function runResearch(sessionId, topic, channelId, agentId = null) {
   update({ phase: session.evidence.length ? 'Awaiting verification' : 'Insufficient evidence', evidenceStatus, metric, logs: [...session.logs, 'Collection finished. Processing progress is not evidence confidence. No independent verification has run.'] });
   if (researchRoles && session.evidence.length) await reviewResearchEvidence(session, researchRoles, update);
   try {
-    for (const [index, note] of session.notes.entries()) {
-      fs.writeFileSync(path.join(RESEARCH_DIR, `${sessionId}_q${index}.json`), JSON.stringify(note, null, 2));
+    if (!persistWorkspaceResearch(session)) {
+      for (const [index, note] of session.notes.entries()) {
+        fs.writeFileSync(path.join(scopedResourceDir('research', RESEARCH_DIR), `${sessionId}_q${index}.json`), JSON.stringify(note, null, 2));
+      }
+      fs.writeFileSync(path.join(scopedResourceDir('research', RESEARCH_DIR), `${sessionId}.json`), JSON.stringify(session, null, 2));
     }
-    fs.writeFileSync(path.join(RESEARCH_DIR, `${sessionId}.json`), JSON.stringify(session, null, 2));
   } catch (e) {
     update({ persistenceError: true, logs: [...session.logs, 'Research artifact could not be saved.'] });
   }
@@ -2978,13 +3105,20 @@ function cleanupStore(storeId) {
 }
 
 async function removeAgent(agentId) {
+  if (workspaceServices()) {
+    const agent = agents.get(agentId); if (!agent) return {success: false, reason: 'Agent not found.'};
+    const actor = require('./collaboration/context.cjs').requireWorkspaceContext();
+    workspaceServices().store.forWorkspace(actor).saveAgent({...agent, status: 'offline', retired: true});
+    agents.delete(agentId); agentMetrics.delete(agentId); jsonFailCount.delete(agentId); agentMemories.delete(agentId);
+    broadcastAgents(); return {success: true, archived: true};
+  }
   if (!agents.has(agentId)) return { success: false, reason: 'Agent not found.' };
   if (agents.size === 1) return { success: false, reason: 'Cannot remove the last agent. LACK requires at least one agent to function.' };
   agents.delete(agentId);
   agentMetrics.delete(agentId);
   jsonFailCount.delete(agentId);
   agentMemories.delete(agentId);
-  const memPath = path.join(AGENT_MEMORY_DIR, `${agentId}.json`);
+  const memPath = path.join(scopedResourceDir('memory', AGENT_MEMORY_DIR), `${agentId}.json`);
   if (fs.existsSync(memPath)) fs.unlinkSync(memPath);
   const idx = config.agents.findIndex(a => a.id === agentId);
   if (idx !== -1) {
@@ -3039,10 +3173,10 @@ async function resetApplicationData() {
     const lineagePath = getLineagePath(storeId);
     if (fs.existsSync(lineagePath)) fs.unlinkSync(lineagePath);
   }
-  if (fs.existsSync(AGENT_MEMORY_DIR)) {
-    const files = fs.readdirSync(AGENT_MEMORY_DIR);
+  if (fs.existsSync(scopedResourceDir('memory', AGENT_MEMORY_DIR))) {
+    const files = fs.readdirSync(scopedResourceDir('memory', AGENT_MEMORY_DIR));
     for (const file of files) {
-      fs.unlinkSync(path.join(AGENT_MEMORY_DIR, file));
+      fs.unlinkSync(path.join(scopedResourceDir('memory', AGENT_MEMORY_DIR), file));
     }
   }
   for (let agent of agents.values()) {
@@ -3117,16 +3251,12 @@ app.get('/api/models', async (req, res) => {
   try { providerName = sanitizeLlmProviderName(req.query.provider, DEFAULT_LLM_PROVIDER); }
   catch { return res.status(400).json({ error: 'Unknown provider' }); }
   const provider = llmProviders[providerName] || llmProviders.ollama;
-  const models = provider && provider.listModels ? await provider.listModels() : [];
-  res.json({ provider: providerName, models });
+  try {const models = await workspaceModelList(providerName); res.json({provider: providerName, models});}
+  catch (error) {res.status(error.statusCode || 503).json({error: error.code || 'model_unavailable'});}
 });
 app.get('/api/llm-providers', (req, res) => {
-  const providers = Object.entries(llmProviders).map(([id, provider]) => ({
-    id,
-    name: provider.displayName || provider.name || id,
-    configured: provider.configured !== false
-  }));
-  res.json({ providers, defaultProvider: DEFAULT_LLM_PROVIDER });
+  const providers = workspaceProviderList();
+  res.json({providers, defaultProvider: providers.some(provider => provider.id === DEFAULT_LLM_PROVIDER) ? DEFAULT_LLM_PROVIDER : null});
 });
 app.get('/api/research/sessions', (req, res) => {
   res.json({ sessions: Array.from(researchSessions.values()).map(s => ({
@@ -3345,6 +3475,7 @@ wss.on('connection', (ws, request) => {
     try {
       const parsed = JSON.parse(raw);
       const data = transport ? transport.authorizeMessage(ws, parsed).message : parsed;
+      if (transport && ['spawn_agent', 'update_agent'].includes(data.type)) workspaceAuthorizeModel(resolveLlmProviderName(data.provider), data.model);
       const client = clients.get(ws);
       if (!client) return;
       switch (data.type) {
@@ -3461,7 +3592,7 @@ wss.on('connection', (ws, request) => {
           {
             const providerName = sanitizeLlmProviderName(data?.provider, DEFAULT_LLM_PROVIDER);
             const provider = llmProviders[providerName] || llmProviders.ollama;
-            const models = provider && provider.listModels ? await provider.listModels() : [];
+            const models = await workspaceModelList(providerName);
             ws.send(JSON.stringify({ type: 'models_list', provider: providerName, models }));
           }
           break;
@@ -3813,8 +3944,8 @@ async function onHumanMessage(channelId, messageObj, ws) {
     } else if (cmd === 'skill') {
       let code = args.join(' ');
       let language = 'text';
-      if (args.length > 0 && fs.existsSync(path.join(WORKSPACE_ROOT, args[0]))) {
-        const filePath = path.join(WORKSPACE_ROOT, args[0]);
+      if (args.length > 0 && fs.existsSync(path.join(scopedResourceDir('workspace', WORKSPACE_ROOT), args[0]))) {
+        const filePath = path.join(scopedResourceDir('workspace', WORKSPACE_ROOT), args[0]);
         code = fs.readFileSync(filePath, 'utf-8');
         language = path.extname(filePath).slice(1) || 'text';
       }
@@ -3888,7 +4019,7 @@ async function onHumanMessage(channelId, messageObj, ws) {
       else if (cmd === 'list') {
         const providerName = sanitizeLlmProviderName(args[0], DEFAULT_LLM_PROVIDER);
         const provider = llmProviders[providerName] || llmProviders.ollama;
-        const models = provider && provider.listModels ? await provider.listModels() : [];
+        const models = await workspaceModelList(providerName);
         const label = providerName === 'ollama' ? 'Ollama' : providerName.toUpperCase();
         const listText = models.length ? `Available ${label} models:\n` + models.join('\n') : `No models found for ${label}.`;
         addMessage(channelId, 'System', 'system', listText); broadcastToStore(channelId, { sender: 'System', content: listText, senderType: 'system' });
@@ -3896,7 +4027,7 @@ async function onHumanMessage(channelId, messageObj, ws) {
       else if (cmd === 'spawn') {
         const spawnProviderName = DEFAULT_LLM_PROVIDER;
         const spawnProvider = llmProviders[spawnProviderName] || llmProviders.ollama;
-        const spawnModels = spawnProvider && spawnProvider.listModels ? await spawnProvider.listModels() : [];
+        const spawnModels = await workspaceModelList(spawnProviderName);
         ws.send(JSON.stringify({ type: 'models_list', provider: spawnProviderName, models: spawnModels }));
       }
       else if (cmd === 'siphon') { 
@@ -4118,13 +4249,16 @@ function createOpenAICompatibleProvider(providerConfig) {
     fallbackModels: providerConfig.fallbackModels,
     configured: !providerConfig.requiresApiKey || Boolean(providerConfig.apiKey),
     async listModels() {
+      workspaceAuthorizeModel(providerConfig.id);
       return getOpenAICompatibleModels(providerConfig);
     },
     async generate({ model, prompt, systemPrompt = '', temperature = 0.7, agentId = null }) {
+      workspaceAuthorizeModel(providerConfig.id, model);
       const call = () => generateWithOpenAICompatible(providerConfig, model, prompt, systemPrompt, temperature, agentId);
       return agentId ? rateLimitedQuery(agentId, call) : call();
     },
     async embed(text) {
+      workspaceAuthorizeModel(providerConfig.id, providerConfig.embeddingModel);
       return getEmbeddingFromOpenAICompatible(providerConfig, text);
     }
   };
@@ -4148,12 +4282,15 @@ const llmProviders = {
     displayName: 'Ollama',
     configured: true,
     async listModels() {
+      workspaceAuthorizeModel('ollama');
       return getOllamaModels();
     },
     async generate({ model, prompt, systemPrompt = '', temperature = 0.7, agentId = null }) {
+      workspaceAuthorizeModel('ollama', model);
       return queryOllamaEngine(model, prompt, systemPrompt, temperature, agentId);
     },
     async embed(text, model = EMBEDDING_MODEL) {
+      workspaceAuthorizeModel('ollama', model);
       return getEmbeddingFromOllama(text, model);
     }
   }
@@ -4190,7 +4327,8 @@ async function queryOllamaWithRetry(model, prompt, systemPrompt = '', temperatur
   let primary;
   try { primary = resolveLlmProviderForAgent(agentId); }
   catch { return '[OLLAMA_ERROR] Unknown provider configuration'; }
-  const policy = config.agentRouting?.[agentId] || {};
+  const policy = workspaceSetting('agentRouting', config.agentRouting)?.[agentId] || {};
+  try {workspaceAuthorizeModel(primary.name, model, {localOnly: policy.localOnly === true});} catch {return '[OLLAMA_ERROR] Model route not authorized';}
   const routes = [{ provider: primary.name, model }];
   for (const fallback of primary.fallbackModels || []) {
     if (fallback !== model) routes.push({ provider: primary.name, model: fallback });
@@ -4203,6 +4341,7 @@ async function queryOllamaWithRetry(model, prompt, systemPrompt = '', temperatur
     if ((policy.localOnly && !provider.local) || (index > 0 && provider.name !== primary.name && !provider.local && policy.allowCloudFallback !== true)) {
       lastError = 'Cloud route blocked by policy'; continue;
     }
+    try {workspaceAuthorizeModel(route.provider, route.model, {localOnly: policy.localOnly === true});} catch {lastError = 'Model route not authorized'; continue;}
     if (!provider.configured) { lastError = 'Provider API key is not configured'; continue; }
     for (let attempt = 0; attempt < Math.max(1, Math.min(3, retries)); attempt++) {
       const started = Date.now();
@@ -4518,7 +4657,10 @@ setInterval(() => {
 }, 3000);
 
 // ==================== LINEAGE HELPERS ====================
-function getLineagePath(storeId) { return path.join(__dirname, 'lineage', `${storeId}.jsonl`); }
+function getLineagePath(storeId) {
+  const resources = workspaceResources();
+  return resources ? resources.safePath(require('./collaboration/context.cjs').requireWorkspaceContext(), 'lineage/' + storeId + '.jsonl') : path.join(__dirname, 'lineage', `${storeId}.jsonl`);
+}
 function appendEvent(storeId, event) {
   try { fs.appendFileSync(getLineagePath(storeId), JSON.stringify(event) + '\n'); } catch (e) {}
 }

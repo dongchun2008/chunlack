@@ -52,7 +52,9 @@ function runtime(options = {}) {
     async gitCommit() { assert.fail('Research must not invoke Git'); }
   });
   context.workspaceTransport = () => null;
-  const api = vm.runInContext(section('function workspaceClients()', 'function initializeWorkspace(') + section('function formatResearchSummary(', '// ==================== CLEANUP') + '\n({runResearch, formatResearchSummary})', context);
+  context.workspaceServices = () => null;
+  context.workspaceResources = () => null;
+  const api = vm.runInContext(section('function workspaceSetting(', 'function workspaceTransport(') + section('function scopedResourceDir(', 'function workspaceAuthorizeModel(') + section('function persistWorkspaceResearch(', 'function scheduleWorkspaceMaintenance(') + section('function workspaceClients()', 'function initializeWorkspace(') + section('function formatResearchSummary(', '// ==================== CLEANUP') + '\n({runResearch, formatResearchSummary})', context);
   return {api, session, calls, writes, messages, scraped};
 }
 
