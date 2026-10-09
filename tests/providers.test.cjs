@@ -38,6 +38,7 @@ function runtime(overrides = {}, transport = {}, agentList = []) {
   });
   const api = vm.runInContext([
     section('const PORT =', 'const RESEARCH_DIR ='),
+    section('var workspaceRuntimeServices;', "\nif (typeof process !== 'undefined' && process.env?.LACK_MULTI_USER === '1')"),
     section('const embeddingCache =', '// ==================== SEARCH PROVIDERS'),
     section('function simpleTfidfSimilarity', 'async function scanAndReindexTemplates'),
     section('const ollamaSemaphore =', 'async function agentRespond'),
@@ -158,7 +159,7 @@ test('legacy database migration preserves local assignment under a cloud default
   db.exec("INSERT INTO agents (id,name,model,system_prompt,channels) VALUES ('legacy','Legacy','old-local','prompt','[]')");
   const {context} = runtime({llmProvider:'cloud'});
   context.db=db;
-  vm.runInContext(section('const existingAgentColumns =','function dbSaveMessage'),context);
+  vm.runInContext(section('const existingAgentColumns =','\n}\n\nfunction dbSaveMessage'),context);
   const api=vm.runInContext(section('function dbSaveAgent(', '// ==================== EMBEDDING CACHE')+';({dbSaveAgent,dbLoadAllAgents})',context);
   assert.equal(api.dbLoadAllAgents().legacy.provider,'ollama');
   api.dbSaveAgent({id:'new',name:'Cloud',provider:'cloud',model:'remote',systemPrompt:'prompt',channels:['general']});

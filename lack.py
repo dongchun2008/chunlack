@@ -279,6 +279,45 @@ const DB_PATH = path.join(__dirname, 'db', 'lack.db');
 fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
 const db = new sqlite3(DB_PATH);
 
+var workspaceRuntimeServices;
+function workspaceServices() {
+  if (typeof process !== 'undefined' && process.env?.LACK_PUBLIC_MODE === '1' && process.env?.LACK_MULTI_USER !== '1') throw new Error('legacy_public_forbidden');
+  if (typeof process === 'undefined' || process.env?.LACK_MULTI_USER !== '1') return null;
+  if (!workspaceRuntimeServices) {
+    const identityPath = process.env.LACK_IDENTITY_DB;
+    if (!identityPath || !require('node:fs').existsSync(identityPath)) throw new Error('identity_bootstrap_required');
+    const identity = require('./identity/store.cjs').createIdentityStore({dbPath: identityPath});
+    const rawDb = {prepare: db.prepare.bind(db), exec: db.exec.bind(db), pragma: db.pragma.bind(db), transaction: db.transaction.bind(db)};
+    let store;
+    try {store = require('./collaboration/store.cjs').createCollaborationStore({db: rawDb, identity});}
+    catch (error) {identity.close(); throw error;}
+    const registry = require('./collaboration/state.cjs').createWorkspaceStateRegistry({identity});
+    const businessTables = /\b(messages|agents|agent_memory|project_states|pipeline_results|loop_health|research_sessions|research_sources)\b/i;
+    db.prepare = function(sql) {
+      if (typeof sql !== 'string' || businessTables.test(sql)) throw new Error('workspace_sql_required');
+      return rawDb.prepare(sql);
+    };
+    db.exec = function(sql) {
+      if (typeof sql !== 'string' || businessTables.test(sql)) throw new Error('workspace_sql_required');
+      return rawDb.exec(sql);
+    };
+    workspaceRuntimeServices = {identity, store, registry, close() {registry.close(); store.close(); identity.close();}};
+  }
+  return workspaceRuntimeServices;
+}
+function workspaceDbScope() {
+  const context = require('./collaboration/context.cjs').requireWorkspaceContext();
+  return workspaceServices().store.forWorkspace(context);
+}
+function workspaceMap(name) {
+  const services = workspaceServices();
+  // Private legacy materializations do not load the new modules implicitly.
+  return services ? require('./collaboration/state.cjs').createScopedMap(name, {registry: services.registry, mode: 'multi-user'}) : new Map();
+}
+if (typeof process !== 'undefined' && process.env?.LACK_MULTI_USER === '1') {
+  workspaceServices();
+} else {
+  workspaceServices();
 db.exec(`
   CREATE TABLE IF NOT EXISTS messages (
     id TEXT PRIMARY KEY,
@@ -343,8 +382,10 @@ if (!existingAgentColumns.some(c => c.name === 'provider')) {
   db.exec('ALTER TABLE agents ADD COLUMN provider TEXT');
 }
 db.exec("UPDATE agents SET provider = 'ollama' WHERE provider IS NULL OR provider = ''");
+}
 
 function dbSaveMessage(msg, storeId) {
+  if (typeof process !== 'undefined' && process.env?.LACK_MULTI_USER === '1') return workspaceDbScope().saveMessage(msg, storeId);
     const stmt = db.prepare(`
         INSERT OR REPLACE INTO messages 
         (id, store_id, sender, sender_type, content, timestamp, parent_id, thread_id, reply_count, reactions)
@@ -359,6 +400,7 @@ function dbSaveMessage(msg, storeId) {
 }
 
 function dbGetMessages(storeId, limit = 1000) {
+  if (typeof process !== 'undefined' && process.env?.LACK_MULTI_USER === '1') return workspaceDbScope().getMessages(storeId, limit);
     const stmt = db.prepare('SELECT * FROM messages WHERE store_id = ? ORDER BY timestamp ASC LIMIT ?');
     const rows = stmt.all(storeId, limit);
     return rows.map(row => ({
@@ -375,6 +417,7 @@ function dbGetMessages(storeId, limit = 1000) {
 }
 
 function dbSaveAgent(agent) {
+  if (typeof process !== 'undefined' && process.env?.LACK_MULTI_USER === '1') return workspaceDbScope().saveAgent(agent);
     const stmt = db.prepare(`
         INSERT OR REPLACE INTO agents 
         (id, name, model, provider, system_prompt, channels, strict_channel, status, is_embed_operator, is_code_moderator)
@@ -390,6 +433,9 @@ function dbSaveAgent(agent) {
 }
 
 function dbLoadAllAgents() {
+  if (typeof process !== 'undefined' && process.env?.LACK_MULTI_USER === '1') {
+    return Object.fromEntries(workspaceDbScope().loadAgents().map(agent => [agent.id, {...agent, lastResponseTime: new Map()}]));
+  }
     const stmt = db.prepare('SELECT * FROM agents');
     const rows = stmt.all();
     const result = {};
@@ -412,7 +458,7 @@ function dbLoadAllAgents() {
 }
 
 // ==================== EMBEDDING CACHE ====================
-const embeddingCache = new Map();
+const embeddingCache = workspaceMap('embeddingCache');
 const CACHE_MAX_SIZE = 500;
 const CACHE_TTL_MS = 60 * 60 * 1000;
 
@@ -737,7 +783,7 @@ function startStackWatcher() {
   }, 10000);
 }
 
-const activeStackRepo = new Map();
+const activeStackRepo = workspaceMap('activeStackRepo');
 
 // ==================== JSON EXTRACTION ====================
 function repairJSON(str) {
@@ -830,7 +876,7 @@ function getChannelPersonality(channelName) {
 const AGENT_MEMORY_DIR = path.join(__dirname, 'agent_memories');
 fs.mkdirSync(AGENT_MEMORY_DIR, { recursive: true });
 
-const agentMemories = new Map();
+const agentMemories = workspaceMap('agentMemories');
 const PUBLIC_MEMORY_SUMMARY = { lastUpdated: 0, summary: '', embeddings: null, enabled: config.enablePublicMemory || false };
 
 function initAgentMemory(agentId) {
@@ -1087,7 +1133,7 @@ async function pruneAgentMemory(agentId) {
   saveAgentMemory(agentId);
 }
 
-const maintenanceCircuit = new Map();
+const maintenanceCircuit = workspaceMap('maintenanceCircuit');
 async function runMaintenanceTask(taskName, taskFn, maxRetries = 3) {
   const circuit = maintenanceCircuit.get(taskName) || { failures: 0, backoffUntil: 0 };
   if (circuit.backoffUntil > Date.now()) {
@@ -1278,33 +1324,38 @@ async function gitCommit(message) {
 }
 
 // ==================== DATA STRUCTURES ====================
-const channels = new Map();
-const agents = new Map();
+const channels = workspaceMap('channels');
+const agents = workspaceMap('agents');
 const clients = new Map();
-const researchSessions = new Map();
-const pinnedMessages = new Map();
-const userReactions = new Map();
-const agentMetrics = new Map();
-const jsonFailCount = new Map();
+const researchSessions = workspaceMap('researchSessions');
+const pinnedMessages = workspaceMap('pinnedMessages');
+const userReactions = workspaceMap('userReactions');
+const agentMetrics = workspaceMap('agentMetrics');
+const jsonFailCount = workspaceMap('jsonFailCount');
 
-const projectStates = new Map();
+const projectStates = workspaceMap('projectStates');
 function getProjectState(storeId) {
+  if (typeof process !== 'undefined' && process.env?.LACK_MULTI_USER === '1' && !projectStates.has(storeId)) {
+    const stored = workspaceDbScope().loadProjectState(storeId);
+    if (stored) projectStates.set(storeId, stored);
+  }
   return projectStates.get(storeId) || { active: false, title: null, goals: [], nextSteps: [], completedTasks: [], memory: {} };
 }
 function setProjectState(storeId, state) {
   projectStates.set(storeId, { ...state });
-  persistProjectState(storeId);
+  if (typeof process !== 'undefined' && process.env?.LACK_MULTI_USER === '1') workspaceDbScope().saveProjectState(storeId, state);
+  else persistProjectState(storeId);
 }
 
-const ralphActive = new Map();
-const ralphGenerations = new Map();
-const ralphGoals = new Map();
-const ralphTimers = new Map();
-const ralphCancel = new Map();
-const ralphStagnation = new Map();
-const ralphNextAgentIdx = new Map();
-const ralphLastBroadcast = new Map();
-const loopHealth = new Map(); // loopId -> { iterations, convergence, stagnation, tokenSpend, lastUpdate }
+const ralphActive = workspaceMap('ralphActive');
+const ralphGenerations = workspaceMap('ralphGenerations');
+const ralphGoals = workspaceMap('ralphGoals');
+const ralphTimers = workspaceMap('ralphTimers');
+const ralphCancel = workspaceMap('ralphCancel');
+const ralphStagnation = workspaceMap('ralphStagnation');
+const ralphNextAgentIdx = workspaceMap('ralphNextAgentIdx');
+const ralphLastBroadcast = workspaceMap('ralphLastBroadcast');
+const loopHealth = workspaceMap('loopHealth'); // loopId -> scoped loop state
 
 function getUserId(ws) {
   let client = clients.get(ws);
@@ -1627,9 +1678,12 @@ async function runCICDPipeline(agentId, channelId, codeBlocks, threadId) {
     };
     results.push(result);
     // DB logging
-    const stmt = db.prepare('INSERT OR REPLACE INTO pipeline_results (id, agent_id, thread_id, code_hash, passed, attempt, feedback, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
     const codeHash = require('crypto').createHash('sha256').update(currentCode).digest('hex');
-    stmt.run(uuidv4(), agentId, threadId, codeHash, passed ? 1 : 0, attempt, finalFeedback, Date.now());
+    if (process.env.LACK_MULTI_USER === '1') workspaceDbScope().savePipelineResult({id: uuidv4(), agentId, threadId, codeHash, passed: !!passed, attempt, feedback: finalFeedback});
+    else {
+      const stmt = db.prepare('INSERT OR REPLACE INTO pipeline_results (id, agent_id, thread_id, code_hash, passed, attempt, feedback, timestamp) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+      stmt.run(uuidv4(), agentId, threadId, codeHash, passed ? 1 : 0, attempt, finalFeedback, Date.now());
+    }
   }
   return results;
 }
@@ -1816,8 +1870,11 @@ Propose a small, incremental change to move closer to the goal. Output a JSON wi
       lastUpdate: Date.now()
     };
     loopHealth.set(loopId, healthEntry);
-    const healthStmt = db.prepare('INSERT OR REPLACE INTO loop_health (loop_id, loop_type, iterations, convergence, stagnation, token_spend, last_update) VALUES (?, ?, ?, ?, ?, ?, ?)');
-    healthStmt.run(loopId, 'reconciliation', iteration, sim, stagnationCounter/iteration, tokenSpend, Date.now());
+    if (process.env.LACK_MULTI_USER === '1') workspaceDbScope().saveLoopHealth(loopId, {...healthEntry, loopType: 'reconciliation'});
+    else {
+      const healthStmt = db.prepare('INSERT OR REPLACE INTO loop_health (loop_id, loop_type, iterations, convergence, stagnation, token_spend, last_update) VALUES (?, ?, ?, ?, ?, ?, ?)');
+      healthStmt.run(loopId, 'reconciliation', iteration, sim, stagnationCounter/iteration, tokenSpend, Date.now());
+    }
 
     // HITL pause
     if (hitlPause && !converged) {
@@ -2244,7 +2301,7 @@ const FILE_TOOLS = [
   { name: "execute_command", description: "Run a safe command. (Restricted to Moderator)", parameters: { type: "object", properties: { command: { type: "string" } }, required: ["command"] } }
 ];
 
-const ollamaSemaphore = new Map();
+const ollamaSemaphore = workspaceMap('ollamaSemaphore');
 async function rateLimitedQuery(agentId, fn) {
   if (!ollamaSemaphore.has(agentId)) ollamaSemaphore.set(agentId, Promise.resolve());
   const queue = ollamaSemaphore.get(agentId);
@@ -2554,7 +2611,7 @@ function stopLoop(channelId) {
 }
 
 // ==================== WEB SCRAPING ====================
-const scrapeBlocklist = new Map();
+const scrapeBlocklist = workspaceMap('scrapeBlocklist');
 const SCRAPE_BLOCK_TTL = 10 * 60 * 1000;
 
 async function axiosWithRetry(config, maxRetries = 3) {
@@ -4041,7 +4098,7 @@ function markOllamaDown() {
     }, 15000);
   }
 }
-const agentDegraded = new Map();
+const agentDegraded = workspaceMap('agentDegraded');
 function getNumPredict(model, degraded = false) {
   const base = /\b(0\.5b|1b)\b/i.test(model) ? 512 : 2048;
   return degraded ? Math.floor(base / 2) : base;
@@ -4233,7 +4290,7 @@ function updateAgentMetrics(agentId, responseTimeMs = 0, wasActive = false, tps 
 }
 
 // ==================== PROACTIVE QUESTIONING ====================
-const proactiveThrottle = new Map();
+const proactiveThrottle = workspaceMap('proactiveThrottle');
 async function triggerProactiveQuestions(storeId, recentMessage) {
   const now = Date.now();
   const last = proactiveThrottle.get(storeId) || 0;
