@@ -113,29 +113,59 @@ async function backupDatabase({sourcePath, targetPath}) {
     return {method: 'sqlite-online-backup', integrity: 'ok', sha256, bytes};
   } catch (error) {if (error.code?.startsWith('migration_')) throw error; throw failure('migration_backup_failed');}
   finally {
-    check?.close(); sourceReader?.close();
-    const cleanup = path.resolve(staging);
-    if (!cleanup.startsWith(parent + path.sep)) throw failure('migration_unsafe_cleanup');
-    fs.rmSync(cleanup, {recursive: true, force: true});
+    try {check?.close(); sourceReader?.close();}
+    finally {
+      const cleanup = path.resolve(staging);
+      if (!cleanup.startsWith(parent + path.sep)) throw failure('migration_unsafe_cleanup');
+      fs.rmSync(cleanup, {recursive: true, force: true});
+    }
   }
 }
 
 // This checkpoint must not be mistaken for schema migration or readiness.
-function applyMigration() {throw failure('migration_apply_not_ready');}
-function verifyMigration() {throw failure('migration_verification_not_ready');}
+function applyMigration(plan, options) {
+  if (options?.reviewed !== true) throw failure('migration_apply_not_ready');
+  return require('./workspace-migration-engine.cjs').applyReviewedMigration(plan, options);
+}
+function verifyMigration(plan) {return require('./workspace-migration-engine.cjs').verifyReviewedMigration(plan);}
 function cliOptions(args) {
-  const names = {'--source-root': 'sourceRoot', '--target-root': 'targetRoot', '--workspace-id': 'workspaceId', '--owner-id': 'ownerId'};
-  const options = Object.create(null); let apply = false;
+  const names = {'--source-root': 'sourceRoot', '--target-root': 'targetRoot', '--workspace-id': 'workspaceId', '--owner-id': 'ownerId', '--snapshot-root': 'snapshotRoot', '--identity-source': 'identitySourcePath', '--grants-file': 'grantsFile', '--plan-file': 'planFile'};
+  const options = Object.create(null), flags = Object.create(null);
+  const switches = {'--apply': 'apply', '--reviewed': 'reviewed', '--verify': 'verify', '--prepare-snapshot': 'prepare'};
   for (let i = 0; i < args.length; i++) {
-    if (args[i] === '--apply' && !apply) {apply = true; continue;}
+    if (Object.hasOwn(switches, args[i])) {
+      const flag = switches[args[i]]; if (flags[flag]) throw failure('migration_invalid_options');
+      flags[flag] = true; continue;
+    }
     const key = Object.hasOwn(names, args[i]) && names[args[i]], value = args[++i];
     if (!key || Object.hasOwn(options, key) || typeof value !== 'string' || !value || value.startsWith('--')) throw failure('migration_invalid_options');
     options[key] = value;
   }
-  return {options, apply};
-}
-if (require.main === module) {
-  try {const {options, apply} = cliOptions(process.argv.slice(2)), plan = planMigration(options); if (apply) applyMigration(plan); console.log(JSON.stringify(plan, null, 2));}
-  catch (error) {console.log(JSON.stringify({readyToApply: false, error: /^migration_[a-z0-9_]+$/.test(error.code || '') ? error.code : 'migration_plan_failed'})); process.exitCode = 2;}
+  if ([flags.apply, flags.verify, flags.prepare].filter(Boolean).length > 1 || flags.reviewed && !flags.apply || options.planFile && (!flags.apply && !flags.verify || ['sourceRoot','targetRoot','workspaceId','ownerId'].some(key => options[key]))) throw failure('migration_invalid_options');
+  return {options, ...flags};
 }
 module.exports = {planMigration, backupDatabase, applyMigration, verifyMigration};
+if (require.main === module) {
+  (async () => {
+    const {options, apply, reviewed, verify, prepare} = cliOptions(process.argv.slice(2));
+    function input(file) {
+      absolute(file); if (fs.statSync(file).size > 2 * 1024 * 1024) throw failure('migration_metadata_invalid');
+      try {return JSON.parse(fs.readFileSync(file, 'utf8'));} catch {throw failure('migration_metadata_invalid');}
+    }
+    if (prepare) {
+      if (!options.sourceRoot || !options.snapshotRoot || Object.keys(options).some(key => !['sourceRoot','snapshotRoot'].includes(key))) throw failure('migration_invalid_options');
+      return require('./workspace-snapshot.cjs').prepareWorkspaceSnapshot({sourceRoot: options.sourceRoot, snapshotRoot: options.snapshotRoot});
+    }
+    if (apply && !reviewed) throw failure('migration_apply_not_ready');
+    if (verify && !options.planFile) throw failure('migration_invalid_options');
+    const plan = options.planFile ? input(options.planFile) : planMigration(options);
+    if (verify) return verifyMigration(plan);
+    if (apply) {
+      if (!options.grantsFile || !options.snapshotRoot || !options.identitySourcePath) throw failure('migration_apply_not_ready');
+      return applyMigration(plan, {reviewed: true, snapshotRoot: options.snapshotRoot, identitySourcePath: options.identitySourcePath, modelGrants: input(options.grantsFile)});
+    }
+    return plan;
+  })().then(result => console.log(JSON.stringify(result, null, 2))).catch(error => {
+    console.log(JSON.stringify({readyToApply: false, error: /^(?:migration|snapshot)_[a-z0-9_]+$/.test(error.code || '') ? error.code : 'migration_plan_failed'})); process.exitCode = 2;
+  });
+}

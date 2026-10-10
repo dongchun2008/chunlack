@@ -328,3 +328,28 @@ values rather than weakening production protocol checks. See the dated report:
 This supersedes earlier approval-dependent owner/closed-WAL repair notes; it
 provides no production, Linux permissions, real model or real Agent acceptance.
 No VPS, credentials, DNS, ingress ownership or Peer Relay changes were made.
+
+## Reviewed migration engine local checkpoint
+
+Actual offline apply/verify and explicit CLI preparation/reviewed application
+are implemented. Source snapshots are retained intact in private quarantine;
+canonical collaboration/gateway data, scoped files and explicit model grants
+are verified before candidate readiness. Original sources stay unchanged,
+historical tokens are disabled, live leases retain capacity, and incomplete
+candidates cannot activate. Same-plan repeat execution is verification only.
+The first CLI test exposed an export-order circular import; its correction was
+verified by the same tests. Backup source-change failure cleanup also has a
+passing regression.
+
+Final current-source Windows full suite with Caddy enabled: 438/438 passed,
+zero skips/cancellations, 237121.7087 ms. The formerly red migration-apply file
+is now a tested 11-case integration suite and is included in this increment.
+No VPS, credentials, DNS, 443, Relay or production changes were made.
+
+Task 11 remains incomplete pending recovery/restore, actual migrated-runtime
+business acceptance, Linux permissions/resources and reviewed treatment of
+unsupported permission/data structures. Task 12 real model/Agent/public
+production/sustained co-host acceptance remains incomplete. Candidate
+migrationReady is not delivery readiness; restoreReady remains false. See
+`docs/reviewed-workspace-migration.md` and
+`docs/verification/reviewed-migration-engine-verification.md`.

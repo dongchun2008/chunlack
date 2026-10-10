@@ -99,3 +99,20 @@ quarantine/file handling, failure recovery and production acceptance remain
 unfinished; see `verification/2026-10-10-identity-snapshot-repair.md` for scope,
 evidence and remaining requirements. Original grant/provider/Ollama support is
 not removed. No production or credential changes are included.
+
+## Reviewed execution and CLI checkpoint
+
+The prior apply-not-ready checkpoint is superseded for explicitly reviewed
+operator calls. Independent candidates can now be converted, quarantined,
+verified, and published as offline migration-ready; no production process is
+started. CLI snapshot preparation, reviewed apply from a saved plan and offline
+verification are documented in `reviewed-workspace-migration.md`.
+
+The final current-source local suite passes 438/438 with Caddy enabled and no
+skips. Preserve the distinction between an offline migration candidate and
+production delivery: restoreReady is still false, runtime business/recovery
+and Linux acceptance remain pending, as do real providers/Agents/public TLS
+and sustained co-host health. The immutable candidate verifier is not a runtime
+health probe after legitimate business writes. Unsupported source structures
+must be reviewed, not silently declared active. Evidence and the first CLI
+failure are retained in `verification/reviewed-migration-engine-verification.md`.

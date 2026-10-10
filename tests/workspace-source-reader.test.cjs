@@ -63,3 +63,12 @@ test('linked sources and oversized main files are rejected before SQLite can tou
   assert.throws(() => f.open(), /migration_source_file_limit/);
   assert.deepEqual(fs.readdirSync(f.root), ['original.db']);
 });
+test('backup staging is cleaned even when source-change detection throws during failure cleanup', async t => {
+  const f = fixture(t), destination = fs.mkdtempSync(path.join(os.tmpdir(), 'lack-backup-cleanup-test-'));
+  const original = Database.prototype.backup;
+  t.after(() => {Database.prototype.backup = original; assert.equal(path.dirname(path.resolve(destination)), path.resolve(os.tmpdir())); fs.rmSync(destination, {recursive: true, force: true});});
+  Database.prototype.backup = function () {fs.appendFileSync(f.source, 'changed while backup failed'); throw new Error('injected backup failure');};
+  await assert.rejects(require('../scripts/migrate-workspaces.cjs').backupDatabase({sourcePath: f.source, targetPath: path.join(destination, 'backup.db')}), /migration_source_changed|migration_backup_failed/);
+  Database.prototype.backup = original;
+  assert.deepEqual(fs.readdirSync(destination), []);
+});
