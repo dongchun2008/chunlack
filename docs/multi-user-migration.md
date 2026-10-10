@@ -123,3 +123,11 @@ failure are retained in `verification/reviewed-migration-engine-verification.md`
 - Preserves original data and configuration, detects tampering/interruption, refuses overlaps, links and occupied destinations. Recovered data remains non-activatable; applicationConsistency is not_proven.
 - Current Windows evidence: focused 32/32 and full Caddy-enabled suite 445/445, zero failures, skips or cancellations. See docs/verification/reviewed-migration-recovery-verification.md and docs/reviewed-workspace-recovery.md.
 - Task 11 is not complete: old-version business recovery and the remaining integrated multi-user acceptance gates still need evidence. Current-source Linux verification, production cutover, public HTTPS, real models and Muse/dots Agent-owned execution remain separate gates. No VPS or Relay change occurred in this checkpoint; Open WebUI remains excluded.
+
+## Migrated runtime business acceptance checkpoint
+
+- Added actual packaged migration/business/restart/recovery acceptance with three humans, two workspaces and two Agent main replies through isolated local HTTP and cloud HTTPS model mocks. Original source database, WAL, configuration, research URL and missing-evidence marker remain intact.
+- Fixed private-memory recall for URL-only/malformed legacy records without rewriting or inventing source content. Fixed private legacy channel startup to load existing SQLite history. Dedicated regressions failed before the fixes and passed afterwards.
+- Current Windows focused evidence: 5/5; full Caddy-enabled suite: 450/450, no failures/skips/cancellations. See docs/verification/migrated-runtime-business-verification.md and docs/migrated-runtime-business-acceptance.md.
+- Revalidated pinned SSH entry and read-only VPS baseline: LACK health 200, same production/Relay PIDs and zero restarts, relay UDP listeners present, no host 443 listener. Located existing native dependencies without installing or modifying them. Current-source Linux isolated full tests have not yet run.
+- Task 11/12 and final delivery remain incomplete: pinned historical release recovery, integrated node lifecycle and bounded five-Agent sustained pressure, current Linux tests, public HTTPS production acceptance, real models and vendor-owned Muse/dots execution remain separate gates. No production cutover or Open WebUI integration.

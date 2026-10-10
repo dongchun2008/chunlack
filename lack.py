@@ -1151,10 +1151,13 @@ async function addToMemory(agentId, trajectory, score, task = 'general', textFor
 async function retrievePrivateMemory(agentId, query, k = 5, useEmbedding = true) {
   const mem = agentMemories.get(agentId);
   if (!mem) return [];
-  let combined = [
-    ...mem.ePool.map(e => ({ text: e.trajectory, score: e.score, type: 'e', embedding: e.embedding })),
-    ...mem.xPool.map(x => ({ text: x.candidate, score: x.score, type: 'x', embedding: x.embedding }))
-  ];
+  // Preserve legacy records in storage. URL-only or malformed entries are not
+  // narrative evidence and must not crash recall or become invented text.
+  const usable = (pool, field, type) => (Array.isArray(pool) ? pool : [])
+    .filter(entry => entry && typeof entry[field] === 'string' && entry[field].trim())
+    .map(entry => ({text: entry[field], score: Number.isFinite(entry.score) ? entry.score : 0, type,
+      embedding: Array.isArray(entry.embedding) && entry.embedding.length > 0 && entry.embedding.every(Number.isFinite) ? entry.embedding : null}));
+  let combined = [...usable(mem.ePool, 'trajectory', 'e'), ...usable(mem.xPool, 'candidate', 'x')];
   if (useEmbedding && combined.some(item => item.embedding)) {
     const queryEmbedding = await getEmbedding(query);
     if (queryEmbedding) {
@@ -1590,7 +1593,7 @@ function getUserId(ws) {
 
 if (process.env.LACK_MULTI_USER !== '1') config.channels.forEach(ch => {
   channels.set(ch.id, {
-    id: ch.id, name: ch.name, messages: [],
+    id: ch.id, name: ch.name, messages: dbGetMessages(ch.id),
     researchActive: false, researchTopic: null, abstractActive: false,
     loopTimer: null, pinned: new Set()
   });
