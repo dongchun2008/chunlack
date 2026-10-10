@@ -5,6 +5,7 @@ const path = require('node:path');
 const { createHash, randomUUID } = require('node:crypto');
 const Database = require('better-sqlite3');
 const { planMigration, backupDatabase } = require('./migrate-workspaces.cjs');
+const { openWorkspaceSource } = require('./workspace-source-reader.cjs');
 
 const DATABASES = ['lack.db', 'identity.db', 'agent-gateway.db', 'mcp-events.db'];
 const FOLDERS = ['memory', 'research', 'uploads', 'artifacts', 'attachments'];
@@ -103,7 +104,8 @@ function inspectSource(root) {
 }
 
 function describeDatabase(file) {
-  const db = new Database(file, { readonly: true, fileMustExist: true, timeout: 1000 });
+  const reader = openWorkspaceSource(file);
+  const db = reader.db;
   try {
     db.pragma('query_only = ON');
     return db.transaction(() => {
@@ -117,7 +119,7 @@ function describeDatabase(file) {
         count: db.prepare('SELECT COUNT(*) AS total FROM "' + name.replaceAll('"', '""') + '"').get().total
       }));
     })();
-  } finally { db.close(); }
+  } finally { reader.close(); }
 }
 
 function canonicalizeOwnedSnapshotDatabase(file) {

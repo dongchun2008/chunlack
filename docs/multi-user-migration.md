@@ -83,3 +83,19 @@ Ollama 的旧默认行为、自定义模型、原始 URL、摘录及缺证标识
 专项与既有离线回归通过 41/41。组件始终返回 `migrationReady=false`，不会打开端口、
 启动服务、复制节点令牌或写入生产配置。`applyMigration`/`verifyMigration` 完整入口仍关闭；
 关闭 WAL 数据库读取的回归尚未通过，等待最小修正确认。
+
+## 2026-10-10 source-reader and owner repair checkpoint
+
+The closed-WAL source preservation defect is fixed and its regression passes.
+A private, stable main/WAL copy is recovered only inside an owned directory;
+planning, inspection and native backup never open the operator original through
+SQLite. Source changes or unsupported journals fail closed. Existing source
+hash/count requirements and non-activatable preparation remain in place.
+
+The gateway conversion's nine tests pass after correcting the identity API
+signature. It still does not implement whole migration activation. Current full
+regression: 434 tests, 426 passed, 8 failed, no skips. Actual apply/verify, complete
+quarantine/file handling, failure recovery and production acceptance remain
+unfinished; see `verification/2026-10-10-identity-snapshot-repair.md` for scope,
+evidence and remaining requirements. Original grant/provider/Ollama support is
+not removed. No production or credential changes are included.

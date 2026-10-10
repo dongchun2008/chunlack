@@ -4,6 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const {createHash} = require('node:crypto');
 const Database = require('better-sqlite3');
+const {openWorkspaceSource} = require('./workspace-source-reader.cjs');
 const {collaborationTableScopes} = require('../collaboration/store.cjs');
 const MAX_FILES = 4096, MAX_HASH_BYTES = 64 * 1024 * 1024;
 function failure(code) {return Object.assign(new Error(code), {code});}
@@ -41,9 +42,9 @@ function planMigration({sourceRoot, targetRoot, workspaceId, ownerId}) {
   if (!config || Array.isArray(config) || typeof config !== 'object') throw failure('migration_config_invalid');
   const dbPath = absolute(path.join(sourceRoot, 'db', 'lack.db'));
   const unresolved = [], tables = [], files = [];
-  let db;
+  let db, sourceReader;
   try {
-    db = new Database(dbPath, {readonly: true, fileMustExist: true}); db.pragma('query_only=ON');
+    sourceReader = openWorkspaceSource(dbPath); db = sourceReader.db;
     db.transaction(() => {
       if (db.pragma('quick_check', {simple: true}) !== 'ok') throw failure('migration_source_integrity_failed');
       for (const table of db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name").all()) {
@@ -56,7 +57,7 @@ function planMigration({sourceRoot, targetRoot, workspaceId, ownerId}) {
       }
     }).deferred();
   } catch (error) {if (error.code?.startsWith('migration_')) throw error; throw failure('migration_source_database_invalid');}
-  finally {db?.close();}
+  finally {sourceReader?.close();}
   let inventoryCount = 0;
   function collect(file, depth = 0) {
     if (++inventoryCount > MAX_FILES || depth > 8) throw failure('migration_file_inventory_limit');
@@ -77,12 +78,12 @@ function planMigration({sourceRoot, targetRoot, workspaceId, ownerId}) {
   const identityPath = path.join(sourceRoot, 'db', 'identity.db');
   if (!fs.existsSync(identityPath)) unresolved.push({code: 'owner_identity_requires_bootstrap'});
   else if (identifier(workspaceId) && identifier(ownerId)) {
-    let identity;
+    let identity, identityReader;
     try {
-      absolute(identityPath); identity = new Database(identityPath, {readonly: true, fileMustExist: true});
+      absolute(identityPath); identityReader = openWorkspaceSource(identityPath); identity = identityReader.db;
       ownershipVerified = Boolean(identity.prepare("SELECT m.workspace_id FROM memberships m JOIN users u ON u.id=m.user_id JOIN workspaces w ON w.id=m.workspace_id WHERE m.workspace_id=? AND m.user_id=? AND m.role='owner' AND u.disabled_at IS NULL AND w.disabled_at IS NULL").get(workspaceId, ownerId));
       if (!ownershipVerified) unresolved.push({code: 'owner_binding_unverified'});
-    } catch {unresolved.push({code: 'identity_source_unverified'});} finally {identity?.close();}
+    } catch {unresolved.push({code: 'identity_source_unverified'});} finally {identityReader?.close();}
   }
   return {version: 1, mode: 'dry-run', readyToApply: false, implementationStage: 'planning_and_consistent_backup_only', sourceRoot, targetRoot,
     ownership: {workspaceId: identifier(workspaceId) ? workspaceId : null, ownerId: identifier(ownerId) ? ownerId : null, verified: ownershipVerified},
@@ -99,10 +100,10 @@ async function backupDatabase({sourcePath, targetPath}) {
   if (contains(sourceRoot, targetPath)) throw failure('migration_roots_overlap');
   if (fs.existsSync(targetPath)) throw failure('migration_target_exists');
   const staging = fs.mkdtempSync(path.join(parent, '.migration-backup-')), snapshot = path.join(staging, 'snapshot.db');
-  let source, check;
+  let source, check, sourceReader;
   try {
-    source = new Database(sourcePath, {readonly: true, fileMustExist: true}); source.pragma('query_only=ON');
-    await source.backup(snapshot); source.close(); source = null;
+    sourceReader = openWorkspaceSource(sourcePath); source = sourceReader.db;
+    await source.backup(snapshot); sourceReader.close(); sourceReader = null; source = null;
     check = new Database(snapshot, {readonly: true, fileMustExist: true});
     if (check.pragma('integrity_check', {simple: true}) !== 'ok' || check.pragma('foreign_key_check').length) throw failure('migration_backup_integrity_failed');
     check.close(); check = null;
@@ -112,7 +113,7 @@ async function backupDatabase({sourcePath, targetPath}) {
     return {method: 'sqlite-online-backup', integrity: 'ok', sha256, bytes};
   } catch (error) {if (error.code?.startsWith('migration_')) throw error; throw failure('migration_backup_failed');}
   finally {
-    check?.close(); source?.close();
+    check?.close(); sourceReader?.close();
     const cleanup = path.resolve(staging);
     if (!cleanup.startsWith(parent + path.sep)) throw failure('migration_unsafe_cleanup');
     fs.rmSync(cleanup, {recursive: true, force: true});

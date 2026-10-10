@@ -306,3 +306,25 @@
 - Source identity/target paths and live-source snapshot safety remain the caller's responsibility. Unknown tables are preserved in the read-only source and reported with counts, not imported into the active schema; the future complete engine must independently archive and verify them. Custom extra columns, gateway nodes/credentials/leases, files/artifacts, event recovery and publication are not claimed implemented by this component. Historical created_by is operator-assigned data-management ownership, not proof of the legacy message author.
 - Limits are 50,000 inventoried rows and a 64 MiB source database, with target max_page_count=16384 (about 64 MiB at the default 4 KiB page size); exceeding a limit fails, never truncates records. Component return migrationReady is always false. No application runtime, public port, model endpoint, credential or VPS/Relay service was changed.
 - Synchronization scope is only the tested component/test and truthful migration/status documentation. Two pending red prerequisite/integration test files stay local/uncommitted. No full current-worktree green claim is made: its known closed-WAL and migration-apply failures remain outside the 41-test success, and the former 403/403 checkpoint cannot cover this new source. Task 11 and overall delivery remain incomplete; approval-dependent snapshot repair and full apply/verify/quarantine/publication/recovery/business acceptance are still required before production.
+
+## Approved identity/source-reader repair (2026-10-10)
+
+The owner call now matches requireMembership(userId, workspaceId). Planning,
+identity inspection, snapshot descriptions and native backup use a bounded,
+hash-checked private database copy including the original WAL. SQLite does not
+open the original directory, and source changes fail closed. The closed-WAL
+regression and six dedicated source-reader cases pass. The gateway conversion
+component's nine tests also pass; historical nodes remain disabled and real
+unexpired leases retain capacity.
+
+Targeted tests: 30/30, no skips. Current-tree full regression with Caddy enabled:
+434 tests, 426 passed, 8 failed, no skips. All eight failures are the uncommitted
+migration-apply integration cases reaching migration_apply_not_ready. Task 11
+execution/publication/recovery and overall delivery remain incomplete. The
+legacy integration fixture must use actual supported task/capability/attempt
+values rather than weakening production protocol checks. See the dated report:
+`docs/verification/2026-10-10-identity-snapshot-repair.md`.
+
+This supersedes earlier approval-dependent owner/closed-WAL repair notes; it
+provides no production, Linux permissions, real model or real Agent acceptance.
+No VPS, credentials, DNS, ingress ownership or Peer Relay changes were made.
