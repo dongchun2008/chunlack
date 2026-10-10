@@ -1,0 +1,60 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),os=require('node:os');
+const {createHash}=require('node:crypto'),Database=require('better-sqlite3');
+const {createIdentityStore}=require('../identity/store.cjs');
+const {createCollaborationStore}=require('../collaboration/store.cjs');
+const {runWithWorkspace}=require('../collaboration/context.cjs');
+const convert=options=>require('../scripts/convert-legacy-collaboration.cjs').convertLegacyCollaboration(options);
+const hash=file=>createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+function fixture(t){
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'lack-collaboration-conversion-')),file=path.join(root,'legacy.db');
+  const writer=new Database(file);writer.pragma('journal_mode=DELETE');
+  writer.exec(`CREATE TABLE agents(id TEXT PRIMARY KEY,name TEXT,model TEXT,provider TEXT,system_prompt TEXT,channels TEXT,strict_channel TEXT,status TEXT,is_embed_operator INTEGER,is_code_moderator INTEGER);
+    INSERT INTO agents VALUES('agent','Original Agent','legacy-custom-model',NULL,'original prompt','["general"]',NULL,'idle',0,0);
+    CREATE TABLE messages(id TEXT PRIMARY KEY,store_id TEXT,sender TEXT,sender_type TEXT,content TEXT,timestamp INTEGER,parent_id TEXT,thread_id TEXT,reply_count INTEGER,reactions TEXT);
+    INSERT INTO messages VALUES('z-root','general','Original Human','human','original https://example.com/source',10,NULL,NULL,1,'{}');
+    INSERT INTO messages VALUES('a-reply','general','Original Agent','agent','original agent result',11,'z-root','z-root',0,'{}');
+    CREATE TABLE agent_memory(agent_id TEXT PRIMARY KEY,e_pool TEXT,x_pool TEXT,weights TEXT,stats TEXT,last_update INTEGER);
+    INSERT INTO agent_memory VALUES('agent','[{"url":"https://example.com/source"}]','[]','{}','{}',12);
+    CREATE TABLE project_states(store_id TEXT PRIMARY KEY,state TEXT,timestamp INTEGER);INSERT INTO project_states VALUES('general','{"stage":"review"}',13);
+    CREATE TABLE pipeline_results(id TEXT PRIMARY KEY,agent_id TEXT,thread_id TEXT,code_hash TEXT,passed INTEGER,attempt INTEGER,feedback TEXT,timestamp INTEGER);
+    INSERT INTO pipeline_results VALUES('pipeline','agent','z-root','${'a'.repeat(64)}',1,1,'original feedback',14);
+    CREATE TABLE loop_health(loop_id TEXT PRIMARY KEY,loop_type TEXT,iterations INTEGER,convergence REAL,stagnation REAL,token_spend INTEGER,last_update INTEGER);
+    INSERT INTO loop_health VALUES('loop','review',1,0.5,0,10,15);
+    CREATE TABLE research_sessions(id TEXT PRIMARY KEY,data TEXT,timestamp INTEGER);INSERT INTO research_sessions VALUES('research','{"id":"research","missingEvidence":true}',16);
+    CREATE TABLE research_sources(id TEXT PRIMARY KEY,research_id TEXT,url TEXT,title TEXT,excerpt TEXT,timestamp INTEGER);
+    INSERT INTO research_sources VALUES('citation','research','https://example.com/source','Original title','Original excerpt',17);
+    CREATE TABLE unknown_notes(id TEXT PRIMARY KEY,content TEXT);INSERT INTO unknown_notes VALUES('original','never discard');`);
+  writer.close();
+  const source=new Database(file,{readonly:true,fileMustExist:true}),target=new Database(path.join(root,'candidate.db'));
+  const identity=createIdentityStore({dbPath:':memory:'});
+  const {user,workspace}=identity.bootstrapIdentity({login:'conversion-owner',passwordHash:'synthetic-unusable-hash-for-store-tests-only'.repeat(2),workspaceName:'Reviewed legacy data'});
+  const actor=identity.requireMembership(user.id,workspace.id);
+  t.after(()=>{source.close();target.close();identity.close();const owned=path.resolve(root);if(!owned.startsWith(path.resolve(os.tmpdir())+path.sep)||!path.basename(owned).startsWith('lack-collaboration-conversion-'))throw Error('unsafe cleanup');fs.rmSync(owned,{recursive:true,force:true});});
+  return {root,file,source,target,identity,actor,options:{source,target,identity,workspaceId:workspace.id,ownerId:user.id}};
+}
+function change(f,sql){const db=new Database(f.file);try{db.exec(sql);}finally{db.close();}}
+test('actual legacy rows convert into the existing scoped store without altering source bytes or original evidence',t=>{
+  const f=fixture(t),before=hash(f.file),result=convert(f.options);
+  assert.equal(result.status,'converted');assert.equal(result.migrationReady,false);assert.equal(hash(f.file),before);
+  assert.equal(fs.existsSync(f.file+'-wal'),false);assert.equal(fs.existsSync(f.file+'-shm'),false);
+  assert.equal(result.converted.messages,2);assert.equal(result.converted.agents,1);assert.equal(result.converted.agent_memory,1);
+  assert.deepEqual(result.unassignedTables,[{name:'unknown_notes',rows:1}]);assert.equal(f.source.prepare('SELECT content FROM unknown_notes').get().content,'never discard');
+  const store=createCollaborationStore({db:f.target,identity:f.identity});
+  try{runWithWorkspace(f.actor,()=>{const scoped=store.forWorkspace(f.actor);const agents=scoped.loadAgents(),messages=scoped.getMessages('general');
+    assert.equal(agents[0].provider,'ollama');assert.equal(agents[0].model,'legacy-custom-model');assert.equal(agents[0].systemPrompt,'original prompt');
+    assert.equal(messages[0].sender,'Original Human');assert.equal(messages[1].parentId,'z-root');assert.equal(messages[1].threadId,'z-root');
+    assert.equal(scoped.loadAgentMemory('agent').ePool[0].url,'https://example.com/source');assert.equal(scoped.loadAgentMemory('agent').lastUpdate,12);
+    assert.equal(scoped.loadProjectState('general').stage,'review');assert.equal(scoped.getPipelineResults('z-root')[0].feedback,'original feedback');
+    assert.equal(scoped.loadLoopHealth('loop').tokenSpend,10);assert.equal(scoped.getResearchSources('research')[0].url,'https://example.com/source');
+    assert.equal(scoped.loadResearchSessions()[0].missingEvidence,true);
+  });}finally{store.close();}
+  assert.equal(f.target.pragma('integrity_check',{simple:true}),'ok');assert.deepEqual(f.target.pragma('foreign_key_check'),[]);
+  assert.equal(f.target.prepare("SELECT count(*) n FROM sqlite_master WHERE type='table' AND name='unknown_notes'").get().n,0);
+});
+test('a member or fabricated owner ID cannot authorize legacy ownership conversion',t=>{const f=fixture(t);const member=f.identity.createUser({login:'conversion-member',passwordHash:'synthetic-unusable-member-hash'.repeat(2)});f.identity.setMembership(f.actor,{workspaceId:f.actor.workspaceId,userId:member.id,role:'member'});assert.throws(()=>convert({...f.options,ownerId:member.id}),/conversion_owner_required/);assert.equal(f.target.prepare("SELECT count(*) n FROM sqlite_master WHERE type='table'").get().n,0);});
+test('foreign-key orphans roll back all imported rows and never invent missing parents',t=>{const f=fixture(t);change(f,"UPDATE messages SET parent_id='absent' WHERE id='a-reply'");const before=hash(f.file);assert.throws(()=>convert(f.options),/conversion_foreign_keys_failed/);assert.equal(f.target.prepare('SELECT count(*) n FROM agents').get().n,0);assert.equal(f.target.prepare('SELECT count(*) n FROM messages').get().n,0);assert.equal(hash(f.file),before);});
+test('unknown agent senders and malformed legacy JSON fail closed without partial imports',t=>{const f=fixture(t);change(f,"UPDATE messages SET sender='unknown-agent' WHERE id='a-reply'");assert.throws(()=>convert(f.options),/conversion_sender_unresolved/);assert.equal(f.target.prepare('SELECT count(*) n FROM agents').get().n,0);const other=fixture(t);change(other,"UPDATE agent_memory SET e_pool='{invalid' WHERE agent_id='agent'");assert.throws(()=>convert(other.options),/conversion_invalid_json/);assert.equal(other.target.prepare('SELECT count(*) n FROM messages').get().n,0);});
+test('an already populated target and a source reused as target are not overwritten',t=>{const f=fixture(t);f.target.exec("CREATE TABLE keep(value TEXT);INSERT INTO keep VALUES('original candidate')");assert.throws(()=>convert(f.options),/conversion_empty_target_required/);assert.equal(f.target.prepare('SELECT value FROM keep').get().value,'original candidate');assert.throws(()=>convert({...f.options,target:f.source}),/conversion_database_boundary_required/);});
+test('existing workspace assignment and unsafe source URLs are not reassigned or published',t=>{const f=fixture(t);change(f,"ALTER TABLE messages ADD COLUMN workspace_id TEXT;UPDATE messages SET workspace_id='another-workspace'");assert.throws(()=>convert(f.options),/conversion_scoped_source_requires_review/);const other=fixture(t);change(other,"UPDATE research_sources SET url='https://user:secret@example.com/source'");assert.throws(()=>convert(other.options),/conversion_invalid_source_url/);assert.equal(other.target.prepare('SELECT count(*) n FROM research_sources').get().n,0);});
+test('SQL-looking identifiers and HTML excerpts remain exact data, not queries or synthesized facts',t=>{const f=fixture(t);change(f,"UPDATE research_sources SET excerpt='<img src=x onerror=alert(1)>',title='original missing-evidence source';UPDATE agents SET model='custom-model; DROP TABLE messages; --'");const before=hash(f.file);convert(f.options);assert.equal(f.target.prepare('SELECT count(*) n FROM messages').get().n,2);assert.equal(f.target.prepare('SELECT model FROM agents').get().model,'custom-model; DROP TABLE messages; --');assert.equal(f.target.prepare('SELECT excerpt FROM research_sources').get().excerpt,'<img src=x onerror=alert(1)>');assert.equal(hash(f.file),before);});
