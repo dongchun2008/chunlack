@@ -56,7 +56,9 @@ function collectBaseline(options, {run = command, read = readText} = {}) {
   const names = new Set(standardUnits); let inventoryKnown = units.status === 0;
   for (const line of units.stdout.trim().split('\n').filter(Boolean)) {
     const parts = line.trim().split(/\s+/), name = parts[0];
-    if (!/^[A-Za-z0-9_.@:-]+\.service$/.test(name || '')) {inventoryKnown = false; continue;}
+    // systemd emits literal C-style hex escapes in path-based instance names.
+    // Preserve those bytes as one argv value; never unescape or invoke a shell.
+    if (!/^(?:[A-Za-z0-9_.@:-]|\\x[0-9A-Fa-f]{2})+\.service$/.test(name || '')) {inventoryKnown = false; continue;}
     if (/tailscale|relay|lack|caddy|nginx|apache2|haproxy/i.test(name) || parts[2] === 'failed') names.add(name);
   }
   if (names.size > SERVICE_LIMIT) inventoryKnown = false;
@@ -71,6 +73,8 @@ function collectBaseline(options, {run = command, read = readText} = {}) {
       memoryBytes: integer(props.MemoryCurrent), cpuUsageNs: integer(props.CPUUsageNSec), result: known ? props.Result : null, exitStatus: integer(props.ExecMainStatus)});
   }
   const journal = result(run, 'journalctl', ['-k', '--since', '-1 hour', '-n', '1000', '--no-pager', '--output=cat', '--grep=oom-kill|Out of memory|Killed process']);
+  // --grep follows grep's no-match status. Errors/diagnostics stay unknown.
+  const journalNoMatches = journal.status === 1 && !journal.stderr.trim() && ['', '-- No entries --'].includes(journal.stdout.trim());
   const vmstat = read('/proc/vmstat'), oomCounter = typeof vmstat === 'string' ? vmstat.match(/^oom_kill\s+(\d+)$/m) : null;
   const dns = [];
   for (const host of [options.webHost, options.agentsHost]) {
@@ -85,7 +89,7 @@ function collectBaseline(options, {run = command, read = readText} = {}) {
     diskAvailableKiB: disk.status === 0 && diskFields?.length >= 6 ? integer(diskFields[3]) : null,
     listenersKnown: tcp !== null && udp !== null, listeners: [...(tcp || []), ...(udp || [])], servicesInventoryKnown: inventoryKnown, services,
     pressure: {cpu: pressure(read('/proc/pressure/cpu')), memory: pressure(read('/proc/pressure/memory')), io: pressure(read('/proc/pressure/io'))},
-    oom: {historicalCounter: oomCounter ? integer(oomCounter[1]) : null, recentCount: journal.status === 0 && !journal.stderr.trim() ? (journal.stdout.match(/oom-kill|Out of memory|Killed process/g) || []).length : null},
+    oom: {historicalCounter: oomCounter ? integer(oomCounter[1]) : null, recentCount: journal.status === 0 && !journal.stderr.trim() ? (journal.stdout.match(/oom-kill|Out of memory|Killed process/g) || []).length : journalNoMatches ? 0 : null},
     cgroupControllers: typeof controllers === 'string' ? controllers.trim().split(/\s+/).filter(value => /^[a-z_]+$/.test(value)) : [], dns};
 }
 

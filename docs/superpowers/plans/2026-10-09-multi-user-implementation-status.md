@@ -439,3 +439,12 @@ historical restore and production/public acceptance remain explicit delivery gat
 - 独立公开 DNS 查询确认 lack.chunclaw.top 和 agents.chunclaw.top 均为 47.108.217.178，无需重复添加 A 记录；不等于公网 TLS 或发布验收。
 - 本轮仅本地夹具、测试政策和文档增量，没有生产切换，没有改动 VPS 服务、Relay、凭据、DNS 或防火墙。真实模型、老镇/玄玑自身执行、公网 HTTPS、旧数据归属和切换/恢复验收仍未完成。
 - 详见 docs/verification/2026-10-11-browser-human-workspace-acceptance.md，使用步骤更新于 docs/public-node-task-pilot.md。
+## 2026-10-11 当前 VPS 公网准备及原生预检修正
+
+- 当前生产仍为 /opt/chunlack/releases/e188eae；既有 LACK PID234963、tailscaled PID859、NRestarts 均 0，LACK health200，Relay UDP40000 有监听，未改动或重启。
+- 443 当前无 TCP 监听，固定解析的两个公网 HTTPS 探测握手失败；不是已发布状态。VPS 2核，可用约1.05GiB，有限基线的资源/端口/DNS检查清零，deploymentAuthorized 仍为 false。
+- 修正正式只读 preflight 对合法 systemd 十六进制转义服务名、journalctl grep 无匹配退出1的兼容；仍保留异常名字、错误、超时、权限诊断和真实OOM阻断。新测试先4失败3通过，再7/7，Windows全量477/477、0失败/跳过/取消，222343.9775ms，冒烟通过。脚本在真实VPS内存执行复验成功，没有安装或写入VPS。
+- OOM历史计数62，最近一小时可读日志无匹配，不能声称从未发生或日志完整。辅助诊断failed字段可能匹配描述，原样保留并注明，不用于故障判定。
+- 独立DNS查询无两个入口的AAAA答案，无入口及父域CAA答案；无DNS改动。非敏感入口示例和本地Caddy校验通过，未启动/申请证书，激活需复核候选回环端口13721/13722/13723。
+- 正式迁移前已请求用户明确旧数据工作区和真人负责人，不猜归属。真实模型、老镇/玄玑自身执行、正式TLS与生产迁移/独立恢复/共存验收仍待完成。
+- 证据见 docs/verification/2026-10-11-public-preflight-native-acceptance.md。

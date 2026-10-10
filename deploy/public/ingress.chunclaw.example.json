@@ -1,0 +1,9 @@
+{
+  "httpPort": 13721,
+  "agentGateway": {"port": 13722},
+  "publicRuntime": {
+    "webOrigin": "https://lack.chunclaw.top",
+    "agentsOrigin": "https://agents.chunclaw.top",
+    "mcpPort": 13723
+  }
+}
