@@ -430,3 +430,12 @@ SSH closed. No production cutover, public port, credential or Open WebUI change.
 Evidence and scope: `docs/verification/2026-10-11-human-pilot-evidence-acceptance.md`.
 Real-browser rendering, direct real models, vendor-owned execution, independent
 historical restore and production/public acceptance remain explicit delivery gates.
+
+## 2026-10-11 真人浏览器及低资源完整回归增量
+
+- 真人负责人实际查看图片、独立确认验收、重新读取验收状态通过；成员与只读用户不能验收尚未验收的任务；工作区切换清除待确认和旧图片；390px 移动视口无横向溢出。
+- 本地夹具明确是 HTTP/Cookie/Origin/WS 替代传输及合成截图，不作为生产 TLS、Muse/dots 自身执行或真实模型证据。PNG 已补齐完整像素数据和两个回归测试；夹具使用现有 scoped 配对及 taskId 字段，另有专属文件停止信号和退出码 0 试验。
+- 默认全量测试文件串行、每文件 90 秒，保留全部文件和用例内部并发。Windows 本轮 470/470，0 失败/跳过/取消，279132.1608ms；后续 HTTP/WebSocket、双模拟模型、重启持久化冒烟退出码 0。此前并行全量失败根因未确认，独立 HTTPS 生命周期 1/1，未用串行通过冒充根因修复。
+- 独立公开 DNS 查询确认 lack.chunclaw.top 和 agents.chunclaw.top 均为 47.108.217.178，无需重复添加 A 记录；不等于公网 TLS 或发布验收。
+- 本轮仅本地夹具、测试政策和文档增量，没有生产切换，没有改动 VPS 服务、Relay、凭据、DNS 或防火墙。真实模型、老镇/玄玑自身执行、公网 HTTPS、旧数据归属和切换/恢复验收仍未完成。
+- 详见 docs/verification/2026-10-11-browser-human-workspace-acceptance.md，使用步骤更新于 docs/public-node-task-pilot.md。

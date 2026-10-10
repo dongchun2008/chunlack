@@ -14,12 +14,15 @@ const WebSocket = require('ws');
 const {createIdentityStore} = require('../../identity/store.cjs');
 const {createSessionService} = require('../../identity/sessions.cjs');
 const {hashPassword} = require('../../identity/passwords.cjs');
+const {seedBrowserPilot} = require('./browser-pilot-seed.cjs');
 const root = path.resolve(__dirname, '../..'), origin = 'https://lack.fixture.invalid';
 const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'lack-workspace-browser-'));
-const proxies = [], sockets = new Set(); let child, backend, identity, stopping = false;
+fs.writeFileSync(path.join(directory, '.fixture-owner'), JSON.stringify({kind: 'LOCAL_BROWSER_FIXTURE_NOT_TLS_ACCEPTANCE', pid: process.pid}));
+const proxies = [], sockets = new Set(); let child, backend, identity, stopping = false, shutdownTimer;
 async function freePort() {const server = net.createServer(); await new Promise(resolve => server.listen(0, '127.0.0.1', resolve)); const port = server.address().port; await new Promise(resolve => server.close(resolve)); return port;}
 async function stop() {
   if (stopping) return; stopping = true;
+  clearInterval(shutdownTimer);
   process.stdin.destroy();
   for (const socket of sockets) socket.destroy();
   await Promise.all(proxies.map(server => new Promise(resolve => server.close(resolve))));
@@ -51,7 +54,11 @@ async function main() {
   child = spawn(process.execPath, [path.join(directory, 'server.js')], {cwd: directory, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'], env: {...process.env, NODE_PATH: path.join(root, 'node_modules'), LACK_BIND_HOST: '127.0.0.1', LACK_MULTI_USER: '1', LACK_PUBLIC_MODE: '1', LACK_WEB_ORIGIN: origin, LACK_IDENTITY_DB: path.join(directory, 'identity.sqlite'), LACK_BROWSER_FIXTURE_SECRET: 'synthetic-browser-secret-'.repeat(3)}});
   child.stdout.on('data', value => {logs = (logs + value).slice(-6000);}); child.stderr.on('data', value => {logs = (logs + value).slice(-6000);});
   for (let i = 0; i < 100 && !logs.includes('Workspace-authenticated runtime listening'); i++) {if (child.exitCode !== null) throw new Error('Fixture child exited: ' + logs); await delay(50);}
-  if (!logs.includes('Workspace-authenticated runtime listening')) throw new Error('Fixture readiness timed out');
+  if (!logs.includes('Workspace-authenticated runtime listening')) {
+    const logPath = path.join(directory, 'fixture-startup.log'); fs.writeFileSync(logPath, logs);
+    throw new Error('Fixture readiness timed out; private synthetic log: ' + logPath);
+  }
+  const evidenceTasks = {};
   for (const [login, workspace] of [['alice', a], ['bob', b]]) {
     const session = await sessions.login({login, password, source: 'browser-fixture-seed-' + login});
     const ws = new WebSocket(`ws://127.0.0.1:${port}/ws/workspaces/${workspace.id}`, {headers: {Origin: origin, Cookie: '__Host-chunlack_session=' + session.token}});
@@ -61,6 +68,7 @@ async function main() {
     for (let i = 0; i < 100 && !messages.some(frame => frame.type === 'new_message'); i++) await delay(20);
     if (!messages.some(frame => frame.type === 'new_message')) throw new Error('Fixture message was not acknowledged');
     ws.close(); await once(ws, 'close');
+    if (process.argv.includes('--seed-human-evidence')) evidenceTasks[login] = await seedBrowserPilot({port, gatewayPort, origin, workspaceId: workspace.id, session, label: login === 'alice' ? 'A' : 'B'});
   }
   const urls = {};
   for (const login of ['alice', 'bob', 'carol']) {
@@ -106,7 +114,9 @@ async function main() {
     await new Promise(resolve => proxy.listen(0, '127.0.0.1', resolve)); proxies.push(proxy); cookieName = 'lack_fixture_' + proxy.address().port;
     urls[login] = `http://127.0.0.1:${proxy.address().port}/`;
   }
-  console.log(JSON.stringify({kind: 'LOCAL_BROWSER_FIXTURE_NOT_TLS_ACCEPTANCE', urls, workspaceIds: {a: a.id, b: b.id}, directory}));
+  const stopFile = path.join(directory, '.stop-fixture');
+  shutdownTimer = setInterval(() => {if (fs.existsSync(stopFile)) void stop();}, 500); shutdownTimer.unref();
+  console.log(JSON.stringify({kind: 'LOCAL_BROWSER_FIXTURE_NOT_TLS_ACCEPTANCE', urls, workspaceIds: {a: a.id, b: b.id}, directory, stopFile, evidenceTasks}));
   process.stdin.setEncoding('utf8'); process.stdin.on('data', value => {if (value.trim() === 'STOP') void stop();});
   process.on('SIGINT', () => void stop()); process.on('SIGTERM', () => void stop());
   const deadline = setTimeout(() => void stop(), 20 * 60 * 1000); deadline.unref();
