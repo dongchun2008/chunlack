@@ -80,3 +80,13 @@
 - Evidence: complete suite 255/255 passed, zero failures/cancellations/skips; smoke passed real local HTTP/WebSocket, two mock model backends, SQLite restart persistence, private bind and configuration preservation. Additional real certificate-verified local HTTPS CONNECT exercised exact claim, valid PNG upload, lease renewal, result receipt and cross-workspace denial. Images and activity records in these fixtures are explicitly synthetic test evidence, not Muse/dots cloud-computer acceptance.
 - Windows cleanup ordering and incomplete runtime fixture dependencies were corrected without relaxing the authorization/lease/evidence assertions. Failed-first test evidence and final logs remain in the ignored execution ledger.
 - Remaining: Tasks 8-12. The current gateway still enforces its existing global single external execution limit; shared model/node capacity, usable multi-user UI, materialization, migration, production publication and both real external Agents remain unfinished. No VPS, DNS, production credentials or Peer Relay changes were made.
+
+## Task 8: shared capacity and bounded task control (2026-10-10)
+
+- One shared coordinator covers actual Ollama/OpenAI-compatible inference and embedding HTTP, plus persisted external node leases; metadata discovery remains role-safe.
+- Root ownership, fresh cancellation policy, deadline/depth/step/delegation limits, queued aborts and actual-settlement occupancy are implemented. External research enqueue shares the step budget; its wait does not consume a second slot.
+- Fixed public missing-setting defaults, legacy VM fixture injection, budget/error propagation through retry/fallback, and membership revocation propagation after a cloud response.
+- Real process test found a startup readiness race in its fixture. It now waits for the actual gateway response and retries only ECONNREFUSED, not incorrect HTTP responses. Unified atomic startup is still Task 10.
+- Verified: 290/290 tests, 0 failures/skips/cancellations; HTTP/WebSocket mock-model smoke passed. Local loopback stress: 2 workspaces, 24 complete five-agent rounds, 120 model requests, 0 failed rounds, actual model HTTP concurrency <= 1. Not a real-model/VPS soak or resource upper-limit claim.
+- Root metadata is bounded in memory; durable audit/restart state remains Task 11. Estimated cost is not a verified billing ceiling. UI task controls remain Task 9. Tasks 9-12 and real model/Muse/dots acceptance are not complete. No VPS/DNS/credential/Relay changes in this increment.
+- Details: `docs/WORKSPACE_CAPACITY.md`.

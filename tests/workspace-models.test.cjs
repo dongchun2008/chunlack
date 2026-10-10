@@ -47,10 +47,12 @@ test('workspace owner is not platform model administrator and grants are immutab
 
 function runtime(t, f, overrides = {}, failPrimary = false) {
   const calls = [], logs = [], registry = createWorkspaceStateRegistry({identity: f.store}); t.after(() => registry.close());
+  const capacity = require('../collaboration/capacity.cjs').createCapacityCoordinator();
+  t.after(() => capacity.close());
   const config = {llmProvider: 'ollama', fallbackModels: ['backup'], embeddingProvider: 'none', llmCloudProviders: [{id: 'cloud', baseUrl: 'https://models.example/v1', apiKeyEnv: 'TEST_KEY', fallbackModels: ['backup']}], ...overrides};
   const context = vm.createContext({
     config, process: {env: {TEST_KEY: 'synthetic-private-key', LACK_MULTI_USER: '1'}}, URL, path, fs, __dirname: f.dir,
-    require, workspaceRuntimeServices: {identity: f.store, registry, resources: f.resources},
+    require, workspaceRuntimeServices: {identity: f.store, registry, resources: f.resources, capacity},
     console: {log: x => logs.push(x), warn() {}, error() {}}, setTimeout, clearTimeout,
     axios: {async get(...a) {calls.push(['GET', ...a]); return {data: {models: [{name: 'local'}, {name: 'backup'}], data: [{id: 'remote'}, {id: 'backup'}]}};}, async post(...a) {calls.push(['POST', ...a]); if (failPrimary && a[1].model === 'local') throw {retryable: false}; return {data: {response: 'local reply', choices: [{message: {content: 'cloud reply'}}], embedding: [1, 0]}};}},
     logError: x => logs.push(JSON.stringify(x)), updateAgentMetrics() {}, broadcastAgents() {}, JSPACE_ENABLED: false
@@ -91,6 +93,29 @@ test('embedded primary and every fallback check workspace model grants before tr
     assert.match(await r.api.queryOllama('local', 'private task', '', .7, 'a'), /not authorized/);
   });
   assert.equal(r.calls.length, before);
+});
+test('root step exhaustion propagates through provider fallback instead of becoming a successful agent error-string reply', async t => {
+  const f = setup(t);
+  const r = runtime(t, f, {workspaceSettings: {[f.workspaces.a.id]: {agentRouting: {a: {allowCloudFallback: true, fallback: {provider: 'cloud', model: 'remote'}}}}}}, true);
+  await runWithWorkspace(f.actor('alice', 'a'), async () => {
+    vm.runInContext("agents.set('a', {id: 'a', provider: 'ollama'})", r.context);
+    await assert.rejects(() => r.api.workspaceServices().capacity.withTaskScope({workspaceId: f.workspaces.a.id, taskId: 'bounded-fallback', createdBy: f.users.alice.id, maxSteps: 1, deadlineAt: Date.now() + 10000}, () => r.api.queryOllama('local', 'synthetic-private-task', '', .7, 'a')), error => error.code === 'task_step_budget');
+    assert.deepEqual(r.calls.filter(call => call[0] === 'POST').map(call => call[2].model), ['local']);
+  });
+});
+test('cloud response authorization loss remains a task failure and cannot be swallowed by retry or fallback', async t => {
+  const f = setup(t), r = runtime(t, f);
+  f.store.setMembership(f.actor('alice', 'a'), {workspaceId: f.workspaces.a.id, userId: f.users.bob.id, role: 'owner'});
+  r.context.axios.post = async (...args) => {
+    r.calls.push(['POST', ...args]);
+    f.store.setMembership(f.actor('bob', 'a'), {workspaceId: f.workspaces.a.id, userId: f.users.alice.id, role: 'viewer'});
+    return {data: {choices: [{message: {content: 'must-not-be-returned'}}]}};
+  };
+  await runWithWorkspace(f.actor('alice', 'a'), async () => {
+    vm.runInContext("agents.set('a', {id: 'a', provider: 'cloud'})", r.context);
+    await assert.rejects(() => r.api.queryOllama('remote', 'private cloud fixture', '', .7, 'a'), error => error.code === 'forbidden');
+  });
+  assert.equal(r.calls.filter(call => call[0] === 'POST').length, 1);
 });
 
 test('viewer may see granted model metadata but cannot generate; cached J-space and agent tool actions remain scoped', async t => {

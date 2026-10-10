@@ -10,9 +10,10 @@ function screenshot() {
   const head = Buffer.alloc(13); head.writeUInt32BE(1, 0); head.writeUInt32BE(1, 4); head[8] = 8; head[9] = 6;
   return Buffer.concat([Buffer.from('89504e470d0a1a0a', 'hex'), chunk('IHDR', head), chunk('IDAT', deflateSync(Buffer.from([0, 1, 2, 3, 255]))), chunk('IEND', Buffer.alloc(0))]);
 }
-function gatewayFixture(t) {
+function gatewayFixture(t, {capacityFactory} = {}) {
   const f = workspaceFixture(t);
-  const store = require('../../gateway/store.cjs').createGatewayStore({dbPath: path.join(f.dir, 'gateway.sqlite'), now: f.now, multiUser: true});
+  const capacity = capacityFactory ? f.own(capacityFactory(f)) : undefined;
+  const store = require('../../gateway/store.cjs').createGatewayStore({dbPath: path.join(f.dir, 'gateway.sqlite'), now: f.now, multiUser: true, capacity});
   f.own(store);
   // A mode silently ignored by the existing store is the RED behavior, before the new facade exists.
   assert.equal(store.multiUser, true, 'Gateway must not silently fall back to unscoped storage');
@@ -27,6 +28,6 @@ function gatewayFixture(t) {
   const node = workspace => access.forNode(principals[workspace]);
   const enqueue = workspace => human(workspace === 'a' ? 'alice' : 'bob', workspace, h => h.enqueueTask({targetNodeId: nodes[workspace].id, scopeId: 'public', taskType: 'browser.public_read', input: {url: 'https://example.com/', challenge: randomBytes(32).toString('base64url')}, deadlineAt: f.now() + 120000}));
   const artifacts = require('../../gateway/pilot-artifacts.cjs').createPilotArtifacts({store, root: path.join(f.dir, 'artifacts'), now: f.now});
-  return {...f, gatewayStore: store, access, human, nodes, credentials, principals, node, enqueue, artifacts};
+  return {...f, gatewayStore: store, capacity, access, human, nodes, credentials, principals, node, enqueue, artifacts};
 }
 module.exports = {gatewayFixture, screenshot};

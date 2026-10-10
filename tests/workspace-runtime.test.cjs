@@ -30,8 +30,8 @@ test('actual embedded process enforces human identity, viewer denial and workspa
     identity.setMembership(identity.requireMembership(bob.id, b.id), {workspaceId: b.id, userId: carol.id, role: 'viewer'});
     const accounts = {};
     for (const name of ['alice', 'bob', 'carol']) accounts[name] = await sessions.login({login: name, password, source: 'runtime-fixture-' + name});
-    let modelRequests = 0;
-    backend = http.createServer((req, res) => {modelRequests++; res.setHeader('Content-Type', 'application/json'); res.end(JSON.stringify(req.method === 'GET' ? {data: [{id: 'fixture-model'}, {id: 'ungranted-model'}]} : {choices: [{message: {content: 'fixture-only reply'}}]}));});
+    let modelRequests = 0, inferenceRequests = 0;
+    backend = http.createServer((req, res) => {modelRequests++; if (req.method === 'POST') inferenceRequests++; res.setHeader('Content-Type', 'application/json'); res.end(JSON.stringify(req.method === 'GET' ? {data: [{id: 'fixture-model'}, {id: 'ungranted-model'}]} : {choices: [{message: {content: 'fixture-only reply'}}]}));});
     await new Promise(resolve => backend.listen(0, '127.0.0.1', resolve));
     const reservation = net.createServer(); await new Promise(resolve => reservation.listen(0, '127.0.0.1', resolve));
     const port = reservation.address().port; await new Promise(resolve => reservation.close(resolve));
@@ -51,7 +51,7 @@ test('actual embedded process enforces human identity, viewer denial and workspa
       const node = require('../collaboration/context.cjs').runWithWorkspace(actor, () => gatewayAccess.forHuman(actor).createNode({name: 'Runtime fixture', capabilities: ['browser.public_read'], scopes: ['public']}));
       nodeCredentials = gatewayStore.pair(node.pairingCode);
     } finally {gatewayStore.close();}
-    for (const [folder, names] of Object.entries({identity: ['store', 'policy', 'sessions', 'passwords', 'admission', 'http'], collaboration: ['store', 'state', 'context', 'transport', 'resources'], gateway: ['protocol', 'store', 'server', 'research-bridge', 'runtime', 'workspace-access', 'pilot-schema']})) {
+    for (const [folder, names] of Object.entries({identity: ['store', 'policy', 'sessions', 'passwords', 'admission', 'http'], collaboration: ['store', 'state', 'context', 'transport', 'resources', 'capacity', 'model-transport', 'task-control'], gateway: ['protocol', 'store', 'server', 'research-bridge', 'runtime', 'workspace-access', 'pilot-schema']})) {
       fs.mkdirSync(path.join(directory, folder));
       for (const name of names) fs.copyFileSync(path.join(root, folder, name + '.cjs'), path.join(directory, folder, name + '.cjs'));
       if (folder === 'gateway') fs.copyFileSync(path.join(root, folder, 'admin.html'), path.join(directory, folder, 'admin.html'));
@@ -64,7 +64,16 @@ test('actual embedded process enforces human identity, viewer denial and workspa
     }
     assert.ok(logs.includes('Workspace-authenticated runtime listening'), 'Runtime failed to start: ' + logs.slice(-3000));
     assert.ok(!/workspace_context_required|Uncaught Exception/.test(logs), logs.slice(-3000));
-    const gatewayHealth = await fetch(`http://127.0.0.1:${gatewayPort}/v1/manifest`);
+    // Main HTTP readiness is not evidence that the separately started gateway
+    // has bound its socket. Retry only connection refusal, never a bad response.
+    let gatewayHealth;
+    for (let attempt = 0; attempt < 100; attempt++) {
+      assert.equal(child.exitCode, null, 'Child exited before gateway readiness: ' + logs.slice(-2000));
+      try {gatewayHealth = await fetch(`http://127.0.0.1:${gatewayPort}/v1/manifest`, {signal: AbortSignal.timeout(1000)}); break;}
+      catch (error) {if (error.cause?.code !== 'ECONNREFUSED') throw error;}
+      await delay(50);
+    }
+    assert.ok(gatewayHealth, 'Gateway did not bind within the bounded readiness check: ' + logs.slice(-2000));
     assert.equal(gatewayHealth.status, 401, 'Enabled workspace gateway rejects anonymous node reads');
     const nodeManifest = await (await fetch(`http://127.0.0.1:${gatewayPort}/v1/manifest`, {headers: {Authorization: 'Bearer ' + nodeCredentials.token}})).json();
     assert.equal(nodeManifest.workspaceId, a.id);
@@ -113,6 +122,22 @@ test('actual embedded process enforces human identity, viewer denial and workspa
     await delay(50); assert.ok(!peerB.frames.some(value => JSON.stringify(value).includes('A-agent')));
     assert.ok(configBefore.equals(fs.readFileSync(configFile)), 'Workspace agent mutation must not rewrite global config');
     assert.ok(!fs.existsSync(path.join(directory, 'agent_memories', spawned.agent.id + '.json')));
+    const control = require('../gateway/store.cjs').createGatewayStore({dbPath: path.join(directory, 'db', 'agent-gateway.db'), multiUser: true});
+    try {
+      const access = require('../gateway/workspace-access.cjs').createWorkspaceGatewayAccess({store: control, identity});
+      const actor = identity.requireMembership(alice.id, a.id);
+      const queued = require('../collaboration/context.cjs').runWithWorkspace(actor, () => access.forHuman(actor).enqueueTask({targetNodeId: nodeCredentials.nodeId, scopeId: 'public', taskType: 'browser.public_read', input: {url: 'https://example.com/', challenge: Buffer.alloc(32, 1).toString('base64url')}, deadlineAt: Date.now() + 120000}));
+      const node = access.forNode(control.authenticate(nodeCredentials.token)), lease = node.claimTask();
+      assert.equal(lease.taskId, queued.taskId);
+      peerA.ws.send(JSON.stringify({type: 'message', content: '/ground'}));
+      await delay(350);
+      assert.equal(inferenceRequests, 0, 'An actual running node lease must prevent all embedded model traffic');
+      require('../collaboration/context.cjs').runWithWorkspace(actor, () => access.forHuman(actor).cancelTask(queued.taskId));
+      await delay(300); assert.equal(inferenceRequests, 0, 'Unconfirmed remote cancellation must retain capacity');
+      node.appendEvent({protocolVersion: 1, taskId: lease.taskId, leaseId: lease.leaseId, attempt: lease.attempt, eventId: 'cancel-confirmed', type: 'cancelled'});
+      await frame(peerA, value => value.type === 'new_message' && value.message.sender === 'A-agent' && value.message.content.includes('fixture-only reply'));
+      assert.ok(inferenceRequests > 0);
+    } finally {control.close();}
     const stopped = once(peerA.ws, 'close');
     assert.equal((await request('/auth/logout', 'alice', a.id, 'POST')).status, 415);
     sessions.logout(accounts.alice.token);

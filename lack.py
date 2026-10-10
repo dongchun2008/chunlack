@@ -293,6 +293,7 @@ function workspaceServices() {
     try {store = require('./collaboration/store.cjs').createCollaborationStore({db: rawDb, identity});}
     catch (error) {identity.close(); throw error;}
     const registry = require('./collaboration/state.cjs').createWorkspaceStateRegistry({identity});
+    const capacity = require('./collaboration/capacity.cjs').createCapacityCoordinator({maxActive: 1, maxQueued: 100, maxQueuedPerWorkspace: 20});
     const businessTables = /\b(messages|agents|agent_memory|project_states|pipeline_results|loop_health|research_sessions|research_sources)\b/i;
     db.prepare = function(sql) {
       if (typeof sql !== 'string' || businessTables.test(sql)) throw new Error('workspace_sql_required');
@@ -302,7 +303,7 @@ function workspaceServices() {
       if (typeof sql !== 'string' || businessTables.test(sql)) throw new Error('workspace_sql_required');
       return rawDb.exec(sql);
     };
-    workspaceRuntimeServices = {identity, store, registry, close() {this.transport?.close(); this.sessions?.close(); for (const timer of this.resourceTimers || []) clearInterval(timer); registry.close(); store.close(); identity.close();}};
+    workspaceRuntimeServices = {identity, store, registry, capacity, close() {this.transport?.close(); this.sessions?.close(); for (const timer of this.resourceTimers || []) clearInterval(timer); this.taskControl?.close(); capacity.close(); registry.close(); store.close(); identity.close();}};
   }
   return workspaceRuntimeServices;
 }
@@ -326,9 +327,29 @@ function scopedResourceDir(kind, legacy) {
   const resources = workspaceResources();
   return resources ? resources.paths(require('./collaboration/context.cjs').requireWorkspaceContext())[kind] : legacy;
 }
+async function workspaceInferenceRequest(providerId, modelId, kind, method, ...args) {
+  const services = typeof workspaceServices === 'function' ? workspaceServices() : null;
+  if (!services) return axios[method](...args);
+  if (!services.modelTransport) services.modelTransport = require('./collaboration/model-transport.cjs').createWorkspaceModelTransport({capacity: services.capacity, authorize: workspaceAuthorizeModel, transport: axios});
+  const request = () => services.modelTransport.request({providerId, modelId, kind, method, url: args[0], data: method === 'post' ? args[1] : undefined, options: (method === 'post' ? args[2] : args[1]) || {}});
+  return kind === 'model.discover' || services.capacity.currentTask() ? request() : workspaceTaskScope(require('node:crypto').randomUUID(), request);
+}
+
+async function workspaceTaskScope(taskId, fn, {delegate = false} = {}) {
+  const services = typeof workspaceServices === 'function' ? workspaceServices() : null;
+  if (!services) return fn();
+  const limits = workspaceSetting('executionLimits', null) || {maxSteps: 50, maxDepth: 3, timeoutMs: 300000};
+  services.taskControl ||= require('./collaboration/task-control.cjs').createWorkspaceTaskControl({identity: services.identity, capacity: services.capacity});
+  return services.taskControl.run(taskId, fn, {delegate, limits});
+}
+
 function workspaceAuthorizeModel(providerId, modelId = null, options = {}) {
   const resources = workspaceResources();
   return resources ? resources.authorizeProvider(require('./collaboration/context.cjs').requireWorkspaceContext(), providerId, modelId, options) : null;
+}
+function workspaceExecutionStopped(error) {
+  return typeof process !== 'undefined' && process.env?.LACK_MULTI_USER === '1' &&
+    (error?.name === 'IdentityError' || /^(task_|workspace_|global_queue_|capacity_|recursive_execution_|delegation_|model_not_authorized)/.test(error?.code || ''));
 }
 async function workspaceModelList(providerName) {
   workspaceAuthorizeModel(providerName);
@@ -2229,6 +2250,11 @@ function getNextRalphAgent(storeId, store) {
   return agent;
 }
 async function runRalphIteration(storeId) {
+  try {return await workspaceTaskScope(uuidv4(), () => runRalphIterationBody(storeId));}
+  catch (error) {try {stopRalphLoop(storeId);} catch {} logError({context: 'runRalphIteration', error: error.code || 'task_failed'});}
+}
+
+async function runRalphIterationBody(storeId) {
   if (ralphCancel.get(storeId) === true) {
     ralphCancel.delete(storeId);
     ralphActive.set(storeId, false);
@@ -2454,6 +2480,7 @@ const FILE_TOOLS = [
 
 const ollamaSemaphore = workspaceMap('ollamaSemaphore');
 async function rateLimitedQuery(agentId, fn) {
+  if (typeof workspaceServices === 'function' && workspaceServices()) return fn();
   if (!ollamaSemaphore.has(agentId)) ollamaSemaphore.set(agentId, Promise.resolve());
   const queue = ollamaSemaphore.get(agentId);
   const next = queue.catch(() => {}).then(() => fn());
@@ -2462,6 +2489,11 @@ async function rateLimitedQuery(agentId, fn) {
 }
 
 async function agentRespond(agent, storeId, triggerMessage, isLoop = false, parentId = null) {
+  try {return await workspaceTaskScope(uuidv4(), () => agentRespondBody(agent, storeId, triggerMessage, isLoop, parentId), {delegate: true});}
+  catch (error) {logError({context: 'agentRespond', agentId: agent.id, error: error.code || 'task_failed'});}
+}
+
+async function agentRespondBody(agent, storeId, triggerMessage, isLoop = false, parentId = null) {
   if (agent.isEmbedOperator) return;
   if (triggerMessage.sender === agent.name) return;
   if (agent.strictChannel && agent.strictChannel !== storeId && channels.has(storeId)) {
@@ -2600,6 +2632,11 @@ async function executeAction(agent, storeId, action, parentId = null) {
 }
 
 async function agentPlanAndAct(agent, storeId, triggerMessage, parentId = null) {
+  try {return await workspaceTaskScope(uuidv4(), () => agentPlanAndActBody(agent, storeId, triggerMessage, parentId), {delegate: true});}
+  catch (error) {logError({context: 'agentPlanAndAct', agentId: agent.id, error: error.code || 'task_failed'});}
+}
+
+async function agentPlanAndActBody(agent, storeId, triggerMessage, parentId = null) {
   if (agent.isEmbedOperator) return;
   if (triggerMessage.sender === agent.name) return;
   if (agent.strictChannel && agent.strictChannel !== storeId && channels.has(storeId)) {
@@ -3372,7 +3409,7 @@ app.get('/api/jspace', async (req, res) => {
 server.listen(PORT, process.env.LACK_BIND_HOST || '127.0.0.1', async () => {
   if (transport) {
     if (config.agentGateway?.enabled === true) {
-      try {agentGateway = await require('./gateway/runtime.cjs').startAgentGateway({config, dataRoot: __dirname, identity: workspaceServices().identity});}
+      try {agentGateway = await require('./gateway/runtime.cjs').startAgentGateway({config, dataRoot: __dirname, identity: workspaceServices().identity, capacity: workspaceServices().capacity});}
       catch {
         console.error('[LACK] Workspace gateway startup failed; public runtime stopped.');
         server.close(); workspaceServices().close(); if (db.open) db.close(); process.exitCode = 1; return;
@@ -3679,6 +3716,12 @@ wss.on('connection', (ws, request) => {
 
 // ==================== MESSAGE HANDLERS ====================
 async function onHumanMessage(channelId, messageObj, ws) {
+  if (typeof process !== 'undefined' && process.env?.LACK_MULTI_USER === '1') workspaceTransport().authorizeCommand(require('./collaboration/context.cjs').requireWorkspaceContext(), messageObj.content);
+  const readOnly = /^\/(help|list|memory|public_memory|graph|convergence|pull|thread)(?:\s|$)/i.test(messageObj.content);
+  return readOnly ? onHumanMessageBody(channelId, messageObj, ws) : workspaceTaskScope(messageObj.id || uuidv4(), () => onHumanMessageBody(channelId, messageObj, ws));
+}
+
+async function onHumanMessageBody(channelId, messageObj, ws) {
   if (typeof process !== 'undefined' && process.env?.LACK_MULTI_USER === '1') workspaceTransport().authorizeCommand(require('./collaboration/context.cjs').requireWorkspaceContext(), messageObj.content);
   const channel = channels.get(channelId);
   if (!channel) return;
@@ -4158,7 +4201,7 @@ let availableModels = [];
 
 async function getOllamaModels() {
   try {
-    const res = await axios.get(`${OLLAMA_URL}/api/tags`, { timeout: 3000 });
+    const res = await workspaceInferenceRequest('ollama', null, 'model.discover', 'get', `${OLLAMA_URL}/api/tags`, { timeout: 3000 });
     const models = res.data.models.map(m => m.name);
     availableModels = models;
     return models;
@@ -4169,7 +4212,7 @@ async function getOllamaModels() {
 }
 
 async function getEmbeddingFromOllama(text, model = EMBEDDING_MODEL) {
-  const res = await axios.post(`${OLLAMA_URL}/api/embeddings`, {
+  const res = await workspaceInferenceRequest('ollama', model, 'model.embed', 'post', `${OLLAMA_URL}/api/embeddings`, {
     model,
     prompt: text.slice(0, 2000)
   }, { timeout: LLM_TIMEOUT_MS, maxRedirects: 0 });
@@ -4179,7 +4222,7 @@ async function getEmbeddingFromOllama(text, model = EMBEDDING_MODEL) {
 async function getOpenAICompatibleModels(providerConfig) {
   if (providerConfig.requiresApiKey && !providerConfig.apiKey) return providerConfig.models;
   try {
-    const res = await axios.get(`${providerConfig.baseUrl}/models`, {
+    const res = await workspaceInferenceRequest(providerConfig.id, null, 'model.discover', 'get', `${providerConfig.baseUrl}/models`, {
       timeout: 3000,
       maxRedirects: 0,
       headers: {
@@ -4202,7 +4245,7 @@ async function generateWithOpenAICompatible(providerConfig, model, prompt, syste
   }
   const started = Date.now();
   try {
-    const response = await axios.post(`${providerConfig.baseUrl}/chat/completions`, {
+    const response = await workspaceInferenceRequest(providerConfig.id, model, 'model.generate', 'post', `${providerConfig.baseUrl}/chat/completions`, {
       model,
       messages: [
         { role: 'system', content: systemPrompt },
@@ -4226,6 +4269,7 @@ async function generateWithOpenAICompatible(providerConfig, model, prompt, syste
     return text;
   } catch (err) {
     if (agentId) updateAgentMetrics(agentId, 0, false, 0);
+    if (workspaceExecutionStopped(err)) {err.retryable = false; throw err;}
     const status = Number(err.response?.status) || 0;
     const error = new Error(status ? `Provider HTTP ${status}` : 'Provider request failed or timed out');
     error.retryable = !status || status === 429 || status >= 500;
@@ -4235,7 +4279,7 @@ async function generateWithOpenAICompatible(providerConfig, model, prompt, syste
 
 async function getEmbeddingFromOpenAICompatible(providerConfig, text) {
   if ((providerConfig.requiresApiKey && !providerConfig.apiKey) || !providerConfig.embeddingModel) return null;
-  const res = await axios.post(`${providerConfig.baseUrl}/embeddings`, {
+  const res = await workspaceInferenceRequest(providerConfig.id, providerConfig.embeddingModel, 'model.embed', 'post', `${providerConfig.baseUrl}/embeddings`, {
     model: providerConfig.embeddingModel,
     input: text.slice(0, 2000)
   }, {
@@ -4310,6 +4354,7 @@ for (const [providerId, providerConfig] of CLOUD_PROVIDER_CONFIGS) {
 }
 
 function markOllamaDown() {
+  if (typeof workspaceServices === 'function' && workspaceServices()) return;
   if (!ollamaCircuitOpen) {
     ollamaCircuitOpen = true;
     console.error('[LACK] Ollama unreachable. Circuit open – retrying in 15s.');
@@ -4360,6 +4405,7 @@ async function queryOllamaWithRetry(model, prompt, systemPrompt = '', temperatur
         console.log(JSON.stringify({ event: 'llm_route', agentId, provider: route.provider, model: route.model, fallback: index > 0, attempt, ok: true, durationMs: Date.now() - started }));
         return result;
       } catch (error) {
+        if (workspaceExecutionStopped(error)) throw error;
         lastError = error.retryable === false ? 'Provider rejected the request' : 'Model request failed or timed out';
         console.log(JSON.stringify({ event: 'llm_route', agentId, provider: route.provider, model: route.model, fallback: index > 0, attempt, ok: false, durationMs: Date.now() - started }));
         if (error.retryable === false) break;
@@ -4384,7 +4430,7 @@ async function queryOllamaEngine(model, prompt, systemPrompt = '', temperature =
       agent.statusMessage = degraded ? 'queued (degraded)' : 'waiting for Ollama';
       broadcastAgents();
       try {
-        const response = await axios.post(`${OLLAMA_URL}/api/generate`, {
+        const response = await workspaceInferenceRequest('ollama', model, 'model.generate', 'post', `${OLLAMA_URL}/api/generate`, {
           model, prompt, system: systemPrompt, stream: false,
           options: { temperature, num_predict: numPredict }
         }, { timeout: LLM_TIMEOUT_MS, maxRedirects: 0 });
@@ -4406,6 +4452,7 @@ async function queryOllamaEngine(model, prompt, systemPrompt = '', temperature =
         }
         return response.data.response || "I'm sorry, I couldn't generate a response.";
       } catch (err) {
+        if (workspaceExecutionStopped(err)) throw err;
         if (err.code === 'ECONNREFUSED' || err.code === 'ENOTFOUND') markOllamaDown();
         if (err.message && err.message.includes('out of memory')) {
           agentDegraded.set(agentId, true);
@@ -4424,12 +4471,13 @@ async function queryOllamaEngine(model, prompt, systemPrompt = '', temperature =
       }
     } else {
       try {
-        const response = await axios.post(`${OLLAMA_URL}/api/generate`, {
+        const response = await workspaceInferenceRequest('ollama', model, 'model.generate', 'post', `${OLLAMA_URL}/api/generate`, {
           model, prompt, system: systemPrompt, stream: false,
           options: { temperature, num_predict: numPredict }
         }, { timeout: LLM_TIMEOUT_MS, maxRedirects: 0 });
         return response.data.response || "I'm sorry, I couldn't generate a response.";
       } catch (err) {
+        if (workspaceExecutionStopped(err)) throw err;
         if (err.code === 'ECONNREFUSED' || err.code === 'ENOTFOUND') markOllamaDown();
         logError({ model, error: err.message, context: 'queryOllama' });
         return `[OLLAMA_ERROR] ${err.message.substring(0,80)}`;
