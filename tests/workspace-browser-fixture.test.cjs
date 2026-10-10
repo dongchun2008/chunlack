@@ -13,10 +13,11 @@ test('loopback browser adapter preserves JSON DELETE framing and the unchanged p
     let deadline; try {await Promise.race([exit, new Promise((_, reject) => {deadline = setTimeout(() => reject(new Error('Owned fixture shutdown timed out')), 5000);})]);}
     finally {clearTimeout(deadline); if (child.exitCode === null) child.kill();}
   });
-  let stdout = '', deadline;
+  let stdout = '', stderr = '', deadline;
+  child.stderr.on('data', value => {stderr = (stderr + value).slice(-8000);});
   const ready = new Promise((resolve, reject) => {
     child.stdout.on('data', value => {stdout += value; const line = stdout.split('\n').find(value => value.startsWith('{')); if (line) {try {resolve(JSON.parse(line));} catch { /* wait for the complete JSON line */ }}});
-    child.once('exit', () => reject(new Error('Owned fixture exited before readiness')));
+    child.once('exit', code => reject(new Error('Owned fixture exited before readiness (' + code + '): ' + stderr)));
     deadline = setTimeout(() => reject(new Error('Owned fixture readiness timed out')), 10000);
   });
   let fixture; try {fixture = await ready;} finally {clearTimeout(deadline);}

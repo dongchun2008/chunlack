@@ -33,10 +33,9 @@ function configuration(config, env) {
   if (webOrigin === agentsOrigin || ports.some(port => !Number.isInteger(port) || port < 1024 || port > 65535) || new Set(ports).size !== 3) throw failure('public_invalid_ports');
   const key = config.agentGateway.adminTokenEnv;
   if (typeof key !== 'string' || !/^[A-Z][A-Z0-9_]{1,100}$/.test(key) || typeof env[key] !== 'string' || env[key].length < 43 || env[key].length > 256) throw failure('public_private_gateway_credential_required');
-  // Event subscriptions require separately approved callback hosts and a persistent
-  // encryption key. Never silently advertise them before the delivery runtime exists.
-  if (options.events?.enabled === true) throw failure('public_events_runtime_not_ready');
-  return {webOrigin, agentsOrigin, mcpPort: options.mcpPort};
+  // Validate before acquiring a writer lease or opening an event database.
+  if (options.events?.enabled === true) require('../integrations/mcp/runtime.cjs').validatePublicEventsOptions(options.events, env).encryptionKey.fill(0);
+  return {webOrigin, agentsOrigin, mcpPort: options.mcpPort, events: options.events};
 }
 function validateMigration(root) {
   const identityPath = safePath(path.join(root, 'db', 'identity.db'));
@@ -89,13 +88,18 @@ function assertWriterLease(root, lease) {
     if (current.isSymbolicLink() || current.dev !== owner.stat.dev || current.ino !== owner.stat.ino || JSON.parse(fs.readFileSync(owner.file, 'utf8')).instanceId !== owner.instanceId) throw failure('public_writer_lease_required');
   } catch {throw failure('public_writer_lease_required');}
 }
-async function startMcpRuntime({gateway, root, port, ready}) {
+async function startMcpRuntime({gateway, root, port, ready, eventsOptions, env}) {
   const {store, workspaceAccess} = gateway;
-  const artifacts = require('./pilot-artifacts.cjs').createPilotArtifacts({store, root: path.join(root, 'artifacts', 'public-pilot')});
+  const artifacts = gateway.artifacts || require('./pilot-artifacts.cjs').createPilotArtifacts({store, root: path.join(root, 'artifacts', 'public-pilot')});
   const uploads = require('../integrations/mcp/artifact-upload.cjs').createArtifactUpload({store, artifacts});
-  const mcp = require('../integrations/mcp/pilot-server.cjs').createPilotMcp({store, artifacts, uploads, workspaceAccess, ready, resolvePrincipal: token => store.authenticate(token)});
-  try {mcp.server.listen(port, '127.0.0.1'); await once(mcp.server, 'listening'); return mcp;}
-  catch (error) {await mcp.close(); throw error;}
+  let mcp, eventRuntime, closing;
+  function close(){if(closing)return closing;closing=(async()=>{const errors=[];for(const fn of [()=>mcp?.close(),()=>eventRuntime?.close()])try{await fn();}catch(error){errors.push(error);}if(errors.length)throw failure('public_mcp_shutdown_incomplete');})();return closing;}
+  try {
+    if(eventsOptions?.enabled===true)eventRuntime=require('../integrations/mcp/runtime.cjs').createPublicEventsRuntime({gateway,dataRoot:root,options:eventsOptions,env,ready});
+    mcp = require('../integrations/mcp/pilot-server.cjs').createPilotMcp({store, artifacts, uploads, workspaceAccess, ready, events:eventRuntime?.events, resolvePrincipal: token => store.authenticate(token)});
+    mcp.server.listen(port, '127.0.0.1'); await once(mcp.server, 'listening');
+    return Object.freeze({server:mcp.server,events:eventRuntime?.events,close});
+  } catch (error) {await close(); throw error;}
 }
 async function startPublicRuntime({config, dataRoot, env = process.env, loadLack = () => require('../server.js'), startMcp = startMcpRuntime} = {}) {
   const options = configuration(config, env), root = safePath(dataRoot, {directory: true});
@@ -121,7 +125,7 @@ async function startPublicRuntime({config, dataRoot, env = process.env, loadLack
     if (typeof module?.startLackRuntime !== 'function') throw failure('public_runtime_export_required');
     web = await module.startLackRuntime({config, dataRoot: root, identity, capacity, env, publicMode: true, bindHost: '127.0.0.1', webOrigin: options.webOrigin, identityPath, writerLease: release, deferReady: true});
     if (!web?.gateway?.workspaceAccess || typeof web.activate !== 'function') throw failure('public_workspace_gateway_required');
-    mcp = await startMcp({gateway: web.gateway, root, port: options.mcpPort, ready: () => web.isReady()});
+    mcp = await startMcp({gateway: web.gateway, root, port: options.mcpPort, ready: () => web.isReady(), eventsOptions: options.events, env});
     web.activate();
     return Object.freeze({identity, capacity, web, gateway: web.gateway, mcp, close});
   } catch (error) {

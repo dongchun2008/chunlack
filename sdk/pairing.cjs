@@ -11,4 +11,5 @@ function bindingFromPairing(value, {workspaceId} = {}) {
   if (workspaceId === undefined ? value.workspaceId !== undefined : id(workspaceId) !== value.workspaceId) throw new Error('Pairing workspace mismatch; specify the approved workspace');
   return {nodeId, token: value.token, ...(workspaceId === undefined ? {} : {workspaceId})};
 }
-module.exports = {pairingArgs, bindingFromPairing};
+function pairingRoute({workspaceId} = {}) {return workspaceId === undefined ? '/v1/pair' : `/v1/workspaces/${id(workspaceId)}/pair`;}
+module.exports = {pairingArgs, bindingFromPairing, pairingRoute};

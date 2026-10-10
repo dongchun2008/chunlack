@@ -1,0 +1,130 @@
+# Generated candidates must be validated before any controlled cutover.
+# No port 80, UDP HTTP/3, administrative API or unreviewed proxy route.
+{
+    admin off
+    persist_config off
+    auto_https disable_redirects
+    https_port @@PUBLIC_PORT@@
+    @@BIND@@
+    servers {
+        protocols h1 h2
+        strict_sni_host on
+        max_header_size 16KB
+        timeouts {
+            read_header 10s
+            read_body 20s
+            idle 120s
+        }
+    }
+}
+
+(scrub_identity) {
+    header_up -Forwarded
+    header_up -X-User-Id
+    header_up -X-User
+    header_up -X-Role
+    header_up -X-Workspace-Role
+    header_up -X-Node-Id
+    header_up -X-Authenticated-User
+    header_up -X-Forwarded-User
+    header_up -Remote-User
+    header_up -X-SSL-Client-Verify
+    header_up -X-SSL-Client-DN
+    header_up X-Forwarded-For {http.request.remote.host}
+    header_up X-Real-IP {http.request.remote.host}
+    header_up X-Forwarded-Proto https
+    header_up X-Forwarded-Host {http.request.host}
+    transport http {
+        dial_timeout 3s
+        response_header_timeout 30s
+        compression off
+    }
+}
+
+(web_proxy) {
+    reverse_proxy 127.0.0.1:@@WEB_PORT@@ {
+        import scrub_identity
+        header_up Host 127.0.0.1:@@WEB_PORT@@
+    }
+}
+(node_proxy) {
+    reverse_proxy 127.0.0.1:@@GATEWAY_PORT@@ {
+        import scrub_identity
+        header_up Host 127.0.0.1:@@GATEWAY_PORT@@
+    }
+}
+(mcp_proxy) {
+    reverse_proxy 127.0.0.1:@@MCP_PORT@@ {
+        import scrub_identity
+        header_up Host 127.0.0.1:@@MCP_PORT@@
+    }
+}
+
+(request_boundary) {
+    @bad_raw expression `{http.request.orig_uri}.matches('^[^?]*(%|//)|^[^?]*/[.]{1,2}(/|[?]|$)') || {http.request.orig_uri}.contains('\\')`
+    respond @bad_raw 404
+    @credential_query expression `{http.request.orig_uri}.matches('(?i)[?&](token|access_token|api_key|authorization|password|secret)=')`
+    respond @credential_query 404
+    request_body {
+        max_size 2097152
+    }
+    header {
+        X-Content-Type-Options nosniff
+        Referrer-Policy no-referrer
+        Cache-Control no-store
+        Strict-Transport-Security "max-age=300"
+    }
+}
+
+https://@@WEB_HOST@@:@@PUBLIC_PORT@@ {
+    @@TLS@@
+    route {
+        import request_boundary
+        @human_read {
+            method GET HEAD
+            path_regexp human_read ^(/|/login|/health|/[A-Za-z0-9_-]+[.](js|css|svg|png|ico|html)|/auth/[A-Za-z0-9_/-]+|/api/(bootstrap|workspaces|channels|messages|tasks|nodes|models|agents|research|research-sessions|evidence|artifacts)(/[A-Za-z0-9_-]+)*)$
+        }
+        handle @human_read {
+            import web_proxy
+        }
+        @human_write {
+            method POST PATCH DELETE
+            path_regexp human_write ^(/auth/[A-Za-z0-9_/-]+|/api/(workspaces|channels|messages|tasks|nodes|models|research|research-sessions)(/[A-Za-z0-9_-]+)*)$
+        }
+        handle @human_write {
+            import web_proxy
+        }
+        respond 404
+    }
+}
+
+https://@@AGENTS_HOST@@:@@PUBLIC_PORT@@ {
+    @@TLS@@
+    route {
+        import request_boundary
+        @bad_query expression `{http.request.orig_uri}.contains('?') && !{http.request.orig_uri}.matches('^/v1/events[?]cursor=[0-9]{1,12}$')`
+        respond @bad_query 404
+        @mcp {
+            method POST
+            path /mcp
+        }
+        handle @mcp {
+            import mcp_proxy
+        }
+        @node_read {
+            method GET
+            path_regexp node_read ^/v1/(manifest|agents/me|openapi[.]json|events|tasks/[A-Za-z0-9_-]{1,100})$
+        }
+        handle @node_read {
+            import node_proxy
+        }
+        @node_write {
+            method POST
+            path_regexp node_write ^/v1/(heartbeat|agents/heartbeat|tasks/claim|workspaces/[A-Za-z0-9_-]{1,100}/pair|tasks/[A-Za-z0-9_-]{1,100}/(heartbeat|events|result)|pilot/tasks/[A-Za-z0-9_-]{1,100}/artifact)$
+        }
+        handle @node_write {
+            import node_proxy
+        }
+        respond 404
+    }
+}

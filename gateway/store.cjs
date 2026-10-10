@@ -83,9 +83,10 @@ function createGatewayStore({dbPath,now=Date.now,multiUser=false,capacity}){
       return {...publicNode(node(id)),pairingCode:pairCode(id),expiresInSeconds:300};
     });
   }
-  function pair(code){P.text(code,100);return mutate(()=>{
+  function pair(code,{workspaceId,authorize}={}){P.text(code,100);if(workspaceId!==undefined)P.id(workspaceId);if(authorize!==undefined&&typeof authorize!=='function')P.fail('invalid_pairing_binding');return mutate(()=>{
     const p=q('SELECT * FROM pairings WHERE code_hash=?').get(P.hash(code));if(!p||p.expires_at<=now())P.fail('invalid_pairing',401);
-    return withWorkspace({workspaceId:p.workspace_id},()=>{const n=liveNode(p.node_id),token=P.secret();q('DELETE FROM pairings WHERE node_id=?').run(n.id);q('UPDATE nodes SET token_hash=?,last_seen=? WHERE id=?').run(P.hash(token),now(),n.id);
+    if(workspaceId!==undefined&&p.workspace_id!==workspaceId)P.fail('workspace_mismatch',403);
+    return withWorkspace({workspaceId:p.workspace_id},()=>{const n=liveNode(p.node_id);if(authorize)authorize(publicNode(n));const token=P.secret();q('DELETE FROM pairings WHERE node_id=?').run(n.id);q('UPDATE nodes SET token_hash=?,last_seen=? WHERE id=?').run(P.hash(token),now(),n.id);
     return {protocolVersion:1,nodeId:n.id,...(multiUser?{workspaceId:n.workspace_id}:{}),token};});
   });}
   function authenticate(token){if(typeof token!=='string'||token.length<40||token.length>100)P.fail('unauthorized',401);const digest=P.hash(token),row=q('SELECT id,workspace_id FROM nodes WHERE token_hash=? AND revoked=0').get(digest);if(!row)P.fail('unauthorized',401);return withWorkspace({workspaceId:row.workspace_id},()=>{const result=Object.freeze(publicNode(liveNode(row.id)));proofs.set(result,{digest,workspaceId:row.workspace_id});return result;});}

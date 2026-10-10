@@ -38,22 +38,19 @@ async function main() {
   backend = http.createServer((req, res) => {res.setHeader('Content-Type', 'application/json'); res.end(JSON.stringify(req.method === 'GET' ? {data: [{id: 'fixture-model'}]} : {choices: [{message: {content: 'LOCAL MOCK MODEL ONLY'}}]}));});
   await new Promise(resolve => backend.listen(0, '127.0.0.1', resolve));
   const port = await freePort(), gatewayPort = await freePort();
-  const source = JSON.parse(execFileSync(process.env.PYTHON || 'python', ['-c', 'import json,runpy; print(json.dumps(runpy.run_path("scripts/materialize.py")["embedded_sources"]()))'], {cwd: root, encoding: 'utf8', timeout: 10000}));
-  fs.writeFileSync(path.join(directory, 'server.js'), source.SERVER_JS);
-  fs.mkdirSync(path.join(directory, 'public')); fs.mkdirSync(path.join(directory, 'config'));
-  const ui = JSON.parse(execFileSync(process.env.PYTHON || 'python', ['-c', 'import ast,json; t=ast.parse(open("lack.py",encoding="utf-8").read()); print(json.dumps(next(ast.literal_eval(n.value) for n in t.body if isinstance(n,ast.Assign) and any(isinstance(x,ast.Name) and x.id=="INDEX_HTML" for x in n.targets))))'], {cwd: root, encoding: 'utf8', timeout: 10000}));
-  fs.writeFileSync(path.join(directory, 'public', 'index.html'), ui);
-  fs.writeFileSync(path.join(directory, 'config', 'lack.config.json'), JSON.stringify({...JSON.parse(source.CONFIG_JSON), httpPort: port, llmProvider: 'local-test', embeddingProvider: 'none', autoPullModels: false, enablePublicMemory: false, agents: [],
+  // Use the deployable package rather than a second hand-maintained dependency
+  // list. New gateway imports must be exercised here, not silently omitted.
+  execFileSync(process.env.PYTHON || 'python', ['scripts/materialize.py', '--output', directory], {cwd: root, encoding: 'utf8', timeout: 10000});
+  const configPath = path.join(directory, 'config', 'lack.config.json');
+  const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  fs.writeFileSync(configPath, JSON.stringify({...config, httpPort: port, llmProvider: 'local-test', embeddingProvider: 'none', autoPullModels: false, enablePublicMemory: false, agents: [],
     agentGateway: {enabled: true, port: gatewayPort, adminTokenEnv: 'LACK_BROWSER_FIXTURE_SECRET'},
     workspaceModelGrants: {[a.id]: {'local-test': {models: ['fixture-model']}}, [b.id]: {'local-test': {models: ['fixture-model']}}},
     llmProviders: [{id: 'local-test', local: true, requiresApiKey: false, baseUrl: `http://127.0.0.1:${backend.address().port}/v1`, models: ['fixture-model']}]}));
-  for (const [folder, names] of Object.entries({identity: ['store', 'policy', 'sessions', 'passwords', 'admission', 'http', 'workspace-ui.js', 'workspace-shell.js', 'login.html'], collaboration: ['store', 'state', 'context', 'transport', 'resources', 'capacity', 'model-transport', 'task-control', 'controls-http'], gateway: ['protocol', 'store', 'server', 'research-bridge', 'runtime', 'workspace-access', 'pilot-schema', 'admin.html']})) {
-    fs.mkdirSync(path.join(directory, folder)); for (const name of names) {const file = name.includes('.') ? name : name + '.cjs'; fs.copyFileSync(path.join(root, folder, file), path.join(directory, folder, file));}
-  }
   let logs = '';
   child = spawn(process.execPath, [path.join(directory, 'server.js')], {cwd: directory, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'], env: {...process.env, NODE_PATH: path.join(root, 'node_modules'), LACK_BIND_HOST: '127.0.0.1', LACK_MULTI_USER: '1', LACK_PUBLIC_MODE: '1', LACK_WEB_ORIGIN: origin, LACK_IDENTITY_DB: path.join(directory, 'identity.sqlite'), LACK_BROWSER_FIXTURE_SECRET: 'synthetic-browser-secret-'.repeat(3)}});
   child.stdout.on('data', value => {logs = (logs + value).slice(-6000);}); child.stderr.on('data', value => {logs = (logs + value).slice(-6000);});
-  for (let i = 0; i < 100 && !logs.includes('Workspace-authenticated runtime listening'); i++) {if (child.exitCode !== null) throw new Error('Fixture child exited'); await delay(50);}
+  for (let i = 0; i < 100 && !logs.includes('Workspace-authenticated runtime listening'); i++) {if (child.exitCode !== null) throw new Error('Fixture child exited: ' + logs); await delay(50);}
   if (!logs.includes('Workspace-authenticated runtime listening')) throw new Error('Fixture readiness timed out');
   for (const [login, workspace] of [['alice', a], ['bob', b]]) {
     const session = await sessions.login({login, password, source: 'browser-fixture-seed-' + login});

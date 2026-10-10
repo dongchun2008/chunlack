@@ -1,7 +1,9 @@
 'use strict';
 const {LIMITS}=require('./protocol.cjs');
 // Static connector contract: never derive addresses or credentials from a request.
-function createPilotOpenApi({multiUser=false}={}){
+function createPilotOpenApi({multiUser=false,publicOrigin}={}){
+  let servers;
+  if(publicOrigin!==undefined){let url;try{url=new URL(publicOrigin);}catch{throw new Error('invalid_connector_origin');}if(url.protocol!=='https:'||url.username||url.password||url.port||url.pathname!=='/'||url.search||url.hash||!/^[a-z0-9-]+(?:\.[a-z0-9-]+)+$/.test(url.hostname))throw new Error('invalid_connector_origin');servers=[{url:url.origin}];}
   const ref=name=>({$ref:'#/components/schemas/'+name});
   const id={type:'string',pattern:'^[A-Za-z0-9_-]{1,100}$'};
   const object=(properties,required=Object.keys(properties))=>({type:'object',properties,...(required.length?{required}:{}),additionalProperties:false});
@@ -48,6 +50,6 @@ function createPilotOpenApi({multiUser=false}={}){
     '/v1/tasks/{taskId}/result':{post:op('submitPilotSuccess','Connector success subset: submit only after actual browser execution and stored screenshot. No fabricated evidence. Acknowledgement is not human acceptance. Retry only the same event and body.',{'200':success(ref('Acknowledgement'))},{parameters:[taskParameter],requestBody:body(ref('SuccessResult'))})},
     '/v1/pilot/tasks/{taskId}/artifact':{post:op('uploadPilotScreenshot','Raw actual screenshot, at most 2 MiB and dimensions at most 4096. Upload within current lease; keep event ID stable for identical retries.',{'201':success(ref('Artifact'))},{parameters:[taskParameter,{name:'X-Pilot-Lease-Id',in:'header',required:true,schema:id},{name:'X-Pilot-Attempt',in:'header',required:true,schema:attempt},{name:'X-Pilot-Event-Id',in:'header',required:true,schema:id}],requestBody:{required:true,content:{'image/png':{schema:{type:'string',format:'binary','x-max-bytes':2097152}},'image/jpeg':{schema:{type:'string',format:'binary','x-max-bytes':2097152}}}}})}
   };
-  return {openapi:'3.0.3',info:{title:'ChunLACK Public Browser Pilot',version:'1.0.0',description:'Private deployment preparation only. Public browser tasks, no shell, admin, pairing, model API or automatic vendor Agent activation. Actual connector compatibility remains unverified. Configure the approved private origin separately; never disable TLS validation.'},security:[{NodeBearer:[]}],paths,components:{securitySchemes:{NodeBearer:{type:'http',scheme:'bearer',description:'Dedicated pre-approved public node credential, supplied from secure storage. Never use an administrator credential.'}},schemas}};
+  return {openapi:'3.0.3',...(servers?{servers}:{}),info:{title:'ChunLACK Public Browser Pilot',version:'1.0.0',description:'Private collaboration browser tasks only: no shell, admin, pairing, model API or automatic vendor Agent activation in this connector contract. Actual vendor compatibility still requires acceptance. Use only the operator-approved origin; never disable TLS validation.'},security:[{NodeBearer:[]}],paths,components:{securitySchemes:{NodeBearer:{type:'http',scheme:'bearer',description:'Dedicated pre-approved public node credential, supplied from secure storage. Never use an administrator credential.'}},schemas}};
 }
 module.exports={createPilotOpenApi};

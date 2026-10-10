@@ -4,7 +4,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
 const P=require('./protocol.cjs');
-function createAgentGateway({store,adminToken,workspaceAccess,now=Date.now,pollMs=P.LIMITS.pollMs,ready=()=>true}){
+function createAgentGateway({store,adminToken,workspaceAccess,now=Date.now,pollMs=P.LIMITS.pollMs,ready=()=>true,pilotHandler}){
   if(store.multiUser&&!workspaceAccess)P.fail('workspace_gateway_configuration',503);
   if(typeof adminToken!=='string'||adminToken.length<43||adminToken.length>256)P.fail('invalid_admin_credential');
   const adminDigest=P.hash(adminToken),waiting=new Map(),rates=new Map();let closed=false;
@@ -12,14 +12,14 @@ function createAgentGateway({store,adminToken,workspaceAccess,now=Date.now,pollM
   const matchSecret=token=>crypto.timingSafeEqual(Buffer.from(P.hash(token)),Buffer.from(adminDigest));
   function respond(res,status,value){if(res.destroyed||res.writableEnded)return;res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(value===undefined?'':JSON.stringify(store.multiUser&&value&&!value.error?{...value,workspaceId:store.currentBinding().workspaceId}:value));}
   function rate(key,limit){const minute=Math.floor(now()/60000),previous=rates.get(key);const entry=previous?.minute===minute?previous:{minute,count:0};entry.count++;rates.set(key,entry);if(entry.count>limit)P.fail('rate_limited',429);}
-  async function body(req){
+  async function body(req,{unbound=false}={}){
     if(!/^application\/json(?:;|$)/i.test(req.headers['content-type']||''))P.fail('json_required',415);
     if(Number(req.headers['content-length'])>P.LIMITS.bodyBytes)P.fail('payload_too_large',413);
     let bytes=0;const chunks=[];
     for await(const chunk of req){bytes+=chunk.length;if(bytes>P.LIMITS.bodyBytes)P.fail('payload_too_large',413);chunks.push(chunk);}
-    try{const value=P.object(JSON.parse(Buffer.concat(chunks).toString('utf8')));if(store.multiUser){if(value.workspaceId!==undefined&&value.workspaceId!==store.currentBinding().workspaceId)P.fail('workspace_mismatch',403);delete value.workspaceId;}return value;}catch(err){if(err instanceof P.GatewayError)throw err;P.fail('invalid_json');}
+    try{const value=P.object(JSON.parse(Buffer.concat(chunks).toString('utf8')));if(store.multiUser&&!unbound){if(value.workspaceId!==undefined&&value.workspaceId!==store.currentBinding().workspaceId)P.fail('workspace_mismatch',403);delete value.workspaceId;}return value;}catch(err){if(err instanceof P.GatewayError)throw err;P.fail('invalid_json');}
   }
-  function bearer(req){const header=req.headers.authorization||'';if(!header.startsWith('Bearer ')||header.length>300)P.fail('unauthorized',401);return header.slice(7);}
+  function bearer(req){if(req.rawHeaders.filter((_,i)=>i%2===0).filter(h=>h.toLowerCase()==='authorization').length!==1)P.fail('unauthorized',401);const header=req.headers.authorization||'';if(!header.startsWith('Bearer ')||header.length>300)P.fail('unauthorized',401);return header.slice(7);}
   function finishWait(nodeId,status,data){const w=waiting.get(nodeId);if(!w)return;waiting.delete(nodeId);clearTimeout(w.timer);w.res.off('close',w.disconnect);respond(w.res,status,data);}
   function wake(){
     for(const [nodeId,w] of [...waiting]){
@@ -39,6 +39,14 @@ function createAgentGateway({store,adminToken,workspaceAccess,now=Date.now,pollM
       const url=new URL(req.url,'http://127.0.0.1');
       if(store.multiUser&&(url.pathname.startsWith('/admin')||url.pathname==='/v1/pair'||url.pathname==='/'))P.fail('not_found',404);
       if(url.searchParams.has('token')||url.searchParams.has('key'))P.fail('credential_query_denied');
+      const pairing=url.pathname.match(/^\/v1\/workspaces\/([A-Za-z0-9_-]{1,100})\/pair$/);
+      if(store.multiUser&&req.method==='POST'&&pairing){
+        rate('pair',20);
+        if(req.headers['x-workspace-id']!==undefined&&req.headers['x-workspace-id']!==pairing[1])P.fail('workspace_mismatch',403);
+        const data=await body(req,{unbound:true});P.fields(data,['code']);
+        const credentials=workspaceAccess.pair(pairing[1],data.code);
+        workspaceAccess.forNode(store.authenticate(credentials.token)).run(()=>respond(res,200,credentials));return;
+      }
       if(req.method==='GET'&&['/','/admin'].includes(url.pathname)){
         res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Content-Security-Policy':"default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'"});res.end(page);return;
       }
@@ -59,13 +67,20 @@ function createAgentGateway({store,adminToken,workspaceAccess,now=Date.now,pollM
         P.fail('not_found',404);
       }
       const node=store.authenticate(token);rate(node.id,60);
+      if(pilotHandler&&store.multiUser&&(
+        url.pathname==='/v1/openapi.json'||/^\/v1\/tasks\/[A-Za-z0-9_-]{1,100}$/.test(url.pathname)&&url.pathname!=='/v1/tasks/claim'||
+        /^\/v1\/pilot\/tasks\/[A-Za-z0-9_-]{1,100}\/artifact$/.test(url.pathname)||
+        url.pathname==='/v1/tasks/claim'&&node.capabilities.length===1&&node.capabilities[0]==='browser.public_read'&&node.scopes.length===1&&node.scopes[0]==='public')){
+        await pilotHandler.handle(req,res);return;
+      }
+      const revalidate=()=>{if(closed)P.fail('gateway_closed',503);if(workspaceAccess)workspaceAccess.forNode(node).run(()=>{});else store.assertAuthenticatedNode(node);};
       const handleNode=async()=>{
       if(store.multiUser&&req.headers['x-workspace-id']!==undefined&&req.headers['x-workspace-id']!==node.workspaceId)P.fail('workspace_mismatch',403);
       if(req.method==='GET'&&url.pathname==='/v1/manifest'){respond(res,200,{protocolVersion:1,nodeId:node.id,capabilities:node.capabilities,scopes:node.scopes,limits:P.LIMITS});return;}
       if(req.method==='GET'&&url.pathname==='/v1/agents/me'){respond(res,200,node);return;}
-      if(req.method==='POST'&&url.pathname==='/v1/agents/me/heartbeat'){const data=await body(req);P.fields(data,['capabilities']);respond(res,200,store.heartbeat(node.id,data.capabilities||[]));return;}
+      if(req.method==='POST'&&url.pathname==='/v1/agents/me/heartbeat'){const data=await body(req);revalidate();P.fields(data,['capabilities']);respond(res,200,store.heartbeat(node.id,data.capabilities||[]));return;}
       if(req.method==='POST'&&url.pathname==='/v1/tasks/claim'){
-        P.fields(await body(req),[]);if(waiting.has(node.id))P.fail('poll_already_waiting',409);const task=store.claimTask(node.id);
+        const data=await body(req);revalidate();P.fields(data,[]);if(waiting.has(node.id))P.fail('poll_already_waiting',409);const task=store.claimTask(node.id);
         if(task){respond(res,200,task);return;}
         if(waiting.size>=P.LIMITS.nodes)P.fail('connection_capacity',429);
         const disconnect=()=>{const w=waiting.get(node.id);if(w?.res===res){clearTimeout(w.timer);waiting.delete(node.id);}};
@@ -75,7 +90,7 @@ function createAgentGateway({store,adminToken,workspaceAccess,now=Date.now,pollM
       if(req.method==='GET'&&url.pathname==='/v1/events'){respond(res,200,store.nodeEvents(node.id,Number(url.searchParams.get('cursor')||0)));return;}
       const match=url.pathname.match(/^\/v1\/tasks\/([a-zA-Z0-9_-]+)\/(heartbeat|events|result)$/);
       if(req.method==='POST'&&match){
-        const data=await body(req);if(data.taskId!==match[1])P.fail('task_id_mismatch');
+        const data=await body(req);revalidate();if(data.taskId!==match[1])P.fail('task_id_mismatch');
         if(match[2]==='heartbeat'){P.fields(data,['taskId','leaseId','attempt']);respond(res,200,store.renewLease(node.id,data.taskId,data.leaseId,data.attempt));}
         else respond(res,200,match[2]==='result'?store.submitResult(node.id,data):store.appendEvent(node.id,data));return;
       }

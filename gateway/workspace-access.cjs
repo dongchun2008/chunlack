@@ -94,6 +94,10 @@ function createWorkspaceGatewayAccess({store, identity} = {}) {
       });
     } catch {return false;}
   }
-  return Object.freeze({forHuman, forNode, authorizeStoredNode});
+  function pair(workspaceId, code) {
+    P.id(workspaceId);
+    return store.pair(code, {workspaceId, authorize: node => grant(node)});
+  }
+  return Object.freeze({forHuman, forNode, authorizeStoredNode, pair});
 }
 module.exports = {createWorkspaceGatewayAccess};

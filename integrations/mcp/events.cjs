@@ -16,7 +16,13 @@ function createPilotEvents({dbPath,encryptionKey,authorize,authorizeCleanup=auth
       if(path.dirname(current)===current)break;
     }
   }
-  const key=Buffer.from(encryptionKey);let closed=false;
+  const key=Buffer.from(encryptionKey),cancellation=new AbortController();let closed=false;
+  async function invokeTransport(url,options,binding){
+    const signal=AbortSignal.any([cancellation.signal,options.signal]);signal.throwIfAborted();let abort;
+    const stopped=new Promise((_,reject)=>{abort=()=>reject(signal.reason);signal.addEventListener('abort',abort,{once:true});if(signal.aborted)abort();});
+    try{return await Promise.race([Promise.resolve().then(()=>{signal.throwIfAborted();return transport(url,{...options,signal},binding);}),stopped]);}
+    finally{signal.removeEventListener('abort',abort);}
+  }
   if(dbPath!==':memory:')fs.mkdirSync(path.dirname(dbPath),{recursive:true,mode:0o700});const db=new Database(dbPath);
   try {
     const tables=db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all().map(row=>row.name);
@@ -48,13 +54,13 @@ function createPilotEvents({dbPath,encryptionKey,authorize,authorizeCleanup=auth
     let url;try{url=new URL(params.delivery.url);}catch{throw problem('callback_url_denied');}if(params.delivery.mode!=='webhook'||url.protocol!=='https:'||url.username||url.password||url.hash||url.port&&url.port!=='443')throw problem('callback_url_denied');if(params.cursor!==undefined&&params.cursor!==null)throw problem('cursor_not_supported');
     if(needsSecret)signingKey(params.delivery.secret);return {id:'sub_'+createHash('sha256').update(P.canonical({nodeId:principal.nodeId,name:params.name,taskId:params.arguments.taskId,url:url.href,...(multiUser?{workspaceId:workspace(principal)}:{})})).digest('hex'),url:url.href};
   }
-  function list(principal){check(principal);return {events:[{name:'pilot.task_ready',description:'One approved public browser task is ready; notification cannot expand permissions.',delivery:['webhook'],inputSchema:{type:'object',properties:{taskId:{type:'string'}},required:['taskId'],additionalProperties:false},payloadSchema:{type:'object',properties:{taskId:{type:'string'},taskType:{const:'browser.public_read'},deadlineAt:{type:'integer'}},required:['taskId','taskType','deadlineAt'],additionalProperties:false}}]};}
+  function list(principal){check(principal);return {events:[{name:'pilot.task_ready',description:'One approved public browser task is ready; notification cannot expand permissions.',delivery:['webhook'],inputSchema:{type:'object',properties:{taskId:{type:'string'}},required:['taskId'],additionalProperties:false},payloadSchema:{type:'object',properties:{taskId:{type:'string'},taskType:{const:'browser.public_read'},deadlineAt:{type:'integer'},...(multiUser?{workspaceId:{type:'string',pattern:'^[A-Za-z0-9_-]{1,100}$'}}:{})},required:['taskId','taskType','deadlineAt',...(multiUser?['workspaceId']:[])],additionalProperties:false}}]};}
   async function subscribe(principal,params){
     const value=identity(principal,params,true),ttl=params.ttlMs===undefined?300000:params.ttlMs;if(!Number.isInteger(ttl)||ttl<1000||ttl>300000)throw problem('invalid_subscription_lifetime');
     let previous=q('SELECT * FROM subscriptions WHERE id=?').get(value.id),verified=previous&&previous.active&&previous.expires_at>now()&&now()-previous.verified_at<30000&&open(previous.sealed).secret===params.delivery.secret;
     if(!previous&&q('SELECT COUNT(*) AS n FROM subscriptions').get().n>=5)throw problem('subscription_capacity');
     if(!verified){const challenge=randomBytes(32).toString('base64url'),started=now(),eventId='verify_'+randomUUID(),body=JSON.stringify({type:'verification',challenge});let response;
-      try{response=await transport(value.url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(10000),headers:signedHeaders(params.delivery.secret,eventId,body,value.id,now()),body},multiUser?Object.freeze({workspaceId:workspace(principal),nodeId:principal.nodeId,taskId:params.arguments.taskId}):undefined);const raw=await response.text();if(raw.length>262144||!response.ok||now()-started>=30000)throw problem('challenge_failed');const reply=JSON.parse(raw),actual=typeof reply.challenge==='string'?Buffer.from(reply.challenge):Buffer.alloc(0),expected=Buffer.from(challenge);if(actual.length!==expected.length||!timingSafeEqual(actual,expected))throw problem('challenge_failed');}catch(e){throw problem(e.reason==='callback_timeout'?'timeout':'challenge_failed',-32015);}
+      try{response=await invokeTransport(value.url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(10000),headers:signedHeaders(params.delivery.secret,eventId,body,value.id,now()),body},multiUser?Object.freeze({workspaceId:workspace(principal),nodeId:principal.nodeId,taskId:params.arguments.taskId}):undefined);const raw=await response.text();if(raw.length>262144||!response.ok||now()-started>=30000)throw problem('challenge_failed');const reply=JSON.parse(raw),actual=typeof reply.challenge==='string'?Buffer.from(reply.challenge):Buffer.alloc(0),expected=Buffer.from(challenge);if(actual.length!==expected.length||!timingSafeEqual(actual,expected))throw problem('challenge_failed');}catch(e){throw problem(e.reason==='callback_timeout'?'timeout':'challenge_failed',-32015);}
       check(principal,params.arguments.taskId);
     }
     const expires=now()+ttl,sealed=seal({url:value.url,secret:params.delivery.secret});db.transaction(()=>{if(!q('SELECT id FROM subscriptions WHERE id=?').get(value.id)&&q('SELECT COUNT(*) AS n FROM subscriptions').get().n>=5)throw problem('subscription_capacity');q('INSERT INTO subscriptions(id,node_id,task_id,sealed,expires_at,verified_at,workspace_id,active) VALUES(?,?,?,?,?,?,?,1) ON CONFLICT(id) DO UPDATE SET sealed=excluded.sealed,expires_at=excluded.expires_at,verified_at=excluded.verified_at,active=1').run(value.id,principal.nodeId,params.arguments.taskId,sealed,expires,verified?previous.verified_at:now(),workspace(principal));}).immediate();
@@ -67,16 +73,20 @@ function createPilotEvents({dbPath,encryptionKey,authorize,authorizeCleanup=auth
     return db.transaction(()=>{let queued=0;for(const sub of q('SELECT * FROM subscriptions WHERE workspace_id=? AND node_id=? AND task_id=? AND active=1 AND expires_at>?').all(workspace(principal),principal.nodeId,event.taskId,now())){const previous=q('SELECT body FROM deliveries WHERE subscription_id=? AND event_id=?').get(sub.id,event.eventId);if(previous){if(P.canonical(JSON.parse(previous.body).data)!==P.canonical(data))throw problem('event_conflict');continue;}if(q('SELECT COUNT(*) AS n FROM deliveries').get().n>=100)throw problem('delivery_capacity');q('INSERT INTO deliveries(id,subscription_id,event_id,body,state,attempt,next_at,deadline_at,workspace_id) VALUES(?,?,?,?,\'pending\',0,?,?,?)').run(randomUUID(),sub.id,event.eventId,body,now(),event.deadlineAt,workspace(principal));queued++;}return {queued};}).immediate();
   }
   let delivering=false;
-  async function deliverDue(){if(closed)throw problem('events_closed');if(delivering)return {delivered:0};delivering=true;let delivered=0;
-    try{for(const row of q("SELECT d.*,s.node_id,s.task_id,s.sealed,s.expires_at,s.active FROM deliveries d JOIN subscriptions s ON s.id=d.subscription_id WHERE d.state='pending' AND d.next_at<=? ORDER BY d.next_at LIMIT 100").all(now())){
+  async function deliverDue({limit=100}={}){if(closed)throw problem('events_closed');if(!Number.isInteger(limit)||limit<1||limit>100)throw problem('invalid_delivery_limit');if(delivering)return {delivered:0};delivering=true;let delivered=0;
+    try{for(const row of q("SELECT d.*,s.node_id,s.task_id,s.sealed,s.expires_at,s.active FROM deliveries d JOIN subscriptions s ON s.id=d.subscription_id WHERE d.state='pending' AND d.next_at<=? ORDER BY d.next_at LIMIT ?").all(now(),limit)){
+      if(closed)return {delivered};
       const p={nodeId:row.node_id,...(multiUser?{workspaceId:row.workspace_id}:{})};let permitted=false;try{check(p,row.task_id);permitted=true;}catch{}
       if(!permitted||!row.active||row.expires_at<=now()||row.deadline_at<=now()){q("UPDATE deliveries SET state='stopped' WHERE id=?").run(row.id);continue;}
       const secret=open(row.sealed),attempt=row.attempt+1;let status=0;
-      try{const response=await transport(secret.url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(10000),headers:signedHeaders(secret.secret,row.event_id,row.body,row.subscription_id,now()),body:row.body},multiUser?Object.freeze({workspaceId:row.workspace_id,nodeId:row.node_id,taskId:row.task_id}):undefined);status=response.status;}catch{}
+      try{const response=await invokeTransport(secret.url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(10000),headers:signedHeaders(secret.secret,row.event_id,row.body,row.subscription_id,now()),body:row.body},multiUser?Object.freeze({workspaceId:row.workspace_id,nodeId:row.node_id,taskId:row.task_id}):undefined);status=response.status;}catch{}
+      if(closed)return {delivered};
       const accepted=status>=200&&status<300,state=accepted?'delivered':attempt>=3||[410,413].includes(status)?'failed':'pending';q('UPDATE deliveries SET state=?,attempt=?,next_at=? WHERE id=?').run(state,attempt,now()+1000*2**(attempt-1),row.id);if(accepted)delivered++;
     }return {delivered};}finally{delivering=false;}
   }
-  function close(){if(closed)return;closed=true;db.close();key.fill(0);}
-  return {multiUser,list,subscribe,unsubscribe,publish,deliverDue,close};
+  function close(){if(closed)return;closed=true;cancellation.abort(problem('events_closed'));db.close();key.fill(0);}
+  function cleanup(){if(closed)throw problem('events_closed');return db.transaction(()=>({removed:q('DELETE FROM subscriptions WHERE active=0 OR expires_at<=?').run(now()).changes})).immediate();}
+  function pendingTargets(){if(closed)throw problem('events_closed');return q('SELECT node_id,task_id,workspace_id FROM subscriptions WHERE active=1 AND expires_at>? ORDER BY rowid LIMIT 5').all(now()).map(row=>({nodeId:row.node_id,...(multiUser?{workspaceId:row.workspace_id}:{}),taskId:row.task_id}));}
+  return {multiUser,list,subscribe,unsubscribe,publish,deliverDue,cleanup,pendingTargets,close};
 }
 module.exports={createPilotEvents,signedHeaders,eventTableScopes};

@@ -2,6 +2,7 @@
 
 本说明适用于已有授权的 `browser.public_read` 试点节点，不是 Muse 或 dots
 真实账号已经接入的声明。真实 Muse 凭据代理与私网通道的组合仍待验证。
+公网模式的 SDK 身份必须绑定明确的工作区，不能使用全局配对入口。
 
 ## 新增接口
 
@@ -31,6 +32,7 @@ const {AgentClient}=require('../sdk/agent-client.cjs');
 const client=new AgentClient({
   baseUrl:config.gatewayOrigin,
   token:config.privateNodeToken,
+  workspaceId:config.workspaceId,
   fetch:transport,
 });
 const details=await client.readTask(selectedTaskId,signal);
@@ -68,3 +70,11 @@ dots 或任何云端电脑，也不会授予 shell、文件或生产部署权限
 执行过浏览器任务。真实接入仍须验证账号授权、私网访问、真实浏览器
 活动记录、截图与任务校验码匹配，以及 ChunLACK 服务端结果留存。
 自动证据校验不能代替人工验收。本轮不开放公网端口、不修改 VPS 或凭据。
+
+## 公网接口的本地验证状态
+
+- 已授权节点可在配置的 agents HTTPS 域名下使用受限 REST 接口；公开 OpenAPI 的服务地址来自受信任部署配置，不采纳调用者伪造的 Host 或代理身份头。
+- 配对入口为 `POST /v1/workspaces/<workspaceId>/pair`，请求正文只提交配对码。工作区和创建者权限在服务端重新核验；配对成功后 SDK 保留工作区和节点身份绑定，不能自动切换到其他区。
+- 节点指定领取、截图回传、续租、结果收件与授权撤销已通过实际组装网关的本地测试。HTTP 收件成功仍不是任务证据验收成功。
+- 可选 MCP Events 用于通知已有授权的 Agent 领取任务，不代替电脑执行，不从事件正文扩大权限。事件订阅/回调的本地测试使用合成节点和受控回调，不证明 dots 账号已订阅或 Muse 已自动执行。
+- HTTPS 入口已通过真实 Caddy 的本地证书、HTTP/2 和 WSS 测试；实际生产域名、完整网页链路和两个供应商账号仍需后续验收。不要把这里的配置与接口测试当作已完成生产接入。

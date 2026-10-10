@@ -37,7 +37,7 @@ function fixture(t) {
   const config = {httpPort: 23721, multiUser: {enabled: true, migrationReady: true},
     agentGateway: {enabled: true, port: 23722, adminTokenEnv: 'FIXTURE_GATEWAY_TOKEN'},
     publicRuntime: {webOrigin: 'https://lack.fixture.invalid', agentsOrigin: 'https://agents.fixture.invalid', mcpPort: 23723}};
-  return {root, config, workspaceId, env: {FIXTURE_GATEWAY_TOKEN: 'x'.repeat(43)}};
+  return {root, config, userId, workspaceId, env: {FIXTURE_GATEWAY_TOKEN: 'x'.repeat(43)}};
 }
 
 async function fakeServer(options) {
@@ -177,4 +177,31 @@ test('legacy server entry cannot bypass the public data-root writer guard', {tim
     assert.match(output, /DIRECT_START_ERROR=public_writer_lease_required/);
     assert.equal((await fetch(`http://127.0.0.1:${f.config.httpPort}/health`)).status, 200);
   } finally {running.child.stdin.write('STOP\n'); await running.exited;}
+});
+
+test('enabled public events validate persistent keys and workspace callback grants before runtime allocation', async t => {
+  const {startPublicRuntime}=require('../gateway/public-runtime.cjs'), f=fixture(t); let loaded=0;
+  const events={enabled:true,encryptionKeyEnv:'FIXTURE_EVENTS_KEY',allowedHosts:['callback.example'],workspaceCallbackHosts:{[f.workspaceId]:['callback.example']}};
+  const config={...f.config,publicRuntime:{...f.config.publicRuntime,events}};
+  await assert.rejects(startPublicRuntime({config,dataRoot:f.root,env:f.env,loadLack:()=>{loaded++;}}),/events_encryption_key_required/);
+  await assert.rejects(startPublicRuntime({config:{...config,publicRuntime:{...config.publicRuntime,events:{...events,workspaceCallbackHosts:{[f.workspaceId]:['unapproved.example']}}}},dataRoot:f.root,
+    env:{...f.env,FIXTURE_EVENTS_KEY:'ab'.repeat(32)},loadLack:()=>{loaded++;}}),/invalid_workspace_callback_grants/);
+  assert.equal(loaded,0); assert.equal(fs.existsSync(path.join(f.root,'.public-runtime.lock')),false);
+  assert.equal(fs.existsSync(path.join(f.root,'db','mcp-events.db')),false);
+});
+
+test('actual materialized runtime exposes scoped MCP Events and closes its event timer and database on restart', {timeout:25000}, async t=>{
+  const f=await packageFixture(t);
+  f.config.publicRuntime.events={enabled:true,encryptionKeyEnv:'FIXTURE_EVENTS_KEY',allowedHosts:['callback.example'],workspaceCallbackHosts:{[f.workspaceId]:['callback.example']}};
+  fs.writeFileSync(path.join(f.root,'config','lack.config.json'),JSON.stringify(f.config));
+  Object.assign(f.childEnv,{FIXTURE_EVENTS_KEY:'ab'.repeat(32),PUBLIC_EVENTS_FIXTURE_WORKSPACE:f.workspaceId,PUBLIC_EVENTS_FIXTURE_USER:f.userId});
+  for(let i=0;i<2;i++){
+    const running=childRuntime(t,f); await ready(running);
+    assert.match(running.logs(),/PUBLIC_EVENTS_SCHEMA_OK/);
+    assert.equal((await fetch(`http://127.0.0.1:${f.config.httpPort}/health`)).status,200);
+    running.child.stdin.write('STOP\n'); assert.deepEqual(await running.exited,[0,null]);
+    assert.equal(fs.existsSync(path.join(f.root,'.public-runtime.lock')),false);
+    const db=new Database(path.join(f.root,'db','mcp-events.db'));
+    assert.equal(db.pragma('quick_check',{simple:true}),'ok'); assert.equal(db.pragma('foreign_key_check').length,0); db.close();
+  }
 });
