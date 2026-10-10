@@ -1,0 +1,47 @@
+[Unit]
+Description=ChunLACK isolated HTTPS ingress
+Requires=chunlack-public.service
+After=chunlack-public.service network-online.target
+ConditionPathExists=/sys/fs/cgroup/cgroup.controllers
+StartLimitIntervalSec=300
+StartLimitBurst=3
+
+[Service]
+Type=simple
+User=chunlack-https
+Group=chunlack-https
+WorkingDirectory=/var/lib/chunlack-https
+Environment=HOME=/var/lib/chunlack-https XDG_DATA_HOME=/var/lib/chunlack-https XDG_CONFIG_HOME=/var/lib/chunlack-https
+ExecStart=/opt/chunlack-public/runtime/caddy/caddy run --config /etc/chunlack-public/Caddyfile --adapter caddyfile
+Restart=on-failure
+RestartSec=10
+TimeoutStartSec=30
+TimeoutStopSec=15
+KillSignal=SIGTERM
+KillMode=control-group
+StateDirectory=chunlack-https
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+CapabilityBoundingSet=CAP_NET_BIND_SERVICE
+MemoryHigh=96M
+MemoryMax=128M
+CPUQuota=10%
+TasksMax=64
+LimitNOFILE=4096
+OOMPolicy=stop
+
+[Install]
+WantedBy=multi-user.target

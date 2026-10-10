@@ -1,0 +1,43 @@
+[Unit]
+Description=ChunLACK isolated multi-user public application
+After=network-online.target
+ConditionPathExists=/sys/fs/cgroup/cgroup.controllers
+
+[Service]
+Type=simple
+User=chunlack-public
+Group=chunlack-public
+WorkingDirectory=/opt/chunlack-public/current
+Environment=LACK_DATA_ROOT=/var/lib/chunlack-public
+EnvironmentFile=/etc/chunlack-public/runtime.env
+ExecStart=/opt/chunlack-public/runtime/node/bin/node /opt/chunlack-public/current/gateway/public-runtime.cjs
+Restart=no
+TimeoutStartSec=30
+TimeoutStopSec=45
+KillSignal=SIGTERM
+KillMode=control-group
+StateDirectory=chunlack-public
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+MemoryHigh=384M
+MemoryMax=448M
+CPUQuota=50%
+TasksMax=64
+LimitNOFILE=4096
+OOMPolicy=stop
+
+[Install]
+WantedBy=multi-user.target
