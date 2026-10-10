@@ -20,7 +20,7 @@ const fixtureRoot = path.join(root, '.superpowers', 'sdd', '2026-10-09-multi-use
 const credentials = Object.freeze({login: 'tls-owner', password: 'public-only-packaged-tls-fixture-password'});
 async function freePort() {const server = net.createServer(); await new Promise(resolve => server.listen(0, '127.0.0.1', resolve)); const port = server.address().port; await new Promise(resolve => server.close(resolve)); return port;}
 
-async function createPackagedIngressFixture({caddyBin, threeHumans = false}) {
+async function createPackagedIngressFixture({caddyBin, threeHumans = false, configure}) {
   fs.mkdirSync(fixtureRoot, {recursive: true});
   const directory = fs.mkdtempSync(path.join(fixtureRoot, 'owned-'));
   const codeRoot = path.join(directory, 'package'), dataRoot = path.join(directory, 'data');
@@ -102,6 +102,10 @@ async function createPackagedIngressFixture({caddyBin, threeHumans = false}) {
       multiUser: {enabled: true, migrationReady: true}, workspaceModelGrants: {},
       agentGateway: {enabled: true, port: await freePort(), adminTokenEnv: 'LACK_PACKAGED_TLS_FIXTURE_SECRET'},
       publicRuntime: {webOrigin, agentsOrigin, mcpPort: await freePort(), events: {enabled: false}}});
+    if (configure !== undefined) {
+      if (typeof configure !== 'function') throw new Error('invalid_fixture_configuration');
+      configure({config, workspaceId: workspace.id, otherWorkspaceId: otherWorkspace.id});
+    }
     fs.writeFileSync(path.join(dataRoot, 'config', 'lack.config.json'), JSON.stringify(config));
     const {startPublicRuntime} = require(path.join(codeRoot, 'gateway', 'public-runtime.cjs'));
     const runtimeEnv = {PATH: process.env.PATH, LACK_PACKAGED_TLS_FIXTURE_SECRET: randomBytes(48).toString('hex')};
