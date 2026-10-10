@@ -28,7 +28,7 @@ async function setup(t) {
   const access = createWorkspaceGatewayAccess({store, identity: f.store});
   const accounts = {};
   for (const login of ['alice', 'bob', 'carol']) accounts[login] = await sessions.login({login, password, source: 'controls-' + login});
-  const app = express(); app.use(transport.httpContext); app.use(createWorkspaceControlsRouter({taskControl: tasks, getGateway: () => ({workspaceAccess: access})}));
+  const app = express(); app.use(transport.httpContext); app.use(createWorkspaceControlsRouter({taskControl: tasks, getGateway: () => ({workspaceAccess: access}), now: f.now}));
   const server = http.createServer(app); await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   t.after(() => new Promise(resolve => {server.closeAllConnections(); server.close(resolve);}));
   async function request(user, workspace, route, {method = 'GET', body, csrf = true, headers: extra = {}} = {}) {
@@ -95,4 +95,52 @@ test('external cancellation keeps its real lease occupied until matching node ac
   assert.equal(f.store.capacity.status(actor.workspaceId).active, 1);
   worker.appendEvent({protocolVersion: 1, taskId: lease.taskId, leaseId: lease.leaseId, attempt: lease.attempt, eventId: 'http-cancelled', type: 'cancelled'});
   assert.equal(f.store.capacity.status(actor.workspaceId).active, 0);
+});
+
+test('member creates a server-challenged public browser task without exposing its execution secrets', async t => {
+  const f = await setup(t);
+  const created = await f.request('alice', 'a', '/api/nodes', {method: 'POST', body: {name: 'Pilot node', capabilities: ['browser.public_read'], scopes: ['public']}});
+  const response = await f.request('bob', 'a', '/api/tasks', {method: 'POST', body: {targetNodeId: created.body.node.id}});
+  assert.equal(response.status, 201);
+  assert.equal(response.body.task.workspaceId, f.workspaces.a.id);
+  assert.equal(response.body.task.createdBy, f.users.bob.id);
+  assert.equal(response.body.task.state, 'queued');
+  const stored = runWithWorkspace(f.actor('bob', 'a'), () => f.access.forHuman(f.actor('bob', 'a')).getTask(response.body.task.taskId));
+  assert.equal(stored.task_type, 'browser.public_read'); assert.equal(stored.scope_id, 'public');
+  assert.equal(stored.input.url, 'https://example.com/');
+  assert.match(stored.input.challenge, /^[A-Za-z0-9_-]{43}$/);
+  assert.equal(stored.deadline_at, f.now() + 300000);
+  assert.ok(!JSON.stringify(response.body).includes(stored.input.challenge));
+  assert.ok(!JSON.stringify(response.body).includes('leaseId'));
+  const next = await f.request('bob', 'a', '/api/tasks', {method: 'POST', body: {targetNodeId: created.body.node.id}});
+  assert.equal(next.status, 201);
+  const other = runWithWorkspace(f.actor('bob', 'a'), () => f.access.forHuman(f.actor('bob', 'a')).getTask(next.body.task.taskId));
+  assert.notEqual(other.input.challenge, stored.input.challenge);
+});
+
+test('external task creation rejects forged input, foreign nodes, viewer writes and missing CSRF before queue mutation', async t => {
+  const f = await setup(t);
+  const created = await f.request('bob', 'b', '/api/nodes', {method: 'POST', body: {name: 'B node', capabilities: ['browser.public_read'], scopes: ['public']}});
+  const body = {targetNodeId: created.body.node.id};
+  assert.equal((await f.request('carol', 'b', '/api/tasks', {method: 'POST', body})).status, 403);
+  assert.equal((await f.request('bob', 'b', '/api/tasks', {method: 'POST', body, csrf: false})).status, 403);
+  for (const extra of [{input: {url: 'http://127.0.0.1/'}}, {deadlineAt: f.now() + 900000}, {workspaceId: f.workspaces.a.id}, {taskType: 'research.retrieve'}, {scopeId: 'private'}]) {
+    assert.equal((await f.request('bob', 'b', '/api/tasks', {method: 'POST', body: {...body, ...extra}})).status, 400);
+  }
+  const foreign = await f.request('alice', 'a', '/api/tasks', {method: 'POST', body});
+  const missing = await f.request('alice', 'a', '/api/tasks', {method: 'POST', body: {targetNodeId: 'unknown-node'}});
+  assert.equal(foreign.status, 404); assert.deepEqual(foreign.body, missing.body);
+  assert.deepEqual((await f.request('bob', 'b', '/api/tasks')).body.externalTasks, []);
+});
+
+test('public task creation preserves the existing twenty-entry workspace queue cap and node capability checks', async t => {
+  const f = await setup(t);
+  const created = await f.request('alice', 'a', '/api/nodes', {method: 'POST', body: {name: 'Bounded node', capabilities: ['browser.public_read'], scopes: ['public']}});
+  const research = await f.request('alice', 'a', '/api/nodes', {method: 'POST', body: {name: 'Not a browser', capabilities: ['research.verify'], scopes: ['public']}});
+  const wrong = await f.request('alice', 'a', '/api/tasks', {method: 'POST', body: {targetNodeId: research.body.node.id}});
+  assert.equal(wrong.status, 403); assert.equal(wrong.body.error, 'capability_denied');
+  for (let i = 0; i < 20; i++) assert.equal((await f.request('alice', 'a', '/api/tasks', {method: 'POST', body: {targetNodeId: created.body.node.id}})).status, 201);
+  const denied = await f.request('alice', 'a', '/api/tasks', {method: 'POST', body: {targetNodeId: created.body.node.id}});
+  assert.equal(denied.status, 429); assert.equal(denied.body.error, 'workspace_queue_full');
+  assert.equal((await f.request('alice', 'a', '/api/tasks')).body.externalTasks.length, 20);
 });

@@ -173,6 +173,20 @@
         const response = await client.request('/api/nodes'); if (!d.live()) return;
         for (const item of response.nodes || []) {
           const row = node('div'); row.className = 'workspace-row'; row.append(node('strong', item.name || item.id), node('span', item.revoked ? '已撤销' : item.paused ? '已暂停' : '已登记'));
+          if (client.can('execute') && !item.revoked && !item.paused && Array.isArray(item.capabilities) && item.capabilities.length === 1 && item.capabilities[0] === 'browser.public_read' && Array.isArray(item.scopes) && item.scopes.length === 1 && item.scopes[0] === 'public') {
+            const start = button('公开浏览试点', () => act(async () => {
+              if (!d.live() || start.disabled || !client.can('execute')) return;
+              start.disabled = true;
+              try {
+                if (!await confirm('向该节点发送 example.com 浏览与截图试点？任务期限五分钟；执行完成不代表已人工验收。') || !d.live()) return;
+                const result = await client.request('/api/tasks', {method: 'POST', body: {targetNodeId: item.id}});
+                if (!d.live()) return;
+                if (typeof result?.task?.taskId !== 'string' || !/^[A-Za-z0-9_-]{1,100}$/.test(result.task.taskId)) throw new Error('invalid_task_receipt');
+                d.body.append(node('p', '已创建公开浏览试点：' + result.task.taskId));
+                button('查看任务进度', openTasks, d.body);
+              } finally {if (d.live()) start.disabled = false;}
+            }), row);
+          }
           if (client.can('manage') && !item.revoked) {
             button(item.paused ? '恢复' : '暂停', () => act(async () => {await client.request(`/api/nodes/${encodeURIComponent(item.id)}/pause`, {method: 'POST', body: {paused: !item.paused}}); if (d.live()) await openNodes();}), row);
             button('撤销', () => act(async () => {if (!await confirm('撤销该节点的后续接入权限？')) return; await client.request(`/api/nodes/${encodeURIComponent(item.id)}`, {method: 'DELETE', body: {}}); if (d.live()) await openNodes();}), row);

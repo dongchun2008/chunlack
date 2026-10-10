@@ -76,3 +76,34 @@ test('member removal requires an in-page confirmation, and workspace reset cance
   assert.equal(f.requests.length, 1);
   f.view.clear(); await pending; assert.equal(f.requests.length, 1);
 });
+
+test('member starts a public browser pilot only after an in-page confirmation and submits only the selected node id', async t => {
+  const eligible = {id: 'browser-node', name: '<img src=x> browser', capabilities: ['browser.public_read'], scopes: ['public'], paused: false, revoked: false};
+  const f = setup(t, {role: 'member', response: {nodes: [eligible]}});
+  f.client.request = async (path, options) => {f.requests.push({path, options}); return options?.method === 'POST' ? {task: {taskId: 'created-public-pilot'}} : {nodes: [eligible]};};
+  await f.view.openNodes();
+  const start = f.walk().find(node => node.tagName === 'button' && node.textContent === '公开浏览试点'); assert.ok(start);
+  const pending = start.onclick();
+  assert.equal(f.requests.filter(item => item.options?.method === 'POST').length, 0);
+  const confirm = f.walk().find(node => node.tagName === 'button' && node.textContent === '确认操作'); assert.ok(confirm); confirm.onclick(); await pending;
+  const sent = f.requests.filter(item => item.options?.method === 'POST');
+  assert.deepEqual(sent, [{path: '/api/tasks', options: {method: 'POST', body: {targetNodeId: 'browser-node'}}}]);
+  assert.ok(f.walk().some(node => String(node.textContent).includes('created-public-pilot')));
+  assert.ok(!f.walk().some(node => node.tagName === 'img'));
+});
+
+test('public pilot action is absent for viewers and for paused, revoked, mixed-capability or non-public nodes', async t => {
+  const browser = {id: 'browser-node', capabilities: ['browser.public_read'], scopes: ['public']};
+  const viewer = setup(t, {response: {nodes: [browser]}}); await viewer.view.openNodes();
+  assert.ok(!viewer.walk().some(node => node.tagName === 'button' && node.textContent === '公开浏览试点'));
+  const owner = setup(t, {role: 'owner', response: {nodes: [{...browser, paused: true}, {...browser, revoked: true}, {...browser, capabilities: ['research.verify']}, {...browser, capabilities: ['browser.public_read', 'research.verify']}, {...browser, scopes: ['private']}]}});
+  await owner.view.openNodes();
+  assert.ok(!owner.walk().some(node => node.tagName === 'button' && node.textContent === '公开浏览试点'));
+});
+
+test('closing the panel cancels a pending public pilot confirmation without creating work in a new workspace', async t => {
+  const f = setup(t, {role: 'member', response: {nodes: [{id: 'old-workspace-node', capabilities: ['browser.public_read'], scopes: ['public']}]}});
+  await f.view.openNodes(); const start = f.walk().find(node => node.tagName === 'button' && node.textContent === '公开浏览试点'); assert.ok(start);
+  const pending = start.onclick(); f.view.clear(); await pending;
+  assert.equal(f.requests.filter(item => item.options?.method === 'POST').length, 0);
+});

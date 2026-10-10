@@ -1,10 +1,11 @@
 'use strict';
 const express = require('express');
+const {randomBytes} = require('node:crypto');
 const {requireWorkspaceContext} = require('./context.cjs');
 const {IdentityError} = require('../identity/policy.cjs');
 
-function createWorkspaceControlsRouter({taskControl, getGateway}) {
-  if (!taskControl || typeof getGateway !== 'function') throw new IdentityError('controls_configuration', 503);
+function createWorkspaceControlsRouter({taskControl, getGateway, now = Date.now}) {
+  if (!taskControl || typeof getGateway !== 'function' || typeof now !== 'function') throw new IdentityError('controls_configuration', 503);
   const router = express.Router();
   const wrap = fn => (req, res, next) => Promise.resolve().then(() => fn(req, res)).catch(next);
   function human() {
@@ -39,6 +40,15 @@ function createWorkspaceControlsRouter({taskControl, getGateway}) {
   router.get('/api/tasks', wrap((req, res) => {
     // No input_json/result_json/lease token/prompt/credentials enter this view.
     res.json({localTasks: taskControl.listTasks(), externalTasks: getGateway()?.workspaceAccess ? human().listTasks().map(externalTask) : []});
+  }));
+  router.post('/api/tasks', wrap((req, res) => {
+    // First external-computer pilot: the requester cannot supply a URL, command,
+    // execution challenge, permission scope, deadline or model credentials.
+    const input = body(req, ['targetNodeId']);
+    const access = human();
+    const task = access.enqueueTask({targetNodeId: input.targetNodeId, scopeId: 'public', taskType: 'browser.public_read',
+      input: {url: 'https://example.com/', challenge: randomBytes(32).toString('base64url')}, deadlineAt: now() + 300000});
+    res.status(201).json({task: externalTask(access.getTask(task.taskId))});
   }));
   router.post('/api/tasks/:taskId/cancel', wrap((req, res) => {
     const input = body(req, ['kind']);

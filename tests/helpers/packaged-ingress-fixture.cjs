@@ -20,7 +20,7 @@ const fixtureRoot = path.join(root, '.superpowers', 'sdd', '2026-10-09-multi-use
 const credentials = Object.freeze({login: 'tls-owner', password: 'public-only-packaged-tls-fixture-password'});
 async function freePort() {const server = net.createServer(); await new Promise(resolve => server.listen(0, '127.0.0.1', resolve)); const port = server.address().port; await new Promise(resolve => server.close(resolve)); return port;}
 
-async function createPackagedIngressFixture({caddyBin}) {
+async function createPackagedIngressFixture({caddyBin, threeHumans = false}) {
   fs.mkdirSync(fixtureRoot, {recursive: true});
   const directory = fs.mkdtempSync(path.join(fixtureRoot, 'owned-'));
   const codeRoot = path.join(directory, 'package'), dataRoot = path.join(directory, 'data');
@@ -47,7 +47,8 @@ async function createPackagedIngressFixture({caddyBin}) {
   const request = (surface, requestPath, options = {}) => new Promise((resolve, reject) => {
     const host = surface === 'web' ? webHost : surface === 'agents' ? agentsHost : null;
     if (!host || typeof requestPath !== 'string' || !requestPath.startsWith('/')) return reject(new Error('Invalid fixture request'));
-    const body = options.json === undefined ? undefined : JSON.stringify(options.json);
+    if (options.bytes !== undefined && options.json !== undefined) return reject(new Error('Ambiguous fixture body'));
+    const body = options.bytes === undefined ? options.json === undefined ? undefined : JSON.stringify(options.json) : Buffer.from(options.bytes);
     const headers = {Host: host, ...(body === undefined ? {} : {'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body)}), ...options.headers};
     const outgoing = https.request({host: '127.0.0.1', port: listenPort, servername: host, ca: certificate, rejectUnauthorized: true,
       method: options.method || 'GET', path: requestPath, headers, agent: false}, response => {
@@ -58,8 +59,8 @@ async function createPackagedIngressFixture({caddyBin}) {
     outgoing.setTimeout(5000, () => outgoing.destroy(new Error('Fixture HTTPS request timed out')));
     outgoing.on('error', reject); outgoing.end(body);
   });
-  const login = async () => {
-    const response = await request('web', '/auth/login', {method: 'POST', headers: {Origin: webOrigin}, json: credentials});
+  const login = async (account = credentials) => {
+    const response = await request('web', '/auth/login', {method: 'POST', headers: {Origin: webOrigin}, json: account});
     if (response.status !== 200) throw new Error('Actual TLS login failed: ' + response.status + ' ' + response.text);
     const body = JSON.parse(response.text), cookie = response.headers['set-cookie']?.[0]?.split(';')[0];
     if (!cookie || !body.csrfToken) throw new Error('Actual TLS login returned incomplete identity');
@@ -87,6 +88,11 @@ async function createPackagedIngressFixture({caddyBin}) {
     const passwordHash = await hashPassword(credentials.password), owner = identity.createUser({login: credentials.login, passwordHash});
     const other = identity.createUser({login: 'other-tls-owner', passwordHash});
     const workspace = identity.createWorkspace({name: 'Actual TLS A', ownerId: owner.id}), otherWorkspace = identity.createWorkspace({name: 'Actual TLS B', ownerId: other.id});
+    if (threeHumans) {
+      const viewer = identity.createUser({login: 'viewer-tls-user', passwordHash});
+      identity.setMembership(identity.requireMembership(owner.id, workspace.id), {workspaceId: workspace.id, userId: other.id, role: 'member'});
+      identity.setMembership(identity.requireMembership(other.id, otherWorkspace.id), {workspaceId: otherWorkspace.id, userId: viewer.id, role: 'viewer'});
+    }
     collaboration = new Database(path.join(dataRoot, 'db', 'lack.db'));
     createCollaborationStore({db: collaboration, identity});
     collaboration.close(); collaboration = null; identity.close(); identity = null;
@@ -98,7 +104,9 @@ async function createPackagedIngressFixture({caddyBin}) {
       publicRuntime: {webOrigin, agentsOrigin, mcpPort: await freePort(), events: {enabled: false}}});
     fs.writeFileSync(path.join(dataRoot, 'config', 'lack.config.json'), JSON.stringify(config));
     const {startPublicRuntime} = require(path.join(codeRoot, 'gateway', 'public-runtime.cjs'));
-    runtime = await startPublicRuntime({config, dataRoot, env: {PATH: process.env.PATH, LACK_PACKAGED_TLS_FIXTURE_SECRET: randomBytes(48).toString('hex')}});
+    const runtimeEnv = {PATH: process.env.PATH, LACK_PACKAGED_TLS_FIXTURE_SECRET: randomBytes(48).toString('hex')};
+    runtime = await startPublicRuntime({config, dataRoot, env: runtimeEnv});
+    const restart = async () => {await runtime.close(); runtime = null; runtime = await startPublicRuntime({config, dataRoot, env: runtimeEnv});};
     const certFile = path.join(directory, 'fixture-cert.pem'), keyFile = path.join(directory, 'fixture-key.pem');
     const openssl = process.platform === 'win32' ? 'C:/Program Files/Git/usr/bin/openssl.exe' : 'openssl';
     execFileSync(openssl, ['req', '-x509', '-newkey', 'rsa:2048', '-sha256', '-nodes', '-days', '1', '-keyout', keyFile, '-out', certFile,
@@ -117,7 +125,9 @@ async function createPackagedIngressFixture({caddyBin}) {
       await delay(50);
     }
     if (!ready) throw new Error('Owned Caddy did not become ready: ' + caddyOutput);
-    return {request, login, connect, frame, close, credentials, webOrigin, agentsOrigin, workspaceId: workspace.id, otherWorkspaceId: otherWorkspace.id};
+    return {request, login, connect, frame, close, restart, credentials,
+      accounts: {owner: credentials, other: {login: 'other-tls-owner', password: credentials.password}, ...(threeHumans ? {viewer: {login: 'viewer-tls-user', password: credentials.password}} : {})},
+      webOrigin, agentsOrigin, workspaceId: workspace.id, otherWorkspaceId: otherWorkspace.id};
   } catch (error) {try {await close();} catch (cleanup) {throw new AggregateError([error, cleanup], 'Fixture initialization and close failed');} throw error;}
 }
 module.exports = {createPackagedIngressFixture};
