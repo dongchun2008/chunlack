@@ -411,3 +411,22 @@ migrationReady is not delivery readiness; restoreReady remains false. See
 - Main trial capped at single-core 50%, 256 MiB, 64 tasks and 900 seconds; measured cgroup peak 137404416 bytes and CPU 134756685000 ns. Thirty co-host samples preserved original active services/PIDs/restart counts, health 200 and relay UDP listeners; real Relay latency/loss remains unproven.
 - SSH observation interruption was resolved by reading the existing terminal unit, not restarting the trial. Downloaded evidence hash matched 05276afb6ecce6ecc92dda9df7e7def9d9a31ba650f524bdaa04850fa122a90b. Owned units are not-found/inactive/PID 0, verified-owned roots removed, final baseline preserved and SSH closed.
 - See docs/verification/2026-10-11-native-public-node-verification.md. Remaining human evidence UI, historical-release restore, direct real providers, vendor-owned computers, production ownership/window/public HTTPS and longer functional co-host acceptance prevent declaring Task 11/12 or total delivery complete.
+
+## Human pilot evidence and explicit owner acceptance checkpoint
+
+Human controls now expose bounded evidence metadata, authenticated image reads
+and explicit owner-only acceptance for the existing public browser pilot. Node
+revocation preserves human historical reads but prevents new acceptance; late
+binary responses and image URLs are cleared across workspace/panel generations.
+Fresh Windows full regression: 467/467; focused 42/42; smoke exit 0. Fresh current
+source native Linux: default Python 20/20, focused 45/45, full 467/467, smoke exit 0,
+180-second synthetic collaboration soak passed with 80 complete five-Agent rounds
+and no failures/privacy exceptions. Five registered nodes remained idle; this is
+not real vendor execution or a five-busy-node capacity result. 31 co-host samples
+and final cleanup retained production LACK/Relay PID/restart/health baseline.
+Owned trial services/roots were cleaned, evidence downloaded/hash-verified and
+SSH closed. No production cutover, public port, credential or Open WebUI change.
+
+Evidence and scope: `docs/verification/2026-10-11-human-pilot-evidence-acceptance.md`.
+Real-browser rendering, direct real models, vendor-owned execution, independent
+historical restore and production/public acceptance remain explicit delivery gates.

@@ -17,6 +17,8 @@ const httpRules = Object.freeze([
   ['GET', /^\/api\/nodes$/, 'node.read'], ['POST', /^\/api\/nodes$/, 'node.manage'],
   ['POST', /^\/api\/nodes\/[^/]+\/pause$/, 'node.manage'], ['DELETE', /^\/api\/nodes\/[^/]+$/, 'node.manage'],
   ['GET', /^\/api\/tasks$/, 'task.read'], ['POST', /^\/api\/tasks$/, 'task.create'], ['POST', /^\/api\/tasks\/[^/]+\/cancel$/, 'task.execute'],
+  ['GET', /^\/api\/tasks\/[^/]+\/evidence$/, 'task.read'], ['GET', /^\/api\/tasks\/[^/]+\/artifact$/, 'artifact.read'],
+  ['POST', /^\/api\/tasks\/[^/]+\/acceptance$/, 'task.approve'],
   ['GET', /^\/api\/channels$/, 'workspace.read'], ['GET', /^\/api\/(models|llm-providers)$/, 'model.read'],
   ['GET', /^\/api\/research\/(sessions|session\/[^/]+)$/, 'task.read'],
   ['GET', /^\/api\/metrics$/, 'agent.read'], ['GET', /^\/api\/agent\/memory\/[^/]+$/, 'memory.read'],

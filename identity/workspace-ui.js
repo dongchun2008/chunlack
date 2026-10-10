@@ -149,7 +149,7 @@
         onError(failure); throw failure;
       }
       const consume = async method => {fresh(); const value = await response[method](); fresh(); return value;};
-      return Object.freeze({status: response.status, ok: response.ok, headers: response.headers, json: () => consume('json'), text: () => consume('text')});
+      return Object.freeze({status: response.status, ok: response.ok, headers: response.headers, json: () => consume('json'), text: () => consume('text'), blob: () => consume('blob')});
     }
     async function request(path, {method = 'GET', body} = {}) {return (await scopedFetch(path, {method, body: body === undefined ? undefined : JSON.stringify(body)})).json();}
     async function logout() {

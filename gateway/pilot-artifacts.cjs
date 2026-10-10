@@ -56,6 +56,13 @@ function createPilotArtifacts({store,root,now=Date.now}){
     try{const stat=fs.lstatSync(target);if(!stat.isFile()||stat.isSymbolicLink()||stat.size!==meta.sizeBytes||stat.size>MAX)P.fail('artifact_unavailable',409);fd=fs.openSync(target,fs.constants.O_RDONLY|(fs.constants.O_NOFOLLOW||0));const opened=fs.fstatSync(fd);if(opened.dev!==stat.dev||opened.ino!==stat.ino||opened.size!==stat.size)P.fail('artifact_unavailable',409);const bytes=fs.readFileSync(fd);if(createHash('sha256').update(bytes).digest('hex')!==meta.sha256)P.fail('artifact_integrity_failed',409);checkImage(meta.contentType,bytes);return bytes;}catch(error){if(error instanceof P.GatewayError)throw error;P.fail('artifact_unavailable',409);}finally{if(fd!==undefined)fs.closeSync(fd);}
   }
   function get(nodeId,taskId,artifactId){const meta=store.authorizePilotArtifact(nodeId,taskId,artifactId);return {...meta,bytes:safeRead(meta)};}
+  // Called only inside the human facade's authorized, task-bound store scope.
+  // Reload canonical metadata; do not trust paths/hashes supplied by a caller.
+  function readForHuman(meta){
+    const canonical=store.getPilotArtifact(meta.artifactId);
+    if(!canonical||canonical.taskId!==meta.taskId||canonical.workspaceId!==meta.workspaceId||canonical.createdAt<now()-RETENTION)P.fail('artifact_unavailable',409);
+    return {...canonical,bytes:safeRead(canonical)};
+  }
   function put(nodeId,lease,payload){
     store.assertPilotLease(nodeId,lease);P.fields(payload,['eventId','contentType','bytes']);P.id(payload.eventId);guard();const size=checkImage(payload.contentType,payload.bytes),digest=createHash('sha256').update(payload.bytes).digest('hex');
     const prior=store.findPilotArtifact(nodeId,payload.eventId);
@@ -72,6 +79,6 @@ function createPilotArtifacts({store,root,now=Date.now}){
   for(const name of fs.readdirSync(directory)){if(!filePattern.test(name)||registered.has(name))continue;const target=path.join(directory,name),stat=fs.lstatSync(target);if(stat.isFile()&&!stat.isSymbolicLink()&&stat.mtimeMs<now()-RETENTION)fs.unlinkSync(target);}
   }
   store.registerPilotArtifactReader((nodeId,taskId,id)=>get(nodeId,taskId,id));
-  return {put,get,removeExpired};
+  return {put,get,readForHuman,removeExpired};
 }
 module.exports={createPilotArtifacts,checkImage};

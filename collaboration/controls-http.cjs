@@ -56,6 +56,35 @@ function createWorkspaceControlsRouter({taskControl, getGateway, now = Date.now}
       input: {url: 'https://example.com/', challenge: randomBytes(32).toString('base64url')}, deadlineAt: now() + 300000});
     res.status(201).json({task: externalTask(access.getTask(task.taskId))});
   }));
+  router.get('/api/tasks/:taskId/evidence', wrap((req, res) => {
+    const access = human(), task = access.getTask(req.params.taskId), acceptance = access.getPilotAcceptance(task.id);
+    const output = task.result?.output;
+    const meta = acceptance.artifactId ? access.getPilotArtifact(acceptance.artifactId) : null;
+    if (meta && (meta.taskId !== task.id || meta.nodeId !== task.node_id)) throw new IdentityError('artifact_unavailable', 409);
+    // Never return the raw result/input, challenge, lease or node credentials.
+    res.json({task: externalTask(task), acceptance, nodeRevoked: access.getNode(task.node_id).revoked,
+      output: output ? Object.fromEntries(['url', 'title', 'executedAt', 'activityEvidence'].filter(key => typeof output[key] === 'string').map(key => [key, output[key]])) : null,
+      artifact: meta ? {artifactId: meta.artifactId, sha256: meta.sha256, sizeBytes: meta.sizeBytes, width: meta.width, height: meta.height, contentType: meta.contentType, createdAt: meta.createdAt} : null});
+  }));
+  router.get('/api/tasks/:taskId/artifact', wrap((req, res) => {
+    const gateway = getGateway();
+    if (typeof gateway?.artifacts?.readForHuman !== 'function') throw new IdentityError('artifact_service_unavailable', 503);
+    const artifact = human().readPilotArtifact(req.params.taskId, meta => gateway.artifacts.readForHuman(meta));
+    res.setHeader('Content-Type', artifact.contentType);
+    res.setHeader('Cache-Control', 'no-store');
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('Content-Disposition', 'inline; filename="task-evidence.' + (artifact.contentType === 'image/png' ? 'png' : 'jpg') + '"');
+    res.send(artifact.bytes);
+  }));
+  router.post('/api/tasks/:taskId/acceptance', wrap((req, res) => {
+    const input = body(req, ['confirm']);
+    if (input.confirm !== true) throw new IdentityError('invalid_request', 400);
+    const access = human(), task = access.getTask(req.params.taskId);
+    // Revoked execution authority is not an expired human session. Keep the
+    // evidence readable, but do not log its viewer out on a node-specific 401.
+    if (access.getNode(task.node_id).revoked) throw new IdentityError('pilot_acceptance_denied', 409);
+    res.json({acceptance: access.acceptPilotTask(task.id)});
+  }));
   router.post('/api/tasks/:taskId/cancel', wrap((req, res) => {
     const input = body(req, ['kind']);
     if (input.kind === 'local') res.json({task: taskControl.cancelTask(req.params.taskId)});

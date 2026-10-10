@@ -77,6 +77,15 @@ test('three humans and five nodes complete scoped HTTPS task lifecycle, cancella
   const receipt = await clients[2].request('/v1/tasks/' + success.taskId + '/result', {method: 'POST', body: payload});
   assert.deepEqual(await clients[2].request('/v1/tasks/' + success.taskId + '/result', {method: 'POST', body: payload}), receipt);
   assert.equal(receipt.status, 'succeeded');
+  const evidence = await human(other, f.workspaceId, '/api/tasks/' + success.taskId + '/evidence');
+  assert.equal(evidence.status, 200); assert.equal(JSON.parse(evidence.text).acceptance.state, 'evidence_checked');
+  assert.ok(!evidence.text.includes(success.input.challenge));
+  const image = await human(owner, f.workspaceId, '/api/tasks/' + success.taskId + '/artifact');
+  assert.equal(image.status, 200); assert.equal(image.headers['content-type'], 'image/png'); assert.deepEqual(image.bytes, screenshot());
+  assert.equal((await human(other, f.workspaceId, '/api/tasks/' + success.taskId + '/acceptance', {method: 'POST', json: {confirm: true}})).status, 403);
+  const accepted = await human(owner, f.workspaceId, '/api/tasks/' + success.taskId + '/acceptance', {method: 'POST', json: {confirm: true}});
+  assert.equal(accepted.status, 200); assert.equal(JSON.parse(accepted.text).acceptance.state, 'accepted');
+  assert.equal((await human(other, f.otherWorkspaceId, '/api/tasks/' + success.taskId + '/artifact')).status, 404);
   const active = await clients[3].claimTask(tasks[3].taskId);
   assert.equal((await human(owner, f.workspaceId, '/api/nodes/' + nodes[3].node.id, {method: 'DELETE', json: {}})).status, 200);
   await assert.rejects(clients[3].manifest(), error => error.status === 401);

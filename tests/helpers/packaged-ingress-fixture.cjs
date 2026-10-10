@@ -54,7 +54,7 @@ async function createPackagedIngressFixture({caddyBin, threeHumans = false, conf
       method: options.method || 'GET', path: requestPath, headers, agent: false}, response => {
       const chunks = []; let size = 0;
       response.on('data', value => {size += value.length; if (size > 1024 * 1024) outgoing.destroy(new Error('Fixture response too large')); else chunks.push(value);});
-      response.on('error', reject); response.on('end', () => resolve({status: response.statusCode, headers: response.headers, text: Buffer.concat(chunks).toString('utf8')}));
+      response.on('error', reject); response.on('end', () => {const bytes = Buffer.concat(chunks); resolve({status: response.statusCode, headers: response.headers, bytes, text: bytes.toString('utf8')});});
     });
     outgoing.setTimeout(5000, () => outgoing.destroy(new Error('Fixture HTTPS request timed out')));
     outgoing.on('error', reject); outgoing.end(body);

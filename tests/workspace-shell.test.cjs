@@ -107,3 +107,35 @@ test('closing the panel cancels a pending public pilot confirmation without crea
   const pending = start.onclick(); f.view.clear(); await pending;
   assert.equal(f.requests.filter(item => item.options?.method === 'POST').length, 0);
 });
+
+test('human screenshot is workspace-fetched, text-rendered and owner acceptance requires decoded image and explicit confirmation', async t => {
+  const f = setup(t, {role: 'owner'}), created = [], revoked = [];
+  f.document.defaultView.URL = {createObjectURL: blob => {assert.equal(blob.type, 'image/png'); created.push('blob:owned-image'); return 'blob:owned-image';}, revokeObjectURL: value => revoked.push(value)};
+  const receipt = {task: {taskId: 'pilot', taskType: 'browser.public_read', state: 'succeeded'}, acceptance: {state: 'evidence_checked', acceptedAt: null},
+    artifact: {width: 1, height: 1, sizeBytes: 2, sha256: 'a'.repeat(64)}, output: {url: 'https://example.com/', title: '<script>title</script>', executedAt: '2026-10-11T00:00:00Z', activityEvidence: 'Synthetic only'}};
+  f.client.request = async (path, options) => {f.requests.push({path, options}); return options?.method === 'POST' ? {acceptance: {state: 'accepted', acceptedAt: 1}} : receipt;};
+  f.client.fetch = async path => {f.requests.push({path}); return {headers: new Headers({'Content-Type': 'image/png'}), blob: async () => new Blob([Buffer.from([1, 2])], {type: 'image/png'})};};
+  assert.equal(typeof f.view.openTaskEvidence, 'function'); await f.view.openTaskEvidence('pilot');
+  assert.ok(f.walk().some(node => node.textContent === '<script>title</script>'));
+  assert.ok(!f.walk().some(node => node.tagName === 'script'));
+  const image = f.walk().find(node => node.tagName === 'img'), approve = f.walk().find(node => node.textContent === '确认人工验收');
+  assert.ok(image); assert.equal(image.src, 'blob:owned-image'); assert.equal(approve.disabled, true);
+  image.onload(); assert.equal(approve.disabled, false);
+  const pending = approve.onclick(); assert.equal(f.requests.filter(item => item.options?.method === 'POST').length, 0);
+  f.walk().find(node => node.textContent === '确认操作').onclick(); await pending;
+  assert.deepEqual(f.requests.filter(item => item.options?.method === 'POST'), [{path: '/api/tasks/pilot/acceptance', options: {method: 'POST', body: {confirm: true}}}]);
+  assert.equal(approve.disabled, true); f.view.clear(); assert.deepEqual(revoked, created);
+});
+
+test('viewer evidence has no approval and a panel reset discards a late image without creating a blob URL', async t => {
+  const f = setup(t), created = [];
+  f.document.defaultView.URL = {createObjectURL: () => {created.push('leaked-image'); return 'blob:bad';}, revokeObjectURL: () => {}};
+  f.client.request = async () => ({task: {taskId: 'pilot', taskType: 'browser.public_read', state: 'succeeded'}, acceptance: {state: 'evidence_checked'}, artifact: {width: 1, height: 1}, output: {title: 'Old private title'}});
+  let release;
+  f.client.fetch = async () => ({headers: new Headers({'Content-Type': 'image/png'}), blob: () => new Promise(resolve => {release = resolve;})});
+  assert.equal(typeof f.view.openTaskEvidence, 'function'); const pending = f.view.openTaskEvidence('pilot');
+  await new Promise(resolve => setImmediate(resolve));
+  assert.ok(!f.walk().some(node => node.textContent === '确认人工验收'));
+  f.view.clear(); release(new Blob([Buffer.from([1])], {type: 'image/png'})); await pending;
+  assert.deepEqual(created, []); assert.ok(!f.walk().some(node => node.textContent === 'Old private title'));
+});

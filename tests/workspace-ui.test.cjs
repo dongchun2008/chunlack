@@ -3,6 +3,18 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const {createWorkspaceClient, safeReturnPath} = require('../identity/workspace-ui.js');
 const turn = () => new Promise(resolve => setImmediate(resolve));
+
+test('binary response consumption rejects a workspace switch before and during blob delivery', async t => {
+  const f = setup(); t.after(() => f.client.close()); await f.client.boot();
+  f.respond(() => new Response(Buffer.from([1, 2]), {headers: {'Content-Type': 'image/png'}}));
+  const response = await f.client.fetch('/api/tasks/pilot/artifact'); assert.equal(typeof response.blob, 'function');
+  await f.client.selectWorkspace('workspace-b'); await assert.rejects(() => response.blob(), error => error.code === 'workspace_changed');
+  let release;
+  f.respond(() => ({ok: true, status: 200, headers: new Headers({'Content-Type': 'image/png'}), blob: () => new Promise(resolve => {release = resolve;})}));
+  const next = await f.client.fetch('/api/tasks/pilot/artifact'), pending = next.blob();
+  const rejected = assert.rejects(pending, error => error.code === 'workspace_changed');
+  await turn(); await f.client.selectWorkspace('workspace-a'); release(new Blob([Buffer.from([1, 2])], {type: 'image/png'})); await rejected;
+});
 function storage(initial = {}) {
   const values = new Map(Object.entries(initial));
   return {get length() {return values.size;}, key: index => [...values.keys()][index], getItem: key => values.get(key) ?? null,

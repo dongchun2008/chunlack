@@ -2,6 +2,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const path = require('node:path');
+const fs = require('node:fs');
 const http = require('node:http');
 const express = require('express');
 const {workspaceFixture} = require('./helpers/workspace-fixture.cjs');
@@ -15,6 +16,8 @@ const {createGatewayStore} = require('../gateway/store.cjs');
 const {createWorkspaceGatewayAccess} = require('../gateway/workspace-access.cjs');
 const {createWorkspaceControlsRouter} = require('../collaboration/controls-http.cjs');
 const {runWithWorkspace} = require('../collaboration/context.cjs');
+const {createPilotArtifacts} = require('../gateway/pilot-artifacts.cjs');
+const {screenshot} = require('./helpers/workspace-gateway-fixture.cjs');
 const origin = 'https://lack.fixture.invalid';
 async function setup(t) {
   const password = 'synthetic-controls-password';
@@ -26,9 +29,10 @@ async function setup(t) {
   const tasks = f.own(createWorkspaceTaskControl({identity: f.store, capacity, now: f.now}));
   const store = f.own(createGatewayStore({dbPath: path.join(f.dir, 'gateway.db'), multiUser: true, capacity, now: f.now}));
   const access = createWorkspaceGatewayAccess({store, identity: f.store});
+  const artifacts = createPilotArtifacts({store, root: path.join(f.dir, 'artifacts'), now: f.now});
   const accounts = {};
   for (const login of ['alice', 'bob', 'carol']) accounts[login] = await sessions.login({login, password, source: 'controls-' + login});
-  const app = express(); app.use(transport.httpContext); app.use(createWorkspaceControlsRouter({taskControl: tasks, getGateway: () => ({workspaceAccess: access}), now: f.now}));
+  const app = express(); app.use(transport.httpContext); app.use(createWorkspaceControlsRouter({taskControl: tasks, getGateway: () => ({workspaceAccess: access, artifacts}), now: f.now}));
   const server = http.createServer(app); await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   t.after(() => new Promise(resolve => {server.closeAllConnections(); server.close(resolve);}));
   async function request(user, workspace, route, {method = 'GET', body, csrf = true, headers: extra = {}} = {}) {
@@ -36,9 +40,21 @@ async function setup(t) {
     if (user) {headers.Cookie = '__Host-chunlack_session=' + accounts[user].token; if (csrf) headers['X-CSRF-Token'] = accounts[user].csrfToken;}
     if (body !== undefined) headers['Content-Type'] = 'application/json';
     const response = await fetch('http://127.0.0.1:' + server.address().port + route, {method, headers, body: body === undefined ? undefined : JSON.stringify(body)});
-    return {status: response.status, body: await response.json()};
+    return {status: response.status, headers: response.headers, body: /^image\//.test(response.headers.get('content-type') || '') ? Buffer.from(await response.arrayBuffer()) : await response.json()};
   }
-  return {...f, sessions, tasks, store, access, request};
+  return {...f, sessions, tasks, store, access, artifacts, request};
+}
+
+async function finishPilot(f, user = 'alice', workspace = 'a') {
+  const created = await f.request(user, workspace, '/api/nodes', {method: 'POST', body: {name: 'Evidence fixture', capabilities: ['browser.public_read'], scopes: ['public']}});
+  const queued = await f.request(user, workspace, '/api/tasks', {method: 'POST', body: {targetNodeId: created.body.node.id}});
+  const credentials = f.store.pair(created.body.pairingCode), worker = f.access.forNode(f.store.authenticate(credentials.token));
+  const lease = worker.claimTask(); assert.equal(lease.taskId, queued.body.task.taskId);
+  const artifact = worker.run(() => f.artifacts.put(created.body.node.id, lease, {eventId: 'evidence-image', contentType: 'image/png', bytes: screenshot()}));
+  worker.submitResult({protocolVersion: 1, taskId: lease.taskId, leaseId: lease.leaseId, attempt: lease.attempt, eventId: 'evidence-result', status: 'succeeded', output: {
+    url: lease.input.url, challenge: lease.input.challenge, title: '<img src=x> Synthetic Example', artifactId: artifact.artifactId,
+    executedAt: new Date(f.now()).toISOString(), activityEvidence: 'Synthetic fixture only; not vendor-owned execution.'}});
+  return {taskId: lease.taskId, nodeId: created.body.node.id, artifact, challenge: lease.input.challenge, token: credentials.token};
 }
 test('human controls require a real session and exact workspace membership; posted role and workspace never grant node access', async t => {
   const f = await setup(t);
@@ -160,4 +176,52 @@ test('public browser task creation refuses mixed capabilities or multiple scopes
     assert.equal(denied.body.error, 'facade_scope_denied');
     assert.deepEqual((await f.request('bob', 'a', '/api/tasks')).body.externalTasks, []);
   }
+});
+
+test('human evidence view returns bounded fields and verified PNG without node tokens, lease secrets or execution challenge', async t => {
+  const f = await setup(t), pilot = await finishPilot(f);
+  const response = await f.request('bob', 'a', '/api/tasks/' + pilot.taskId + '/evidence');
+  assert.equal(response.status, 200); assert.equal(response.body.acceptance.state, 'evidence_checked');
+  assert.equal(response.body.output.title, '<img src=x> Synthetic Example');
+  assert.equal(response.body.artifact.sha256, pilot.artifact.sha256);
+  for (const secret of [pilot.challenge, pilot.token, 'lease_id', 'leaseId', 'input_json']) assert.ok(!JSON.stringify(response.body).includes(secret));
+  const image = await f.request('bob', 'a', '/api/tasks/' + pilot.taskId + '/artifact');
+  assert.equal(image.status, 200); assert.equal(image.headers.get('content-type'), 'image/png');
+  assert.equal(image.headers.get('cache-control'), 'no-store'); assert.equal(image.headers.get('x-content-type-options'), 'nosniff');
+  assert.deepEqual(image.body, screenshot());
+  await f.request('alice', 'a', '/api/nodes/' + pilot.nodeId, {method: 'DELETE', body: {}});
+  assert.equal((await f.request('bob', 'a', '/api/tasks/' + pilot.taskId + '/artifact')).status, 200, 'Revoking node access must not erase human evidence');
+  const denied = await f.request('alice', 'a', '/api/tasks/' + pilot.taskId + '/acceptance', {method: 'POST', body: {confirm: true}});
+  assert.equal(denied.status, 409, 'Revoked node cannot receive a new human acceptance and must not invalidate the human session');
+  assert.equal((await f.request('alice', 'a', '/api/tasks/' + pilot.taskId + '/evidence')).status, 200);
+});
+
+test('only the real workspace owner may explicitly accept evidence, with fresh CSRF; viewer may read but never approve', async t => {
+  const f = await setup(t), pilot = await finishPilot(f), other = await finishPilot(f, 'bob', 'b');
+  const route = '/api/tasks/' + pilot.taskId + '/acceptance';
+  assert.equal((await f.request('bob', 'a', route, {method: 'POST', body: {confirm: true}})).status, 403);
+  assert.equal((await f.request('carol', 'b', '/api/tasks/' + other.taskId + '/evidence')).status, 200);
+  assert.equal((await f.request('carol', 'b', '/api/tasks/' + other.taskId + '/acceptance', {method: 'POST', body: {confirm: true}})).status, 403);
+  assert.equal((await f.request('alice', 'a', route, {method: 'POST', body: {confirm: true}, csrf: false})).status, 403);
+  assert.equal((await f.request('alice', 'a', route, {method: 'POST', body: {confirm: false}})).status, 400);
+  assert.equal((await f.request('alice', 'a', route, {method: 'POST', body: {confirm: true, role: 'owner'}})).status, 400);
+  const accepted = await f.request('alice', 'a', route, {method: 'POST', body: {confirm: true}});
+  assert.equal(accepted.status, 200); assert.equal(accepted.body.acceptance.state, 'accepted');
+  assert.equal(accepted.body.acceptance.acceptedAt, f.now());
+  assert.deepEqual((await f.request('alice', 'a', route, {method: 'POST', body: {confirm: true}})).body, accepted.body);
+});
+
+test('foreign workspace and node bearer cannot read human evidence or screenshot, and corrupt image cannot be accepted', async t => {
+  const f = await setup(t), pilot = await finishPilot(f);
+  for (const suffix of ['evidence', 'artifact']) {
+    const foreign = await f.request('bob', 'b', '/api/tasks/' + pilot.taskId + '/' + suffix);
+    const missing = await f.request('bob', 'b', '/api/tasks/unknown-task/' + suffix);
+    assert.equal(foreign.status, 404); assert.deepEqual(foreign.body, missing.body);
+    assert.equal((await f.request(null, 'a', '/api/tasks/' + pilot.taskId + '/' + suffix, {headers: {Authorization: 'Bearer ' + pilot.token}})).status, 401);
+  }
+  const file = path.join(f.dir, 'artifacts', 'workspaces', f.workspaces.a.id, pilot.artifact.artifactId + '.png');
+  const changed = screenshot(); changed[changed.length - 1] ^= 1; fs.writeFileSync(file, changed);
+  assert.equal((await f.request('alice', 'a', '/api/tasks/' + pilot.taskId + '/artifact')).status, 409);
+  assert.equal((await f.request('alice', 'a', '/api/tasks/' + pilot.taskId + '/acceptance', {method: 'POST', body: {confirm: true}})).status, 409);
+  assert.equal((await f.request('alice', 'a', '/api/tasks/' + pilot.taskId + '/evidence')).body.acceptance.state, 'evidence_checked');
 });

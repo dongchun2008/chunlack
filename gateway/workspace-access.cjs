@@ -58,6 +58,16 @@ function createWorkspaceGatewayAccess({store, identity} = {}) {
       retryTask: id => ownTask('task.retry', id, () => store.retryTask(id)),
       getPilotAcceptance: id => run('task.read', () => store.getPilotAcceptance(id)),
       acceptPilotTask: id => run('task.approve', () => store.acceptPilotTask(id)),
+      // The reader is trusted service code, never a client-supplied callback.
+      // Human history access is separate from a currently valid node token.
+      readPilotArtifact: (taskId, reader) => run('artifact.read', () => {
+        if (typeof reader !== 'function') P.fail('artifact_service_unavailable', 503);
+        const task = store.getTask(taskId), acceptance = store.getPilotAcceptance(taskId);
+        if (!acceptance.artifactId) P.fail('artifact_unavailable', 409);
+        const meta = store.getPilotArtifact(acceptance.artifactId);
+        if (!meta || meta.taskId !== task.id || meta.nodeId !== task.node_id) P.fail('artifact_unavailable', 409);
+        return reader(meta);
+      }),
       getPilotArtifact: id => run('artifact.read', () => store.getPilotArtifact(id))
     });
   }

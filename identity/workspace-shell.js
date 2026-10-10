@@ -8,6 +8,7 @@
     if (!client || !document) throw new TypeError('Workspace client and document required');
     const roles = {owner: '所有者', member: '成员', viewer: '只读成员'};
     let state = null, closed = false, panelGeneration = 0, timer = null, copySecret = null, copyButton = null, pendingConfirmation = null;
+    const imageUrls = new Map();
     const node = (tag, text, id) => {
       const element = document.createElement(tag);
       if (text !== undefined) element.textContent = String(text == null ? '' : text);
@@ -47,6 +48,8 @@
     async function act(fn) {try {return await fn();} catch (error) {if (!closed) notify(error);}}
     function clearPanel() {
       if (pendingConfirmation) pendingConfirmation(false);
+      for (const [url, api] of imageUrls) api.revokeObjectURL(url);
+      imageUrls.clear();
       panelGeneration++; clearTimeout(timer); timer = null; copySecret = null;
       if (copyButton) copyButton.disabled = true; copyButton = null;
       panel.replaceChildren(); panel.hidden = true; notice.textContent = '';
@@ -213,6 +216,7 @@
           const response = await client.request('/api/tasks'); if (!d.live()) return; list.replaceChildren();
           for (const [kind, items] of [['local', response.localTasks || []], ['external', response.externalTasks || []]]) for (const task of items) {
             const row = node('div'); row.className = 'workspace-row'; row.append(node('strong', task.taskId), node('span', `${kind === 'local' ? '编排' : '外部节点'} · ${task.state || task.status || '未知'}`));
+            if (kind === 'external' && task.taskType === 'browser.public_read') button('查看证据', () => openTaskEvidence(task.taskId), row);
             if (client.can('cancel', task.createdBy) && !['completed', 'succeeded', 'cancelled', 'failed', 'expired'].includes(task.state || task.status)) button('取消', () => act(async () => {
               if (!await confirm('请求停止该任务及其后续执行？')) return;
               await client.request(`/api/tasks/${encodeURIComponent(task.taskId)}/cancel`, {method: 'POST', body: {kind}}); if (d.live()) await refresh();
@@ -223,6 +227,55 @@
         if (d.live()) {clearTimeout(timer); timer = setTimeout(refresh, 5000); if (timer.unref) timer.unref();}
       }
       await refresh();
+    }
+    async function openTaskEvidence(id) {
+      if (!state || !state.workspace || !client.can('read')) return;
+      const d = dialog('节点任务证据');
+      await act(async () => {
+        const info = await client.request(`/api/tasks/${encodeURIComponent(id)}/evidence`);
+        if (!d.live()) return;
+        if (info.task?.taskId !== id || info.task?.taskType !== 'browser.public_read' || !info.acceptance) throw new Error('invalid_response');
+        const labels = {received: '尚未收到完整证据', evidence_checked: '字段与文件已校验，尚未人工验收', accepted: '已人工验收'};
+        const status = node('p', labels[info.acceptance.state] || '证据状态未知'); d.body.append(node('strong', id), status);
+        d.body.append(node('p', '执行成功不等于结论可靠。活动记录是节点自述；截图格式和哈希校验不证明 Muse 或 dots 自身浏览器已执行任务。'));
+        const output = info.output || {};
+        d.body.append(node('h3', output.title || '未返回标题'), node('p', output.executedAt || '缺证：未返回执行时间'), node('blockquote', output.activityEvidence || '缺证：未返回活动记录'));
+        let url; try {url = new URL(output.url);} catch (_) {}
+        if (url && url.protocol === 'https:' && !url.username && !url.password) {
+          const link = node('a', output.url); link.href = output.url; link.target = '_blank'; link.rel = 'noopener noreferrer'; d.body.append(link);
+        } else d.body.append(node('p', '缺证：未返回安全的原始网址。'));
+        if (info.acceptance.acceptedAt) d.body.append(node('p', '验收时间：' + new Date(info.acceptance.acceptedAt).toISOString()));
+        if (info.nodeRevoked) d.body.append(node('p', '节点已撤销：保留历史证据，不再允许新验收。'));
+        button('重新读取证据', () => openTaskEvidence(id), d.body);
+        if (!info.artifact) {d.body.append(node('p', '缺证：尚无可读取的截图，不能人工验收。')); return;}
+        d.body.append(node('p', `截图：${info.artifact.width} × ${info.artifact.height}；SHA-256：${info.artifact.sha256 || '缺失'}`));
+        let loaded = false, accepted = info.acceptance.state === 'accepted', approve = null;
+        if (client.can('manage') && !info.nodeRevoked && info.task.state === 'succeeded' && info.acceptance.state === 'evidence_checked') {
+          approve = button('确认人工验收', async () => {
+            if (!d.live() || !loaded || accepted || approve.disabled || !client.can('manage')) return;
+            approve.disabled = true;
+            try {await act(async () => {
+              if (!await confirm('确认已核对截图、活动记录及实际节点身份？仅记录本次人工验收，不扩大任何执行权限。')) return;
+              if (!d.live() || !loaded || !client.can('manage')) return;
+              const result = await client.request(`/api/tasks/${encodeURIComponent(id)}/acceptance`, {method: 'POST', body: {confirm: true}});
+              if (!d.live()) return;
+              if (result.acceptance?.state !== 'accepted') throw new Error('invalid_response');
+              accepted = true; status.textContent = '已人工验收';
+            });} finally {if (d.live()) approve.disabled = accepted || !loaded || !client.can('manage');}
+          }, d.body); approve.disabled = true;
+        }
+        const response = await client.fetch(`/api/tasks/${encodeURIComponent(id)}/artifact`);
+        const type = (response.headers.get('content-type') || '').split(';')[0].toLowerCase();
+        if (!['image/png', 'image/jpeg'].includes(type)) throw new Error('invalid_response');
+        const blob = await response.blob(); if (!d.live()) return;
+        const imageUrlApi = document.defaultView && document.defaultView.URL;
+        if (blob.size < 1 || blob.size > 2097152 || blob.type.split(';')[0].toLowerCase() !== type || !imageUrlApi?.createObjectURL || !imageUrlApi?.revokeObjectURL) throw new Error('invalid_response');
+        const ownedUrl = imageUrlApi.createObjectURL(blob); imageUrls.set(ownedUrl, imageUrlApi);
+        const image = node('img'); image.alt = '任务截图（节点提交）'; image.style.maxWidth = '100%'; image.style.height = 'auto'; image.style.display = 'block'; image.style.marginTop = '16px';
+        image.onload = () => {if (d.live()) {loaded = true; if (approve) approve.disabled = accepted || !client.can('manage');}};
+        image.onerror = () => {if (d.live()) {loaded = false; if (approve) approve.disabled = true; d.body.append(node('p', '截图无法解码，不能人工验收。'));} imageUrlApi.revokeObjectURL(ownedUrl); imageUrls.delete(ownedUrl);};
+        image.src = ownedUrl; d.body.append(image);
+      });
     }
     async function openResearch(id) {
       if (!state || !state.workspace || !client.can('read')) return;
@@ -251,7 +304,7 @@
     function clear() {clearPanel(); cover.replaceChildren(); account.textContent = ''; role.textContent = ''; selector.replaceChildren(); selector.disabled = members.disabled = nodes.disabled = tasks.disabled = true; state = null; gatedControls();}
     function close() {if (closed) return; clear(); closed = true; bar.remove(); cover.remove(); panel.remove(); style.remove();}
     render(client.snapshot());
-    return Object.freeze({render, clear, close, notify, openResearch, openMembers, openNodes, openTasks});
+    return Object.freeze({render, clear, close, notify, openResearch, openMembers, openNodes, openTasks, openTaskEvidence});
   }
   return Object.freeze({mountWorkspaceShell});
 });
