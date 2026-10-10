@@ -448,3 +448,11 @@ historical restore and production/public acceptance remain explicit delivery gat
 - 独立DNS查询无两个入口的AAAA答案，无入口及父域CAA答案；无DNS改动。非敏感入口示例和本地Caddy校验通过，未启动/申请证书，激活需复核候选回环端口13721/13722/13723。
 - 正式迁移前已请求用户明确旧数据工作区和真人负责人，不猜归属。真实模型、老镇/玄玑自身执行、正式TLS与生产迁移/独立恢复/共存验收仍待完成。
 - 证据见 docs/verification/2026-10-11-public-preflight-native-acceptance.md。
+## 2026-10-11 真实旧数据的原生快照及独立副本恢复
+
+- 只读定位现有 /var/lib/chunlack/db/lack.db（57344字节）和私有配置；SQLite只在稳定临时副本打开。完整性ok、外键违规0，1个Agent、13条消息，6表无workspace_id；未读取/输出消息或凭据值。
+- 使用9abcfde源码归档，在独立私有临时目录完成现有快照/独立恢复工具的真实旧数据演练：库存43项85072字节，快照和恢复各28项记录，表行数/文件校验匹配，未启动恢复后的应用。
+- 初次临时单元226/NAMESPACE因PrivateTmp隐藏试验目录；保留失败记录。只增加本轮BindPaths，用新单元重试，保留源数据RO、私有网络、0.1CPU/128MiB/32Tasks/90秒约束。原生实际退出0，10.368秒（含8秒取证等待），内存峰值19550208字节，CPU242ms，无Swap峰值。
+- LACK PID234963、tailscaled PID859和重启计数0不变，health200；最终两个临时单元not-found/inactive、MainPID0、cgroup不存在。私有副本保留约8616KiB，目录0700、归档配置0600，未下载数据库/配置或提交Git。
+- 这不是正式一致性备份/应用恢复。migrationReady、restoreReady仍false，applicationConsistency=not_proven；未分类根数据、旧数据归属、真人身份初始化仍未解决，临时目录不承诺长期保留。
+- 详见 docs/verification/2026-10-11-existing-data-offline-restore-trial.md。真实模型、老镇/玄玑自身执行、正式HTTPS、应用级恢复与真实Relay转发共存仍待完成，目标保持未完成。
