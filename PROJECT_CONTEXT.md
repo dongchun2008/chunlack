@@ -204,3 +204,12 @@ Phase 7: Governance
 ## Implementation status (2026-09-08)
 
 The single-node implementation still lives in the embedded sources in lack.py. Ollama and configurable OpenAI-compatible providers are implemented. Generation routing has bounded retries, explicit per-agent cloud fallback permission and local-only generation checks. This is not yet a fully separated router service or end-to-end privacy system. See deploy/README.md for the private VPS deployment and tests for repeatable verification. GPU integration and native Anthropic/Gemini adapters remain planned.
+
+## 2026-10-10 latest verified local checkpoint
+
+- Task 9 local implementation and acceptance completed: isolated browser accounts, two workspaces, live member revocation, workspace re-entry, multi-tab logout, node create/pause/resume/revoke, task status and granted provider/model selection.
+- Public UI uses text-only identity/evidence rendering, in-page destructive confirmation, and fail-closed identity reset. Invalid-cookie recovery and invite acceptance have explicit regression tests.
+- Full local regression: 332 tests passed, zero failures; smoke passed for real HTTP/WebSocket, two mock model backends, SQLite restart persistence, private bind and configuration preservation.
+- Browser fixtures use synthetic accounts and mocked TLS/model transport. Original-source rendering includes a separate labelled DOM fixture; it is not a real research or external Agent acceptance result. Narrow chat and evidence layouts were checked at 390 pixels.
+- Task 10 materialization prerequisites implemented and tested: include identity/collaboration/login assets, pinned dependency manifests and account CLI; exclude fixtures/private runtime state and reject linked destination paths before writing. Atomic runtime lifecycle, single-writer guard, HTTPS ingress and read-only VPS preflight remain in progress.
+- No VPS, DNS, real credentials or Tailscale Peer Relay configuration changed. Real model, Muse Laozhen and dots Xuanji end-to-end acceptance remains pending; the overall delivery goal remains active.

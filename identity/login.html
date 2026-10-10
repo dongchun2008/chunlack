@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <title>登录 | ChunLACK</title>
+  <style>body{margin:0;background:#f3f5e8;color:#29391f;font-family:Georgia,serif}</style>
+</head>
+<body>
+  <script src="/identity/workspace-ui.js"></script>
+  <script src="/identity/workspace-shell.js"></script>
+  <script>
+    'use strict';
+    let view;
+    const client = ChunLackWorkspace.createWorkspaceClient({
+      fetch: window.fetch.bind(window), WebSocket: window.WebSocket, storage: window.sessionStorage,
+      legacyStorage: window.localStorage, location: window.location,
+      onReset: () => view && view.clear(),
+      onIdentity: state => {if (view) view.render(state); if (state.status === 'ready') window.location.replace('/');},
+      onError: error => view && view.notify(error)
+    });
+    view = ChunLackWorkspaceShell.mountWorkspaceShell({client, document});
+    window.addEventListener('pagehide', () => {view.close(); client.close();}, {once: true});
+    client.boot().catch(error => view.notify(error));
+  </script>
+</body>
+</html>

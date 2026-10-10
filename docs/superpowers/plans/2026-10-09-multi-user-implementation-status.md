@@ -100,3 +100,22 @@
 - Verified: 16 state-controller tests, with 4 regression failures reproduced before correction; complete suite 306/306, 0 failures/skips/cancellations; existing HTTP/WebSocket mock-model smoke passed.
 - These are state-controller/unit and backend regression checks, not real DOM, HTML-injection, browser login, three-browser-account or desktop/narrow-screen acceptance. Task 9 remains open: login.html, existing avocado UI wiring/reset, members/nodes/tasks views and protected controls endpoints, evidence/source display, and actual browser acceptance.
 - Tasks 10-12, production cutover and real-model/Muse/dots acceptance remain open. No VPS/DNS/credentials/Relay changes.
+
+## Tasks 9-10: UI integration and runtime asset preparation, still in progress
+
+- Added served login and text-only account/workspace/member/node/task/evidence panels; wired the existing avocado UI to authoritative per-tab HTTP/WSS scopes. Scope reset clears private DOM/drafts/attachments, readers/workers/timers and subscriptions before a full presentation reload. Private legacy mode is preserved; public host/Git/shell/cron operations remain denied.
+- Added server-authorized controls endpoints for node grants and scoped local/external task progress/cancellation; metadata omits task input/results and reusable credentials. Cancellation still holds external occupancy until exact acknowledgement/lease expiry.
+- Fixed expired-cookie cleanup and successful browser-account replacement; other device sessions survive. Invitations support bound new accounts or CSRF-authenticated existing accounts and reject late acceptance after logout.
+- Browser fixtures confirmed three users, owner/member/viewer controls, Bob independent A/B tabs and isolated messages. Desktop and 390px login screenshots are outside Git. TLS/cookies and model are explicitly mocked in this loopback browser fixture, not production acceptance. Native confirmation blocked live removal; in-page confirmation replacement is covered by a failed-first reset-cancellation test. Its live recheck and complete logout/node/task/narrow interactions remain pending.
+- Materialize now packages auth/UI/collaboration/MCP/account CLI and pinned package manifests, filters test/runtime/private artifacts, preserves existing configuration/database bytes and rejects linked target components before writes. Actual embedded-process integration uses the generated package, and generated MCP/SDK imports are checked.
+- Full local suite reached 329/329 with no failures/skips/cancellations; legacy real HTTP/WebSocket mock-model smoke passed. Subsequent expanded manifest/import assertions and materialized-process test passed 4/4; final full-suite log is recorded before commit.
+- Tasks 9 and 10 are not complete: live UI gates, atomic start/close/export, single-writer guard, public ingress/TLS and resource preflight remain. Tasks 11-12 and real model/Muse 老镇/dots 玄玑 acceptance remain open. No VPS/DNS/credential/Peer Relay modifications were performed. Details: docs/WORKSPACE_UI.md.
+
+## 2026-10-10 latest verified local checkpoint
+
+- Task 9 local implementation and acceptance completed: isolated browser accounts, two workspaces, live member revocation, workspace re-entry, multi-tab logout, node create/pause/resume/revoke, task status and granted provider/model selection.
+- Public UI uses text-only identity/evidence rendering, in-page destructive confirmation, and fail-closed identity reset. Invalid-cookie recovery and invite acceptance have explicit regression tests.
+- Full local regression: 332 tests passed, zero failures; smoke passed for real HTTP/WebSocket, two mock model backends, SQLite restart persistence, private bind and configuration preservation.
+- Browser fixtures use synthetic accounts and mocked TLS/model transport. Original-source rendering includes a separate labelled DOM fixture; it is not a real research or external Agent acceptance result. Narrow chat and evidence layouts were checked at 390 pixels.
+- Task 10 materialization prerequisites implemented and tested: include identity/collaboration/login assets, pinned dependency manifests and account CLI; exclude fixtures/private runtime state and reject linked destination paths before writing. Atomic runtime lifecycle, single-writer guard, HTTPS ingress and read-only VPS preflight remain in progress.
+- No VPS, DNS, real credentials or Tailscale Peer Relay configuration changed. Real model, Muse Laozhen and dots Xuanji end-to-end acceptance remains pending; the overall delivery goal remains active.

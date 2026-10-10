@@ -3267,8 +3267,31 @@ if (transport) {
   app.use('/api', transport.httpContext, (req, res, next) => {initializeWorkspace(req.workspace); next();});
 }
 
+app.get('/identity/runtime-mode.js', (req, res) => {
+  res.setHeader('Cache-Control', 'no-store'); res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.type('application/javascript').send(`Object.defineProperty(globalThis, 'LACK_MULTI_USER', {value: ${!!transport}});`);
+});
+app.get('/identity/workspace-ui.js', (req, res) => {
+  res.setHeader('Cache-Control', 'no-store'); res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.sendFile(path.join(__dirname, 'identity', 'workspace-ui.js'));
+});
+app.get('/identity/workspace-shell.js', (req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.sendFile(path.join(__dirname, 'identity', 'workspace-shell.js'));
+});
+app.get('/login', (req, res) => {
+  if (!transport || req.url.includes('?')) return res.status(404).json({error: 'not_found'});
+  res.setHeader('Cache-Control', 'no-store'); res.setHeader('Referrer-Policy', 'no-referrer');
+  res.sendFile(path.join(__dirname, 'identity', 'login.html'));
+});
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.json({ limit: transport ? '64kb' : '1mb' }));
+if (transport) {
+  const services = workspaceServices();
+  services.taskControl ||= require('./collaboration/task-control.cjs').createWorkspaceTaskControl({identity: services.identity, capacity: services.capacity});
+  app.use(require('./collaboration/controls-http.cjs').createWorkspaceControlsRouter({taskControl: services.taskControl, getGateway: () => agentGateway}));
+}
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', version: '4.2.2', uptime: process.uptime() });
@@ -5266,11 +5289,82 @@ INDEX_HTML = r'''<!DOCTYPE html>
 
 <div id="toast" class="toast"></div>
 
+<script src="/identity/runtime-mode.js"></script>
+<script src="/identity/workspace-ui.js"></script>
+<script src="/identity/workspace-shell.js"></script>
 <script>
 let ws, currentStoreId = 'general', username = localStorage.getItem('lack_username') || 'human_' + Math.floor(Math.random()*1000), userId = '', agents = [], researchSessions = [], channels = [], currentThreadId = null, graphInterval = null, graphCanvas, graphCtx, resizeListener = false, availableLlmProviders = [];
 let pendingFile = null;
 let moderatorState = false;
 const jspaceEnabled = true;
+let workspaceClient = null, workspaceView = null, chatUiInitialized = false;
+let researchInterval = null, thinkingInterval = null, legacyReconnectTimer = null, activeWorkspaceScope = null;
+let graphWorkerUrl = null;
+const fileReaders = new Set();
+
+function clearWorkspacePresentation() {
+  clearInterval(researchInterval); clearInterval(thinkingInterval); clearInterval(graphInterval); clearTimeout(legacyReconnectTimer);
+  researchInterval = thinkingInterval = graphInterval = legacyReconnectTimer = null;
+  if (resizeListener) window.removeEventListener('resize', handleGraphResize);
+  resizeListener = false;
+  if (graphWorker) {graphWorker.onmessage = null; graphWorker.terminate(); graphWorker = null;}
+  if (graphWorkerUrl) {URL.revokeObjectURL(graphWorkerUrl); graphWorkerUrl = null;}
+  for (const reader of fileReaders) reader.abort(); fileReaders.clear();
+  agents = []; channels = []; researchSessions = []; availableLlmProviders = []; pendingFile = null;
+  currentThreadId = null; currentStoreId = 'general'; username = ''; userId = ''; moderatorState = false; activeWorkspaceScope = null;
+  document.body.classList.remove('chunlack-public-ready', 'sidebar-open');
+  for (const id of ['messagesArea', 'sidebar', 'threadMessages', 'filePreview', 'agentDetailContent', 'graphLabels', 'treeContent', 'toast']) {
+    const element = document.getElementById(id); if (element) element.replaceChildren();
+  }
+  for (const element of document.querySelectorAll('.modal')) element.style.display = 'none';
+  for (const element of document.querySelectorAll('.workspace-reaction-picker')) element.remove();
+  for (const element of document.querySelectorAll('.neuro-desktop input,.neuro-desktop textarea,.modal input,.modal textarea')) element.value = '';
+  const thread = document.getElementById('threadPanel'); if (thread) thread.classList.remove('open');
+  const detail = document.getElementById('agentDetailPopup'); if (detail) detail.classList.remove('show');
+  const thinking = document.getElementById('agentThinkingToast'); if (thinking) thinking.style.display = 'none';
+  const badge = document.getElementById('ralphStatusBadge'); if (badge) {badge.textContent = ''; badge.style.display = 'none';}
+  const title = document.getElementById('currentChatName'); if (title) title.textContent = '#general';
+  if (graphCtx && graphCanvas) graphCtx.clearRect(0, 0, graphCanvas.width, graphCanvas.height);
+  if (workspaceView) workspaceView.clear();
+}
+
+async function init() {
+  if (globalThis.LACK_MULTI_USER === false) {initializeChatUi(); return;}
+  document.body.classList.add('chunlack-public');
+  const publicStyle = document.createElement('style');
+  publicStyle.textContent = '.chunlack-public:not(.chunlack-public-ready) .neuro-menu,.chunlack-public:not(.chunlack-public-ready) .neuro-desktop,.chunlack-public:not(.chunlack-public-ready) .bottom-bar{visibility:hidden}.chunlack-public .workspace-cover,.chunlack-public .workspace-panel{top:var(--workspace-toolbar-height,48px)}';
+  document.head.append(publicStyle);
+  if (globalThis.LACK_MULTI_USER !== true || !globalThis.ChunLackWorkspace || !globalThis.ChunLackWorkspaceShell) {
+    const error = document.createElement('p'); error.textContent = '无法确认登录模式，已停止连接。请检查服务后重新加载。'; document.body.append(error); return;
+  }
+  const nativeFetch = window.fetch.bind(window);
+  const alignToolbar = () => {
+    const bar = document.querySelector('.workspace-bar'), menu = document.querySelector('.neuro-menu'), desktop = document.querySelector('.neuro-desktop');
+    if (!bar || !menu || !desktop) return;
+    const height = bar.getBoundingClientRect().height;
+    document.body.style.setProperty('--workspace-toolbar-height', height + 'px');
+    menu.style.top = height + 'px'; desktop.style.top = height + menu.getBoundingClientRect().height + 'px';
+  };
+  workspaceClient = ChunLackWorkspace.createWorkspaceClient({fetch: nativeFetch, WebSocket: window.WebSocket, location,
+    storage: sessionStorage, legacyStorage: localStorage, onReset: clearWorkspacePresentation,
+    onIdentity: state => {
+      if (workspaceView) workspaceView.render(state);
+      for (const id of ['treeBtn', 'cronBtn']) {const element = document.getElementById(id); if (element) {element.disabled = true; element.title = '公网多用户模式不开放主机文件或 cron 操作';}}
+      requestAnimationFrame(alignToolbar);
+    },
+    onWorkspace: selected => {
+      if (chatUiInitialized) {location.reload(); return;}
+      const account = workspaceClient.snapshot().user;
+      username = account.login; userId = account.id; activeWorkspaceScope = account.id + ':' + selected.id;
+      chatUiInitialized = true; initializeChatUi(); workspaceView.render(workspaceClient.snapshot());
+      document.body.classList.add('chunlack-public-ready'); alignToolbar();
+    }, onError: error => workspaceView && workspaceView.notify(error), onReconnect: () => connect()});
+  window.fetch = (url, options) => workspaceClient.fetch(url, options);
+  workspaceView = ChunLackWorkspaceShell.mountWorkspaceShell({client: workspaceClient, document});
+  window.addEventListener('resize', alignToolbar);
+  window.addEventListener('pagehide', () => {workspaceClient.close(); workspaceView.close(); window.removeEventListener('resize', alignToolbar);}, {once: true});
+  await workspaceClient.boot();
+}
 
 function showToast(msg, type = 'info') {
   const toast = document.getElementById('toast');
@@ -5331,7 +5425,8 @@ function initGraphWorker() {
   `;
   try {
     const blob = new Blob([workerCode], { type: 'application/javascript' });
-    graphWorker = new Worker(URL.createObjectURL(blob));
+    graphWorkerUrl = URL.createObjectURL(blob);
+    graphWorker = new Worker(graphWorkerUrl);
     graphWorker.onmessage = (e) => {
       if (e.data.type === 'processed') {
         drawGraph(e.data.data);
@@ -5343,7 +5438,7 @@ function initGraphWorker() {
   }
 }
 
-function init() {
+function initializeChatUi() {
   connect();
   loadLlmProviders();
   initStudioControls();
@@ -5360,7 +5455,7 @@ function init() {
   document.addEventListener('keydown', e => { if((e.ctrlKey||e.metaKey) && e.key === 'k') { e.preventDefault(); document.getElementById('quickSwitcherModal').style.display = 'flex'; document.getElementById('switcherInput').focus(); } });
   document.getElementById('quickSwitcherModal').onclick = e => { if(e.target === document.getElementById('quickSwitcherModal')) document.getElementById('quickSwitcherModal').style.display = 'none'; };
   document.getElementById('switcherInput').addEventListener('keyup', e => { if(e.key === 'Enter') handleQuickSwitch(); });
-  setInterval(fetchResearchSessions, 5000);
+  researchInterval = setInterval(fetchResearchSessions, 5000);
   document.getElementById('closeGraphBtn').onclick = () => { document.getElementById('graphModal').style.display = 'none'; if(graphInterval) clearInterval(graphInterval); if(resizeListener) window.removeEventListener('resize', handleGraphResize); };
   document.getElementById('moderatorBtn').onclick = toggleModerator;
   document.getElementById('closeAgentDetail').onclick = () => { document.getElementById('agentDetailPopup').classList.remove('show'); };
@@ -5371,6 +5466,7 @@ function init() {
   fileInput.addEventListener('change', async (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    const uploadGeneration = workspaceClient ? workspaceClient.snapshot().generation : null;
     const MAX_SIZE = 512 * 1024;
     if (file.size > MAX_SIZE) { showToast(`File too large (max 512KB)`, 'error'); fileInput.value = ''; return; }
     const previewDiv = document.getElementById('filePreview');
@@ -5380,9 +5476,10 @@ function init() {
     spinner.style.display = 'inline-block';
     try {
       const base64 = await readFileAsBase64(file);
+      if (workspaceClient && uploadGeneration !== workspaceClient.snapshot().generation) return;
       pendingFile = { name: file.name, contentBase64: base64, size: file.size };
       showToast(`File "${file.name}" ready to send`, 'success');
-    } catch (err) { showToast(`Failed to read file`, 'error'); pendingFile = null; previewDiv.innerHTML = ''; }
+    } catch (err) { if (!workspaceClient || uploadGeneration === workspaceClient.snapshot().generation) {showToast(`Failed to read file`, 'error'); pendingFile = null; previewDiv.innerHTML = '';} }
     finally { spinner.style.display = 'none'; fileInput.value = ''; }
   });
 
@@ -5410,7 +5507,7 @@ function init() {
     }
   };
 
-  setInterval(() => {
+  thinkingInterval = setInterval(() => {
     const anyThinking = agents.some(a => a.status === 'thinking' || a.status === 'queued');
     document.getElementById('agentThinkingToast').style.display = anyThinking ? 'flex' : 'none';
   }, 500);
@@ -5457,19 +5554,21 @@ function initStudioControls() {
 function readFileAsBase64(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = () => resolve(reader.result.split(',')[1]);
-    reader.onerror = reject;
+    fileReaders.add(reader);
+    reader.onload = () => {fileReaders.delete(reader); resolve(reader.result.split(',')[1]);};
+    reader.onerror = event => {fileReaders.delete(reader); reject(event);};
+    reader.onabort = () => {fileReaders.delete(reader); reject(new Error('workspace_changed'));};
     reader.readAsDataURL(file);
   });
 }
 
 function connect() {
   const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
-  ws = new WebSocket(protocol+'//'+location.host);
+  ws = workspaceClient ? workspaceClient.createSocket() : new WebSocket(protocol+'//'+location.host);
   ws.onopen = () => {
     document.getElementById('statusText').innerText = 'CONNECTED';
     ws.send(JSON.stringify({type:'join',channelId:currentStoreId}));
-    ws.send(JSON.stringify({type:'set_username',username}));
+    if (!workspaceClient) ws.send(JSON.stringify({type:'set_username',username}));
   };
   ws.onmessage = e => {
     const d = JSON.parse(e.data);
@@ -5490,14 +5589,14 @@ function connect() {
         const badge = document.getElementById('ralphStatusBadge');
         if (d.storeId === currentStoreId && d.active) {
           badge.style.display = 'inline-block';
-          badge.innerHTML = `🧬 Ralph gen ${d.generation} · ${d.goal || ''}`;
+          badge.textContent = `Ralph gen ${d.generation} · ${d.goal || ''}`;
         } else if (d.storeId === currentStoreId && !d.active) {
           badge.style.display = 'none';
         }
         break;
     }
   };
-  ws.onclose = () => { document.getElementById('statusText').innerText = 'DISCONNECTED'; setTimeout(connect,3000); };
+  ws.onclose = () => { document.getElementById('statusText').innerText = 'DISCONNECTED'; if (!workspaceClient) legacyReconnectTimer = setTimeout(connect,3000); };
 }
 
 async function loadLlmProviders() {
@@ -5546,19 +5645,20 @@ function addSection(title, items) {
     if (item.type === 'agent') {
       div = document.createElement('div');
       div.className = 'agent-item';
-      const strictHtml = item.strictChannel ? `<span class="role-badge" title="Strict channel">🔒${item.strictChannel}</span>` : '';
+      const strictHtml = item.strictChannel ? `<span class="role-badge" title="Strict channel">🔒${escapeHtml(item.strictChannel)}</span>` : '';
       div.innerHTML = `
-        <div class="agent-info" data-agent-id="${item.id}">
+        <div class="agent-info" data-agent-id="${escapeHtml(item.id)}">
           <span style="font-size:1.2rem;">${item.icon || '🤖'}</span>
           <span class="agent-name">${escapeHtml(item.name)}</span>
-          <span class="agent-status status-${item.status}"></span>
+          <span class="agent-status status-${escapeHtml(['online','thinking','queued','offline'].includes(item.status) ? item.status : 'offline')}"></span>
           ${strictHtml}
         </div>
-        <i class="fas fa-trash-alt remove-agent" data-agent-id="${item.id}" title="Remove"></i>
+        <i class="fas fa-trash-alt remove-agent" data-agent-id="${escapeHtml(item.id)}" title="Remove"></i>
       `;
       const infoDiv = div.querySelector('.agent-info');
       infoDiv.onclick = (e) => { e.stopPropagation(); showAgentDetails(item.id); };
       const trash = div.querySelector('.remove-agent');
+      if (workspaceClient && !workspaceClient.can('manage')) trash.hidden = true;
       trash.onclick = async (e) => { e.stopPropagation(); if(confirm(`Permanently remove agent "${item.name}"?`)) { const resp = await fetch(`/api/agent/${item.id}`, { method: 'DELETE' }); const result = await resp.json(); if (resp.ok && result.success) { showToast(`Agent "${item.name}" removed`, 'success'); } else { showToast(result.reason || 'Cannot remove agent', 'error'); } } };
     } else {
       div = document.createElement('div'); div.className = 'channel-item';
@@ -5566,7 +5666,7 @@ function addSection(title, items) {
       if(item.progress !== undefined) { let p = document.createElement('span'); p.style.fontSize='0.7rem'; p.style.marginLeft='auto'; p.innerText = `${Math.round(item.progress*100)}%`; div.appendChild(p); }
       div.onclick = () => {
         if(item.type === 'channel') switchToChannel(item.id);
-        else if(item.type === 'research') sendCommand('/pull '+item.id);
+        else if(item.type === 'research') {if (workspaceView) workspaceView.openResearch(item.id); else sendCommand('/pull '+item.id);}
       };
     }
     itemsDiv.appendChild(div);
@@ -5581,17 +5681,21 @@ function showAgentDetails(agentId) {
   content.innerHTML = `
     <h3>${escapeHtml(agent.name)}</h3>
     <p><strong>Model:</strong> ${escapeHtml(agent.model)}</p>
-    <p><strong>Strict Channel:</strong> ${agent.strictChannel || 'None'}</p>
-    <p><strong>Status:</strong> ${agent.status}</p>
+    <p><strong>Provider:</strong> ${escapeHtml(agent.provider || 'ollama')}</p>
+    <p><strong>Strict Channel:</strong> ${escapeHtml(agent.strictChannel || 'None')}</p>
+    <p><strong>Status:</strong> ${escapeHtml(agent.status)}</p>
     <p><strong>Exploit/Explore:</strong> ${agent.weights ? agent.weights.exploitation.toFixed(2) + ' / ' + agent.weights.exploration.toFixed(2) : 'N/A'}</p>
     <p><strong>E-pool / X-pool:</strong> ${agent.ePoolSize || 0} / ${agent.xPoolSize || 0}</p>
     <p><strong>J-space enabled:</strong> ${agent.jspaceEnabled ? '✅' : '❌'}</p>
-    <button onclick="openEditModal('${agentId}')">Edit</button>
+    <button class="edit-agent-detail">Edit</button>
   `;
+  const editButton = content.querySelector('.edit-agent-detail');
+  editButton.disabled = !!workspaceClient && !workspaceClient.can('manage');
+  editButton.onclick = () => openEditModal(agentId);
   document.getElementById('agentDetailPopup').classList.add('show');
 }
 
-function switchToChannel(id) { currentStoreId = id; const ch = channels.find(c=>c.id===id); document.getElementById('currentChatName').innerHTML = ch ? '#'+ch.name : id; ws.send(JSON.stringify({type:'join',channelId:id})); closeThreadPanel(); updateRalphBadge(); }
+function switchToChannel(id) { currentStoreId = id; const ch = channels.find(c=>c.id===id); document.getElementById('currentChatName').textContent = ch ? '#'+ch.name : id; ws.send(JSON.stringify({type:'join',channelId:id})); closeThreadPanel(); updateRalphBadge(); }
 
 function updateRalphBadge() {
   const badge = document.getElementById('ralphStatusBadge');
@@ -5693,6 +5797,7 @@ function handleSlash(e) { if(e.key !== '/') return; const input = e.target; if(i
 function showReactionPicker(messageId, event) {
   const emojis = ['👍','❤️','😂','😮','😢','🔥'];
   const picker = document.createElement('div');
+  picker.className = 'workspace-reaction-picker';
   picker.style.position='fixed'; picker.style.background='var(--white)'; picker.style.border='1px solid var(--black)'; picker.style.borderRadius='20px'; picker.style.padding='4px'; picker.style.display='flex'; picker.style.gap='8px'; picker.style.zIndex=1000;
   emojis.forEach(emoji => {
     const btn = document.createElement('span');
@@ -5778,7 +5883,7 @@ async function handleSpawn() {
     strictChannel: strict || null
   }));
 }
-function escapeHtml(s) { return s.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 
 function updateModeratorButton() {
   const mod = agents.find(a => a.id === 'moderator');
@@ -5861,7 +5966,7 @@ async function fetchAndDrawGraph() {
       const label = document.createElement('div');
       label.className = 'graph-label';
       label.innerHTML = `
-        <strong>${a.name}</strong>
+        <strong>${escapeHtml(a.name)}</strong>
         <span style="color:${colors.cpu};">${lastCpu.toFixed(1)}%</span>
         <span style="color:${colors.mem};">${lastMem.toFixed(1)}%</span>
         <span style="color:${colors.tps};">${lastTps.toFixed(1)}</span>

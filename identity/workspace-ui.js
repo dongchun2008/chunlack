@@ -103,6 +103,20 @@
       if (closed || epoch !== generation) throw error('workspace_changed', 409);
       return boot();
     }
+    async function acceptInvite(token, password) {
+      if (closed) throw error('client_closed', 503);
+      if (status === 'logout_pending') throw error('logout_not_confirmed', 503);
+      const epoch = generation, currentUser = user;
+      const body = currentUser ? {token} : {token, password};
+      const result = await plain('/auth/invites/accept', {method: 'POST', body, csrfToken: currentUser ? csrf : undefined, signal: controller.signal});
+      if (closed || epoch !== generation) throw error('workspace_changed', 409);
+      if (!identifier(result?.user?.id) || typeof result.user.login !== 'string') throw error('invalid_response', 503);
+      if (currentUser) {
+        if (result.user.id !== currentUser.id) throw error('invalid_response', 503);
+        return boot();
+      }
+      return login(result.user.login, password);
+    }
     async function recover(statusCode) {
       reset(statusCode === 401 ? 'unauthorized' : 'permission_changed');
       if (statusCode === 401) {user = null; csrf = ''; workspaces = []; status = 'login'; publish(); return;}
@@ -193,7 +207,7 @@
       return facade;
     }
     function close() {if (closed) return; closed = true; reset('closed', {forget: false}); user = null; csrf = ''; workspaces = []; pendingLogoutCsrf = ''; status = 'closed';}
-    return Object.freeze({boot, login, logout, selectWorkspace, fetch: scopedFetch, request, createSocket, can, snapshot, close});
+    return Object.freeze({boot, login, acceptInvite, logout, selectWorkspace, fetch: scopedFetch, request, createSocket, can, snapshot, close});
   }
   return {createWorkspaceClient, safeReturnPath};
 });

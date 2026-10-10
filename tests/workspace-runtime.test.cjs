@@ -51,11 +51,9 @@ test('actual embedded process enforces human identity, viewer denial and workspa
       const node = require('../collaboration/context.cjs').runWithWorkspace(actor, () => gatewayAccess.forHuman(actor).createNode({name: 'Runtime fixture', capabilities: ['browser.public_read'], scopes: ['public']}));
       nodeCredentials = gatewayStore.pair(node.pairingCode);
     } finally {gatewayStore.close();}
-    for (const [folder, names] of Object.entries({identity: ['store', 'policy', 'sessions', 'passwords', 'admission', 'http'], collaboration: ['store', 'state', 'context', 'transport', 'resources', 'capacity', 'model-transport', 'task-control'], gateway: ['protocol', 'store', 'server', 'research-bridge', 'runtime', 'workspace-access', 'pilot-schema']})) {
-      fs.mkdirSync(path.join(directory, folder));
-      for (const name of names) fs.copyFileSync(path.join(root, folder, name + '.cjs'), path.join(directory, folder, name + '.cjs'));
-      if (folder === 'gateway') fs.copyFileSync(path.join(root, folder, 'admin.html'), path.join(directory, folder, 'admin.html'));
-    }
+    // Exercise the deliverable generator, not a hand-selected set of modules
+    // that could hide missing public-runtime dependencies.
+    execFileSync(process.env.PYTHON || 'python', ['scripts/materialize.py', '--output', directory], {cwd: root, timeout: 10000, stdio: 'pipe'});
     child = spawn(process.execPath, [path.join(directory, 'server.js')], {cwd: directory, env: {...process.env, NODE_PATH: path.join(root, 'node_modules'), LACK_BIND_HOST: '127.0.0.1', LACK_MULTI_USER: '1', LACK_PUBLIC_MODE: '1', LACK_WEB_ORIGIN: origin, LACK_IDENTITY_DB: path.join(directory, 'identity.sqlite'), LACK_GATEWAY_FIXTURE_SECRET: 'synthetic-only-fixture-'.repeat(3)}, stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true});
     child.stdout.on('data', chunk => {logs += chunk;}); child.stderr.on('data', chunk => {logs += chunk;});
     for (let attempt = 0; attempt < 100 && !logs.includes('Workspace-authenticated runtime listening'); attempt++) {
@@ -88,6 +86,17 @@ test('actual embedded process enforces human identity, viewer denial and workspa
     assert.equal((await request('/api/channels', null, a.id)).status, 401);
     assert.equal((await request('/api/channels', 'alice', b.id)).status, 404);
     assert.equal((await request('/api/channels', 'alice', a.id)).body.channels[0].id, 'general');
+    const nodes = await request('/api/nodes', 'alice', a.id);
+    assert.equal(nodes.status, 200); assert.equal(nodes.body.nodes.length, 1);
+    assert.equal(nodes.body.nodes[0].workspaceId, a.id); assert.ok(!JSON.stringify(nodes.body).includes(nodeCredentials.token));
+    assert.deepEqual((await request('/api/nodes', 'bob', b.id)).body.nodes, []);
+    assert.equal((await request('/api/tasks', 'alice', a.id)).status, 200);
+    const runtimeMode = await fetch(base + '/identity/runtime-mode.js'); assert.equal(runtimeMode.status, 200);
+    assert.match(await runtimeMode.text(), /LACK_MULTI_USER.*true/);
+    const shellAsset = await fetch(base + '/identity/workspace-shell.js'); assert.equal(shellAsset.status, 200);
+    assert.match(await shellAsset.text(), /mountWorkspaceShell/); assert.equal(shellAsset.headers.get('cache-control'), 'no-store');
+    const loginPage = await fetch(base + '/login'); assert.equal(loginPage.status, 200); assert.match(await loginPage.text(), /workspace-ui.js/);
+    assert.equal((await fetch(base + '/login?token=synthetic-secret')).status, 404);
     async function connect(name, workspaceId) {
       const ws = new WebSocket(base.replace('http:', 'ws:') + '/ws/workspaces/' + workspaceId, {headers: {Origin: origin, Cookie: '__Host-chunlack_session=' + accounts[name].token}, handshakeTimeout: 5000});
       const frames = []; ws.on('message', value => frames.push(JSON.parse(value))); peers.push(ws);

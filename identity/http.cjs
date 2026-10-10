@@ -49,15 +49,23 @@ function createIdentityRouter({store, sessions, webOrigin}) {
     const input = body(req);
     if (typeof input.login !== 'string' || input.login.length > 256 || typeof input.password !== 'string' || input.password.length > 256) throw new IdentityError('invalid_request', 400);
     const authenticated = await sessions.login({login: input.login, password: input.password, source: source(req)});
+    const previous = readSessionCookie(req.headers.cookie);
+    if (previous && previous !== authenticated.token) {
+      try {sessions.logout(previous);} catch (error) {if (!(error instanceof IdentityError) || error.code !== 'unauthorized') throw error;}
+    }
     res.cookie(cookieName, authenticated.token, {...cookieOptions, maxAge: 12 * 60 * 60 * 1000});
     res.json({user: authenticated.user, csrfToken: authenticated.csrfToken});
   }));
   router.get('/auth/me', wrap((req, res) => {
-    const authenticated = principal(req);
+    let authenticated;
+    try {authenticated = principal(req);}
+    catch (error) {if (error instanceof IdentityError && error.code === 'unauthorized') res.clearCookie(cookieName, cookieOptions); throw error;}
     res.json({user: authenticated.user, csrfToken: authenticated.csrfToken});
   }));
   router.post('/auth/logout', mutation, json, wrap((req, res) => {
-    body(req); authenticatedMutation(req);
+    body(req);
+    try {authenticatedMutation(req);}
+    catch (error) {if (error instanceof IdentityError && error.code === 'unauthorized') res.clearCookie(cookieName, cookieOptions); throw error;}
     sessions.logout(readSessionCookie(req.headers.cookie));
     res.clearCookie(cookieName, cookieOptions).json({ok: true});
   }));

@@ -14,6 +14,9 @@ const slashActions = Object.freeze({
   pull: null, errorlog: null, toggle_public_memory: null
 });
 const httpRules = Object.freeze([
+  ['GET', /^\/api\/nodes$/, 'node.read'], ['POST', /^\/api\/nodes$/, 'node.manage'],
+  ['POST', /^\/api\/nodes\/[^/]+\/pause$/, 'node.manage'], ['DELETE', /^\/api\/nodes\/[^/]+$/, 'node.manage'],
+  ['GET', /^\/api\/tasks$/, 'task.read'], ['POST', /^\/api\/tasks\/[^/]+\/cancel$/, 'task.execute'],
   ['GET', /^\/api\/channels$/, 'workspace.read'], ['GET', /^\/api\/(models|llm-providers)$/, 'model.read'],
   ['GET', /^\/api\/research\/(sessions|session\/[^/]+)$/, 'task.read'],
   ['GET', /^\/api\/metrics$/, 'agent.read'], ['GET', /^\/api\/agent\/memory\/[^/]+$/, 'memory.read'],
