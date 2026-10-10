@@ -149,7 +149,7 @@ test('embedded server delegates its persistence and map entry points and rejects
   const mapsStart = source.indexOf('// ==================== DATA STRUCTURES');
   const mapsEnd = source.indexOf('function getUserId', mapsStart);
   assert.ok(persistenceStart >= 0 && persistenceEnd > persistenceStart && mapsStart >= 0 && mapsEnd > mapsStart);
-  const context = vm.createContext({fs, path, sqlite3: Database, __dirname: f.dir, require: createRequire(path.join(root, 'server.js')), process: {env: {LACK_MULTI_USER: '1', LACK_IDENTITY_DB: f.dbPath}}});
+  const context = vm.createContext({fs, path, sqlite3: Database, __dirname: f.dir, disposers: [], sharedIdentity: null, sharedCapacity: null, require: createRequire(path.join(root, 'server.js')), process: {env: {LACK_MULTI_USER: '1', LACK_IDENTITY_DB: f.dbPath}}});
   try {
     vm.runInContext(source.slice(persistenceStart, persistenceEnd) + source.slice(mapsStart, mapsEnd) + `
       globalThis.runtime={dbSaveMessage,dbGetMessages,dbSaveAgent,dbLoadAllAgents,getProjectState,setProjectState,

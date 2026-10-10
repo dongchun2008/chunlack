@@ -1,7 +1,7 @@
 'use strict';
 const http=require('node:http');
 const P=require('../../gateway/protocol.cjs');
-function createPilotMcp({store,artifacts,uploads,resolvePrincipal,events,workspaceAccess}){
+function createPilotMcp({store,artifacts,uploads,resolvePrincipal,events,workspaceAccess,ready=()=>true}){
   if(store.multiUser&&!workspaceAccess)P.fail('workspace_gateway_configuration',503);
   if(store.multiUser&&events&&events.multiUser!==true)P.fail('workspace_events_configuration',503);
   if(typeof resolvePrincipal!=='function')throw new Error('principal_resolver_required');let closed=false;const sockets=new Set(),rates=new Map();
@@ -46,6 +46,7 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,events,workspa
   const server=http.createServer(async(req,res)=>{
     function send(status,value){if(res.destroyed||res.writableEnded)return;res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store',Connection:'close'});res.end(JSON.stringify(value));}
     try{
+      if(!ready()){send(503,{error:'runtime_starting'});req.resume();return;}
       if(req.method!=='POST'||req.url!=='/mcp'){send(404,{error:'not_found'});req.resume();return;}
       if(req.headers.origin||req.headers['sec-fetch-site']==='cross-site'){send(403,{error:'cross_origin_denied'});req.resume();return;}
       if(!/^(127\.0\.0\.1|localhost)(:\d+)?$/.test(req.headers.host||'')||req.rawHeaders.filter((_,i)=>i%2===0).filter(h=>h.toLowerCase()==='authorization').length!==1){send(401,{error:'unauthorized'});req.resume();return;}

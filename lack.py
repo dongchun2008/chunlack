@@ -43,7 +43,51 @@ const legacyExecPromise = util.promisify(exec);
 const execPromise = (...args) => {if (workspaceServices()) return Promise.reject(new Error('public_tools_disabled')); return legacyExecPromise(...args);};
 const sqlite3 = require('better-sqlite3');
 const { ESLint } = require('eslint');
-let agentGateway = null;
+
+const LACK_CODE_ROOT = __dirname;
+async function startLackRuntime({config: suppliedConfig, dataRoot, identity: sharedIdentity, capacity: sharedCapacity,
+  env = global.process.env, publicMode = false, bindHost, webOrigin, identityPath, writerLease, deferReady = false} = {}) {
+  const __dirname = dataRoot || LACK_CODE_ROOT;
+  const process = Object.create(global.process);
+  Object.defineProperty(process, 'env', {value: {...env}});
+  if (publicMode) {process.env.LACK_PUBLIC_MODE = '1'; process.env.LACK_MULTI_USER = '1';}
+  if (dataRoot) process.env.LACK_DATA_ROOT = dataRoot;
+  if (identityPath) process.env.LACK_IDENTITY_DB = identityPath;
+  if (webOrigin) process.env.LACK_WEB_ORIGIN = webOrigin;
+  let agentGateway = null, ownedHttpServer, ownedWss, runtimeReady = false, closing;
+  const intervals = new Set(), timeouts = new Set(), disposers = [];
+  const setInterval = (fn, ms, ...args) => {const timer = global.setInterval(fn, ms, ...args); intervals.add(timer); return timer;};
+  const clearInterval = timer => {intervals.delete(timer); global.clearInterval(timer);};
+  const setTimeout = (fn, ms, ...args) => {const timer = global.setTimeout(() => {timeouts.delete(timer); fn(...args);}, ms); timeouts.add(timer); return timer;};
+  const clearTimeout = timer => {timeouts.delete(timer); global.clearTimeout(timer);};
+  process.on = (name, fn) => {global.process.on(name, fn); disposers.push(() => global.process.off(name, fn)); return process;};
+  async function close() {
+    if (closing) return closing;
+    runtimeReady = false;
+    closing = (async () => {
+      const errors = [];
+      for (const timer of intervals) global.clearInterval(timer); intervals.clear();
+      const attempt = async fn => {try {await fn();} catch (error) {errors.push(error);}};
+      await attempt(() => workspaceRuntimeServices?.taskControl?.close());
+      await attempt(() => workspaceRuntimeServices?.capacity?.close());
+      await attempt(() => workspaceRuntimeServices?.capacity?.drain({timeoutMs: 8000}));
+      await attempt(() => agentGateway?.close());
+      if (ownedWss) {
+        for (const socket of ownedWss.clients) socket.terminate();
+        await attempt(() => new Promise(resolve => ownedWss.close(resolve)));
+      }
+      if (ownedHttpServer) {
+        ownedHttpServer.closeAllConnections();
+        if (ownedHttpServer.listening) await attempt(() => new Promise(resolve => ownedHttpServer.close(resolve)));
+      }
+      for (const timer of timeouts) global.clearTimeout(timer); timeouts.clear();
+      for (const dispose of disposers.reverse()) await attempt(dispose);
+      if (errors.length) throw new Error('runtime_shutdown_incomplete');
+    })();
+    return closing;
+  }
+  try {
+    if (fs.existsSync(path.join(__dirname, '.public-runtime.lock'))) require('./gateway/public-runtime.cjs').assertWriterLease(__dirname, writerLease);
 
 // ==================== SONNET-STYLE BASE PROMPT ====================
 const BASE_SYSTEM_PROMPT = `You are a highly collaborative technical agent in the LACK multi-agent system.
@@ -72,7 +116,7 @@ IMPORTANT: Only the Moderator agent is allowed to execute system commands. If yo
 const configPath = path.join(__dirname, 'config', 'lack.config.json');
 let config;
 try {
-  config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+  config = suppliedConfig || JSON.parse(fs.readFileSync(configPath, 'utf-8'));
 } catch (err) {
   config = {
     httpPort: 3721,
@@ -128,6 +172,10 @@ try {
   fs.mkdirSync(path.join(__dirname, 'config'), { recursive: true });
   fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
 }
+if (publicMode && config.multiUser?.enabled !== true) throw new Error('public_multi_user_required');
+if (publicMode || config.multiUser?.enabled === true) require('./gateway/public-runtime.cjs').assertWriterLease(__dirname, writerLease);
+const runtimeBind = bindHost || process.env.LACK_BIND_HOST || '127.0.0.1';
+if (process.env.LACK_MULTI_USER === '1' && runtimeBind !== '127.0.0.1') throw new Error('loopback_binding_required');
 const PORT = config.httpPort || 3721;
 const OLLAMA_URL = (process.env.OLLAMA_URL || config.ollamaUrl || 'http://localhost:11434').replace(/\/+$/, '');
 const LLM_TIMEOUT_MS = Math.max(100, Math.min(300000, Number(config.llmTimeoutMs) || 30000));
@@ -279,6 +327,7 @@ async function getJspaceCached(text) {
 const DB_PATH = path.join(__dirname, 'db', 'lack.db');
 fs.mkdirSync(path.dirname(DB_PATH), { recursive: true });
 const db = new sqlite3(DB_PATH);
+disposers.push(() => {if (db.open) db.close();});
 
 var workspaceRuntimeServices;
 function workspaceServices() {
@@ -286,14 +335,14 @@ function workspaceServices() {
   if (typeof process === 'undefined' || process.env?.LACK_MULTI_USER !== '1') return null;
   if (!workspaceRuntimeServices) {
     const identityPath = process.env.LACK_IDENTITY_DB;
-    if (!identityPath || !require('node:fs').existsSync(identityPath)) throw new Error('identity_bootstrap_required');
-    const identity = require('./identity/store.cjs').createIdentityStore({dbPath: identityPath});
+    if (!sharedIdentity && (!identityPath || !require('node:fs').existsSync(identityPath))) throw new Error('identity_bootstrap_required');
+    const identity = sharedIdentity || require('./identity/store.cjs').createIdentityStore({dbPath: identityPath});
     const rawDb = {prepare: db.prepare.bind(db), exec: db.exec.bind(db), pragma: db.pragma.bind(db), transaction: db.transaction.bind(db)};
     let store;
     try {store = require('./collaboration/store.cjs').createCollaborationStore({db: rawDb, identity});}
-    catch (error) {identity.close(); throw error;}
+    catch (error) {if (!sharedIdentity) identity.close(); throw error;}
     const registry = require('./collaboration/state.cjs').createWorkspaceStateRegistry({identity});
-    const capacity = require('./collaboration/capacity.cjs').createCapacityCoordinator({maxActive: 1, maxQueued: 100, maxQueuedPerWorkspace: 20});
+    const capacity = sharedCapacity || require('./collaboration/capacity.cjs').createCapacityCoordinator({maxActive: 1, maxQueued: 100, maxQueuedPerWorkspace: 20});
     const businessTables = /\b(messages|agents|agent_memory|project_states|pipeline_results|loop_health|research_sessions|research_sources)\b/i;
     db.prepare = function(sql) {
       if (typeof sql !== 'string' || businessTables.test(sql)) throw new Error('workspace_sql_required');
@@ -303,7 +352,8 @@ function workspaceServices() {
       if (typeof sql !== 'string' || businessTables.test(sql)) throw new Error('workspace_sql_required');
       return rawDb.exec(sql);
     };
-    workspaceRuntimeServices = {identity, store, registry, capacity, close() {this.transport?.close(); this.sessions?.close(); for (const timer of this.resourceTimers || []) clearInterval(timer); this.taskControl?.close(); capacity.close(); registry.close(); store.close(); identity.close();}};
+    workspaceRuntimeServices = {identity, store, registry, capacity, close() {this.transport?.close(); this.sessions?.close(); for (const timer of this.resourceTimers || []) clearInterval(timer); this.taskControl?.close(); if (!sharedCapacity) capacity.close(); registry.close(); store.close(); if (!sharedIdentity) identity.close();}};
+    disposers.push(() => workspaceRuntimeServices.close());
   }
   return workspaceRuntimeServices;
 }
@@ -743,8 +793,8 @@ process.on('unhandledRejection', (reason, promise) => {
   console.error('❌ Unhandled Rejection:', reason);
   if (typeof logError === 'function') logError({ context: 'unhandledRejection', error: reason });
 });
-process.on('SIGTERM', () => { console.log('[LACK] SIGTERM received, shutting down...'); process.exit(0); });
-process.on('SIGINT', () => { console.log('[LACK] SIGINT received, shutting down...'); process.exit(0); });
+
+
 
 // ==================== STACK CORE ====================
 const STACK_ROOT = path.join(__dirname, 'lack_repos');
@@ -3251,8 +3301,10 @@ async function buildFileTree(dir) {
 
 // ==================== EXPRESS APP & ROUTES ====================
 const app = express();
+app.use((req, res, next) => {if (runtimeReady) return next(); req.resume(); res.status(503).json({error: 'runtime_starting'});});
 const http = require('http');
-const server = http.createServer(app);
+const server = http.createServer(app); ownedHttpServer = server;
+server.requestTimeout = 40000; server.headersTimeout = 10000; server.keepAliveTimeout = 5000; server.maxConnections = 64;
 const transport = workspaceTransport();
 const wss = new WebSocket.Server({ server, maxPayload: transport ? 65536 : 1048576, perMessageDeflate: false,
   verifyClient: transport ? (info, done) => {
@@ -3260,6 +3312,7 @@ const wss = new WebSocket.Server({ server, maxPayload: transport ? 65536 : 10485
     catch (error) {done(false, error.statusCode || 403, 'Rejected');}
   } : undefined
 });
+ownedWss = wss;
 
 if (transport) {
   const services = workspaceServices();
@@ -3273,19 +3326,19 @@ app.get('/identity/runtime-mode.js', (req, res) => {
 });
 app.get('/identity/workspace-ui.js', (req, res) => {
   res.setHeader('Cache-Control', 'no-store'); res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.sendFile(path.join(__dirname, 'identity', 'workspace-ui.js'));
+  res.sendFile(path.join(LACK_CODE_ROOT, 'identity', 'workspace-ui.js'));
 });
 app.get('/identity/workspace-shell.js', (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
   res.setHeader('X-Content-Type-Options', 'nosniff');
-  res.sendFile(path.join(__dirname, 'identity', 'workspace-shell.js'));
+  res.sendFile(path.join(LACK_CODE_ROOT, 'identity', 'workspace-shell.js'));
 });
 app.get('/login', (req, res) => {
   if (!transport || req.url.includes('?')) return res.status(404).json({error: 'not_found'});
   res.setHeader('Cache-Control', 'no-store'); res.setHeader('Referrer-Policy', 'no-referrer');
-  res.sendFile(path.join(__dirname, 'identity', 'login.html'));
+  res.sendFile(path.join(LACK_CODE_ROOT, 'identity', 'login.html'));
 });
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(LACK_CODE_ROOT, 'public')));
 app.use(express.json({ limit: transport ? '64kb' : '1mb' }));
 if (transport) {
   const services = workspaceServices();
@@ -3429,18 +3482,22 @@ app.get('/api/jspace', async (req, res) => {
 });
 
 // ==================== WEBSOCKET SERVER ====================
-server.listen(PORT, process.env.LACK_BIND_HOST || '127.0.0.1', async () => {
+function listenHttp() {
+  return new Promise((resolve, reject) => {
+    const failed = error => {server.off('listening', listening); reject(error);};
+    const listening = () => {server.off('error', failed); resolve();};
+    server.once('error', failed); server.once('listening', listening); server.listen(PORT, runtimeBind);
+  });
+}
+async function initializeRuntime() {
   if (transport) {
-    if (config.agentGateway?.enabled === true) {
-      try {agentGateway = await require('./gateway/runtime.cjs').startAgentGateway({config, dataRoot: __dirname, identity: workspaceServices().identity, capacity: workspaceServices().capacity});}
-      catch {
-        console.error('[LACK] Workspace gateway startup failed; public runtime stopped.');
-        server.close(); workspaceServices().close(); if (db.open) db.close(); process.exitCode = 1; return;
-      }
-    }
+    if (config.agentGateway?.enabled === true) agentGateway = await require('./gateway/runtime.cjs').startAgentGateway({config, dataRoot: __dirname, identity: workspaceServices().identity, capacity: workspaceServices().capacity, env: process.env, ready: () => runtimeReady});
+    await listenHttp();
+    if (!deferReady) runtimeReady = true;
     console.log('[LACK] Workspace-authenticated runtime listening on its configured private bind. Global legacy maintenance is disabled.');
     return;
   }
+  await listenHttp(); runtimeReady = true;
   if (config.agentGateway?.enabled === true) {
     try { agentGateway = await require('./gateway/runtime.cjs').startAgentGateway({config, dataRoot: __dirname}); }
     catch { logError({context: 'agentGateway', error: 'Gateway could not start. Existing LACK service remains available.'}); }
@@ -3523,7 +3580,7 @@ jobs:
   console.log(`[CICD] Generated GitHub Actions workflow at ${workflowPath}`);
 
   console.log(`\x1b[32m✓ LACK v4.2.2 – Musing & Triangulation – running at http://localhost:${PORT}\x1b[0m`);
-});
+}
 
 wss.on('connection', (ws, request) => {
   let connectionActor;
@@ -4895,6 +4952,21 @@ function broadcastRalphStatus(storeId) {
       ws.send(JSON.stringify({ type: 'ralph_status', storeId, active, generation: gen, goal: snippet }));
     }
   }
+}
+
+  await initializeRuntime();
+  return Object.freeze({server, wss, gateway: agentGateway, identity: workspaceRuntimeServices?.identity,
+    capacity: workspaceRuntimeServices?.capacity, close, isReady: () => runtimeReady,
+    activate() {if (closing) throw new Error('runtime_closed'); runtimeReady = true;}});
+  } catch (error) {try {await close();} catch {throw new Error('runtime_startup_cleanup_incomplete');} throw error;}
+}
+module.exports = {startLackRuntime};
+if (require.main === module) {
+  let runtime, start, stopping = false;
+  const stop = async () => {if (stopping) return; stopping = true; try {runtime = runtime || await start; await runtime?.close();} catch {global.process.exitCode = 1;}};
+  for (const signal of ['SIGTERM', 'SIGINT']) global.process.once(signal, stop);
+  start = startLackRuntime();
+  start.then(value => {runtime = value; if (stopping) return runtime.close();}).catch(() => {console.error('[LACK] Runtime startup failed.'); global.process.exitCode = 1;});
 }
 '''  # End of SERVER_JS
 

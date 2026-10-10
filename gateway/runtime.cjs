@@ -1,6 +1,6 @@
 'use strict';
 const path=require('node:path');const {once}=require('node:events');
-async function startAgentGateway({config,dataRoot,identity,capacity,env=process.env}){
+async function startAgentGateway({config,dataRoot,identity,capacity,env=process.env,ready=()=>true}){
   const options=config.agentGateway;if(options?.enabled!==true)return null;
   if(!Number.isInteger(options.port)||options.port<1024||options.port>65535||typeof options.adminTokenEnv!=='string'||!/^[A-Z][A-Z0-9_]{1,100}$/.test(options.adminTokenEnv))throw new Error('invalid_gateway_configuration');
   const {createGatewayStore}=require('./store.cjs'),{createAgentGateway}=require('./server.cjs'),{createResearchBridge}=require('./research-bridge.cjs');
@@ -12,7 +12,7 @@ async function startAgentGateway({config,dataRoot,identity,capacity,env=process.
   let gateway,bridge;
   try{
     const workspaceAccess=multiUser?require('./workspace-access.cjs').createWorkspaceGatewayAccess({store,identity}):null;
-    gateway=createAgentGateway({store,adminToken:token,workspaceAccess});bridge=createResearchBridge({store,workspaceAccess});
+    gateway=createAgentGateway({store,adminToken:token,workspaceAccess,ready});bridge=createResearchBridge({store,workspaceAccess});
     gateway.server.listen(options.port,'127.0.0.1');await once(gateway.server,'listening');
     const stop=gateway.close;let closed=false;
     gateway.close=async()=>{if(closed)return;closed=true;bridge.close();await stop();store.close();};

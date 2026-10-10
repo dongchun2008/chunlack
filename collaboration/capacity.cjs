@@ -193,7 +193,15 @@ function createCapacityCoordinator({maxActive = 1, maxQueued = 100, maxQueuedPer
     for (const entry of [...local.values()]) cancelEntry(entry, failure('capacity_closed', 503));
   }
   const timer = setInterval(() => {try {refresh();} catch {}}, 250); timer.unref();
-  return Object.freeze({submit, cancel, status, refresh, close, restoreExternalLeases, bindLeaseSource, releaseExternal, claimExternal, assertCanQueue, withTaskScope,
+  async function drain({timeoutMs = 8000} = {}) {
+    if (!closed || !Number.isSafeInteger(timeoutMs) || timeoutMs < 1 || timeoutMs > 10000) throw failure('capacity_drain_requires_closed', 503);
+    const deadline = Date.now() + timeoutMs;
+    while ([...local.values()].some(entry => entry.state === 'running')) {
+      if (Date.now() >= deadline) throw failure('capacity_shutdown_incomplete', 503);
+      await new Promise(resolve => setTimeout(resolve, 10));
+    }
+  }
+  return Object.freeze({submit, cancel, status, refresh, close, drain, restoreExternalLeases, bindLeaseSource, releaseExternal, claimExternal, assertCanQueue, withTaskScope,
     currentTask() {const scope=scopes.getStore();return scope?Object.freeze({workspaceId:scope.workspaceId,taskId:scope.taskId,rootTaskId:scope.root.taskId,createdBy:scope.root.createdBy,depth:scope.depth,deadlineAt:scope.deadlineAt,signal:scope.root.controller.signal}):null;},
     onAvailable(fn) {if (closed || typeof fn !== 'function' || listeners.size >= 8) throw failure('invalid_capacity_listener', 503); listeners.add(fn); return () => listeners.delete(fn);}});
 }

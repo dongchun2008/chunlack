@@ -10,7 +10,7 @@ const {createCapacityCoordinator} = require('../collaboration/capacity.cjs');
 const {runWithWorkspace, requireWorkspaceContext} = require('../collaboration/context.cjs');
 const {createWorkspaceResources} = require('../collaboration/resources.cjs');
 const source = JSON.parse(execFileSync(process.env.PYTHON || 'python', ['-c', 'import json,runpy; print(json.dumps(runpy.run_path("scripts/materialize.py")["embedded_sources"]()))'], {cwd: path.resolve(__dirname, '..'), encoding: 'utf8'})).SERVER_JS;
-const nodes = require('espree').parse(source, {ecmaVersion: 'latest', sourceType: 'script', range: true}).body;
+const nodes = require('./helpers/embedded-server-ast.cjs').runtimeStatements(source);
 const functions = ['workspaceInferenceRequest', 'workspaceTaskScope'].map(name => {
   const node = nodes.find(item => item.type === 'FunctionDeclaration' && item.id.name === name);
   assert.ok(node, name); return source.slice(...node.range);

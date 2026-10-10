@@ -4,7 +4,7 @@ const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
 const P=require('./protocol.cjs');
-function createAgentGateway({store,adminToken,workspaceAccess,now=Date.now,pollMs=P.LIMITS.pollMs}){
+function createAgentGateway({store,adminToken,workspaceAccess,now=Date.now,pollMs=P.LIMITS.pollMs,ready=()=>true}){
   if(store.multiUser&&!workspaceAccess)P.fail('workspace_gateway_configuration',503);
   if(typeof adminToken!=='string'||adminToken.length<43||adminToken.length>256)P.fail('invalid_admin_credential');
   const adminDigest=P.hash(adminToken),waiting=new Map(),rates=new Map();let closed=false;
@@ -32,6 +32,7 @@ function createAgentGateway({store,adminToken,workspaceAccess,now=Date.now,pollM
     const traceId=crypto.randomUUID();
     try{
       if(closed)P.fail('gateway_closed',503);
+      if(!ready()){req.resume();P.fail('runtime_starting',503);}
       if(!/^(127\.0\.0\.1|localhost)(:\d+)?$/.test(req.headers.host||''))P.fail('invalid_host',403);
       if(req.headers.origin&&req.headers.origin!==`http://${req.headers.host}`)P.fail('cross_origin_denied',403);
       if(req.headers['sec-fetch-site']==='cross-site')P.fail('cross_origin_denied',403);
