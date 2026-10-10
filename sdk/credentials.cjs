@@ -14,5 +14,5 @@ function saveCredentials(file,value){
   const temp=path.join(parent,'.credential-'+randomUUID());
   try{fs.closeSync(fs.openSync(temp,'wx',0o600));if(process.platform==='win32')windowsAcl(temp,true);check(temp);fs.writeFileSync(temp,JSON.stringify(value),{encoding:'utf8',mode:0o600});fs.renameSync(temp,file);check(file);}catch(error){if(fs.existsSync(temp))fs.unlinkSync(temp);throw new Error('Could not securely save connector credentials',{cause:error});}
 }
-function loadCredentials(file){check(file);const value=JSON.parse(fs.readFileSync(file,'utf8'));if(typeof value.baseUrl!=='string'||typeof value.token!=='string'||value.token.length<40||typeof value.nodeId!=='string')throw new Error('Invalid connector credentials');return value;}
+function loadCredentials(file){check(file);const value=JSON.parse(fs.readFileSync(file,'utf8'));if(typeof value.baseUrl!=='string'||typeof value.token!=='string'||value.token.length<40||typeof value.nodeId!=='string')throw new Error('Invalid connector credentials');require('./agent-client.cjs').validateBaseUrl(value.baseUrl);require('./pairing.cjs').bindingFromPairing(value,{workspaceId:value.workspaceId});return value;}
 module.exports={saveCredentials,loadCredentials};

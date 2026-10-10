@@ -50,7 +50,7 @@ function secureDirectory(root){
 }
 function createPilotArtifacts({store,root,now=Date.now}){
   const directory=secureDirectory(root);
-  function file(meta){return path.join(directory,meta.artifactId+(meta.contentType==='image/png'?'.png':'.jpg'));}
+  function file(meta){let root=directory;if(store.multiUser){P.id(meta.workspaceId);root=secureDirectory(path.join(directory,'workspaces',meta.workspaceId));}return path.join(root,meta.artifactId+(meta.contentType==='image/png'?'.png':'.jpg'));}
   function guard(){if(secureDirectory(directory)!==directory)P.fail('unsafe_artifact_directory');}
   function safeRead(meta){guard();const target=file(meta);let fd;
     try{const stat=fs.lstatSync(target);if(!stat.isFile()||stat.isSymbolicLink()||stat.size!==meta.sizeBytes||stat.size>MAX)P.fail('artifact_unavailable',409);fd=fs.openSync(target,fs.constants.O_RDONLY|(fs.constants.O_NOFOLLOW||0));const opened=fs.fstatSync(fd);if(opened.dev!==stat.dev||opened.ino!==stat.ino||opened.size!==stat.size)P.fail('artifact_unavailable',409);const bytes=fs.readFileSync(fd);if(createHash('sha256').update(bytes).digest('hex')!==meta.sha256)P.fail('artifact_integrity_failed',409);checkImage(meta.contentType,bytes);return bytes;}catch(error){if(error instanceof P.GatewayError)throw error;P.fail('artifact_unavailable',409);}finally{if(fd!==undefined)fs.closeSync(fd);}
@@ -62,14 +62,15 @@ function createPilotArtifacts({store,root,now=Date.now}){
     if(prior){if(prior.taskId!==lease.taskId||prior.sha256!==digest||prior.contentType!==payload.contentType)P.fail('artifact_event_conflict',409);safeRead(prior);return prior;}
     const records=store.listPilotArtifacts();if(records.some(a=>a.taskId===lease.taskId))P.fail('artifact_already_exists',409);
     if(records.reduce((total,a)=>total+a.sizeBytes,0)+payload.bytes.length>20*1024*1024)P.fail('artifact_capacity',429);
-    const meta={artifactId:randomUUID(),eventId:payload.eventId,sha256:digest,sizeBytes:payload.bytes.length,...size,contentType:payload.contentType},target=file(meta),temporary=path.join(directory,meta.artifactId+'.tmp');let committed=false;
+    const meta={...(store.multiUser?{workspaceId:store.currentBinding().workspaceId}:{}),artifactId:randomUUID(),eventId:payload.eventId,sha256:digest,sizeBytes:payload.bytes.length,...size,contentType:payload.contentType},target=file(meta),temporary=path.join(path.dirname(target),meta.artifactId+'.tmp');let committed=false;
     try{fs.writeFileSync(temporary,payload.bytes,{flag:'wx',mode:0o600});store.assertPilotLease(nodeId,lease);fs.renameSync(temporary,target);const saved=store.savePilotArtifact(nodeId,lease,meta);committed=true;return saved;}
     finally{if(!committed){for(const owned of [temporary,target])if(fs.existsSync(owned))fs.unlinkSync(owned);}}
   }
-  function removeExpired(){guard();let count=0;for(const meta of store.expiredPilotArtifacts()){const target=file(meta);try{if(fs.existsSync(target)){const stat=fs.lstatSync(target);if(stat.isSymbolicLink()||!stat.isFile())continue;fs.unlinkSync(target);}store.forgetPilotArtifact(meta.artifactId);count++;}catch{ /* Keep metadata and capacity reservation if deletion fails. */ }}return count;}
+  function removeExpired(){guard();let count=0;for(const meta of store.expiredPilotArtifacts()){const target=file(meta);try{if(fs.existsSync(target)){const stat=fs.lstatSync(target);if(stat.isSymbolicLink()||!stat.isFile())continue;fs.unlinkSync(target);}if(store.multiUser)store.withWorkspace({workspaceId:meta.workspaceId},()=>store.forgetPilotArtifact(meta.artifactId));else store.forgetPilotArtifact(meta.artifactId);count++;}catch{ /* Keep metadata and capacity reservation if deletion fails. */ }}return count;}
   // Only recover old, unregistered files with names owned by this dedicated store.
-  guard();const registered=new Set(store.listPilotArtifacts().map(a=>path.basename(file(a))));
+  if(!store.multiUser){guard();const registered=new Set(store.listPilotArtifacts().map(a=>path.basename(file(a))));
   for(const name of fs.readdirSync(directory)){if(!filePattern.test(name)||registered.has(name))continue;const target=path.join(directory,name),stat=fs.lstatSync(target);if(stat.isFile()&&!stat.isSymbolicLink()&&stat.mtimeMs<now()-RETENTION)fs.unlinkSync(target);}
+  }
   store.registerPilotArtifactReader((nodeId,taskId,id)=>get(nodeId,taskId,id));
   return {put,get,removeExpired};
 }

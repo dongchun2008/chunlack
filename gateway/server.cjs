@@ -4,25 +4,26 @@ const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
 const P=require('./protocol.cjs');
-function createAgentGateway({store,adminToken,now=Date.now,pollMs=P.LIMITS.pollMs}){
+function createAgentGateway({store,adminToken,workspaceAccess,now=Date.now,pollMs=P.LIMITS.pollMs}){
+  if(store.multiUser&&!workspaceAccess)P.fail('workspace_gateway_configuration',503);
   if(typeof adminToken!=='string'||adminToken.length<43||adminToken.length>256)P.fail('invalid_admin_credential');
   const adminDigest=P.hash(adminToken),waiting=new Map(),rates=new Map();let closed=false;
   const page=fs.readFileSync(path.join(__dirname,'admin.html'));
   const matchSecret=token=>crypto.timingSafeEqual(Buffer.from(P.hash(token)),Buffer.from(adminDigest));
-  function respond(res,status,value){if(res.destroyed||res.writableEnded)return;res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(value===undefined?'':JSON.stringify(value));}
+  function respond(res,status,value){if(res.destroyed||res.writableEnded)return;res.writeHead(status,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff'});res.end(value===undefined?'':JSON.stringify(store.multiUser&&value&&!value.error?{...value,workspaceId:store.currentBinding().workspaceId}:value));}
   function rate(key,limit){const minute=Math.floor(now()/60000),previous=rates.get(key);const entry=previous?.minute===minute?previous:{minute,count:0};entry.count++;rates.set(key,entry);if(entry.count>limit)P.fail('rate_limited',429);}
   async function body(req){
     if(!/^application\/json(?:;|$)/i.test(req.headers['content-type']||''))P.fail('json_required',415);
     if(Number(req.headers['content-length'])>P.LIMITS.bodyBytes)P.fail('payload_too_large',413);
     let bytes=0;const chunks=[];
     for await(const chunk of req){bytes+=chunk.length;if(bytes>P.LIMITS.bodyBytes)P.fail('payload_too_large',413);chunks.push(chunk);}
-    try{return P.object(JSON.parse(Buffer.concat(chunks).toString('utf8')));}catch(err){if(err instanceof P.GatewayError)throw err;P.fail('invalid_json');}
+    try{const value=P.object(JSON.parse(Buffer.concat(chunks).toString('utf8')));if(store.multiUser){if(value.workspaceId!==undefined&&value.workspaceId!==store.currentBinding().workspaceId)P.fail('workspace_mismatch',403);delete value.workspaceId;}return value;}catch(err){if(err instanceof P.GatewayError)throw err;P.fail('invalid_json');}
   }
   function bearer(req){const header=req.headers.authorization||'';if(!header.startsWith('Bearer ')||header.length>300)P.fail('unauthorized',401);return header.slice(7);}
   function finishWait(nodeId,status,data){const w=waiting.get(nodeId);if(!w)return;waiting.delete(nodeId);clearTimeout(w.timer);w.res.off('close',w.disconnect);respond(w.res,status,data);}
   function wake(){
     for(const [nodeId,w] of [...waiting]){
-      try{store.authenticate(w.token);const task=store.claimTask(nodeId);if(task)finishWait(nodeId,200,task);}catch(error){finishWait(nodeId,error.status||500,{error:error.code||'gateway_error'});}
+      try{const n=store.authenticate(w.token);const next=()=>{const task=store.claimTask(nodeId);if(task)finishWait(nodeId,200,task);};if(workspaceAccess)workspaceAccess.forNode(n).run(next);else next();}catch(error){finishWait(nodeId,error.status||500,{error:error.code||'gateway_error'});}
     }
   }
   store.changes.on('change',wake);
@@ -35,6 +36,7 @@ function createAgentGateway({store,adminToken,now=Date.now,pollMs=P.LIMITS.pollM
       if(req.headers.origin&&req.headers.origin!==`http://${req.headers.host}`)P.fail('cross_origin_denied',403);
       if(req.headers['sec-fetch-site']==='cross-site')P.fail('cross_origin_denied',403);
       const url=new URL(req.url,'http://127.0.0.1');
+      if(store.multiUser&&(url.pathname.startsWith('/admin')||url.pathname==='/v1/pair'||url.pathname==='/'))P.fail('not_found',404);
       if(url.searchParams.has('token')||url.searchParams.has('key'))P.fail('credential_query_denied');
       if(req.method==='GET'&&['/','/admin'].includes(url.pathname)){
         res.writeHead(200,{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','Content-Security-Policy':"default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'"});res.end(page);return;
@@ -56,6 +58,8 @@ function createAgentGateway({store,adminToken,now=Date.now,pollMs=P.LIMITS.pollM
         P.fail('not_found',404);
       }
       const node=store.authenticate(token);rate(node.id,60);
+      const handleNode=async()=>{
+      if(store.multiUser&&req.headers['x-workspace-id']!==undefined&&req.headers['x-workspace-id']!==node.workspaceId)P.fail('workspace_mismatch',403);
       if(req.method==='GET'&&url.pathname==='/v1/manifest'){respond(res,200,{protocolVersion:1,nodeId:node.id,capabilities:node.capabilities,scopes:node.scopes,limits:P.LIMITS});return;}
       if(req.method==='GET'&&url.pathname==='/v1/agents/me'){respond(res,200,node);return;}
       if(req.method==='POST'&&url.pathname==='/v1/agents/me/heartbeat'){const data=await body(req);P.fields(data,['capabilities']);respond(res,200,store.heartbeat(node.id,data.capabilities||[]));return;}
@@ -75,6 +79,8 @@ function createAgentGateway({store,adminToken,now=Date.now,pollMs=P.LIMITS.pollM
         else respond(res,200,match[2]==='result'?store.submitResult(node.id,data):store.appendEvent(node.id,data));return;
       }
       P.fail('not_found',404);
+      };
+      if(workspaceAccess)await workspaceAccess.forNode(node).run(handleNode);else await handleNode();
     }catch(error){respond(res,error instanceof P.GatewayError?error.status:500,{error:error instanceof P.GatewayError?error.code:'gateway_error',traceId});}
   }
   const server=http.createServer((req,res)=>{void handle(req,res);});server.maxConnections=16;server.requestTimeout=40000;server.headersTimeout=10000;server.keepAliveTimeout=5000;

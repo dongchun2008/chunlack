@@ -22,11 +22,20 @@ function sendPinnedHttps(value,options,address,{ca,timeoutMs=10000}={}){
     });request.on('error',()=>finish(fail('webhook_network_failed')));request.end(options.body);
   });
 }
-function createWebhookTransport({allowedHosts,lookup=dns.lookup,ca,timeoutMs=10000,post=sendPinnedHttps}){
+function createWebhookTransport({allowedHosts,workspaceCallbackHosts={},multiUser=false,lookup=dns.lookup,ca,timeoutMs=10000,post=sendPinnedHttps}){
   if(!Array.isArray(allowedHosts)||!allowedHosts.length||allowedHosts.length>10||allowedHosts.some(h=>typeof h!=='string'||h!==h.toLowerCase()||net.isIP(h)||!/^[a-z0-9-]+(?:\.[a-z0-9-]+)+$/.test(h))||!Number.isInteger(timeoutMs)||timeoutMs<50||timeoutMs>10000)throw fail('invalid_webhook_configuration');const allowed=new Set(allowedHosts);
-  return async function transport(value,options={}){
+  const grants=new Map();
+  if(multiUser){
+    if(!workspaceCallbackHosts||typeof workspaceCallbackHosts!=='object'||Array.isArray(workspaceCallbackHosts)||Object.keys(workspaceCallbackHosts).length>100)throw fail('invalid_workspace_callback_grants');
+    for(const [id,hosts] of Object.entries(workspaceCallbackHosts)){
+      if(!/^[A-Za-z0-9_-]{1,100}$/.test(id)||!Array.isArray(hosts)||!hosts.length||hosts.length>10||hosts.some(host=>!allowed.has(host)))throw fail('invalid_workspace_callback_grants');
+      grants.set(id,new Set(hosts));
+    }
+  }
+  return async function transport(value,options={},binding){
     let url;try{url=new URL(value);}catch{throw fail('callback_url_denied');}
     if(url.protocol!=='https:'||url.username||url.password||url.hash||url.port&&url.port!=='443'||!allowed.has(url.hostname))throw fail('callback_url_denied');
+    if(multiUser&&(!binding||!['workspaceId','nodeId','taskId'].every(field=>typeof binding[field]==='string'&&/^[A-Za-z0-9_-]{1,100}$/.test(binding[field]))||!grants.get(binding.workspaceId)?.has(url.hostname)))throw fail('callback_workspace_denied');
     const addresses=await lookup(url.hostname,{all:true,verbatim:true});if(!Array.isArray(addresses)||!addresses.length||addresses.length>32||addresses.some(a=>!isPublicAddress(a.address)||a.family!==net.isIP(a.address)))throw fail('callback_address_denied');
     return post(url.href,{...options,method:'POST',redirect:'error'},addresses[0],{ca,timeoutMs});
   };

@@ -35,17 +35,28 @@ test('actual embedded process enforces human identity, viewer denial and workspa
     await new Promise(resolve => backend.listen(0, '127.0.0.1', resolve));
     const reservation = net.createServer(); await new Promise(resolve => reservation.listen(0, '127.0.0.1', resolve));
     const port = reservation.address().port; await new Promise(resolve => reservation.close(resolve));
+    const gatewayReservation = net.createServer(); await new Promise(resolve => gatewayReservation.listen(0, '127.0.0.1', resolve));
+    const gatewayPort = gatewayReservation.address().port; await new Promise(resolve => gatewayReservation.close(resolve));
     const sources = JSON.parse(execFileSync(process.env.PYTHON || 'python', ['-c', 'import json,runpy; print(json.dumps(runpy.run_path("scripts/materialize.py")["embedded_sources"]()))'], {cwd: root, encoding: 'utf8', timeout: 10000}));
     fs.writeFileSync(path.join(directory, 'server.js'), sources.SERVER_JS);
     fs.mkdirSync(path.join(directory, 'config')); fs.mkdirSync(path.join(directory, 'public'));
-    const config = {...JSON.parse(sources.CONFIG_JSON), httpPort: port, llmProvider: 'local-test', embeddingProvider: 'none', autoPullModels: false, enablePublicMemory: false, agentGateway: {enabled: false}, agents: [], workspaceModelGrants: {[a.id]: {'local-test': {models: ['fixture-model']}}}, llmProviders: [{id: 'local-test', local: true, requiresApiKey: false, baseUrl: `http://127.0.0.1:${backend.address().port}/v1`, models: ['fixture-model']}]};
+    const config = {...JSON.parse(sources.CONFIG_JSON), httpPort: port, llmProvider: 'local-test', embeddingProvider: 'none', autoPullModels: false, enablePublicMemory: false, agentGateway: {enabled: true, port: gatewayPort, adminTokenEnv: 'LACK_GATEWAY_FIXTURE_SECRET'}, agents: [], workspaceModelGrants: {[a.id]: {'local-test': {models: ['fixture-model']}}}, llmProviders: [{id: 'local-test', local: true, requiresApiKey: false, baseUrl: `http://127.0.0.1:${backend.address().port}/v1`, models: ['fixture-model']}]};
     const configFile = path.join(directory, 'config', 'lack.config.json'); fs.writeFileSync(configFile, JSON.stringify(config));
     const configBefore = fs.readFileSync(configFile);
-    for (const [folder, names] of Object.entries({identity: ['store', 'policy', 'sessions', 'passwords', 'admission', 'http'], collaboration: ['store', 'state', 'context', 'transport', 'resources']})) {
+    const gatewayStore = require('../gateway/store.cjs').createGatewayStore({dbPath: path.join(directory, 'db', 'agent-gateway.db'), multiUser: true});
+    const gatewayAccess = require('../gateway/workspace-access.cjs').createWorkspaceGatewayAccess({store: gatewayStore, identity});
+    let nodeCredentials;
+    try {
+      const actor = identity.requireMembership(alice.id, a.id);
+      const node = require('../collaboration/context.cjs').runWithWorkspace(actor, () => gatewayAccess.forHuman(actor).createNode({name: 'Runtime fixture', capabilities: ['browser.public_read'], scopes: ['public']}));
+      nodeCredentials = gatewayStore.pair(node.pairingCode);
+    } finally {gatewayStore.close();}
+    for (const [folder, names] of Object.entries({identity: ['store', 'policy', 'sessions', 'passwords', 'admission', 'http'], collaboration: ['store', 'state', 'context', 'transport', 'resources'], gateway: ['protocol', 'store', 'server', 'research-bridge', 'runtime', 'workspace-access', 'pilot-schema']})) {
       fs.mkdirSync(path.join(directory, folder));
       for (const name of names) fs.copyFileSync(path.join(root, folder, name + '.cjs'), path.join(directory, folder, name + '.cjs'));
+      if (folder === 'gateway') fs.copyFileSync(path.join(root, folder, 'admin.html'), path.join(directory, folder, 'admin.html'));
     }
-    child = spawn(process.execPath, [path.join(directory, 'server.js')], {cwd: directory, env: {...process.env, NODE_PATH: path.join(root, 'node_modules'), LACK_BIND_HOST: '127.0.0.1', LACK_MULTI_USER: '1', LACK_PUBLIC_MODE: '1', LACK_WEB_ORIGIN: origin, LACK_IDENTITY_DB: path.join(directory, 'identity.sqlite')}, stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true});
+    child = spawn(process.execPath, [path.join(directory, 'server.js')], {cwd: directory, env: {...process.env, NODE_PATH: path.join(root, 'node_modules'), LACK_BIND_HOST: '127.0.0.1', LACK_MULTI_USER: '1', LACK_PUBLIC_MODE: '1', LACK_WEB_ORIGIN: origin, LACK_IDENTITY_DB: path.join(directory, 'identity.sqlite'), LACK_GATEWAY_FIXTURE_SECRET: 'synthetic-only-fixture-'.repeat(3)}, stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true});
     child.stdout.on('data', chunk => {logs += chunk;}); child.stderr.on('data', chunk => {logs += chunk;});
     for (let attempt = 0; attempt < 100 && !logs.includes('Workspace-authenticated runtime listening'); attempt++) {
       if (child.exitCode !== null) break;
@@ -53,6 +64,11 @@ test('actual embedded process enforces human identity, viewer denial and workspa
     }
     assert.ok(logs.includes('Workspace-authenticated runtime listening'), 'Runtime failed to start: ' + logs.slice(-3000));
     assert.ok(!/workspace_context_required|Uncaught Exception/.test(logs), logs.slice(-3000));
+    const gatewayHealth = await fetch(`http://127.0.0.1:${gatewayPort}/v1/manifest`);
+    assert.equal(gatewayHealth.status, 401, 'Enabled workspace gateway rejects anonymous node reads');
+    const nodeManifest = await (await fetch(`http://127.0.0.1:${gatewayPort}/v1/manifest`, {headers: {Authorization: 'Bearer ' + nodeCredentials.token}})).json();
+    assert.equal(nodeManifest.workspaceId, a.id);
+    assert.equal((await fetch(`http://127.0.0.1:${gatewayPort}/admin/v1/tasks`, {headers: {Authorization: 'Bearer ' + 'synthetic-only-fixture-'.repeat(3)}})).status, 404);
     const base = `http://127.0.0.1:${port}`;
     async function request(route, name, workspaceId, method = 'GET') {
       const headers = {Origin: origin, 'X-Workspace-Id': workspaceId};

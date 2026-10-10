@@ -24,7 +24,8 @@ function bounded(value){const data=canonical(value);if(Buffer.byteLength(data)>L
 function hash(value){return crypto.createHash('sha256').update(value).digest('hex');}
 function secret(bytes=32){return crypto.randomBytes(bytes).toString('base64url');}
 function envelope(value){
-  fields(value,['protocolVersion','taskId','leaseId','attempt','eventId','status','output','sources','claims','missingEvidence','usage','type','message']);
+  fields(value,['protocolVersion','taskId','leaseId','attempt','eventId','status','output','sources','claims','missingEvidence','usage','type','message','workspaceId']);
+  if(value.workspaceId!==undefined)id(value.workspaceId);
   if(value.protocolVersion!==1)fail('unsupported_version');id(value.taskId);id(value.leaseId);id(value.eventId);
   if(!Number.isInteger(value.attempt)||value.attempt<1||value.attempt>3)fail('invalid_attempt');bounded(value);
   if(value.sources!==undefined&&(!Array.isArray(value.sources)||value.sources.length>5))fail('too_many_sources');

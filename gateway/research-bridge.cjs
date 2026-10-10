@@ -1,18 +1,21 @@
 'use strict';
 const P=require('./protocol.cjs');
-function createResearchBridge({store,now=Date.now}){
+function createResearchBridge({store,workspaceAccess,now=Date.now}){
+  if(store.multiUser&&!workspaceAccess)P.fail('workspace_gateway_configuration',503);
   const pending=new Map();
-  function check(){for(const [id,item] of [...pending]){let task;try{task=store.getTask(id);}catch{item.finish(new Error('external_task_missing'));continue;}if(task.status==='succeeded')item.finish(null,{status:'succeeded',output:task.result.output,provenance:{nodeId:task.node_id,taskId:task.id,attempt:task.attempt,traceId:task.trace_id,researchSessionId:task.research_session_id}});else if(['failed','cancelled','needs_attention','cancel_requested'].includes(task.status))item.finish(new Error('external_task_'+task.status));}}
+  function check(){for(const [id,item] of [...pending]){let task;try{task=item.withHuman(handle=>handle.getTask(id));}catch{item.finish(new Error('external_task_missing'));continue;}if(task.status==='succeeded')item.finish(null,{status:'succeeded',output:task.result.output,provenance:{...(store.multiUser?{workspaceId:task.workspace_id}:{}),nodeId:task.node_id,taskId:task.id,attempt:task.attempt,traceId:task.trace_id,researchSessionId:task.research_session_id}});else if(['failed','cancelled','needs_attention','cancel_requested'].includes(task.status))item.finish(new Error('external_task_'+task.status));}}
   store.changes.on('change',check);
   function dispatchResearchStage({sessionId,traceId,stage,role,input,deadlineAt=now()+120000,scopeId='public',privacy}){
     if(privacy!=='public')return Promise.reject(new Error('external_research_requires_public_material'));
     if(role?.kind!=='external'||!P.TYPES.includes('research.'+stage))return Promise.reject(new Error('unsupported_external_role'));
     if(pending.size>=32)return Promise.reject(new Error('external_wait_capacity'));
-    const task=store.enqueueTask({targetNodeId:role.nodeId,scopeId,taskType:'research.'+stage,input,deadlineAt,researchSessionId:sessionId,traceId});
+    const actor=workspaceAccess?require('../collaboration/context.cjs').requireWorkspaceContext():null;
+    const withHuman=actor?fn=>require('../collaboration/context.cjs').runWithWorkspace(actor,()=>fn(workspaceAccess.forHuman(actor))):fn=>fn(store);
+    const task=withHuman(handle=>handle.enqueueTask({targetNodeId:role.nodeId,scopeId,taskType:'research.'+stage,input,deadlineAt,researchSessionId:sessionId,traceId}));
     return new Promise((resolve,reject)=>{
-      const timer=setTimeout(()=>{const item=pending.get(task.taskId);if(!item)return;try{store.cancelTask(task.taskId);}catch{}item.finish(new Error('external_task_timeout'));},Math.max(1,deadlineAt-now()));
+      const timer=setTimeout(()=>{const item=pending.get(task.taskId);if(!item)return;try{withHuman(handle=>handle.cancelTask(task.taskId));}catch{}item.finish(new Error('external_task_timeout'));},Math.max(1,deadlineAt-now()));
       function finish(error,value){if(!pending.has(task.taskId))return;pending.delete(task.taskId);clearTimeout(timer);error?reject(error):resolve(value);}
-      pending.set(task.taskId,{finish});check();
+      pending.set(task.taskId,{finish,withHuman});check();
     });
   }
   const close=()=>{store.changes.off('change',check);for(const [,item] of [...pending])item.finish(new Error('gateway_closed'));};

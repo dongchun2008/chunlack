@@ -1,7 +1,7 @@
 'use strict';
 const {LIMITS}=require('./protocol.cjs');
 // Static connector contract: never derive addresses or credentials from a request.
-function createPilotOpenApi(){
+function createPilotOpenApi({multiUser=false}={}){
   const ref=name=>({$ref:'#/components/schemas/'+name});
   const id={type:'string',pattern:'^[A-Za-z0-9_-]{1,100}$'};
   const object=(properties,required=Object.keys(properties))=>({type:'object',properties,...(required.length?{required}:{}),additionalProperties:false});
@@ -27,6 +27,7 @@ function createPilotOpenApi(){
     Manifest:object({protocolVersion:{type:'integer',enum:[1]},nodeId:id,capabilities:{type:'array',items:{type:'string',enum:['browser.public_read']}},scopes:{type:'array',items:{type:'string',enum:['public']}},limits:{type:'object',additionalProperties:{type:'integer'}}}),
     NodeHeartbeat:object({capabilities:{type:'array',items:{type:'string',enum:['browser.public_read']}}},[])
   };
+  if(multiUser)for(const name of ['TaskView','TaskLease','LeaseState','Manifest']){schemas[name].properties.workspaceId=id;schemas[name].required.push('workspaceId');}
   const json=schema=>({'application/json':{schema}});
   const success=(schema,description='Successful response')=>({description,content:json(schema)});
   const error=description=>success(ref('Error'),description);

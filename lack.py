@@ -2883,7 +2883,9 @@ function validateResearchDecisions(raw, note) {
 function resolveResearchRole(reference) {
   if (typeof reference === 'string') return agents.get(reference);
   if (reference?.kind !== 'external' || typeof agentGateway === 'undefined' || !agentGateway) return null;
-  const node = agentGateway.store.getNode(reference.nodeId);
+  const node = agentGateway.workspaceAccess
+    ? agentGateway.workspaceAccess.forHuman(require('./collaboration/context.cjs').requireWorkspaceContext()).getNode(reference.nodeId)
+    : agentGateway.store.getNode(reference.nodeId);
   if (node.revoked || node.paused) return null;
   return {kind: 'external', nodeId: node.id, id: 'external:' + node.id, capabilities: node.capabilities};
 }
@@ -3369,6 +3371,13 @@ app.get('/api/jspace', async (req, res) => {
 // ==================== WEBSOCKET SERVER ====================
 server.listen(PORT, process.env.LACK_BIND_HOST || '127.0.0.1', async () => {
   if (transport) {
+    if (config.agentGateway?.enabled === true) {
+      try {agentGateway = await require('./gateway/runtime.cjs').startAgentGateway({config, dataRoot: __dirname, identity: workspaceServices().identity});}
+      catch {
+        console.error('[LACK] Workspace gateway startup failed; public runtime stopped.');
+        server.close(); workspaceServices().close(); if (db.open) db.close(); process.exitCode = 1; return;
+      }
+    }
     console.log('[LACK] Workspace-authenticated runtime listening on its configured private bind. Global legacy maintenance is disabled.');
     return;
   }
@@ -4618,6 +4627,7 @@ if (process.env.LACK_MULTI_USER !== '1') for (const [id, agent] of agents) {
 
 // ==================== MAIN LOOP (SET INTERVALS) ====================
 setInterval(() => {
+  if (transport) return;
   for (let [agentId, metrics] of agentMetrics.entries()) {
     metrics.cpu = metrics.cpu.map(v => Math.max(5, v - 3));
     metrics.activity = metrics.activity.map(v => {
@@ -4654,7 +4664,7 @@ setInterval(() => {
     }
     agentMetrics.set(agentId, metrics);
   }
-}, 3000);
+}, 3000).unref();
 
 // ==================== LINEAGE HELPERS ====================
 function getLineagePath(storeId) {

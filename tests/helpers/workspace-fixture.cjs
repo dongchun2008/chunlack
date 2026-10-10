@@ -34,7 +34,7 @@ function workspaceFixture(t, {passwordHash = syntheticHash} = {}) {
   const actor = (user, workspace) => store.requireMembership(users[user].id, workspaces[workspace].id);
   store.setMembership(actor('alice', 'a'), {workspaceId: workspaces.a.id, userId: users.bob.id, role: 'member'});
   store.setMembership(actor('bob', 'b'), {workspaceId: workspaces.b.id, userId: users.carol.id, role: 'viewer'});
-  return {dir, dbPath, store, users, workspaces, actor, open, now: () => time, advance: ms => {time += ms;}};
+  return {dir, dbPath, store, users, workspaces, actor, open, own: value => {stores.push(value); return value;}, now: () => time, advance: ms => {time += ms;}};
 }
 
 function throwsCode(fn, code) {

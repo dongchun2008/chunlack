@@ -1,14 +1,19 @@
 'use strict';
 const http=require('node:http'),https=require('node:https'),tls=require('node:tls');
 function failure(code){return new Error(code);}
-function createMuseProxyTransport({proxyUrl,targetOrigin,ca,timeoutMs=40000}){
+function createMuseProxyTransport({proxyUrl,targetOrigin,workspaceId,ca,timeoutMs=40000}){
   let proxy,target;try{proxy=new URL(proxyUrl);target=new URL(targetOrigin);}catch{throw failure('invalid_proxy_configuration');}
   if(!['http:','https:'].includes(proxy.protocol)||proxy.pathname!=='/'||proxy.search||proxy.hash||target.protocol!=='https:'||target.username||target.password||target.pathname!=='/'||target.search||target.hash||!Number.isInteger(timeoutMs)||timeoutMs<50||timeoutMs>40000)throw failure('invalid_proxy_configuration');
   if(process.env.NODE_TLS_REJECT_UNAUTHORIZED==='0')throw failure('unsafe_tls_environment');
+  if(workspaceId!==undefined&&(typeof workspaceId!=='string'||!/^[A-Za-z0-9_-]{1,100}$/.test(workspaceId)))throw failure('invalid_workspace_binding');
   return async function transport(value,options={}){
     let url;try{url=new URL(value);}catch{throw failure('target_origin_denied');}
     if(url.origin!==target.origin||url.username||url.password||url.hash)throw failure('target_origin_denied');
     const method=options.method||'GET',headers=new Headers(options.headers);
+    if(workspaceId!==undefined){
+      if(headers.has('X-Workspace-Id')&&headers.get('X-Workspace-Id')!==workspaceId){const error=failure('workspace_binding_mismatch');error.status=403;throw error;}
+      headers.set('X-Workspace-Id',workspaceId);
+    }
     if(!['GET','POST'].includes(method)||['host','connection','proxy-authorization','content-length','transfer-encoding'].some(h=>headers.has(h)))throw failure('unsupported_transport_request');
     const bytes=options.body===undefined?null:Buffer.isBuffer(options.body)?options.body:typeof options.body==='string'?Buffer.from(options.body):null;
     if(options.body!==undefined&&!bytes)throw failure('unsupported_transport_body');
