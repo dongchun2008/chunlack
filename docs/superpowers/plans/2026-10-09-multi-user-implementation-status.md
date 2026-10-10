@@ -90,3 +90,13 @@
 - Verified: 290/290 tests, 0 failures/skips/cancellations; HTTP/WebSocket mock-model smoke passed. Local loopback stress: 2 workspaces, 24 complete five-agent rounds, 120 model requests, 0 failed rounds, actual model HTTP concurrency <= 1. Not a real-model/VPS soak or resource upper-limit claim.
 - Root metadata is bounded in memory; durable audit/restart state remains Task 11. Estimated cost is not a verified billing ceiling. UI task controls remain Task 9. Tasks 9-12 and real model/Muse/dots acceptance are not complete. No VPS/DNS/credential/Relay changes in this increment.
 - Details: `docs/WORKSPACE_CAPACITY.md`.
+
+## Task 9: browser identity state foundation, in progress (2026-10-10)
+
+- Added `identity/workspace-ui.js`, a provider-independent frontend state controller, without yet wiring it into INDEX_HTML or exposing a new public login page.
+- Each tab stores only its non-sensitive workspaceId. Account/role snapshots are immutable; CSRF remains in closure memory. Legacy app-owned history/identity storage is cleared while unrelated storage and theme preferences are retained.
+- Workspace switch/exit aborts requests and closes old subscriptions. Late HTTP JSON, old socket messages/sends and late login completion cannot restore an earlier workspace/account. 401 stops access; 403 refreshes available memberships without an automatic retry loop. Network reconnection is bounded to 3 validated attempts per minute.
+- Unconfirmed logout stays pending and cannot silently boot/login again. Auth token query URLs and off-origin requests/return paths fail before traffic. Page teardown preserves the non-sensitive selected workspace for reload.
+- Verified: 16 state-controller tests, with 4 regression failures reproduced before correction; complete suite 306/306, 0 failures/skips/cancellations; existing HTTP/WebSocket mock-model smoke passed.
+- These are state-controller/unit and backend regression checks, not real DOM, HTML-injection, browser login, three-browser-account or desktop/narrow-screen acceptance. Task 9 remains open: login.html, existing avocado UI wiring/reset, members/nodes/tasks views and protected controls endpoints, evidence/source display, and actual browser acceptance.
+- Tasks 10-12, production cutover and real-model/Muse/dots acceptance remain open. No VPS/DNS/credentials/Relay changes.
