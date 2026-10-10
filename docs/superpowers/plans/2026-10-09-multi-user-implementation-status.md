@@ -456,3 +456,9 @@ historical restore and production/public acceptance remain explicit delivery gat
 - LACK PID234963、tailscaled PID859和重启计数0不变，health200；最终两个临时单元not-found/inactive、MainPID0、cgroup不存在。私有副本保留约8616KiB，目录0700、归档配置0600，未下载数据库/配置或提交Git。
 - 这不是正式一致性备份/应用恢复。migrationReady、restoreReady仍false，applicationConsistency=not_proven；未分类根数据、旧数据归属、真人身份初始化仍未解决，临时目录不承诺长期保留。
 - 详见 docs/verification/2026-10-11-existing-data-offline-restore-trial.md。真实模型、老镇/玄玑自身执行、正式HTTPS、应用级恢复与真实Relay转发共存仍待完成，目标保持未完成。
+## 2026-10-11 未分类旧根目录的保全缺口核对
+
+- 新的真实只读证据：12个未分类根目录，其中8个有直接子条目，包含agent_memories、workspace、lack_repos、lineage；只读名字/类型/数量，不读内容。不能由SQLite agent_memory为0推出文件系统记忆为空，也不能猜这些目录可丢弃。
+- 前一轮28项快照/副本恢复仍只证明声明范围，未包括未分类目录内容或空目录结构，不是整根完整备份/全部记忆恢复。就绪标记与3类未解决项原样保留。
+- 已提出扩大私有归档范围的设计确认请求；需先审核版本兼容、目录保全、边界/权限/体积、消费方和未归属隔离，不先写产品代码或自动把未知数据挂给Agent。旧数据工作区与真人负责人仍待用户指定。
+- 本轮业务代码/生产/凭据/同机服务未变，没有扩大复制范围或重复已有模拟测试。新取证及范围校正见 docs/verification/2026-10-11-legacy-root-preservation-gap.md。
