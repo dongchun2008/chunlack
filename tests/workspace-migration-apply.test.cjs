@@ -86,6 +86,7 @@ test('referenced pilot evidence must exist with its original hash before migrati
 test('linked and occupied destinations are never overwritten even after a plan was reviewed',async t=>{const f=await prepared(t);fs.mkdirSync(f.targetRoot);fs.writeFileSync(path.join(f.targetRoot,'keep'),'existing bytes');await assert.rejects(Promise.resolve().then(()=>applyMigration(f.plan,f.options)),/migration_destination_exists/);assert.equal(fs.readFileSync(path.join(f.targetRoot,'keep'),'utf8'),'existing bytes');const other=await prepared(t);fs.symlinkSync(other.sourceRoot,other.targetRoot,process.platform==='win32'?'junction':'dir');await assert.rejects(Promise.resolve().then(()=>applyMigration(other.plan,other.options)),/migration_link_denied/);});
 
 function cli(args){const result=spawnSync(process.execPath,[path.resolve(__dirname,'../scripts/migrate-workspaces.cjs'),...args],{encoding:'utf8',timeout:30000});assert.equal(result.error,undefined);assert.ok(!(result.stdout+result.stderr).includes('synthetic-secret-never-print'));return {...result,json:JSON.parse(result.stdout)};}
+function recovery(){return require('../scripts/workspace-migration-recovery.cjs');}
 test('CLI prepares, explicitly applies reviewed plan, verifies and repeats without exposing credentials',async t=>{
   const f=await fixture(t);
   const preview=cli(['--source-root',f.sourceRoot,'--target-root',f.targetRoot,'--workspace-id',f.input.workspaceId,'--owner-id',f.input.ownerId]);
@@ -111,4 +112,59 @@ test('identity source changes during conversion prevent candidate publication',a
   await assert.rejects(applyMigration(f.plan,{...f.options,onPhase:phase=>{if(phase==='data-converted'){const identity=new Database(f.options.identitySourcePath);try{identity.prepare("UPDATE memberships SET role='member' WHERE user_id=? AND workspace_id=?").run(f.input.ownerId,f.input.workspaceId);}finally{identity.close();}}}}),/migration_source_changed|migration_owner_binding_invalid/);
   assert.equal(JSON.parse(fs.readFileSync(path.join(f.targetRoot,'config','lack.config.json'))).multiUser.migrationReady,false);
   assert.throws(()=>verifyMigration(f.plan),/migration_publication_incomplete/);
+});
+
+test('reviewed recovery materializes old data and original config without activating, changing sources or depending on the candidate afterwards',async t=>{
+  const f=await prepared(t);await applyMigration(f.plan,f.options);const recoveryRoot=path.join(f.root,'recovery');
+  const before=[hash(f.dbPath),hash(f.dbPath+'-wal'),hash(path.join(f.targetRoot,'db','lack.db')),hash(path.join(f.targetRoot,'config','lack.config.json'))];
+  const result=recovery().prepareMigrationRecovery({candidateRoot:f.targetRoot,recoveryRoot,reviewed:true});
+  assert.equal(result.status,'verified');assert.equal(result.migrationReady,false);assert.equal(result.restoreReady,false);assert.equal(result.applicationConsistency,'not_proven');assert.ok(!JSON.stringify(result).includes('synthetic-secret-never-print'));
+  assert.deepEqual([hash(f.dbPath),hash(f.dbPath+'-wal'),hash(path.join(f.targetRoot,'db','lack.db')),hash(path.join(f.targetRoot,'config','lack.config.json'))],before);
+  const legacy=path.join(recoveryRoot,'legacy-data'),db=new Database(path.join(legacy,'db','lack.db'),{readonly:true});
+  try{assert.equal(db.prepare('SELECT count(*) n FROM messages').get().n,2);assert.equal(db.prepare('SELECT content FROM unknown_notes').get().content,'never discard');assert.equal(db.pragma('integrity_check',{simple:true}),'ok');}finally{db.close();}
+  assert.equal(hash(path.join(legacy,'memory','agent.json')),hash(path.join(f.sourceRoot,'memory','agent.json')));
+  assert.equal(hash(path.join(recoveryRoot,'original-config','lack.config.json')),hash(path.join(f.sourceRoot,'config','lack.config.json')));
+  assert.equal(JSON.parse(fs.readFileSync(path.join(legacy,'config','lack.config.json'))).multiUser.migrationReady,false);
+  fs.renameSync(f.targetRoot,path.join(f.root,'candidate-moved'));assert.deepEqual(recovery().verifyMigrationRecovery(recoveryRoot),result);
+  f.db.prepare('INSERT INTO unknown_notes VALUES(?,?)').run('writer-after-recovery','still usable');
+});
+test('an interrupted migration can recover its old-version snapshot while both candidates remain non-activatable',async t=>{
+  const f=await prepared(t);await assert.rejects(applyMigration(f.plan,{...f.options,onPhase:phase=>{if(phase==='data-converted')throw Error('interrupted fixture');}}),/interrupted fixture/);
+  const recoveryRoot=path.join(f.root,'recovery'),result=recovery().prepareMigrationRecovery({candidateRoot:f.targetRoot,recoveryRoot,reviewed:true});
+  assert.equal(result.sourceStatus,'failed');assert.equal(result.migrationReady,false);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(f.targetRoot,'config','lack.config.json'))).multiUser.migrationReady,false);
+  assert.equal(JSON.parse(fs.readFileSync(path.join(recoveryRoot,'legacy-data','config','lack.config.json'))).multiUser.migrationReady,false);
+});
+test('recovery needs explicit review and intact snapshot provenance before creating any output',async t=>{
+  const f=await prepared(t);await applyMigration(f.plan,f.options);const recoveryRoot=path.join(f.root,'recovery');
+  assert.throws(()=>recovery().prepareMigrationRecovery({candidateRoot:f.targetRoot,recoveryRoot}),/recovery_review_required/);assert.equal(fs.existsSync(recoveryRoot),false);
+  fs.appendFileSync(path.join(f.targetRoot,'quarantine','snapshot','candidate','memory','agent.json'),'changed');
+  assert.throws(()=>recovery().prepareMigrationRecovery({candidateRoot:f.targetRoot,recoveryRoot,reviewed:true}),/snapshot_file_mismatch|recovery_source_mismatch/);assert.equal(fs.existsSync(recoveryRoot),false);
+});
+test('recovery rejects occupied, overlapping and linked paths without overwriting old files',async t=>{
+  const f=await prepared(t);await applyMigration(f.plan,f.options);const recoveryRoot=path.join(f.root,'recovery');fs.mkdirSync(recoveryRoot);fs.writeFileSync(path.join(recoveryRoot,'keep'),'original');
+  assert.throws(()=>recovery().prepareMigrationRecovery({candidateRoot:f.targetRoot,recoveryRoot,reviewed:true}),/recovery_destination_exists/);assert.equal(fs.readFileSync(path.join(recoveryRoot,'keep'),'utf8'),'original');
+  assert.throws(()=>recovery().prepareMigrationRecovery({candidateRoot:f.targetRoot,recoveryRoot:path.join(f.targetRoot,'nested'),reviewed:true}),/recovery_roots_overlap/);
+  const link=path.join(f.root,'candidate-link');fs.symlinkSync(f.targetRoot,link,process.platform==='win32'?'junction':'dir');
+  assert.throws(()=>recovery().prepareMigrationRecovery({candidateRoot:link,recoveryRoot:path.join(f.root,'other-recovery'),reviewed:true}),/recovery_link_denied/);
+});
+test('recovery verification detects changed legacy bytes and forged readiness flags',async t=>{
+  const f=await prepared(t);await applyMigration(f.plan,f.options);const recoveryRoot=path.join(f.root,'recovery');recovery().prepareMigrationRecovery({candidateRoot:f.targetRoot,recoveryRoot,reviewed:true});
+  const file=path.join(recoveryRoot,'legacy-data','memory','agent.json'),original=fs.readFileSync(file);fs.appendFileSync(file,'changed');
+  assert.throws(()=>recovery().verifyMigrationRecovery(recoveryRoot),/recovery_file_mismatch/);fs.writeFileSync(file,original);
+  const marker=path.join(recoveryRoot,'recovery-state.json'),state=JSON.parse(fs.readFileSync(marker));state.restoreReady=true;fs.writeFileSync(marker,JSON.stringify(state));
+  assert.throws(()=>recovery().verifyMigrationRecovery(recoveryRoot),/recovery_metadata_invalid/);
+});
+test('interrupted recovery keeps a failed non-activatable copy and never changes the candidate',async t=>{
+  const f=await prepared(t);await applyMigration(f.plan,f.options);const recoveryRoot=path.join(f.root,'recovery'),before=hash(path.join(f.targetRoot,'migration-state.json'));
+  assert.throws(()=>recovery().prepareMigrationRecovery({candidateRoot:f.targetRoot,recoveryRoot,reviewed:true,onPhase:phase=>{if(phase==='legacy-materialized')throw Error('recovery interruption');}}),/recovery interruption/);
+  assert.equal(hash(path.join(f.targetRoot,'migration-state.json')),before);assert.equal(JSON.parse(fs.readFileSync(path.join(recoveryRoot,'recovery-state.json'))).status,'failed');
+  assert.equal(JSON.parse(fs.readFileSync(path.join(recoveryRoot,'legacy-data','config','lack.config.json'))).multiUser.migrationReady,false);
+  assert.throws(()=>recovery().verifyMigrationRecovery(recoveryRoot),/recovery_metadata_invalid/);
+});
+test('CLI explicitly prepares and independently verifies a reviewed recovery without leaking credentials',async t=>{
+  const f=await prepared(t);await applyMigration(f.plan,f.options);const recoveryRoot=path.join(f.root,'recovery');
+  const denied=cli(['--recover','--candidate-root',f.targetRoot,'--recovery-root',recoveryRoot]);assert.equal(denied.status,2);assert.equal(denied.json.error,'recovery_review_required');assert.equal(fs.existsSync(recoveryRoot),false);
+  const result=cli(['--recover','--reviewed','--candidate-root',f.targetRoot,'--recovery-root',recoveryRoot]);assert.equal(result.status,0);assert.equal(result.json.restoreReady,false);
+  const check=cli(['--verify-recovery','--recovery-root',recoveryRoot]);assert.equal(check.status,0);assert.equal(check.json.migrationReady,false);
 });

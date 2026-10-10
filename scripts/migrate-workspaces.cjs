@@ -129,9 +129,9 @@ function applyMigration(plan, options) {
 }
 function verifyMigration(plan) {return require('./workspace-migration-engine.cjs').verifyReviewedMigration(plan);}
 function cliOptions(args) {
-  const names = {'--source-root': 'sourceRoot', '--target-root': 'targetRoot', '--workspace-id': 'workspaceId', '--owner-id': 'ownerId', '--snapshot-root': 'snapshotRoot', '--identity-source': 'identitySourcePath', '--grants-file': 'grantsFile', '--plan-file': 'planFile'};
+  const names = {'--source-root': 'sourceRoot', '--target-root': 'targetRoot', '--workspace-id': 'workspaceId', '--owner-id': 'ownerId', '--snapshot-root': 'snapshotRoot', '--identity-source': 'identitySourcePath', '--grants-file': 'grantsFile', '--plan-file': 'planFile', '--candidate-root': 'candidateRoot', '--recovery-root': 'recoveryRoot'};
   const options = Object.create(null), flags = Object.create(null);
-  const switches = {'--apply': 'apply', '--reviewed': 'reviewed', '--verify': 'verify', '--prepare-snapshot': 'prepare'};
+  const switches = {'--apply': 'apply', '--reviewed': 'reviewed', '--verify': 'verify', '--prepare-snapshot': 'prepare', '--recover': 'recover', '--verify-recovery': 'verifyRecovery'};
   for (let i = 0; i < args.length; i++) {
     if (Object.hasOwn(switches, args[i])) {
       const flag = switches[args[i]]; if (flags[flag]) throw failure('migration_invalid_options');
@@ -141,13 +141,21 @@ function cliOptions(args) {
     if (!key || Object.hasOwn(options, key) || typeof value !== 'string' || !value || value.startsWith('--')) throw failure('migration_invalid_options');
     options[key] = value;
   }
-  if ([flags.apply, flags.verify, flags.prepare].filter(Boolean).length > 1 || flags.reviewed && !flags.apply || options.planFile && (!flags.apply && !flags.verify || ['sourceRoot','targetRoot','workspaceId','ownerId'].some(key => options[key]))) throw failure('migration_invalid_options');
+  if ([flags.apply, flags.verify, flags.prepare, flags.recover, flags.verifyRecovery].filter(Boolean).length > 1 || flags.reviewed && !flags.apply && !flags.recover || options.planFile && (!flags.apply && !flags.verify || ['sourceRoot','targetRoot','workspaceId','ownerId'].some(key => options[key]))) throw failure('migration_invalid_options');
+  if (!flags.recover && !flags.verifyRecovery && (options.candidateRoot || options.recoveryRoot)) throw failure('migration_invalid_options');
   return {options, ...flags};
 }
 module.exports = {planMigration, backupDatabase, applyMigration, verifyMigration};
 if (require.main === module) {
   (async () => {
-    const {options, apply, reviewed, verify, prepare} = cliOptions(process.argv.slice(2));
+    const {options, apply, reviewed, verify, prepare, recover, verifyRecovery} = cliOptions(process.argv.slice(2));
+    if (recover || verifyRecovery) {
+      if (recover && !reviewed) throw failure('recovery_review_required');
+      const keys = recover ? ['candidateRoot', 'recoveryRoot'] : ['recoveryRoot'];
+      if (keys.some(key => !options[key]) || Object.keys(options).some(key => !keys.includes(key))) throw failure('migration_invalid_options');
+      const recovery = require('./workspace-migration-recovery.cjs');
+      return recover ? recovery.prepareMigrationRecovery({...options, reviewed: true}) : recovery.verifyMigrationRecovery(options.recoveryRoot);
+    }
     function input(file) {
       absolute(file); if (fs.statSync(file).size > 2 * 1024 * 1024) throw failure('migration_metadata_invalid');
       try {return JSON.parse(fs.readFileSync(file, 'utf8'));} catch {throw failure('migration_metadata_invalid');}
@@ -166,6 +174,6 @@ if (require.main === module) {
     }
     return plan;
   })().then(result => console.log(JSON.stringify(result, null, 2))).catch(error => {
-    console.log(JSON.stringify({readyToApply: false, error: /^(?:migration|snapshot)_[a-z0-9_]+$/.test(error.code || '') ? error.code : 'migration_plan_failed'})); process.exitCode = 2;
+    console.log(JSON.stringify({readyToApply: false, error: /^(?:migration|snapshot|recovery)_[a-z0-9_]+$/.test(error.code || '') ? error.code : 'migration_plan_failed'})); process.exitCode = 2;
   });
 }

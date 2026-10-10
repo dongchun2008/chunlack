@@ -353,3 +353,10 @@ production/sustained co-host acceptance remains incomplete. Candidate
 migrationReady is not delivery readiness; restoreReady remains false. See
 `docs/reviewed-workspace-migration.md` and
 `docs/verification/reviewed-migration-engine-verification.md`.
+
+## Reviewed migration recovery checkpoint
+
+- Implemented independent legacy-data materialization from the quarantined snapshot of published or failed migration candidates, plus explicit reviewed recovery and standalone verification CLI modes.
+- Preserves original data and configuration, detects tampering/interruption, refuses overlaps, links and occupied destinations. Recovered data remains non-activatable; applicationConsistency is not_proven.
+- Current Windows evidence: focused 32/32 and full Caddy-enabled suite 445/445, zero failures, skips or cancellations. See docs/verification/reviewed-migration-recovery-verification.md and docs/reviewed-workspace-recovery.md.
+- Task 11 is not complete: old-version business recovery and the remaining integrated multi-user acceptance gates still need evidence. Current-source Linux verification, production cutover, public HTTPS, real models and Muse/dots Agent-owned execution remain separate gates. No VPS or Relay change occurred in this checkpoint; Open WebUI remains excluded.
