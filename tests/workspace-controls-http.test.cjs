@@ -144,3 +144,20 @@ test('public task creation preserves the existing twenty-entry workspace queue c
   assert.equal(denied.status, 429); assert.equal(denied.body.error, 'workspace_queue_full');
   assert.equal((await f.request('alice', 'a', '/api/tasks')).body.externalTasks.length, 20);
 });
+
+test('public browser task creation refuses mixed capabilities or multiple scopes before creating an unfinishable pilot', async t => {
+  const f = await setup(t);
+  const specifications = [
+    {name: 'Mixed browser', capabilities: ['browser.public_read', 'research.verify'], scopes: ['public']},
+    {name: 'Multiple scopes', capabilities: ['browser.public_read'], scopes: ['public', 'private']},
+    {name: 'Both mixed', capabilities: ['research.retrieve', 'browser.public_read'], scopes: ['private', 'public']}
+  ];
+  for (const specification of specifications) {
+    const created = await f.request('alice', 'a', '/api/nodes', {method: 'POST', body: specification});
+    assert.equal(created.status, 201);
+    const denied = await f.request('bob', 'a', '/api/tasks', {method: 'POST', body: {targetNodeId: created.body.node.id}});
+    assert.equal(denied.status, 403);
+    assert.equal(denied.body.error, 'facade_scope_denied');
+    assert.deepEqual((await f.request('bob', 'a', '/api/tasks')).body.externalTasks, []);
+  }
+});

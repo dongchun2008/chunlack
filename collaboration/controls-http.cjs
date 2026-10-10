@@ -46,6 +46,12 @@ function createWorkspaceControlsRouter({taskControl, getGateway, now = Date.now}
     // execution challenge, permission scope, deadline or model credentials.
     const input = body(req, ['targetNodeId']);
     const access = human();
+    // This entry point uses the restricted screenshot facade, not the generic
+    // research queue. Reject nodes the facade cannot serve before enqueueing.
+    const node = access.getNode(input.targetNodeId);
+    if (!node.capabilities.includes('browser.public_read')) throw new IdentityError('capability_denied', 403);
+    if (!node.scopes.includes('public')) throw new IdentityError('scope_denied', 403);
+    if (node.capabilities.length !== 1 || node.scopes.length !== 1) throw new IdentityError('facade_scope_denied', 403);
     const task = access.enqueueTask({targetNodeId: input.targetNodeId, scopeId: 'public', taskType: 'browser.public_read',
       input: {url: 'https://example.com/', challenge: randomBytes(32).toString('base64url')}, deadlineAt: now() + 300000});
     res.status(201).json({task: externalTask(access.getTask(task.taskId))});
