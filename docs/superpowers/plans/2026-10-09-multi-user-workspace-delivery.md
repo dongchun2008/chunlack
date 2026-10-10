@@ -222,3 +222,32 @@
 这些条件不阻止在计划获准后先完成本地实现和测试，但均阻止对应生产验收项被标记完成。本轮只是形成实施计划，没有安装依赖、修改产品代码、执行产品测试或改动生产配置。
 
 参数参考：[OWASP Password Storage](https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html)、[Node.js 24 crypto](https://nodejs.org/docs/latest-v24.x/api/crypto.html)。身份、会话及隔离安全参考以已批准设计中的官方链接为准。
+
+## Accepted scope amendment: 2026-10-10 model routing without Open WebUI
+
+The user's explicit correction supersedes all earlier Open WebUI-specific setup
+or acceptance requirements in this plan. ChunLACK must not depend on Open WebUI,
+register it as an Agent connector, or require its API/version/models/login UI as
+an acceptance gate. The previously supplied Open WebUI address and API key must
+not be reused as the default direct-model connection or probed for this delivery.
+
+Model services and Agent execution nodes remain separate. Models connect through
+provider-neutral interfaces to the actual approved inference endpoint, such as
+llama.cpp, 1Cat, DGX Spark-hosted services or cloud providers. Do not guess backend
+ports, protocols, model identifiers or credentials from the Open WebUI frontend.
+Retain existing Ollama support and generic OpenAI-compatible provider support;
+removing an unwanted frontend dependency is not a vendor blacklist.
+
+The existing Open WebUI installation, data, accounts, configuration and credentials
+remain outside this project's change scope. Do not stop or modify that service,
+read/delete its former key file, or migrate its knowledge bases or conversations.
+Repository/runtime references and any private bindings have not yet been audited
+for this correction; documentation alone is not proof that they were removed.
+
+All other approved delivery requirements remain in force: multi-human/workspace
+isolation, constrained HTTPS ingress, bounded low-resource collaboration, source
+provenance, safe migration and proven restore/rollback, preservation of co-hosted
+Relay services, and actual Muse/dots cloud-Agent task execution evidence. Real
+model acceptance must use a verified direct backend endpoint rather than Open WebUI.
+Known snapshot and ingress defects still require the requested repair confirmation;
+443 ownership must be clarified before any port takeover or production cutover.
