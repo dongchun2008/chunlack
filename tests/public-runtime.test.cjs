@@ -11,9 +11,10 @@ const {randomUUID} = require('node:crypto');
 const Database = require('better-sqlite3');
 const {createIdentityStore} = require('../identity/store.cjs');
 const {createCollaborationStore} = require('../collaboration/store.cjs');
+const python = process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3');
 
 test('materialized server exports an explicit owned lifecycle instead of auto-starting on import', () => {
-  const source = execFileSync('python', ['-X', 'utf8', '-c',
+  const source = execFileSync(python, ['-X', 'utf8', '-c',
     'import ast; p=ast.parse(open("lack.py",encoding="utf-8").read()); print(next(ast.literal_eval(n.value) for n in p.body if isinstance(n,ast.Assign) and any(isinstance(t,ast.Name) and t.id=="SERVER_JS" for t in n.targets)))'],
   {cwd: path.join(__dirname, '..'), encoding: 'utf8'});
   assert.equal(/module\.exports\s*=\s*\{[^}]*startLackRuntime/.test(source), true);
@@ -116,7 +117,7 @@ test('capacity shutdown waits for actual transport settlement and reports an unr
 
 async function packageFixture(t) {
   const f = fixture(t), packageRoot = path.join(f.root, 'package');
-  execFileSync('python', ['scripts/materialize.py', '--output', packageRoot], {cwd: path.join(__dirname, '..'), timeout: 10000, stdio: 'pipe'});
+  execFileSync(python, ['scripts/materialize.py', '--output', packageRoot], {cwd: path.join(__dirname, '..'), timeout: 10000, stdio: 'pipe'});
   const reservations = [];
   for (let i = 0; i < 3; i++) {const server = http.createServer(); await new Promise(resolve => server.listen(0, '127.0.0.1', resolve)); reservations.push(server);}
   [f.config.httpPort, f.config.agentGateway.port, f.config.publicRuntime.mcpPort] = reservations.map(server => server.address().port);

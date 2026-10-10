@@ -4,6 +4,7 @@ const {runWithWorkspace}=require('../collaboration/context.cjs');
 const {createCapacityCoordinator}=require('../collaboration/capacity.cjs');
 const actor=workspaceId=>({workspaceId,userId:'owner-'+workspaceId,role:'owner',version:1});
 const turn=()=>new Promise(resolve=>setImmediate(resolve));
+const python=process.env.PYTHON||(process.platform==='win32'?'python':'python3');
 test('provider-neutral transport shares inference capacity across workspaces and reauthorizes before and after queued execution',async t=>{
   const {createWorkspaceModelTransport}=require('../collaboration/model-transport.cjs');
   const capacity=createCapacityCoordinator();t.after(()=>capacity.close());let active=0,peak=0,calls=0,checks=0;
@@ -32,7 +33,7 @@ test('scoped root cancellation reaches model HTTP transport and does not allow n
 });
 test('embedded task scopes use bounded public defaults when workspace settings intentionally omit legacy configuration',async t=>{
   const {execFileSync}=require('node:child_process'),vm=require('node:vm'),path=require('node:path'),espree=require('espree');
-  const source=JSON.parse(execFileSync('python',['-c','import json,runpy; print(json.dumps(runpy.run_path("scripts/materialize.py")["embedded_sources"]()))'],{cwd:path.resolve(__dirname,'..'),encoding:'utf8'})).SERVER_JS;
+  const source=JSON.parse(execFileSync(python,['-c','import json,runpy; print(json.dumps(runpy.run_path("scripts/materialize.py")["embedded_sources"]()))'],{cwd:path.resolve(__dirname,'..'),encoding:'utf8'})).SERVER_JS;
   const fn=require('./helpers/embedded-server-ast.cjs').runtimeStatements(source).find(node=>node.type==='FunctionDeclaration'&&node.id.name==='workspaceTaskScope');assert.ok(fn);
   const capacity=createCapacityCoordinator();t.after(()=>capacity.close());const services={capacity,identity:{requireMembership:()=>actor('a')}};
   const box={workspaceServices:()=>services,workspaceSetting:()=>null,require:require('node:module').createRequire(path.resolve(__dirname,'..','server.js'))};vm.createContext(box);vm.runInContext(source.slice(...fn.range),box);

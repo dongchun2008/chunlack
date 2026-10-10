@@ -82,9 +82,16 @@ https://@@WEB_HOST@@:@@PUBLIC_PORT@@ {
         import request_boundary
         @human_read {
             method GET HEAD
-            path_regexp human_read ^(/|/login|/health|/[A-Za-z0-9_-]+[.](js|css|svg|png|ico|html)|/auth/[A-Za-z0-9_/-]+|/api/(bootstrap|workspaces|channels|messages|tasks|nodes|models|agents|research|research-sessions|evidence|artifacts)(/[A-Za-z0-9_-]+)*)$
+            path_regexp human_read ^(/|/login|/health|/[A-Za-z0-9_-]+[.](js|css|svg|png|ico|html)|/identity/(runtime-mode|workspace-ui|workspace-shell)[.]js|/auth/[A-Za-z0-9_/-]+|/api/llm-providers|/api/(bootstrap|workspaces|channels|messages|tasks|nodes|models|agents|research|research-sessions|evidence|artifacts)(/[A-Za-z0-9_-]+)*)$
         }
         handle @human_read {
+            import web_proxy
+        }
+        @workspace_socket {
+            method GET
+            path_regexp workspace_socket ^/ws/workspaces/[A-Za-z0-9_-]{1,100}$
+        }
+        handle @workspace_socket {
             import web_proxy
         }
         @human_write {
