@@ -252,3 +252,9 @@ The single-node implementation still lives in the embedded sources in lack.py. O
 - Open review findings: owned OIDC shutdown/drain, concurrent browser-login identity race, and genuine v1 migration plus active/revoked-link archive coverage.
 - Corrections were disclosed and approval requested. No production/Relay/Pocket ID configuration changes. Preserve the long-term goal as active.
 - See docs/verification/2026-10-11-pocket-id-login-checkpoint.md and docs/POCKET_ID_SETUP.md. Older custom OAuth core remains unmounted.
+
+### Pocket ID diagnostic follow-up (same product revision 803e77b)
+
+- No matching browser-fixture Node processes remained from failed runs. Owned startup probe reached readiness in 3362 ms; unchanged browser test then passed 1/1 without the probe. Earlier timeout root cause remains unconfirmed.
+- Two new regression tests reproduce the disclosed OIDC shutdown-cancellation and delayed-login race; 0/2 pass as expected before repair. Product code was not changed; correction request remains outstanding.
+- Last full-suite counts still refer to the prior 523-test run, not these later isolated runs. See docs/verification/2026-10-11-pocket-id-diagnostic-followup.md. Keep release and full-delivery gates closed.
