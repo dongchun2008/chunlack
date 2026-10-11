@@ -266,3 +266,9 @@ The single-node implementation still lives in the embedded sources in lack.py. O
 - Fresh review blocks release: newer begin does not revoke an already-issued old session; stream cancellation is not fully drained; abandoned browser bindings can exhaust the new 256-entry capacity. The latter two were reproduced using synthetic diagnostics. Additional correction approval was requested.
 - Seven real Caddy/packaged HTTPS tests were skipped, not passed. Active-session restoration and uncooperative OIDC writer-lock retention need coverage. See docs/verification/2026-10-11-pocket-id-repair-checkpoint.md.
 - No production, Pocket ID application, credentials, VPS/Relay or provider-route changes. This checkpoint is not release-ready; full delivery remains unfinished.
+
+### Read-only capability follow-up
+
+- Fresh public Pocket ID discovery and JWKS both returned 200 at 2026-10-11T15:35:07.693Z. S256, RS256, authorization code and client_secret_basic are advertised; the public key is RSA/RS256. Dedicated client, real login and installed version remain unverified.
+- Local HTTPS skips are gated by absent CADDY_TEST_BIN. Verified official Windows archive/manifest SHA-256 downloads are isolated in ignored storage, but preparation stopped before extraction/execution because the command compared the manifest SHA-512 with the API SHA-256. Correction permission was requested; no new HTTPS pass claim.
+- See docs/verification/2026-10-11-pocket-id-live-capability-followup.md. Login review blockers and production boundaries are unchanged.
