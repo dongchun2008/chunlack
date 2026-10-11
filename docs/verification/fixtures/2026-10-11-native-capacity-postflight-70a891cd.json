@@ -1,0 +1,79 @@
+{
+  "kind": "CHUNLACK_NATIVE_CAPACITY_INDEPENDENT_POSTFLIGHT",
+  "nonce": "70a891cd",
+  "productCommit": "95c70de51de569cd04f3c1bf60d6b2b944eac530",
+  "verifiedAt": "2026-10-11T10:35:16.332930+00:00",
+  "status": "verified",
+  "tests": {
+    "tests": 5,
+    "pass": 5,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "mockHttpMeasurement": {
+    "measurement": "local-mock-http-not-vps-real-model",
+    "humanConnections": 0,
+    "workspaces": 2,
+    "agentsPerRound": 5,
+    "completedRounds": 24,
+    "modelRequests": 120,
+    "failedRounds": 0,
+    "maxActiveModelHTTP": 1,
+    "maxWorkspaceQueued": 4,
+    "durationMs": 3813,
+    "roundP95Ms": 695,
+    "cpuMs": 377,
+    "rssMiB": 79,
+    "rssDeltaMiB": 6
+  },
+  "appliedLimits": {
+    "MemoryMax": "201326592",
+    "MemoryHigh": "167772160",
+    "MemorySwapMax": "0",
+    "TasksMax": "32",
+    "OOMPolicy": "stop",
+    "CPUQuotaPerSecUSec": "100ms",
+    "RuntimeMaxUSec": "4min"
+  },
+  "unitElapsedSeconds": 13.185329639352858,
+  "unitMemoryPeakBytes": 48492544,
+  "unitSwapPeakBytes": 0,
+  "unitCpuUsageNSec": 1214467000,
+  "ownedUnitStopped": true,
+  "ownedUnitState": {
+    "MainPID": "0",
+    "LoadState": "not-found",
+    "ActiveState": "inactive"
+  },
+  "originalServices": {
+    "chunlack.service": {
+      "MainPID": "594652",
+      "NRestarts": "0",
+      "ActiveState": "active",
+      "SubState": "running"
+    },
+    "tailscaled.service": {
+      "MainPID": "859",
+      "NRestarts": "0",
+      "ActiveState": "active",
+      "SubState": "running"
+    }
+  },
+  "originalUnitHashesUnchanged": true,
+  "lackHealthStatus": 200,
+  "relayListenerPresent": true,
+  "relayForwardingTested": false,
+  "public443Listening": false,
+  "public443Unchanged": true,
+  "controllerSha256": "484ecdec20e053fa6f9aed07b1477c45b176294d5714a870b0f1ab6d3f266e52",
+  "hostReportSha256": "ad2dfc5fd824622b4f35460eb21e193ef0e7dbd96eeee09d8fcccb41e5d526c3",
+  "trialReportSha256": "f4e28f90673c9cf0bccaa87f8c1f0f02f562eba07ba8fa142fa124e9a77efe32",
+  "productionCutover": false,
+  "realBackendRequests": 0,
+  "realModelAcceptance": false,
+  "vendorAgentAcceptance": false,
+  "publicTlsVerified": false,
+  "authenticatedPublicRuntimeTested": false,
+  "agentPlanAndActTested": false
+}
