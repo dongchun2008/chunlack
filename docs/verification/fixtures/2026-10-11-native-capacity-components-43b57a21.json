@@ -1,0 +1,102 @@
+{
+  "kind": "CHUNLACK_NATIVE_CAPACITY_COMPONENT_EVIDENCE",
+  "date": "2026-10-11",
+  "productCommit": "95c70de51de569cd04f3c1bf60d6b2b944eac530",
+  "nonce": "43b57a21",
+  "localVerification": {
+    "controlFlowPassed": 6,
+    "parserPassed": 9,
+    "negativeParserCases": 8,
+    "controllerSha256": "03482494ef93e7c0bafef337627716cc7d93d780d1cb344a6d3fe85f05e703a0",
+    "worktreeClean": true
+  },
+  "controllerExitStatus": 1,
+  "diagnostic": {
+    "nativeTapCounters": {
+      "tests": [],
+      "pass": [],
+      "fail": [],
+      "cancelled": [],
+      "skipped": []
+    },
+    "mockDiagnostics": [],
+    "capturedAppliedProperties": {
+      "MemoryMax": "201326592",
+      "MemoryHigh": "167772160",
+      "MemorySwapMax": "0",
+      "TasksMax": "32",
+      "OOMPolicy": "stop",
+      "CPUQuotaPerSecUSec": "100ms",
+      "RuntimeMaxUSec": "4min",
+      "ExecMainStatus": "0",
+      "MemoryPeak": "47349760",
+      "MemorySwapPeak": "0",
+      "CPUUsageNSec": "1210630000"
+    },
+    "ownedUnitState": {
+      "MainPID": "0",
+      "LoadState": "not-found",
+      "ActiveState": "inactive"
+    },
+    "controllerErrors": [
+      "native_component_report_failed_ValueError",
+      "native_trial_failed"
+    ],
+    "originalBeforeAfter": {
+      "chunlack.service": {
+        "MainPID": [
+          "594652",
+          "594652"
+        ],
+        "NRestarts": [
+          "0",
+          "0"
+        ],
+        "ActiveState": [
+          "active",
+          "active"
+        ],
+        "SubState": [
+          "running",
+          "running"
+        ]
+      },
+      "tailscaled.service": {
+        "MainPID": [
+          "859",
+          "859"
+        ],
+        "NRestarts": [
+          "0",
+          "0"
+        ],
+        "ActiveState": [
+          "active",
+          "active"
+        ],
+        "SubState": [
+          "running",
+          "running"
+        ]
+      }
+    },
+    "originalUnitHashesUnchanged": true,
+    "healthStatus": 200,
+    "relayListenerPresent": true,
+    "public443StateUnchanged": true
+  },
+  "reporter": {
+    "logBytes": 1057,
+    "logTextBounded": "\u2714 provider-neutral transport shares inference capacity across workspaces and reauthorizes before and after queued execution (297.401649ms)\n\u2714 membership removed while waiting prevents model traffic; removed while executing prevents returning private output (2.737343ms)\n\u2714 scoped root cancellation reaches model HTTP transport and does not allow next inference before it settles (2.480874ms)\n\u2714 embedded task scopes use bounded public defaults when workspace settings intentionally omit legacy configuration (3992.665086ms)\n\u2714 two workspaces finish twenty-four complete five-agent rounds through real HTTP with one shared slot (4402.525195ms)\n\u2139 {\"measurement\":\"local-mock-http-not-vps-real-model\",\"humanConnections\":0,\"workspaces\":2,\"agentsPerRound\":5,\"completedRounds\":24,\"modelRequests\":120,\"failedRounds\":0,\"maxActiveModelHTTP\":1,\"maxWorkspaceQueued\":4,\"durationMs\":4002,\"roundP95Ms\":698,\"cpuMs\":389,\"rssMiB\":78,\"rssDeltaMiB\":5}\n\u2139 tests 5\n\u2139 suites 0\n\u2139 pass 5\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 11594.099173\n",
+    "truncated": false
+  },
+  "acceptance": "not-accepted-controller-output-format-mismatch",
+  "productionCutover": false,
+  "liveOwnerCreated": false,
+  "realBackendRequests": 0,
+  "realModelAcceptance": false,
+  "vendorAgentAcceptance": false,
+  "authenticatedPublicRuntimeTested": false,
+  "agentPlanAndActTested": false,
+  "relayForwardingTested": false
+}
