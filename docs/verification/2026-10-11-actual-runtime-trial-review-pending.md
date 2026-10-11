@@ -32,3 +32,18 @@ lifecycle boundaries, then execute the bounded private-network trial. Keep CPU
 10%, memory high/max 160/192 MiB, tasks 32, runtime 180 seconds, protected frozen
 candidate/snapshot/recovery and original-service before/after checks. Do not
 expand limits or switch production if the test fails.
+
+## Subsequent read-only native check
+
+A pinned-host-key SSH check of the frozen candidate's SQLite schema used
+`mode=ro&immutable=1`, without creating a connection writer or sidecar. It
+confirmed `messages.store_id` exists and `messages.channel_id` does not.
+The Agent table has the expected `workspace_id`, `provider` and `model` columns.
+This corroborates the first review finding against actual converted data;
+it is not an authenticated business-test result.
+
+The new runtime trial unit was `not-found`/inactive with PID 0. Its operational
+copy, package, native report and host result did not exist, confirming the trial
+had not started. Original LACK PID 594652 and Tailscale PID 859 were still
+active/running, restart count 0, and original LACK health returned 200. No
+mutation, production switch or live account creation was performed.
