@@ -1,5 +1,8 @@
 # Actual-backup authenticated runtime trial: review pending
 
+> Historical pre-execution state. Explicitly approved r1 corrections and native
+> business verification are recorded in `2026-10-11-actual-runtime-business-approved.md`.
+
 Date: 2026-10-11. The completed native conversion and recovery evidence is
 `2026-10-11-actual-backup-workspace-conversion.md`; its result is unaffected.
 

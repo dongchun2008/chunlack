@@ -1,0 +1,98 @@
+import hashlib,json,os,pathlib,subprocess,time,urllib.request
+ROOT=pathlib.Path('/var/tmp/chunlack-actual-migration-20261011-7fd316ba/runtime-business-821f946c')
+PARENT=ROOT.parent
+UNIT='chunlack-actual-runtime-821f946c-r1.service'
+owner=json.loads((ROOT/'trial-owner.json').read_text())
+assert ROOT.resolve()==ROOT and ROOT.stat().st_uid==0 and ROOT.stat().st_mode&0o077==0
+assert owner['kind']=='CHUNLACK_ACTUAL_RUNTIME_TRIAL' and owner['nonce']=='821f946c'
+def run(args):
+ return subprocess.run(args,check=True,text=True,stdout=subprocess.PIPE,stderr=subprocess.PIPE,timeout=15).stdout
+def props(unit):
+ result=run(['systemctl','show',unit,'-p','LoadState','-p','ActiveState','-p','SubState','-p','MainPID','-p','NRestarts','-p','ExecMainStatus','-p','ExecMainExitTimestampMonotonic','-p','MemoryPeak','-p','MemorySwapPeak','-p','CPUUsageNSec','-p','FragmentPath','-p','Description'])
+ return dict(line.split('=',1) for line in result.splitlines() if '=' in line)
+def sha(file):
+ with open(file,'rb') as stream:return hashlib.file_digest(stream,'sha256').hexdigest()
+def baseline():
+ services={name:props(name) for name in ['chunlack.service','tailscaled.service']}
+ for service in services.values():assert service['ActiveState']=='active' and service['SubState']=='running'
+ hashes={name:sha(value['FragmentPath']) for name,value in services.items()}
+ with urllib.request.urlopen('http://127.0.0.1:3721/health',timeout=5) as response:health=response.status
+ assert health==200
+ assert 'pid='+services['tailscaled.service']['MainPID'] in run(['ss','-lunp','sport = :40000'])
+ return {'services':services,'unitFileSha256':hashes,'healthStatus':health,'relayPort40000Present':True,'public443Listening':len(run(['ss','-ltn','sport = :443']).splitlines())>1}
+before=baseline()
+assert props(UNIT)['LoadState']=='not-found'
+available=int(next(line.split()[1] for line in pathlib.Path('/proc/meminfo').read_text().splitlines() if line.startswith('MemAvailable:')))
+assert available>=512*1024 and os.statvfs(ROOT).f_bavail*os.statvfs(ROOT).f_frsize>=128*1024*1024
+inputs=json.loads((ROOT/'trial-inputs-r1.json').read_text())
+for name,digest in inputs['sha256'].items():
+ file=ROOT/name;assert file.is_file() and not file.is_symlink() and sha(file)==digest;os.chmod(file,0o600)
+assert not (ROOT/'trial-report-r1.json').exists() and not (ROOT/'operational').exists() and not (ROOT/'package').exists()
+assert json.loads((PARENT/'trial-report.json').read_text())['status']=='verified'
+os.umask(0o077)
+(ROOT/'scratch').mkdir(mode=0o700)
+with open(ROOT/'preflight-r1.json','x') as f:json.dump(before,f,indent=2)
+description='ChunLACK isolated actual-backup runtime 821f946c r1'
+cmd=['systemd-run','--quiet','--unit='+UNIT,'--property=Description='+description,'--property=CPUQuota=10%',
+ '--property=MemoryHigh=160M','--property=MemoryMax=192M','--property=TasksMax=32','--property=RuntimeMaxSec=180',
+ '--property=RemainAfterExit=yes','--property=NoNewPrivileges=yes','--property=PrivateNetwork=yes',
+ '--property=PrivateDevices=yes','--property=ProtectSystem=strict','--property=ProtectHome=yes',
+ '--property=ReadWritePaths='+str(ROOT),'--property=ReadOnlyPaths=/var/backups/chunlack-root-20261011-57c03a6e/snapshot '+str(PARENT/'candidate')+' '+str(PARENT/'recovery')+' '+str(PARENT/'code')+' '+str(PARENT/'materialized-source')+' '+str(PARENT/'fixture-auth.json'),
+ '--property=InaccessiblePaths=/var/lib/chunlack','--property=UMask=0077','--property=TimeoutStopSec=10',
+ '--property=StandardOutput=append:'+str(ROOT/'runtime-r1.log'),'--property=StandardError=append:'+str(ROOT/'runtime-r1.log'),
+ '--working-directory='+str(ROOT),'--setenv=NODE_PATH=/opt/chunlack/current/node_modules','--setenv=TMPDIR='+str(ROOT/'scratch'),
+ '/opt/chunlack/node/bin/node','--max-old-space-size=64',str(ROOT/'native-actual-runtime-821f946c-r1.cjs')]
+started=time.monotonic();result=None;trial=None;errors=[];after=None;owned_stopped=False
+def assert_owner():
+ assert ROOT.resolve()==ROOT and ROOT.stat().st_uid==0 and ROOT.stat().st_mode&0o077==0
+ assert json.loads((ROOT/'trial-owner.json').read_text())==owner
+try:
+ run(cmd)
+ while time.monotonic()-started<=200:
+  result=props(UNIT)
+  if result['MainPID']=='0' and result['ExecMainExitTimestampMonotonic']!='0':break
+  if result['LoadState']=='not-found':raise RuntimeError('owned_trial_disappeared')
+  time.sleep(1)
+ if not result or result['MainPID']!='0' or result['ExecMainExitTimestampMonotonic']=='0':
+  errors.append('owned_trial_not_terminal')
+ try:trial=json.loads((ROOT/'trial-report-r1.json').read_text())
+ except (OSError,ValueError):errors.append('trial_report_unreadable_or_invalid')
+ if not result or result.get('ExecMainStatus')!='0' or not trial or trial.get('status')!='verified':
+  errors.append('native_trial_failed')
+except Exception as error:
+ errors.append('controller_execution_failed_'+type(error).__name__)
+finally:
+ assert_owner()
+ try:
+  current=props(UNIT)
+  if current['LoadState']=='not-found':
+   owned_stopped=True
+  else:
+   assert current['FragmentPath']=='/run/systemd/transient/'+UNIT and current['Description']==description
+   run(['systemctl','stop',UNIT])
+   stopped=props(UNIT)
+   owned_stopped=stopped['MainPID']=='0' and stopped['ActiveState'] in ['inactive','failed']
+   if not owned_stopped:errors.append('owned_unit_stop_not_verified')
+ except Exception as error:
+  errors.append('owned_unit_cleanup_failed_'+type(error).__name__)
+ try:
+  after=baseline()
+  for name in before['services']:
+   for field in ['MainPID','NRestarts','ActiveState','SubState']:
+    if before['services'][name][field]!=after['services'][name][field]:errors.append('original_service_changed')
+  if before['unitFileSha256']!=after['unitFileSha256'] or before['public443Listening']!=after['public443Listening']:
+   errors.append('original_unit_or_listener_changed')
+ except Exception:errors.append('postflight_baseline_failed')
+ assert_owner()
+ report={'kind':owner['kind'],'nonce':owner['nonce'],'commit':owner['commit'],'unit':UNIT,'unitResult':result,
+  'elapsedSeconds':time.monotonic()-started,'resourceLimits':{'cpuQuotaPercent':10,'memoryHighMiB':160,'memoryMaxMiB':192,'tasksMax':32,'runtimeMaxSeconds':180},
+  'before':before,'after':after,'trial':trial,'errors':errors,'ownedUnitStopped':owned_stopped,'productionCutover':False}
+ try:
+  with open(ROOT/'host-result-r1.json','x') as f:json.dump(report,f,indent=2)
+ except Exception as error:
+  errors.append('host_report_write_failed_'+type(error).__name__)
+ print(json.dumps({'unit':UNIT,'exitStatus':result.get('ExecMainStatus') if result else None,'elapsedSeconds':report['elapsedSeconds'],
+  'memoryPeakBytes':result.get('MemoryPeak') if result else None,'swapPeakBytes':result.get('MemorySwapPeak') if result else None,
+  'errors':errors,'trial':trial,'ownedUnitStopped':owned_stopped,
+  'originalServicePidsUnchanged':after is not None and all(before['services'][name]['MainPID']==after['services'][name]['MainPID'] for name in before['services'])}))
+raise SystemExit(1 if errors or not owned_stopped else 0)
