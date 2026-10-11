@@ -297,3 +297,10 @@ The single-node implementation still lives in the embedded sources in lack.py. O
 - Real generated-package fault injection proves incomplete OIDC body cancellation retains the writer lock on shutdown and startup rollback, rejecting second writers even after later drain. This is Windows-local evidence, not native Linux or production acceptance.
 - Evidence, intermediate review findings, reproduction failures and final log hashes: `docs/verification/2026-10-12-oidc-boundary-repair-validation.md`. Pocket ID setup instructions updated. No product dependencies, provider routes, Pocket ID applications, live credentials, VPS services or Relay configuration changed.
 - Dedicated Pocket ID real login, native Muse LaoZhen/dots XuanJi task/evidence round trips and production publication remain open. The custom OAuth core remains unmounted; full platform delivery is not claimed.
+
+## 2026-10-12: pinned post-repair candidate package
+
+- Exported immutable commit `753308194bfb9136e34555008d68c4736f76292e` and materialized its runtime into a new ignored local candidate directory. This avoids mixing later documentation or checkout changes into the source package.
+- Runtime: 53 files, 837191 bytes; compressed archive: 218783 bytes. Inventory and independent unpacked-file count/size/SHA-256 checks passed. No installed dependencies, live data or private configuration were copied.
+- Artifact hashes and scope: `docs/verification/2026-10-12-pinned-oidc-candidate.md`. Default configuration is not a production-ready configuration; no runtime or VPS was started/contacted.
+- Dedicated Pocket ID client availability requested; existing Tailscale/OIDC applications remain untouched. Native post-repair verification, external enrollment and full delivery remain separate gates.
