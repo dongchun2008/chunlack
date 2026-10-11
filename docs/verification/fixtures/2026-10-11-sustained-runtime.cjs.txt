@@ -1,0 +1,258 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {createHash,randomBytes}=require('node:crypto');
+const {spawn,execFileSync}=require('node:child_process');
+const {setTimeout:delay}=require('node:timers/promises');
+const {finished}=require('node:stream/promises');
+const Database=require('better-sqlite3'),WebSocket=require('ws'),http=require('node:http');
+const parent='/var/tmp/chunlack-actual-migration-20261011-7fd316ba';
+const root=path.join(parent,'sustained-business-6a719ce4'),source=path.join(parent,'candidate');
+const snapshot='/var/backups/chunlack-root-20261011-57c03a6e/snapshot';
+const code=path.join(parent,'code'),data=path.join(root,'operational'),pkg=path.join(root,'package');
+const owner=JSON.parse(fs.readFileSync(path.join(root,'trial-owner.json'),'utf8'));
+assert.equal(__dirname,root);assert.equal(owner.kind,'CHUNLACK_SUSTAINED_RUNTIME_TRIAL');assert.equal(owner.nonce,'6a719ce4');
+const sha=file=>createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+function inventory(base){
+ const result=[];let bytes=0;
+ function walk(rel=''){
+  for(const name of fs.readdirSync(path.join(base,rel)).sort()){
+   const item=rel?rel+'/'+name:name,file=path.join(base,item),stat=fs.lstatSync(file);
+   assert.ok(!stat.isSymbolicLink()&&(stat.isFile()||stat.isDirectory()));
+   assert.ok(result.length<2048&&item.split('/').length<=12);
+   if(stat.isDirectory()){result.push({path:item,kind:'directory'});walk(item);}
+   else{bytes+=stat.size;assert.ok(stat.size<=16*1024*1024&&bytes<=128*1024*1024);result.push({path:item,kind:'file',bytes:stat.size,sha256:sha(file)});}
+  }
+ }walk();return result;
+}
+const frozen=[source,snapshot,path.join(parent,'recovery'),path.join(parent,'materialized-source'),code];
+const report={kind:owner.kind,nonce:owner.nonce,commit:owner.commit,productionCutover:false,liveOwnerCreated:false,
+ realBackendRequests:0,realModelAcceptance:false,vendorAgentAcceptance:false,publicTlsVerified:false};
+let stage='preparation',child,guard,modelGuardRequests=0;const peers=[],sensitive=[],childExits=[];
+function ensurePrivate(base){
+ fs.chmodSync(base,0o700);
+ for(const entry of fs.readdirSync(base)){const file=path.join(base,entry),s=fs.lstatSync(file);
+  assert.ok(!s.isSymbolicLink());if(s.isDirectory())ensurePrivate(file);else{assert.ok(s.isFile());fs.chmodSync(file,0o600);}}
+}
+async function waitFor(predicate,ms=30000){
+ const deadline=Date.now()+ms;
+ while(Date.now()<deadline){if(predicate())return;if(child&&child.exitCode!==null)throw Object.assign(Error('child_exited'),{code:'child_exited'});await delay(50);}
+ throw Object.assign(Error('bounded_wait_timeout'),{code:'bounded_wait_timeout'});
+}
+async function reservePorts(){
+ const servers=[];
+ try{
+  for(let i=0;i<3;i++){const s=http.createServer();await new Promise((resolve,reject)=>{s.once('error',reject);s.listen(0,'127.0.0.1',resolve);});servers.push(s);}
+  const ports=servers.map(s=>s.address().port);assert.ok(ports.every(p=>p>=1024&&p!==3721&&p!==443&&p!==22));
+  return ports;
+ }finally{for(const s of servers)await new Promise(resolve=>s.close(resolve));}
+}
+let origin,base,accounts={},auth,configBefore;
+async function request(route,{account,workspace,method='GET',body,csrf=true,requestOrigin=origin,headers={}}={}){
+ const all={...headers};
+ if(requestOrigin!==null)all.Origin=requestOrigin;
+ if(account){all.Cookie=account.cookie;if(csrf)all['X-CSRF-Token']=account.csrfToken;}
+ if(workspace!==undefined)all['X-Workspace-Id']=workspace;
+ if(body!==undefined)all['Content-Type']='application/json';
+ const res=await fetch(base+route,{method,headers:all,body:body===undefined?undefined:JSON.stringify(body),redirect:'manual',signal:AbortSignal.timeout(10000)});
+ const text=await res.text();let json;try{json=JSON.parse(text);}catch{}
+ return {status:res.status,headers:res.headers,json,text};
+}
+async function start(iteration){
+ const outputFile=path.join(root,'child-'+iteration+'-r1.log'),stream=fs.createWriteStream(outputFile,{flags:'wx',mode:0o600});
+ let logs='';
+ child=spawn(process.execPath,['--max-old-space-size=64',path.join(code,'tests/helpers/public-runtime-child.cjs'),path.join(pkg,'gateway/public-runtime.cjs'),data],
+  {cwd:root,env:{...process.env,TRIAL_GATEWAY_TOKEN:randomBytes(32).toString('base64url'),NODE_PATH:'/opt/chunlack/current/node_modules'},stdio:['pipe','pipe','pipe']});
+ child.stdout.on('data',chunk=>{logs+=chunk;stream.write(chunk);});
+ child.stderr.on('data',chunk=>{logs+=chunk;stream.write(chunk);});
+ child.on('error',()=>{});
+ const exited=new Promise((resolve,reject)=>child.once('close',(exitCode,signal)=>{
+  stream.end();finished(stream).then(()=>resolve({exitCode,signal}),reject);
+ }));
+ exited.catch(()=>{});
+ await waitFor(()=>logs.includes('PUBLIC_RUNTIME_READY'),30000);
+ assert.equal((await request('/health')).status,200);
+ return {child,exited,logs:()=>logs};
+}
+async function stop(runtime){
+ for(const peer of peers.splice(0))peer.ws.terminate();
+ runtime.child.stdin.write('STOP\n');
+ const result=await Promise.race([runtime.exited,delay(12000).then(()=>{throw Object.assign(Error('close_timeout'),{code:'close_timeout'});})]);
+ assert.deepEqual(result,{exitCode:0,signal:null});childExits.push(result);
+ assert.ok(runtime.logs().includes('PUBLIC_RUNTIME_CLOSED'));
+ for(const secret of sensitive)assert.ok(!runtime.logs().includes(secret));
+ assert.ok(!fs.existsSync(path.join(data,'.public-runtime.lock')));
+ child=null;
+}
+async function connect(account,workspace){
+ const ws=new WebSocket(base.replace('http:','ws:')+'/ws/workspaces/'+workspace,
+  {headers:{Origin:origin,Cookie:account.cookie},handshakeTimeout:10000});
+ const peer={ws,frames:[]};peers.push(peer);ws.on('message',raw=>peer.frames.push(JSON.parse(raw)));ws.on('error',()=>{});
+ await new Promise((resolve,reject)=>{ws.once('open',resolve);ws.once('error',()=>reject(Object.assign(Error('socket_connect_failed'),{code:'socket_connect_failed'})));
+  ws.once('unexpected-response',(req,res)=>{res.resume();ws.terminate();reject(Object.assign(Error('socket_rejected'),{code:'socket_rejected'}));});});
+ return peer;
+}
+async function frame(peer,predicate){
+ let found;
+ await waitFor(()=>{const i=peer.frames.findIndex(predicate);if(i<0)return false;found=peer.frames.splice(i,1)[0];return true;},10000);
+ return found;
+}
+async function history(account,workspace,channels){
+ const peer=await connect(account,workspace),rows=[];
+ for(const channel of channels){peer.ws.send(JSON.stringify({type:'join',channelId:channel}));const value=await frame(peer,x=>x.type==='history');
+  assert.ok(Array.isArray(value.messages));rows.push(...value.messages);}
+ return {peer,rows};
+}
+function checkedLegacyHistory(rows,expected){
+ const actual=new Map(rows.map(row=>[row.id,row.content]));
+ assert.equal(actual.size,expected.length);
+ for(const row of expected)assert.equal(actual.get(row.id),row.content);
+}
+(async()=>{
+ const before=Object.fromEntries(frozen.map(dir=>[dir,inventory(dir)]));
+ auth=JSON.parse(fs.readFileSync(path.join(parent,'fixture-auth.json'),'utf8'));
+ assert.equal(typeof auth.password,'string');sensitive.push(auth.password);
+ fs.cpSync(source,data,{recursive:true,errorOnExist:true,force:false});ensurePrivate(data);
+ assert.ok(!fs.existsSync(path.join(data,'.public-runtime.lock')));
+ const db=new Database(path.join(data,'db','lack.db'),{readonly:true});
+ let expected,agents;
+ try{
+  assert.equal(db.pragma('quick_check',{simple:true}),'ok');
+  expected=db.prepare('SELECT id,store_id,content FROM messages WHERE workspace_id=? ORDER BY id').all(auth.workspaceA);
+  assert.equal(expected.length,13);agents=db.prepare('SELECT workspace_id,provider,model FROM agents').all();
+  assert.equal(agents.length,1);assert.equal(db.prepare('SELECT COUNT(*) AS n FROM messages WHERE workspace_id=?').get(auth.workspaceB).n,0);
+ }finally{db.close();}
+ const identity=new Database(path.join(data,'db','identity.db'),{readonly:true}),users={};
+ try{for(const name of ['a','b','c']){users[name]=identity.prepare('SELECT id,login FROM users WHERE id=?').get(auth.users[name]);assert.ok(users[name]);}}
+ finally{identity.close();}
+ execFileSync('python3',[path.join(code,'scripts/materialize.py'),'--output',pkg],{cwd:code,timeout:30000,stdio:'pipe'});
+ ensurePrivate(pkg);
+ guard=http.createServer((req,res)=>{modelGuardRequests++;res.writeHead(503,{'Content-Type':'application/json'});res.end('{"error":"fixture_model_disabled"}');});
+ await new Promise((resolve,reject)=>{guard.once('error',reject);guard.listen(0,'127.0.0.1',resolve);});
+ const ports=await reservePorts();origin='https://lack.actual-trial.invalid';base='http://127.0.0.1:'+ports[0];
+ const grants={};
+ for(const a of agents){assert.equal(typeof a.provider,'string');assert.equal(typeof a.model,'string');
+  grants[a.workspace_id]||={};grants[a.workspace_id][a.provider]||={models:[]};grants[a.workspace_id][a.provider].models.push(a.model);}
+ const config={httpPort:ports[0],bindHost:'127.0.0.1',multiUser:{enabled:true,migrationReady:true},
+  agentGateway:{enabled:true,port:ports[1],adminTokenEnv:'TRIAL_GATEWAY_TOKEN'},
+  publicRuntime:{webOrigin:origin,agentsOrigin:'https://agents.actual-trial.invalid',mcpPort:ports[2]},
+  llmProvider:'fixture-no-model',llmProviders:[{id:'fixture-no-model',local:true,requiresApiKey:false,baseUrl:'http://127.0.0.1:'+guard.address().port+'/v1',models:['fixture-denied']}],
+  ollamaHost:'http://127.0.0.1:'+guard.address().port,embeddingProvider:'none',autoPullModels:false,
+  enablePublicMemory:false,jspaceEnabled:false,agents:[],workspaceModelGrants:grants};
+ fs.writeFileSync(path.join(data,'config','lack.config.json'),JSON.stringify(config),{mode:0o600});configBefore=fs.readFileSync(path.join(data,'config','lack.config.json'));
+ stage='first-runtime';const first=await start(1);
+ assert.equal((await request('/api/channels',{workspace:auth.workspaceA})).status,401);
+ for(const name of ['a','b','c']){
+  const r=await request('/auth/login',{method:'POST',body:{login:users[name].login,password:auth.password}});
+  assert.equal(r.status,200);assert.equal(r.json.user.id,users[name].id);
+  const cookie=r.headers.get('set-cookie');for(const flag of ['Secure','HttpOnly','SameSite=Lax','Path=/'])assert.ok(cookie.includes(flag));
+  accounts[name]={cookie:cookie.split(';')[0],csrfToken:r.json.csrfToken};sensitive.push(accounts[name].cookie.split('=')[1],accounts[name].csrfToken);
+ }
+ stage='workspace-isolation';
+ assert.equal((await request('/api/channels',{account:accounts.a})).status,400);
+ for(const pair of [['a',auth.workspaceB],['c',auth.workspaceA]]){
+  const r=await request('/api/channels',{account:accounts[pair[0]],workspace:pair[1]});
+  const absent=await request('/api/channels',{account:accounts[pair[0]],workspace:'does-not-exist'});
+  assert.equal(r.status,404);assert.deepEqual(r.json,absent.json);
+ }
+ for(const pair of [['a',auth.workspaceA],['b',auth.workspaceA],['b',auth.workspaceB],['c',auth.workspaceB]])
+  assert.equal((await request('/api/channels',{account:accounts[pair[0]],workspace:pair[1]})).status,200);
+ const historicalChannels=[...new Set(expected.map(row=>row.store_id))];
+ const old=await history(accounts.a,auth.workspaceA,historicalChannels);checkedLegacyHistory(old.rows,expected);
+ const ownerB=await history(accounts.b,auth.workspaceB,['general']);assert.equal(ownerB.rows.length,0);
+ const viewerB=await history(accounts.c,auth.workspaceB,['general']);assert.equal(viewerB.rows.length,0);
+ viewerB.peer.ws.send(JSON.stringify({type:'message',content:'fixture-denied-write'}));
+ assert.equal((await frame(viewerB.peer,x=>x.type==='error')).code,'forbidden');
+ const inviteRoute='/api/workspaces/'+auth.workspaceB+'/invites',inviteBody={login:'runtime-check-6a719ce4',role:'member'};
+ assert.equal((await request(inviteRoute,{account:accounts.c,method:'POST',body:inviteBody,headers:{'X-Role':'owner','X-User-ID':users.b.id}})).status,403);
+ assert.equal((await request(inviteRoute,{account:accounts.b,method:'POST',body:inviteBody,csrf:false})).status,403);
+ assert.equal((await request(inviteRoute,{account:accounts.b,method:'POST',body:inviteBody,requestOrigin:'https://evil.invalid'})).status,403);
+ const invite=await request(inviteRoute,{account:accounts.b,method:'POST',body:inviteBody});assert.equal(invite.status,201);assert.equal(typeof invite.json.token,'string');sensitive.push(invite.json.token);
+
+ stage='sustained-session-business';
+ const extraA=await history(accounts.a,auth.workspaceA,historicalChannels);
+ checkedLegacyHistory(extraA.rows,expected);
+ const extraMemberA=await history(accounts.b,auth.workspaceA,historicalChannels);
+ checkedLegacyHistory(extraMemberA.rows,expected);
+ assert.equal(peers.length,5);
+ const sustainedStarted=Date.now(),latencies=[],ticks=[],durationMs=1800000;
+ let tick=0,sustainedWrites=0;
+ while(Date.now()-sustainedStarted<durationMs){
+  const tickStarted=Date.now();
+  for(const name of ['a','b','c']){
+   const t=Date.now();const r=await request('/auth/me',{account:accounts[name]});
+   assert.equal(r.status,200);assert.equal(r.json.user.id,users[name].id);latencies.push(Date.now()-t);
+  }
+  for(const pair of [['a',auth.workspaceA],['b',auth.workspaceB],['c',auth.workspaceB]]){
+   const t=Date.now();assert.equal((await request('/api/channels',{account:accounts[pair[0]],workspace:pair[1]})).status,200);latencies.push(Date.now()-t);
+  }
+  assert.equal((await request('/health')).status,200);
+  for(const peer of peers){
+   assert.equal(peer.ws.readyState,WebSocket.OPEN);
+   await new Promise((resolve,reject)=>{
+    const timer=setTimeout(()=>reject(Object.assign(Error('sustained_pong_timeout'),{code:'sustained_pong_timeout'})),10000);
+    peer.ws.once('pong',()=>{clearTimeout(timer);resolve();});peer.ws.ping();
+   });
+  }
+  if(tick%6===0){
+   const marker='sustained-6a719ce4-'+String(tick);
+   ownerB.peer.ws.send(JSON.stringify({type:'message',content:marker,username:'root',userId:users.a.id}));
+   const posted=await frame(ownerB.peer,x=>x.type==='new_message'&&x.message.content===marker);
+   assert.equal(posted.message.sender,users.b.login);
+   const viewed=await frame(viewerB.peer,x=>x.type==='new_message'&&x.message.content===marker);
+   assert.equal(viewed.message.sender,users.b.login);
+   assert.ok(![old.peer,extraA.peer,extraMemberA.peer].some(peer=>peer.frames.some(x=>JSON.stringify(x).includes(marker))));
+   sustainedWrites++;
+   ticks.push({elapsedSeconds:(Date.now()-sustainedStarted)/1000,tick,heapUsedBytes:process.memoryUsage().heapUsed});
+   console.log(JSON.stringify({kind:'sustained_progress',elapsedSeconds:(Date.now()-sustainedStarted)/1000,tick,sustainedWrites,openSockets:peers.filter(p=>p.ws.readyState===WebSocket.OPEN).length}));
+  }
+  tick++;
+  await delay(Math.max(0,10000-(Date.now()-tickStarted)));
+ }
+ const ordered=latencies.slice().sort((a,b)=>a-b);
+ report.sustained={targetSeconds:1800,elapsedSeconds:(Date.now()-sustainedStarted)/1000,ticks:tick,
+  authenticatedHttpRequests:latencies.length,webSocketClients:5,workspaces:2,fixtureUsers:3,sustainedWrites,
+  httpLatencyP50Ms:ordered[Math.floor((ordered.length-1)*0.50)],httpLatencyP95Ms:ordered[Math.floor((ordered.length-1)*0.95)],
+  httpLatencyMaxMs:ordered[ordered.length-1],samples:ticks,realModelRequests:0,agentInferenceLoadTested:false};
+ stage='isolated-write';
+ const marker='sustained-business-6a719ce4-'+randomBytes(12).toString('hex');
+ ownerB.peer.ws.send(JSON.stringify({type:'message',content:marker,username:'root',userId:users.a.id}));
+ const posted=await frame(ownerB.peer,x=>x.type==='new_message'&&x.message.content===marker);
+ assert.equal(posted.message.sender,users.b.login);
+ await delay(250);assert.ok(!old.peer.frames.some(x=>JSON.stringify(x).includes(marker)));
+ assert.deepEqual(fs.readFileSync(path.join(data,'config','lack.config.json')),configBefore);
+ await stop(first);
+ stage='restart';const second=await start(2);
+ for(const name of ['a','b','c']){const r=await request('/auth/me',{account:accounts[name]});assert.equal(r.status,200);assert.equal(r.json.user.id,users[name].id);}
+ const historicalAgain=await history(accounts.a,auth.workspaceA,historicalChannels);checkedLegacyHistory(historicalAgain.rows,expected);
+ const bAgain=await history(accounts.b,auth.workspaceB,['general']);
+ assert.equal(bAgain.rows.filter(x=>x.content===marker).length,1);
+ const closed=new Promise(resolve=>bAgain.peer.ws.once('close',(code)=>resolve(code)));
+ assert.equal((await request('/auth/logout',{account:accounts.b,method:'POST',body:{}})).status,200);
+ assert.equal(await Promise.race([closed,delay(10000).then(()=>{throw Object.assign(Error('logout_close_timeout'),{code:'logout_close_timeout'});})]),1008);
+ assert.equal((await request('/auth/me',{account:accounts.b})).status,401);
+ assert.equal((await request('/auth/me',{account:accounts.a})).status,200);
+ await stop(second);
+ stage='integrity';
+ const finalDb=new Database(path.join(data,'db','lack.db'),{readonly:true});
+ try{assert.equal(finalDb.pragma('quick_check',{simple:true}),'ok');assert.equal(finalDb.pragma('foreign_key_check').length,0);
+  assert.deepEqual(finalDb.prepare('SELECT id,store_id,content FROM messages WHERE workspace_id=? ORDER BY id').all(auth.workspaceA),expected);
+  assert.equal(finalDb.prepare('SELECT COUNT(*) AS n FROM messages WHERE workspace_id=? AND content=?').get(auth.workspaceB,marker).n,1);
+  assert.equal(finalDb.prepare('SELECT COUNT(*) AS n FROM agents').get().n,1);
+ }finally{finalDb.close();}
+ for(const dir of frozen)assert.deepEqual(inventory(dir),before[dir]);
+ assert.deepEqual(fs.readFileSync(path.join(data,'config','lack.config.json')),configBefore);
+ assert.equal(modelGuardRequests,0);
+ Object.assign(report,{status:'verified',finishedAt:new Date().toISOString(),authenticatedRuntimeBusinessVerified:true,
+ fixtureLogins:3,fixtureWorkspaces:2,checkedMembershipContexts:4,legacyMessagesBeforeAndAfterRestart:13,legacyAgents:1,
+ viewerAndForgeryDenied:true,csrfAndOriginDenied:true,isolatedMessagePersisted:true,authenticatedSenderEnforced:true,
+ sessionsPersistedAcrossRestart:true,logoutRevokedAndClosedSocket:true,originalFrozenTreesUnchanged:true,
+ configUnchangedAcrossRuntime:true,childExits,modelGuardRequests,loopbackPorts:ports,restoreReady:false});
+})().catch(error=>{Object.assign(report,{status:'failed',stage,errorCode:typeof error.code==='string'?error.code:'trial_error'});process.exitCode=1;})
+.finally(async()=>{
+ for(const peer of peers)peer.ws.terminate();
+ if(child&&child.exitCode===null){child.kill('SIGTERM');await Promise.race([new Promise(resolve=>child.once('exit',resolve)),delay(3000)]);if(child.exitCode===null)child.kill('SIGKILL');}
+ if(guard){guard.closeAllConnections();await new Promise(resolve=>guard.close(resolve));}
+ fs.writeFileSync(path.join(root,'trial-report-r1.json'),JSON.stringify(report,null,2),{flag:'wx',mode:0o600});
+ console.log(JSON.stringify(report));
+});
+

@@ -1,0 +1,89 @@
+{
+  "kind": "CHUNLACK_SUSTAINED_TRIAL_INDEPENDENT_POSTFLIGHT",
+  "nonce": "6a719ce4",
+  "productCommit": "95c70de51de569cd04f3c1bf60d6b2b944eac530",
+  "unit": "chunlack-sustained-6a719ce4.service",
+  "units": {
+    "chunlack.service": {
+      "MainPID": "594652",
+      "NRestarts": "0",
+      "LoadState": "loaded",
+      "ActiveState": "active",
+      "SubState": "running",
+      "FragmentPath": "/etc/systemd/system/chunlack.service"
+    },
+    "tailscaled.service": {
+      "MainPID": "859",
+      "NRestarts": "0",
+      "LoadState": "loaded",
+      "ActiveState": "active",
+      "SubState": "running",
+      "FragmentPath": "/usr/lib/systemd/system/tailscaled.service"
+    },
+    "chunlack-sustained-6a719ce4.service": {
+      "MainPID": "0",
+      "NRestarts": "0",
+      "LoadState": "not-found",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "FragmentPath": ""
+    },
+    "chunlack-public.service": {
+      "MainPID": "0",
+      "NRestarts": "0",
+      "LoadState": "not-found",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "FragmentPath": ""
+    },
+    "chunlack-https.service": {
+      "MainPID": "0",
+      "NRestarts": "0",
+      "LoadState": "not-found",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "FragmentPath": ""
+    }
+  },
+  "trialReportSha256": "553a1096208a81c8e2b94aea5b93772e514b3eaa27c12c32187f053a1eb0f310",
+  "hostReportSha256": "f0158949145a72ec8aa18f64279d089c878c31cda2257982b3ecab2ec23509d9",
+  "scriptSha256": {
+    "native-actual-runtime-6a719ce4-r1.cjs": "a741c65ebfeb52d9214257530b7b3f642e7ed5e0e3f000beeb844d2b67fc69d6",
+    "native-runtime-controller-r1.py": "0a6e86e9b63f370799ffff2d70cdb468e13fa3e82bbf15396b916718e575bc06"
+  },
+  "finishedAt": "2026-10-11T09:15:52.708Z",
+  "elapsedSeconds": 1853.2070721974596,
+  "sustained": {
+    "targetSeconds": 1800,
+    "elapsedSeconds": 1800.892,
+    "ticks": 180,
+    "authenticatedHttpRequests": 1080,
+    "webSocketClients": 5,
+    "workspaces": 2,
+    "fixtureUsers": 3,
+    "sustainedWrites": 30,
+    "httpLatencyP50Ms": 2,
+    "httpLatencyP95Ms": 70,
+    "httpLatencyMaxMs": 249,
+    "realModelRequests": 0,
+    "agentInferenceLoadTested": false
+  },
+  "memoryPeakBytes": 140886016,
+  "cpuUsageNSec": 11167575000,
+  "swapPeakBytes": 0,
+  "monitorSamples": 62,
+  "hostAvailableMinKiB": 976476,
+  "memoryCurrentFirstNonzeroSampleBytes": 110665728,
+  "memoryCurrentLastSampleBytes": 121872384,
+  "currentHealthStatus": 200,
+  "relayListenerPresent": true,
+  "relayFunctionalTrafficTested": false,
+  "public443Listeners": [],
+  "ownedUnitStopped": true,
+  "productionCutover": false,
+  "liveOwnerCreated": false,
+  "realModelAcceptance": false,
+  "vendorAgentAcceptance": false,
+  "publicTlsVerified": false,
+  "restoreReady": false
+}
