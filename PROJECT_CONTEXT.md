@@ -272,3 +272,10 @@ The single-node implementation still lives in the embedded sources in lack.py. O
 - Fresh public Pocket ID discovery and JWKS both returned 200 at 2026-10-11T15:35:07.693Z. S256, RS256, authorization code and client_secret_basic are advertised; the public key is RSA/RS256. Dedicated client, real login and installed version remain unverified.
 - Local HTTPS skips are gated by absent CADDY_TEST_BIN. Verified official Windows archive/manifest SHA-256 downloads are isolated in ignored storage, but preparation stopped before extraction/execution because the command compared the manifest SHA-512 with the API SHA-256. Correction permission was requested; no new HTTPS pass claim.
 - See docs/verification/2026-10-11-pocket-id-live-capability-followup.md. Login review blockers and production boundaries are unchanged.
+
+### Authorized Windows HTTPS supplement
+
+- Corrected the portable Caddy checksum command after explicit approval: archive/manifest SHA-256 and the archive's published SHA-512 all matched. Only the verified executable was extracted; no global installation or service creation.
+- Unchanged HTTPS test files completed 11/11, zero failures/skips/cancellations, 47348.7477 ms. This includes all seven previously skipped TLS/HTTP2/WSS/packaged multi-user and node scenarios. No owned Caddy processes remained afterwards.
+- The earlier 532-test full-run count remains historical; this is a separate supplement, not a newly combined full run. Backends/nodes are synthetic, not real Muse/dots acceptance, and no production resource-cap claim follows.
+- Evidence: docs/verification/2026-10-11-windows-https-supplement.md. Remaining OIDC repairs were not authorized by the Caddy-only response and were not performed. Production LACK, Pocket ID and Relay remain unchanged.
