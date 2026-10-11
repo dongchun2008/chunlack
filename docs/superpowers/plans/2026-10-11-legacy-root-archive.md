@@ -64,3 +64,13 @@
 ## Execution ruling
 
 The user explicitly approved this design and instructed development/testing on 2026-10-11. Execute the described scope inline without another redundant permission round. New production activation or ownership assignment is not implied. No completion claim substitutes for the full original delivery goal.
+
+## Progress 2026-10-11
+
+- Snapshot/restore v2 and coordinated consumers implemented; independent review findings reproduced and repaired.
+- Windows full regression with existing Caddy: 489/489 pass, zero failure/skip/cancel; smoke exit 0.
+- Human-approved workspace/login: ChunLACK / chunlack-owner; account creation still pending, no password initialized.
+- Native real-root trial failed closed before any snapshot: conservative 256-entry trial bound, not product's 4096-entry bound.
+- Bounded read-only metadata proved 1344 entries / 9734656 bytes. Await explicit approval of a 2048-entry trial bound without raising CPU/memory/time/bytes or changing production.
+- Real 1Cat direct generation and two isolated ChunLACK provider requests observed; restart of local task history remains an uncovered delivery gap, not a fully passed pilot.
+- Production, HTTPS activation, application recovery, vendor-owned Agent execution and Relay traffic acceptance remain incomplete.

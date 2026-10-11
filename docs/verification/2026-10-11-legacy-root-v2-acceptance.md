@@ -59,3 +59,19 @@ UTC 2026-10-11 00:57 的只读采样：生产 LACK PID 234963、Tailscale PID 85
 运行日志、原始 SSH 输出和真实模型试点脚本保存在忽略目录 `.superpowers/sdd/2026-10-11-legacy-root-archive/`，不上传真实配置、数据库、凭据或生产库存清单。
 
 所有快照及恢复仍保持 `migrationReady=false`、`restoreReady=false`、`applicationConsistency=not_proven`。完整交付还需原生全根目录归档、应用一致性备份与恢复、真人账号初始化及明确资源授权、受控发布和回滚、两个公网入口验收、完整真实模型链路、Muse 老镇/dots 玄玑自身执行与证据回传、忙碌节点及 Relay 业务共存验证。当前不宣称系统可直接交付。
+
+## VPS 原生演练的阻断及结束状态
+
+归档源码提交 `ed9b00e13646ca9cd82c30d717f0cbaafd980bfa` 已同步到 GitHub 开发分支，并从该提交生成 3942400 字节源码 tar，SHA-256 为 `989cfb3e48bec041a36768eb4dd07bfb458d3137e04f90cdccd79cffcf050e20`。解包前验证大小、哈希、路径、类型和容量；只在本轮 0700 root 私有目录操作，源码及上传文件为 0600。
+
+两次真实源数据演练均在创建快照前终止，没有产生快照或恢复副本；第一次诊断过度隐藏错误，第二次仅加入安全阶段/错误码，定位为 `source_inventory / trial_source_entry_limit`。没有删除未知文件、过滤缓存或放宽源数据保护。首次目录 `/var/tmp/chunlack-root-v2-20261011-a6b4d927`、诊断目录 `/var/tmp/chunlack-root-v2-20261011-b8cfa761` 保留失败取证，不能算备份或恢复验收。
+
+两次单元实际保持 CPUQuotaPerSecUSec=100ms、MemoryHigh=100663296、MemoryMax=134217728、TasksMax=32、RuntimeMaxUSec=90 秒、PrivateNetwork/PrivateTmp=yes、ProtectSystem=strict、原 `/var/lib/chunlack` 只读、本轮根目录显式绑定且仅该目录可写。退出码均为 1，包含 8 秒取证等待；第一轮实际服务 CPU 116ms、内存峰值约 20.1 MiB、Swap 0，诊断轮 CPU 103ms、峰值约 17.6 MiB、Swap 0，不是吞吐测量。
+
+随后以另一个只读、禁止网络的 metadata 单元核对完整源目录，仅统计文件类型/大小，不读取文件内容：实际 1344 项、515 文件、829 目录、9734656 字节，未超过设计上限 4096，未观察到链接或特殊类型。`build-cache` 占 1277 项、9594218 字节，不能将此前浅库存 43 项称作完整根目录。metadata 单元退出 0，耗时 1.027 秒、CPU 111ms、报告内存峰值 516 KiB、Swap 0。
+
+失败原因是本次演练脚本的 256 项保守上限，而非证明 v2 产品代码无法保存真实目录。已向用户请求仅将演练库存限额调整至 2048；总量 16 MiB、CPU/内存/时间/只读与网络隔离均不变。收到明确答复前，不自动扩大预算或跳过 `build-cache`。
+
+UTC 2026-10-11 01:11 的结束采样：LACK PID 234963、Tailscale PID 859、NRestarts=0、active/running，LACK `/health` HTTP 200；Relay UDP 40000 保持由 PID 859 监听，TCP 443 仍无监听，生产发布 `e188eae` 不变。可用内存 1122800 KiB、Swap 使用 0、load1 为 0。三个试验单元 MainPID 均为 0，仅清除了两项自有失败单元的失败标记，不操作业务服务。
+
+这仍是有限共存采样，不证明 Relay 转发业务或应用恢复。真人名称已确认，但账户尚未创建；公网入口和整体交付仍未完成。
