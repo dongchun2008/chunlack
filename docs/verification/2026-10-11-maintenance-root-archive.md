@@ -45,3 +45,9 @@ This completes the bounded original-root archive and independent offline file/da
 The original service was restarted against its unchanged original data, not switched to the restored copy. Therefore restoring an application from the backup, reviewed ownership migration, new-runtime recovery/rollback and production business acceptance remain separate gates. The snapshot and restore reports intentionally retain `migrationReady=false`, `restoreReady=false` and `applicationConsistency=not_proven`.
 
 No real model request or vendor Agent task ran during this maintenance test. Relay process/listener stability is not proof of real forwarding latency or packet-loss stability; traffic-based coexistence acceptance remains outstanding. The template-index product fix was not deployed. No new public port, DNS change, credential change or external account connection occurred.
+
+## Subsequent retention and application-history checks
+
+A verified same-host non-temporary copy now exists at `/var/backups/chunlack-root-20261011-57c03a6e`. The temporary root remains retained as operator evidence, but is no longer the only accepted snapshot location. No off-host copy has been made.
+
+The subsequent isolated application check restored this retained snapshot into a new mutable test root and verified the original 13 messages and one Agent through two fresh processes of the current packaged legacy-compatible runtime. It did not switch production or prove the pinned historical release, public multi-user migration, model connectivity or full business recovery. See [the bounded follow-up evidence](2026-10-11-durable-backup-app-history.md).
