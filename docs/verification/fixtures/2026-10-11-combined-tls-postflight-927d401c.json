@@ -1,0 +1,81 @@
+{
+  "kind": "CHUNLACK_NATIVE_TLS_INDEPENDENT_POSTFLIGHT",
+  "nonce": "927d401c",
+  "productCommit": "95c70de51de569cd04f3c1bf60d6b2b944eac530",
+  "verifiedAt": "2026-10-11T10:57:33.757893+00:00",
+  "status": "verified",
+  "tests": {
+    "tests": 3,
+    "pass": 3,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "passedNames": [
+    "actual materialized LACK serves its referenced login/workspace scripts through verified HTTPS",
+    "actual packaged HTTPS API preserves sessions, Origin/CSRF and current workspace authorization across ingress",
+    "actual packaged WSS uses the scoped path and shared identity, while agents REST/MCP never expose human or global administration routes"
+  ],
+  "fixtureTlsVerified": true,
+  "fixturesCleaned": true,
+  "caddy": {
+    "version": "2.11.7",
+    "source": "https://github.com/caddyserver/caddy/releases/download/v2.11.7/caddy_2.11.7_linux_amd64.tar.gz",
+    "archiveBytes": 18113754,
+    "archiveSha256": "727b91701a392de6ebc5027509f548bf39979e5216340d0faed8fa5e69c84f8b",
+    "binarySha256": "678ade3bfc088749c81a681adc603333ee0bb023b6a6cfe3c0f58bef8ff854e9",
+    "githubAssetDigestVerified": true,
+    "separatePublisherSignatureVerified": false,
+    "globalInstallation": false,
+    "systemServiceCreated": false
+  },
+  "appliedLimits": {
+    "MemoryMax": "201326592",
+    "MemoryHigh": "167772160",
+    "MemorySwapMax": "0",
+    "TasksMax": "32",
+    "OOMPolicy": "stop",
+    "CPUQuotaPerSecUSec": "100ms",
+    "RuntimeMaxUSec": "4min"
+  },
+  "unitElapsedSeconds": 47.6003687530756,
+  "unitMemoryPeakBytes": 115224576,
+  "unitSwapPeakBytes": 0,
+  "unitCpuUsageNSec": 4437483000,
+  "ownedUnitStopped": true,
+  "ownedUnitState": {
+    "MainPID": "0",
+    "LoadState": "not-found",
+    "ActiveState": "inactive"
+  },
+  "originalServices": {
+    "chunlack.service": {
+      "MainPID": "594652",
+      "NRestarts": "0",
+      "ActiveState": "active",
+      "SubState": "running"
+    },
+    "tailscaled.service": {
+      "MainPID": "859",
+      "NRestarts": "0",
+      "ActiveState": "active",
+      "SubState": "running"
+    }
+  },
+  "originalUnitHashesUnchanged": true,
+  "lackHealthStatus": 200,
+  "relayListenerPresent": true,
+  "relayForwardingTested": false,
+  "public443Listening": false,
+  "public443Unchanged": true,
+  "controllerSha256": "f7d7ccf83556f90fb5f552d400e58e471241126b12db65bdcb6dc3ac21bd89bb",
+  "hostReportSha256": "1a086a335408793b8411fc03a80d17447d36b13a21595106fc9b9e04d431d9e5",
+  "trialReportSha256": "7ddeada44880efce3daa9c5b5c983ab8d1db48700eb92a5ed37c87e73ceefeca",
+  "productionCutover": false,
+  "realBackendRequests": 0,
+  "realModelAcceptance": false,
+  "vendorAgentAcceptance": false,
+  "publicTlsVerified": false,
+  "authenticatedPublicRuntimeTested": true,
+  "agentPlanAndActTested": false
+}

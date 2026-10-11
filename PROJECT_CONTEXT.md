@@ -234,3 +234,12 @@ The single-node implementation still lives in the embedded sources in lack.py. O
 - Both original services retained their PIDs, restart counters and unit-file hashes; original LACK health remained 200 and the Relay listener remained present. Actual Relay forwarding quality was not measured. The owned trial stopped and its unit became not-found.
 - The corrected fixed-revision local package was generated and inventoried without being started. No production cutover, live owner creation, certificate, credential/DNS/firewall change, or maintenance-window consumption occurred.
 - Complete model-task load, combined HTTPS/application budget acceptance, formal account/data ownership, deployed direct 1Cat and native Muse Laozhen/dots Xuanji acceptance remain open. Open WebUI is not an integration target. Overall delivery remains active; see docs/verification/2026-10-11-low-budget-sustained-validation.md for scope and evidence hashes.
+
+## 2026-10-11 bounded native model-capacity and TLS checkpoint
+
+- Native capacity component retest: 5/5 passed, 24 complete five-participant mock rounds, 120 mock requests; applied CPU 10%, MemoryHigh 160 MiB, MemoryMax 192 MiB, swap 0, TasksMax 32. This is not native vendor-Agent or real-model inference acceptance.
+- Native application + fixture TLS/WSS: 3/3 passed in the same 192 MiB / CPU 10% unit budget; peak 115224576 bytes, swap peak 0. Caddy 2.11.7 remained an isolated verified tool, not a global installation or production service.
+- Original LACK and Tailscale PIDs/unit hashes remained unchanged, health 200 and Relay listener present; the owned test units/fixtures were stopped/cleaned. Public TCP 443 remained unbound. Relay forwarding performance was not measured.
+- Evidence: docs/verification/2026-10-11-native-capacity-retest.md and docs/verification/2026-10-11-combined-tls-budget-validation.md.
+- Real VPS-to-1Cat routing/generation, Muse/dots native computer-task acceptance, formal owner creation/data attribution, production TLS/login and sustained combined real workloads remain pending. The publication window is still unconsumed; do not claim production delivery or accepted production caps from these fixture trials.
+- A usable direct-model private address or separately approved bounded loopback forwarding test is still needed. External node task protocol currently has research/browser types, not general model inference. Do not widen the public browser pilot or reuse Open WebUI credentials as a shortcut.
