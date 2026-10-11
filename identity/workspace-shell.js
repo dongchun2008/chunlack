@@ -110,6 +110,7 @@
           await act(() => client.login(login.value.trim(), value)); if (!closed) submit.disabled = false;
         };
         body.append(form);
+        const sso = node('a', '使用统一身份登录（Pocket ID）'); sso.href = '/auth/oidc/login'; body.append(sso);
         button('使用邀请码', () => openInvite(), body);
         body.append(node('p', '没有账号？请向工作区所有者申请邀请。此页面不会显示或保存模型密钥。'));
       } else if (next.status === 'no_access' || next.status === 'selection') {

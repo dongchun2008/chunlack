@@ -148,7 +148,7 @@ test('identity tables enforce foreign keys and persist memberships across reopen
     assert.equal(db.pragma('integrity_check', {simple: true}), 'ok');
     assert.deepEqual(db.pragma('foreign_key_check'), []);
     const names = db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name").all().map(x => x.name);
-    assert.deepEqual(names, ['audit', 'invites', 'memberships', 'reset_tokens', 'schema_version', 'sessions', 'users', 'workspaces']);
+    assert.deepEqual(names, ['audit', 'external_identities', 'invites', 'memberships', 'reset_tokens', 'schema_version', 'sessions', 'users', 'workspaces']);
   } finally {db.close();}
 });
 

@@ -8,7 +8,7 @@ const {IdentityError, roles, authorize} = require('./policy.cjs');
 const identityTableScopes = Object.freeze({
   users: 'user', workspaces: 'workspace', memberships: 'workspace',
   invites: 'workspace', sessions: 'user', reset_tokens: 'user',
-  audit: 'platform', schema_version: 'platform'
+  audit: 'platform', schema_version: 'platform', external_identities: 'user'
 });
 
 function normalizeLogin(login) {
@@ -23,7 +23,7 @@ function safeUser(row) {
 }
 
 // Privileged provisioning/authentication primitives are never public routes.
-function createIdentityStore({dbPath, now = Date.now}) {
+function createIdentityStore({dbPath, now = Date.now, migrate = false}) {
   if (typeof dbPath !== 'string' || (dbPath !== ':memory:' && !path.isAbsolute(dbPath))) {
     throw new IdentityError('invalid_database_path', 400);
   }
@@ -50,7 +50,8 @@ function createIdentityStore({dbPath, now = Date.now}) {
     db.pragma('foreign_keys = ON');
     if (db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='schema_version'").get()) {
       const row = db.prepare("SELECT version FROM schema_version WHERE component='identity'").get();
-      if (row && row.version !== 1) throw new IdentityError('unsupported_schema', 503);
+      if (row && ![1, 2].includes(row.version)) throw new IdentityError('unsupported_schema', 503);
+      if (row?.version === 1 && migrate !== true) throw new IdentityError('identity_migration_required', 503);
     }
     if (dbPath !== ':memory:') db.pragma('journal_mode = WAL');
     db.transaction(() => {
@@ -98,9 +99,15 @@ function createIdentityStore({dbPath, now = Date.now}) {
           action TEXT NOT NULL, metadata TEXT NOT NULL, created_at INTEGER NOT NULL
         );
         CREATE INDEX IF NOT EXISTS audit_workspace ON audit(workspace_id,created_at);
+        CREATE TABLE IF NOT EXISTS external_identities (
+          issuer TEXT NOT NULL, subject TEXT NOT NULL, user_id TEXT NOT NULL REFERENCES users(id),
+          created_at INTEGER NOT NULL, revoked_at INTEGER,
+          PRIMARY KEY(issuer,subject), UNIQUE(issuer,user_id)
+        );
       `);
       db.prepare('INSERT OR IGNORE INTO schema_version(component,version,applied_at) VALUES (?,?,?)')
-        .run('identity', 1, clock());
+        .run('identity', 2, clock());
+      db.prepare("UPDATE schema_version SET version=2,applied_at=? WHERE component='identity' AND version=1").run(clock());
     }).immediate();
   } catch (error) {
     db.close();
@@ -151,6 +158,42 @@ function createIdentityStore({dbPath, now = Date.now}) {
   }
 
   const api = {
+    linkExternalIdentity({issuer, sub, userId}) {
+      let url;
+      try {url = new URL(issuer);} catch {throw new IdentityError('invalid_identity', 400);}
+      if (url.protocol !== 'https:' || url.origin !== issuer || url.username || url.password ||
+          typeof sub !== 'string' || !/^[\x21-\x7e]{1,255}$/.test(sub)) throw new IdentityError('invalid_identity', 400);
+      return db.transaction(() => {
+        activeUser(userId, 'unauthorized');
+        try {db.prepare('INSERT INTO external_identities(issuer,subject,user_id,created_at) VALUES (?,?,?,?)').run(issuer, sub, userId, clock());}
+        catch (error) {if (error.code?.startsWith('SQLITE_CONSTRAINT')) throw new IdentityError('identity_already_linked', 409); throw error;}
+        recordAudit({targetId: userId, action: 'identity.linked'});
+        return {linked: true};
+      }).immediate();
+    },
+    resolveExternalIdentity({issuer, sub}) {
+      if (typeof issuer !== 'string' || typeof sub !== 'string') throw new IdentityError('unauthorized', 401);
+      const row = db.prepare('SELECT user_id FROM external_identities WHERE issuer=? AND subject=? AND revoked_at IS NULL').get(issuer, sub);
+      if (!row) throw new IdentityError('unauthorized', 401);
+      return safeUser(activeUser(row.user_id, 'unauthorized'));
+    },
+    unlinkExternalIdentity({issuer, sub}) {
+      return db.transaction(() => {
+        const row = db.prepare('SELECT user_id FROM external_identities WHERE issuer=? AND subject=? AND revoked_at IS NULL').get(issuer, sub);
+        if (!row) throw new IdentityError('not_found', 404);
+        db.prepare('UPDATE external_identities SET revoked_at=? WHERE issuer=? AND subject=?').run(clock(), issuer, sub);
+        const revoked = revokeAll(row.user_id, clock());
+        recordAudit({targetId: row.user_id, action: 'identity.unlinked'});
+        return {userId: row.user_id, revoked};
+      }).immediate();
+    },
+    createOidcSessionRecord({issuer, sub, tokenHash, csrfHash, expiresAt}) {
+      return db.transaction(() => {
+        const account = api.resolveExternalIdentity({issuer, sub});
+        const user = activeUser(account.id, 'unauthorized');
+        return api.createSessionRecord({userId: user.id, tokenHash, csrfHash, expiresAt, expectedPasswordHash: user.password_hash});
+      }).immediate();
+    },
     createUser({login, passwordHash}) {
       const normalized = normalizeLogin(login);
       if (typeof passwordHash !== 'string' || passwordHash.length < 32 || passwordHash.length > 1024 ||
@@ -416,6 +459,7 @@ function createIdentityStore({dbPath, now = Date.now}) {
     const result = fn(...args);
     let event;
     if (name === 'disableUser') event = {type: 'account_disabled', userId: args[0]};
+    if (name === 'unlinkExternalIdentity') event = {type: 'identity_unlinked', userId: result.userId, revoked: result.revoked};
     if (name === 'setMembership' || name === 'removeMembership') {
       event = {type: 'membership', workspaceId: args[1].workspaceId, userId: args[1].userId};
     }

@@ -487,7 +487,7 @@ function workspaceTransport() {
   if (!services) return null;
   if (!services.transport) {
     if (!process.env.LACK_WEB_ORIGIN) throw new Error('web_origin_required');
-    services.sessions = require('./identity/sessions.cjs').createSessionService({store: services.identity, onRevoke: event => services.transport?.revoke(event)});
+    services.sessions = require('./identity/sessions.cjs').createSessionService({store: services.identity, oidc: services.oidc || null, onRevoke: event => services.transport?.revoke(event)});
     try {services.transport = require('./collaboration/transport.cjs').createWorkspaceTransport({identity: services.identity, sessions: services.sessions, state: services.registry, webOrigin: process.env.LACK_WEB_ORIGIN});}
     catch (error) {services.sessions.close(); throw error;}
   }
@@ -3311,6 +3311,10 @@ app.use((req, res, next) => {if (runtimeReady) return next(); req.resume(); res.
 const http = require('http');
 const server = http.createServer(app); ownedHttpServer = server;
 server.requestTimeout = 40000; server.headersTimeout = 10000; server.keepAliveTimeout = 5000; server.maxConnections = 64;
+if (workspaceServices()) {
+  const services = workspaceServices();
+  services.oidc = await require('./identity/oidc.cjs').createOidcLogin({config: config.identity?.oidc, webOrigin: process.env.LACK_WEB_ORIGIN, env: process.env});
+}
 const transport = workspaceTransport();
 const wss = new WebSocket.Server({ server, maxPayload: transport ? 65536 : 1048576, perMessageDeflate: false,
   verifyClient: transport ? (info, done) => {
@@ -3322,7 +3326,7 @@ ownedWss = wss;
 
 if (transport) {
   const services = workspaceServices();
-  app.use(require('./identity/http.cjs').createIdentityRouter({store: services.identity, sessions: services.sessions, webOrigin: process.env.LACK_WEB_ORIGIN}));
+  app.use(require('./identity/http.cjs').createIdentityRouter({store: services.identity, sessions: services.sessions, webOrigin: process.env.LACK_WEB_ORIGIN, oidc: services.oidc}));
   app.use('/api', transport.httpContext, (req, res, next) => {initializeWorkspace(req.workspace); next();});
 }
 

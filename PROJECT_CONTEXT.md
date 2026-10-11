@@ -243,3 +243,12 @@ The single-node implementation still lives in the embedded sources in lack.py. O
 - Evidence: docs/verification/2026-10-11-native-capacity-retest.md and docs/verification/2026-10-11-combined-tls-budget-validation.md.
 - Real VPS-to-1Cat routing/generation, Muse/dots native computer-task acceptance, formal owner creation/data attribution, production TLS/login and sustained combined real workloads remain pending. The publication window is still unconsumed; do not claim production delivery or accepted production caps from these fixture trials.
 - A usable direct-model private address or separately approved bounded loopback forwarding test is still needed. External node task protocol currently has research/browser types, not general model inference. Do not widen the public browser pilot or reuse Open WebUI credentials as a shortcut.
+
+## 2026-10-11 Pocket ID human login checkpoint (not release ready)
+
+- Existing issuer: https://pockid.chunclaw.top; dedicated client and real login remain unconfigured/unverified.
+- Opt-in relying party, explicit identity links/schema v2 and local-session route integration are implemented in the development branch only.
+- Full local run: 523 tests, 514 pass, 2 fail, 7 skip. Browser readiness recheck also failed; do not call this accepted.
+- Open review findings: owned OIDC shutdown/drain, concurrent browser-login identity race, and genuine v1 migration plus active/revoked-link archive coverage.
+- Corrections were disclosed and approval requested. No production/Relay/Pocket ID configuration changes. Preserve the long-term goal as active.
+- See docs/verification/2026-10-11-pocket-id-login-checkpoint.md and docs/POCKET_ID_SETUP.md. Older custom OAuth core remains unmounted.

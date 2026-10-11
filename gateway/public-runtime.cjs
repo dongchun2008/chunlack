@@ -47,7 +47,7 @@ function validateMigration(root) {
     for (const db of [identity, data]) {
       if (db.pragma('quick_check', {simple: true}) !== 'ok' || db.pragma('foreign_key_check').length) throw failure('migration_integrity_failed');
     }
-    if (identity.prepare("SELECT version FROM schema_version WHERE component='identity'").get()?.version !== 1 || data.prepare("SELECT version FROM collaboration_schema WHERE component='collaboration'").get()?.version !== 1) throw failure('migration_schema_required');
+    if (identity.prepare("SELECT version FROM schema_version WHERE component='identity'").get()?.version !== 2 || data.prepare("SELECT version FROM collaboration_schema WHERE component='collaboration'").get()?.version !== 1) throw failure('migration_schema_required');
     const workspaces = identity.prepare('SELECT id FROM workspaces WHERE disabled_at IS NULL').all();
     const owners = identity.prepare("SELECT m.workspace_id FROM memberships m JOIN users u ON u.id=m.user_id WHERE m.role='owner' AND u.disabled_at IS NULL").all();
     if (!workspaces.length || workspaces.some(w => !owners.some(o => o.workspace_id === w.id))) throw failure('migration_owner_required');

@@ -8,7 +8,7 @@ const digest = value => createHash('sha256').update(value).digest('hex');
 const cookieName = '__Host-chunlack_session';
 const cookieOptions = Object.freeze({secure: true, httpOnly: true, sameSite: 'lax', path: '/'});
 
-function createIdentityRouter({store, sessions, webOrigin}) {
+function createIdentityRouter({store, sessions, webOrigin, oidc = null}) {
   const url = new URL(webOrigin);
   if (url.protocol !== 'https:' || url.origin !== webOrigin || url.username || url.password || typeof store?.requireMembership !== 'function' || typeof sessions?.authenticate !== 'function') throw new IdentityError('invalid_config', 400);
   const router = express.Router();
@@ -42,9 +42,10 @@ function createIdentityRouter({store, sessions, webOrigin}) {
   router.use((req, res, next) => {
     res.setHeader('Cache-Control', 'no-store');
     res.setHeader('Referrer-Policy', 'no-referrer');
-    if (req.path.startsWith('/auth/') && req.url.includes('?')) return res.status(404).json({error: 'not_found'});
+    if (req.path.startsWith('/auth/') && req.url.includes('?') && !(oidc && req.method === 'GET' && req.path === '/auth/oidc/callback')) return res.status(404).json({error: 'not_found'});
     next();
   });
+  require('./oidc-http.cjs').mountOidcRoutes({router, oidc, sessions, webOrigin, mutation, json, wrap});
   router.post('/auth/login', mutation, json, wrap(async (req, res) => {
     const input = body(req);
     if (typeof input.login !== 'string' || input.login.length > 256 || typeof input.password !== 'string' || input.password.length > 256) throw new IdentityError('invalid_request', 400);

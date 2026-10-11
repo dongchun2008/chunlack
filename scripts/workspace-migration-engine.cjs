@@ -242,7 +242,7 @@ async function applyReviewedMigration(plan, options) {
     await identityReader.db.backup(path.join(root, 'db', 'identity.db'));
     identityReader.close(); identityReader = null;
     canonical(path.join(root, 'db', 'identity.db'));
-    identity = createIdentityStore({dbPath: path.join(root, 'db', 'identity.db')});
+    identity = createIdentityStore({dbPath: path.join(root, 'db', 'identity.db'), migrate: true});
     if (identity.requireMembership(binding.ownerId, binding.workspaceId).role !== 'owner') throw fail('migration_owner_binding_invalid');
     sourceReader = openWorkspaceSource(relative(snapshotRoot, 'candidate/db/lack.db'));
     target = new Database(path.join(root, 'db', 'lack.db'));

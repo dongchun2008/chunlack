@@ -25,7 +25,7 @@ function readSessionCookie(header) {
   return token;
 }
 
-function createSessionService({store, now = Date.now, onRevoke = () => {}, admission = createAdmission({now})}) {
+function createSessionService({store, now = Date.now, onRevoke = () => {}, admission = createAdmission({now}), oidc = null}) {
   if (!store || typeof onRevoke !== 'function' || typeof now !== 'function') throw new IdentityError('invalid_service', 500);
   let closed = false, failed = false;
   function ensureOpen() {
@@ -61,9 +61,19 @@ function createSessionService({store, now = Date.now, onRevoke = () => {}, admis
   const unsubscribe = store.onIdentityChange(event => {
     if (closed) return;
     if (event.type === 'account_disabled') notifySessions(store.revokeUserSessions(event.userId), 'account_disabled');
+    else if (event.type === 'identity_unlinked') notifySessions(event.revoked, 'identity_unlinked');
     else notify({...event, reason: 'membership_changed'});
   });
   const service = {
+    loginOidc({proof}) {
+      ensureOpen();
+      if (!oidc) throw new IdentityError('unauthorized', 401);
+      const identity = oidc.consume(proof);
+      const token = randomBytes(32).toString('base64url'), csrfToken = csrf(token);
+      const record = store.createOidcSessionRecord({...identity, tokenHash: digest(token), csrfHash: digest(csrfToken), expiresAt: clock() + absoluteMs});
+      notifySessions(record.revoked, 'session_limit');
+      return {token, csrfToken, sessionId: record.sessionId, user: store.getUser(record.userId)};
+    },
     async login({login, password, source}) {
       ensureOpen();
       if (!validInput(password) || typeof login !== 'string' || !login.trim() || login.length > 128) {
