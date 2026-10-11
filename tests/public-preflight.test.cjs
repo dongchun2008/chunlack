@@ -20,7 +20,9 @@ function run(t, occupied) {
   for (const [name, body] of Object.entries(scripts)) fs.writeFileSync(path.join(root, name), `#!/bin/sh\nprintf '%s\\n' '${name}:'"$*" >> '${shellLog}'\n${body}\n`, {mode: 0o700});
   const bash = process.platform === 'win32' ? 'C:/Program Files/Git/bin/bash.exe' : '/bin/bash';
   const result = spawnSync(bash, ['-c', 'export PATH="$1:/usr/bin:/bin"; exec /usr/bin/sh "$2"', 'preflight-fixture', shellPath(root), shellPath(path.join(__dirname, '..', 'scripts', 'public-preflight.sh'))],
-    {env: {...process.env, MSYS_NO_PATHCONV: '1'}, encoding: 'utf8', timeout: 3000, windowsHide: true});
+    // Git Bash launches a separate Windows process for each fixture command.
+    // Keep a finite deadline without mistaking its startup overhead for a gate failure.
+    {env: {...process.env, MSYS_NO_PATHCONV: '1'}, encoding: 'utf8', timeout: process.platform === 'win32' ? 15000 : 3000, windowsHide: true});
   return {...result, commands: fs.readFileSync(log, 'utf8')};
 }
 test('preflight only collects a synthetic baseline and never treats it as permission to deploy', t => {

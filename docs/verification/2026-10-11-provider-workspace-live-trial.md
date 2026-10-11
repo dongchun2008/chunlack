@@ -1,7 +1,7 @@
 # Workspace Provider trial: local regressions and native runner gate
 
 Date: 2026-10-11. Status: local regressions passed; native live Provider
-acceptance NOT passed. No product code, production configuration, credentials,
+acceptance PASSED in r3 below. Earlier failures are retained. No product code, production configuration, credentials,
 model configuration, Tailscale routing or Relay configuration was changed.
 
 ## Fixture and local result
@@ -72,7 +72,7 @@ inactive with MainPID 0. Artifacts are retained in the owned isolated root.
 No production service was stopped/restarted. No public port was opened.
 These checks do not measure Relay throughput or prove long-term performance.
 
-## Next gate
+## Historical gate after r1
 
 The minimal proposed correction is confined to the isolated controller:
 execute this same Node test script directly rather than use a CLI runner that
@@ -85,3 +85,44 @@ The raw VPS-to-model API call already passed in
 `2026-10-11-direct-1cat-tailnet-route.md`. Its success does not prove this native
 workspace Provider trial. OAuth written-spec review, native Muse/dots execution,
 formal-owner/data ownership and final production publication gates remain.
+
+## Native isolated correction and r3 acceptance
+
+The approved r2 direct-script attempt exposed a second namespace mismatch:
+container dependency links resolved to `/app` in the host namespace. It failed
+with `ENOENT ... lstat '/app'`, before Provider acceptance. Its non-TAP reporter
+also prevented reliable counts. Neither failed attempt is a successful test.
+
+The r3 controller uses host-visible `/opt/chunlack/node/bin/node` and
+`/opt/chunlack/current/node_modules`, executes the same script directly, and
+explicitly selects `--test-reporter=tap` without the child-spawning `--test`.
+Read-only SHA256 comparison confirmed the host and container Node binaries
+are identical: `7fde7b8afa198da66257f42ee2001d874c7355631e6d1579a5fb5ef1f246df4c`.
+Frozen product archive and live test hashes are unchanged from r1.
+
+Canonical report: `fixtures/2026-10-11-1cat-provider-native-r3.json`.
+Trial root: `/var/tmp/chunlack-1cat-provider-20261011-e8bd217c`.
+Unit: `chunlack-1cat-e8bd217c.service`. Result: exit 0, tests 1, pass 1,
+fail 0, skipped 0, cancelled 0, accepted true; elapsed 5.802 seconds.
+
+The actual Provider performed exactly two calls to the private inference
+router: model discovery and generation using `qwen38-27b-nvfp4`. Generation
+returned HTTP 200 in 181 ms, 17 prompt tokens and 2 completion tokens; the
+fixture asserted `OK`. Cross-workspace, viewer and ungranted-model attempts
+were denied before transport. Prompt logging was not observed.
+
+Applied limits remained CPU 10%, MemoryHigh 160 MiB, MemoryMax 192 MiB,
+MemorySwapMax 0, TasksMax 32, runtime 2 minutes. MemoryPeak was 42577920 bytes
+(40.605 MiB), CPU usage 497083000 ns. This is a bounded short acceptance test,
+not sustained inference-capacity or full Agent/browser acceptance.
+
+Original LACK PID 594652 and Tailscale PID 859, service-definition hashes,
+HTTP health 200 and UDP 40000 listener output matched before and after.
+The owned test unit stopped, inactive/dead with MainPID 0; cleanup passed.
+No production/Relay restart, configuration change or new public listener.
+The later report-download timeout did not invalidate the test and did not
+justify repeating real inference; the retained report was downloaded again.
+
+Next: implement the already-approved lightweight OAuth in local bounded steps,
+then integrate identity/consent/ingress/restore and native account tests. The
+successful Provider result does not complete those separate delivery gates.
