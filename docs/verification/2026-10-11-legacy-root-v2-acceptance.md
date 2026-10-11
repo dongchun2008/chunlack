@@ -75,3 +75,19 @@ UTC 2026-10-11 00:57 的只读采样：生产 LACK PID 234963、Tailscale PID 85
 UTC 2026-10-11 01:11 的结束采样：LACK PID 234963、Tailscale PID 859、NRestarts=0、active/running，LACK `/health` HTTP 200；Relay UDP 40000 保持由 PID 859 监听，TCP 443 仍无监听，生产发布 `e188eae` 不变。可用内存 1122800 KiB、Swap 使用 0、load1 为 0。三个试验单元 MainPID 均为 0，仅清除了两项自有失败单元的失败标记，不操作业务服务。
 
 这仍是有限共存采样，不证明 Relay 转发业务或应用恢复。真人名称已确认，但账户尚未创建；公网入口和整体交付仍未完成。
+
+## 原生 Linux 新增回归验证
+
+UTC 2026-10-11 01:14，在既有 VPS 的独立代码目录使用 Node v24.21.0 和既有原生依赖，执行本轮两个新增测试文件。只使用合成 fixture，不使用生产数据，不安装全局软件：
+
+```sh
+node --test --test-concurrency=1 --test-timeout=70000 \
+  tests/workspace-snapshot-root-coverage.test.cjs \
+  tests/workspace-snapshot-review-boundaries.test.cjs
+```
+
+单元 `chunlack-root-v2-regression-b8cfa761.service` 使用与前述演练相同的 CPU/内存/任务数/90 秒预算、PrivateNetwork/PrivateTmp、原数据只读与自有目录绑定。systemd-run 实际退出 0：12 项通过，失败、跳过、取消均为 0，Node 报告 18103.830655 ms；服务实际耗时 18.694 秒、CPU 1.865 秒、内存峰值约 63 MiB、Swap 峰值 0。宿主包装器耗时 19.151 秒，不能混同于 Node 用例耗时或生产吞吐。
+
+验证覆盖深度上限、目录预算、未知内容归档、空目录完整性、来源变更、链接拒绝、v1 兼容、未知版本拒绝、普通数据库扩展名附件及实际候选迁移/失败恢复。这不是原生 Linux 489 项全量回归，也不是生产真实目录的归档成功证据；Windows 专属语义以 Windows 全量证据为准。
+
+真实源目录演练仍等待用户确认 2048 项库存上限，其余预算和保护条件不变。该批准尚未收到，未提前调整。
