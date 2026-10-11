@@ -79,7 +79,7 @@ function createSessionService({store, now = Date.now, onRevoke = () => {}, admis
       notifySessions(record.revoked, 'session_limit');
       return {token, csrfToken, sessionId: record.sessionId, user: store.getUser(record.userId)};
     },
-    async login({login, password, source}) {
+    async login({login, password, source, browserToken = null}) {
       ensureOpen();
       if (!validInput(password) || typeof login !== 'string' || !login.trim() || login.length > 128) {
         throw new IdentityError('unauthorized', 401);
@@ -93,9 +93,13 @@ function createSessionService({store, now = Date.now, onRevoke = () => {}, admis
         if (!account || account.disabled || !isPasswordHash(account.passwordHash) || !verified) {
           throw new IdentityError('unauthorized', 401);
         }
+        // Do not persist a session (or evict an older one) before binding
+        // capacity is secured. No await separates reservation and registration.
+        oidc?.reserveAuthentication(browserToken);
         const token = randomBytes(32).toString('base64url'), csrfToken = csrf(token);
         const record = store.createSessionRecord({userId: account.id, tokenHash: digest(token), csrfHash: digest(csrfToken),
           expectedPasswordHash: account.passwordHash, expiresAt: clock() + absoluteMs});
+        if (oidc) service.browserAuthenticationChanged(browserToken, record.sessionId);
         notifySessions(record.revoked, 'session_limit');
         return {token, csrfToken, sessionId: record.sessionId, user: store.getUser(account.id)};
       } finally {release();}

@@ -288,3 +288,12 @@ The single-node implementation still lives in the embedded sources in lack.py. O
 - Evidence and exact commands: `docs/verification/2026-10-12-session-migration-restore-validation.md`.
 - No product code, production, Pocket ID application or Relay changes. Restore trials remain non-activatable; this is not production rollback-session policy validation.
 - Three previously reported OIDC product issues and shutdown/writer-lock coverage remain pending separate approval. Real Pocket ID and native Muse/dots delivery gates remain open.
+
+## 2026-10-12: OIDC boundary repairs verified locally
+
+- Approved repairs now revoke already-issued prior browser sessions on a newer OIDC begin, await response-body cancellation settlement, and expire abandoned browser records after five minutes without pruning authenticated mappings early.
+- Two review findings were separately authorized and corrected: restore missing bindings after local password login; reserve bounded binding capacity after password validation but before synchronous session issuance/registration. HTTP regressions verify rejected attempts do not create hidden sessions or revoke existing ones.
+- Final focused regression: 80/80 passed. Final full repository regression with verified portable Caddy: 541/541 passed, zero failures/skips/cancellations. Smoke passed for local HTTP/WebSocket, two mock model backends, SQLite persistence, private binding and config preservation. No matching Caddy test process remained.
+- Real generated-package fault injection proves incomplete OIDC body cancellation retains the writer lock on shutdown and startup rollback, rejecting second writers even after later drain. This is Windows-local evidence, not native Linux or production acceptance.
+- Evidence, intermediate review findings, reproduction failures and final log hashes: `docs/verification/2026-10-12-oidc-boundary-repair-validation.md`. Pocket ID setup instructions updated. No product dependencies, provider routes, Pocket ID applications, live credentials, VPS services or Relay configuration changed.
+- Dedicated Pocket ID real login, native Muse LaoZhen/dots XuanJi task/evidence round trips and production publication remain open. The custom OAuth core remains unmounted; full platform delivery is not claimed.

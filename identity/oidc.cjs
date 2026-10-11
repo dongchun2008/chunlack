@@ -44,8 +44,11 @@ async function createOidcLogin({config, webOrigin, env = process.env, fetchImpl 
     if (response.status !== 200 || Number(response.headers.get('content-length')) > 262144 || !response.body) {
       await response.body?.cancel(); throw Error('issuer_response_rejected');
     }
-    const reader = response.body.getReader(), chunks = []; let bytes = 0;
-    const abort = () => {reader.cancel().catch(() => {});};
+    const reader = response.body.getReader(), chunks = []; let bytes = 0, cancellation;
+    // A reader may report done before its underlying cancellation has settled.
+    // Keep that cleanup inside the owned fetch operation, including on abort.
+    const cancel = () => cancellation || (cancellation = Promise.resolve().then(() => reader.cancel()).catch(() => {}));
+    const abort = () => {void cancel();};
     signal.addEventListener('abort', abort, {once: true});
     try {
       while (true) {
@@ -54,11 +57,11 @@ async function createOidcLogin({config, webOrigin, env = process.env, fetchImpl 
         signal.throwIfAborted();
         if (done) break;
         bytes += value.byteLength;
-        if (bytes > 262144) {await reader.cancel(); throw Error('issuer_response_too_large');}
+        if (bytes > 262144) {await cancel(); throw Error('issuer_response_too_large');}
         chunks.push(value);
       }
       return new Response(Buffer.concat(chunks), {status: response.status, headers: response.headers});
-    } finally {signal.removeEventListener('abort', abort); reader.releaseLock();}
+    } finally {signal.removeEventListener('abort', abort); await cancellation; reader.releaseLock();}
   });
   let client, configuration;
   try {
@@ -95,6 +98,16 @@ async function createOidcLogin({config, webOrigin, env = process.env, fetchImpl 
     browser.generation++;
     for (const [state, row] of pending) if (row.browser === browser) pending.delete(state);
   }
+  function authenticationBrowser(browserToken, time, create) {
+    const key = browserKey(browserToken);
+    let browser = browsers.get(key);
+    if (!browser && key && create) {
+      if (browsers.size >= 256) throw fail('rate_limited', 429);
+      browser = {createdAt: time, expiresAt: time + 300000, generation: 0, sessionId: null};
+      browsers.set(key, browser);
+    }
+    return browser;
+  }
   const service = {
     async begin({source, browserToken: suppliedToken}) {
       const time = clock(); prune(time);
@@ -105,10 +118,11 @@ async function createOidcLogin({config, webOrigin, env = process.env, fetchImpl 
         if (!browser) {
           if (browsers.size >= 256) throw fail('rate_limited', 429);
           browserToken = randomBytes(32).toString('base64url');
-          browser = {createdAt: time, expiresAt: time + 12 * 60 * 60 * 1000, generation: 0, sessionId: null};
+          browser = {createdAt: time, expiresAt: time + 300000, generation: 0, sessionId: null};
           browsers.set(browserKey(browserToken), browser);
         }
         invalidate(browser);
+        if (!browser.sessionId) browser.expiresAt = time + 300000;
         const state = randomBytes(32).toString('base64url');
         const row = {createdAt: time, expiresAt: time + 300000, browserHash: digest(browserToken),
           browser, generation: browser.generation, nonce: client.randomNonce(), verifier: client.randomPKCECodeVerifier()};
@@ -157,13 +171,19 @@ async function createOidcLogin({config, webOrigin, env = process.env, fetchImpl 
       if (!row || !current(row, time) || time >= row.expiresAt || time < row.createdAt) throw fail('unauthorized');
       return {issuer: row.issuer, sub: row.sub};
     },
+    reserveAuthentication(browserToken) {
+      const time = clock(); prune(time);
+      // Called only after credential validation, before synchronous issuance.
+      authenticationBrowser(browserToken, time, true);
+    },
     authenticationChanged(browserToken, sessionId = null) {
       const time = clock(); prune(time);
-      const browser = browsers.get(browserKey(browserToken));
+      const browser = authenticationBrowser(browserToken, time, Boolean(sessionId));
       if (!browser) return null;
       invalidate(browser);
       const previous = browser.sessionId;
       browser.sessionId = sessionId;
+      browser.expiresAt = time + (sessionId ? 12 * 60 * 60 * 1000 : 300000);
       return previous;
     },
     async close() {

@@ -182,6 +182,16 @@ for (const rollback of [false,true]) test('enabled packaged OIDC aborts and drai
     assert.equal(fs.existsSync(path.join(f.root,'.public-runtime.lock')),false);
   }finally{await oidc?.close();await runtime?.close();await exchange;}
 });
+for (const mode of ['shutdown', 'rollback']) test('packaged OIDC incomplete body cancellation retains the writer lock on ' + mode, {timeout: 25000}, async t => {
+  const f = await packageFixture(t);
+  fs.symlinkSync(path.join(__dirname, '..', 'node_modules'), path.join(f.packageRoot, 'node_modules'), process.platform === 'win32' ? 'junction' : 'dir');
+  f.config.identity = {oidc: {enabled: true, issuer: 'https://oidc.fixture.invalid', clientId: 'fixture-client', clientSecretEnv: 'FIXTURE_OIDC_SECRET'}};
+  fs.writeFileSync(path.join(f.root, 'config', 'lack.config.json'), JSON.stringify(f.config));
+  const output = execFileSync(process.execPath, [path.join(__dirname, 'helpers', 'oidc-drain-lock-child.cjs'), f.entry, f.root, mode],
+    {env: {...f.childEnv, FIXTURE_OIDC_SECRET: 'synthetic-oidc-secret'}, timeout: 20000, encoding: 'utf8', windowsHide: true});
+  assert.match(output, new RegExp('OIDC_DRAIN_LOCK_RETAINED=' + mode));
+});
+
 test('actual materialized import allocates no data directory, listeners or retained startup timers', {timeout: 15000}, async t => {
   const f = await packageFixture(t);
   const result = execFileSync(process.execPath, ['-e', "require(process.argv[1]); console.log('IMPORT_ONLY_OK')", path.join(f.packageRoot, 'server.js')],

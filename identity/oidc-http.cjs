@@ -31,7 +31,11 @@ function mountOidcRoutes({router, oidc, sessions, webOrigin, mutation, json, wra
   router.post('/auth/oidc/begin', mutation, json, wrap(async (req, res) => {
     if (!req.body || Array.isArray(req.body) || Object.keys(req.body).length) throw new IdentityError('invalid_request', 400);
     rejectActiveSession(req);
-    const result = await oidc.begin({source: req.socket.remoteAddress || 'local', browserToken: browserCookie(req.headers.cookie, true)});
+    const browserToken = browserCookie(req.headers.cookie, true);
+    // Revoke a session whose response has not reached this browser yet, before
+    // opening another attempt. Generation invalidation alone cannot revoke it.
+    sessions.browserAuthenticationChanged(browserToken);
+    const result = await oidc.begin({source: req.socket.remoteAddress || 'local', browserToken});
     res.cookie(cookieName, result.browserToken, {...cookieOptions, maxAge: 12 * 60 * 60 * 1000});
     res.json({url: result.url});
   }));

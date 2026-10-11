@@ -52,8 +52,7 @@ function createIdentityRouter({store, sessions, webOrigin, oidc = null}) {
     const input = body(req);
     if (typeof input.login !== 'string' || input.login.length > 256 || typeof input.password !== 'string' || input.password.length > 256) throw new IdentityError('invalid_request', 400);
     const browserToken = browser(req);
-    const authenticated = await sessions.login({login: input.login, password: input.password, source: source(req)});
-    if (oidc) sessions.browserAuthenticationChanged(browserToken, authenticated.sessionId);
+    const authenticated = await sessions.login({login: input.login, password: input.password, source: source(req), browserToken});
     const previous = readSessionCookie(req.headers.cookie);
     if (previous && previous !== authenticated.token) {
       try {sessions.logout(previous);} catch (error) {if (!(error instanceof IdentityError) || error.code !== 'unauthorized') throw error;}
