@@ -96,14 +96,16 @@ function privateDirectory(directory) {
 function prepareWorkspaceRestoreTrial({ snapshotRoot, restoreRoot }) {
   const source = checkedPath(snapshotRoot);
   const target = checkedPath(restoreRoot, true);
-  if (source === target || source.startsWith(target + path.sep) || target.startsWith(source + path.sep)) throw fail('restore_roots_overlap');
+  const sourceKey = process.platform === 'win32' ? source.toLowerCase() : source;
+  const targetKey = process.platform === 'win32' ? target.toLowerCase() : target;
+  if (sourceKey === targetKey || sourceKey.startsWith(targetKey + path.sep) || targetKey.startsWith(sourceKey + path.sep)) throw fail('restore_roots_overlap');
   if (fs.existsSync(target)) throw fail('restore_destination_exists');
   if (!fs.statSync(checkedPath(path.dirname(target))).isDirectory()) throw fail('restore_parent_missing');
   const verified = verifyWorkspaceSnapshot(source);
   const manifest = readMetadata(payloadFile(source, 'manifest.json'), 2 * 1024 * 1024);
   const originalState = readMetadata(payloadFile(source, 'snapshot-state.json'), 16384);
   const trialId = randomUUID();
-  const marker = { version: 1, trialId, snapshotId: verified.snapshotId, status: 'building', migrationReady: false, restoreReady: false };
+  const marker = { version: verified.formatVersion, trialId, snapshotId: verified.snapshotId, status: 'building', migrationReady: false, restoreReady: false };
   // No source directory is created, replaced, changed, or started as a service.
   fs.mkdirSync(target, { mode: 0o700 });
   writeState(target, marker, true);
@@ -115,6 +117,10 @@ function prepareWorkspaceRestoreTrial({ snapshotRoot, restoreRoot }) {
       records.push({ relativePath, bytes: metadata.bytes.length, sha256: createHash('sha256').update(metadata.bytes).digest('hex') });
     }
     for (const record of records) {
+      if (record.kind === 'directory') {
+        privateDirectory(payloadFile(payload, record.relativePath, true));
+        continue;
+      }
       const input = payloadFile(source, record.relativePath);
       const output = payloadFile(payload, record.relativePath, true);
       privateDirectory(path.dirname(output));
@@ -135,16 +141,18 @@ function verifyWorkspaceRestoreTrial(restoreRoot) {
   const root = checkedPath(restoreRoot);
   const markerFile = payloadFile(root, 'restore-trial-state.json');
   const marker = readMetadata(markerFile, 16384).value;
-  if (marker.version !== 1 || marker.status !== 'verified' || marker.migrationReady !== false || marker.restoreReady !== false ||
+  if (![1, 2].includes(marker.version) || marker.status !== 'verified' || marker.migrationReady !== false || marker.restoreReady !== false ||
       typeof marker.trialId !== 'string' || !/^[0-9a-f-]{36}$/.test(marker.trialId)) throw fail('restore_metadata_invalid');
   const entries = fs.readdirSync(root).sort();
   if (JSON.stringify(entries) !== JSON.stringify(['payload', 'restore-trial-state.json'])) throw fail('restore_unlisted_file');
   if (process.platform !== 'win32' && ((fs.statSync(root).mode | fs.statSync(markerFile).mode) & 0o077)) throw fail('restore_permissions_invalid');
   const result = verifyWorkspaceSnapshot(checkedPath(path.join(root, 'payload')));
-  if (result.snapshotId !== marker.snapshotId) throw fail('restore_metadata_invalid');
+  if (result.snapshotId !== marker.snapshotId || result.formatVersion !== marker.version) throw fail('restore_metadata_invalid');
   return {
     status: 'verified', trialId: marker.trialId, snapshotId: result.snapshotId,
     fileCount: result.fileCount, databases: result.databases,
+    directoryCount: result.directoryCount, entryCount: result.entryCount, formatVersion: result.formatVersion,
+    scope: result.scope, sourceCoverage: result.sourceCoverage, verificationMode: result.verificationMode,
     migrationReady: false, restoreReady: false, applicationConsistency: result.applicationConsistency,
     permissionEvidence: result.permissionEvidence
   };

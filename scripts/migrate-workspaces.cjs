@@ -59,11 +59,11 @@ function planMigration({sourceRoot, targetRoot, workspaceId, ownerId}) {
   } catch (error) {if (error.code?.startsWith('migration_')) throw error; throw failure('migration_source_database_invalid');}
   finally {sourceReader?.close();}
   let inventoryCount = 0;
-  function collect(file, depth = 0) {
-    if (++inventoryCount > MAX_FILES || depth > 8) throw failure('migration_file_inventory_limit');
+  function collect(file) {
+    if (++inventoryCount > MAX_FILES || path.relative(sourceRoot, file).split(path.sep).length > 12) throw failure('migration_file_inventory_limit');
     const stat = fs.lstatSync(file);
     if (stat.isSymbolicLink()) throw failure('migration_linked_path_denied');
-    if (stat.isDirectory()) {for (const entry of fs.readdirSync(file).sort()) collect(path.join(file, entry), depth + 1); return;}
+    if (stat.isDirectory()) {for (const entry of fs.readdirSync(file).sort()) collect(path.join(file, entry)); return;}
     const relativePath = path.relative(sourceRoot, file).split(path.sep).join('/');
     if (!stat.isFile()) {unresolved.push({code: 'unsupported_file_type', relativePath}); return;}
     if (stat.size > MAX_HASH_BYTES) {unresolved.push({code: 'large_file_requires_review', relativePath, bytes: stat.size}); return;}

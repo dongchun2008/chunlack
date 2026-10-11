@@ -81,7 +81,8 @@ function inventory(root, describeDatabases = true) {
       if (stat.isDirectory()) { walk(file, relative, depth + 1); continue; }
       const info = fileInfo(file); total += info.bytes;
       if (records.length >= 8192 || total > MAX_TOTAL) throw fail('recovery_limit_exceeded');
-      records.push({ relativePath: relative, ...info, ...(describeDatabases && /\.(db|sqlite)$/.test(name) ? { tables: databaseTables(file) } : {}) });
+      const sqliteRole = /^(?:legacy-data\/db\/|snapshot-trial\/payload\/candidate\/db\/)(?:lack|identity|agent-gateway|mcp-events)\.db$/.test(relative);
+      records.push({ relativePath: relative, ...info, ...(describeDatabases && sqliteRole ? { tables: databaseTables(file) } : {}) });
     }
   }
   walk(root, '', 0); return records;
@@ -151,6 +152,7 @@ function verifyMigrationRecovery(recoveryRoot) {
     safeRelative(record.relativePath);
     const relative = record.relativePath.startsWith('candidate/') ? 'legacy-data/' + record.relativePath.slice(10) : record.relativePath === 'archive/config/lack.config.json' ? 'original-config/lack.config.json' : null;
     if (!relative) continue;
+    if (record.kind === 'directory') { privateEntry(path.join(root, relative), true); continue; }
     const actual = fileInfo(path.join(root, relative));
     if (actual.bytes !== record.bytes || actual.sha256 !== record.sha256) throw fail('recovery_file_mismatch');
   }
@@ -179,7 +181,10 @@ function prepareMigrationRecovery({ candidateRoot, recoveryRoot, reviewed, onPha
     for (const record of proof.manifest.records) {
       safeRelative(record.relativePath);
       const destination = record.relativePath.startsWith('candidate/') ? 'legacy-data/' + record.relativePath.slice(10) : record.relativePath === 'archive/config/lack.config.json' ? 'original-config/lack.config.json' : null;
-      if (destination) copy(path.join(trialRoot, 'payload', record.relativePath), path.join(root, destination), record);
+      if (destination) {
+        if (record.kind === 'directory') fs.mkdirSync(path.join(root, destination), { recursive: true, mode: 0o700 });
+        else copy(path.join(trialRoot, 'payload', record.relativePath), path.join(root, destination), record);
+      }
     }
     checkLegacyConfig(root);
     if (onPhase !== undefined && typeof onPhase !== 'function') throw fail('recovery_options_invalid');

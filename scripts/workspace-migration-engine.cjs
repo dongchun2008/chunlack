@@ -132,7 +132,8 @@ function inventory(root, expectedConfig) {
       const value = rel === 'config/lack.config.json' && expectedConfig ? {bytes: expectedConfig.length, sha256: sha(expectedConfig)} : digest(file);
       total += value.bytes; if (total > MAX_TOTAL) throw fail('migration_capacity_exceeded');
       const item = {relativePath: rel, ...value};
-      if (rel.endsWith('.db')) item.tables = tableCounts(file);
+      // These are the actual runtime/verified-snapshot SQLite roles, not filename inference.
+      if (/^(?:db\/|quarantine\/snapshot\/candidate\/db\/)(?:lack|identity|agent-gateway|mcp-events)\.db$/.test(rel)) item.tables = tableCounts(file);
       records.push(item);
     }
   }
@@ -149,6 +150,8 @@ function verifyPublishedRoot(root, expected) {
   if (config.multiUser?.migrationReady !== true || config.multiUser?.enabled !== true) throw fail('migration_publication_incomplete');
   const actual = inventory(root);
   if (JSON.stringify(actual) !== JSON.stringify(manifest.records)) throw fail('migration_file_mismatch');
+  const retained = require('./workspace-snapshot.cjs').verifyWorkspaceSnapshot(path.join(root, 'quarantine', 'snapshot'));
+  if (retained.snapshotId !== manifest.snapshotId || retained.manifestSha256 !== manifest.snapshotManifestSha256) throw fail('migration_file_mismatch');
   const reader = openWorkspaceSource(path.join(root, 'db', 'identity.db'));
   try {ownership(reader.db, manifest);} finally {reader.close();}
   require('../gateway/public-runtime.cjs').validateMigration(root);
@@ -183,7 +186,7 @@ async function applyReviewedMigration(plan, options) {
   let identityReader = openWorkspaceSource(identitySource), proof;
   try {proof = ownership(identityReader.db, binding);} finally {identityReader.close(); identityReader = null;}
   const parent = checked(path.dirname(root), true);
-  const required = originalManifest.records.reduce((sum, item) => sum + item.bytes * 2, 0) + identityBefore.main.bytes * 2 + 128 * 1024 * 1024;
+  const required = originalManifest.records.reduce((sum, item) => sum + (item.kind === 'directory' ? 0 : item.bytes * 2), 0) + identityBefore.main.bytes * 2 + 128 * 1024 * 1024;
   const space = fs.statfsSync(parent);
   if (space.bavail * space.bsize < required) throw fail('migration_disk_budget_insufficient');
   fs.mkdirSync(root, {mode: 0o700}); const rootStat = fs.lstatSync(root), instanceId = randomUUID();
@@ -206,12 +209,20 @@ async function applyReviewedMigration(plan, options) {
   function phase(name) {owned(); if (options.onPhase) options.onPhase(name); owned();}
   try {
     const quarantine = path.join(root, 'quarantine', 'snapshot'); dirs(quarantine, root);
-    for (const item of originalManifest.records) copy(relative(snapshotRoot, item.relativePath), relative(quarantine, item.relativePath), item, root);
+    for (const item of originalManifest.records) {
+      if (item.kind === 'directory') dirs(path.join(quarantine, ...item.relativePath.split('/')), root);
+      else copy(relative(snapshotRoot, item.relativePath), relative(quarantine, item.relativePath), item, root);
+    }
     for (const name of ['manifest.json','snapshot-state.json']) copy(path.join(snapshotRoot, name), path.join(quarantine, name), digest(path.join(snapshotRoot, name)), root);
     for (const item of originalManifest.records) {
       if (!item.relativePath.startsWith('candidate/') || item.kind === 'sqlite' || item.kind === 'config') continue;
       const parts = item.relativePath.split('/').slice(1), folder = parts.shift();
+      if (!['memory','research','uploads','artifacts','attachments'].includes(folder)) continue;
       const destinationFolder = folder === 'memory' ? 'agent_memories' : folder;
+      if (item.kind === 'directory') {
+        dirs(path.join(root, 'workspaces', binding.workspaceId, destinationFolder, ...parts), root);
+        continue;
+      }
       const destination = relative(root, 'workspaces/' + binding.workspaceId + '/' + destinationFolder + '/' + parts.join('/'));
       copy(relative(snapshotRoot, item.relativePath), destination, item, root);
     }
