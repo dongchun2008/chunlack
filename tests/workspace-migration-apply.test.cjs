@@ -1,6 +1,6 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),os=require('node:os');
-const {createHash,randomUUID}=require('node:crypto');
+const {createHash,createHmac,randomUUID}=require('node:crypto');
 const Database=require('better-sqlite3');
 const {createIdentityStore}=require('../identity/store.cjs');
 const {hashPassword}=require('../identity/passwords.cjs');
@@ -50,6 +50,11 @@ async function fixture(t,{v1=false}={}){
       legacy.prepare('INSERT INTO users VALUES(?,?,?,?,NULL)').run(userId,'migration-owner',await passwordHash,time);
       legacy.prepare('INSERT INTO workspaces VALUES(?,?,?,NULL)').run(workspaceId,'Explicit legacy workspace',time);
       legacy.prepare('INSERT INTO memberships VALUES(?,?,?,1,?,?)').run(workspaceId,userId,'owner',time,time);
+      for(const [token,revoked] of [['v'.repeat(43),false],['r'.repeat(43),true]]){
+        const tokenHash=createHash('sha256').update(token).digest('hex');
+        const csrfHash=createHash('sha256').update(createHmac('sha256',token).update('chunlack-csrf-v1').digest('base64url')).digest('hex');
+        legacy.prepare('INSERT INTO sessions(id,token_hash,csrf_hash,user_id,created_at,last_seen_at,expires_at,revoked_at) VALUES(?,?,?,?,?,?,?,?)').run(randomUUID(),tokenHash,csrfHash,userId,time,time,time+3600000,revoked?time:null);
+      }
       owner={user:{id:userId},workspace:{id:workspaceId}};
     }finally{legacy.close();}
   }else{
@@ -69,7 +74,7 @@ async function fixture(t,{v1=false}={}){
 }
 async function prepared(t){const f=await fixture(t);const plan=planMigration(f.input);await prepareWorkspaceSnapshot({sourceRoot:f.sourceRoot,snapshotRoot:f.snapshotRoot});return {...f,plan};}
 
-test('genuine frozen v1 identity migrates only in the isolated candidate and preserves source bytes',async t=>{
+test('genuine frozen v1 identity and active/revoked sessions migrate only in the isolated candidate and preserve source bytes',async t=>{
   const f=await fixture(t,{v1:true}),source=f.options.identitySourcePath;
   const before=[hash(source),hash(f.dbPath),hash(f.dbPath+'-wal')];
   const original=new Database(source,{readonly:true});
@@ -82,24 +87,37 @@ test('genuine frozen v1 identity migrates only in the isolated candidate and pre
   assert.equal((await applyMigration(plan,f.options)).migrationReady,true);
   assert.deepEqual([hash(source),hash(f.dbPath),hash(f.dbPath+'-wal')],before);
   const candidate=createIdentityStore({dbPath:path.join(f.targetRoot,'db','identity.db')});
+  const migratedSessions=require('../identity/sessions.cjs').createSessionService({store:candidate});
   try{
     assert.equal(candidate.requireMembership(f.input.ownerId,f.input.workspaceId).role,'owner');
+    const activeToken='v'.repeat(43),revokedToken='r'.repeat(43);
+    assert.equal(migratedSessions.authenticate(activeToken).userId,f.input.ownerId);
+    assert.equal(migratedSessions.validateCsrf(activeToken,createHmac('sha256',activeToken).update('chunlack-csrf-v1').digest('base64url')),true);
+    assert.throws(()=>migratedSessions.authenticate(revokedToken),{code:'unauthorized'});
+    assert.notEqual(candidate.findSessionRecord(createHash('sha256').update(revokedToken).digest('hex')).revoked_at,null);
+    migratedSessions.logout(activeToken);
+    assert.throws(()=>migratedSessions.authenticate(activeToken),{code:'unauthorized'});
     candidate.linkExternalIdentity({issuer:'https://pocket.fixture.invalid',sub:'migrated-owner',userId:f.input.ownerId});
     assert.equal(candidate.resolveExternalIdentity({issuer:'https://pocket.fixture.invalid',sub:'migrated-owner'}).id,f.input.ownerId);
-  }finally{candidate.close();}
+  }finally{migratedSessions.close();candidate.close();}
   assert.equal(hash(source),before[0]);
 });
 
-test('v2 snapshot and restore preserve active links, revoked links and revoked sessions without activation',async t=>{
+test('v2 snapshot and restore preserve active/revoked identities and sessions without activation',async t=>{
   const f=await fixture(t),identityFile=path.join(f.sourceRoot,'db','identity.db');
   fs.copyFileSync(f.options.identitySourcePath,identityFile);
   const identity=createIdentityStore({dbPath:identityFile}),issuer='https://pocket.fixture.invalid';
-  let revokedSession;
+  const activeToken='a'.repeat(43),revokedToken='r'.repeat(43);
+  const tokenHash=token=>createHash('sha256').update(token).digest('hex');
+  const csrfToken=token=>createHmac('sha256',token).update('chunlack-csrf-v1').digest('base64url');
+  const csrfHash=token=>tokenHash(csrfToken(token));
+  let activeSession,revokedSession;
   try{
     const other=identity.createUser({login:'revoked-owner',passwordHash:await passwordHash});
     identity.linkExternalIdentity({issuer,sub:'active',userId:f.input.ownerId});
     identity.linkExternalIdentity({issuer,sub:'revoked',userId:other.id});
-    revokedSession=identity.createOidcSessionRecord({issuer,sub:'revoked',tokenHash:'d'.repeat(64),csrfHash:'e'.repeat(64),expiresAt:Date.now()+60000}).sessionId;
+    activeSession=identity.createOidcSessionRecord({issuer,sub:'active',tokenHash:tokenHash(activeToken),csrfHash:csrfHash(activeToken),expiresAt:Date.now()+3600000}).sessionId;
+    revokedSession=identity.createOidcSessionRecord({issuer,sub:'revoked',tokenHash:tokenHash(revokedToken),csrfHash:csrfHash(revokedToken),expiresAt:Date.now()+3600000}).sessionId;
     identity.unlinkExternalIdentity({issuer,sub:'revoked'});
   }finally{identity.close();}
   const before=hash(identityFile);
@@ -113,13 +131,22 @@ test('v2 snapshot and restore preserve active links, revoked links and revoked s
   // Test a working copy so opening SQLite cannot mutate the verified archive.
   const workingFile=path.join(f.root,'restored-identity.db');fs.copyFileSync(restoredFile,workingFile);
   const restored=createIdentityStore({dbPath:workingFile});
+  const restoredSessions=require('../identity/sessions.cjs').createSessionService({store:restored});
   try{
     assert.equal(restored.resolveExternalIdentity({issuer,sub:'active'}).id,f.input.ownerId);
+    const principal=restoredSessions.authenticate(activeToken);
+    assert.equal(principal.userId,f.input.ownerId);assert.equal(principal.sessionId,activeSession);
+    assert.equal(restored.requireMembership(principal.userId,f.input.workspaceId).role,'owner');
+    assert.equal(restoredSessions.validateCsrf(activeToken,csrfToken(activeToken)),true);
+    assert.throws(()=>restoredSessions.authenticate(revokedToken),{code:'unauthorized'});
     assert.throws(()=>restored.resolveExternalIdentity({issuer,sub:'revoked'}),{code:'unauthorized'});
     assert.throws(()=>restored.createOidcSessionRecord({issuer,sub:'revoked',tokenHash:'a'.repeat(64),csrfHash:'f'.repeat(64),expiresAt:Date.now()+60000}),{code:'unauthorized'});
-    assert.notEqual(restored.findSessionRecord('d'.repeat(64)).revoked_at,null);
-    assert.equal(restored.findSessionRecord('d'.repeat(64)).id,revokedSession);
-  }finally{restored.close();}
+    assert.notEqual(restored.findSessionRecord(tokenHash(revokedToken)).revoked_at,null);
+    assert.equal(restored.findSessionRecord(tokenHash(revokedToken)).id,revokedSession);
+    restoredSessions.logout(activeToken);
+    assert.throws(()=>restoredSessions.authenticate(activeToken),{code:'unauthorized'});
+    assert.equal(restored.resolveExternalIdentity({issuer,sub:'active'}).id,f.input.ownerId);
+  }finally{restoredSessions.close();restored.close();}
   assert.equal(hash(identityFile),before);assert.deepEqual(verifyWorkspaceRestoreTrial(restoreRoot),checked);
 });
 

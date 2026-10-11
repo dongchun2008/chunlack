@@ -279,3 +279,12 @@ The single-node implementation still lives in the embedded sources in lack.py. O
 - Unchanged HTTPS test files completed 11/11, zero failures/skips/cancellations, 47348.7477 ms. This includes all seven previously skipped TLS/HTTP2/WSS/packaged multi-user and node scenarios. No owned Caddy processes remained afterwards.
 - The earlier 532-test full-run count remains historical; this is a separate supplement, not a newly combined full run. Backends/nodes are synthetic, not real Muse/dots acceptance, and no production resource-cap claim follows.
 - Evidence: docs/verification/2026-10-11-windows-https-supplement.md. Remaining OIDC repairs were not authorized by the Caddy-only response and were not performed. Production LACK, Pocket ID and Relay remain unchanged.
+
+## 2026-10-12: approved session migration/restore test coverage
+
+- Local test-only correction: explicit eight-column/eight-placeholder legacy session INSERT in `tests/workspace-migration-apply.test.cjs`.
+- Genuine v1 migration and v2 snapshot/restore now cover active session authentication, CSRF, revoked-session rejection and logout in isolated working copies, preserving source/archive bytes.
+- Fresh focused result: 2/2 passed. Related five-file regression: 77/77 passed, zero failures/skips/cancellations; the focused cases are included in those 77.
+- Evidence and exact commands: `docs/verification/2026-10-12-session-migration-restore-validation.md`.
+- No product code, production, Pocket ID application or Relay changes. Restore trials remain non-activatable; this is not production rollback-session policy validation.
+- Three previously reported OIDC product issues and shutdown/writer-lock coverage remain pending separate approval. Real Pocket ID and native Muse/dots delivery gates remain open.
