@@ -1,5 +1,9 @@
 # Actual-backup authenticated runtime: native verification
 
+> Subsequent explicitly approved local exception-fixture correction passed six
+> control-flow cases; see `2026-10-11-controller-exception-fixture-approved.md`.
+> Native OS/cgroup fault injection is still not claimed.
+
 Date: 2026-10-11. The operator explicitly approved correction of the three
 disclosed disposable test-script defects and isolated verification.
 
