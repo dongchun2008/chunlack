@@ -74,3 +74,7 @@ The user explicitly approved this design and instructed development/testing on 2
 - Bounded read-only metadata proved 1344 entries / 9734656 bytes. Await explicit approval of a 2048-entry trial bound without raising CPU/memory/time/bytes or changing production.
 - Real 1Cat direct generation and two isolated ChunLACK provider requests observed; restart of local task history remains an uncovered delivery gap, not a fully passed pilot.
 - Production, HTTPS activation, application recovery, vendor-owned Agent execution and Relay traffic acceptance remain incomplete.
+
+## 2026-10-11 follow-up: approved 2048-entry native trial
+
+User approved only the private trial entry-cap increase to 2048. Two fresh native real-root trials used the unchanged 16 MiB, 0.1-core, 128 MiB, 90-second and read-only/no-network boundaries. Both completed archive/independent restore component checks but exited 1 on source stability after restore. A retained diagnostic inventory proves matching path sets and file bytes/hashes, with one lack_repos directory mtimeMs/ctimeMs difference; writer/root cause not established. Both test processes are terminal; cohost PIDs, restart counts, health and Relay listeners unchanged. No production cutover or source-stability waiver. See the acceptance report's 2048 section. Next gate is a reviewed consistent-source method or separately agreed maintenance window, followed by application recovery acceptance; do not run more identical retries or silently weaken the assertion.

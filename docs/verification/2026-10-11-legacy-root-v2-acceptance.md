@@ -91,3 +91,31 @@ node --test --test-concurrency=1 --test-timeout=70000 \
 验证覆盖深度上限、目录预算、未知内容归档、空目录完整性、来源变更、链接拒绝、v1 兼容、未知版本拒绝、普通数据库扩展名附件及实际候选迁移/失败恢复。这不是原生 Linux 489 项全量回归，也不是生产真实目录的归档成功证据；Windows 专属语义以 Windows 全量证据为准。
 
 真实源目录演练仍等待用户确认 2048 项库存上限，其余预算和保护条件不变。该批准尚未收到，未提前调整。
+
+## Approved 2048-entry real-root trials (2026-10-11)
+
+The user explicitly approved raising only the private trial source-entry cap from 256 to 2048. Product limits and all other trial budgets were unchanged: 16 MiB source total/per-file, depth 12, CPUQuota 10%, MemoryHigh 96 MiB, MemoryMax 128 MiB, TasksMax 32, RuntimeMaxSec 90, original source read-only, PrivateNetwork/PrivateTmp, strict filesystem protection, and a single fresh private writable trial root per run. No production restart, cutover, public listener, global install, credential, DNS, or Relay configuration change occurred.
+
+Tested Git source: `047e2b0191c5f1e3391b9cc228a2691dd861b1c8`. Source archive SHA256: `24de9600ab2732868f5fc0d994733dbf549647097e8273808a323ed0162770b7` (3942400 bytes). The diagnostic helper is private/ignored and is not production code.
+
+### Actual terminal results
+
+- `chunlack-root-v2-ce432f8a.service`: exit 1 at the final source-inventory equality assertion, after archive and independent restore checks. Runtime 45.442 seconds, CPU time 3.744 seconds, memory peak 79.7 MiB as reported by systemd, swap peak 0. This passed the former source-entry gate, but did not pass overall acceptance.
+- One bounded retry used a fresh private root and a helper that retained before/after inventories and reported differences without printing source contents. All equality checks remained strict; no assertions or source entries were skipped.
+- `chunlack-root-v2-ea822ec9.service`: exit 1, `stage=source_stability_after_restore`, `code=trial_source_changed_after_restore`. Runtime 46.181 seconds, CPU time 3.809 seconds, memory peak 73.0 MiB as reported by systemd, swap peak 0.
+- Retry source inventory: 1344 entries, comprising 515 files and 829 directories, totaling 9734656 bytes. The snapshot has 1349 typed records including derived records; this is not a source-entry count.
+- Retry before/after path sets match. All source file byte counts and SHA256 values match. Exactly one source directory in `lack_repos` changed `mtimeMs` and `ctimeMs`; its writer and the cause of the metadata change have not been established. This does not prove the source was quiescent throughout the run.
+- Before reaching that final failure, the helper completed v2 snapshot coverage/path/kind checks, independent restored file hashes and directory checks, copied SQLite integrity and foreign-key checks, copied database table-count comparisons, and recursive private/root-owned/no-link permission checks. These passing component checks do not turn the failed overall trial into a pass.
+- Copied `lack.db` counts: agents 1, messages 13; agent_memory, loop_health, pipeline_results, project_states each 0. The trial never opened the original source database with SQLite.
+
+### Cohost protection and retained evidence
+
+Fresh post-trial observations at `2026-10-11T02:28:53.807377+00:00`: LACK PID 234963 and Tailscale PID 859 both active/running with NRestarts 0; LACK health HTTP 200; existing IPv4/IPv6 UDP 40000 listeners still owned by PID 859; no TCP 443 listener; production release still `/opt/chunlack/releases/e188eae`; available memory 1108240 KiB and used swap 0. These are process/listener/health observations, not proof of end-to-end Relay traffic quality.
+
+Both own test units were confirmed terminal with MainPID 0 and exit status 1 before their failed flags were reset. Afterwards both were inactive/dead with MainPID 0. The root SSH session was closed. Private trial roots, logs, manifests, inventories, restored copies, host-run reports, and post-trial summary were retained as failure evidence; no production data or private artifact was committed to Git.
+
+### Decision and remaining gate
+
+**Overall real-root acceptance remains failed, not waived.** The approved 2048 cap is sufficient for the observed inventory, and neither run exceeded resource budgets. The remaining failure is source directory metadata instability across the complete archive/restore trial, not source-entry capacity or restored file corruption.
+
+Do not retry indefinitely, ignore directory timestamps, exclude build-cache/lack_repos, increase resource limits, or stop production merely to obtain a green result. A separately reviewed consistent-source approach or an explicitly agreed maintenance window is required before claiming source stability and application-consistent recovery. Existing readiness flags remain `migrationReady=false`, `restoreReady=false`, `applicationConsistency=not_proven`; no account bootstrap, migration, public HTTPS publication, or production cutover is authorized by these trial results. Earlier Windows 489-test and native synthetic 12-test results remain their original, narrower evidence and were not rerun or relabeled as this real-root acceptance.
