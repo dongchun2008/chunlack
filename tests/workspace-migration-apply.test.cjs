@@ -55,6 +55,79 @@ async function fixture(t){
 }
 async function prepared(t){const f=await fixture(t);const plan=planMigration(f.input);await prepareWorkspaceSnapshot({sourceRoot:f.sourceRoot,snapshotRoot:f.snapshotRoot});return {...f,plan};}
 
+test('reviewed v2 migration retains unclassified root bytes and empty directories only in quarantine',async t=>{
+  const f=await fixture(t);
+  const files={'lack_repos/project/readme.txt':'opaque repository contents','agent_memories/old.json':'{"unverified":true}',
+    'root-note.txt':'opaque root file','config/extra-private.json':'synthetic archived config','db/unclassified.db':'opaque non-SQLite bytes'};
+  for(const [relative,content] of Object.entries(files)){
+    const file=path.join(f.sourceRoot,relative);fs.mkdirSync(path.dirname(file),{recursive:true,mode:0o700});fs.writeFileSync(file,content,{mode:0o600});
+  }
+  fs.mkdirSync(path.join(f.sourceRoot,'lack_repos/empty'),{mode:0o700});
+  const plan=planMigration(f.input);assert.ok(plan.unresolved.some(x=>x.code==='unclassified_root_entry'&&x.name==='lack_repos'));
+  await prepareWorkspaceSnapshot({sourceRoot:f.sourceRoot,snapshotRoot:f.snapshotRoot});
+  const before=Object.keys(files).map(relative=>hash(path.join(f.sourceRoot,relative)));
+  const result=await applyMigration(plan,f.options);assert.equal(result.migrationReady,true);assert.equal(result.restoreReady,false);
+  const archive=path.join(f.targetRoot,'quarantine/snapshot/archive/legacy-root');
+  for(const [relative,content] of Object.entries(files))assert.equal(fs.readFileSync(path.join(archive,relative),'utf8'),content);
+  assert.deepEqual(fs.readdirSync(path.join(archive,'lack_repos/empty')),[]);
+  for(const name of ['lack_repos','root-note.txt']){
+    assert.equal(fs.existsSync(path.join(f.targetRoot,name)),false);
+    assert.equal(fs.existsSync(path.join(f.targetRoot,'workspaces',f.input.workspaceId,name)),false);
+  }
+  assert.equal(fs.existsSync(path.join(f.targetRoot,'agent_memories')),false);
+  assert.equal(fs.existsSync(path.join(f.targetRoot,'workspaces',f.input.workspaceId,'agent_memories/old.json')),false);
+  assert.equal(hash(path.join(f.targetRoot,'workspaces',f.input.workspaceId,'agent_memories/agent.json')),hash(path.join(f.sourceRoot,'memory/agent.json')));
+  assert.equal(fs.existsSync(path.join(f.targetRoot,'config/extra-private.json')),false);
+  assert.equal(fs.existsSync(path.join(f.targetRoot,'db/unclassified.db')),false);
+  assert.deepEqual(Object.keys(files).map(relative=>hash(path.join(f.sourceRoot,relative))),before);
+  assert.equal(verifyMigration(plan).migrationReady,true);
+  const recoveryRoot=path.join(f.root,'root-archive-recovery');
+  recovery().prepareMigrationRecovery({candidateRoot:f.targetRoot,recoveryRoot,reviewed:true});
+  for(const [relative,content] of Object.entries(files))assert.equal(fs.readFileSync(path.join(recoveryRoot,'snapshot-trial/payload/archive/legacy-root',relative),'utf8'),content);
+  assert.equal(fs.existsSync(path.join(recoveryRoot,'legacy-data/lack_repos')),false);
+});
+
+test('partial v1 snapshots cannot waive unresolved root ownership',async t=>{
+  const f=await fixture(t);fs.mkdirSync(path.join(f.sourceRoot,'lack_repos'),{mode:0o700});
+  const plan=planMigration(f.input);await prepareWorkspaceSnapshot({sourceRoot:f.sourceRoot,snapshotRoot:f.snapshotRoot});
+  const oldRoot=path.join(f.root,'partial-v1');fs.mkdirSync(oldRoot,{mode:0o700});
+  const paths=[['archive/config/lack.config.json','file'],['candidate/config/lack.config.json','config'],['candidate/db/lack.db','sqlite']];
+  const records=paths.map(([relativePath,kind])=>{
+    const source=path.join(f.snapshotRoot,relativePath),target=path.join(oldRoot,relativePath);
+    fs.mkdirSync(path.dirname(target),{recursive:true,mode:0o700});fs.copyFileSync(source,target);fs.chmodSync(target,0o600);
+    const record={relativePath,kind,bytes:fs.statSync(target).size,sha256:hash(target)};
+    if(kind==='sqlite'){
+      const db=new Database(target,{readonly:true});try{record.tables=db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name").all().map(({name})=>({name,count:db.prepare('SELECT count(*) n FROM "'+name+'"').get().n}));}finally{db.close();}
+    }
+    return record;
+  });
+  const snapshotId=randomUUID(),manifestPath=path.join(oldRoot,'manifest.json');
+  fs.writeFileSync(manifestPath,JSON.stringify({version:1,kind:'chunlack-offline-preparation',snapshotId,migrationReady:false,restoreReady:false,
+    applicationConsistency:'not_proven',scope:'configured_database_allowlist_and_inventoried_files',
+    permissionEvidence:process.platform==='win32'?'windows_acl_not_verified':'private_posix_modes',unresolved:[],records}),{mode:0o600});
+  fs.writeFileSync(path.join(oldRoot,'snapshot-state.json'),JSON.stringify({version:1,snapshotId,status:'prepared',migrationReady:false,manifestSha256:hash(manifestPath)}),{mode:0o600});
+  assert.equal(require('../scripts/workspace-snapshot.cjs').verifyWorkspaceSnapshot(oldRoot).formatVersion,1);
+  await assert.rejects(applyMigration(plan,{...f.options,snapshotRoot:oldRoot}),/migration_unresolved_input/);
+  assert.equal(fs.existsSync(f.targetRoot),false);
+});
+
+test('unclassified root review must name a retained root, not a known, nested or missing path',async t=>{
+  for(const name of ['absent-root','config','memory','../outside','lack_repos/nested','',null]){
+    const f=await prepared(t),plan={...f.plan,unresolved:[...f.plan.unresolved,{code:'unclassified_root_entry',name}]};
+    await assert.rejects(applyMigration(plan,f.options),/migration_unresolved_input/);
+    assert.equal(fs.existsSync(f.targetRoot),false);
+  }
+});
+
+test('archived unknown root corruption fails snapshot verification before migration output exists',async t=>{
+  const f=await fixture(t);fs.mkdirSync(path.join(f.sourceRoot,'lack_repos'),{mode:0o700});
+  fs.writeFileSync(path.join(f.sourceRoot,'lack_repos/readme.txt'),'original archive',{mode:0o600});
+  const plan=planMigration(f.input);await prepareWorkspaceSnapshot({sourceRoot:f.sourceRoot,snapshotRoot:f.snapshotRoot});
+  fs.appendFileSync(path.join(f.snapshotRoot,'archive/legacy-root/lack_repos/readme.txt'),'changed');
+  await assert.rejects(applyMigration(plan,f.options),/snapshot_file_mismatch/);
+  assert.equal(fs.existsSync(f.targetRoot),false);
+});
+
 test('reviewed snapshot converts real legacy tables and gateway ownership, preserving WAL, original sources and Ollama',async t=>{
   const f=await prepared(t),before=[hash(f.dbPath),hash(f.dbPath+'-wal')];
   const result=await applyMigration(f.plan,f.options);assert.equal(result.migrationReady,true);assert.equal(result.restoreReady,false);

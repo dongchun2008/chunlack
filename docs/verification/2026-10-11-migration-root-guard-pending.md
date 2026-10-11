@@ -1,5 +1,8 @@
 # Migration root archive guard: pending verification correction
 
+> Historical pending state. The operator subsequently approved the corrections;
+> see `2026-10-11-migration-root-guard-approved.md` for the fresh 497/497 result.
+
 Date: 2026-10-11. Baseline: `bcc9c8986fd2b11a5d61cca1dba44e15d7c5286c`.
 
 ## Scope and publication boundary

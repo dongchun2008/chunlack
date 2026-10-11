@@ -169,11 +169,22 @@ async function applyReviewedMigration(plan, options) {
   const modelGrants = grants(options.modelGrants);
   const snapshotRoot = checked(options.snapshotRoot, true), identitySource = checked(options.identitySourcePath);
   for (const other of [snapshotRoot, path.dirname(identitySource)]) if (within(root, other) || within(other, root) && other === snapshotRoot) throw fail('migration_roots_overlap');
-  if (plan.unresolved.some(item => !['unknown_table','explicit_ownership_required','owner_identity_requires_bootstrap','owner_binding_unverified','identity_source_unverified'].includes(item.code))) throw fail('migration_unresolved_input');
+  if (plan.unresolved.some(item => !['unknown_table','explicit_ownership_required','owner_identity_requires_bootstrap','owner_binding_unverified','identity_source_unverified','unclassified_root_entry'].includes(item.code))) throw fail('migration_unresolved_input');
   const {verifyWorkspaceSnapshot} = require('./workspace-snapshot.cjs');
   const prepared = verifyWorkspaceSnapshot(snapshotRoot), originalManifest = readJson(path.join(snapshotRoot, 'manifest.json'));
   const snapshotManifestSha256 = digest(path.join(snapshotRoot, 'manifest.json')).sha256;
   const records = new Map(originalManifest.records.map(item => [item.relativePath, item]));
+  for (const item of plan.unresolved.filter(item => item.code === 'unclassified_root_entry')) {
+    const name = item.name;
+    if (prepared.formatVersion !== 2 || prepared.scope !== 'bounded_complete_root_inventory' ||
+        typeof name !== 'string' || !name || name === '.' || name === '..' || /[/\\]/.test(name)) throw fail('migration_unresolved_input');
+    const source = originalManifest.sourceInventory.find(entry => entry.relativePath === name);
+    const destination = 'archive/legacy-root/' + name, captured = records.get(destination);
+    // The verified v2 coverage contract checks every descendant, its placement and bytes.
+    // Only opaque archived roots qualify; no root is loaded into an active workspace here.
+    if (!source || source.destination !== destination || !captured || captured.kind !== source.kind ||
+        captured.sourceRelativePath !== name) throw fail('migration_unresolved_input');
+  }
   if (plan.files.length > 4096 || plan.tables.length > 128) throw fail('migration_plan_invalid');
   for (const file of plan.files) {
     const rel = file.relativePath === 'config/lack.config.json' ? 'archive/' + file.relativePath : 'candidate/' + file.relativePath;

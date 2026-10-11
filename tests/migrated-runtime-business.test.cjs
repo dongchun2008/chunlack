@@ -149,7 +149,9 @@ function client(f) {
 }
 test('migrated packaged runtime serves three humans in two workspaces, actual model routes, restart and legacy-compatible recovery', { timeout: 90000 }, async t => {
   const f = await fixture(t), api = client(f), running = start(f, f.candidateRoot);
-  await until(() => running.logs().includes('PUBLIC_RUNTIME_READY') || running.process.exitCode !== null, 'packaged public runtime');
+  // Cold packaged startup is distinct from business/model waits. Keep the
+  // overall 90-second test bound and default operation waits unchanged.
+  await until(() => running.logs().includes('PUBLIC_RUNTIME_READY') || running.process.exitCode !== null, 'packaged public runtime', 30000);
   assert.equal(running.process.exitCode, null, running.logs());
   assert.equal((await api.request('/health')).status, 200);
   // Admission intentionally bounds password hashing to one operation. Three
@@ -185,7 +187,7 @@ test('migrated packaged runtime serves three humans in two workspaces, actual mo
   const db = new Database(path.join(f.candidateRoot, 'db', 'lack.db'), { readonly: true });
   try { assert.equal(db.prepare("SELECT count(*) AS n FROM messages WHERE content='VIEWER_MUST_NOT_PERSIST'").get().n, 0); assert.equal(db.prepare("SELECT url FROM research_sources WHERE id='citation'").get().url, 'https://example.com/original'); assert.equal(JSON.parse(db.prepare("SELECT data FROM research_sessions WHERE id='research'").get().data).missingEvidence, true); } finally { db.close(); }
   const restarted = start(f, f.candidateRoot);
-  await until(() => restarted.logs().includes('PUBLIC_RUNTIME_READY') || restarted.process.exitCode !== null, 'restart'); assert.equal(restarted.process.exitCode, null, restarted.logs());
+  await until(() => restarted.logs().includes('PUBLIC_RUNTIME_READY') || restarted.process.exitCode !== null, 'restart', 30000); assert.equal(restarted.process.exitCode, null, restarted.logs());
   const nextAlice = await api.login('alice'), nextBob = await api.login('bob');
   const nextA = await api.open(t, nextAlice, f.a.id), nextB = await api.open(t, nextBob, f.b.id);
   assert.ok(JSON.stringify(nextA.messages).includes('NEW_PRIVATE_A')); assert.ok(!JSON.stringify(nextA.messages).includes('NEW_PRIVATE_B'));
@@ -193,7 +195,7 @@ test('migrated packaged runtime serves three humans in two workspaces, actual mo
   const closed = once(nextA.ws, 'close'); assert.equal((await api.request('/auth/logout', { auth: nextAlice, method: 'POST', body: {} })).status, 200); assert.equal((await closed)[0], 1008);
   nextB.ws.terminate(); assert.deepEqual(await stop(restarted), [0, null]);
   const legacy = start(f, f.recovered.legacyDataRoot, true);
-  await until(() => legacy.logs().includes('LEGACY_READY') || legacy.process.exitCode !== null, 'legacy-compatible recovered runtime'); assert.equal(legacy.process.exitCode, null, legacy.logs());
+  await until(() => legacy.logs().includes('LEGACY_READY') || legacy.process.exitCode !== null, 'legacy-compatible recovered runtime', 30000); assert.equal(legacy.process.exitCode, null, legacy.logs());
   assert.equal((await api.request('/health')).status, 200);
   const old = await api.open(t, null, null, true);
   assert.ok(JSON.stringify(old.messages).includes('ORIGINAL_RESEARCH_A')); assert.ok(!JSON.stringify(old.messages).includes('NEW_PRIVATE_A'));
