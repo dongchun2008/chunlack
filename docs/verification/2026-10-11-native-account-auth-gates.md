@@ -45,6 +45,60 @@ public native dots acceptance. Do not select No authentication as a workaround,
 embed credentials in a URL, or inject a shared token for unauthenticated callers.
 OAuth client credentials are not interchangeable with the node Bearer token.
 
+## Follow-up: configured public route and identity boundary
+
+A subsequent read-only review at revision
+`ec5ae12925371bc552546bb53ac259c81e6878b6` covered the configured ingress,
+renderer, identity HTTP router, session service and identity policy. The
+identity schema, table-scope declarations and session/revocation methods were
+also inspected. Truncated command output was recovered only for the affected
+identity-store tail and deployment README.
+
+- `deploy/public/Caddyfile.template`: the agents host permits only `POST /mcp`
+  for MCP, does not expose protected-resource metadata, and rejects query
+  strings except the explicitly scoped events cursor. The human host has no
+  OAuth or well-known route. Merely adding a backend endpoint would not expose
+  a working discovery/authorization flow through this template.
+- `deploy/public/render-ingress.cjs`: it substitutes the approved hosts,
+  loopback ports and TLS configuration; it does not add OAuth routing or
+  authentication logic.
+- `identity/http.cjs`: routes implement human login/logout, membership,
+  invitations and password reset, not OAuth authorization or token exchange.
+  `/auth/` queries are rejected. Existing exact-Origin and CSRF checks must
+  remain intact; do not relax them globally to accommodate OAuth callbacks.
+- `identity/sessions.cjs`: human sessions use a host-only secure cookie with
+  idle/absolute expiry and revocation notifications. These are reusable human
+  identity controls, not an OAuth grant or an external node credential.
+- `identity/store.cjs`: identity schema version 1 and its table-scope map cover
+  users, workspaces, memberships, invites, sessions, reset tokens and audit.
+  The inspected schema does not contain OAuth client/code/grant/token tables.
+  New authorization state requires an explicit storage and backup/restore
+  contract, not an untracked table silently added to production.
+- `identity/policy.cjs`: only workspace owners may manage nodes. External
+  client consent must not turn a human owner's full role into a blanket node
+  credential; current workspace/node permissions must still be enforced.
+
+Finding: the inspected configured public MCP/identity path does not provide a
+complete OAuth flow compatible with the observed client. This is a source
+finding, not a live OAuth failure test, and does not claim that every possible
+external identity provider was searched. No existing credentials were changed.
+
+The [official MCP resource-server guidance](https://ts.sdk.modelcontextprotocol.io/v2/serving/authorization)
+describes token verification, resource/audience checks, HTTP authentication
+challenges and discovery metadata. It explicitly distinguishes the resource
+server from the authorization server; adding metadata alone does not issue
+valid tokens or implement consent. These requirements guide a proposed
+integration, not a claim that this repository implements them.
+
+Any OAuth addition changes the authorization boundary and deployment routes.
+It needs a reviewed design and implementation plan before product changes.
+The proposed direction is an isolated standards-based authorization component
+reusing current human identity controls, without a separate always-on service.
+Retain existing REST/Bearer compatibility, require explicit scoped consent,
+and verify revocation, cross-workspace denial, restart and restore behavior.
+Actual dependency choice, resource use and native-client compatibility remain
+unmeasured; no production budget or new protocol version is approved here.
+
 ## Official documentation checked
 
 The official [custom MCP server guide](https://developers.openai.com/api/docs/guides/custom-mcp-server)
