@@ -887,7 +887,10 @@ async function scanAndReindexTemplates() {
     }
   }
   stackManifest = newManifest;
-  fs.writeFileSync(MANIFEST_PATH, JSON.stringify(stackManifest, null, 2));
+  const serializedManifest = JSON.stringify(stackManifest, null, 2);
+  if (!fs.existsSync(MANIFEST_PATH) || fs.readFileSync(MANIFEST_PATH, 'utf-8') !== serializedManifest) {
+    fs.writeFileSync(MANIFEST_PATH, serializedManifest);
+  }
   console.log(`[STACK] Reindexed ${Object.keys(stackManifest).length} templates`);
 }
 
