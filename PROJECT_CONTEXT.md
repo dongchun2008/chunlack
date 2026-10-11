@@ -258,3 +258,11 @@ The single-node implementation still lives in the embedded sources in lack.py. O
 - No matching browser-fixture Node processes remained from failed runs. Owned startup probe reached readiness in 3362 ms; unchanged browser test then passed 1/1 without the probe. Earlier timeout root cause remains unconfirmed.
 - Two new regression tests reproduce the disclosed OIDC shutdown-cancellation and delayed-login race; 0/2 pass as expected before repair. Product code was not changed; correction request remains outstanding.
 - Last full-suite counts still refer to the prior 523-test run, not these later isolated runs. See docs/verification/2026-10-11-pocket-id-diagnostic-followup.md. Keep release and full-delivery gates closed.
+
+### Authorized Pocket ID corrections and fresh review
+
+- Added owned abort/drain, browser generation, successful-login session replacement and SQLite fixture cleanup. New tests cover generated-runtime shutdown/rollback, frozen genuine v1 migration, and active/revoked-link snapshot/restore.
+- Focused 69/69 passed. Extended 43/44 passed, with an unchanged nested Node startup deadline timing out. Full regression: 532 total, 525 pass, 0 fail, 7 skip; the writer-guard test passed without changes. Startup timing cause remains unknown. HTTP/WebSocket, two mock models and persistence smoke passed.
+- Fresh review blocks release: newer begin does not revoke an already-issued old session; stream cancellation is not fully drained; abandoned browser bindings can exhaust the new 256-entry capacity. The latter two were reproduced using synthetic diagnostics. Additional correction approval was requested.
+- Seven real Caddy/packaged HTTPS tests were skipped, not passed. Active-session restoration and uncooperative OIDC writer-lock retention need coverage. See docs/verification/2026-10-11-pocket-id-repair-checkpoint.md.
+- No production, Pocket ID application, credentials, VPS/Relay or provider-route changes. This checkpoint is not release-ready; full delivery remains unfinished.

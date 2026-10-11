@@ -65,6 +65,11 @@ function createSessionService({store, now = Date.now, onRevoke = () => {}, admis
     else notify({...event, reason: 'membership_changed'});
   });
   const service = {
+    browserAuthenticationChanged(browserToken, sessionId = null) {
+      ensureOpen();
+      const previous = oidc?.authenticationChanged(browserToken, sessionId);
+      if (previous && previous !== sessionId) notifySessions(store.revokeSessionRecord(previous), 'browser_identity_changed');
+    },
     loginOidc({proof}) {
       ensureOpen();
       if (!oidc) throw new IdentityError('unauthorized', 401);

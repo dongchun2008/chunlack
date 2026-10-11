@@ -139,6 +139,49 @@ async function ready(f) {
   for (let i = 0; i < 160; i++) {if (f.logs().includes('PUBLIC_RUNTIME_READY')) return; if (f.child.exitCode !== null) break; await delay(50);}
   assert.fail('Actual packaged runtime not ready: ' + f.logs().slice(-1800));
 }
+
+for (const rollback of [false,true]) test('enabled packaged OIDC aborts and drains token exchange on '+(rollback?'startup rollback':'normal shutdown'),{timeout:20000},async t=>{
+  const f=await packageFixture(t),issuer='https://oidc.fixture.invalid';
+  // Package dependencies are the same pinned modules as the surrounding tests.
+  fs.symlinkSync(path.join(__dirname,'..','node_modules'),path.join(f.packageRoot,'node_modules'),process.platform==='win32'?'junction':'dir');
+  f.config.identity={oidc:{enabled:true,issuer,clientId:'fixture-client',clientSecretEnv:'FIXTURE_OIDC_SECRET'}};
+  f.env.FIXTURE_OIDC_SECRET='synthetic-oidc-secret';
+  const module=require(path.join(f.packageRoot,'identity','oidc.cjs')),original=module.createOidcLogin;
+  let oidc,signal,settled=false,reached,exchange,runtime;
+  const reachedPromise=new Promise(resolve=>{reached=resolve;});
+  const metadata={issuer,authorization_endpoint:issuer+'/authorize',token_endpoint:issuer+'/token',jwks_uri:issuer+'/jwks',
+    response_types_supported:['code'],subject_types_supported:['public'],id_token_signing_alg_values_supported:['RS256'],
+    code_challenge_methods_supported:['S256'],token_endpoint_auth_methods_supported:['client_secret_basic'],authorization_response_iss_parameter_supported:true};
+  t.mock.method(module,'createOidcLogin',async options=>{
+    oidc=await original({...options,fetchImpl:async(url,init)=>{
+      if(String(url).endsWith('/.well-known/openid-configuration'))return Response.json(metadata);
+      assert.equal(String(url),issuer+'/token');signal=init.signal;reached();
+      try{await new Promise((resolve,reject)=>{
+        if(signal.aborted)reject(signal.reason);else signal.addEventListener('abort',()=>reject(signal.reason),{once:true});
+      });}finally{settled=true;}
+    }});return oidc;
+  });
+  async function startExchange(){
+    const start=await oidc.begin({source:'runtime-fixture'}),url=new URL(f.config.publicRuntime.webOrigin+'/auth/oidc/callback');
+    url.search=new URLSearchParams({state:new URL(start.url).searchParams.get('state'),code:'fixture-code',iss:issuer});
+    exchange=oidc.finish({url,browserToken:start.browserToken}).catch(error=>error);
+    await reachedPromise;
+  }
+  const {startPublicRuntime}=require(f.entry);
+  try{
+    if(rollback){
+      await assert.rejects(startPublicRuntime({config:f.config,dataRoot:f.root,env:f.env,startMcp:async()=>{
+        await startExchange();throw Error('fixture_mcp_failure');
+      }}),/fixture_mcp_failure/);
+    }else{
+      runtime=await startPublicRuntime({config:f.config,dataRoot:f.root,env:f.env});
+      await startExchange();await runtime.close();
+    }
+    assert.equal(signal.aborted,true);assert.equal(settled,true);
+    assert.equal((await exchange).code,'oidc_login_failed');
+    assert.equal(fs.existsSync(path.join(f.root,'.public-runtime.lock')),false);
+  }finally{await oidc?.close();await runtime?.close();await exchange;}
+});
 test('actual materialized import allocates no data directory, listeners or retained startup timers', {timeout: 15000}, async t => {
   const f = await packageFixture(t);
   const result = execFileSync(process.execPath, ['-e', "require(process.argv[1]); console.log('IMPORT_ONLY_OK')", path.join(f.packageRoot, 'server.js')],

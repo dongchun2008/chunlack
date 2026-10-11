@@ -68,6 +68,7 @@ async function startLackRuntime({config: suppliedConfig, dataRoot, identity: sha
       const errors = [];
       for (const timer of intervals) global.clearInterval(timer); intervals.clear();
       const attempt = async fn => {try {await fn();} catch (error) {errors.push(error);}};
+      await attempt(() => workspaceRuntimeServices?.oidc?.close());
       await attempt(() => workspaceRuntimeServices?.taskControl?.close());
       await attempt(() => workspaceRuntimeServices?.capacity?.close());
       await attempt(() => workspaceRuntimeServices?.capacity?.drain({timeoutMs: 8000}));
@@ -352,7 +353,7 @@ function workspaceServices() {
       if (typeof sql !== 'string' || businessTables.test(sql)) throw new Error('workspace_sql_required');
       return rawDb.exec(sql);
     };
-    workspaceRuntimeServices = {identity, store, registry, capacity, close() {this.transport?.close(); this.sessions?.close(); for (const timer of this.resourceTimers || []) clearInterval(timer); this.taskControl?.close(); if (!sharedCapacity) capacity.close(); registry.close(); store.close(); if (!sharedIdentity) identity.close();}};
+    workspaceRuntimeServices = {identity, store, registry, capacity, async close() {await this.oidc?.close(); this.transport?.close(); this.sessions?.close(); for (const timer of this.resourceTimers || []) clearInterval(timer); this.taskControl?.close(); if (!sharedCapacity) capacity.close(); registry.close(); store.close(); if (!sharedIdentity) identity.close();}};
     disposers.push(() => workspaceRuntimeServices.close());
   }
   return workspaceRuntimeServices;

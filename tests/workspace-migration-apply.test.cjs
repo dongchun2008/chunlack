@@ -13,7 +13,7 @@ const {validateMigration}=require('../gateway/public-runtime.cjs');
 const {spawnSync}=require('node:child_process');
 const hash=file=>createHash('sha256').update(fs.readFileSync(file)).digest('hex');
 let passwordHash;
-async function fixture(t){
+async function fixture(t,{v1=false}={}){
   const root=fs.mkdtempSync(path.join(os.tmpdir(),'lack-migration-apply-'));
   const sourceRoot=path.join(root,'source'),targetRoot=path.join(root,'candidate'),snapshotRoot=path.join(root,'snapshot');
   fs.mkdirSync(path.join(sourceRoot,'db'),{recursive:true,mode:0o700});fs.mkdirSync(path.join(sourceRoot,'config'),{mode:0o700});
@@ -39,10 +39,24 @@ async function fixture(t){
   CREATE TABLE research_sources(id TEXT PRIMARY KEY,research_id TEXT,url TEXT,title TEXT,excerpt TEXT,timestamp INTEGER);
   INSERT INTO research_sources VALUES('source','research','https://example.com/original','Original','original excerpt',17);
   CREATE TABLE unknown_notes(id TEXT PRIMARY KEY,content TEXT);INSERT INTO unknown_notes VALUES('note','never discard');`);
-  const identitySourcePath=path.join(root,'identity.sqlite'),identity=createIdentityStore({dbPath:identitySourcePath});
+  const identitySourcePath=path.join(root,'identity.sqlite');
   passwordHash=passwordHash||hashPassword('migration-fixture-password');
-  const owner=identity.bootstrapIdentity({login:'migration-owner',passwordHash:await passwordHash,workspaceName:'Explicit legacy workspace'});
-  identity.close();
+  let owner;
+  if(v1){
+    const legacy=new Database(identitySourcePath),userId=randomUUID(),workspaceId=randomUUID(),time=Date.now();
+    try{
+      legacy.exec(require('./helpers/identity-v1-schema.cjs'));
+      legacy.prepare('INSERT INTO schema_version VALUES(?,?,?)').run('identity',1,time);
+      legacy.prepare('INSERT INTO users VALUES(?,?,?,?,NULL)').run(userId,'migration-owner',await passwordHash,time);
+      legacy.prepare('INSERT INTO workspaces VALUES(?,?,?,NULL)').run(workspaceId,'Explicit legacy workspace',time);
+      legacy.prepare('INSERT INTO memberships VALUES(?,?,?,1,?,?)').run(workspaceId,userId,'owner',time,time);
+      owner={user:{id:userId},workspace:{id:workspaceId}};
+    }finally{legacy.close();}
+  }else{
+    const identity=createIdentityStore({dbPath:identitySourcePath});
+    try{owner=identity.bootstrapIdentity({login:'migration-owner',passwordHash:await passwordHash,workspaceName:'Explicit legacy workspace'});}
+    finally{identity.close();}
+  }
   const gatewayPath=path.join(sourceRoot,'db','agent-gateway.db'),store=createGatewayStore({dbPath:gatewayPath});store.close();
   const gateway=new Database(gatewayPath),nodeId=randomUUID(),taskId=randomUUID(),leaseId=randomUUID(),leaseUntil=Date.now()+120000;
   gateway.prepare('INSERT INTO nodes(id,name,capabilities,scopes,token_hash,created_at) VALUES(?,?,?,?,?,?)').run(nodeId,'Legacy node','["research.retrieve"]','["general"]','b'.repeat(64),10);
@@ -54,6 +68,60 @@ async function fixture(t){
   return {root,db,dbPath,input,options,nodeId,taskId,leaseId,leaseUntil,gatewayPath,snapshotRoot,targetRoot,sourceRoot};
 }
 async function prepared(t){const f=await fixture(t);const plan=planMigration(f.input);await prepareWorkspaceSnapshot({sourceRoot:f.sourceRoot,snapshotRoot:f.snapshotRoot});return {...f,plan};}
+
+test('genuine frozen v1 identity migrates only in the isolated candidate and preserves source bytes',async t=>{
+  const f=await fixture(t,{v1:true}),source=f.options.identitySourcePath;
+  const before=[hash(source),hash(f.dbPath),hash(f.dbPath+'-wal')];
+  const original=new Database(source,{readonly:true});
+  try{
+    assert.equal(original.prepare("SELECT version FROM schema_version WHERE component='identity'").get().version,1);
+    assert.equal(original.prepare("SELECT name FROM sqlite_master WHERE name='external_identities'").get(),undefined);
+  }finally{original.close();}
+  const plan=planMigration(f.input);
+  await prepareWorkspaceSnapshot({sourceRoot:f.sourceRoot,snapshotRoot:f.snapshotRoot});
+  assert.equal((await applyMigration(plan,f.options)).migrationReady,true);
+  assert.deepEqual([hash(source),hash(f.dbPath),hash(f.dbPath+'-wal')],before);
+  const candidate=createIdentityStore({dbPath:path.join(f.targetRoot,'db','identity.db')});
+  try{
+    assert.equal(candidate.requireMembership(f.input.ownerId,f.input.workspaceId).role,'owner');
+    candidate.linkExternalIdentity({issuer:'https://pocket.fixture.invalid',sub:'migrated-owner',userId:f.input.ownerId});
+    assert.equal(candidate.resolveExternalIdentity({issuer:'https://pocket.fixture.invalid',sub:'migrated-owner'}).id,f.input.ownerId);
+  }finally{candidate.close();}
+  assert.equal(hash(source),before[0]);
+});
+
+test('v2 snapshot and restore preserve active links, revoked links and revoked sessions without activation',async t=>{
+  const f=await fixture(t),identityFile=path.join(f.sourceRoot,'db','identity.db');
+  fs.copyFileSync(f.options.identitySourcePath,identityFile);
+  const identity=createIdentityStore({dbPath:identityFile}),issuer='https://pocket.fixture.invalid';
+  let revokedSession;
+  try{
+    const other=identity.createUser({login:'revoked-owner',passwordHash:await passwordHash});
+    identity.linkExternalIdentity({issuer,sub:'active',userId:f.input.ownerId});
+    identity.linkExternalIdentity({issuer,sub:'revoked',userId:other.id});
+    revokedSession=identity.createOidcSessionRecord({issuer,sub:'revoked',tokenHash:'d'.repeat(64),csrfHash:'e'.repeat(64),expiresAt:Date.now()+60000}).sessionId;
+    identity.unlinkExternalIdentity({issuer,sub:'revoked'});
+  }finally{identity.close();}
+  const before=hash(identityFile);
+  await prepareWorkspaceSnapshot({sourceRoot:f.sourceRoot,snapshotRoot:f.snapshotRoot});
+  const restoreRoot=path.join(f.root,'restore');
+  const {prepareWorkspaceRestoreTrial,verifyWorkspaceRestoreTrial}=require('../scripts/workspace-restore-trial.cjs');
+  prepareWorkspaceRestoreTrial({snapshotRoot:f.snapshotRoot,restoreRoot});
+  const checked=verifyWorkspaceRestoreTrial(restoreRoot);
+  assert.equal(checked.restoreReady,false);assert.equal(checked.migrationReady,false);
+  const restoredFile=path.join(restoreRoot,'payload','candidate','db','identity.db');
+  // Test a working copy so opening SQLite cannot mutate the verified archive.
+  const workingFile=path.join(f.root,'restored-identity.db');fs.copyFileSync(restoredFile,workingFile);
+  const restored=createIdentityStore({dbPath:workingFile});
+  try{
+    assert.equal(restored.resolveExternalIdentity({issuer,sub:'active'}).id,f.input.ownerId);
+    assert.throws(()=>restored.resolveExternalIdentity({issuer,sub:'revoked'}),{code:'unauthorized'});
+    assert.throws(()=>restored.createOidcSessionRecord({issuer,sub:'revoked',tokenHash:'a'.repeat(64),csrfHash:'f'.repeat(64),expiresAt:Date.now()+60000}),{code:'unauthorized'});
+    assert.notEqual(restored.findSessionRecord('d'.repeat(64)).revoked_at,null);
+    assert.equal(restored.findSessionRecord('d'.repeat(64)).id,revokedSession);
+  }finally{restored.close();}
+  assert.equal(hash(identityFile),before);assert.deepEqual(verifyWorkspaceRestoreTrial(restoreRoot),checked);
+});
 
 test('reviewed v2 migration retains unclassified root bytes and empty directories only in quarantine',async t=>{
   const f=await fixture(t);

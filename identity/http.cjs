@@ -3,6 +3,7 @@ const express = require('express');
 const {randomBytes, createHash} = require('node:crypto');
 const {IdentityError, authorize} = require('./policy.cjs');
 const {readSessionCookie} = require('./sessions.cjs');
+const {browserCookie} = require('./oidc-http.cjs');
 const tokenPattern = /^[A-Za-z0-9_-]{43}$/;
 const digest = value => createHash('sha256').update(value).digest('hex');
 const cookieName = '__Host-chunlack_session';
@@ -27,6 +28,7 @@ function createIdentityRouter({store, sessions, webOrigin, oidc = null}) {
     return req.body;
   };
   const source = req => req.socket.remoteAddress || 'unknown-local-source';
+  const browser = req => oidc ? browserCookie(req.headers.cookie, true) : null;
   const principal = req => sessions.authenticate(readSessionCookie(req.headers.cookie));
   const authenticatedMutation = req => {
     const token = readSessionCookie(req.headers.cookie);
@@ -49,7 +51,9 @@ function createIdentityRouter({store, sessions, webOrigin, oidc = null}) {
   router.post('/auth/login', mutation, json, wrap(async (req, res) => {
     const input = body(req);
     if (typeof input.login !== 'string' || input.login.length > 256 || typeof input.password !== 'string' || input.password.length > 256) throw new IdentityError('invalid_request', 400);
+    const browserToken = browser(req);
     const authenticated = await sessions.login({login: input.login, password: input.password, source: source(req)});
+    if (oidc) sessions.browserAuthenticationChanged(browserToken, authenticated.sessionId);
     const previous = readSessionCookie(req.headers.cookie);
     if (previous && previous !== authenticated.token) {
       try {sessions.logout(previous);} catch (error) {if (!(error instanceof IdentityError) || error.code !== 'unauthorized') throw error;}
@@ -65,14 +69,18 @@ function createIdentityRouter({store, sessions, webOrigin, oidc = null}) {
   }));
   router.post('/auth/logout', mutation, json, wrap((req, res) => {
     body(req);
+    const browserToken = browser(req);
     try {authenticatedMutation(req);}
     catch (error) {if (error instanceof IdentityError && error.code === 'unauthorized') res.clearCookie(cookieName, cookieOptions); throw error;}
     sessions.logout(readSessionCookie(req.headers.cookie));
+    if (oidc) sessions.browserAuthenticationChanged(browserToken);
     res.clearCookie(cookieName, cookieOptions).json({ok: true});
   }));
   router.post('/auth/logout-all', mutation, json, wrap((req, res) => {
     body(req); const authenticated = authenticatedMutation(req);
+    const browserToken = browser(req);
     sessions.logoutAll(authenticated.userId);
+    if (oidc) sessions.browserAuthenticationChanged(browserToken);
     res.clearCookie(cookieName, cookieOptions).json({ok: true});
   }));
   router.get('/api/workspaces', wrap((req, res) => {
@@ -126,12 +134,14 @@ function createIdentityRouter({store, sessions, webOrigin, oidc = null}) {
   }));
   router.post('/auth/password/reset', mutation, json, wrap(async (req, res) => {
     const input = body(req);
+    const browserToken = browser(req);
     try {
       await sessions.resetPassword({token: input.token, password: input.password, source: source(req)});
     } catch (error) {
       if (error instanceof IdentityError && error.code === 'unauthorized') throw new IdentityError('not_found', 404);
       throw error;
     }
+    if (oidc) sessions.browserAuthenticationChanged(browserToken);
     res.clearCookie(cookieName, cookieOptions).json({ok: true});
   }));
   router.use((error, req, res, next) => {

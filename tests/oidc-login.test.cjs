@@ -121,7 +121,7 @@ test('identity v1 migration is explicit and v2 classifies links for archive inve
   db.exec("DROP TABLE IF EXISTS external_identities; UPDATE schema_version SET version=1 WHERE component='identity'"); db.close();
   const {createIdentityStore, identityTableScopes} = require('../identity/store.cjs');
   throwsCode(() => createIdentityStore({dbPath: r.dbPath}), 'identity_migration_required');
-  const store = createIdentityStore({dbPath: r.dbPath, migrate: true}); t.after(() => store.close());
+  const store = r.own(createIdentityStore({dbPath: r.dbPath, migrate: true}));
   store.linkExternalIdentity({issuer, sub: 'pocket-alice', userId: r.users.alice.id});
   assert.equal(identityTableScopes.external_identities, 'user');
   assert.equal(store.requireMembership(r.users.alice.id, r.workspaces.a.id).role, 'owner');

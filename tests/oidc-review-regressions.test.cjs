@@ -1,6 +1,5 @@
 'use strict';
-// Regression evidence for the unaccepted Pocket ID checkpoint. These tests
-// intentionally remain red until the disclosed corrections are authorized.
+// Reproductions of the disclosed lifecycle and cross-tab authentication defects.
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const express = require('express');
@@ -17,7 +16,7 @@ function deferred() {
   return {promise, resolve};
 }
 
-async function provider(t) {
+async function provider(t, {uncooperative = false} = {}) {
   const jose = await import('jose');
   const {privateKey, publicKey} = await jose.generateKeyPair('RS256');
   const jwk = {...await jose.exportJWK(publicKey), kid: 'review-key', use: 'sig', alg: 'RS256'};
@@ -37,7 +36,7 @@ async function provider(t) {
       await new Promise((resolve, reject) => {
         const abort = () => reject(options.signal.reason);
         if (options.signal.aborted) {abort(); return;}
-        options.signal.addEventListener('abort', abort, {once: true});
+        if (!uncooperative) options.signal.addEventListener('abort', abort, {once: true});
         release.promise.then(() => {options.signal.removeEventListener('abort', abort); resolve();});
       });
       const seconds = Math.floor(Date.now() / 1000);
@@ -68,6 +67,38 @@ test('OIDC close aborts an already-started cooperative token request before repo
     assert.equal(f.signal().aborted, true, 'close returned while the upstream exchange still had a live signal');
     assert.ok((await outcome).error, 'closed OIDC service must not issue an identity proof');
   } finally {f.release(); await outcome;}
+});
+
+test('OIDC close reports an uncooperative request instead of falsely declaring shutdown complete', {timeout:10000}, async t=>{
+  const f=await provider(t,{uncooperative:true}),start=await f.oidc.begin({source:'uncooperative'});
+  const outcome=f.oidc.finish({url:f.callback(start.url),browserToken:start.browserToken}).catch(error=>error);
+  await f.reached;
+  try{await assert.rejects(f.oidc.close(),{code:'oidc_shutdown_incomplete'});assert.equal(f.signal().aborted,true);}
+  finally{f.release();assert.equal((await outcome).code,'oidc_login_failed');await f.oidc.close();}
+});
+
+test('a second begin reuses browser binding and cancels the older attempt', async t=>{
+  const f=await provider(t),first=await f.oidc.begin({source:'two-tabs'});
+  const oldCallback=f.callback(first.url);
+  const second=await f.oidc.begin({source:'two-tabs',browserToken:first.browserToken});
+  assert.equal(second.browserToken,first.browserToken);
+  await assert.rejects(f.oidc.finish({url:oldCallback,browserToken:first.browserToken}),{code:'unauthorized'});
+  f.release();
+  const proof=await f.oidc.finish({url:f.callback(second.url),browserToken:second.browserToken});
+  f.oidc.authenticationChanged(second.browserToken);
+  assert.throws(()=>f.oidc.consume(proof),{code:'unauthorized'});
+});
+
+test('newer browser login revokes an already issued older session without retaining bearer tokens',async t=>{
+  const r=workspaceFixture(t),f=await provider(t),start=await f.oidc.begin({source:'late-response'});
+  r.store.linkExternalIdentity({issuer,sub:'alice-subject',userId:r.users.alice.id});
+  const sessions=createSessionService({store:r.store,oidc:f.oidc,now:r.now});t.after(()=>sessions.close());
+  f.release();
+  const auth=sessions.loginOidc({proof:await f.oidc.finish({url:f.callback(start.url),browserToken:start.browserToken})});
+  sessions.browserAuthenticationChanged(start.browserToken,auth.sessionId);
+  assert.equal(sessions.authenticate(auth.token).userId,r.users.alice.id);
+  sessions.browserAuthenticationChanged(start.browserToken,'new-server-owned-session-id');
+  assert.throws(()=>sessions.authenticate(auth.token),{code:'unauthorized'});
 });
 
 test('a delayed OIDC callback cannot overwrite a newer successful local login in the same browser', {timeout: 15000}, async t => {

@@ -3,9 +3,11 @@ const {IdentityError} = require('./policy.cjs');
 const {readSessionCookie} = require('./sessions.cjs');
 const cookieName = '__Host-chunlack_oidc';
 const cookieOptions = {secure: true, httpOnly: true, sameSite: 'lax', path: '/'};
-function browserCookie(header) {
+function browserCookie(header, optional = false) {
+  if (optional && (header === undefined || header === null)) return null;
   if (typeof header !== 'string' || header.length > 8192) throw new IdentityError('unauthorized', 401);
   const values = header.split(';').map(p => p.trim()).filter(p => p.startsWith(cookieName + '='));
+  if (optional && !values.length) return null;
   if (values.length !== 1) throw new IdentityError('unauthorized', 401);
   const value = values[0].slice(cookieName.length + 1);
   if (!/^[A-Za-z0-9_-]{43}$/.test(value)) throw new IdentityError('unauthorized', 401);
@@ -29,17 +31,18 @@ function mountOidcRoutes({router, oidc, sessions, webOrigin, mutation, json, wra
   router.post('/auth/oidc/begin', mutation, json, wrap(async (req, res) => {
     if (!req.body || Array.isArray(req.body) || Object.keys(req.body).length) throw new IdentityError('invalid_request', 400);
     rejectActiveSession(req);
-    const result = await oidc.begin({source: req.socket.remoteAddress || 'local'});
-    res.cookie(cookieName, result.browserToken, {...cookieOptions, maxAge: 300000});
+    const result = await oidc.begin({source: req.socket.remoteAddress || 'local', browserToken: browserCookie(req.headers.cookie, true)});
+    res.cookie(cookieName, result.browserToken, {...cookieOptions, maxAge: 12 * 60 * 60 * 1000});
     res.json({url: result.url});
   }));
   router.get('/auth/oidc/callback', wrap(async (req, res) => {
-    res.clearCookie(cookieName, cookieOptions);
     rejectActiveSession(req);
-    const proof = await oidc.finish({url: new URL(req.originalUrl, webOrigin), browserToken: browserCookie(req.headers.cookie)});
+    const browserToken = browserCookie(req.headers.cookie);
+    const proof = await oidc.finish({url: new URL(req.originalUrl, webOrigin), browserToken});
     const auth = sessions.loginOidc({proof});
+    sessions.browserAuthenticationChanged(browserToken, auth.sessionId);
     res.cookie('__Host-chunlack_session', auth.token, {...cookieOptions, maxAge: 12 * 60 * 60 * 1000});
     res.redirect(303, '/');
   }));
 }
-module.exports = {mountOidcRoutes};
+module.exports = {mountOidcRoutes, browserCookie};
