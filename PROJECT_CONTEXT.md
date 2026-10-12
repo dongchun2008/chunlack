@@ -330,3 +330,11 @@ The single-node implementation still lives in the embedded sources in lack.py. O
 - LACK and Tailscale Relay baseline/postflight matched; the owned unit stopped. No production update or public listener change.
 - Evidence: `docs/verification/2026-10-12-runtime-low-cpu-retest.md`.
 - Separate dependency-security upgrade/regression remains in progress; this native result does not include upgraded dependencies. Pocket ID and native Muse/dots acceptance still gate delivery.
+## 2026-10-12 dependency upgrade checkpoint (not accepted)
+
+- Local-only security candidate updates simple-git 4.0.2 and four associated/transitive packages; production dependencies are untouched.
+- Actual installed versions now match the candidate lock. Current advisory query returned no findings across 239 locked package names; this is not functional acceptance.
+- Existing suite: 525/541 passed, 16 failed. The new seven-case dependency test file was not included in that run.
+- Confirmed startup break: simple-git 4 exports a named factory; the legacy callable require import must be adapted. New Git fixtures also need safe HOME/XDG isolation instead of GIT_CONFIG_GLOBAL. Repair confirmation requested, not yet applied.
+- One SDK fetch failure passed a separate rerun; cause remains unknown. A full enlarged-suite rerun, smoke and native upgraded-dependency validation are required.
+- See `docs/verification/2026-10-12-dependency-security-checkpoint.md`. Do not confuse this uncommitted candidate with the earlier accepted native runtime-only retest.
