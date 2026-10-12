@@ -12,6 +12,9 @@ const Database = require('better-sqlite3');
 const {createIdentityStore} = require('../identity/store.cjs');
 const {createCollaborationStore} = require('../collaboration/store.cjs');
 const python = process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3');
+// Only the explicitly selected, CPU-quota-limited test environment needs extra cold-start time.
+const lowCpuIsolation = process.env.CHUNLACK_TEST_LOW_CPU === '1';
+const coldStartTimeout = lowCpuIsolation ? 12000 : 5000;
 
 test('materialized server exports an explicit owned lifecycle instead of auto-starting on import', () => {
   const source = execFileSync(python, ['-X', 'utf8', '-c',
@@ -192,10 +195,10 @@ for (const mode of ['shutdown', 'rollback']) test('packaged OIDC incomplete body
   assert.match(output, new RegExp('OIDC_DRAIN_LOCK_RETAINED=' + mode));
 });
 
-test('actual materialized import allocates no data directory, listeners or retained startup timers', {timeout: 15000}, async t => {
+test('actual materialized import allocates no data directory, listeners or retained startup timers', {timeout: lowCpuIsolation ? 30000 : 15000}, async t => {
   const f = await packageFixture(t);
   const result = execFileSync(process.execPath, ['-e', "require(process.argv[1]); console.log('IMPORT_ONLY_OK')", path.join(f.packageRoot, 'server.js')],
-    {env: f.childEnv, timeout: 5000, encoding: 'utf8'});
+    {env: f.childEnv, timeout: coldStartTimeout, encoding: 'utf8'});
   assert.equal(result.trim(), 'IMPORT_ONLY_OK'); assert.equal(fs.existsSync(path.join(f.packageRoot, 'db')), false);
   assert.equal(fs.existsSync(path.join(f.packageRoot, 'jspace')), false);
 });
@@ -223,11 +226,11 @@ test('actual MCP port conflict rolls back web and gateway startup without leavin
   assert.equal(conflict.listening, true, 'unrelated occupied service remains running');
 });
 
-test('legacy server entry cannot bypass the public data-root writer guard', {timeout: 20000}, async t => {
+test('legacy server entry cannot bypass the public data-root writer guard', {timeout: lowCpuIsolation ? 40000 : 20000}, async t => {
   const f = await packageFixture(t), running = childRuntime(t, f); await ready(running);
   try {
     const program = `const fs=require('node:fs'),path=require('node:path');const root=process.argv[2];const config=JSON.parse(fs.readFileSync(path.join(root,'config','lack.config.json'),'utf8'));require(process.argv[1]).startLackRuntime({config,dataRoot:root,env:{...process.env,LACK_MULTI_USER:'1',LACK_IDENTITY_DB:path.join(root,'db','identity.db'),LACK_WEB_ORIGIN:config.publicRuntime.webOrigin}}).then(r=>r.close()).catch(e=>console.log('DIRECT_START_ERROR='+e.message));`;
-    const output = execFileSync(process.execPath, ['-e', program, path.join(f.packageRoot, 'server.js'), f.root], {env: f.childEnv, timeout: 5000, encoding: 'utf8'});
+    const output = execFileSync(process.execPath, ['-e', program, path.join(f.packageRoot, 'server.js'), f.root], {env: f.childEnv, timeout: coldStartTimeout, encoding: 'utf8'});
     assert.match(output, /DIRECT_START_ERROR=public_writer_lease_required/);
     assert.equal((await fetch(`http://127.0.0.1:${f.config.httpPort}/health`)).status, 200);
   } finally {running.child.stdin.write('STOP\n'); await running.exited;}
