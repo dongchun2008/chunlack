@@ -80,3 +80,18 @@ used as acceptance evidence for the candidate.
 - https://github.com/advisories/GHSA-v5rq-49vh-5v5c
 - https://github.com/advisories/GHSA-jqcg-44mw-7w3h
 - https://github.com/advisories/GHSA-q2hr-2g5m-vwhr
+
+## Follow-up: connector transport diagnostic
+
+The complete `workspace-public-connector.test.cjs` file was run three times
+with a read-only undici request-error observer limited to loopback requests.
+Each run passed 5/5 (15/15 observed in total), with no skips or cancellations.
+The observer emits only method, loopback port, error name and error codes;
+it does not change request behavior, retry requests or record credentials.
+
+Logs: `public-connector-diagnostic-1.tap`, `public-connector-diagnostic-2.tap`,
+and `public-connector-diagnostic-3.tap` under the ignored evidence directory.
+No product code or service configuration was changed for this diagnostic.
+The earlier full-suite fetch failure remains unreproduced, not explained or
+fixed. Do not substitute these focused runs for the required complete-suite
+rerun after the pending named-import and Git-fixture repairs.
