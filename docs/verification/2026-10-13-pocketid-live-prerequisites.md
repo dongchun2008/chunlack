@@ -1,8 +1,9 @@
 # Pocket ID live prerequisites, 2026-10-13
 
 Status: prerequisites partly verified; real login and production delivery are
-not accepted. No production, credential, client permission, or Relay setting
-was changed by these checks.
+not accepted. Initial observations did not change configuration. Subsequent
+explicitly approved client-access and failed-state changes are recorded below.
+No production application, credential or Relay setting was changed.
 
 ## Replacement credential boundary
 
@@ -135,17 +136,55 @@ Evidence below .superpowers/sdd/2026-10-13-pocketid-preflight:
 | vps-readonly-preflight-fixed-1791846266567145800.json | f27b1728cb433d09d77dabebc58c82bf8de3f042b0b5314ada78fd351db9059c |
 | failed-unit-classification-1791846649658716600.json | 01d9c87876d63fc666f6b0a9e8c226d3ea234e58af8e33df4eaa49553c6fe24a |
 
-The intended Pocket ID username has now been explicitly selected by the user.
-Creating a dedicated group or granting this client access remains unapproved
-and unperformed; selecting an account is not permission to expand its access.
+The intended Pocket ID username was explicitly selected by the user. At this
+point access changes were still unapproved; selecting an account alone was not
+treated as permission. The user then separately approved both actions below.
+
+## Approved failed-state cleanup and access configuration
+
+Before cleanup, each of the exact ten listed units was rechecked for matching
+identity, failed state, zero main/control PIDs, transient status, the expected
+systemd transient fragment path and an isolated /var/tmp/chunlack- working
+directory. Both production services had to be active/running with real PIDs,
+LACK health 200 and the expected Relay UDP listener. Pre-action evidence was
+flushed to a local record before executing the approved command.
+
+One systemctl reset-failed invocation named only those ten units. It returned
+zero; their failed states cleared. No test files, original reports or journal
+entries were deleted, and no service was started, stopped or restarted. The
+production baseline matched before and after: LACK PID 594652, tailscaled PID
+859, both zero restarts, health 200 and Relay listener present. The unchanged
+collector then returned exit 0, BASELINE_CLEAR_NOT_DEPLOY_AUTHORIZATION and an
+empty gate list. This establishes only the sampled baseline, not production
+permission, a new test pass, or actual Relay forwarding quality.
+
+Evidence: approved-failed-state-reset-1791846872492165000.jsonl, SHA-256
+8f53c60b5ff0e988f520cdaf56b5b0832fb1b2e26698a00e55c19b7a440a29b8,
+under the same ignored evidence directory. Historical failed-run evidence above
+remains part of the record, not replaced by this cleared systemd state.
+
+In Pocket ID, the approved dedicated group chunlack-users was created. Only
+the explicitly selected existing human account was added; the other account
+remained unchecked. Only ChunLACK was selected in the group's allowed clients;
+Tailscale was not selected. A full page reload confirmed the one-member group.
+Fresh navigation to the dedicated ChunLACK client's Allowed User Groups tab
+confirmed chunlack-users checked, user count 1, and the existing Tailscale group
+unchecked, still showing its original two users. Restricted access remained
+enabled; no All Users grant, secret change or additional client was created.
+
+A non-secret screenshot of that client-side result was retained locally as
+pocketid-access-1791847023501.jpg in the ignored evidence directory. No personal
+account details or credential values are included in this Git report. Granting
+Pocket ID client access did not create a ChunLACK owner, bind an external
+identity or prove the complete browser login flow.
 
 ## Remaining sequence
 
-1. Review the ten retained failed transient-unit states. The read-only
-   invocation is repaired and current baseline evidence is recorded above;
-   do not treat the exit-2 deployment gate as cleared.
-2. Approve narrowly scoped Pocket ID access for the selected human owner.
-   The saved callback is confirmed by the read-only UI observation above.
+1. Retain the historical failed-run evidence and the new successful baseline
+   report. Refresh production conditions before any separately approved release.
+2. The selected human's narrowly scoped Pocket ID client access and saved
+   callback are confirmed. Next verify the real authentication exchange, not
+   merely these settings or the presence of a secret file.
 3. Prepare the isolated real-login trial and explicit identity binding. A
    production HTTPS callback and production cutover still need their own
    applicable release gates and maintenance authorization. Do not disable
