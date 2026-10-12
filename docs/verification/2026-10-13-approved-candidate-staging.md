@@ -74,3 +74,14 @@ Local ignored evidence is under
 .superpowers/sdd/2026-10-13-release-preparation/, including the fresh activation
 preflight, native dependency/Caddy result and activation-stopped postflight.
 Private credentials and runtime data are excluded from this record and Git.
+
+## Independent read-only identity prerequisite
+
+While the upload-command correction awaits approval, the authenticated Pocket
+ID administration UI was used to inspect the explicitly selected dongchun
+account. Its enabled state and the username on its individual detail page were
+confirmed, and that page's user identifier was retained only in local ignored
+evidence. No form was submitted, permission changed, secret read or identity
+binding written. An administration-page user ID is not yet a verified OIDC
+token subject; actual issuer/sub validation and authenticated browser acceptance
+remain required before reporting the owner login as usable.
