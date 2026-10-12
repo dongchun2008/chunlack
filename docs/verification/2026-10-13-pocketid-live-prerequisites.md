@@ -52,9 +52,13 @@ Tailscale group, allow every user, or grant ChunLACK workspace ownership from
 group membership. Application ownership still requires an explicit verified
 (issuer, sub) binding.
 
-The private configuration's redirect value was checked. The general-page
-custom callback control did not yield a value through the attempted label
-lookup, so this probe does not newly attest the saved server-side callback.
+The private configuration's redirect value was checked. The initial label
+lookup did not resolve the custom callback control. A subsequent read-only
+General-tab DOM snapshot directly showed one configured callback:
+https://lack.chunclaw.top/auth/oidc/callback, with no wildcard or additional
+callback. It also showed the launch URL https://lack.chunclaw.top. No field was
+edited or saved. This confirms the displayed client configuration, not HTTPS
+reachability or a completed authorization-code exchange.
 
 ## Unsuccessful VPS observation, not a server-health result
 
@@ -76,8 +80,9 @@ change.
 
 1. Approve and correct only the read-only preflight invocation; obtain current
    service, resource, listener and DNS evidence without modifying services.
-2. Approve narrowly scoped Pocket ID client access, verify the saved callback,
-   and identify the intended human owner without exposing credentials.
+2. Approve narrowly scoped Pocket ID client access and identify the intended
+   human owner without exposing credentials. The saved callback is now
+   confirmed by the read-only UI observation above.
 3. Prepare the isolated real-login trial and explicit identity binding. A
    production HTTPS callback and production cutover still need their own
    applicable release gates and maintenance authorization. Do not disable
