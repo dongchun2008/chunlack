@@ -1,7 +1,49 @@
 # Approved isolated candidate staging, 2026-10-13
 
-Status: preparation partially completed; stopped at a metadata upload error.
+Current status: the approved metadata repair and isolated owner-data migration
+have passed. Activation is stopped at completed preparation-unit cleanup.
 The public candidate is not active, and real Pocket ID login is not accepted.
+Earlier interruption details below are retained as historical evidence.
+
+## Approved repair and migration follow-up
+
+The operator authorized correcting the upload and continuing. The existing
+isolated identity database was opened through the bounded source-copy reader;
+exactly one user and one workspace were found, with the approved names and a
+valid active owner membership. Only those nonsecret identifiers were recovered.
+The already-created, empty metadata file was opened without following links,
+its inode/device and empty size checked, set to 0600, written and fsynced. Its
+saved JSON and permissions were then verified. No owner or password was recreated.
+
+The existing frozen snapshot was verified and used to reconstruct a private
+source copy. The reviewed migration produced a separate candidate data root and
+passed its offline verification: 13 messages and one Agent were converted. The
+original snapshot verification result was unchanged. The candidate configuration
+was then recorded separately for the approved origins and ports; real inference
+remains disabled and no Pocket ID subject has been bound. migrationReady is true
+only for this verified offline conversion; restoreReady remains false.
+
+The owned data-initialization unit exited successfully under 192 MiB, 50% CPU,
+no swap and a 240-second limit. Its MemoryPeak was unavailable, not zero. Before
+public activation, the full preflight correctly blocked on two retained
+active/exited preparation units lacking live process resource evidence:
+
+- chunlack-public-data-init-20261013.service
+- chunlack-public-dependencies-20261013.service
+
+Both have MainPID=0, ControlPID=0, Result=success, ExecMainStatus=0 and Transient=yes.
+A proposed evidence-preserving stop of only these completed, owned units did not
+execute: the new controller indexed ExecStop, but systemctl omitted that empty
+property. It raised KeyError before the first stop. The proposed narrow repair is
+to request complete property output, require explicit empty ExecStop/ExecStopPost
+and the other ownership/terminal checks, retain the evidence, and only then stop
+these two completed units and repeat the unchanged full preflight. This repair
+awaits approval; no gate is bypassed and no product preflight is weakened.
+
+Postflight: old LACK health 200, PID 594652 / NRestarts 0; Tailscale PID 859 /
+NRestarts 0 with UDP 40000 listeners. TCP 443 remains free. No public service unit
+or /etc/chunlack-public/runtime.env has been installed, and no HTTPS activation,
+certificate request, external identity binding or production data cutover occurred.
 
 ## Authorization and boundaries
 
