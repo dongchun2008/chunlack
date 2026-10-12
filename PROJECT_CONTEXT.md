@@ -322,3 +322,11 @@ The single-node implementation still lives in the embedded sources in lack.py. O
 - Requested approval for an explicit bounded low-CPU test mode; defaults and product deadlines remain unchanged until approved. Pocket ID login is deferred by the user.
 - All groups retained nobody, private network/tmp, 10% CPU, 192 MiB max, zero swap and four-minute per-unit limits. Production service baselines matched; no active owned test units remain in the completed controller records.
 - Full evidence and remaining gates: `docs/verification/2026-10-12-native-runtime-storage-https-validation.md`. No production deployment, live data migration or native Muse/dots acceptance was performed.
+
+## 2026-10-12 native runtime low-CPU retest
+
+- User-authorized test-only cold-start mode is committed as `36ec636`.
+- Native Linux runtime group passed 17/17 with no skips/cancellations at unchanged 10% CPU, 192 MiB memory and 240-second unit ceiling.
+- LACK and Tailscale Relay baseline/postflight matched; the owned unit stopped. No production update or public listener change.
+- Evidence: `docs/verification/2026-10-12-runtime-low-cpu-retest.md`.
+- Separate dependency-security upgrade/regression remains in progress; this native result does not include upgraded dependencies. Pocket ID and native Muse/dots acceptance still gate delivery.
