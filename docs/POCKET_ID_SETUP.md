@@ -1,7 +1,19 @@
 # ChunLACK / Pocket ID 接入说明
 
 状态：本地实现与测试中，尚未启用生产登录。Pocket ID 发现接口已只读确认；
-专用客户端、真实用户登录、Muse/dots 授权和公网发布均未完成验收。
+专用客户端配置已有建立记录，但安全替换密钥尚未就绪；真实用户登录、
+Muse/dots 授权和公网发布均未完成验收。
+
+**2026-10-12 当前凭据门槛：** 对用户指定私有 JSON 的检查仅输出状态，
+未输出凭据值；`clientSecret` 仍为空，`requiresSecretReplacement` 为 true。
+此前新客户端密钥曾意外出现在工具记录中，不得继续使用。需要用户在
+Pocket ID 撤销该密钥并替换，将新值安全保存到原指定私有文件；不要发到
+聊天或提交 Git。仅修改标记不能替代撤销和更换。此过程不修改 Tailscale
+或其他应用的客户端，也不自动启用生产登录。
+
+最新本地全量已通过 552/552；Linux 尚有两项临时测试证书生成超时，详见
+[本轮验收记录](verification/2026-10-12-test-boundary-revalidation.md)。
+以下较早测试数字保留为历史证据，不是当前生产版本状态。
 
 **2026-10-12 本地修正已复验，尚未允许据此直接发布：** 最终全量测试
 541/541 通过，0 失败、0 跳过；烟雾测试通过。已修正旧回调与新登录发起的
@@ -22,11 +34,12 @@ HTTPS 补测记录：`verification/2026-10-11-windows-https-supplement.md`。补
 ## 使用现有 Pocket ID，新增专用应用
 
 已确认的 issuer：`https://pockid.chunclaw.top`，不带末尾斜杠。
-拟注册的唯一回调：`https://lack.chunclaw.top/auth/oidc/callback`。
+已批准的唯一回调：`https://lack.chunclaw.top/auth/oidc/callback`。
 
-管理员需要在 Pocket ID 中创建单独的 ChunLACK OIDC 客户端，不复用现有
-Tailscale 或其他应用的 Client ID/Secret，不修改它们的回调和访问权限。
-此步骤尚未执行。客户端应使用授权码流程、PKCE S256、
+ChunLACK 使用单独的 Pocket ID OIDC 客户端，不复用现有 Tailscale 或其他
+应用的 Client ID/Secret，不修改它们的回调和访问权限。已有专用客户端配置
+时不重复创建；先完成上文密钥替换，并核对该客户端的回调、PKCE、用户同意
+和授权用户范围。客户端应使用授权码流程、PKCE S256、
 `client_secret_basic` 和 RS256 签名。当前适配器只接受这些组合，不会降级
 为 plain、未签名令牌、其他 issuer 或任意回调。
 
