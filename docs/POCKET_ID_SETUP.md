@@ -16,7 +16,9 @@ issuer 和回调匹配；文件禁用继承，Allow 项仅当前用户与 SYSTEM
 workspace-runtime 1 项分别通过，不是 Linux 全量 552 项，详见
 [候选回归记录](verification/2026-10-12-candidate-regression-checkpoint.md)。
 真实 Pocket ID 发现接口已由当前适配器检查通过，客户端仍处于受限用户组
-模式且未勾选组；VPS 最新预检未取得有效报告。真实登录仍待验收，详见
+模式且未勾选组；VPS 只读预检调用已修正，现有服务正常的快照已取得，
+但发布门槛仍被 10 个已退出的历史测试单元 failed 状态拦截。未清除状态或
+放宽门槛。真实登录仍待验收，详见
 [真实身份接入前置检查](verification/2026-10-13-pocketid-live-prerequisites.md)。
 以下较早测试数字保留为历史证据，不是当前生产版本状态。
 

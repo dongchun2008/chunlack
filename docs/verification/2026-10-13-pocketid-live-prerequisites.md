@@ -72,17 +72,80 @@ stdin execution mode. The collector's CLI body uses precisely that guard, so
 the invocation does not execute the collector entry. This is a check-wrapper
 defect, not evidence of an unhealthy VPS. No usable current VPS baseline was
 obtained; earlier healthy-service and empty-443 observations remain historical.
-The defect was reported rather than silently corrected. A minimal explicit
-entry invocation and bounded recheck await approval; product code need not
-change.
+The defect was reported rather than silently corrected. The user subsequently
+approved the minimal invocation correction and read-only recheck, completed
+below. Product code did not need to change.
+
+## Approved invocation correction and current VPS evidence
+
+The wrapper now explicitly invokes the collector's existing exported
+parseOptions, collectBaseline and assessBaseline functions when require.main
+is not module. It keeps the collector and all its fail-closed gates unchanged.
+The source and invocation hashes are retained in the local evidence record.
+No remote file was uploaded or written, and SSH host-key pinning remained
+mandatory before authentication.
+
+At 2026-10-13 07:04:26 Asia/Shanghai, the collector returned valid JSON and
+exit 2, BLOCKED_OR_REVIEW_REQUIRED. Successful report collection is not a
+passing deployment preflight. The report showed:
+
+- Two CPU cores, load1m 0, available memory 1091376 KiB, swap use zero.
+- CPU/memory/IO pressure avg10 0.54/0.18/1.81 and no kernel OOM entries in
+  the preceding hour. The cumulative historical OOM counter was 62, not zero.
+- Existing chunlack.service and tailscaled.service active, PIDs 594652 and
+  859, respectively, both with zero recorded restarts.
+- No TCP 443 listener; the expected UDP 40000 listener present.
+- Both public hostnames resolved on the VPS to the expected IPv4 address,
+  with no IPv6 address returned. This is not ACME/TLS acceptance.
+- Ten existing failed units were the only reported preflight gates.
+
+A follow-up bounded metadata query at 07:10:49 Asia/Shanghai identified all
+ten as transient units with failed state, MainPID 0, ControlPID 0 and
+NRestarts 0. Their descriptions/working directories refer to prior isolated
+ChunLACK tests under /var/tmp; fragment paths are systemd transient-unit
+paths. Eight recorded exit status 1, two recorded status 226. Current memory
+and task counters were unset, not measurements of zero resource use. The
+follow-up GET /health returned 200 with curl exit zero.
+
+| Failed transient unit | Recorded exit status |
+| --- | --- |
+| chunlack-actual-migration-7fd316ba.service | 1 |
+| chunlack-candidate-47165309d229-2.service | 1 |
+| chunlack-candidate-6666cbcbdf11-10.service | 1 |
+| chunlack-candidate-ac0b95885333-13.service | 1 |
+| chunlack-candidate-ac0b95885333-2.service | 1 |
+| chunlack-candidate-fbb525d7f2eb-1.service | 1 |
+| chunlack-dependency-fa02c62b7cc1.service | 226 |
+| chunlack-oidc-1b4ad68c-1.service | 1 |
+| chunlack-oidc-a61f09d2-1.service | 226 |
+| chunlack-runtime-679fe4a2-1.service | 1 |
+
+No reset-failed, service stop/restart, firewall/DNS change, credential change,
+production switch, or permission change was performed. Metadata distinguishes
+these exited test units from the active production services; it does not
+erase their failed test history, prove every original failure resolved, or
+measure actual Relay forwarding quality. Any scoped failed-state reset needs
+approval and a fresh ownership/inactive-state check before action; never use
+an unqualified global reset-failed or weaken the collector to hide failures.
+
+Evidence below .superpowers/sdd/2026-10-13-pocketid-preflight:
+
+| Artifact | SHA-256 |
+| --- | --- |
+| vps-readonly-preflight-fixed-1791846266567145800.json | f27b1728cb433d09d77dabebc58c82bf8de3f042b0b5314ada78fd351db9059c |
+| failed-unit-classification-1791846649658716600.json | 01d9c87876d63fc666f6b0a9e8c226d3ea234e58af8e33df4eaa49553c6fe24a |
+
+The intended Pocket ID username has now been explicitly selected by the user.
+Creating a dedicated group or granting this client access remains unapproved
+and unperformed; selecting an account is not permission to expand its access.
 
 ## Remaining sequence
 
-1. Approve and correct only the read-only preflight invocation; obtain current
-   service, resource, listener and DNS evidence without modifying services.
-2. Approve narrowly scoped Pocket ID client access and identify the intended
-   human owner without exposing credentials. The saved callback is now
-   confirmed by the read-only UI observation above.
+1. Review the ten retained failed transient-unit states. The read-only
+   invocation is repaired and current baseline evidence is recorded above;
+   do not treat the exit-2 deployment gate as cleared.
+2. Approve narrowly scoped Pocket ID access for the selected human owner.
+   The saved callback is confirmed by the read-only UI observation above.
 3. Prepare the isolated real-login trial and explicit identity binding. A
    production HTTPS callback and production cutover still need their own
    applicable release gates and maintenance authorization. Do not disable
