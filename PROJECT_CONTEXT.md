@@ -304,3 +304,12 @@ The single-node implementation still lives in the embedded sources in lack.py. O
 - Runtime: 53 files, 837191 bytes; compressed archive: 218783 bytes. Inventory and independent unpacked-file count/size/SHA-256 checks passed. No installed dependencies, live data or private configuration were copied.
 - Artifact hashes and scope: `docs/verification/2026-10-12-pinned-oidc-candidate.md`. Default configuration is not a production-ready configuration; no runtime or VPS was started/contacted.
 - Dedicated Pocket ID client availability requested; existing Tailscale/OIDC applications remain untouched. Native post-repair verification, external enrollment and full delivery remain separate gates.
+
+## 2026-10-12: native OIDC/session isolation retry accepted
+
+- Candidate source remains `753308194bfb9136e34555008d68c4736f76292e`; no product code changed in this retry.
+- With explicit approval, mapped only existing dependencies read-only into the test namespace, retaining nobody, private networking, PrivateTmp, 10% CPU and 192 MiB maximum memory.
+- Native Linux results: oidc-login 11/11, oidc-review-regressions 12/12, identity-session 22/22; 45 total passes, zero failures/skips/cancellations. Highest recorded memory peak was 92356608 bytes.
+- Production preflight/postflight records matched. Existing LACK and Tailscale Relay were not restarted or modified. No owned test unit remains active according to the completed controller result.
+- Evidence and limitations: `docs/verification/2026-10-12-native-oidc-session-validation.md`. Earlier failed attempts remain documented separately.
+- Pocket ID client creation is authorized but awaits the user's deferred Passkey login. Real Pocket ID authentication, native runtime/HTTPS and migration integration for this revision, native Muse/dots execution and formal publication are not accepted by the 45-test result.

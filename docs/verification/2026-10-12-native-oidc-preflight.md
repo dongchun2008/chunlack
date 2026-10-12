@@ -1,5 +1,9 @@
 # Native OIDC preflight and isolated startup failure
 
+Follow-up: the subsequently authorized dependency mapping correction passed
+the scoped native run; see [45-test acceptance](2026-10-12-native-oidc-session-validation.md).
+The failures below remain historical evidence, not the latest run's outcome.
+
 Date: 2026-10-12 (Asia/Shanghai).
 Candidate source: `753308194bfb9136e34555008d68c4736f76292e`.
 Documentation baseline: `294b92d40c4bf60ceb955a810dbcb65014db1c62`.
