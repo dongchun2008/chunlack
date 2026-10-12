@@ -13,6 +13,9 @@ const {setTimeout: delay} = require('node:timers/promises');
 const {WebSocket, WebSocketServer} = require('ws');
 const {renderPublicIngress} = require('../deploy/public/render-ingress.cjs');
 const WEB = 'lack.fixture.invalid', AGENTS = 'agents.fixture.invalid';
+const lowCpuIsolation = process.env.CHUNLACK_TEST_LOW_CPU === '1';
+const certificateTimeoutMs = lowCpuIsolation ? 20000 : 5000;
+const tlsTestTimeoutMs = lowCpuIsolation ? 40000 : 20000;
 const config = {httpPort: 23721, agentGateway: {port: 23722}, publicRuntime: {webOrigin: 'https://' + WEB, agentsOrigin: 'https://' + AGENTS, mcpPort: 23723}};
 
 function folder(t) {const root=fs.mkdtempSync(path.join(os.tmpdir(),'lack-ingress-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));return root;}
@@ -62,7 +65,12 @@ async function caddyFixture(t) {
   const probe=http.createServer();await new Promise(resolve=>probe.listen(0,'127.0.0.1',resolve));const port=probe.address().port;await new Promise(resolve=>probe.close(resolve));
   const certFile=path.join(root,'fixture.crt'),keyFile=path.join(root,'fixture.key');
   const openssl=process.env.OPENSSL_TEST_BIN||(process.platform==='win32'?'C:/Program Files/Git/usr/bin/openssl.exe':'openssl');
-  execFileSync(openssl,['req','-x509','-newkey','rsa:2048','-nodes','-keyout',keyFile,'-out',certFile,'-days','1','-subj','/CN='+WEB,'-addext','subjectAltName=DNS:'+WEB+',DNS:'+AGENTS],{timeout:5000,stdio:'pipe',windowsHide:true});
+  const certificateStarted = performance.now();
+  try {
+    execFileSync(openssl,['req','-x509','-newkey','rsa:2048','-nodes','-keyout',keyFile,'-out',certFile,'-days','1','-subj','/CN='+WEB,'-addext','subjectAltName=DNS:'+WEB+',DNS:'+AGENTS],{timeout:certificateTimeoutMs,stdio:'pipe',windowsHide:true});
+  } finally {
+    console.log('CERTIFICATE_FIXTURE_TIMING=' + JSON.stringify({elapsedMs: Math.ceil(performance.now() - certificateStarted), timeoutMs: certificateTimeoutMs, lowCpuIsolation}));
+  }
   const c={...config,httpPort:backend.ports[0],agentGateway:{port:backend.ports[1]},publicRuntime:{...config.publicRuntime,mcpPort:backend.ports[2]}};
   const file=path.join(root,'Caddyfile');fs.writeFileSync(file,renderPublicIngress(c,{fixture:{listenPort:port,certFile,keyFile}}),{mode:0o600});
   const env={...process.env,XDG_DATA_HOME:path.join(root,'data'),XDG_CONFIG_HOME:path.join(root,'config')};
@@ -77,7 +85,7 @@ async function caddyFixture(t) {
   return {root,port,cert,...backend,child,exited};
 }
 
-test('real Caddy TLS ingress enforces routing, raw path boundaries and trusted proxy headers', {skip:!process.env.CADDY_TEST_BIN,timeout:20000}, async t=>{
+test('real Caddy TLS ingress enforces routing, raw path boundaries and trusted proxy headers', {skip:!process.env.CADDY_TEST_BIN,timeout:tlsTestTimeoutMs}, async t=>{
   const f=await caddyFixture(t);
   const web=await client(f.port,WEB,f.cert,'/login');assert.equal(web.status,200);assert.equal(JSON.parse(web.body).name,'web');
   const node=await client(f.port,AGENTS,f.cert,'/v1/manifest',{headers:{Host:AGENTS+':'+f.port,Authorization:'Bearer fixture','X-User-Id':'spoofed','X-Role':'owner','X-Workspace-Role':'owner','X-Node-Id':'other',Forwarded:'for=10.0.0.1','X-Forwarded-For':'10.0.0.1','X-Workspace-Id':'ws_fixture'}});
@@ -99,7 +107,7 @@ test('real Caddy TLS ingress enforces routing, raw path boundaries and trusted p
   assert.equal(duplicate.status,401);assert.equal(f.requests.at(-1).duplicate,2,'Caddy must preserve duplicate auth for the node API to reject');
 });
 
-test('real Caddy negotiates verified HTTP/2 and forwards WSS without changing the browser host boundary', {skip:!process.env.CADDY_TEST_BIN,timeout:20000},async t=>{
+test('real Caddy negotiates verified HTTP/2 and forwards WSS without changing the browser host boundary', {skip:!process.env.CADDY_TEST_BIN,timeout:tlsTestTimeoutMs},async t=>{
   const f=await caddyFixture(t),connection=http2.connect('https://127.0.0.1:'+f.port,{servername:WEB,ca:f.cert,rejectUnauthorized:true});
   t.after(()=>connection.destroy());await once(connection,'connect');assert.equal(connection.alpnProtocol,'h2');
   const request=connection.request({':path':'/login',':authority':WEB+':'+f.port});let responseStatus;request.on('response',headers=>{responseStatus=headers[':status'];});request.resume();await once(request,'end');assert.equal(responseStatus,200);
