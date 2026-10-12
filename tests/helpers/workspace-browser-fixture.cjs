@@ -15,25 +15,39 @@ const {createIdentityStore} = require('../../identity/store.cjs');
 const {createSessionService} = require('../../identity/sessions.cjs');
 const {hashPassword} = require('../../identity/passwords.cjs');
 const {seedBrowserPilot} = require('./browser-pilot-seed.cjs');
+const budget = require('./workspace-browser-budget.cjs');
 const root = path.resolve(__dirname, '../..'), origin = 'https://lack.fixture.invalid';
 const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'lack-workspace-browser-'));
 fs.writeFileSync(path.join(directory, '.fixture-owner'), JSON.stringify({kind: 'LOCAL_BROWSER_FIXTURE_NOT_TLS_ACCEPTANCE', pid: process.pid}));
-const proxies = [], sockets = new Set(); let child, backend, identity, stopping = false, shutdownTimer;
+const proxies = [], sockets = new Set(), seedSockets = new Set();
+const startupAbort = new AbortController();
+let child, backend, identity, stopping = false, shutdownTimer, startupTimer, lifetimeTimer, startupPromise, stopPromise, stage = 'loading';
+function enterStage(value) {startupAbort.signal.throwIfAborted(); stage = value; console.error('BROWSER_FIXTURE_STAGE=' + value);}
 async function freePort() {const server = net.createServer(); await new Promise(resolve => server.listen(0, '127.0.0.1', resolve)); const port = server.address().port; await new Promise(resolve => server.close(resolve)); return port;}
-async function stop() {
-  if (stopping) return; stopping = true;
-  clearInterval(shutdownTimer);
-  process.stdin.destroy();
-  for (const socket of sockets) socket.destroy();
-  await Promise.all(proxies.map(server => new Promise(resolve => server.close(resolve))));
-  if (child && child.exitCode === null) {const ended = once(child, 'exit'); child.kill(); await ended;}
-  if (backend) await new Promise(resolve => backend.close(resolve));
-  if (identity) identity.close();
-  process.exitCode = 0;
+function stop() {
+  if (stopPromise) return stopPromise;
+  stopping = true; startupAbort.abort(new Error('Owned fixture stop requested'));
+  clearInterval(shutdownTimer); clearTimeout(startupTimer); clearTimeout(lifetimeTimer);
+  for (const socket of seedSockets) socket.terminate();
+  stopPromise = (async () => {
+    // Drain initialization first, so resources created by a pending listen/hash
+    // operation cannot escape cleanup. Abort checks prevent the next stage.
+    if (startupPromise) await startupPromise.catch(() => {});
+    process.stdin.destroy();
+    for (const socket of sockets) socket.destroy();
+    await Promise.all(proxies.map(server => new Promise(resolve => server.close(resolve))));
+    if (child && child.exitCode === null && child.signalCode === null) {const ended = once(child, 'exit'); child.kill(); await ended;}
+    if (backend) {backend.closeAllConnections(); await new Promise(resolve => backend.close(resolve));}
+    if (identity) identity.close();
+    process.exitCode ??= 0;
+  })();
+  return stopPromise;
 }
 async function main() {
+  enterStage('identity');
   identity = createIdentityStore({dbPath: path.join(directory, 'identity.sqlite')});
   const sessions = createSessionService({store: identity}), password = 'public-browser-fixture-password', passwordHash = await hashPassword(password);
+  startupAbort.signal.throwIfAborted();
   const alice = identity.createUser({login: 'alice', passwordHash}), bob = identity.createUser({login: 'bob', passwordHash}), carol = identity.createUser({login: 'carol', passwordHash});
   const a = identity.createWorkspace({name: '研究 A <img src=x onerror=alert(1)>', ownerId: alice.id}), b = identity.createWorkspace({name: '开发 B', ownerId: bob.id});
   identity.setMembership(identity.requireMembership(alice.id, a.id), {workspaceId: a.id, userId: bob.id, role: 'member'});
@@ -43,7 +57,10 @@ async function main() {
   const port = await freePort(), gatewayPort = await freePort();
   // Use the deployable package rather than a second hand-maintained dependency
   // list. New gateway imports must be exercised here, not silently omitted.
-  execFileSync(process.env.PYTHON || 'python', ['scripts/materialize.py', '--output', directory], {cwd: root, encoding: 'utf8', timeout: 10000});
+  enterStage('materialize');
+  execFileSync(process.env.PYTHON || 'python', ['scripts/materialize.py', '--output', directory], {cwd: root, encoding: 'utf8', timeout: budget.materializeMs});
+  // Let buffered STOP/EOF be handled after the bounded synchronous subprocess.
+  await delay(0, undefined, {signal: startupAbort.signal});
   const configPath = path.join(directory, 'config', 'lack.config.json');
   const config = JSON.parse(fs.readFileSync(configPath, 'utf8'));
   fs.writeFileSync(configPath, JSON.stringify({...config, httpPort: port, llmProvider: 'local-test', embeddingProvider: 'none', autoPullModels: false, enablePublicMemory: false, agents: [],
@@ -51,25 +68,33 @@ async function main() {
     workspaceModelGrants: {[a.id]: {'local-test': {models: ['fixture-model']}}, [b.id]: {'local-test': {models: ['fixture-model']}}},
     llmProviders: [{id: 'local-test', local: true, requiresApiKey: false, baseUrl: `http://127.0.0.1:${backend.address().port}/v1`, models: ['fixture-model']}]}));
   let logs = '';
+  enterStage('runtime');
   child = spawn(process.execPath, [path.join(directory, 'server.js')], {cwd: directory, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'], env: {...process.env, NODE_PATH: path.join(root, 'node_modules'), LACK_BIND_HOST: '127.0.0.1', LACK_MULTI_USER: '1', LACK_PUBLIC_MODE: '1', LACK_WEB_ORIGIN: origin, LACK_IDENTITY_DB: path.join(directory, 'identity.sqlite'), LACK_BROWSER_FIXTURE_SECRET: 'synthetic-browser-secret-'.repeat(3)}});
   child.stdout.on('data', value => {logs = (logs + value).slice(-6000);}); child.stderr.on('data', value => {logs = (logs + value).slice(-6000);});
-  for (let i = 0; i < 100 && !logs.includes('Workspace-authenticated runtime listening'); i++) {if (child.exitCode !== null) throw new Error('Fixture child exited: ' + logs); await delay(50);}
+  for (let i = 0; i < Math.ceil(budget.runtimeMs / 50) && !logs.includes('Workspace-authenticated runtime listening'); i++) {if (child.exitCode !== null || child.signalCode !== null) throw new Error('Fixture child exited: ' + logs); await delay(50, undefined, {signal: startupAbort.signal});}
   if (!logs.includes('Workspace-authenticated runtime listening')) {
     const logPath = path.join(directory, 'fixture-startup.log'); fs.writeFileSync(logPath, logs);
     throw new Error('Fixture readiness timed out; private synthetic log: ' + logPath);
   }
   const evidenceTasks = {};
+  enterStage('seed');
+  const seedTimer = setTimeout(() => startupAbort.abort(new Error('Fixture seed deadline exceeded')), budget.seedMs);
+  try {
   for (const [login, workspace] of [['alice', a], ['bob', b]]) {
     const session = await sessions.login({login, password, source: 'browser-fixture-seed-' + login});
+    startupAbort.signal.throwIfAborted();
     const ws = new WebSocket(`ws://127.0.0.1:${port}/ws/workspaces/${workspace.id}`, {headers: {Origin: origin, Cookie: '__Host-chunlack_session=' + session.token}});
+    seedSockets.add(ws); ws.once('close', () => seedSockets.delete(ws));
     const messages = []; ws.on('message', value => messages.push(JSON.parse(value)));
-    await once(ws, 'open'); ws.send(JSON.stringify({type: 'join', channelId: 'general'}));
+    await once(ws, 'open', {signal: startupAbort.signal}); ws.send(JSON.stringify({type: 'join', channelId: 'general'}));
     ws.send(JSON.stringify({type: 'message', channelId: 'general', content: 'PRIVATE_MARKER_' + (login === 'alice' ? 'A' : 'B') + ' <img src=x onerror=alert(1)>'}));
-    for (let i = 0; i < 100 && !messages.some(frame => frame.type === 'new_message'); i++) await delay(20);
+    for (let i = 0; i < 100 && !messages.some(frame => frame.type === 'new_message'); i++) await delay(20, undefined, {signal: startupAbort.signal});
     if (!messages.some(frame => frame.type === 'new_message')) throw new Error('Fixture message was not acknowledged');
-    ws.close(); await once(ws, 'close');
+    ws.close(); await once(ws, 'close', {signal: startupAbort.signal});
     if (process.argv.includes('--seed-human-evidence')) evidenceTasks[login] = await seedBrowserPilot({port, gatewayPort, origin, workspaceId: workspace.id, session, label: login === 'alice' ? 'A' : 'B'});
   }
+  } finally {clearTimeout(seedTimer);}
+  enterStage('proxies');
   const urls = {};
   for (const login of ['alice', 'bob', 'carol']) {
     let cookieName;
@@ -111,14 +136,20 @@ async function main() {
       request.on('upgrade', (response, peer, responseHead) => {sockets.add(peer); peer.on('close', () => sockets.delete(peer)); socket.write('HTTP/1.1 101 Switching Protocols\r\n' + Object.entries(response.headers).map(([key, value]) => key + ': ' + value).join('\r\n') + '\r\n\r\n'); if (responseHead.length) socket.write(responseHead); if (head.length) peer.write(head); socket.pipe(peer); peer.pipe(socket); socket.on('error', () => peer.destroy()); peer.on('error', () => socket.destroy());});
       request.on('response', response => {socket.end(`HTTP/1.1 ${response.statusCode} Rejected\r\nConnection: close\r\n\r\n`);}); request.on('error', () => socket.destroy()); request.end();
     });
-    await new Promise(resolve => proxy.listen(0, '127.0.0.1', resolve)); proxies.push(proxy); cookieName = 'lack_fixture_' + proxy.address().port;
+    proxies.push(proxy); await new Promise(resolve => proxy.listen(0, '127.0.0.1', resolve)); startupAbort.signal.throwIfAborted(); cookieName = 'lack_fixture_' + proxy.address().port;
     urls[login] = `http://127.0.0.1:${proxy.address().port}/`;
   }
   const stopFile = path.join(directory, '.stop-fixture');
   shutdownTimer = setInterval(() => {if (fs.existsSync(stopFile)) void stop();}, 500); shutdownTimer.unref();
+  enterStage('ready');
   console.log(JSON.stringify({kind: 'LOCAL_BROWSER_FIXTURE_NOT_TLS_ACCEPTANCE', urls, workspaceIds: {a: a.id, b: b.id}, directory, stopFile, evidenceTasks}));
-  process.stdin.setEncoding('utf8'); process.stdin.on('data', value => {if (value.trim() === 'STOP') void stop();});
-  process.on('SIGINT', () => void stop()); process.on('SIGTERM', () => void stop());
-  const deadline = setTimeout(() => void stop(), 20 * 60 * 1000); deadline.unref();
 }
-main().catch(async error => {console.error('BROWSER_FIXTURE_FAILED: ' + error.message); await stop(); process.exitCode = 1;});
+process.stdin.setEncoding('utf8');
+process.stdin.on('data', value => {if (value.trim() === 'STOP') void stop();});
+process.stdin.on('end', () => void stop());
+process.on('SIGINT', () => void stop()); process.on('SIGTERM', () => void stop());
+lifetimeTimer = setTimeout(() => void stop(), 20 * 60 * 1000); lifetimeTimer.unref();
+startupPromise = main();
+startupTimer = setTimeout(() => {console.error('BROWSER_FIXTURE_FAILED: startup deadline; stage=' + stage); process.exitCode = 1; void stop();}, budget.readinessMs);
+startupPromise.then(() => clearTimeout(startupTimer), () => clearTimeout(startupTimer));
+startupPromise.catch(async error => {const failed = !stopping; if (failed) console.error('BROWSER_FIXTURE_FAILED: stage=' + stage + '; ' + error.message); await stop(); if (failed) process.exitCode = 1;});

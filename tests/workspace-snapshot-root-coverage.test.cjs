@@ -177,6 +177,21 @@ test('failed-candidate recovery retains v2 empty directories and opaque archives
   fs.cpSync(f.snapshotRoot, path.join(candidateRoot, 'quarantine/snapshot'), { recursive: true });
   put(candidateRoot, 'migration-state.json', JSON.stringify({ version: 1, instanceId: randomUUID(), snapshotId: snapshot.snapshotId,
     planSha256: '0'.repeat(64), status: 'failed', migrationReady: false }));
+  if (process.platform !== 'win32') {
+    const copiedSnapshot = path.join(candidateRoot, 'quarantine/snapshot');
+    fs.chmodSync(copiedSnapshot, 0o755);
+    assert.throws(() => prepareMigrationRecovery({ candidateRoot,
+      recoveryRoot: path.join(f.root, 'insecure-copy-recovery'), reviewed: true }),
+    { code: 'snapshot_permissions_invalid' });
+    const makeCopiedDirectoriesPrivate = directory => {
+      fs.chmodSync(directory, 0o700);
+      for (const item of fs.readdirSync(directory, { withFileTypes: true })) {
+        assert.equal(item.isSymbolicLink(), false);
+        if (item.isDirectory()) makeCopiedDirectoriesPrivate(path.join(directory, item.name));
+      }
+    };
+    makeCopiedDirectoriesPrivate(copiedSnapshot);
+  }
   const result = prepareMigrationRecovery({ candidateRoot, recoveryRoot, reviewed: true });
   assert.equal(result.status, 'verified'); assert.equal(result.migrationReady, false);
   assert.equal(fs.readFileSync(path.join(recoveryRoot, 'snapshot-trial/payload/archive/legacy-root/db/unclassified.db'), 'utf8'), 'not a database');

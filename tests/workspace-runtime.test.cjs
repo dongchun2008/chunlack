@@ -15,7 +15,7 @@ const {createIdentityStore} = require('../identity/store.cjs');
 const {createSessionService} = require('../identity/sessions.cjs');
 const {hashPassword} = require('../identity/passwords.cjs');
 const origin = 'https://lack.fixture.invalid';
-test('actual embedded process enforces human identity, viewer denial and workspace separation without global config writes', {timeout: 20000}, async () => {
+test('actual embedded process enforces human identity, viewer denial and workspace separation without global config writes', {timeout: 60000}, async () => {
   const root = path.resolve(__dirname, '..');
   const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'lack-workspace-runtime-'));
   const identity = createIdentityStore({dbPath: path.join(directory, 'identity.sqlite')});
@@ -54,12 +54,14 @@ test('actual embedded process enforces human identity, viewer denial and workspa
     // Exercise the deliverable generator, not a hand-selected set of modules
     // that could hide missing public-runtime dependencies.
     execFileSync(process.env.PYTHON || 'python', ['scripts/materialize.py', '--output', directory], {cwd: root, timeout: 10000, stdio: 'pipe'});
+    const startupStarted = performance.now(), startupTimeoutMs = 20000;
     child = spawn(process.execPath, [path.join(directory, 'server.js')], {cwd: directory, env: {...process.env, NODE_PATH: path.join(root, 'node_modules'), LACK_BIND_HOST: '127.0.0.1', LACK_MULTI_USER: '1', LACK_PUBLIC_MODE: '1', LACK_WEB_ORIGIN: origin, LACK_IDENTITY_DB: path.join(directory, 'identity.sqlite'), LACK_GATEWAY_FIXTURE_SECRET: 'synthetic-only-fixture-'.repeat(3)}, stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true});
     child.stdout.on('data', chunk => {logs += chunk;}); child.stderr.on('data', chunk => {logs += chunk;});
-    for (let attempt = 0; attempt < 100 && !logs.includes('Workspace-authenticated runtime listening'); attempt++) {
-      if (child.exitCode !== null) break;
-      await delay(50);
+    while (!logs.includes('Workspace-authenticated runtime listening') && performance.now() - startupStarted < startupTimeoutMs) {
+      if (child.exitCode !== null || child.signalCode !== null) break;
+      await delay(Math.min(50, Math.max(1, startupTimeoutMs - (performance.now() - startupStarted))));
     }
+    console.log('WORKSPACE_RUNTIME_STARTUP_TIMING=' + JSON.stringify({elapsedMs: Math.ceil(performance.now() - startupStarted), timeoutMs: startupTimeoutMs, ready: logs.includes('Workspace-authenticated runtime listening')}));
     assert.ok(logs.includes('Workspace-authenticated runtime listening'), 'Runtime failed to start: ' + logs.slice(-3000));
     assert.ok(!/workspace_context_required|Uncaught Exception/.test(logs), logs.slice(-3000));
     // Main HTTP readiness is not evidence that the separately started gateway

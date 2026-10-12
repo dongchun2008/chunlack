@@ -135,7 +135,8 @@ function childRuntime(t, f) {
     {env: f.childEnv, stdio: ['pipe', 'pipe', 'pipe'], windowsHide: true});
   let logs = ''; child.stdout.on('data', data => {logs += data;}); child.stderr.on('data', data => {logs += data;});
   const exited = once(child, 'exit');
-  t.after(async () => {if (child.exitCode === null) {child.stdin.write('STOP\n'); await Promise.race([exited, delay(5000)]); if (child.exitCode === null) {child.kill(); await exited;}}});
+  exited.catch(() => {});
+  t.after(() => require('./helpers/owned-child-cleanup.cjs').stopOwnedChild(child, exited));
   return {child, exited, logs: () => logs};
 }
 async function ready(f) {
