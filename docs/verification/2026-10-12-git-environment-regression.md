@@ -85,3 +85,32 @@ are not included in this documentation commit.
   replacement-required marker. No production login was enabled.
 - Real external-Agent and real-model acceptance remain separate delivery
   requirements. No production or Relay restart/change was performed here.
+
+## Follow-up stage timing
+
+A subsequent instrumented, local-only helper run completed successfully and
+shut down its own server. It did not change the test or production code:
+
+- Password hashing: 737 ms.
+- Package materialization: 1282 ms.
+- Server spawn to listening indication: approximately 5375 ms.
+- Supervisor start to complete helper readiness: 9898 ms.
+- Supervisor completion: 10058 ms, exit 0; the owned server received SIGTERM
+  during the helper's normal shutdown.
+
+Evidence: ignored `browser-startup-stage-diagnostic.log` in the same directory.
+The instrumentation emits stage names, timings and exit status only, not
+credentials, task contents or actual account data.
+
+This establishes that the 10-second outer readiness budget can be almost
+exhausted by a successful initialization. It is also shorter than the sum of
+the allowed internal materialization and server-startup budgets, before
+session seeding. It does not explain every earlier timeout or turn a failed
+acceptance test into a pass.
+
+Approval has been requested for a test-only correction: derive bounded outer
+readiness from the internal startup stages, expose safe failure-stage
+diagnostics, and ensure timeout cleanup reaches only the owned subprocesses.
+All identity, authorization and DELETE assertions, production timeouts and
+security policy must remain unchanged. No such correction has been applied
+at this checkpoint.
