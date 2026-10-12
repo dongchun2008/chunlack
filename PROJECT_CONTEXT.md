@@ -313,3 +313,12 @@ The single-node implementation still lives in the embedded sources in lack.py. O
 - Production preflight/postflight records matched. Existing LACK and Tailscale Relay were not restarted or modified. No owned test unit remains active according to the completed controller result.
 - Evidence and limitations: `docs/verification/2026-10-12-native-oidc-session-validation.md`. Earlier failed attempts remain documented separately.
 - Pocket ID client creation is authorized but awaits the user's deferred Passkey login. Real Pocket ID authentication, native runtime/HTTPS and migration integration for this revision, native Muse/dots execution and formal publication are not accepted by the 45-test result.
+
+## 2026-10-12: native storage/HTTPS pass; runtime timeout gate remains
+
+- Same pinned product source `753308194bfb9136e34555008d68c4736f76292e`, with no product/test assertion changes.
+- Native storage: 52/52 pass across migration application, snapshot/WAL/root-boundary and isolated restore tests. Native HTTPS/ingress: 10/10 pass, actual materialized application/Caddy where specified; no skips or cancellations.
+- Runtime group: 15/17 pass. Two unchanged 5-second child-start deadlines timed out. Independent bounded sampling measured a natural cold import exit at 6.096 seconds total, 5.600 seconds module load and 0.560 seconds CPU, without creating package db/jspace directories. This diagnostic does not replace either failed test.
+- Requested approval for an explicit bounded low-CPU test mode; defaults and product deadlines remain unchanged until approved. Pocket ID login is deferred by the user.
+- All groups retained nobody, private network/tmp, 10% CPU, 192 MiB max, zero swap and four-minute per-unit limits. Production service baselines matched; no active owned test units remain in the completed controller records.
+- Full evidence and remaining gates: `docs/verification/2026-10-12-native-runtime-storage-https-validation.md`. No production deployment, live data migration or native Muse/dots acceptance was performed.
