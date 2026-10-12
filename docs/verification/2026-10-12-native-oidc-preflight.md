@@ -80,8 +80,47 @@ Ignored local evidence directory:
 ## Remaining delivery gates
 
 Native OIDC/session validation is still pending. The dedicated Pocket ID
-client has not been created, and authorization for that external account
-change is still pending. No real Pocket ID login, production activation,
+client has not been created. The user subsequently authorized creating that
+independent client; the browser currently requires the user's Passkey login.
+No real Pocket ID login, production activation,
 Muse native execution, or dots native execution was performed in this round.
 Earlier local passing suites and historical native results must not be used
 to label this candidate fully delivered.
+
+## Authorized retry: namespace fixed, dependency access blocked
+
+The user's subsequent approval covered the minimal namespace correction.
+Retry `1b4ad68c` used a new exclusive directory and service identity, preserving
+the first attempt's evidence. It retained `PrivateTmp` and added only a
+read-only source bind plus a read-write scratch bind. The test service started
+and the recorded systemd properties confirmed `nobody`, private networking,
+strict system protection, no new privileges, 10% CPU, 160/192 MiB memory,
+zero swap allowance and 32 tasks. The unit lifetime remained four minutes.
+
+The first test file then failed to load with `MODULE_NOT_FOUND: express`.
+The TAP result was one failing file wrapper, zero passes, zero skipped and
+zero cancelled; it does not represent execution of the individual OIDC
+assertions. No further test group ran and the controller issued a scoped stop
+for its own unit. Subsequent inspection showed MainPID 0 and failed state.
+
+Read-only diagnosis confirmed that `express`, `better-sqlite3` and `ws` exist
+and resolve for root. However, `/opt/chunlack/current` resolves through a
+release directory with mode 0750, owned by root and group chunlack. `nobody`
+cannot traverse this directory. No production permissions or group membership
+were changed. The next proposed correction is to expose only the existing
+dependency directory at a read-only test-namespace path and change the test's
+NODE_PATH to that path. This additional correction awaits confirmation; it
+must not expose production configuration, data or credentials or use root
+instead of the non-privileged test user.
+
+The retry's preflight and postflight records again matched each other and the
+first attempt. Evidence remains local and ignored under
+`.superpowers/sdd/2026-10-12-oidc-native/native-oidc-7533081-1b4ad68c/`.
+
+| File | SHA-256 |
+| --- | --- |
+| baseline.json | 2a9eba13dcf362333002ffb3b9a8c2e80983c8430c36994e1e66baae96c9581e |
+| postflight.json | 2a9eba13dcf362333002ffb3b9a8c2e80983c8430c36994e1e66baae96c9581e |
+| result.json | f18a62ba8ea638a28998094f53ac93d3d0c6ad81c8f1a2067c53ccb05d401e32 |
+| oidc-login.tap | 115da01daa3dec08dda189fb8f6fc4a29aa73ac32fa3f2d4f4e19dae54f6cb9c |
+| dependency-diagnostic.txt | 16c5aff416ad1703e009a0aca7ad48dcaa69ff045c3b3b6a7dc4c1e37ca70f19 |
