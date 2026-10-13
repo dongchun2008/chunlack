@@ -5210,7 +5210,10 @@ INDEX_HTML = r'''<!DOCTYPE html>
     .modal-content h3 { margin-bottom: 20px; font-size: 18px; }
     .modal-content label { color: var(--dark-gray); font-size: 12px; }
     .modal-content input, .modal-content select, .modal-content textarea { border: 1px solid var(--line); border-radius: 3px; padding: 10px; background: var(--off-white); color: var(--black); margin: 7px 0 16px; }
-    #saveAgentBtn { background: var(--action); color: var(--on-action); }
+    #saveAgentBtn, #createAgentSubmit { background: var(--action); color: var(--on-action); }
+    #createAgentFields { border: 0; margin: 0; padding: 0; min-width: 0; }
+    #createAgentStatus { min-height: 1.5em; white-space: pre-wrap; overflow-wrap: anywhere; }
+    #createAgentModal button:disabled { opacity: .55; cursor: not-allowed; }
     #removeAgentBtn { color: #af584a; border-color: #cfa79e; }
     .agent-detail-popup { border: 1px solid var(--black); border-radius: 5px; box-shadow: 5px 5px 0 var(--shadow-dark); font-size: 13px; line-height: 1.9; }
     .file-tree a { color: var(--link); }
@@ -5372,6 +5375,21 @@ INDEX_HTML = r'''<!DOCTYPE html>
 
 <div id="toast" class="toast"></div>
 
+<div id="createAgentModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="createAgentTitle">
+  <form id="createAgentForm" class="modal-content">
+    <h3 id="createAgentTitle">添加 Agent</h3>
+    <fieldset id="createAgentFields">
+      <label for="createAgentName">名称</label><input id="createAgentName" required maxlength="64" autocomplete="off">
+      <label for="createAgentProvider">模型供应商</label><select id="createAgentProvider" required></select>
+      <label for="createAgentModel">模型</label><select id="createAgentModel" required></select>
+      <label for="createAgentPrompt">系统提示词</label><textarea id="createAgentPrompt" rows="3" maxlength="8192"></textarea>
+      <label for="createAgentChannels">参与频道（英文逗号分隔）</label><input id="createAgentChannels" required maxlength="1000">
+      <label for="createAgentStrictChannel">限定频道（可留空）</label><input id="createAgentStrictChannel" maxlength="100">
+    </fieldset>
+    <p id="createAgentStatus" role="status" aria-live="polite"></p>
+    <div class="modal-buttons"><button id="createAgentRetry" type="button">重新加载</button><button id="createAgentCancel" type="button">取消</button><button id="createAgentSubmit" type="submit" disabled>创建 Agent</button></div>
+  </form>
+</div>
 <script src="/identity/runtime-mode.js"></script>
 <script src="/identity/workspace-ui.js"></script>
 <script src="/identity/workspace-shell.js"></script>
@@ -5384,8 +5402,10 @@ let workspaceClient = null, workspaceView = null, chatUiInitialized = false;
 let researchInterval = null, thinkingInterval = null, legacyReconnectTimer = null, activeWorkspaceScope = null;
 let graphWorkerUrl = null;
 const fileReaders = new Set();
+let agentCreateForm = null;
 
 function clearWorkspacePresentation() {
+  agentCreateForm?.reset();
   clearInterval(researchInterval); clearInterval(thinkingInterval); clearInterval(graphInterval); clearTimeout(legacyReconnectTimer);
   researchInterval = thinkingInterval = graphInterval = legacyReconnectTimer = null;
   if (resizeListener) window.removeEventListener('resize', handleGraphResize);
@@ -5664,8 +5684,8 @@ function connect() {
       case 'thread_messages': renderThreadMessages(d.messages); currentThreadId = d.threadId; openThreadPanel(); break;
       case 'thread_update': if(currentThreadId === d.threadId) renderThreadMessages(d.messages); break;
       case 'models_list': populateModelSelect(d.models); break;
-      case 'spawn_confirm': appendSystemMessage('Agent '+d.agent.name+' created.'); showToast(`Agent ${d.agent.name} spawned`, 'success'); break;
-      case 'error': showToast(d.message, 'error'); break;
+      case 'spawn_confirm': agentCreateForm?.receive(d); appendSystemMessage('Agent '+d.agent.name+' created.'); showToast(`Agent ${d.agent.name} spawned`, 'success'); break;
+      case 'error': agentCreateForm?.receive(d); showToast(d.message, 'error'); break;
       case 'cron_reset': location.reload(); break;
       case 'graph_ack': openGraphModal(); break;
       case 'ralph_status':
@@ -5679,7 +5699,7 @@ function connect() {
         break;
     }
   };
-  ws.onclose = () => { document.getElementById('statusText').innerText = 'DISCONNECTED'; if (!workspaceClient) legacyReconnectTimer = setTimeout(connect,3000); };
+  ws.onclose = () => { agentCreateForm?.disconnected(); document.getElementById('statusText').innerText = 'DISCONNECTED'; if (!workspaceClient) legacyReconnectTimer = setTimeout(connect,3000); };
 }
 
 async function loadLlmProviders() {
@@ -5940,31 +5960,123 @@ function openEditModal(agentId) {
   document.getElementById('agentDetailPopup').classList.remove('show');
 }
 async function handleSpawn() {
-  const providers = availableLlmProviders.length ? availableLlmProviders : await loadLlmProviders();
-  const configured = providers.filter(p => p.configured);
-  if (!configured.length) { alert('No configured LLM provider found.'); return; }
-  const provider = prompt('Provider:', configured[0].id);
-  if (!provider) return;
-  const selectedProvider = configured.find(p => p.id === provider) ? provider : configured[0].id;
-  const modelRes = await fetch(`/api/models?provider=${encodeURIComponent(selectedProvider)}`);
-  const data = await modelRes.json();
-  const models = data.models || [];
-  if (!models.length) { alert(`No models found for ${selectedProvider}.`); return; }
-  const name = prompt('Agent name:');
-  if (!name) return;
-  const model = prompt('Model:', models[0]);
-  const promptText = prompt('System prompt:','You are helpful.');
-  const chans = prompt('Channels (comma):','general,siphon,code').split(',').map(s=>s.trim());
-  const strict = prompt('Strict channel (optional, leave empty):', '');
-  ws.send(JSON.stringify({
-    type:'spawn_agent',
-    provider: selectedProvider,
-    name,
-    model,
-    systemPrompt: promptText,
-    channels: chans,
-    strictChannel: strict || null
-  }));
+  if (!agentCreateForm) agentCreateForm = createAgentForm();
+  return agentCreateForm.open();
+}
+function createAgentForm() {
+  const field = suffix => document.getElementById('createAgent' + suffix);
+  const modal = field('Modal'), form = field('Form'), fields = field('Fields');
+  const provider = field('Provider'), model = field('Model'), submit = field('Submit');
+  const retry = field('Retry'), cancel = field('Cancel'), status = field('Status');
+  let state = null, revision = 0, controller = null, loadTimer = null, ackTimer = null;
+  const context = () => ({scope: activeWorkspaceScope, generation: workspaceClient ? workspaceClient.snapshot().generation : null, socket: ws});
+  const current = s => {const c = context(); return state === s && s && s.scope === c.scope && s.generation === c.generation && s.socket === c.socket;};
+  const connected = s => current(s) && s.socket && s.socket.readyState === WebSocket.OPEN;
+  const stopLoad = () => {revision++; controller?.abort(); controller = null; clearTimeout(loadTimer); loadTimer = null;};
+  function reset() {
+    stopLoad(); clearTimeout(ackTimer); ackTimer = null; state = null;
+    modal.style.display = 'none'; fields.disabled = false; submit.disabled = true;
+    provider.replaceChildren(); model.replaceChildren(); status.textContent = '';
+    for (const name of ['Name', 'Prompt', 'Channels', 'StrictChannel']) field(name).value = '';
+  }
+  function fill(select, values) {
+    select.replaceChildren();
+    for (const value of values) {const option = document.createElement('option'); option.value = value; option.textContent = value; select.appendChild(option);}
+    select.value = values[0] || '';
+  }
+  async function read(url) {
+    const abort = controller;
+    clearTimeout(loadTimer); loadTimer = setTimeout(() => abort.abort(), 20000);
+    const response = await fetch(url, {signal: abort.signal});
+    if (!response.ok) throw new Error('catalog_unavailable');
+    return response.json();
+  }
+  async function loadModels() {
+    const s = state;
+    if (!current(s) || s.pending) return;
+    stopLoad(); const request = revision, selected = provider.value; controller = new AbortController();
+    s.models = []; model.replaceChildren(); model.disabled = true; submit.disabled = true; retry.disabled = true;
+    status.textContent = '正在加载模型…';
+    try {
+      if (!s.providers.includes(selected)) throw new Error('provider_not_available');
+      const data = await read('/api/models?provider=' + encodeURIComponent(selected));
+      if (!current(s) || request !== revision) return;
+      s.models = Array.isArray(data.models) ? data.models.filter(value => typeof value === 'string' && value.length > 0) : [];
+      if (!s.models.length) throw new Error('no_models');
+      fill(model, s.models); model.disabled = false; submit.disabled = !connected(s);
+      status.textContent = '请选择模型并填写 Agent 名称。';
+    } catch (error) {
+      if (current(s) && request === revision) status.textContent = '模型加载失败或没有获准使用的模型。请重新加载或选择其他供应商。';
+    } finally {
+      if (current(s) && request === revision) {clearTimeout(loadTimer); retry.disabled = false;}
+    }
+  }
+  async function loadProviders() {
+    const s = state;
+    if (!current(s) || s.pending) return;
+    stopLoad(); const request = revision; controller = new AbortController();
+    s.providers = []; s.models = []; provider.replaceChildren(); model.replaceChildren();
+    provider.disabled = model.disabled = submit.disabled = retry.disabled = true;
+    status.textContent = '正在加载可用供应商…';
+    try {
+      const data = await read('/api/llm-providers');
+      if (!current(s) || request !== revision) return;
+      s.providers = Array.isArray(data.providers) ? data.providers.filter(p => p && p.configured && typeof p.id === 'string').map(p => p.id) : [];
+      if (!s.providers.length) throw new Error('no_providers');
+      fill(provider, s.providers);
+      if (s.providers.includes(data.defaultProvider)) provider.value = data.defaultProvider;
+      provider.disabled = false;
+      await loadModels();
+    } catch (error) {
+      if (current(s) && request === revision) status.textContent = '供应商加载失败或当前工作区没有已配置的供应商。请重新加载，或联系工作区所有者。';
+    } finally {
+      if (current(s) && request === revision) {clearTimeout(loadTimer); retry.disabled = false;}
+    }
+  }
+  function uncertain() {
+    if (state?.pending) status.textContent = '尚未确认创建结果。请刷新并核对 Agent 列表后再试，勿重复提交。';
+  }
+  form.onsubmit = event => {
+    event.preventDefault(); const s = state;
+    if (!connected(s) || s.pending || submit.disabled) return;
+    const name = field('Name').value.trim(), strict = field('StrictChannel').value.trim();
+    const channels = [...new Set(field('Channels').value.split(',').map(value => value.trim()).filter(Boolean))];
+    if (!name || !channels.length || (strict && !channels.includes(strict))) {status.textContent = '请填写名称和参与频道；限定频道必须属于参与频道。'; return;}
+    if (!s.providers.includes(provider.value) || !s.models.includes(model.value)) {status.textContent = '请选择已加载并获准使用的供应商和模型。'; return;}
+    const packet = {type: 'spawn_agent', name, provider: provider.value, model: model.value, systemPrompt: field('Prompt').value, channels, strictChannel: strict || null};
+    s.pending = packet; fields.disabled = submit.disabled = retry.disabled = true;
+    status.textContent = '已提交，正在等待服务端确认…';
+    try {s.socket.send(JSON.stringify(packet)); ackTimer = setTimeout(uncertain, 10000);}
+    catch (error) {s.pending = null; fields.disabled = false; submit.disabled = !connected(s); retry.disabled = false; status.textContent = '连接不可用，未发送创建请求。请重新连接后再试。';}
+  };
+  provider.onchange = loadModels; retry.onclick = loadProviders;
+  cancel.onclick = () => {if (state?.pending) modal.style.display = 'none'; else reset(); document.getElementById('studioSpawnBtn')?.focus();};
+  modal.onkeydown = event => {
+    if (event.key === 'Escape') {event.preventDefault(); cancel.onclick();}
+    if (event.key === 'Tab') {
+      const controls = ['Name', 'Provider', 'Model', 'Prompt', 'Channels', 'StrictChannel', 'Retry', 'Cancel', 'Submit'].map(field).filter(item => !item.disabled && (!fields.disabled || item === cancel));
+      const index = controls.indexOf(document.activeElement);
+      if (event.shiftKey && index <= 0) {event.preventDefault(); controls.at(-1).focus();}
+      else if (!event.shiftKey && (index === -1 || index === controls.length - 1)) {event.preventDefault(); controls[0].focus();}
+    }
+  };
+  return {
+    reset,
+    async open() {
+      if (state && current(state)) {modal.style.display = 'flex'; field('Name').focus(); return;}
+      reset(); const s = {...context(), providers: [], models: [], pending: null}; state = s;
+      if (!connected(s)) {reset(); showToast('尚未连接服务，请稍后再试。', 'error'); return;}
+      field('Prompt').value = 'You are helpful.'; field('Channels').value = 'general,siphon,code';
+      modal.style.display = 'flex'; field('Name').focus(); await loadProviders();
+    },
+    receive(frame) {
+      const s = state;
+      if (!current(s) || !s.pending) return;
+      if (frame.type === 'spawn_confirm' && frame.agent && ['name', 'provider', 'model'].every(key => frame.agent[key] === s.pending[key])) {reset(); document.getElementById('studioSpawnBtn')?.focus();}
+      else if (frame.type === 'error') uncertain();
+    },
+    disconnected() {submit.disabled = true; if (state?.pending) uncertain(); else if (state) status.textContent = '连接已断开，请关闭表单并在重新连接后再试。';}
+  };
 }
 function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 

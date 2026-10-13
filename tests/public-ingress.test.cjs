@@ -14,8 +14,10 @@ const {WebSocket, WebSocketServer} = require('ws');
 const {renderPublicIngress} = require('../deploy/public/render-ingress.cjs');
 const WEB = 'lack.fixture.invalid', AGENTS = 'agents.fixture.invalid';
 const lowCpuIsolation = process.env.CHUNLACK_TEST_LOW_CPU === '1';
+const windowsStartup = process.platform === 'win32';
 const certificateTimeoutMs = lowCpuIsolation ? 20000 : 5000;
-const tlsTestTimeoutMs = lowCpuIsolation ? 40000 : 20000;
+const caddyCommandTimeoutMs = windowsStartup ? 20000 : 5000;
+const tlsTestTimeoutMs = windowsStartup ? 90000 : lowCpuIsolation ? 40000 : 20000;
 const config = {httpPort: 23721, agentGateway: {port: 23722}, publicRuntime: {webOrigin: 'https://' + WEB, agentsOrigin: 'https://' + AGENTS, mcpPort: 23723}};
 
 function folder(t) {const root=fs.mkdtempSync(path.join(os.tmpdir(),'lack-ingress-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));return root;}
@@ -39,7 +41,7 @@ test('ingress rendering rejects unsafe host, upstream and test certificate input
 
 function client(port, host, cert, uri='/', options={}) {
   return new Promise((resolve,reject)=>{
-    const req=https.request({hostname:'127.0.0.1',port,servername:options.servername||host,ca:cert,rejectUnauthorized:true,path:uri,
+    const req=https.request({hostname:'127.0.0.1',port,servername:options.servername||host,ca:cert,rejectUnauthorized:true,path:uri,signal:options.signal,
       method:options.method||'GET',headers:options.headers||{Host:host+':'+port}},res=>{
       const chunks=[];res.on('data',data=>chunks.push(data));res.on('end',()=>resolve({status:res.statusCode,body:Buffer.concat(chunks).toString('utf8')}));
     });req.setTimeout(2000,()=>req.destroy(new Error('fixture_request_timeout')));req.on('error',reject);req.end(options.body);
@@ -74,13 +76,29 @@ async function caddyFixture(t) {
   const c={...config,httpPort:backend.ports[0],agentGateway:{port:backend.ports[1]},publicRuntime:{...config.publicRuntime,mcpPort:backend.ports[2]}};
   const file=path.join(root,'Caddyfile');fs.writeFileSync(file,renderPublicIngress(c,{fixture:{listenPort:port,certFile,keyFile}}),{mode:0o600});
   const env={...process.env,XDG_DATA_HOME:path.join(root,'data'),XDG_CONFIG_HOME:path.join(root,'config')};
-  execFileSync(binary,['validate','--adapter','caddyfile','--config',file],{env,timeout:5000,stdio:'pipe',windowsHide:true});
-  const adapted=JSON.parse(execFileSync(binary,['adapt','--adapter','caddyfile','--config',file],{env,timeout:5000,encoding:'utf8',stdio:['ignore','pipe','pipe'],windowsHide:true}));
+  function caddyPhase(phase) {
+    const started=performance.now();
+    try {return execFileSync(binary,[phase,'--adapter','caddyfile','--config',file],{env,timeout:caddyCommandTimeoutMs,encoding:'utf8',stdio:['ignore','pipe','pipe'],windowsHide:true});}
+    finally {console.log('CADDY_FIXTURE_TIMING='+JSON.stringify({phase,elapsedMs:Math.ceil(performance.now()-started),timeoutMs:caddyCommandTimeoutMs,windowsStartup}));}
+  }
+  caddyPhase('validate');
+  const adapted=JSON.parse(caddyPhase('adapt'));
   assert.equal(adapted.admin.disabled,true);assert.ok(Object.values(adapted.apps.http.servers).every(s=>s.listen.every(p=>p.endsWith(':'+port))&&s.protocols.join(' ')==='h1 h2'));
   const child=spawn(binary,['run','--adapter','caddyfile','--config',file],{env,stdio:['ignore','ignore','pipe'],windowsHide:true});let logs='';child.stderr.on('data',data=>{logs+=data;});const exited=once(child,'exit');
   t.after(async()=>{if(child.exitCode===null){child.kill('SIGTERM');await Promise.race([exited,delay(3000)]);if(child.exitCode===null){child.kill('SIGKILL');await exited;}}});
   const cert=fs.readFileSync(certFile);let ready=false;
-  for(let i=0;i<100;i++){try{const r=await client(port,WEB,cert);if(r.status===200){ready=true;break;}}catch{}if(child.exitCode!==null)break;await delay(20);}
+  const readinessStarted=performance.now(), readinessAbort=new AbortController();
+  const readinessTimer=windowsStartup?setTimeout(()=>readinessAbort.abort(),20000):null;
+  try {
+    for(let i=0;windowsStartup?performance.now()-readinessStarted<20000:i<100;i++){
+      try{const r=await client(port,WEB,cert,'/',{signal:windowsStartup?readinessAbort.signal:undefined});if(r.status===200){ready=true;break;}}catch{}
+      if(child.exitCode!==null||readinessAbort.signal.aborted)break;
+      await delay(20,undefined,{signal:readinessAbort.signal}).catch(()=>{});
+    }
+  } finally {
+    clearTimeout(readinessTimer);readinessAbort.abort();
+    console.log('CADDY_FIXTURE_TIMING='+JSON.stringify({phase:'readiness',elapsedMs:Math.ceil(performance.now()-readinessStarted),timeoutMs:windowsStartup?20000:null,maxProbes:windowsStartup?null:100,ready,windowsStartup}));
+  }
   assert.ok(ready,'owned Caddy fixture not ready: '+logs.slice(-1200));backend.requests.length=0;
   return {root,port,cert,...backend,child,exited};
 }
