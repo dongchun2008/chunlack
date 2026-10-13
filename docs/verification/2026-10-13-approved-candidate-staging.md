@@ -1,10 +1,51 @@
 # Approved isolated candidate staging, 2026-10-13
 
-Current status: the approved metadata repair, isolated owner-data migration and
-completed preparation-unit cleanup have passed. Activation is stopped before
-installation because its preparation-state precondition conflicts with cleanup.
+Current status: the approved metadata repair, isolated owner-data migration,
+completed preparation-unit cleanup and replacement activation-state gate passed.
+Installation prepared the dedicated users/directories, then stopped at an
+overly broad dependency-symlink check. New services are not installed or started.
 The public candidate is not active, and real Pocket ID login is not accepted.
 Earlier interruption details below are retained as historical evidence.
+
+## Activation-state repair and dependency-link finding
+
+The operator approved correcting the activation condition. The installer now
+verifies the recorded successful terminal/release evidence, the offline migration
+manifest and operational configuration hashes, actual runtime schema checks, the
+exact owner/workspace and scoped counts of 13 messages and one Agent. It requires
+the released units to be inactive with zero main/control PIDs instead of still
+being exited. These checks and the unchanged full resource preflight passed.
+No initialization or password generation was repeated.
+
+Installation then created only the two approved system users, the empty dedicated
+configuration directory, and the empty dedicated HTTPS state directory. The new
+users have nologin shells. The original service users and directories were not
+changed. It stopped before recursive code/data ownership changes, credential
+upload, Caddyfile installation, service-unit installation or service startup.
+
+The stop was caused by the installer's unconditional link prohibition over both
+code dependencies and data. A bounded read-only inventory found ten links, all
+under the candidate node_modules/.bin and resolving to files within the same
+candidate node_modules: acorn, eslint, js-yaml, mime, node-which, prebuild-install,
+rc, rimraf, semver and uuid. No link was found in the isolated data root; neither
+root itself resolves through a link. This finding does not justify allowing
+arbitrary code/data symlinks or relaxing source/migration path checks.
+
+The proposed narrow correction is to verify each npm entry against its exact
+declared package bin target and confined destination, preserve legitimate
+executable entry permissions, and continue from these specifically owned partial
+installation artifacts after rechecking their identities, permissions and empty
+state. Unknown, broken, escaping or data-directory links remain denied. This
+additional correction awaits approval. Existing runtime.env and service units
+must not be overwritten, nor system users silently recreated or adopted.
+
+Observed partial state: chunlack-public UID/GID 996/987 and chunlack-https 995/986;
+/etc/chunlack-public is 0750 root:chunlack-https, /var/lib/chunlack-https is 0700
+chunlack-https:chunlack-https. Candidate code/data roots remain 0700 root:root.
+runtime.env and Caddyfile are absent. Postflight old LACK health was 200; LACK
+and Tailscale PID/restart counters remained unchanged. No public activation or
+real OIDC login has occurred. Local bounded link evidence is retained in the
+ignored release-preparation directory.
 
 ## Completed-unit cleanup follow-up
 
