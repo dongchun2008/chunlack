@@ -1,9 +1,34 @@
 # Approved isolated candidate staging, 2026-10-13
 
-Current status: the approved metadata repair and isolated owner-data migration
-have passed. Activation is stopped at completed preparation-unit cleanup.
+Current status: the approved metadata repair, isolated owner-data migration and
+completed preparation-unit cleanup have passed. Activation is stopped before
+installation because its preparation-state precondition conflicts with cleanup.
 The public candidate is not active, and real Pocket ID login is not accepted.
 Earlier interruption details below are retained as historical evidence.
+
+## Completed-unit cleanup follow-up
+
+Following the operator's instruction to continue, the two known transient units
+were checked through systemd D-Bus. Both ExecStop and ExecStopPost explicitly
+returned zero-length arrays; absent systemctl output was not accepted as proof.
+Exact unit identities, transient fragment paths, zero main/control PIDs and
+successful exit status were checked, preserved locally and rechecked immediately
+before releasing only those two units. Existing LACK/Relay PID, restart and health
+output matched before and after. Both owned units subsequently became inactive,
+dead and not-found; their logs and local evidence were retained.
+
+The unchanged full public preflight then passed. Installation nevertheless stopped
+before its first mutation: activate-approved-services.py still requires the
+data-initialization unit to be exited with status zero, although the preceding
+approved cleanup necessarily releases that transient unit. The stale state gate
+must instead consume the saved terminal proof and verify the prepared data and
+release evidence; it must not rerun initialization, recreate an owner, weaken
+the resource preflight or fabricate a successful live unit state.
+
+This additional orchestration correction awaits operator approval. Postflight
+confirmed both new service users, public unit files and /etc/chunlack-public
+remain absent; 443 is unoccupied. Old LACK still returned health 200 with the
+same PID/restart count, and the Relay PID/restart count was unchanged.
 
 ## Approved repair and migration follow-up
 
