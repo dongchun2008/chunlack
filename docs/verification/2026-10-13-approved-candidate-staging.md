@@ -193,3 +193,34 @@ evidence. No form was submitted, permission changed, secret read or identity
 binding written. An administration-page user ID is not yet a verified OIDC
 token subject; actual issuer/sub validation and authenticated browser acceptance
 remain required before reporting the owner login as usable.
+
+## 2026-10-13 update: candidate active; owner binding completed; acceptance open
+
+This entry supersedes earlier pending activation/link-check notes in this document. It does not declare delivery or a production-data cutover.
+
+- The confined npm-bin exception was applied only to the ten declared package binaries, matching the pinned dependency lock and canonical in-tree targets. Other code links and all data links remain rejected.
+- Independent `chunlack-public.service` and `chunlack-https.service` started successfully. App listeners remain on 127.0.0.1 ports 13721/13722/13723; Caddy listens on TCP 443. No port 80, UDP 443, existing DNS, or firewall rules were changed in this step.
+- Initial external checks verified both hostnames with normal certificate/hostname verification and TLS 1.3. Human health returned 200, anonymous identity and channels returned 401, and the agents origin root returned 404. These are point-in-time results, not continuous availability evidence.
+- The public login page was rendered in the browser, and its SSO link reached the dedicated Pocket ID ChunLACK interaction page.
+- Only the two new candidate services were gracefully stopped for identity maintenance. The runtime lock disappeared normally; it was not removed manually. A private SQLite backup was created before binding, using the application account.
+- The administratively verified Pocket ID user `dongchun` was explicitly linked by issuer and immutable user ID to the already approved local `chunlack-owner`. The store API confirmed the mapping, and the new services restarted successfully. No email-based, automatic group-based, or arbitrary-user owner grant was added.
+- Pocket ID documents `sub` as the immutable user ID: https://pocket-id.org/docs/guides/scopes-and-claims . Administrative mapping is not proof of a successful signed-token exchange; real login remains pending the user's passkey interaction.
+- At the latest service observation, the app used 59,936,768 bytes and HTTPS used 13,225,984 bytes. Limits remain app 448 MiB / 50% of one CPU and HTTPS 128 MiB / 10%. Both had zero automatic restarts. These measurements are not a sustained-load acceptance test.
+- Protected old LACK remained active at PID 594652 with health 200; Tailscale remained at PID 859 with its existing UDP 40000 listeners. Both restart counters remained zero. This is coexistence sampling, not Relay end-to-end forwarding verification.
+
+### New unresolved acceptance finding
+
+After the candidate restart, the VPS-local hostname/SNI-correct HTTPS check returned 200, but new connections from this Windows host failed during TLS with `SSLEOFError`. A separate browser health navigation reported `ERR_BLOCKED_BY_CLIENT`. The local resolver returned 28.0.36.204 for the human hostname; this observation alone does not establish the root cause. No local proxy, VPN, DNS, certificate-trust or security settings were modified. No TLS validation was disabled.
+
+The attempted eight-case anonymous-boundary batch stopped at its first connection failure; it is NOT an 8/8 pass. Distinguish this current failure from the earlier successful public TLS and browser observations.
+
+### Remaining delivery gates
+
+- Complete the user's Pocket ID passkey interaction and prove the actual callback, owner/workspace session, logout and access isolation.
+- Resolve or localize the Windows-to-public-ingress failure and repeat public boundary checks without weakening TLS or client protections.
+- Enable and verify boot persistence only as part of an accepted operational configuration; current start success does not prove reboot recovery.
+- Connect and accept the direct 1Cat provider separately; no Open WebUI integration or credential reuse is implied.
+- Complete real Muse and dots cloud-Agent task execution and evidence return; mock/worker tests do not establish vendor-Agent acceptance.
+- Preserve the old deployment, private identity backup, and Relay throughout. Do not claim full delivery yet.
+
+All private credentials, UUID mapping records, recovery files and raw evidence remain outside tracked source. This update changes documentation only, not product code.
