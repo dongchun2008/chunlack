@@ -143,7 +143,9 @@ async function createOidcLogin({config, webOrigin, env = process.env, fetchImpl 
         callback = new URL(url);
         if (callback.origin + callback.pathname !== redirectUri || callback.hash || callback.href.length > 8192 ||
             callback.username || callback.password || !opaque(browserToken)) throw Error();
-        const allowed = new Set(['state', 'code', 'iss', 'error', 'error_description', 'error_uri']);
+        // Pocket ID returns scope here. It is informational only: identity and
+        // permissions still come from the verified ID token and local bindings.
+        const allowed = new Set(['state', 'code', 'iss', 'scope', 'error', 'error_description', 'error_uri']);
         for (const key of callback.searchParams.keys()) if (!allowed.has(key) || callback.searchParams.getAll(key).length !== 1) throw Error();
         if (!opaque(callback.searchParams.get('state')) || callback.searchParams.get('iss') !== config.issuer) throw Error();
       } catch {throw fail('unauthorized');}

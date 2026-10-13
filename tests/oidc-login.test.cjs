@@ -63,6 +63,25 @@ test('OIDC verifies PKCE and signed identity, then issues only a single-use opaq
   assert.equal(f.exchanges(), 1);
 });
 
+for (const scope of ['openid profile email', 'openid profile email owner admin']) {
+  test('Pocket ID callback accepts informational scope without deriving identity or roles: ' + scope, async t => {
+    const f = await fixture(t), start = await f.begin();
+    const proof = await f.oidc.finish({url: f.response(start, {scope}), browserToken: start.browserToken});
+    assert.deepEqual(f.oidc.consume(proof), {issuer, sub: 'pocket-alice'});
+    assert.equal(f.exchanges(), 1);
+  });
+}
+
+test('Pocket ID callback still rejects duplicate scope and unknown query parameters before exchange', async t => {
+  const f = await fixture(t), start = await f.begin();
+  const duplicate = f.response(start, {scope: 'openid profile email'});
+  duplicate.searchParams.append('scope', 'admin');
+  for (const url of [duplicate, f.response(start, {scope: 'openid profile email', role: 'owner'})]) {
+    await assert.rejects(f.oidc.finish({url, browserToken: start.browserToken}), {code: 'unauthorized'});
+  }
+  assert.equal(f.exchanges(), 0);
+});
+
 for (const [name, options] of Object.entries({signature: {badSignature: true}, nonce: {claims: {nonce: 'wrong'}},
   audience: {claims: {aud: 'another-app'}}, issuer: {claims: {iss: 'https://evil.test'}}, expired: {claims: {exp: 1}}})) {
   test('OIDC denies invalid ' + name + ' without an authenticated identity', async t => {
@@ -101,7 +120,7 @@ test('external identity binding persists, never merges by email, and unlink inva
   const {createSessionService} = require('../identity/sessions.cjs');
   const sessions = createSessionService({store: r.store, oidc: f.oidc, now: r.now});
   t.after(() => sessions.close());
-  const start = await f.begin(), proof = await f.oidc.finish({url: f.response(start), browserToken: start.browserToken});
+  const start = await f.begin(), proof = await f.oidc.finish({url: f.response(start, {scope: 'openid profile email owner'}), browserToken: start.browserToken});
   throwsCode(() => sessions.loginOidc({proof}), 'unauthorized');
   r.store.linkExternalIdentity({issuer, sub: 'pocket-alice', userId: r.users.alice.id});
   throwsCode(() => r.store.linkExternalIdentity({issuer, sub: 'pocket-alice', userId: r.users.bob.id}), 'identity_already_linked');
@@ -139,7 +158,7 @@ test('HTTP callback requires browser binding and returns a local session, not pr
   const start = await fetch(base + '/auth/oidc/begin', {method: 'POST', headers: {'content-type': 'application/json', origin: 'https://evil.test'}, body: '{}'});
   assert.equal(start.status, 403);
   // Prepare through the same provider to inspect the synthetic issuer's nonce/PKCE.
-  const login = await f.begin(), url = f.response(login);
+  const login = await f.begin(), url = f.response(login, {scope: 'openid profile email'});
   const response = await fetch(base + url.pathname + url.search, {redirect: 'manual', headers: {cookie: '__Host-chunlack_oidc=' + login.browserToken}});
   assert.equal(response.status, 303); assert.equal(response.headers.get('location'), '/');
   const cookies = response.headers.getSetCookie(), session = cookies.find(c => c.startsWith('__Host-chunlack_session='));

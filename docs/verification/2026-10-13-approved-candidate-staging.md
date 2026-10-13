@@ -246,3 +246,28 @@ Observed terminal exit was 0. The final report recorded exactly four attempted a
 The owner accessed the workspace provider view, while the unrelated workspace owner received 404 both before and after restart. The first Agent response included observed real-backend output. After restarting the disposable runtime, its exact message ID and content remained in channel history, and the persisted Agent produced a different second response using two further successful model calls. Both tested local execution scopes settled with no active branches. The fixture and its own sockets/process were closed before the successful terminal result.
 
 The private operator harness and report are under `.superpowers/sdd/2026-10-13-release-preparation/current-provider-acceptance.cjs` and `current-provider-acceptance-*.json`. This is current-source isolated integration evidence, not public deployment acceptance, sustained throughput evidence, interrupted-task recovery, real Pocket ID login, or Muse/dots cloud-computer execution. The publicly running candidate configuration remains unchanged while the user's Pocket ID interaction is pending.
+
+## 2026-10-13 update: Pocket ID scope compatibility fixed locally; publication rolled back
+
+A real Pocket ID callback included a single `scope` query parameter. The OIDC callback's explicit query allowlist did not include it, so the application returned `unauthorized` before attempting the token exchange. A synthetic signed-identity reproducer established the failure: the control callback passed, the otherwise identical scope-bearing callback failed, and duplicate scope was rejected. No real authorization code, cookie or credential was used in that reproducer.
+
+The minimal product change adds `scope` to the accepted callback parameter names. Its value is not consumed as identity, membership or permission data. Duplicate parameters, unknown parameters, browser binding, state/issuer checks, PKCE, nonce, signature, audience, expiry and explicit local identity bindings remain enforced.
+
+Tests now cover normal scope, scope text containing owner/admin without deriving authority, duplicate scope, unknown role parameters, unbound identities and the actual HTTP callback/session path with scope. Fresh results:
+
+- Reproducer and related OIDC regression files: 29/29 pass, zero failure/skip/cancel, exit 0.
+- Full Windows suite with existing real Caddy fixture support: 555/555 pass, zero failure/skip/cancel, exit 0; 421917.576 ms.
+- Smoke: exit 0; real HTTP/WebSocket, two mock model backends, SQLite restart persistence, private bind and configuration preservation.
+- VPS Linux synthetic regression: 3/3 pass, zero failure/skip/cancel, exit 0, Node duration 4896.917665 ms. The transient test was launched with 192 MiB maximum memory, no swap, 10% CPU, 90 seconds maximum runtime, private network and read-only system protection. This was not a live Pocket ID exchange.
+
+The first Linux wrapper failed before any remote file creation because it attempted `open_sftp` on a Paramiko Transport. The user approved correcting only that call; the subsequent isolated run above passed.
+
+### Publication attempt and rollback
+
+The user approved updating only the new candidate service. The operator verified the existing module hash and permissions, saved an exclusive private backup, stopped only the two new candidate units, replaced only `identity/oidc.cjs`, and attempted startup/health verification. A post-update check failed. The wrapper automatically stopped only those candidate units, restored the original module, and restarted them. It did not retain which exact verification stage failed; therefore a root cause for the publication failure is NOT established.
+
+Fresh post-rollback observations: the original module SHA-256 is `1a9fa148d54711fd2f701984b275ec952c27131086ad7659ad6117f147debae3`; the candidate app and HTTPS service are active with zero automatic restarts; hostname/SNI-correct locally verified HTTPS health is 200 and anonymous `/auth/me` is 401. Protected old LACK and Tailscale remain active at PIDs 594652 and 859 with zero automatic restarts. No credentials or Pocket ID client configuration changed.
+
+The operator's immediate HTTPS check after `systemctl start` lacks an explicit readiness wait, which is a possible timing issue, not a confirmed cause. A bounded readiness wait plus sanitized per-stage diagnostics and one controlled retry have been submitted for user approval. Existing TLS validation, assertions, backup and rollback must remain intact.
+
+**The scope fix is tested and synchronized source code, not a successfully deployed fix yet.** Do not ask the user to reuse old callback URLs or report real Pocket ID login as passed. A fresh login attempt is required after successful publication.
