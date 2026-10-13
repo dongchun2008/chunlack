@@ -79,3 +79,20 @@ must not be mounted or represented as accepted; external Agent authorization
 remains a separate Pocket ID integration and acceptance task.
 
 Do not publish this checkpoint as a production-ready release.
+
+## Subsequent unchanged browser-fixture retry
+
+After checkpoint `88180a1`, the clean development worktree was checked and the
+existing manual browser fixture was retried without code or budget changes.
+It again exited 1 during runtime readiness, before producing browser URLs.
+Its synthetic startup log contained only the J-space stub initialization
+message; it did not contain the required workspace-runtime listening marker.
+The existing runtime allowance remains 20 seconds.
+
+A subsequent read-only host CPU sample reported 100 percent utilization.
+This is a point-in-time observation, not proof that CPU contention caused the
+timeout. The diagnostic did not establish an offending process or justify
+changing production limits. No real-browser form acceptance was completed,
+no additional startup retries were launched after that observation, and no
+VPS service was changed during this retry. Pending reconnect and isolation
+wrapper repairs remain unapplied.
