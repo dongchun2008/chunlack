@@ -236,3 +236,13 @@ All private credentials, UUID mapping records, recovery files and raw evidence r
 - The new candidate's model configuration has NOT been switched. The pending real Pocket ID interaction was left intact rather than invalidated by another application restart. Actual provider integration, workspace authorization and Agent execution remain distinct next gates.
 
 The direct-model gate now has a current usable private path. This does not resolve the separate Windows/public-TLS failure or establish completed Pocket ID login, external vendor-Agent execution, boot recovery, or overall delivery.
+
+## 2026-10-13 update: current-source isolated real-provider workflow passed
+
+A fresh disposable packaged-runtime fixture was run from the current worktree using existing Caddy 2.11.7, synthetic human accounts and two synthetic workspaces. The fixture materialized the current application, used actual HTTPS and WSS with its explicitly trusted test certificate and hostname verification, and called the direct inference backend through a loopback-only bounded test guard. No real owner credential, Open WebUI credential, public service, production data, or Relay configuration was used or changed.
+
+Observed terminal exit was 0. The final report recorded exactly four attempted and four successful completions, zero failed or budget-rejected requests, and zero active calls. Each completion was capped at 32 output tokens and a 15-second upstream timeout. The actual provider was `direct-1cat-pilot`, model `qwen38-27b-nvfp4`; four runtime route records had `fallback=false`, `attempt=0`, and durations of 1024, 759, 952 and 762 ms.
+
+The owner accessed the workspace provider view, while the unrelated workspace owner received 404 both before and after restart. The first Agent response included observed real-backend output. After restarting the disposable runtime, its exact message ID and content remained in channel history, and the persisted Agent produced a different second response using two further successful model calls. Both tested local execution scopes settled with no active branches. The fixture and its own sockets/process were closed before the successful terminal result.
+
+The private operator harness and report are under `.superpowers/sdd/2026-10-13-release-preparation/current-provider-acceptance.cjs` and `current-provider-acceptance-*.json`. This is current-source isolated integration evidence, not public deployment acceptance, sustained throughput evidence, interrupted-task recovery, real Pocket ID login, or Muse/dots cloud-computer execution. The publicly running candidate configuration remains unchanged while the user's Pocket ID interaction is pending.
