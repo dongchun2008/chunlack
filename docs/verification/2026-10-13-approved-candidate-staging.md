@@ -281,3 +281,9 @@ The wrapper now records sanitized failure stages and waits at most 20 seconds fo
 The candidate application and HTTPS services are active with zero automatic restarts. Anonymous `/auth/me` remains HTTP 401. The old LACK health endpoint remains HTTP 200, and the protected old LACK / Tailscale service baseline is unchanged. No credentials, Pocket ID client configuration, Relay configuration or product security assertions were changed. Process-state checks do not constitute an end-to-end Relay forwarding test.
 
 The preceding Windows full suite passed 555/555 with no failures, skips or cancellations; the smoke test passed. The resource-limited Linux scope regression passed 3/3. This retry changed the deployment wrapper only, not the tested product patch. Real Pocket ID login still requires a fresh browser attempt; neither this update nor the health checks constitute full delivery acceptance.
+
+## Real Pocket ID browser acceptance after the controlled retry
+
+A fresh login was started from `https://lack.chunclaw.top/auth/oidc/login` in the existing browser, without reusing a callback code. After selecting Continue to identity provider, the browser returned to the ChunLACK root page. Its completed UI showed workspace ChunLACK, local account chunlack-owner, the owner role, and CONNECTED. The previous unauthorized callback error did not recur in this attempt. This supersedes the pending-new-attempt status above for this specific login gate.
+
+The acceptance screenshot is retained only in ignored private evidence storage, not in Git. No authentication codes, cookies, tokens or client secret are included in this record. No new permission grant or credential change was performed. This verifies the real Pocket ID login and visible workspace access for this account; it does not claim all-user coverage, reboot persistence, activated production model routing, Muse/dots acceptance or complete delivery.
