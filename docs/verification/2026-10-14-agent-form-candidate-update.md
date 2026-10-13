@@ -106,6 +106,37 @@ directory, not in Git:
 - `live-agent-created-20261014.png`
 - `live-onecat-ui-reflection-20261014.png`
 
+## Follow-up: bounded response-path diagnosis
+
+Subsequent source inspection and an offline helper diagnostic identified the
+following paths without changing product code:
+
+- `lack.py:4222`: `generateReflection` makes another generation request using a
+  reflection-specific system prompt, rather than the Agent's exact-output
+  instructions. The normal response path calls this helper unconditionally.
+- `lack.py:4214`: after normal handling in `general`, the runtime schedules
+  `triggerProactiveQuestions` after 1.5 seconds.
+- `lack.py:4663`: proactive questioning selects up to two non-embedding Agents
+  in `general`, generates another response, and persists and broadcasts a
+  separately formatted message. Its suffix matches the second visible reply.
+  The 30-second throttle limits repeats but does not require opt-in.
+- `lack.py:4205`: ordinary message routing selects eligible channel members;
+  this path does not filter recipients based on an explicit `@Agent` mention.
+- `lack.py:1279`: lightweight judging uses local scoring, but calls memory
+  persistence. The helper diagnostic does not establish the side effects or
+  embedding requests of the full real runtime.
+
+The ignored `response-generation-diagnostic-20261014.cjs` extracts the actual
+reflection and proactive helper definitions and executes them in a VM with
+mock generation and storage functions. It reproduced one reflection call, one
+proactive call and one extra persisted/broadcast message. An immediate repeat
+was throttled. Exit code was 0, with no network or real-model requests.
+
+This explains the matching response mechanisms, not an exact production trace
+or proof that all other side effects were absent. The main response plus these
+two enabled paths can require three generation requests even before retries or
+other features. No additional production prompt was sent for this diagnosis.
+
 ## Next gate
 
 Agree on bounded normal-chat semantics before changing response behavior:
