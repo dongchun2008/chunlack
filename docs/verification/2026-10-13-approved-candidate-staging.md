@@ -271,3 +271,13 @@ Fresh post-rollback observations: the original module SHA-256 is `1a9fa148d54711
 The operator's immediate HTTPS check after `systemctl start` lacks an explicit readiness wait, which is a possible timing issue, not a confirmed cause. A bounded readiness wait plus sanitized per-stage diagnostics and one controlled retry have been submitted for user approval. Existing TLS validation, assertions, backup and rollback must remain intact.
 
 **The scope fix is tested and synchronized source code, not a successfully deployed fix yet.** Do not ask the user to reuse old callback URLs or report real Pocket ID login as passed. A fresh login attempt is required after successful publication.
+
+## Controlled scope-patch retry: successful
+
+The approved retry changed only the already-tested `identity/oidc.cjs` module in the new public candidate. Its SHA-256 is `ae459a09646237683d38e3218899b392580395a7729f3ec99282f837f5663f57`. The previous module remains in an exclusive private backup for rollback.
+
+The wrapper now records sanitized failure stages and waits at most 20 seconds for certificate-verified HTTPS readiness. In this run, HTTPS probes at 12, 271, 531 and 790 ms returned curl exit 7; the probe at 1108 ms returned exit 0 / HTTP 200. This confirms that an immediate check would have been premature in this run; it does not retrospectively prove the exact failure stage of the earlier attempt.
+
+The candidate application and HTTPS services are active with zero automatic restarts. Anonymous `/auth/me` remains HTTP 401. The old LACK health endpoint remains HTTP 200, and the protected old LACK / Tailscale service baseline is unchanged. No credentials, Pocket ID client configuration, Relay configuration or product security assertions were changed. Process-state checks do not constitute an end-to-end Relay forwarding test.
+
+The preceding Windows full suite passed 555/555 with no failures, skips or cancellations; the smoke test passed. The resource-limited Linux scope regression passed 3/3. This retry changed the deployment wrapper only, not the tested product patch. Real Pocket ID login still requires a fresh browser attempt; neither this update nor the health checks constitute full delivery acceptance.
