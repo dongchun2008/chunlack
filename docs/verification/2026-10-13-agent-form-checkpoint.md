@@ -1,5 +1,10 @@
 # Agent form development checkpoint - 2026-10-13
 
+Update 2026-10-14: the authorized reconnect and isolation-runner repairs have
+passed full local and selected Linux verification. See
+[the follow-up report](2026-10-14-agent-form-reconnect-acceptance.md).
+The historical results below remain unchanged; this checkpoint was not deployed.
+
 Status: NOT ACCEPTED FOR RELEASE. This is a development checkpoint, not a
 production deployment or a completed delivery.
 

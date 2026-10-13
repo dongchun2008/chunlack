@@ -137,3 +137,48 @@ test('same-workspace reconnect preserves an unacknowledged creation lock', async
   assert.equal(f.sent.length, 1, 'reconnection must not permit a second possibly duplicate creation');
   assert.equal(f.elements.get('createAgentSubmit').disabled, true);
 });
+
+test('reconnected pending creation cannot be resent by cancel, retry or a matching-looking new-socket frame', async t => {
+  const f = fixture(t); await f.open(); await f.submit();
+  const requests = f.requests.length;
+  f.socket.readyState = 3; f.context.agentCreateForm.disconnected();
+  f.context.ws = {readyState: 1, send: value => f.sent.push(JSON.parse(value))};
+  f.cancel(); await f.open();
+  await f.elements.get('createAgentRetry').onclick();
+  await f.elements.get('createAgentProvider').onchange();
+  f.context.agentCreateForm.receive({type: 'spawn_confirm', agent: {name: 'Research', provider: 'direct-test', model: 'model-a'}});
+  await f.submit(); f.cancel(); await f.open(); await f.submit();
+  assert.equal(f.sent.length, 1);
+  assert.equal(f.requests.length, requests);
+  assert.equal(f.elements.get('createAgentFields').disabled, true);
+  assert.equal(f.elements.get('createAgentSubmit').disabled, true);
+  assert.equal(f.document.activeElement.id, 'createAgentCancel');
+  assert.match(f.elements.get('createAgentStatus').textContent, /尚未确认/);
+});
+
+test('a reconnect without pending creation can load a fresh authorized form', async t => {
+  const f = fixture(t); await f.open();
+  f.elements.get('createAgentName').value = 'unsent draft';
+  f.socket.readyState = 3; f.context.agentCreateForm.disconnected();
+  f.context.ws = {readyState: 1, send: value => f.sent.push(JSON.parse(value))};
+  await f.open();
+  assert.equal(f.elements.get('createAgentName').value, '');
+  assert.equal(f.requests.length, 4);
+  assert.equal(f.elements.get('createAgentSubmit').disabled, false);
+  await f.submit(); assert.equal(f.sent.length, 1);
+});
+
+test('pending creation does not retain private draft or lock across identity generation or workspace changes', async t => {
+  const f = fixture(t); await f.open(); await f.submit();
+  f.elements.get('createAgentPrompt').value = 'old identity private draft';
+  f.context.workspaceClient = {snapshot: () => ({generation: 2})};
+  await f.open();
+  assert.equal(f.elements.get('createAgentName').value, '');
+  assert.equal(f.elements.get('createAgentPrompt').value, 'You are helpful.');
+  assert.equal(f.elements.get('createAgentSubmit').disabled, false);
+  await f.submit(); assert.equal(f.sent.length, 2);
+  f.switchWorkspace(); await f.open();
+  assert.equal(f.elements.get('createAgentName').value, '');
+  assert.equal(f.elements.get('createAgentFields').disabled, false);
+  await f.submit(); assert.equal(f.sent.length, 3);
+});

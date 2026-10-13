@@ -5970,7 +5970,8 @@ function createAgentForm() {
   const retry = field('Retry'), cancel = field('Cancel'), status = field('Status');
   let state = null, revision = 0, controller = null, loadTimer = null, ackTimer = null;
   const context = () => ({scope: activeWorkspaceScope, generation: workspaceClient ? workspaceClient.snapshot().generation : null, socket: ws});
-  const current = s => {const c = context(); return state === s && s && s.scope === c.scope && s.generation === c.generation && s.socket === c.socket;};
+  const sameWorkspace = s => {const c = context(); return state === s && s && s.scope === c.scope && s.generation === c.generation;};
+  const current = s => sameWorkspace(s) && s.socket === ws;
   const connected = s => current(s) && s.socket && s.socket.readyState === WebSocket.OPEN;
   const stopLoad = () => {revision++; controller?.abort(); controller = null; clearTimeout(loadTimer); loadTimer = null;};
   function reset() {
@@ -6063,6 +6064,11 @@ function createAgentForm() {
   return {
     reset,
     async open() {
+      if (state?.pending && sameWorkspace(state)) {
+        modal.style.display = 'flex';
+        if (!current(state)) uncertain();
+        cancel.focus(); return;
+      }
       if (state && current(state)) {modal.style.display = 'flex'; field('Name').focus(); return;}
       reset(); const s = {...context(), providers: [], models: [], pending: null}; state = s;
       if (!connected(s)) {reset(); showToast('尚未连接服务，请稍后再试。', 'error'); return;}
