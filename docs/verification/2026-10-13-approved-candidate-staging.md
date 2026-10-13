@@ -224,3 +224,15 @@ The attempted eight-case anonymous-boundary batch stopped at its first connectio
 - Preserve the old deployment, private identity backup, and Relay throughout. Do not claim full delivery yet.
 
 All private credentials, UUID mapping records, recovery files and raw evidence remain outside tracked source. This update changes documentation only, not product code.
+
+## 2026-10-13 update: direct inference path recovered without network changes
+
+- Fresh VPS route inspection showed the historical LAN endpoint was routed over the default Ethernet gateway, not the tailnet; its bounded model-list request failed. The earlier LAN success from Windows must not be treated as current VPS reachability.
+- A read-only inventory identified the existing online Linux inference peer. Using that peer's existing Tailscale IPv4 address and port 8080, the VPS retrieved `/v1/models` successfully in 1106 ms.
+- One bounded direct `/v1/chat/completions` request returned HTTP 200 in 242 ms, with returned model `qwen38-27b-nvfp4` and nonempty output. Maximum requested output was 32 tokens. These are individual request observations, not capacity measurements.
+- This used the direct OpenAI-compatible endpoint: no Open WebUI, credentials, new tunnel, route changes, Tailscale changes, or Relay reconfiguration. The backend engine and physical GPU topology remain unverified.
+- The protected LACK and Tailscale PIDs remained 594652 and 859, both active with zero automatic restarts after the probe.
+- Private endpoint and raw report are retained in the ignored release-preparation evidence directory as `direct-tailnet-model-*.json`; no endpoint credentials were read or committed.
+- The new candidate's model configuration has NOT been switched. The pending real Pocket ID interaction was left intact rather than invalidated by another application restart. Actual provider integration, workspace authorization and Agent execution remain distinct next gates.
+
+The direct-model gate now has a current usable private path. This does not resolve the separate Windows/public-TLS failure or establish completed Pocket ID login, external vendor-Agent execution, boot recovery, or overall delivery.
