@@ -16,13 +16,28 @@ function validatePublicEventsOptions(options, env, webhook = {}, authorize) {
     workspaceCallbackHosts: options.workspaceCallbackHosts, multiUser: true, authorize});
   return {encryptionKey: Buffer.from(env[name], 'hex'), transport, deliveryIntervalMs};
 }
-function createPublicEventsRuntime({gateway, dataRoot, options, env = process.env, webhook, now = Date.now, ready = () => true}) {
+function createPublicEventsRuntime({gateway, dataRoot, options, env = process.env, webhook, now = Date.now, ready = () => true, agentAuthority}) {
   if (!gateway?.store?.multiUser || !gateway.workspaceAccess || typeof dataRoot !== 'string' || !path.isAbsolute(dataRoot) || typeof ready !== 'function') throw failure('invalid_events_runtime');
+  if (agentAuthority !== undefined && typeof agentAuthority?.assertSubscription !== 'function') throw failure('invalid_events_agent_authority');
+  const assertAgent = agentAuthority?.assertSubscription.bind(agentAuthority);
+  function authorizeAgentGrant(value, principal) {
+    if (!assertAgent) return false;
+    try {
+      const current = assertAgent(value);
+      return current.nodeId === principal.nodeId && current.workspaceId === principal.workspaceId;
+    } catch {return false;}
+  }
+  function authorizeCallback(binding) {
+    const principal = {nodeId: binding?.nodeId, workspaceId: binding?.workspaceId};
+    if (gateway.workspaceAccess.authorizeStoredNode(principal, binding?.taskId) !== true) return false;
+    return !Object.hasOwn(binding, 'agentGrant') || authorizeAgentGrant(binding.agentGrant, principal);
+  }
   const {encryptionKey, transport, deliveryIntervalMs} = validatePublicEventsOptions(options, env, webhook,
-    binding => gateway.workspaceAccess.authorizeStoredNode({nodeId: binding?.nodeId, workspaceId: binding?.workspaceId}, binding?.taskId));
+    authorizeCallback);
   const {store, workspaceAccess} = gateway;
   let events;
   try {events = createPilotEvents({dbPath: path.join(dataRoot, 'db', 'mcp-events.db'), encryptionKey, transport, now, multiUser: true,
+    ...(assertAgent ? {authorizeAgentGrant} : {}),
     authorize: (principal, taskId) => workspaceAccess.authorizeStoredNode(principal, taskId),
     authorizeCleanup: principal => workspaceAccess.authorizeStoredNode(principal, undefined, {cleanup: true})});}
   finally {encryptionKey.fill(0);}

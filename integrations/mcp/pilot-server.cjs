@@ -5,6 +5,7 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPr
   if(store.multiUser&&!workspaceAccess)P.fail('workspace_gateway_configuration',503);
   if(store.multiUser&&events&&events.multiUser!==true)P.fail('workspace_events_configuration',503);
   if(resolveAgentPrincipal!==undefined&&(typeof resolveAgentPrincipal!=='function'||!store.multiUser||!workspaceAccess||typeof store.authenticateAgent!=='function'))P.fail('agent_mcp_configuration',503);
+  if(resolveAgentPrincipal&&events?.agentAuthority===true&&typeof store.agentSubscriptionBinding!=='function')P.fail('agent_mcp_configuration',503);
   if(typeof resolvePrincipal!=='function')throw new Error('principal_resolver_required');let closed=false;const sockets=new Set(),rates=new Map();
   const id={type:'string',pattern:'^[A-Za-z0-9_-]{1,100}$'},num={type:'integer',minimum:1,maximum:3};
   const schema=props=>({type:'object',properties:props,required:Object.keys(props),additionalProperties:false});
@@ -53,19 +54,19 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPr
       const minute=Math.floor(Date.now()/60000),old=rates.get(p.nodeId),entry=old?.minute===minute?old:{minute,count:0};entry.count++;rates.set(p.nodeId,entry);if(entry.count>120)P.fail('rate_limited',429);
       const handleNode=async()=>{
       const params=request.params||{};let result;
-      if(agentRequest&&request.method.startsWith('events/'))P.fail('agent_events_not_ready',503);
-      if(request.method==='server/discover'){P.fields(params,[]);result={resultType:'complete',supportedVersions:['2026-07-28'],capabilities:{tools:{},...(events&&!agentRequest?{events:{}}:{})}};}
+      if(agentRequest&&request.method.startsWith('events/')&&events?.agentAuthority!==true)P.fail('agent_events_not_ready',503);
+      if(request.method==='server/discover'){P.fields(params,[]);result={resultType:'complete',supportedVersions:['2026-07-28'],capabilities:{tools:{},...(events&&(!agentRequest||events.agentAuthority===true)?{events:{}}:{})}};}
       else if(request.method==='tools/list'){P.fields(params,[]);result={tools:definitions};}
       else if(request.method==='tools/call'){P.fields(params,['name','arguments']);const raw=call(p,params.name,params.arguments||{}),value=store.multiUser&&raw?{...raw,workspaceId:p.workspaceId}:raw;result={content:[{type:'text',text:JSON.stringify(value)}],structuredContent:value,isError:false};}
       else if(events&&request.method==='events/list'){P.fields(params,[]);result=events.list(p);}
-      else if(events&&request.method==='events/subscribe')result=await events.subscribe(p,params);
-      else if(events&&request.method==='events/unsubscribe')result=await events.unsubscribe(p,params);
+      else if(events&&request.method==='events/subscribe')result=await events.subscribe(agentRequest?{...p,agentGrant:store.agentSubscriptionBinding(resolved)}:p,params);
+      else if(events&&request.method==='events/unsubscribe')result=await events.unsubscribe(agentRequest?{...p,agentGrant:store.agentSubscriptionBinding(resolved)}:p,params);
       else return error(requestId,-32601,'method_not_found');
       return {jsonrpc:'2.0',id:requestId,result};
       };
       if(agentRequest){
-        // All tool effects are synchronous inside this request-scoped boundary.
-        // Durable events remain disabled until their persisted binding can recheck the grant.
+        // Tool effects are synchronous inside this request-scoped boundary.
+        // Asynchronous events persist server-issued bindings and recheck live grants.
         const current=store.assertAuthenticatedNode(resolved,{scope,requireAgent:true});
         return await store.withWorkspace({workspaceId:current.workspaceId,userId:current.createdBy},handleNode);
       }
