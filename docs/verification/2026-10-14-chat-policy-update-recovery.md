@@ -1,6 +1,6 @@
 # Candidate chat-policy update and recovery
 
-Date: 2026-10-14. Outcome: update not accepted; old candidate code and HTTPS service restored.
+Date: 2026-10-14. Historical first-attempt outcome: update not accepted; old candidate code and HTTPS service restored. A later explicitly approved retry succeeded; see [controlled retry and real browser acceptance](2026-10-14-chat-policy-controlled-retry.md). The original failed-attempt record below is preserved.
 
 ## Approved work and tests
 

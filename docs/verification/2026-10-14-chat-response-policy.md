@@ -35,13 +35,15 @@ Private local evidence, intentionally excluded from Git:
 
 The intermediate `chat-response-boundaries-full-suite-20261014.tap` run was stopped once its version was superseded by the approved legacy-mode correction. Its incomplete result is not a full-suite pass.
 
-## Pending gates
+## Candidate update and bounded real acceptance
 
-- Candidate-only backend update, including source/hash guards, backup, bounded HTTPS readiness, rollback and protected-service checks.
-- Correct the update wrapper's handling of the existing HTTPS service dependency, after user confirmation. The deadline correction passed 4/4 targeted tests, but the controlled update exposed a separate service-restoration omission; see the attempt record below.
-- A real browser request through the existing 1Cat acceptance Agent, verifying the requested single reply with no unsolicited reflection or proactive follow-up.
+The first update exposed a dependency-restoration omission and was restored to the old code and HTTPS health; see [the historical recovery record](2026-10-14-chat-policy-update-recovery.md).
 
-No credentials, old LACK service or Tailscale Relay configuration were changed by this repair. The attempted candidate update was restored to its old code and HTTPS health; the patch is not currently active. See [the update and recovery record](2026-10-14-chat-policy-update-recovery.md).
+After explicit approval, the wrapper was corrected to establish application readiness before restoring HTTPS, using the same sequence for rollback. Ten wrapper checks passed. The controlled retry succeeded in 3.732 seconds with the tested backend active, HTTPS health 200, and protected-service state, fixed file hashes and resource limits unchanged.
+
+One real browser request through the existing direct 1Cat acceptance Agent produced exactly `CHUNLACK_SINGLE_OK_20261014_B8F`. An additional 30-second wait showed no extra reply; refreshing retained the same request and reply. This is bounded single-round evidence, not an unlimited-duration or backend-call-count assertion.
+
+No credentials, old LACK service or Tailscale Relay configuration were changed. Full details and evidence hashes: [controlled retry and browser acceptance](2026-10-14-chat-policy-controlled-retry.md).
 
 ## Delivery boundary
 
