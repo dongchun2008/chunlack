@@ -38,10 +38,10 @@ The intermediate `chat-response-boundaries-full-suite-20261014.tap` run was stop
 ## Pending gates
 
 - Candidate-only backend update, including source/hash guards, backup, bounded HTTPS readiness, rollback and protected-service checks.
-- Tighten the prepared update wrapper so each readiness probe shares the same remaining 20-second budget. The wrapper has not run; this follow-up is awaiting the user's confirmation.
+- Correct the update wrapper's handling of the existing HTTPS service dependency, after user confirmation. The deadline correction passed 4/4 targeted tests, but the controlled update exposed a separate service-restoration omission; see the attempt record below.
 - A real browser request through the existing 1Cat acceptance Agent, verifying the requested single reply with no unsolicited reflection or proactive follow-up.
 
-No credentials, old LACK service or Tailscale Relay configuration were changed by this repair. The candidate backend has not yet been updated with this patch.
+No credentials, old LACK service or Tailscale Relay configuration were changed by this repair. The attempted candidate update was restored to its old code and HTTPS health; the patch is not currently active. See [the update and recovery record](2026-10-14-chat-policy-update-recovery.md).
 
 ## Delivery boundary
 
