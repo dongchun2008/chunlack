@@ -10,6 +10,11 @@ Spec: `docs/superpowers/specs/2026-10-11-pocket-id-integration.md`.
 Parent plan: `docs/superpowers/plans/2026-10-14-pocket-agent-resource.md`, task 2.
 Baseline: `0716134`.
 
+Local implementation and the review-fix pass are verified in
+`docs/verification/2026-10-14-membership-epochs-repair.md`.
+This completes only the unmounted membership-epoch primitive, not the parent
+plan's complete authority bridge or production acceptance.
+
 ## Design ruling
 
 The existing memberships table has a composite workspace/user key and an integer
@@ -43,17 +48,18 @@ closed. The existing caller owns the database connection and write-lock policy.
 
 ## Implementation and verification
 
-- [ ] Write tests and observe the missing-module failure.
-- [ ] Implement the optional transactional schema, triggers and current-state read.
-- [ ] Prove delete/reinsert at identical timestamps and version 1 changes epoch.
-- [ ] Prove role changes, disable/re-enable and second-connection mutations invalidate.
-- [ ] Prove transaction rollback preserves the old committed epoch and membership.
-- [ ] Prove reopen preserves epochs, missing/disabled identities fail, future schema
+- [x] Write tests and observe the missing-module failure.
+- [x] Implement the optional transactional schema, triggers and current-state read.
+- [x] Prove delete/reinsert at identical timestamps and version 1 changes epoch.
+- [x] Prove role changes, disable/re-enable and second-connection mutations invalidate.
+- [x] Prove transaction rollback preserves the old committed epoch and membership.
+- [x] Prove reopen preserves epochs, missing/disabled identities fail, future schema
   is rejected, and the frozen pre-OIDC identity schema remains compatible.
-- [ ] Prove the explicit restore primitive rotates all current epochs without
+- [x] Prove the explicit restore primitive rotates all current epochs without
   changing roles or membership versions. Do not claim restore integration exists.
-- [ ] Run focused identity regressions and the complete local test suite.
-- [ ] Obtain an independent read-only review; record actual results and sync GitHub.
+- [x] Run focused identity regressions and the complete local test suite.
+- [x] Obtain an independent read-only review and address its finding through a
+  reproduced RED-to-GREEN repair; record actual results for GitHub synchronization.
 
 Review focus: foreign-key-disabled connections, delete/reinsert ABA, no-op updates,
 cross-workspace leakage, migration rollback and persisted incarnation stability.

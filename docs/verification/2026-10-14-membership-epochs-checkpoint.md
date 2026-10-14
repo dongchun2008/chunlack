@@ -3,6 +3,11 @@
 Date: 2026-10-14. Baseline: `0716134`.
 Plan: `docs/superpowers/plans/2026-10-14-agent-membership-epochs.md`.
 
+Historical checkpoint: the reproduced finding and additional test gaps below
+were subsequently addressed with explicit user approval. See the
+[fresh repair verification](2026-10-14-membership-epochs-repair.md).
+The remainder records the earlier state; the module is still not mounted.
+
 Status: local implementation and regression are complete for the initial test
 set, but independent review found a reproduced lifecycle bypass. The module is
 not accepted and is not called by the current runtime. Do not mount or deploy it

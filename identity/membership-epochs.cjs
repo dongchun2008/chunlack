@@ -38,6 +38,18 @@ function createMembershipEpochs(db) {
       AFTER DELETE ON memberships BEGIN
         DELETE FROM agent_membership_epochs WHERE workspace_id=OLD.workspace_id AND user_id=OLD.user_id;
       END;
+      CREATE TRIGGER IF NOT EXISTS agent_membership_epochs_user_insert
+      AFTER INSERT ON users BEGIN
+        INSERT INTO agent_membership_epochs(workspace_id,user_id,epoch)
+        SELECT workspace_id,user_id,lower(hex(randomblob(16))) FROM memberships WHERE user_id=NEW.id
+        ON CONFLICT(workspace_id,user_id) DO UPDATE SET epoch=excluded.epoch;
+      END;
+      CREATE TRIGGER IF NOT EXISTS agent_membership_epochs_workspace_insert
+      AFTER INSERT ON workspaces BEGIN
+        INSERT INTO agent_membership_epochs(workspace_id,user_id,epoch)
+        SELECT workspace_id,user_id,lower(hex(randomblob(16))) FROM memberships WHERE workspace_id=NEW.id
+        ON CONFLICT(workspace_id,user_id) DO UPDATE SET epoch=excluded.epoch;
+      END;
       CREATE TRIGGER IF NOT EXISTS agent_membership_epochs_user_state
       AFTER UPDATE OF disabled_at ON users WHEN OLD.disabled_at IS NOT NEW.disabled_at BEGIN
         UPDATE agent_membership_epochs SET epoch=lower(hex(randomblob(16))) WHERE user_id=NEW.id;
