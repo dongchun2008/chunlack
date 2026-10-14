@@ -111,8 +111,9 @@ function createGatewayStore({dbPath,now=Date.now,multiUser=false,capacity,agentA
     proofs.set(result,{kind:'agent',authorityProof,scope,nodeId:current.id,workspaceId:current.workspaceId,createdBy:current.createdBy});
     return result;
   }
-  function assertAuthenticatedNode(value,{scope}={}){
+  function assertAuthenticatedNode(value,{scope,requireAgent=false}={}){
     const proof=value&&proofs.get(value);if(!proof)P.fail('unauthorized',401);
+    if(requireAgent&&proof.kind!=='agent')P.fail('unauthorized',401);
     if(proof.kind==='agent'){
       const current=agentNode(proof.authorityProof,scope===undefined?proof.scope:scope);
       if(current.id!==proof.nodeId||current.workspaceId!==proof.workspaceId||current.createdBy!==proof.createdBy)P.fail('unauthorized',401);

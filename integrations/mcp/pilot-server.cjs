@@ -1,9 +1,10 @@
 'use strict';
 const http=require('node:http');
 const P=require('../../gateway/protocol.cjs');
-function createPilotMcp({store,artifacts,uploads,resolvePrincipal,events,workspaceAccess,ready=()=>true}){
+function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPrincipal,events,workspaceAccess,ready=()=>true}){
   if(store.multiUser&&!workspaceAccess)P.fail('workspace_gateway_configuration',503);
   if(store.multiUser&&events&&events.multiUser!==true)P.fail('workspace_events_configuration',503);
+  if(resolveAgentPrincipal!==undefined&&(typeof resolveAgentPrincipal!=='function'||!store.multiUser||!workspaceAccess||typeof store.authenticateAgent!=='function'))P.fail('agent_mcp_configuration',503);
   if(typeof resolvePrincipal!=='function')throw new Error('principal_resolver_required');let closed=false;const sockets=new Set(),rates=new Map();
   const id={type:'string',pattern:'^[A-Za-z0-9_-]{1,100}$'},num={type:'integer',minimum:1,maximum:3};
   const schema=props=>({type:'object',properties:props,required:Object.keys(props),additionalProperties:false});
@@ -22,16 +23,38 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,events,workspa
     P.fail('unsupported_tool');
   }
   function error(id,code,reason){return {jsonrpc:'2.0',id:id??null,error:{code,message:reason,data:{reason}}};}
+  const agentToken=value=>typeof value==='string'&&value.includes('.');
+  function requestScope(request){
+    if(request.method==='events/list')return 'events.read';
+    if(['events/subscribe','events/unsubscribe'].includes(request.method))return 'events.subscribe';
+    if(request.method==='tools/call'){
+      if(request.params?.name==='pilot.claim_task')return 'task.claim';
+      if(['pilot.heartbeat','pilot.report_event','pilot.submit_result','pilot.artifact_begin','pilot.artifact_chunk','pilot.artifact_finish'].includes(request.params?.name))return 'task.result';
+    }
+    return 'task.read';
+  }
   async function handleRpc(request,auth){
     let requestId=null;
     try{
       P.fields(request,['jsonrpc','id','method','params']);requestId=request.id;
       if(request.jsonrpc!=='2.0'||!(typeof requestId==='string'&&requestId.length<=100||Number.isSafeInteger(requestId))||typeof request.method!=='string')return error(null,-32600,'invalid_request');P.bounded(request);
-      if(closed)P.fail('mcp_closed',503);let p,nodeAccess;try{const resolved=await resolvePrincipal(auth);nodeAccess=workspaceAccess?workspaceAccess.forNode(resolved):null;p=nodeAccess?nodeAccess.principal:principal(resolved);}catch{return error(requestId,-32001,'unauthorized');}
+      if(closed)P.fail('mcp_closed',503);
+      const agentRequest=agentToken(auth),scope=requestScope(request);let p,nodeAccess,resolved;
+      try{
+        if(agentRequest){
+          if(!resolveAgentPrincipal||auth.length>8192)P.fail('unauthorized',401);
+          // Binding selection belongs to the trusted runtime resolver, not task arguments.
+          resolved=await resolveAgentPrincipal(auth,{scope});
+          store.assertAuthenticatedNode(resolved,{scope,requireAgent:true});
+        }else resolved=await resolvePrincipal(auth);
+        nodeAccess=workspaceAccess?workspaceAccess.forNode(resolved):null;p=nodeAccess?nodeAccess.principal:principal(resolved);
+      }catch(e){return error(requestId,agentRequest&&e.code==='insufficient_scope'?-32003:-32001,agentRequest&&e.code==='insufficient_scope'?'insufficient_scope':'unauthorized');}
+      if(closed)P.fail('mcp_closed',503);
       const minute=Math.floor(Date.now()/60000),old=rates.get(p.nodeId),entry=old?.minute===minute?old:{minute,count:0};entry.count++;rates.set(p.nodeId,entry);if(entry.count>120)P.fail('rate_limited',429);
       const handleNode=async()=>{
       const params=request.params||{};let result;
-      if(request.method==='server/discover'){P.fields(params,[]);result={resultType:'complete',supportedVersions:['2026-07-28'],capabilities:{tools:{},...(events?{events:{}}:{})}};}
+      if(agentRequest&&request.method.startsWith('events/'))P.fail('agent_events_not_ready',503);
+      if(request.method==='server/discover'){P.fields(params,[]);result={resultType:'complete',supportedVersions:['2026-07-28'],capabilities:{tools:{},...(events&&!agentRequest?{events:{}}:{})}};}
       else if(request.method==='tools/list'){P.fields(params,[]);result={tools:definitions};}
       else if(request.method==='tools/call'){P.fields(params,['name','arguments']);const raw=call(p,params.name,params.arguments||{}),value=store.multiUser&&raw?{...raw,workspaceId:p.workspaceId}:raw;result={content:[{type:'text',text:JSON.stringify(value)}],structuredContent:value,isError:false};}
       else if(events&&request.method==='events/list'){P.fields(params,[]);result=events.list(p);}
@@ -40,6 +63,12 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,events,workspa
       else return error(requestId,-32601,'method_not_found');
       return {jsonrpc:'2.0',id:requestId,result};
       };
+      if(agentRequest){
+        // All tool effects are synchronous inside this request-scoped boundary.
+        // Durable events remain disabled until their persisted binding can recheck the grant.
+        const current=store.assertAuthenticatedNode(resolved,{scope,requireAgent:true});
+        return await store.withWorkspace({workspaceId:current.workspaceId,userId:current.createdBy},handleNode);
+      }
       return nodeAccess?await nodeAccess.run(handleNode):await handleNode();
     }catch(e){const reason=e instanceof P.GatewayError?e.code:e.reason||'mcp_error';const invalid=['unsupported_field','unsupported_tool','invalid_object','missing_tool_field','invalid_id','invalid_text','sensitive_or_unsafe_field'].includes(reason);return error(requestId,e.rpcCode||(invalid?-32602:-32000),reason);}
   }
@@ -50,10 +79,11 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,events,workspa
       if(req.method!=='POST'||req.url!=='/mcp'){send(404,{error:'not_found'});req.resume();return;}
       if(req.headers.origin||req.headers['sec-fetch-site']==='cross-site'){send(403,{error:'cross_origin_denied'});req.resume();return;}
       if(!/^(127\.0\.0\.1|localhost)(:\d+)?$/.test(req.headers.host||'')||req.rawHeaders.filter((_,i)=>i%2===0).filter(h=>h.toLowerCase()==='authorization').length!==1){send(401,{error:'unauthorized'});req.resume();return;}
-      const auth=req.headers.authorization||'';if(!auth.startsWith('Bearer ')||auth.length>256){send(401,{error:'unauthorized'});req.resume();return;}
+      const auth=req.headers.authorization||'',token=auth.slice(7);
+      if(!auth.startsWith('Bearer ')||(agentToken(token)?!resolveAgentPrincipal||token.length>8192:auth.length>256)){send(401,{error:'unauthorized'});req.resume();return;}
       if(!/^application\/json(?:;|$)/i.test(req.headers['content-type']||'')||Number(req.headers['content-length'])>262144){send(413,{error:'invalid_body'});req.resume();return;}
       let size=0;const chunks=[];for await(const chunk of req){size+=chunk.length;if(size>262144)P.fail('payload_too_large',413);chunks.push(chunk);}if(!req.complete||req.aborted)return;
-      const reply=await handleRpc(JSON.parse(Buffer.concat(chunks).toString('utf8')),auth.slice(7));send(reply.error?.code===-32001?401:200,reply);
+      const reply=await handleRpc(JSON.parse(Buffer.concat(chunks).toString('utf8')),token);send(reply.error?.code===-32001?401:reply.error?.code===-32003?403:200,reply);
     }catch(e){req.resume();send(e instanceof P.GatewayError?e.status:400,{error:'invalid_request'});}
   });server.maxConnections=16;server.requestTimeout=40000;server.headersTimeout=10000;server.keepAliveTimeout=1000;server.on('connection',s=>{sockets.add(s);s.on('close',()=>sockets.delete(s));});const listen=server.listen.bind(server);server.listen=(...args)=>{if(args[1]!=='127.0.0.1')P.fail('loopback_binding_required');return listen(...args);};
   async function close(){if(closed)return;closed=true;for(const socket of sockets)socket.destroy();if(server.listening)await new Promise(resolve=>server.close(resolve));}
