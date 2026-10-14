@@ -27,7 +27,7 @@ async function createAgentAccessVerifier({config, fetchImpl = globalThis.fetch, 
   } catch {throw fail('invalid_agent_access_config', 503);}
   const jose = await import('jose');
   const controller = new AbortController(), operations = new Set();
-  let closed = false, closing, active = 0, proofs = new WeakMap(), rate = {minute: -1, count: 0};
+  let closed = false, closing, active = 0, nextFetchAt = 0, proofs = new WeakMap(), rate = {minute: -1, count: 0};
   function clock() {
     if (closed) throw fail('service_closed', 503);
     const time = now();
@@ -53,6 +53,10 @@ async function createAgentAccessVerifier({config, fetchImpl = globalThis.fetch, 
   }
   async function boundedFetch(url, options) {
     if (String(url) !== jwks.href || closed) throw Error();
+    // JOSE cools down successful refreshes; failed attempts must be bounded too.
+    const time = clock();
+    if (time < nextFetchAt) throw Error();
+    nextFetchAt = time + 30000;
     const signal = AbortSignal.any([controller.signal, AbortSignal.timeout(3000), options.signal]);
     signal.throwIfAborted();
     const response = await fetchImpl(url, {...options, method: 'GET', redirect: 'error', credentials: 'omit', signal});
@@ -87,7 +91,7 @@ async function createAgentAccessVerifier({config, fetchImpl = globalThis.fetch, 
     cooldownDuration: 30000, cacheMaxAge: 300000
   });
   function facts(payload, scope) {
-    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(payload.sub || '') ||
+    if (typeof payload.sub !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(payload.sub) ||
         !clients.has(payload.client_id) || !clean(payload.jti, 128) ||
         !Number.isSafeInteger(payload.iat) || !Number.isSafeInteger(payload.exp) ||
         payload.exp <= payload.iat || payload.exp - payload.iat > 3600 ||
