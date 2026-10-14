@@ -36,12 +36,18 @@ It did not byte-match a render of the current repository template with the known
 
 An earlier diagnostic intentionally stopped before reading configuration content because it expected JSON while the service uses a Caddyfile. Its failure is not a service failure; no service was changed.
 
+### Follow-up: textual policy equivalence confirmed
+
+A further read-only comparison rendered the current repository template in memory and compared it with the deployed Caddyfile after universal-newline decoding. Both complete text values had SHA-256:
+`864a8e9dda5c03ade3ae7d19f3e8593e53c66c604989fd1e4f396483a2ad806e`
+
+The complete line diff contained zero changed lines, and the comparison excluding blank/comment lines was also equal. This establishes current textual policy equivalence, including routes and security directives; raw byte identity is not asserted. No configuration replacement or service reload is needed for the earlier byte-hash observation. No configuration content or credentials were printed.
+
 ## Remaining acceptance gates
 
-1. Reconcile the deployed ingress configuration with the intended reviewed route policy before any future ingress change; never overwrite an unexplained difference.
-2. Implement and verify the approved Agent OAuth resource-server path, discovery and challenges without reusing the human-login client's credentials or granting workspace access from login alone.
-3. Confirm each supplier account's supported authentication and MCP/REST protocol, including its client registration requirements.
-4. Verify dedicated node/workspace binding, authenticated tool discovery and revocation.
-5. Prove native cloud-computer execution, matching task/challenge/screenshot evidence and saved results separately for Muse and dots. Manual and automatic triggering remain separate gates.
+1. Implement and verify the approved Agent OAuth resource-server path, discovery and challenges without reusing the human-login client's credentials or granting workspace access from login alone.
+2. Confirm each supplier account's supported authentication and MCP/REST protocol, including its client registration requirements.
+3. Verify dedicated node/workspace binding, authenticated tool discovery and revocation.
+4. Prove native cloud-computer execution, matching task/challenge/screenshot evidence and saved results separately for Muse and dots. Manual and automatic triggering remain separate gates.
 
 Health, unauthorized-request rejection and synthetic tests do not satisfy these remaining gates.
