@@ -95,9 +95,9 @@ const BASE_SYSTEM_PROMPT = `You are a highly collaborative technical agent in th
 
 Core rules:
 - Think step-by-step.
-- After solving or responding, ALWAYS reflect and generate 2-5 concrete "things worth a closer look".
-- End most responses with: "A few things worth a closer look — want me to dig into any of these next?" or a direct question to another agent/user.
-- Use the format:
+- Follow the user's requested answer format. Ordinary chat does not require reflection or a follow-up question.
+- Suggest further investigations only when requested or working in an explicitly started collaboration workflow.
+- For an explicitly requested investigation, you may use the format:
   **Thinking**
   • Check X logic
   • Inspect Y function
@@ -2425,6 +2425,7 @@ function startRalphLoop(storeId, goal) {
   runRalphIteration(storeId);
 }
 function stopRalphLoop(storeId) {
+  invalidateChatWorkflow(storeId);
   if (ralphTimers.has(storeId)) {
     clearTimeout(ralphTimers.get(storeId));
     ralphTimers.delete(storeId);
@@ -2550,6 +2551,54 @@ async function agentRespond(agent, storeId, triggerMessage, isLoop = false, pare
   catch (error) {logError({context: 'agentRespond', agentId: agent.id, error: error.code || 'task_failed'});}
 }
 
+function chatEnhancementsEnabled(storeId, isLoop = false) {
+  const channel = channels.get(storeId);
+  return Boolean(channel && (isLoop || ralphActive.get(storeId) || getProjectState(storeId).active || channel.abstractActive || channel.researchActive));
+}
+
+function normalizeChatSystemPrompt(prompt) {
+  const currentRules = "- Follow the user's requested answer format. Ordinary chat does not require reflection or a follow-up question.\n- Suggest further investigations only when requested or working in an explicitly started collaboration workflow.\n- For an explicitly requested investigation, you may use the format:";
+  const legacyRules = '- After solving or responding, ALWAYS reflect and generate 2-5 concrete "things worth a closer look".\n- End most responses with: "A few things worth a closer look \u2014 want me to dig into any of these next?" or a direct question to another agent/user.\n- Use the format:';
+  const legacyBase = BASE_SYSTEM_PROMPT.replace(currentRules, legacyRules);
+  return typeof prompt === 'string' && prompt.startsWith(legacyBase)
+    ? BASE_SYSTEM_PROMPT + prompt.slice(legacyBase.length) : prompt;
+}
+
+const chatWorkflowFlags = workspaceMap('runtimeFlags');
+function chatWorkflowGeneration(storeId) {
+  const key = `chatWorkflow:${storeId}`;
+  if (!chatWorkflowFlags.has(key)) chatWorkflowFlags.set(key, {});
+  return chatWorkflowFlags.get(key);
+}
+
+function invalidateChatWorkflow(storeId) {
+  chatWorkflowFlags.set(`chatWorkflow:${storeId}`, {});
+}
+
+function selectChatRecipients(content, candidates, eligible = candidates) {
+  // Resolve complete workspace names before applying channel permissions.
+  // Unknown or ambiguous explicit mentions must never fall back to broadcasting.
+  const punctuation = new Set(Array.from("()[]{}<>\"',.!?:;\u3001\u3002\u300a\u300b\u3010\u3011\u2018\u2019\u201c\u201d\uff01\uff08\uff09\uff0c\uff0e\uff1a\uff1b\uff1f"));
+  const boundary = char => char === undefined || /\s/u.test(char) || punctuation.has(char);
+  const selected = [], seen = new Set();
+  let explicit = false;
+  for (let index = 0; index < content.length; index++) {
+    if (content[index] !== '@' || !boundary(content[index - 1])) continue;
+    explicit = true;
+    const offset = index + 1;
+    const matches = candidates.filter(agent => typeof agent.name === 'string' && agent.name.length > 0 &&
+      content.startsWith(agent.name, offset) && boundary(content[offset + agent.name.length]));
+    const longest = Math.max(0, ...matches.map(agent => agent.name.length));
+    const exact = matches.filter(agent => agent.name.length === longest);
+    if (exact.length !== 1) return {agents: [], explicit: true, error: true};
+    const agent = exact[0];
+    if (!eligible.some(candidate => candidate.id === agent.id)) return {agents: [], explicit: true, error: true};
+    if (!seen.has(agent.id)) {seen.add(agent.id); selected.push(agent);}
+    index += agent.name.length;
+  }
+  return {agents: explicit ? selected : eligible, explicit, error: false};
+}
+
 async function agentRespondBody(agent, storeId, triggerMessage, isLoop = false, parentId = null) {
   if (agent.isEmbedOperator) return;
   if (triggerMessage.sender === agent.name) return;
@@ -2567,7 +2616,7 @@ async function agentRespondBody(agent, storeId, triggerMessage, isLoop = false, 
     const store = channels.get(storeId);
     const channelName = store.name;
     const personality = getChannelPersonality(channelName);
-    let systemPrompt = agent.systemPrompt + (personality.systemBonus || "");
+    let systemPrompt = normalizeChatSystemPrompt(agent.systemPrompt) + (personality.systemBonus || "");
     if (channelName) {
       systemPrompt += `\n\nCURRENT CHANNEL: #${channelName}. Follow strict channel rules above. Do not mix content from other channels.`;
     }
@@ -2607,8 +2656,9 @@ async function agentRespondBody(agent, storeId, triggerMessage, isLoop = false, 
       broadcastAgents();
       return;
     }
-    // Generate reflection
-    const reflection = await generateReflection(agent.id, context + '\n' + triggerMessage.content, mainReply);
+    // Extra generation belongs to explicitly started workflows, not ordinary chat.
+    const reflection = chatEnhancementsEnabled(storeId, isLoop)
+      ? await generateReflection(agent.id, context + '\n' + triggerMessage.content, mainReply) : '';
     let finalReply = mainReply;
     if (reflection && !reflection.startsWith('[OLLAMA_ERROR]')) {
       finalReply = mainReply + '\n\n' + reflection;
@@ -4202,18 +4252,27 @@ async function onHumanMessageBody(channelId, messageObj, ws) {
     }
     return;
   }
-  const relevantAgents = Array.from(agents.values()).filter(a => a.channels.includes(channel.name) && !a.isEmbedOperator);
+  const workspaceAgents = Array.from(agents.values());
+  const eligibleAgents = workspaceAgents.filter(a => a.channels.includes(channel.name) && !a.isEmbedOperator && (!a.strictChannel || a.strictChannel === channelId));
+  const selection = selectChatRecipients(content, workspaceAgents, eligibleAgents);
+  if (selection.error) {
+    const message = addMessage(channelId, 'System', 'system', 'Agent mention is unknown, unavailable in this channel, or ambiguous. Use an exact unique Agent name followed by a space or punctuation. No Agents were called.', messageObj.parentId);
+    if (message) broadcastToStore(channelId, message);
+    return;
+  }
+  const relevantAgents = selection.agents;
   const state = getProjectState(channelId);
   const usePlanning = state.active || channel.abstractActive || channel.researchActive;
+  const workflowGeneration = chatWorkflowGeneration(channelId);
   for (const agent of relevantAgents) {
     if (ralphActive.get(channelId)) continue;
     if (agent.strictChannel && agent.strictChannel !== channelId) continue;
     if (usePlanning) await agentPlanAndAct(agent, channelId, messageObj, messageObj.parentId);
     else await agentRespond(agent, channelId, messageObj, false, messageObj.parentId);
   }
-  if (channelId === 'general') {
+  if (channelId === 'general' && usePlanning && !selection.explicit && relevantAgents.length > 0) {
     setTimeout(() => {
-      triggerProactiveQuestions(channelId, messageObj).catch(console.error);
+      triggerProactiveQuestions(channelId, messageObj, workflowGeneration).catch(console.error);
     }, 1500);
   }
 }
@@ -4660,13 +4719,14 @@ function updateAgentMetrics(agentId, responseTimeMs = 0, wasActive = false, tps 
 
 // ==================== PROACTIVE QUESTIONING ====================
 const proactiveThrottle = workspaceMap('proactiveThrottle');
-async function triggerProactiveQuestions(storeId, recentMessage) {
+async function triggerProactiveQuestions(storeId, recentMessage, generation = chatWorkflowGeneration(storeId)) {
+  if (generation !== chatWorkflowGeneration(storeId) || !chatEnhancementsEnabled(storeId)) return;
   const now = Date.now();
   const last = proactiveThrottle.get(storeId) || 0;
   if (now - last < 30000) return;
   proactiveThrottle.set(storeId, now);
   
-  const activeAgents = Array.from(agents.values()).filter(a => a.channels.includes('general') && !a.isEmbedOperator);
+  const activeAgents = Array.from(agents.values()).filter(a => a.channels.includes('general') && !a.isEmbedOperator && (!a.strictChannel || a.strictChannel === storeId));
   if (activeAgents.length === 0) return;
   
   const num = Math.min(2, activeAgents.length);
@@ -4674,11 +4734,12 @@ async function triggerProactiveQuestions(storeId, recentMessage) {
   const selected = shuffled.slice(0, num);
   
   for (const agent of selected) {
+    if (generation !== chatWorkflowGeneration(storeId) || !chatEnhancementsEnabled(storeId)) return;
     const prompt = `Recent discussion: "${recentMessage.content}"
     
 As ${agent.name}, generate a short, targeted question or suggestion to another agent or the team about what to investigate next. Keep it concise (1-2 sentences).`;
     const q = await queryOllama(agent.model, prompt, agent.systemPrompt, 0.6, agent.id);
-    if (q && !q.startsWith('[OLLAMA_ERROR]') && q.length > 10) {
+    if (generation === chatWorkflowGeneration(storeId) && chatEnhancementsEnabled(storeId) && q && !q.startsWith('[OLLAMA_ERROR]') && q.length > 10) {
       const msg = {
         id: uuidv4(),
         sender: agent.name,
