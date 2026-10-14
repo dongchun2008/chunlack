@@ -72,24 +72,25 @@ function createWorkspaceGatewayAccess({store, identity} = {}) {
     });
   }
   function forNode(authenticatedNode) {
-    function current() {return grant(store.assertAuthenticatedNode(authenticatedNode));}
+    function current(scope) {return grant(store.assertAuthenticatedNode(authenticatedNode, {scope}));}
     const initial = current();
-    function run(fn) {const node = current(); return store.withWorkspace({workspaceId: node.workspaceId, userId: node.createdBy}, () => fn(node));}
+    function run(scope, fn) {const node = current(scope); return store.withWorkspace({workspaceId: node.workspaceId, userId: node.createdBy}, () => fn(node));}
     function task(node, id) {const value = store.getTask(id); if (value.node_id !== node.id) P.fail('unknown_task', 404); return value;}
     return Object.freeze({
       principal: Object.freeze({nodeId: initial.id, workspaceId: initial.workspaceId}),
-      run,
-      getTask: id => run(node => task(node, id)),
-      claimTask: () => run(node => store.claimTask(node.id)),
-      claimPilotTask: id => run(node => {task(node, id); return store.claimPilotTask(node.id, id);}),
-      authorizePilotTask: id => run(node => store.authorizePilotTask(node.id, id)),
-      renewLease: (id, leaseId, attempt) => run(node => stamp(store.renewLease(node.id, id, leaseId, attempt), node.workspaceId)),
-      appendEvent: body => run(node => stamp(store.appendEvent(node.id, selector(body, node.workspaceId)), node.workspaceId)),
-      submitResult: body => run(node => stamp(store.submitResult(node.id, selector(body, node.workspaceId)), node.workspaceId)),
-      heartbeat: capabilities => run(node => store.heartbeat(node.id, capabilities || [])),
-      nodeEvents: cursor => run(node => stamp(store.nodeEvents(node.id, cursor), node.workspaceId)),
-      getPilotAcceptance: id => run(node => {task(node, id); return stamp(store.getPilotAcceptance(id), node.workspaceId);}),
-      assertPilotLease: lease => run(node => store.assertPilotLease(node.id, lease))
+      // Arbitrary trusted callbacks remain available only to legacy pairing principals.
+      run: fn => run('gateway.unscoped', fn),
+      getTask: id => run('task.read', node => task(node, id)),
+      claimTask: () => run('task.claim', node => store.claimTask(node.id)),
+      claimPilotTask: id => run('task.claim', node => {task(node, id); return store.claimPilotTask(node.id, id);}),
+      authorizePilotTask: id => run('task.read', node => store.authorizePilotTask(node.id, id)),
+      renewLease: (id, leaseId, attempt) => run('task.result', node => stamp(store.renewLease(node.id, id, leaseId, attempt), node.workspaceId)),
+      appendEvent: body => run('task.result', node => stamp(store.appendEvent(node.id, selector(body, node.workspaceId)), node.workspaceId)),
+      submitResult: body => run('task.result', node => stamp(store.submitResult(node.id, selector(body, node.workspaceId)), node.workspaceId)),
+      heartbeat: capabilities => run('task.read', node => store.heartbeat(node.id, capabilities || [])),
+      nodeEvents: cursor => run('events.read', node => stamp(store.nodeEvents(node.id, cursor), node.workspaceId)),
+      getPilotAcceptance: id => run('task.read', node => {task(node, id); return stamp(store.getPilotAcceptance(id), node.workspaceId);}),
+      assertPilotLease: lease => run('task.result', node => store.assertPilotLease(node.id, lease))
     });
   }
   // Trusted background delivery uses attribution already persisted by an authenticated subscription.

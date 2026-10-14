@@ -8,8 +8,11 @@ const P=require('./protocol.cjs');
 const {AsyncLocalStorage}=require('node:async_hooks');
 const gatewayTableScopes=Object.freeze({nodes:'workspace',pairings:'workspace',tasks:'workspace',events:'workspace',pilot_artifacts:'workspace',pilot_acceptance:'workspace',gateway_schema:'platform'});
 const Pilot=require('./pilot-schema.cjs');
-function createGatewayStore({dbPath,now=Date.now,multiUser=false,capacity}){
+function createGatewayStore({dbPath,now=Date.now,multiUser=false,capacity,agentAuthority}){
   if(typeof multiUser!=='boolean')P.fail('invalid_gateway_mode',503);
+  if(agentAuthority!==undefined&&(!multiUser||typeof agentAuthority?.assert!=='function'))P.fail('invalid_agent_authority',503);
+  // Only the trusted runtime assembler supplies this dependency, never a request.
+  const assertAgentAuthority=agentAuthority?.assert.bind(agentAuthority);
   const contexts=new AsyncLocalStorage(),proofs=new WeakMap();
   function binding(){const value=contexts.getStore();if(multiUser&&!value)P.fail('workspace_context_required',503);return value||{workspaceId:'legacy-local',userId:null};}
   function withWorkspace(value,fn){P.id(value.workspaceId);if(value.userId!==undefined&&value.userId!==null)P.id(value.userId);if(typeof fn!=='function')P.fail('invalid_context');return contexts.run(Object.freeze({workspaceId:value.workspaceId,userId:value.userId||null}),fn);}
@@ -90,7 +93,33 @@ function createGatewayStore({dbPath,now=Date.now,multiUser=false,capacity}){
     return {protocolVersion:1,nodeId:n.id,...(multiUser?{workspaceId:n.workspace_id}:{}),token};});
   });}
   function authenticate(token){if(typeof token!=='string'||token.length<40||token.length>100)P.fail('unauthorized',401);const digest=P.hash(token),row=q('SELECT id,workspace_id FROM nodes WHERE token_hash=? AND revoked=0').get(digest);if(!row)P.fail('unauthorized',401);return withWorkspace({workspaceId:row.workspace_id},()=>{const result=Object.freeze(publicNode(liveNode(row.id)));proofs.set(result,{digest,workspaceId:row.workspace_id});return result;});}
-  function assertAuthenticatedNode(value){const proof=value&&proofs.get(value);if(!proof)P.fail('unauthorized',401);const row=q('SELECT token_hash,workspace_id,revoked FROM nodes WHERE id=?').get(value.id);if(!row||row.revoked||row.token_hash!==proof.digest||row.workspace_id!==proof.workspaceId)P.fail('unauthorized',401);return withWorkspace({workspaceId:row.workspace_id},()=>publicNode(liveNode(value.id)));}
+  function agentNode(authorityProof,scope){
+    if(closed)P.fail('service_closed',503);
+    if(!assertAgentAuthority)P.fail('unauthorized',401);
+    if(scope==='gateway.unscoped')P.fail('scoped_operation_required',403);
+    if(!['task.read','task.claim','task.result','events.read','events.subscribe'].includes(scope))P.fail('invalid_scope',400);
+    let evidence;
+    try{evidence=assertAgentAuthority(authorityProof,{scope});}
+    catch(error){if(error.statusCode)P.fail(error.code,error.statusCode);throw error;}
+    if(!evidence||typeof evidence.nodeId!=='string'||typeof evidence.workspaceId!=='string'||typeof evidence.userId!=='string')P.fail('unauthorized',401);
+    const row=q('SELECT id,workspace_id,created_by,revoked FROM nodes WHERE id=?').get(evidence.nodeId);
+    if(!row||row.revoked||row.workspace_id!==evidence.workspaceId||row.created_by!==evidence.userId)P.fail('unauthorized',401);
+    return withWorkspace({workspaceId:row.workspace_id},()=>publicNode(liveNode(row.id)));
+  }
+  function authenticateAgent(authorityProof,{scope}={}){
+    const current=agentNode(authorityProof,scope),result=Object.freeze(current);
+    proofs.set(result,{kind:'agent',authorityProof,scope,nodeId:current.id,workspaceId:current.workspaceId,createdBy:current.createdBy});
+    return result;
+  }
+  function assertAuthenticatedNode(value,{scope}={}){
+    const proof=value&&proofs.get(value);if(!proof)P.fail('unauthorized',401);
+    if(proof.kind==='agent'){
+      const current=agentNode(proof.authorityProof,scope===undefined?proof.scope:scope);
+      if(current.id!==proof.nodeId||current.workspaceId!==proof.workspaceId||current.createdBy!==proof.createdBy)P.fail('unauthorized',401);
+      return current;
+    }
+    const row=q('SELECT token_hash,workspace_id,revoked FROM nodes WHERE id=?').get(value.id);if(!row||row.revoked||row.token_hash!==proof.digest||row.workspace_id!==proof.workspaceId)P.fail('unauthorized',401);return withWorkspace({workspaceId:row.workspace_id},()=>publicNode(liveNode(value.id)));
+  }
   function rePair(id){if(multiUser)return mutate(()=>{
     const old=liveNode(id),scope=binding();if(!scope.userId)P.fail('creator_required',503);
     if(q('SELECT COUNT(*) AS n FROM nodes').get().n>=100)P.fail('node_capacity',429);
@@ -208,6 +237,6 @@ function createGatewayStore({dbPath,now=Date.now,multiUser=false,capacity}){
   let detachCapacity,detachAvailable,closed=false;
   try{if(coordinator){detachCapacity=coordinator.bindLeaseSource(capacitySnapshot);detachAvailable=coordinator.onAvailable(()=>{if(!closed)changes.emit('change');});changes.on('change',()=>coordinator.refresh());}}
   catch(error){detachCapacity?.();detachAvailable?.();if(ownsCapacity)coordinator.close();db.close();throw error;}
-  return {multiUser,capacity:coordinator,capacitySnapshot,withWorkspace,currentBinding:binding,assertAuthenticatedNode,listArtifactsForMaintenance,changes,createNode,pair,rePair,authenticate,getNode:id=>publicNode(node(id)),enqueueTask,claimTask,claimPilotTask:(nodeId,taskId)=>{P.id(taskId);return claimTask(nodeId,taskId);},authorizePilotTask,renewLease,appendEvent:(id,body)=>record(id,body,false),submitResult:(id,body)=>record(id,body,true),getTask,cancelTask,retryTask,revokeNode,setNodePaused,heartbeat,listNodes,listTasks,nodeEvents,sweep:()=>mutate(sweepInternal),cleanup,assertPilotLease,listPilotArtifacts,getPilotArtifact,findPilotArtifact,savePilotArtifact,authorizePilotArtifact,expiredPilotArtifacts,forgetPilotArtifact,registerPilotArtifactReader,getPilotAcceptance,acceptPilotTask,close:()=>{if(closed)return;closed=true;detachCapacity?.();detachAvailable?.();changes.removeAllListeners();if(ownsCapacity)coordinator.close();db.close();}};
+  return {multiUser,capacity:coordinator,capacitySnapshot,withWorkspace,currentBinding:binding,assertAuthenticatedNode,listArtifactsForMaintenance,changes,createNode,pair,rePair,authenticate,authenticateAgent,getNode:id=>publicNode(node(id)),enqueueTask,claimTask,claimPilotTask:(nodeId,taskId)=>{P.id(taskId);return claimTask(nodeId,taskId);},authorizePilotTask,renewLease,appendEvent:(id,body)=>record(id,body,false),submitResult:(id,body)=>record(id,body,true),getTask,cancelTask,retryTask,revokeNode,setNodePaused,heartbeat,listNodes,listTasks,nodeEvents,sweep:()=>mutate(sweepInternal),cleanup,assertPilotLease,listPilotArtifacts,getPilotArtifact,findPilotArtifact,savePilotArtifact,authorizePilotArtifact,expiredPilotArtifacts,forgetPilotArtifact,registerPilotArtifactReader,getPilotAcceptance,acceptPilotTask,close:()=>{if(closed)return;closed=true;detachCapacity?.();detachAvailable?.();changes.removeAllListeners();if(ownsCapacity)coordinator.close();db.close();}};
 }
 module.exports={createGatewayStore,gatewayTableScopes};
