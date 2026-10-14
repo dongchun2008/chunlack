@@ -2,6 +2,11 @@
 
 Date: 2026-10-14. Baseline: `2f73247`.
 
+Follow-up: the RSA test-validity gate below was subsequently corrected with user
+approval. See [the fresh verification record](2026-10-14-agent-access-rsa-verification.md)
+for the 49-test focused and 649-test full results. The rest of this document
+preserves the earlier checkpoint and its then-unresolved gate as history.
+
 Status: the two approved implementation defects are corrected locally. The
 verifier remains unmounted. This is a progress checkpoint, not production or
 external-Agent acceptance. The earlier checkpoint is retained as history.

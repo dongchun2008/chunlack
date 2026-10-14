@@ -1,7 +1,7 @@
 'use strict';
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const {generateKeyPairSync, sign} = require('node:crypto');
+const {generateKeyPairSync, sign, verify: verifySignature} = require('node:crypto');
 const {createAgentAccessVerifier} = require('../identity/agent-access.cjs');
 
 const issuer = 'https://pocket.example.test';
@@ -195,12 +195,40 @@ test('token-supplied key locations and critical header overrides are rejected be
   assert.equal(f.calls(), 0);
 });
 
-for (const bits of [2047, 4097]) {
-  test('JWKS modulus outside the allowed bit range is rejected: ' + bits, async t => {
-    const modulus = Buffer.alloc(Math.ceil(bits / 8), 255);
-    modulus[0] = (1 << ((bits - 1) % 8 + 1)) - 1;
-    const f = await fixture(t, () => Response.json({keys: [{...keys[0].jwk, n: modulus.toString('base64url')}]}));
-    await assert.rejects(verify(f), invalid);
+for (const bits of [2047, 2048, 4096, 4098]) {
+  test('matching RSA signatures enforce the accepted JWKS size range: ' + bits, async t => {
+    const pair = generateKeyPairSync('rsa', {modulusLength: bits});
+    const jwk = {...pair.publicKey.export({format: 'jwk'}), kid: 'rsa-boundary', alg: 'RS256', use: 'sig'};
+    const modulus = Buffer.from(jwk.n, 'base64url');
+    const actualBits = (modulus.length - 1) * 8 + 32 - Math.clz32(modulus[0]);
+    // Some OpenSSL builds round a requested 4097 bits down to 4096.
+    // Check the actual modulus and use 4098 for the upper negative control.
+    assert.equal(actualBits, bits, 'fixture must actually have the requested key size');
+    const f = await fixture(t, () => Response.json({keys: [jwk]}));
+    const iat = Math.floor(Date.now() / 1000);
+    const encode = value => Buffer.from(JSON.stringify(value)).toString('base64url');
+    const input = encode({alg: 'RS256', typ: 'at+jwt', kid: jwk.kid}) + '.' + encode({
+      iss: issuer, sub: subject, aud: resource, iat, exp: iat + 600,
+      jti: 'rsa-boundary-token', client_id: config.clientIds[0], scope: 'openid task.read'
+    });
+    const signature = sign('RSA-SHA256', Buffer.from(input), pair.privateKey);
+    assert.equal(verifySignature('RSA-SHA256', Buffer.from(input), pair.publicKey, signature), true,
+      'size rejection must not be explained by an invalid signature');
+    const token = input + '.' + signature.toString('base64url');
+    if (bits >= 2048) {
+      const jose = await import('jose');
+      const reference = await jose.jwtVerify(token, jose.createLocalJWKSet({keys: [jwk]}), {
+        algorithms: ['RS256'], typ: 'at+jwt', issuer, audience: resource
+      });
+      assert.equal(reference.payload.jti, 'rsa-boundary-token',
+        'the reference JWT verifier accepts even the upper out-of-range control');
+    }
+    if (bits < 2048 || bits > 4096) {
+      await assert.rejects(verify(f, token), invalid);
+    } else {
+      assert.equal(f.service.consume(await verify(f, token)).subject, subject);
+    }
     assert.equal(f.calls(), 1);
+    t.diagnostic('actual RSA bits=' + actualBits + '; matching signature verified');
   });
 }
