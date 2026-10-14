@@ -174,6 +174,20 @@ function createAgentAuthority({db, identity, workspaceAccess, verifier, config, 
       const proof = Object.freeze({}); proofs.set(proof, entry); return proof;
     },
     assert(proof, {scope} = {}) {return evidence(proofs.get(proof), scope);},
+    // Trusted, authenticated storage only: this is not a bearer authenticator.
+    assertSubscription(value) {
+      const fields = ['grantId', 'userId', 'workspaceId', 'nodeId', 'issuer', 'subject', 'clientId', 'resource', 'scope', 'expiresAt'];
+      if (!value || typeof value !== 'object' || Array.isArray(value) ||
+          Object.keys(value).length !== fields.length || fields.some(key => !Object.hasOwn(value, key)) ||
+          !['grantId', 'userId', 'workspaceId', 'nodeId', 'subject'].every(key => uuid(value[key])) ||
+          value.scope !== 'events.subscribe' || !Number.isSafeInteger(value.expiresAt) || value.expiresAt <= 0) throw fail();
+      const current = evidence({grantId: value.grantId, evidence: {
+        issuer: value.issuer, subject: value.subject, clientId: value.clientId, resource: value.resource,
+        scopes: ['events.subscribe'], expiresAt: value.expiresAt / 1000
+      }}, 'events.subscribe');
+      if (fields.some(key => current[key] !== value[key])) throw fail();
+      return current;
+    },
     close() {closed = true; proofs = new WeakMap();}
   });
 }

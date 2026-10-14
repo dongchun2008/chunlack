@@ -7,8 +7,9 @@ const eventTableScopes=Object.freeze({subscriptions:'workspace',deliveries:'work
 function problem(reason,rpcCode){const error=new Error(reason);error.reason=reason;error.rpcCode=rpcCode;return error;}
 function signingKey(secret){if(typeof secret!=='string'||!secret.startsWith('whsec_'))throw problem('invalid_signing_secret');const value=secret.slice(6),bytes=Buffer.from(value,'base64');if(bytes.length<24||bytes.length>64||bytes.toString('base64')!==value)throw problem('invalid_signing_secret');return bytes;}
 function signedHeaders(secret,eventId,body,subscriptionId,now){const timestamp=String(Math.floor(now/1000));return {'Content-Type':'application/json','webhook-id':eventId,'webhook-timestamp':timestamp,'webhook-signature':'v1,'+createHmac('sha256',signingKey(secret)).update(eventId+'.'+timestamp+'.'+body).digest('base64'),'X-MCP-Subscription-Id':subscriptionId};}
-function createPilotEvents({dbPath,encryptionKey,authorize,authorizeCleanup=authorize,transport,now=Date.now,multiUser=false}){
+function createPilotEvents({dbPath,encryptionKey,authorize,authorizeCleanup=authorize,authorizeAgentGrant,transport,now=Date.now,multiUser=false}){
   if(typeof multiUser!=='boolean'||typeof dbPath!=='string'||!Buffer.isBuffer(encryptionKey)||encryptionKey.length!==32||typeof authorize!=='function'||typeof authorizeCleanup!=='function'||typeof transport!=='function')throw problem('invalid_events_configuration');
+  if(authorizeAgentGrant!==undefined&&(!multiUser||typeof authorizeAgentGrant!=='function'))throw problem('invalid_events_configuration');
   if(multiUser&&dbPath!==':memory:'){
     if(!path.isAbsolute(dbPath))throw problem('event_path_denied');
     for(let current=path.resolve(dbPath);;current=path.dirname(current)){
@@ -16,11 +17,11 @@ function createPilotEvents({dbPath,encryptionKey,authorize,authorizeCleanup=auth
       if(path.dirname(current)===current)break;
     }
   }
-  const key=Buffer.from(encryptionKey),cancellation=new AbortController();let closed=false;
+  const key=Buffer.from(encryptionKey),cancellation=new AbortController();let closed=false,boundState=false;
   async function invokeTransport(url,options,binding){
     const signal=AbortSignal.any([cancellation.signal,options.signal]);signal.throwIfAborted();let abort;
     const stopped=new Promise((_,reject)=>{abort=()=>reject(signal.reason);signal.addEventListener('abort',abort,{once:true});if(signal.aborted)abort();});
-    try{return await Promise.race([Promise.resolve().then(()=>{signal.throwIfAborted();return transport(url,{...options,signal},binding);}),stopped]);}
+    try{return await Promise.race([Promise.resolve().then(()=>{signal.throwIfAborted();if(binding?.agentGrant)check({nodeId:binding.nodeId,workspaceId:binding.workspaceId,agentGrant:binding.agentGrant},binding.taskId);return transport(url,{...options,signal},binding);}),stopped]);}
     finally{signal.removeEventListener('abort',abort);}
   }
   if(dbPath!==':memory:')fs.mkdirSync(path.dirname(dbPath),{recursive:true,mode:0o700});const db=new Database(dbPath);
@@ -28,7 +29,9 @@ function createPilotEvents({dbPath,encryptionKey,authorize,authorizeCleanup=auth
     const tables=db.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%'").all().map(row=>row.name);
     if(tables.some(name=>!['subscriptions','deliveries','event_schema'].includes(name)))throw problem('event_table_unclassified');
     const metadata=tables.includes('event_schema')?db.prepare('SELECT version,mode FROM event_schema').get():null;
-    if(metadata&&(metadata.version!==1||metadata.mode!==(multiUser?'multi-user':'legacy')))throw problem('event_schema_mode_mismatch');
+    if(metadata&&(![1,2].includes(metadata.version)||metadata.mode!==(multiUser?'multi-user':'legacy')||metadata.version===2&&!multiUser))throw problem('event_schema_mode_mismatch');
+    if(metadata?.version===2&&!authorizeAgentGrant)throw problem('event_agent_authority_required');
+    boundState=metadata?.version===2;
     if(multiUser)for(const name of ['subscriptions','deliveries'])if(tables.includes(name)){
       const columns=db.prepare(`PRAGMA table_info(${name})`).all();
       const count=columns.some(column=>column.name==='workspace_id')?db.prepare(`SELECT COUNT(*) AS n FROM ${name} WHERE workspace_id IS NULL OR workspace_id='' OR workspace_id='legacy-local'`).get().n:db.prepare(`SELECT COUNT(*) AS n FROM ${name}`).get().n;
@@ -45,41 +48,67 @@ function createPilotEvents({dbPath,encryptionKey,authorize,authorizeCleanup=auth
     db.exec("CREATE TRIGGER IF NOT EXISTS delivery_workspace_parent BEFORE INSERT ON deliveries WHEN NOT EXISTS(SELECT 1 FROM subscriptions WHERE id=NEW.subscription_id AND workspace_id=NEW.workspace_id) BEGIN SELECT RAISE(ABORT,'workspace_mismatch'); END; CREATE TRIGGER IF NOT EXISTS subscription_workspace_immutable BEFORE UPDATE OF workspace_id ON subscriptions WHEN NEW.workspace_id<>OLD.workspace_id BEGIN SELECT RAISE(ABORT,'workspace_mismatch'); END; CREATE TRIGGER IF NOT EXISTS delivery_workspace_immutable BEFORE UPDATE OF workspace_id ON deliveries WHEN NEW.workspace_id<>OLD.workspace_id BEGIN SELECT RAISE(ABORT,'workspace_mismatch'); END;");
   }).immediate();
   const q=sql=>db.prepare(sql),workspace=principal=>multiUser?P.id(principal.workspaceId):'legacy-local';
-  function seal(value){const iv=randomBytes(12),cipher=createCipheriv('aes-256-gcm',key,iv),data=Buffer.concat([cipher.update(JSON.stringify(value),'utf8'),cipher.final()]);return Buffer.concat([iv,cipher.getAuthTag(),data]).toString('base64');}
-  function open(value){try{const data=Buffer.from(value,'base64'),decipher=createDecipheriv('aes-256-gcm',key,data.subarray(0,12));decipher.setAuthTag(data.subarray(12,28));return JSON.parse(Buffer.concat([decipher.update(data.subarray(28)),decipher.final()]).toString('utf8'));}catch{throw problem('event_state_key_mismatch');}}
-  try{for(const row of q('SELECT sealed FROM subscriptions').all())open(row.sealed);}catch(e){db.close();key.fill(0);throw e;}
-  function check(principal,taskId,cleanup=false){if(closed)throw problem('events_closed');P.fields(principal,multiUser?['nodeId','workspaceId']:['nodeId']);P.id(principal.nodeId);workspace(principal);if((cleanup?authorizeCleanup:authorize)(principal,taskId)!==true)throw problem('event_access_denied',-32001);}
+  function aad(row){return Buffer.from(P.canonical({version:2,id:P.id(row.id),nodeId:P.id(row.node_id),workspaceId:P.id(row.workspace_id),taskId:P.id(row.task_id)}),'utf8');}
+  function seal(value,row,bound=boundState){const iv=randomBytes(12),cipher=createCipheriv('aes-256-gcm',key,iv);if(bound)cipher.setAAD(aad(row));const data=Buffer.concat([cipher.update(JSON.stringify(value),'utf8'),cipher.final()]);return (bound?'v2:':'')+Buffer.concat([iv,cipher.getAuthTag(),data]).toString('base64');}
+  function open(value,row){try{if(typeof value!=='string'||value.startsWith('v2:')!==boundState)throw Error();const data=Buffer.from(boundState?value.slice(3):value,'base64'),decipher=createDecipheriv('aes-256-gcm',key,data.subarray(0,12));if(boundState)decipher.setAAD(aad(row));decipher.setAuthTag(data.subarray(12,28));return JSON.parse(Buffer.concat([decipher.update(data.subarray(28)),decipher.final()]).toString('utf8'));}catch{throw problem('event_state_key_mismatch');}}
+  try{
+    const records=q('SELECT * FROM subscriptions').all().map(row=>({row,value:open(row.sealed,row)}));
+    for(const {row,value} of records){
+      if(Object.hasOwn(value,'agentGrant')&&!authorizeAgentGrant)throw problem('event_agent_authority_required');
+      if(authorizeAgentGrant&&!boundState){
+        if(Object.hasOwn(value,'agentGrant'))throw problem('event_unbound_agent_state');
+        const expected='sub_'+createHash('sha256').update(P.canonical({nodeId:row.node_id,name:'pilot.task_ready',taskId:row.task_id,url:new URL(value.url).href,workspaceId:row.workspace_id})).digest('hex');
+        if(row.id!==expected)throw problem('event_subscription_identity_mismatch');
+      }
+    }
+    if(authorizeAgentGrant&&!boundState){
+      db.transaction(()=>{for(const {row,value} of records)q('UPDATE subscriptions SET sealed=? WHERE id=?').run(seal(value,row,true),row.id);q('UPDATE event_schema SET version=2 WHERE version=1').run();}).immediate();
+      boundState=true;
+    }
+  }catch(e){db.close();key.fill(0);throw e;}
+  function check(principal,taskId,cleanup=false){
+    if(closed)throw problem('events_closed');
+    P.fields(principal,multiUser?['nodeId','workspaceId','agentGrant']:['nodeId']);P.id(principal.nodeId);workspace(principal);
+    const base={nodeId:principal.nodeId,...(multiUser?{workspaceId:principal.workspaceId}:{})};
+    if((cleanup?authorizeCleanup:authorize)(base,taskId)!==true)throw problem('event_access_denied',-32001);
+    if(Object.hasOwn(principal,'agentGrant')){
+      let allowed=false;try{allowed=authorizeAgentGrant?.(principal.agentGrant,base)===true;}catch{}
+      if(!allowed)throw problem('event_access_denied',-32001);
+    }
+  }
+  function subscriptionPrincipal(row){const secret=open(row.sealed,row);return {nodeId:row.node_id,...(multiUser?{workspaceId:row.workspace_id}:{}),...(Object.hasOwn(secret,'agentGrant')?{agentGrant:secret.agentGrant}:{})};}
+  function attribution(principal,taskId){return multiUser?Object.freeze({workspaceId:workspace(principal),nodeId:principal.nodeId,taskId,...(Object.hasOwn(principal,'agentGrant')?{agentGrant:principal.agentGrant}:{})}):undefined;}
   function identity(principal,params,needsSecret){
     check(principal,params?.arguments?.taskId,!needsSecret);P.fields(params,['name','arguments','delivery','cursor','ttlMs']);if(params.name!=='pilot.task_ready')throw problem('unsupported_event');P.fields(params.arguments,['taskId']);P.id(params.arguments.taskId);P.fields(params.delivery,needsSecret?['mode','url','secret']:['mode','url']);
     let url;try{url=new URL(params.delivery.url);}catch{throw problem('callback_url_denied');}if(params.delivery.mode!=='webhook'||url.protocol!=='https:'||url.username||url.password||url.hash||url.port&&url.port!=='443')throw problem('callback_url_denied');if(params.cursor!==undefined&&params.cursor!==null)throw problem('cursor_not_supported');
-    if(needsSecret)signingKey(params.delivery.secret);return {id:'sub_'+createHash('sha256').update(P.canonical({nodeId:principal.nodeId,name:params.name,taskId:params.arguments.taskId,url:url.href,...(multiUser?{workspaceId:workspace(principal)}:{})})).digest('hex'),url:url.href};
+    if(needsSecret)signingKey(params.delivery.secret);return {id:'sub_'+createHash('sha256').update(P.canonical({nodeId:principal.nodeId,name:params.name,taskId:params.arguments.taskId,url:url.href,...(multiUser?{workspaceId:workspace(principal)}:{}),...(principal.agentGrant?{grantId:principal.agentGrant.grantId}:{})})).digest('hex'),url:url.href};
   }
   function list(principal){check(principal);return {events:[{name:'pilot.task_ready',description:'One approved public browser task is ready; notification cannot expand permissions.',delivery:['webhook'],inputSchema:{type:'object',properties:{taskId:{type:'string'}},required:['taskId'],additionalProperties:false},payloadSchema:{type:'object',properties:{taskId:{type:'string'},taskType:{const:'browser.public_read'},deadlineAt:{type:'integer'},...(multiUser?{workspaceId:{type:'string',pattern:'^[A-Za-z0-9_-]{1,100}$'}}:{})},required:['taskId','taskType','deadlineAt',...(multiUser?['workspaceId']:[])],additionalProperties:false}}]};}
   async function subscribe(principal,params){
     const value=identity(principal,params,true),ttl=params.ttlMs===undefined?300000:params.ttlMs;if(!Number.isInteger(ttl)||ttl<1000||ttl>300000)throw problem('invalid_subscription_lifetime');
-    let previous=q('SELECT * FROM subscriptions WHERE id=?').get(value.id),verified=previous&&previous.active&&previous.expires_at>now()&&now()-previous.verified_at<30000&&open(previous.sealed).secret===params.delivery.secret;
+    let previous=q('SELECT * FROM subscriptions WHERE id=?').get(value.id),verified=previous&&previous.active&&previous.expires_at>now()&&now()-previous.verified_at<30000&&open(previous.sealed,previous).secret===params.delivery.secret;
     if(!previous&&q('SELECT COUNT(*) AS n FROM subscriptions').get().n>=5)throw problem('subscription_capacity');
     if(!verified){const challenge=randomBytes(32).toString('base64url'),started=now(),eventId='verify_'+randomUUID(),body=JSON.stringify({type:'verification',challenge});let response;
-      try{response=await invokeTransport(value.url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(10000),headers:signedHeaders(params.delivery.secret,eventId,body,value.id,now()),body},multiUser?Object.freeze({workspaceId:workspace(principal),nodeId:principal.nodeId,taskId:params.arguments.taskId}):undefined);const raw=await response.text();if(raw.length>262144||!response.ok||now()-started>=30000)throw problem('challenge_failed');const reply=JSON.parse(raw),actual=typeof reply.challenge==='string'?Buffer.from(reply.challenge):Buffer.alloc(0),expected=Buffer.from(challenge);if(actual.length!==expected.length||!timingSafeEqual(actual,expected))throw problem('challenge_failed');}catch(e){throw problem(e.reason==='callback_timeout'?'timeout':'challenge_failed',-32015);}
+      try{response=await invokeTransport(value.url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(10000),headers:signedHeaders(params.delivery.secret,eventId,body,value.id,now()),body},attribution(principal,params.arguments.taskId));const raw=await response.text();if(raw.length>262144||!response.ok||now()-started>=30000)throw problem('challenge_failed');const reply=JSON.parse(raw),actual=typeof reply.challenge==='string'?Buffer.from(reply.challenge):Buffer.alloc(0),expected=Buffer.from(challenge);if(actual.length!==expected.length||!timingSafeEqual(actual,expected))throw problem('challenge_failed');}catch(e){throw problem(e.reason==='callback_timeout'?'timeout':'challenge_failed',-32015);}
       check(principal,params.arguments.taskId);
     }
-    const expires=now()+ttl,sealed=seal({url:value.url,secret:params.delivery.secret});db.transaction(()=>{if(!q('SELECT id FROM subscriptions WHERE id=?').get(value.id)&&q('SELECT COUNT(*) AS n FROM subscriptions').get().n>=5)throw problem('subscription_capacity');q('INSERT INTO subscriptions(id,node_id,task_id,sealed,expires_at,verified_at,workspace_id,active) VALUES(?,?,?,?,?,?,?,1) ON CONFLICT(id) DO UPDATE SET sealed=excluded.sealed,expires_at=excluded.expires_at,verified_at=excluded.verified_at,active=1').run(value.id,principal.nodeId,params.arguments.taskId,sealed,expires,verified?previous.verified_at:now(),workspace(principal));}).immediate();
+    const expires=Math.min(now()+ttl,principal.agentGrant?.expiresAt??Infinity),sealed=seal({url:value.url,secret:params.delivery.secret,...(principal.agentGrant?{agentGrant:principal.agentGrant}:{})},{id:value.id,node_id:principal.nodeId,task_id:params.arguments.taskId,workspace_id:workspace(principal)});db.transaction(()=>{if(!q('SELECT id FROM subscriptions WHERE id=?').get(value.id)&&q('SELECT COUNT(*) AS n FROM subscriptions').get().n>=5)throw problem('subscription_capacity');q('INSERT INTO subscriptions(id,node_id,task_id,sealed,expires_at,verified_at,workspace_id,active) VALUES(?,?,?,?,?,?,?,1) ON CONFLICT(id) DO UPDATE SET sealed=excluded.sealed,expires_at=excluded.expires_at,verified_at=excluded.verified_at,active=1').run(value.id,principal.nodeId,params.arguments.taskId,sealed,expires,verified?previous.verified_at:now(),workspace(principal));}).immediate();
     return {id:value.id,refreshBefore:new Date(expires).toISOString(),cursor:null,truncated:false};
   }
   function unsubscribe(principal,params){const value=identity(principal,params,false);q('UPDATE subscriptions SET active=0 WHERE id=? AND node_id=?').run(value.id,principal.nodeId);q("UPDATE deliveries SET state='stopped' WHERE subscription_id=? AND state='pending'").run(value.id);return {unsubscribed:true};}
   function publish(principal,event){
     P.fields(event,['eventId','taskId','taskType','deadlineAt']);check(principal,event.taskId);P.id(event.eventId);P.id(event.taskId);if(event.taskType!=='browser.public_read'||!Number.isSafeInteger(event.deadlineAt)||event.deadlineAt<=now()||event.deadlineAt>now()+300000)throw problem('invalid_pilot_event');
     const data={taskId:event.taskId,taskType:event.taskType,deadlineAt:event.deadlineAt,...(multiUser?{workspaceId:workspace(principal)}:{})},body=JSON.stringify({eventId:event.eventId,name:'pilot.task_ready',timestamp:new Date(now()).toISOString(),data,cursor:null});
-    return db.transaction(()=>{let queued=0;for(const sub of q('SELECT * FROM subscriptions WHERE workspace_id=? AND node_id=? AND task_id=? AND active=1 AND expires_at>?').all(workspace(principal),principal.nodeId,event.taskId,now())){const previous=q('SELECT body FROM deliveries WHERE subscription_id=? AND event_id=?').get(sub.id,event.eventId);if(previous){if(P.canonical(JSON.parse(previous.body).data)!==P.canonical(data))throw problem('event_conflict');continue;}if(q('SELECT COUNT(*) AS n FROM deliveries').get().n>=100)throw problem('delivery_capacity');q('INSERT INTO deliveries(id,subscription_id,event_id,body,state,attempt,next_at,deadline_at,workspace_id) VALUES(?,?,?,?,\'pending\',0,?,?,?)').run(randomUUID(),sub.id,event.eventId,body,now(),event.deadlineAt,workspace(principal));queued++;}return {queued};}).immediate();
+    return db.transaction(()=>{let queued=0;for(const sub of q('SELECT * FROM subscriptions WHERE workspace_id=? AND node_id=? AND task_id=? AND active=1 AND expires_at>?').all(workspace(principal),principal.nodeId,event.taskId,now())){try{check(subscriptionPrincipal(sub),event.taskId);}catch{continue;}const previous=q('SELECT body FROM deliveries WHERE subscription_id=? AND event_id=?').get(sub.id,event.eventId);if(previous){if(P.canonical(JSON.parse(previous.body).data)!==P.canonical(data))throw problem('event_conflict');continue;}if(q('SELECT COUNT(*) AS n FROM deliveries').get().n>=100)throw problem('delivery_capacity');q('INSERT INTO deliveries(id,subscription_id,event_id,body,state,attempt,next_at,deadline_at,workspace_id) VALUES(?,?,?,?,\'pending\',0,?,?,?)').run(randomUUID(),sub.id,event.eventId,body,now(),event.deadlineAt,workspace(principal));queued++;}return {queued};}).immediate();
   }
   let delivering=false;
   async function deliverDue({limit=100}={}){if(closed)throw problem('events_closed');if(!Number.isInteger(limit)||limit<1||limit>100)throw problem('invalid_delivery_limit');if(delivering)return {delivered:0};delivering=true;let delivered=0;
     try{for(const row of q("SELECT d.*,s.node_id,s.task_id,s.sealed,s.expires_at,s.active FROM deliveries d JOIN subscriptions s ON s.id=d.subscription_id WHERE d.state='pending' AND d.next_at<=? ORDER BY d.next_at LIMIT ?").all(now(),limit)){
       if(closed)return {delivered};
-      const p={nodeId:row.node_id,...(multiUser?{workspaceId:row.workspace_id}:{})};let permitted=false;try{check(p,row.task_id);permitted=true;}catch{}
+      let p,permitted=false;try{p=subscriptionPrincipal({...row,id:row.subscription_id});check(p,row.task_id);permitted=true;}catch{}
       if(!permitted||!row.active||row.expires_at<=now()||row.deadline_at<=now()){q("UPDATE deliveries SET state='stopped' WHERE id=?").run(row.id);continue;}
-      const secret=open(row.sealed),attempt=row.attempt+1;let status=0;
-      try{const response=await invokeTransport(secret.url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(10000),headers:signedHeaders(secret.secret,row.event_id,row.body,row.subscription_id,now()),body:row.body},multiUser?Object.freeze({workspaceId:row.workspace_id,nodeId:row.node_id,taskId:row.task_id}):undefined);status=response.status;}catch{}
+      const secret=open(row.sealed,{...row,id:row.subscription_id}),attempt=row.attempt+1;let status=0;
+      try{const response=await invokeTransport(secret.url,{method:'POST',redirect:'error',signal:AbortSignal.timeout(10000),headers:signedHeaders(secret.secret,row.event_id,row.body,row.subscription_id,now()),body:row.body},attribution(p,row.task_id));status=response.status;}catch{}
       if(closed)return {delivered};
       const accepted=status>=200&&status<300,state=accepted?'delivered':attempt>=3||[410,413].includes(status)?'failed':'pending';q('UPDATE deliveries SET state=?,attempt=?,next_at=? WHERE id=?').run(state,attempt,now()+1000*2**(attempt-1),row.id);if(accepted)delivered++;
     }return {delivered};}finally{delivering=false;}
@@ -87,6 +116,6 @@ function createPilotEvents({dbPath,encryptionKey,authorize,authorizeCleanup=auth
   function close(){if(closed)return;closed=true;cancellation.abort(problem('events_closed'));db.close();key.fill(0);}
   function cleanup(){if(closed)throw problem('events_closed');return db.transaction(()=>({removed:q('DELETE FROM subscriptions WHERE active=0 OR expires_at<=?').run(now()).changes})).immediate();}
   function pendingTargets(){if(closed)throw problem('events_closed');return q('SELECT node_id,task_id,workspace_id FROM subscriptions WHERE active=1 AND expires_at>? ORDER BY rowid LIMIT 5').all(now()).map(row=>({nodeId:row.node_id,...(multiUser?{workspaceId:row.workspace_id}:{}),taskId:row.task_id}));}
-  return {multiUser,list,subscribe,unsubscribe,publish,deliverDue,cleanup,pendingTargets,close};
+  return {multiUser,agentAuthority:!!authorizeAgentGrant,list,subscribe,unsubscribe,publish,deliverDue,cleanup,pendingTargets,close};
 }
 module.exports={createPilotEvents,signedHeaders,eventTableScopes};
