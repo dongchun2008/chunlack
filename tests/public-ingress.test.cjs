@@ -20,7 +20,53 @@ const caddyCommandTimeoutMs = windowsStartup ? 20000 : 5000;
 const tlsTestTimeoutMs = windowsStartup ? 90000 : lowCpuIsolation ? 40000 : 20000;
 const config = {httpPort: 23721, agentGateway: {port: 23722}, publicRuntime: {webOrigin: 'https://' + WEB, agentsOrigin: 'https://' + AGENTS, mcpPort: 23723}};
 
-function folder(t) {const root=fs.mkdtempSync(path.join(os.tmpdir(),'lack-ingress-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));return root;}
+test('owned fixture closes connections and awaits its child before removing its directory', async () => {
+  const order=[];
+  await finishFixture([
+    async()=>{order.push('connections');},
+    async()=>{await new Promise(resolve=>setImmediate(resolve));order.push('child-exited');}
+  ],()=>{assert.deepEqual(order,['connections','child-exited']);order.push('directory');});
+  assert.deepEqual(order,['connections','child-exited','directory']);
+});
+test('owned fixture still stops its child after connection cleanup fails and preserves its directory', async () => {
+  const order=[];
+  await assert.rejects(finishFixture([
+    async()=>{order.push('connections');throw Error('synthetic_connection_failure');},
+    async()=>{order.push('child-exited');}
+  ],()=>order.push('directory')),error=>error.message==='owned_fixture_cleanup_incomplete'&&error.errors[0].message==='synthetic_connection_failure');
+  assert.deepEqual(order,['connections','child-exited']);
+});
+test('owned fixture bounds an uncooperative cleanup and never deletes its directory', async () => {
+  const order=[];
+  await assert.rejects(finishFixture([
+    ()=>new Promise(()=>{}),
+    async()=>{order.push('child-stop-attempted');}
+  ],()=>order.push('directory'),20),error=>error.message==='owned_fixture_cleanup_incomplete'&&error.errors[0].message==='owned_fixture_cleanup_timeout');
+  assert.deepEqual(order,['child-stop-attempted']);
+});
+
+async function finishFixture(cleanups, removeDirectory, timeoutMs=7000) {
+  const failures=[];
+  for(const cleanup of cleanups){
+    let timer;
+    try{
+      await Promise.race([Promise.resolve().then(cleanup),new Promise((_,reject)=>{
+        timer=setTimeout(()=>reject(Error('owned_fixture_cleanup_timeout')),timeoutMs);
+      })]);
+    }catch(error){failures.push(error);}finally{clearTimeout(timer);}
+  }
+  if(failures.length)throw new AggregateError(failures,'owned_fixture_cleanup_incomplete');
+  await removeDirectory();
+}
+function folder(t) {
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'lack-ingress-'));
+  t.after(()=>{
+    const target=fs.realpathSync(root),parent=fs.realpathSync(os.tmpdir());
+    if(fs.lstatSync(root).isSymbolicLink()||path.dirname(target)!==parent||!path.basename(target).startsWith('lack-ingress-'))throw Error('unsafe_fixture_cleanup');
+    fs.rmSync(target,{recursive:true,force:true});
+  });
+  return root;
+}
 test('production ingress renders two isolated HTTPS hosts without admin, port 80, HTTP challenge or HTTP/3', () => {
   const source=renderPublicIngress(config);
   assert.match(source,/admin off/); assert.match(source,/auto_https disable_redirects/);
@@ -62,7 +108,11 @@ async function servers(t) {
   return {requests,ports:owned.map(server=>server.address().port)};
 }
 async function caddyFixture(t) {
-  const root=folder(t),backend=await servers(t),binary=process.env.CADDY_TEST_BIN;
+  const cleanups=[],scope={after:cleanup=>cleanups.push(cleanup)};let removeDirectory;
+  const root=folder({after:cleanup=>{removeDirectory=cleanup;}}),binary=process.env.CADDY_TEST_BIN;
+  // One owning hook: connections first, then the child; remove files only on success.
+  t.after(()=>finishFixture(cleanups,removeDirectory));
+  const backend=await servers(scope);
   assert.ok(path.isAbsolute(binary),'CADDY_TEST_BIN must identify an already verified local executable');
   const probe=http.createServer();await new Promise(resolve=>probe.listen(0,'127.0.0.1',resolve));const port=probe.address().port;await new Promise(resolve=>probe.close(resolve));
   const certFile=path.join(root,'fixture.crt'),keyFile=path.join(root,'fixture.key');
@@ -85,7 +135,7 @@ async function caddyFixture(t) {
   const adapted=JSON.parse(caddyPhase('adapt'));
   assert.equal(adapted.admin.disabled,true);assert.ok(Object.values(adapted.apps.http.servers).every(s=>s.listen.every(p=>p.endsWith(':'+port))&&s.protocols.join(' ')==='h1 h2'));
   const child=spawn(binary,['run','--adapter','caddyfile','--config',file],{env,stdio:['ignore','ignore','pipe'],windowsHide:true});let logs='';child.stderr.on('data',data=>{logs+=data;});const exited=once(child,'exit');
-  t.after(async()=>{if(child.exitCode===null){child.kill('SIGTERM');await Promise.race([exited,delay(3000)]);if(child.exitCode===null){child.kill('SIGKILL');await exited;}}});
+  scope.after(async()=>{if(child.exitCode===null){child.kill('SIGTERM');await Promise.race([exited,delay(3000)]);if(child.exitCode===null){child.kill('SIGKILL');await exited;}}});
   const cert=fs.readFileSync(certFile);let ready=false;
   const readinessStarted=performance.now(), readinessAbort=new AbortController();
   const readinessTimer=windowsStartup?setTimeout(()=>readinessAbort.abort(),20000):null;

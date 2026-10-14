@@ -67,6 +67,9 @@ function createAgentAuthority({db, identity, workspaceAccess, verifier, config, 
       .run('agent-authority', 1, clock());
   }).immediate();
   const get = db.prepare('SELECT * FROM agent_authority_grants WHERE id=?');
+  const connections = db.prepare(`SELECT g.*, w.name AS workspace_name FROM agent_authority_grants g
+    JOIN workspaces w ON w.id=g.workspace_id
+    WHERE g.issuer=? AND g.subject=? AND g.client_id=? AND g.resource=? ORDER BY g.id LIMIT ?`);
   const binding = db.prepare('SELECT user_id FROM external_identities WHERE issuer=? AND subject=? AND revoked_at IS NULL');
   const audit = db.prepare('INSERT INTO audit(id,workspace_id,actor_id,target_id,action,metadata,created_at) VALUES (?,?,?,?,?,?,?)');
   const prune = db.prepare(`DELETE FROM agent_authority_grants AS g WHERE expires_at<=?
@@ -118,6 +121,36 @@ function createAgentAuthority({db, identity, workspaceAccess, verifier, config, 
     }
   }
   return Object.freeze({
+    async discover(token) {
+      clock();
+      // Discovery requires the same read permission as protocol/tool discovery.
+      // Verify once, then recheck live local authority for each bounded row.
+      const verified = await verifier.verify(token, {scope: 'task.read'});
+      clock();
+      const facts = verifier.consume(verified), result = [];
+      const label = value => String(value ?? '').replace(/[\x00-\x1f\x7f]/g, '').slice(0, 160);
+      for (const row of connections.all(issuer.origin, facts.subject, facts.clientId, resource.href, maxGrants)) {
+        try {
+          if (typeof row.scopes !== 'string' || row.scopes.length > 256) continue;
+          const allowed = JSON.parse(row.scopes);
+          if (!scopeList(allowed)) continue;
+          let scopes = SCOPES.filter(scope => allowed.includes(scope) && facts.scopes.includes(scope));
+          if (!scopes.length) continue;
+          const scope = scopes.find(value => value !== 'task.claim') || scopes[0];
+          const current = evidence({grantId: row.id, evidence: facts}, scope);
+          const value = node(current.userId, current.workspaceId, current.nodeId, scope);
+          if (value.paused) scopes = scopes.filter(value => value !== 'task.claim');
+          if (!scopes.length) continue;
+          result.push(Object.freeze({grantId: current.grantId, workspaceId: current.workspaceId,
+            workspaceName: label(row.workspace_name), nodeId: current.nodeId, nodeName: label(value.name),
+            scopes: Object.freeze(scopes), expiresAt: current.expiresAt}));
+        } catch (error) {
+          // Stale bindings are not discoverable; operational errors still fail closed.
+          if (!(error instanceof IdentityError) || !['unauthorized', 'insufficient_scope', 'node_paused'].includes(error.code)) throw error;
+        }
+      }
+      return Object.freeze({connections: Object.freeze(result)});
+    },
     grant(actor, input = {}) {
       const time = clock();
       const manager = admin(actor, input.workspaceId);

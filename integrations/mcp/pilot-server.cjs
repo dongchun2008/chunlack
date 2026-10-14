@@ -1,11 +1,12 @@
 'use strict';
 const http=require('node:http');
 const P=require('../../gateway/protocol.cjs');
-function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPrincipal,events,workspaceAccess,ready=()=>true,agentOAuth}){
+function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPrincipal,resolveAgentConnections,events,workspaceAccess,ready=()=>true,agentOAuth}){
   if(store.multiUser&&!workspaceAccess)P.fail('workspace_gateway_configuration',503);
   if(store.multiUser&&events&&events.multiUser!==true)P.fail('workspace_events_configuration',503);
   if(resolveAgentPrincipal!==undefined&&(typeof resolveAgentPrincipal!=='function'||!store.multiUser||!workspaceAccess||typeof store.authenticateAgent!=='function'))P.fail('agent_mcp_configuration',503);
   if(resolveAgentPrincipal&&events?.agentAuthority===true&&typeof store.agentSubscriptionBinding!=='function')P.fail('agent_mcp_configuration',503);
+  if(resolveAgentConnections!==undefined&&(typeof resolveAgentConnections!=='function'||!resolveAgentPrincipal))P.fail('agent_mcp_configuration',503);
   const resourceProfile=require('../../identity/agent-resource.cjs').createAgentResource(agentOAuth);
   if(resourceProfile&&!resolveAgentPrincipal)P.fail('agent_mcp_configuration',503);
   if(typeof resolvePrincipal!=='function')throw new Error('principal_resolver_required');let closed=false;const sockets=new Set(),rates=new Map();
@@ -13,6 +14,9 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPr
   const schema=props=>({type:'object',properties:props,required:Object.keys(props),additionalProperties:false});
   const lease={taskId:id,leaseId:id,attempt:num};
   const definitions=[['pilot.read_task',{taskId:id},true],['pilot.claim_task',{taskId:id},false],['pilot.heartbeat',lease,false],['pilot.report_event',{envelope:{type:'object'}},false],['pilot.submit_result',{envelope:{type:'object'}},false],...(uploads?[['pilot.artifact_begin',{...lease,eventId:id,contentType:{type:'string',enum:['image/png','image/jpeg']}},false],['pilot.artifact_chunk',{uploadId:id,index:{type:'integer',minimum:0,maximum:32767},data:{type:'string',maxLength:87384}},false],['pilot.artifact_finish',{uploadId:id},false]]:[])].map(([name,props,readOnly])=>({name,description:'Public pilot only; does not grant browser, shell or private-network access.',inputSchema:schema(props),annotations:{readOnlyHint:readOnly,destructiveHint:false,openWorldHint:false}}));
+  const grantPattern='^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$';
+  const connectionTool={name:'chunlack_connections_list',description:'List your currently approved connections. Select a grantId explicitly for every scoped call; this list is not authorization.',inputSchema:schema({}),annotations:{readOnlyHint:true,destructiveHint:false,openWorldHint:false}};
+  const agentDefinitions=[connectionTool,...definitions.map(definition=>({...definition,inputSchema:schema({grantId:{type:'string',pattern:grantPattern},...definition.inputSchema.properties})}))];
   function principal(value){if(workspaceAccess)return workspaceAccess.forNode(value).principal;if(!value?.nodeId)P.fail('unauthorized',401);const n=store.getNode(value.nodeId);if(n.revoked||!n.capabilities.includes('browser.public_read')||!n.scopes.includes('public'))P.fail('unauthorized',401);return {nodeId:n.id};}
   function call(p,name,args){
     const definition=definitions.find(x=>x.name===name);if(!definition)P.fail('unsupported_tool');P.fields(args,Object.keys(definition.inputSchema.properties));if(Object.keys(definition.inputSchema.properties).some(key=>args[key]===undefined))P.fail('missing_tool_field');
@@ -42,12 +46,41 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPr
       P.fields(request,['jsonrpc','id','method','params']);requestId=request.id;
       if(request.jsonrpc!=='2.0'||!(typeof requestId==='string'&&requestId.length<=100||Number.isSafeInteger(requestId))||typeof request.method!=='string')return error(null,-32600,'invalid_request');P.bounded(request);
       if(closed)P.fail('mcp_closed',503);
-      const agentRequest=agentToken(auth),scope=requestScope(request);let p,nodeAccess,resolved;
+      const agentRequest=agentToken(auth),scope=requestScope(request);let p,nodeAccess,resolved,grantId;
+      const explicit=agentRequest&&!!resolveAgentConnections;
+      const connectionRequest=request.method==='tools/call'&&request.params?.name===connectionTool.name;
+      if(explicit&&(['server/discover','tools/list','initialize'].includes(request.method)||connectionRequest)){
+        let current;
+        try{
+          if(auth.length>8192)P.fail('unauthorized',401);
+          current=await resolveAgentConnections(auth);
+          if(!current?.connections?.length)P.fail('insufficient_scope',403);
+        }catch(e){return error(requestId,e.code==='insufficient_scope'?-32003:-32001,e.code==='insufficient_scope'?'insufficient_scope':'unauthorized');}
+        if(closed)P.fail('mcp_closed',503);
+        const params=request.params||{};let result;
+        if(connectionRequest){P.fields(params,['name','arguments']);P.fields(params.arguments||{},[]);result={content:[{type:'text',text:JSON.stringify(current)}],structuredContent:current,isError:false};}
+        else if(request.method==='initialize'){
+          P.fields(params,['protocolVersion','capabilities','clientInfo']);P.text(params.protocolVersion,100);P.object(params.capabilities);P.object(params.clientInfo);
+          result={protocolVersion:'2025-11-25',capabilities:{tools:{}},serverInfo:{name:'ChunLACK',version:'1.0.0'}};
+        }else{
+          P.fields(params,[]);
+          result=request.method==='tools/list'?{tools:agentDefinitions}:{resultType:'complete',supportedVersions:['2026-07-28'],capabilities:{tools:{},...(events?.agentAuthority===true?{events:{}}:{})}};
+        }
+        return {jsonrpc:'2.0',id:requestId,result};
+      }
+      if(explicit){
+        const params=P.object(request.params||{}),tool=request.method==='tools/call';
+        const args=P.object(tool?params.arguments||{}:params);
+        grantId=args.grantId;
+        if(typeof grantId!=='string'||!new RegExp(grantPattern).test(grantId))P.fail('invalid_id');
+        const {grantId:selector,...payload}=args;
+        request={...request,params:tool?{...params,arguments:payload}:payload};
+      }
       try{
         if(agentRequest){
           if(!resolveAgentPrincipal||auth.length>8192)P.fail('unauthorized',401);
-          // Binding selection belongs to the trusted runtime resolver, not task arguments.
-          resolved=await resolveAgentPrincipal(auth,{scope});
+          // The selector is not identity: the trusted resolver authenticates this exact grant.
+          resolved=await resolveAgentPrincipal(auth,{scope,...(explicit?{grantId}:{})});
           store.assertAuthenticatedNode(resolved,{scope,requireAgent:true});
         }else resolved=await resolvePrincipal(auth);
         nodeAccess=workspaceAccess?workspaceAccess.forNode(resolved):null;p=nodeAccess?nodeAccess.principal:principal(resolved);

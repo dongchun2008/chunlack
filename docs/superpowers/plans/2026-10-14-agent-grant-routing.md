@@ -1,6 +1,6 @@
 # Explicit Agent grant routing
 
-Status: proposed; awaiting the user's endpoint/selection choice. This document
+Status: recommended routing approved by the user; implementation in progress. This document
 does not authorize enrollment, expand a grant or enable production OAuth.
 
 Baseline: `3bcffae39f5dfd3940d710d7a5b854d66d1f867a`.
@@ -134,4 +134,4 @@ schemas; it must not accept OAuth grant selectors as a privilege expansion.
 The alternative is one independently identified OAuth resource per connection
 or workspace, with matching metadata and token audience. It is standards-based
 but increases enrollment/configuration work; it is not silently selected by
-this proposal. Await the user's routing choice before implementation.
+this proposal. The user selected the canonical endpoint and explicit-grant approach.
