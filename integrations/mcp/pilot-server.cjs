@@ -1,11 +1,13 @@
 'use strict';
 const http=require('node:http');
 const P=require('../../gateway/protocol.cjs');
-function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPrincipal,events,workspaceAccess,ready=()=>true}){
+function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPrincipal,events,workspaceAccess,ready=()=>true,agentOAuth}){
   if(store.multiUser&&!workspaceAccess)P.fail('workspace_gateway_configuration',503);
   if(store.multiUser&&events&&events.multiUser!==true)P.fail('workspace_events_configuration',503);
   if(resolveAgentPrincipal!==undefined&&(typeof resolveAgentPrincipal!=='function'||!store.multiUser||!workspaceAccess||typeof store.authenticateAgent!=='function'))P.fail('agent_mcp_configuration',503);
   if(resolveAgentPrincipal&&events?.agentAuthority===true&&typeof store.agentSubscriptionBinding!=='function')P.fail('agent_mcp_configuration',503);
+  const resourceProfile=require('../../identity/agent-resource.cjs').createAgentResource(agentOAuth);
+  if(resourceProfile&&!resolveAgentPrincipal)P.fail('agent_mcp_configuration',503);
   if(typeof resolvePrincipal!=='function')throw new Error('principal_resolver_required');let closed=false;const sockets=new Set(),rates=new Map();
   const id={type:'string',pattern:'^[A-Za-z0-9_-]{1,100}$'},num={type:'integer',minimum:1,maximum:3};
   const schema=props=>({type:'object',properties:props,required:Object.keys(props),additionalProperties:false});
@@ -74,9 +76,20 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPr
     }catch(e){const reason=e instanceof P.GatewayError?e.code:e.reason||'mcp_error';const invalid=['unsupported_field','unsupported_tool','invalid_object','missing_tool_field','invalid_id','invalid_text','sensitive_or_unsafe_field'].includes(reason);return error(requestId,e.rpcCode||(invalid?-32602:-32000),reason);}
   }
   const server=http.createServer(async(req,res)=>{
-    function send(status,value){if(res.destroyed||res.writableEnded)return;res.writeHead(status,{'Content-Type':'application/json','Cache-Control':'no-store',Connection:'close'});res.end(JSON.stringify(value));}
+    function send(status,value,{scope,invalidToken=false,metadata=false}={}){
+      if(res.destroyed||res.writableEnded)return;
+      const headers={'Content-Type':'application/json','Cache-Control':'no-store',Connection:'close'};
+      if(resourceProfile&&status===401)headers['WWW-Authenticate']=resourceProfile.challenge({error:invalidToken?'invalid_token':undefined});
+      if(resourceProfile&&status===403&&scope)headers['WWW-Authenticate']=resourceProfile.challenge({scope,error:'insufficient_scope'});
+      if(metadata)headers['Access-Control-Allow-Origin']='*';
+      res.writeHead(status,headers);res.end(req.method==='HEAD'?undefined:JSON.stringify(value));
+    }
     try{
       if(!ready()){send(503,{error:'runtime_starting'});req.resume();return;}
+      if(resourceProfile&&['GET','HEAD'].includes(req.method)&&resourceProfile.paths.includes(req.url)){
+        if(!/^(127\.0\.0\.1|localhost)(:\d+)?$/.test(req.headers.host||'')||req.rawHeaders.filter((_,i)=>i%2===0).filter(h=>h.toLowerCase()==='host').length!==1){send(401,{error:'unauthorized'});req.resume();return;}
+        send(200,resourceProfile.metadata,{metadata:true});req.resume();return;
+      }
       if(req.method!=='POST'||req.url!=='/mcp'){send(404,{error:'not_found'});req.resume();return;}
       if(req.headers.origin||req.headers['sec-fetch-site']==='cross-site'){send(403,{error:'cross_origin_denied'});req.resume();return;}
       if(!/^(127\.0\.0\.1|localhost)(:\d+)?$/.test(req.headers.host||'')||req.rawHeaders.filter((_,i)=>i%2===0).filter(h=>h.toLowerCase()==='authorization').length!==1){send(401,{error:'unauthorized'});req.resume();return;}
@@ -84,7 +97,7 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPr
       if(!auth.startsWith('Bearer ')||(agentToken(token)?!resolveAgentPrincipal||token.length>8192:auth.length>256)){send(401,{error:'unauthorized'});req.resume();return;}
       if(!/^application\/json(?:;|$)/i.test(req.headers['content-type']||'')||Number(req.headers['content-length'])>262144){send(413,{error:'invalid_body'});req.resume();return;}
       let size=0;const chunks=[];for await(const chunk of req){size+=chunk.length;if(size>262144)P.fail('payload_too_large',413);chunks.push(chunk);}if(!req.complete||req.aborted)return;
-      const reply=await handleRpc(JSON.parse(Buffer.concat(chunks).toString('utf8')),token);send(reply.error?.code===-32001?401:reply.error?.code===-32003?403:200,reply);
+      const request=JSON.parse(Buffer.concat(chunks).toString('utf8')),reply=await handleRpc(request,token);send(reply.error?.code===-32001?401:reply.error?.code===-32003?403:200,reply,{scope:reply.error?.code===-32003?requestScope(request):undefined,invalidToken:reply.error?.code===-32001});
     }catch(e){req.resume();send(e instanceof P.GatewayError?e.status:400,{error:'invalid_request'});}
   });server.maxConnections=16;server.requestTimeout=40000;server.headersTimeout=10000;server.keepAliveTimeout=1000;server.on('connection',s=>{sockets.add(s);s.on('close',()=>sockets.delete(s));});const listen=server.listen.bind(server);server.listen=(...args)=>{if(args[1]!=='127.0.0.1')P.fail('loopback_binding_required');return listen(...args);};
   async function close(){if(closed)return;closed=true;for(const socket of sockets)socket.destroy();if(server.listening)await new Promise(resolve=>server.close(resolve));}

@@ -50,8 +50,9 @@ function createWorkspaceTaskControl({identity, capacity, now = Date.now, onState
       prune();
       const id = key(actor.workspaceId, taskId);
       if (records.has(id)) fail('duplicate_task');
-      record = {taskId, workspaceId: actor.workspaceId, createdBy: actor.userId, state: 'running', createdAt: now(),
-        updatedAt: now(), deadlineAt: now() + timeoutMs, activeBranches: 0, errorCode: null, cancelled: false,
+      const createdAt = now();
+      record = {taskId, workspaceId: actor.workspaceId, createdBy: actor.userId, state: 'running', createdAt,
+        updatedAt: createdAt, deadlineAt: createdAt + timeoutMs, activeBranches: 0, errorCode: null, cancelled: false,
         delegations: 0, maxDepthSeen: 0, maxDelegations: limits.maxSteps ?? 50};
       records.set(id, record);
     }
