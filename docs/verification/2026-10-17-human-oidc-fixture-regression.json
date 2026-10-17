@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-17",
+  "scope": "Approved local test-fixture corrections and constrained Linux regression; not a production release",
+  "changes": [
+    "Synthetic OIDC issuer strictly decodes OAuth Basic form-encoded credentials and compares the expected test client and secret",
+    "Foreign workspace keeps its independent human owner and receives no Agent grant for the original user",
+    "Packaged disabled-authority regression expects owner-readable availability while continuing to reject grant creation and revocation"
+  ],
+  "redEvidence": {
+    "oidc": "Earlier callback regression failed with 401 at the fixture's raw Basic comparison",
+    "foreignWorkspace": "Normal-mode reproduction failed with not_found while attempting original-user membership in the foreign workspace",
+    "disabledAvailability": "Earlier packaged regression expected 404 while the approved availability route returned 200"
+  },
+  "localRelatedRegression": {
+    "report": ".superpowers/sdd/2026-10-14-agent-grant-routing/approved-fixture-regression-20261017.tap",
+    "exitCode": 0,
+    "tests": 65,
+    "pass": 65,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMs": 97810.5097
+  },
+  "smoke": {
+    "report": ".superpowers/sdd/2026-10-14-agent-grant-routing/approved-fixture-smoke-20261017.log",
+    "exitCode": 0,
+    "passed": true,
+    "coverage": "Real HTTP/WebSocket, two mock model backends in one channel, SQLite restart persistence, private bind and config preservation"
+  },
+  "linuxIsolation": {
+    "report": ".superpowers/sdd/2026-10-14-agent-grant-routing/chunlack-runtime-human-boundary-0a8adc54a8ec-report.json",
+    "archiveSha256": "35bfae5b8e4d587faeae0854f88b251c004d39d1497f46cc451bb9fde9f0f290",
+    "sourceFiles": 79,
+    "exitCode": 0,
+    "tests": 3,
+    "pass": 3,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "memoryPeakBytes": 87924736,
+    "memoryLimitBytes": 201326592,
+    "cpuQuotaPercent": 10,
+    "tasksMax": 32,
+    "runtimeMaxSeconds": 90,
+    "privateNetwork": true,
+    "unprivilegedTestUser": true,
+    "limitsVerified": true,
+    "protectedServiceBaselineUnchanged": true,
+    "ownedUnitStopped": true,
+    "ownedCgroupEmpty": true,
+    "ownedPayloadRemoved": true,
+    "errors": []
+  },
+  "independentReview": {
+    "result": "No concrete bugs or weakened security assertions found in the scoped delta",
+    "method": "Read-only static review; not an additional test run"
+  },
+  "acceptanceLimits": [
+    "Related regression only; the full repository suite has not been rerun on this exact snapshot",
+    "OIDC issuer responses are synthetic and cookies are manually supplied over local HTTP",
+    "Real Pocket ID interoperability and browser cookie enforcement remain separate acceptance gates",
+    "Muse and dots external Agent round trips have not been accepted",
+    "No production deployment, credential changes, client grants or Relay modifications in this phase",
+    "Protected-service baseline comparison does not establish Relay traffic performance",
+    "Ignored raw evidence paths are local reproducibility references and are not shipped as repository artifacts"
+  ]
+}

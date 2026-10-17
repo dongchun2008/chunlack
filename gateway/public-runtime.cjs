@@ -34,8 +34,19 @@ function configuration(config, env) {
   const key = config.agentGateway.adminTokenEnv;
   if (typeof key !== 'string' || !/^[A-Z][A-Z0-9_]{1,100}$/.test(key) || typeof env[key] !== 'string' || env[key].length < 43 || env[key].length > 256) throw failure('public_private_gateway_credential_required');
   // Validate before acquiring a writer lease or opening an event database.
+  if (options.agentOAuth?.discoveryOnly !== undefined && typeof options.agentOAuth.discoveryOnly !== 'boolean' ||
+      options.agentOAuth?.discoveryOnly === true && options.agentOAuth?.enabled !== true) throw failure('invalid_agent_access_config');
+  if (options.agentOAuth?.discoveryOnly === true && options.events?.enabled === true) throw failure('public_discovery_only_events_forbidden');
   if (options.events?.enabled === true) require('../integrations/mcp/runtime.cjs').validatePublicEventsOptions(options.events, env).encryptionKey.fill(0);
-  return {webOrigin, agentsOrigin, mcpPort: options.mcpPort, events: options.events};
+  let agentOAuth;
+  if (options.agentOAuth?.enabled === true) {
+    agentOAuth = Object.freeze({...options.agentOAuth,
+      clientIds: Array.isArray(options.agentOAuth.clientIds) ? Object.freeze([...options.agentOAuth.clientIds]) : options.agentOAuth.clientIds});
+    require('../identity/agent-resource.cjs').createAgentResource(agentOAuth);
+    if (agentOAuth.resource !== agentsOrigin + '/mcp' ||
+        config.identity?.oidc?.clientId && agentOAuth.browserClientId !== config.identity.oidc.clientId) throw failure('public_agent_resource_or_browser_mismatch');
+  }
+  return {webOrigin, agentsOrigin, mcpPort: options.mcpPort, events: options.events, agentOAuth};
 }
 function validateMigration(root) {
   const identityPath = safePath(path.join(root, 'db', 'identity.db'));
@@ -88,15 +99,17 @@ function assertWriterLease(root, lease) {
     if (current.isSymbolicLink() || current.dev !== owner.stat.dev || current.ino !== owner.stat.ino || JSON.parse(fs.readFileSync(owner.file, 'utf8')).instanceId !== owner.instanceId) throw failure('public_writer_lease_required');
   } catch {throw failure('public_writer_lease_required');}
 }
-async function startMcpRuntime({gateway, root, port, ready, eventsOptions, env}) {
+async function startMcpRuntime({gateway, root, port, ready, eventsOptions, env, agentAuthority, agentOAuth}) {
   const {store, workspaceAccess} = gateway;
   const artifacts = gateway.artifacts || require('./pilot-artifacts.cjs').createPilotArtifacts({store, root: path.join(root, 'artifacts', 'public-pilot')});
   const uploads = require('../integrations/mcp/artifact-upload.cjs').createArtifactUpload({store, artifacts});
   let mcp, eventRuntime, closing;
   function close(){if(closing)return closing;closing=(async()=>{const errors=[];for(const fn of [()=>mcp?.close(),()=>eventRuntime?.close()])try{await fn();}catch(error){errors.push(error);}if(errors.length)throw failure('public_mcp_shutdown_incomplete');})();return closing;}
   try {
-    if(eventsOptions?.enabled===true)eventRuntime=require('../integrations/mcp/runtime.cjs').createPublicEventsRuntime({gateway,dataRoot:root,options:eventsOptions,env,ready});
-    mcp = require('../integrations/mcp/pilot-server.cjs').createPilotMcp({store, artifacts, uploads, workspaceAccess, ready, events:eventRuntime?.events, resolvePrincipal: token => store.authenticate(token)});
+    if(eventsOptions?.enabled===true)eventRuntime=require('../integrations/mcp/runtime.cjs').createPublicEventsRuntime({gateway,dataRoot:root,options:eventsOptions,env,ready,agentAuthority});
+    mcp = require('../integrations/mcp/pilot-server.cjs').createPilotMcp({store, artifacts, uploads, workspaceAccess, ready, agentOAuth, events:eventRuntime?.events, resolvePrincipal: token => store.authenticate(token),
+      ...(agentAuthority ? {resolveAgentConnections: token => agentAuthority.discover(token),
+        resolveAgentPrincipal: async (token, selection) => store.authenticateAgent(await agentAuthority.authenticate(token, selection), selection)} : {})});
     mcp.server.listen(port, '127.0.0.1'); await once(mcp.server, 'listening');
     return Object.freeze({server:mcp.server,events:eventRuntime?.events,close});
   } catch (error) {await close(); throw error;}
@@ -104,13 +117,37 @@ async function startMcpRuntime({gateway, root, port, ready, eventsOptions, env})
 async function startPublicRuntime({config, dataRoot, env = process.env, loadLack = () => require('../server.js'), startMcp = startMcpRuntime} = {}) {
   const options = configuration(config, env), root = safePath(dataRoot, {directory: true});
   const identityPath = validateMigration(root), release = writerLock(root);
-  let identity, capacity, web, mcp, closing;
+  let identity, capacity, web, mcp, closing, verifier, authorityDb, agentAuthority, stopping = false;
+  // A trusted runtime closure, never a configurable proof or public credential.
+  // Gateway creation precedes authority creation because authority needs workspace access.
+  function boundAuthority() {
+    if (stopping || !agentAuthority) throw new (require('../identity/policy.cjs').IdentityError)('service_closed', 503);
+    return agentAuthority;
+  }
+  const authorityFacade = options.agentOAuth && !options.agentOAuth.discoveryOnly ? Object.freeze({
+    assert: (proof, selection) => boundAuthority().assert(proof, selection),
+    list: (actor, input) => boundAuthority().list(actor, input),
+    grant: (actor, input) => boundAuthority().grant(actor, input),
+    revoke: (actor, input) => boundAuthority().revoke(actor, input)
+  }) : undefined;
   async function close() {
     if (closing) return closing;
     closing = (async () => {
       const errors = [];
+      stopping = true;
+      agentAuthority?.close();
+      // Abort verification before closing request sockets. Authority is already
+      // closed, so late verifier continuations cannot access its SQLite handle.
+      const verifierDrain = (async () => {
+        if (!verifier) return;
+        let timer;
+        try {await Promise.race([verifier.close(), new Promise((_, reject) => {
+          timer = setTimeout(() => reject(failure('public_agent_shutdown_incomplete')), 8000);
+        })]);} finally {clearTimeout(timer);}
+      })().catch(error => {errors.push(error);});
       capacity?.close();
-      for (const fn of [() => mcp?.close(), () => web?.close(), () => capacity?.drain({timeoutMs: 8000}), () => identity?.close()]) {
+      for (const fn of [() => mcp?.close(), () => web?.close(), () => verifierDrain,
+        () => {if (authorityDb?.open) authorityDb.close();}, () => capacity?.drain({timeoutMs: 8000}), () => identity?.close()]) {
         try {await fn();} catch (error) {errors.push(error);}
       }
       if (errors.length) throw failure('public_shutdown_incomplete');
@@ -119,15 +156,23 @@ async function startPublicRuntime({config, dataRoot, env = process.env, loadLack
     return closing;
   }
   try {
+    if (options.agentOAuth) verifier = await require('../identity/agent-access.cjs').createAgentAccessVerifier({config: options.agentOAuth});
     identity = require('../identity/store.cjs').createIdentityStore({dbPath: identityPath});
     capacity = require('../collaboration/capacity.cjs').createCapacityCoordinator({maxActive: 1, maxQueued: 100, maxQueuedPerWorkspace: 20});
     const module = loadLack();
     if (typeof module?.startLackRuntime !== 'function') throw failure('public_runtime_export_required');
-    web = await module.startLackRuntime({config, dataRoot: root, identity, capacity, env, publicMode: true, bindHost: '127.0.0.1', webOrigin: options.webOrigin, identityPath, writerLease: release, deferReady: true});
+    web = await module.startLackRuntime({config, dataRoot: root, identity, capacity, env, publicMode: true, bindHost: '127.0.0.1', webOrigin: options.webOrigin, identityPath, writerLease: release, deferReady: true, agentAuthority: authorityFacade});
     if (!web?.gateway?.workspaceAccess || typeof web.activate !== 'function') throw failure('public_workspace_gateway_required');
-    mcp = await startMcp({gateway: web.gateway, root, port: options.mcpPort, ready: () => web.isReady(), eventsOptions: options.events, env});
+    if (verifier && !options.agentOAuth.discoveryOnly) {
+      authorityDb = new Database(identityPath, {fileMustExist: true});
+      authorityDb.pragma('foreign_keys = ON');
+      agentAuthority = require('../identity/agent-authority.cjs').createAgentAuthority({db: authorityDb, identity,
+        workspaceAccess: web.gateway.workspaceAccess, verifier, config: options.agentOAuth});
+    }
+    mcp = await startMcp({gateway: web.gateway, root, port: options.mcpPort, ready: () => !stopping && web.isReady(), eventsOptions: options.events, env,
+      agentAuthority, agentOAuth: options.agentOAuth});
     web.activate();
-    return Object.freeze({identity, capacity, web, gateway: web.gateway, mcp, close});
+    return Object.freeze({identity, capacity, web, gateway: web.gateway, mcp, agentAuthority, close});
   } catch (error) {
     try {await close();} catch {throw failure('public_startup_cleanup_incomplete');}
     throw error;

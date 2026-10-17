@@ -4,7 +4,15 @@ const assert = require('node:assert/strict');
 const http = require('node:http');
 const {setTimeout: delay} = require('node:timers/promises');
 const {createPackagedIngressFixture} = require('./packaged-ingress-fixture.cjs');
-async function createPackagedAgentScenario({caddyBin, mockDelayMs = 20} = {}) {
+const { createOwnedFixture } = require('./owned-fixture-lifecycle.cjs');
+
+function createPackagedAgentScenario(options = {}) {
+  return createOwnedFixture(options, signal => initializePackagedAgentScenario({ ...options, signal }));
+}
+
+async function initializePackagedAgentScenario({signal, caddyBin, mockDelayMs = 20} = {}) {
+  signal.throwIfAborted();
+
   if (!Number.isInteger(mockDelayMs) || mockDelayMs < 0 || mockDelayMs > 500) throw new Error('invalid_mock_delay');
   const start = Date.now(), cpuStart = process.cpuUsage(), timers = new Set(), durations = [];
   const metrics = {completedRounds: 0, failedRounds: 0, privacyFailures: 0, mainModelRequests: 0, totalGenerationRequests: 0, maxActiveModelHTTP: 0};
@@ -61,14 +69,14 @@ async function createPackagedAgentScenario({caddyBin, mockDelayMs = 20} = {}) {
       for (const value of Object.values(state)) if (value.error) throw value.error;
       if (closed) throw new Error('scenario_closed');
       const result = await predicate(); if (result) return result;
-      peakRss = Math.max(peakRss, process.memoryUsage().rss); await delay(25);
+      peakRss = Math.max(peakRss, process.memoryUsage().rss); await delay(25, undefined, { signal });
     }
     throw new Error('agent_acceptance_timeout:' + label);
   }
   try {
     await new Promise((resolve, reject) => {mock.once('error', reject); mock.listen(0, '127.0.0.1', resolve);});
     const models = key => Array.from({length: 5}, (_, i) => `model-${key.toLowerCase()}-${i}`);
-    fixture = await createPackagedIngressFixture({caddyBin, threeHumans: true, configure: ({config, workspaceId, otherWorkspaceId}) => {
+    fixture = await createPackagedIngressFixture({signal, caddyBin, threeHumans: true, configure: ({config, workspaceId, otherWorkspaceId}) => {
       config.llmProvider = 'soak-a'; config.defaultModel = 'model-a-0';
       config.llmProviders = ['A', 'B'].map(key => ({id: 'soak-' + key.toLowerCase(), local: true, requiresApiKey: false,
         baseUrl: `http://127.0.0.1:${mock.address().port}/${key.toLowerCase()}/v1`, models: models(key)}));
@@ -116,7 +124,7 @@ async function createPackagedAgentScenario({caddyBin, mockDelayMs = 20} = {}) {
       if (!state[key] || !Number.isInteger(index) || index !== state[key].next || state[key].current) throw new Error('round_replay_denied');
       const slot = state[key]; slot.current = {index, models: new Set(), requests: 0};
       try {
-        if (slot.last) await delay(Math.max(0, slot.last + 2350 - Date.now()));
+        if (slot.last) await delay(Math.max(0, slot.last + 2350 - Date.now()), undefined, { signal });
         const begin = Date.now(), before = new Set((await request(key, '/api/tasks')).localTasks.map(task => task.taskId));
         peers[key].socket.send(JSON.stringify({type: 'message', channelId: 'general', content: '/ground'}));
         await until(() => slot.names.every((name, i) => peers[key].frames.some(frame => frame.type === 'new_message' && JSON.stringify(frame).includes(name) && JSON.stringify(frame).includes(`SOAK_RESULT_${key}_r${index}_m${i}`))), 'five actual replies ' + key);

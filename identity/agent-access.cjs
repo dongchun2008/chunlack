@@ -7,7 +7,10 @@ const clean = (value, max) => typeof value === 'string' && value.length > 0 && v
 // Identity evidence only: no node credentials, sessions, grants or listeners.
 // The caller must separately bind this evidence to current local authority.
 async function createAgentAccessVerifier({config, fetchImpl = globalThis.fetch, now = Date.now} = {}) {
+  if (config?.discoveryOnly !== undefined && typeof config.discoveryOnly !== 'boolean' ||
+      config?.discoveryOnly === true && config?.enabled !== true) throw fail('invalid_agent_access_config', 503);
   if (config?.enabled !== true) return null;
+  const discoveryOnly = config.discoveryOnly === true;
   let issuer, resource, jwks, clients;
   try {
     const canonical = value => {
@@ -19,12 +22,19 @@ async function createAgentAccessVerifier({config, fetchImpl = globalThis.fetch, 
     if (issuer.origin !== config.issuer || resource.href !== config.resource ||
         jwks.href !== config.jwksUri || jwks.origin !== issuer.origin ||
         !clean(config.browserClientId, 256) || !Array.isArray(config.clientIds) ||
-        !config.clientIds.length || config.clientIds.length > 32 ||
+        (discoveryOnly ? config.clientIds.length !== 0 : !config.clientIds.length) || config.clientIds.length > 32 ||
         config.clientIds.some(id => !clean(id, 256) || id === config.browserClientId) ||
         new Set(config.clientIds).size !== config.clientIds.length ||
         typeof fetchImpl !== 'function' || typeof now !== 'function') throw Error();
     clients = new Set(config.clientIds);
   } catch {throw fail('invalid_agent_access_config', 503);}
+  // Enrollment exposes public metadata only. No key fetch, token validation,
+  // or identity proof may make this immutable instance usable for access.
+  if (discoveryOnly) {
+    let closed = false;
+    const deny = () => {throw closed ? fail('service_closed', 503) : fail();};
+    return Object.freeze({async verify() {deny();}, consume() {deny();}, async close() {closed = true;}});
+  }
   const jose = await import('jose');
   const controller = new AbortController(), operations = new Set();
   let closed = false, closing, active = 0, nextFetchAt = 0, proofs = new WeakMap(), rate = {minute: -1, count: 0};

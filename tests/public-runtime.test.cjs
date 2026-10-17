@@ -1,7 +1,6 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const {execFileSync, spawn} = require('node:child_process');
-const {once} = require('node:events');
+const {execFileSync} = require('node:child_process');
 const {setTimeout: delay} = require('node:timers/promises');
 const path = require('node:path');
 const fs = require('node:fs');
@@ -11,6 +10,7 @@ const {randomUUID} = require('node:crypto');
 const Database = require('better-sqlite3');
 const {createIdentityStore} = require('../identity/store.cjs');
 const {createCollaborationStore} = require('../collaboration/store.cjs');
+const {createPublicRuntimeResources} = require('./helpers/public-runtime-resources.cjs');
 const python = process.env.PYTHON || (process.platform === 'win32' ? 'python' : 'python3');
 // Only the explicitly selected, CPU-quota-limited test environment needs extra cold-start time.
 const lowCpuIsolation = process.env.CHUNLACK_TEST_LOW_CPU === '1';
@@ -26,7 +26,8 @@ test('materialized server exports an explicit owned lifecycle instead of auto-st
 
 function fixture(t) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'lack-public-runtime-'));
-  t.after(() => fs.rmSync(root, {recursive: true, force: true}));
+  const resources = createPublicRuntimeResources({root, testContext: t});
+  resources.assertOpen();
   const identityPath = path.join(root, 'db', 'identity.db');
   const identity = createIdentityStore({dbPath: identityPath});
   const idb = new Database(identityPath), userId = randomUUID(), workspaceId = randomUUID(), now = Date.now();
@@ -41,7 +42,7 @@ function fixture(t) {
   const config = {httpPort: 23721, multiUser: {enabled: true, migrationReady: true},
     agentGateway: {enabled: true, port: 23722, adminTokenEnv: 'FIXTURE_GATEWAY_TOKEN'},
     publicRuntime: {webOrigin: 'https://lack.fixture.invalid', agentsOrigin: 'https://agents.fixture.invalid', mcpPort: 23723}};
-  return {root, config, userId, workspaceId, env: {FIXTURE_GATEWAY_TOKEN: 'x'.repeat(43)}};
+  return {root, resources, config, userId, workspaceId, env: {FIXTURE_GATEWAY_TOKEN: 'x'.repeat(43)}};
 }
 
 async function fakeServer(options) {
@@ -121,22 +122,28 @@ test('capacity shutdown waits for actual transport settlement and reports an unr
 async function packageFixture(t) {
   const f = fixture(t), packageRoot = path.join(f.root, 'package');
   execFileSync(python, ['scripts/materialize.py', '--output', packageRoot], {cwd: path.join(__dirname, '..'), timeout: 10000, stdio: 'pipe'});
+  f.resources.assertOpen();
   const reservations = [];
-  for (let i = 0; i < 3; i++) {const server = http.createServer(); await new Promise(resolve => server.listen(0, '127.0.0.1', resolve)); reservations.push(server);}
+  for (let i = 0; i < 3; i++) {
+    f.resources.assertOpen();
+    const server = http.createServer();
+    f.resources.defer(() => server.listening ? new Promise(resolve => server.close(resolve)) : undefined);
+    await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+    f.resources.assertOpen();
+    reservations.push(server);
+  }
   [f.config.httpPort, f.config.agentGateway.port, f.config.publicRuntime.mcpPort] = reservations.map(server => server.address().port);
   for (const server of reservations) await new Promise(resolve => server.close(resolve));
+  f.resources.assertOpen();
   Object.assign(f.config, {llmProvider: 'ollama', embeddingProvider: 'none', autoPullModels: false, agents: [], jspaceEnabled: false});
   fs.mkdirSync(path.join(f.root, 'config')); fs.writeFileSync(path.join(f.root, 'config', 'lack.config.json'), JSON.stringify(f.config));
   return {...f, packageRoot, entry: path.join(packageRoot, 'gateway', 'public-runtime.cjs'),
     childEnv: {...process.env, ...f.env, NODE_PATH: path.join(__dirname, '..', 'node_modules')}};
 }
 function childRuntime(t, f) {
-  const child = spawn(process.execPath, [path.join(__dirname, 'helpers', 'public-runtime-child.cjs'), f.entry, f.root],
+  const {child, exited} = f.resources.spawn(process.execPath, [path.join(__dirname, 'helpers', 'public-runtime-child.cjs'), f.entry, f.root],
     {env: f.childEnv, stdio: ['pipe', 'pipe', 'pipe'], windowsHide: true});
   let logs = ''; child.stdout.on('data', data => {logs += data;}); child.stderr.on('data', data => {logs += data;});
-  const exited = once(child, 'exit');
-  exited.catch(() => {});
-  t.after(() => require('./helpers/owned-child-cleanup.cjs').stopOwnedChild(child, exited));
   return {child, exited, logs: () => logs};
 }
 async function ready(f) {
@@ -218,8 +225,9 @@ test('actual packaged web, node REST and MCP share a guarded lifecycle and resta
 });
 test('actual MCP port conflict rolls back web and gateway startup without leaving a writer lock', {timeout: 20000}, async t => {
   const f = await packageFixture(t), conflict = http.createServer();
+  f.resources.defer(() => conflict.listening ? new Promise(resolve => conflict.close(resolve)) : undefined);
   await new Promise(resolve => conflict.listen(f.config.publicRuntime.mcpPort, '127.0.0.1', resolve));
-  t.after(() => new Promise(resolve => conflict.close(resolve)));
+  f.resources.assertOpen();
   const running = childRuntime(t, f); const exit = await running.exited;
   assert.equal(exit[0], 1); assert.ok(!running.logs().includes('PUBLIC_RUNTIME_READY'));
   assert.equal(fs.existsSync(path.join(f.root, '.public-runtime.lock')), false);

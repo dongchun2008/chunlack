@@ -10,7 +10,7 @@ const {createPackagedIngressFixture} = require('./helpers/packaged-ingress-fixtu
 const caddyBin = process.env.CADDY_TEST_BIN;
 
 test('three humans and five nodes complete scoped HTTPS task lifecycle, cancellation evidence and persisted lease recovery', {skip: !caddyBin, timeout: 60000}, async t => {
-  const f = await createPackagedIngressFixture({caddyBin, threeHumans: true}); t.after(() => f.close());
+  const f = await createPackagedIngressFixture({testContext: t, caddyBin, threeHumans: true}); 
   const owner = await f.login();
   function human(auth, workspaceId, route, {method = 'GET', json, csrf = true} = {}) {
     return f.request('web', route, {method, json, headers: {Cookie: auth.cookie, 'X-Workspace-Id': workspaceId, Origin: f.webOrigin, ...(csrf ? {'X-CSRF-Token': auth.csrfToken} : {})}});

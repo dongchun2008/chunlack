@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "observedAt": "2026-10-16T14:55:40.5763080+00:00",
+  "scope": "Candidate artifact provenance and remaining release gates; no production changes",
+  "archiveSha256": "50e0537460927ac4fdf2b347971e0813e58032e29f79d6fa6e6ef048f440843b",
+  "archiveBytes": 262947,
+  "artifactFileCount": 56,
+  "sourceMatchedToNativeTestSnapshot": 55,
+  "missingSourceEvidence": [],
+  "differingSourceEvidence": [],
+  "nativeEvidence": {
+    "report": "chunlack-runtime-https-sessions-e71ec91c84be-report.json",
+    "unit": "chunlack-runtime-https-sessions-e71ec91c84be.service",
+    "passed": true,
+    "counts": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "testExit": "0",
+    "archiveSha256": "ae3a5cc4c62b419001c19b5059e1d2e55cb959be2a0a173ef392e0dfd6e4f422",
+    "limitsVerified": true,
+    "protectedUnchanged": true
+  },
+  "provenanceComplete": true,
+  "configurationIncluded": false,
+  "dependencyBinariesIncluded": false,
+  "productionDiscoveryEnabled": false,
+  "deploymentAuthorized": false,
+  "generatedArtifactComparison": {
+    "report": "generated-artifact-comparison-44baf214dc81.json",
+    "changed": [
+      "server.js",
+      "package.json",
+      "package-lock.json"
+    ],
+    "additionalDirectDependency": "jose@6.2.12",
+    "missingInstalledDirectDependencies": [],
+    "node": "24.21.0",
+    "nativeModuleABI": "137",
+    "publicHealth": "200",
+    "protectedUnchanged": true
+  },
+  "releaseGates": [
+    {
+      "gate": "Current complete regression",
+      "state": "not_passed",
+      "reason": "Prior Windows run had 4 failures and 2 cancellations; latest CPU admission 94-96 percent prevented a new full run. Selected Linux counterparts do not replace full-suite acceptance."
+    },
+    {
+      "gate": "Coherent runtime package",
+      "state": "prepared_not_deployed",
+      "reason": "56 explicit program files with archive byte verification; configuration, data and dependency binaries excluded."
+    },
+    {
+      "gate": "Dependency closure and native ABI",
+      "state": "partial",
+      "reason": "Direct dependencies are installed; metadata existence does not prove complete closure or native load compatibility."
+    },
+    {
+      "gate": "Ingress and discovery-only activation",
+      "state": "pending",
+      "reason": "Current ingress has no resource discovery route; keep all Agent access denied and clients empty. No client registration or consent in this phase."
+    },
+    {
+      "gate": "Rollback rehearsal",
+      "state": "pending",
+      "reason": "Stage complete release separately; preserve current code, lockfiles, config and consistent database backup; do not overwrite live files. Confirm migration reversibility before any switch."
+    },
+    {
+      "gate": "Scoped production maintenance approval",
+      "state": "not_granted_for_this_phase",
+      "reason": "Do not switch current, restart services, edit credentials or modify Relay under development-only permission."
+    },
+    {
+      "gate": "GitHub synchronization",
+      "state": "pending",
+      "reason": "No local tracked .github workflows found; remote branch, external deployment hooks, scoped diff and secret checks remain."
+    },
+    {
+      "gate": "Real provider and vendor acceptance",
+      "state": "pending",
+      "reason": "Direct model, Muse and dots own-computer execution, evidence receipt and sustained collaboration must be proved separately."
+    }
+  ]
+}

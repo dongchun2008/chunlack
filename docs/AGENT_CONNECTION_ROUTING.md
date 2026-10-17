@@ -3,7 +3,8 @@
 ## Status and boundary
 
 The authority and opt-in MCP routing components implement the approved shared
-endpoint design. They are not yet mounted by the public production runtime.
+endpoint design. Local public-runtime assembly is now implemented but remains
+under validation; it has not been enabled in the deployed production runtime.
 This document is an integration contract, not a claim that Muse Laozhen or
 dots Xuanji has completed enrollment or a real computer task.
 
@@ -111,3 +112,64 @@ Real acceptance requires Muse or dots itself to receive a task, use its own
 computer, return the matching task nonce and evidence, and obtain a stored
 ChunLACK receipt. Local JWT fixtures, metadata and HTTP success are not that
 acceptance. Production LACK and Tailscale Relay remain outside this local change.
+
+## Local runtime configuration (not a deployment instruction)
+
+The assembly opt-in is `publicRuntime.agentOAuth.enabled`. It is disabled when
+absent. Its configuration also supplies `issuer`, `resource`, `jwksUri`,
+`browserClientId` and a bounded `clientIds` array of separately approved Agent
+clients. These are identifiers and public URLs, not client secrets. The existing
+access verifier remains the sole JWT verifier; no new issuer is introduced.
+
+`resource` must equal the configured `agentsOrigin` plus `/mcp`. If a human
+OIDC client ID is configured, `browserClientId` must match it, and the access
+verifier rejects using that ID in the Agent client allowlist. This option does
+not enroll a client, link a person, create a grant or enable human OIDC.
+
+The gateway receives a trusted deny-before-binding assertion facade, not a
+function from JSON configuration. Once workspace access exists, the runtime
+opens its owned identity database handle, creates the existing authority, and
+passes it to MCP routing and event delivery before activating web readiness.
+No default grant is selected. The legacy paired-token path is preserved.
+
+Shutdown closes authority admission and aborts verification before tearing down
+listeners. Verification drainage has an eight-second bound. A timeout or any
+other teardown failure retains the writer lease; late completion cannot turn
+that failed shutdown into successful release. Closed authority blocks late
+verifier continuations before SQLite access. Startup rollback owns the same
+resources. Importing modules does not enable this configuration.
+
+## Human grant administration (local development)
+
+When the trusted runtime supplies the authority, the existing identity router
+mounts these routes on the human web service, not on the Agent MCP endpoint:
+
+- `GET /api/workspaces/:workspaceId/agent-grants`: owner-only administrative
+  records plus configured Agent client identifiers and resource information.
+- `POST /api/workspaces/:workspaceId/agent-grants`: owner-only creation using
+  exactly `subject`, `clientId`, `nodeId`, `scopes`, `expiresAt`. The workspace
+  comes from the authorized URL, not the request body.
+- `DELETE /api/workspaces/:workspaceId/agent-grants/:grantId`: owner-only
+  revocation, with an empty JSON object as its body.
+
+These routes require the existing authenticated human session cookie. Mutations
+also require the existing exact Origin, JSON content type and CSRF token. Agent
+Bearer tokens do not authenticate a human, and untrusted user/role/workspace
+fields are rejected. Authority methods independently recheck the current owner
+role, linked subject, allowed client, target node ownership and expiry bounds.
+There is no automatic identity linking or grant widening on duplicate creation.
+
+Listing is bounded and workspace-scoped. It deliberately includes stale and
+expired records for owner revocation; a listed record is **not** a claim of
+current usability, token scope or vendor enrollment. No password hashes,
+membership epochs, tokens or pairing credentials are returned. With no trusted
+authority supplied, these administration routes are not mounted.
+
+This is an HTTP foundation, not the completed visual administration panel.
+Current local evidence and the still-open validation gate are recorded in
+`verification/2026-10-15-agent-grant-admin-http-checkpoint.md`.
+
+Owner management, ingress exposure, complete native protocol behavior, recovery
+policy and real vendor acceptance remain separate unfinished gates. See
+`verification/2026-10-15-agent-runtime-assembly-checkpoint.md` for current local
+test failures and limitations; do not activate this checkpoint in production.

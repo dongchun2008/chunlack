@@ -9,9 +9,10 @@ const digest = value => createHash('sha256').update(value).digest('hex');
 const cookieName = '__Host-chunlack_session';
 const cookieOptions = Object.freeze({secure: true, httpOnly: true, sameSite: 'lax', path: '/'});
 
-function createIdentityRouter({store, sessions, webOrigin, oidc = null}) {
+function createIdentityRouter({store, sessions, webOrigin, oidc = null, agentAuthority}) {
   const url = new URL(webOrigin);
   if (url.protocol !== 'https:' || url.origin !== webOrigin || url.username || url.password || typeof store?.requireMembership !== 'function' || typeof sessions?.authenticate !== 'function') throw new IdentityError('invalid_config', 400);
+  if (agentAuthority !== undefined && ['list', 'grant', 'revoke'].some(method => typeof agentAuthority?.[method] !== 'function')) throw new IdentityError('invalid_config', 400);
   const router = express.Router();
   const wrap = fn => (req, res, next) => Promise.resolve().then(() => fn(req, res)).catch(next);
   const origin = req => {if (req.headers.origin !== webOrigin) throw new IdentityError('forbidden_origin', 403);};
@@ -91,6 +92,31 @@ function createIdentityRouter({store, sessions, webOrigin, oidc = null}) {
     const actor = workspaceActor(req, authenticated, 'member.read');
     res.json({members: store.listMembers(actor, {workspaceId: actor.workspaceId})});
   }));
+  router.get('/api/workspaces/:workspaceId/agent-grants', wrap((req, res) => {
+    const actor = workspaceActor(req, principal(req), 'workspace.manage');
+    // Availability is owner-readable even when no authority facade exists.
+    // Mutation routes remain absent; this response creates no Agent access.
+    res.json(agentAuthority ? agentAuthority.list(actor, {workspaceId: actor.workspaceId}) : {available: false});
+  }));
+  if (agentAuthority) {
+    const exactBody = (req, fields) => {
+      const input = body(req);
+      if (Object.keys(input).some(key => !fields.includes(key))) throw new IdentityError('invalid_request', 400);
+      return input;
+    };
+    router.post('/api/workspaces/:workspaceId/agent-grants', mutation, json, wrap((req, res) => {
+      const actor = workspaceActor(req, authenticatedMutation(req), 'workspace.manage');
+      const input = exactBody(req, ['subject', 'clientId', 'nodeId', 'scopes', 'expiresAt']);
+      const grant = agentAuthority.grant(actor, {...input, workspaceId: actor.workspaceId});
+      res.status(201).json({grant});
+    }));
+    router.delete('/api/workspaces/:workspaceId/agent-grants/:grantId', mutation, json, wrap((req, res) => {
+      const actor = workspaceActor(req, authenticatedMutation(req), 'workspace.manage');
+      exactBody(req, []);
+      agentAuthority.revoke(actor, {workspaceId: actor.workspaceId, grantId: req.params.grantId});
+      res.json({ok: true});
+    }));
+  }
   router.patch('/api/workspaces/:workspaceId/members/:userId', mutation, json, wrap((req, res) => {
     const input = body(req); const authenticated = authenticatedMutation(req);
     const actor = workspaceActor(req, authenticated, 'member.manage');

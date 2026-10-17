@@ -34,8 +34,9 @@
       if (parent) parent.append(element); return element;
     };
     const members = button('成员', () => openMembers()), nodes = button('节点', () => openNodes()), tasks = button('任务', () => openTasks());
+    const agentGrants = button('Agent 授权', () => openAgentGrants()); agentGrants.id = 'workspaceAgentGrants';
     const logout = button('退出', () => act(() => client.logout())); logout.id = 'workspaceLogout';
-    bar.append(brand, selector, role, spacer, members, nodes, tasks, account, logout); document.body.prepend(bar);
+    bar.append(brand, selector, role, spacer, members, nodes, tasks, agentGrants, account, logout); document.body.prepend(bar);
     const cover = node('section'); cover.className = 'workspace-cover'; cover.hidden = true; document.body.append(cover);
     const panel = node('section'); panel.className = 'workspace-panel'; panel.hidden = true; document.body.append(panel);
     const notice = node('p', '', 'workspaceNotice'); notice.className = 'workspace-error'; notice.setAttribute('role', 'status');
@@ -95,6 +96,7 @@
       selector.value = next.workspace ? next.workspace.id : ''; selector.disabled = !next.user || !(next.workspaces || []).length;
       role.textContent = next.workspace ? roles[next.workspace.role] || '无权限' : '';
       members.disabled = nodes.disabled = tasks.disabled = !next.workspace || next.status !== 'ready';
+      agentGrants.hidden = !next.workspace || next.status !== 'ready' || !client.can('manage'); agentGrants.disabled = agentGrants.hidden;
       logout.hidden = !next.user && next.status !== 'logout_pending'; logout.textContent = next.status === 'logout_pending' ? '重试退出' : '退出';
       gatedControls(); cover.replaceChildren(); cover.hidden = next.status === 'ready';
       if (cover.hidden) return;
@@ -209,6 +211,83 @@
         }); if (d.live()) submit.disabled = false;};
       });
     }
+    async function openAgentGrants() {
+      if (closed || !state?.workspace || state.status !== 'ready' || !client.can('manage')) return;
+      const d = dialog('外部 Agent 授权'), workspaceId = state.workspace.id;
+      const route = `/api/workspaces/${encodeURIComponent(workspaceId)}/agent-grants`;
+      const uuid = value => typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value);
+      const scopes = ['task.read', 'task.claim', 'task.result', 'events.read', 'events.subscribe'];
+      d.body.append(node('p', '授权只适用于当前工作区。客户端须先单独登记，账户须已绑定；这里不创建云端账号、不读取密钥，也不代表 Muse 或 dots 已接入成功。'));
+      await act(async () => {
+        const info = await client.request(route); if (!d.live()) return;
+        if (info?.available === false) {
+          const unavailable = node('p', '外部 Agent 授权管理尚未启用。此页面仅显示状态，不能创建或撤销授权；请由管理员完成接入配置后再试。');
+          unavailable.setAttribute('role', 'status'); d.body.append(unavailable); return;
+        }
+        if (!Array.isArray(info.grants) || info.grants.length > 2048 || !Array.isArray(info.clientIds) || info.clientIds.length > 32 ||
+            info.clientIds.some(id => typeof id !== 'string' || !id || id.length > 256) ||
+            info.grants.some(item => !uuid(item.id) || item.workspaceId !== workspaceId || !uuid(item.nodeId) ||
+              typeof item.clientId !== 'string' || !Array.isArray(item.scopes) || item.scopes.some(scope => !scopes.includes(scope)) ||
+              !Number.isSafeInteger(item.expiresAt))) throw new Error('invalid_response');
+        d.body.append(node('p', '授权记录不等于当前可用权限：过期、成员变更、节点撤销或令牌范围不足，都可能使执行被拒绝。'));
+        for (const item of info.grants) {
+          const row = node('div'); row.className = 'workspace-row';
+          row.append(node('strong', item.clientId), node('span', '节点：' + item.nodeId),
+            node('span', item.scopes.join(', ')), node('span', item.expiresAt <= Date.now() ? '已过期' : '未过期，仍须实时校验'));
+          const revoke = button('撤销授权', async () => {
+            if (!d.live() || revoke.disabled || !client.can('manage')) return;
+            revoke.disabled = true;
+            try {await act(async () => {
+              if (!await confirm(`撤销客户端 ${item.clientId} 对节点 ${item.nodeId} 的这项授权？后续任务和事件将重新校验权限；已发送的数据无法撤回。`)) return;
+              if (!d.live() || !client.can('manage')) return;
+              await client.request(route + '/' + encodeURIComponent(item.id), {method: 'DELETE', body: {}});
+              if (d.live()) await openAgentGrants();
+            });} finally {if (d.live()) revoke.disabled = false;}
+          }, row);
+          d.body.append(row);
+        }
+        const response = await client.request('/api/nodes'); if (!d.live()) return;
+        if (!Array.isArray(response.nodes) || response.nodes.length > 100 || response.nodes.some(item => !uuid(item.id) || item.workspaceId !== workspaceId)) throw new Error('invalid_response');
+        const available = response.nodes.filter(item => !item.revoked);
+        const form = node('form', undefined, 'agentGrantForm');
+        form.append(node('h3', '创建明确授权'));
+        const subject = field(form, 'Pocket ID 账户 subject（UUID，不是用户名）', 'agentGrantSubject'); subject.autocomplete = 'off';
+        function selection(label, id, items) {
+          const wrapper = node('label', label), select = node('select', undefined, id); select.required = true;
+          for (const [value, text] of items) {const option = node('option', text); option.value = value; select.append(option);}
+          wrapper.append(select); form.append(wrapper); return select;
+        }
+        const clientId = selection('已批准的 Agent 客户端', 'agentGrantClient', [['', '请选择客户端'], ...info.clientIds.map(id => [id, id])]);
+        const target = selection('当前工作区的节点', 'agentGrantNode', [['', '请选择节点'], ...available.map(item => [item.id, String(item.name || item.id) + (item.paused ? '（已暂停）' : '')])]);
+        clientId.value = target.value = '';
+        const checks = scopes.map(scope => {
+          const label = node('label', scope), input = node('input', undefined, 'agentGrantScope_' + scope.replaceAll('.', '_'));
+          input.type = 'checkbox'; input.checked = scope === 'task.read'; label.append(input); form.append(label); return {scope, input};
+        });
+        const duration = selection('授权有效期', 'agentGrantDuration', [['3600000', '1 小时'], ['86400000', '24 小时'], ['604800000', '7 天']]); duration.value = '3600000';
+        form.append(node('p', '默认只读。领取任务需要 task.claim，回传结果需要 task.result；事件订阅须按需勾选。账户必须拥有所选节点，后端会再次核验。'));
+        const submit = node('button', '创建授权', 'agentGrantSubmit'); submit.type = 'submit'; submit.disabled = !available.length || !info.clientIds.length;
+        form.append(submit); d.body.append(form);
+        if (submit.disabled) d.body.append(node('p', '尚无可选节点或已批准的 Agent 客户端，不能创建授权。'));
+        form.onsubmit = async event => {
+          event.preventDefault(); if (!d.live() || submit.disabled || !client.can('manage')) return;
+          submit.disabled = true;
+          try {await act(async () => {
+            const selected = available.find(item => item.id === target.value), selectedScopes = checks.filter(item => item.input.checked).map(item => item.scope);
+            if (!uuid(subject.value.trim()) || !info.clientIds.includes(clientId.value) || !selected || !selectedScopes.length ||
+                !['3600000', '86400000', '604800000'].includes(duration.value)) throw new Error('invalid_agent_grant');
+            const input = {subject: subject.value.trim(), clientId: clientId.value, nodeId: selected.id,
+              scopes: selectedScopes, expiresAt: Date.now() + Number(duration.value)};
+            if (!await confirm(`为账户 ${input.subject} 的客户端 ${input.clientId} 授权节点 ${String(selected.name || selected.id)}？权限：${input.scopes.join(', ')}；到期：${new Date(input.expiresAt).toISOString()}。仅限当前工作区，不扩大节点本身的工具权限。`)) return;
+            if (!d.live() || !client.can('manage')) return;
+            const result = await client.request(route, {method: 'POST', body: input});
+            if (!d.live()) return;
+            if (!uuid(result?.grant?.id)) throw new Error('invalid_response');
+            await openAgentGrants();
+          });} finally {if (d.live()) submit.disabled = !available.length || !info.clientIds.length;}
+        };
+      });
+    }
     async function openTasks() {
       if (!state || !state.workspace) return;
       const d = dialog('任务进度'), list = node('div'); d.body.append(node('p', '“完成”表示执行链已结束，不等于结论已核验或人工验收。取消后的远端任务仍须确认停止或等待租约到期。'), list);
@@ -302,10 +381,10 @@
         }
       });
     }
-    function clear() {clearPanel(); cover.replaceChildren(); account.textContent = ''; role.textContent = ''; selector.replaceChildren(); selector.disabled = members.disabled = nodes.disabled = tasks.disabled = true; state = null; gatedControls();}
+    function clear() {clearPanel(); cover.replaceChildren(); account.textContent = ''; role.textContent = ''; selector.replaceChildren(); selector.disabled = members.disabled = nodes.disabled = tasks.disabled = agentGrants.disabled = true; agentGrants.hidden = true; state = null; gatedControls();}
     function close() {if (closed) return; clear(); closed = true; bar.remove(); cover.remove(); panel.remove(); style.remove();}
     render(client.snapshot());
-    return Object.freeze({render, clear, close, notify, openResearch, openMembers, openNodes, openTasks, openTaskEvidence});
+    return Object.freeze({render, clear, close, notify, openResearch, openMembers, openNodes, openTasks, openTaskEvidence, openAgentGrants});
   }
   return Object.freeze({mountWorkspaceShell});
 });

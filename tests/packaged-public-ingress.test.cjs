@@ -5,7 +5,7 @@ const caddyBin = process.env.CADDY_TEST_BIN;
 
 test('actual materialized LACK serves its referenced login/workspace scripts through verified HTTPS', {skip: !caddyBin, timeout: 30000}, async t => {
   const {createPackagedIngressFixture} = require('./helpers/packaged-ingress-fixture.cjs');
-  const fixture = await createPackagedIngressFixture({caddyBin}); t.after(() => fixture.close());
+  const fixture = await createPackagedIngressFixture({testContext: t, caddyBin}); 
   for (const page of ['/', '/login']) {
     const response = await fixture.request('web', page);
     assert.equal(response.status, 200, page);
@@ -30,7 +30,7 @@ test('actual materialized LACK serves its referenced login/workspace scripts thr
 
 test('actual packaged HTTPS API preserves sessions, Origin/CSRF and current workspace authorization across ingress', {skip: !caddyBin, timeout: 30000}, async t => {
   const {createPackagedIngressFixture} = require('./helpers/packaged-ingress-fixture.cjs');
-  const fixture = await createPackagedIngressFixture({caddyBin}); t.after(() => fixture.close());
+  const fixture = await createPackagedIngressFixture({testContext: t, caddyBin}); 
   const forbidden = await fixture.request('web', '/auth/login', {method: 'POST', headers: {Origin: 'https://rogue.fixture.invalid'}, json: fixture.credentials});
   assert.equal(forbidden.status, 403);
   const login = await fixture.login();
@@ -54,7 +54,7 @@ test('actual packaged HTTPS API preserves sessions, Origin/CSRF and current work
 
 test('actual packaged WSS uses the scoped path and shared identity, while agents REST/MCP never expose human or global administration routes', {skip: !caddyBin, timeout: 30000}, async t => {
   const {createPackagedIngressFixture} = require('./helpers/packaged-ingress-fixture.cjs');
-  const fixture = await createPackagedIngressFixture({caddyBin}); t.after(() => fixture.close());
+  const fixture = await createPackagedIngressFixture({testContext: t, caddyBin}); 
   const login = await fixture.login(), socket = await fixture.connect({cookie: login.cookie, workspaceId: fixture.workspaceId});
   socket.send(JSON.stringify({type: 'join', channelId: 'general'}));
   socket.send(JSON.stringify({type: 'message', channelId: 'general', content: 'ACTUAL_TLS_WORKSPACE_MESSAGE', username: 'FORGED_TLS_SENDER'}));

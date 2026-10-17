@@ -12,6 +12,7 @@ const { spawn, execFileSync } = require('node:child_process');
 const { once } = require('node:events');
 const { setTimeout: delay } = require('node:timers/promises');
 const { createHash } = require('node:crypto');
+const { performance } = require('node:perf_hooks');
 const Database = require('better-sqlite3');
 const WebSocket = require('ws');
 const { createIdentityStore } = require('../identity/store.cjs');
@@ -41,13 +42,31 @@ function stop(child) {
   child.process.stdin.write('STOP\n'); return child.exited;
 }
 function start(f, dataRoot, legacy = false) {
+  const startedAt = performance.now();
   const packageRoot = f.packageRoot;
   const args = [path.join(__dirname, 'helpers', 'migrated-runtime-child.cjs'), legacy ? path.join(packageRoot, 'server.js') : path.join(packageRoot, 'gateway', 'public-runtime.cjs'), dataRoot, legacy ? 'legacy' : 'public'];
   const processChild = spawn(process.execPath, args, { cwd: packageRoot, windowsHide: true, stdio: ['pipe', 'pipe', 'pipe'], env: { ...process.env, NODE_PATH: path.join(repository, 'node_modules'), NODE_EXTRA_CA_CERTS: f.certificatePath, CLOUD_TEST_API_KEY: 'synthetic-cloud-business-key', BUSINESS_GATEWAY_SECRET: 'synthetic-gateway-business-'.repeat(3), LACK_BIND_HOST: '127.0.0.1' } });
   let logs = ''; processChild.stdout.on('data', value => { logs = (logs + value).slice(-6000); }); processChild.stderr.on('data', value => { logs = (logs + value).slice(-6000); });
-  const child = { process: processChild, exited: once(processChild, 'exit'), logs: () => logs };
+  const child = { process: processChild, exited: once(processChild, 'exit'), logs: () => logs, startedAt };
   f.addCleanup(async () => { if (processChild.exitCode === null) { const ending = stop(child); await Promise.race([ending, delay(5000)]); if (processChild.exitCode === null) { processChild.kill(); await child.exited; } } });
   return child;
+}
+async function waitForReady(t, child, label, marker) {
+  try {
+    await until(() => child.logs().includes(marker) || child.process.exitCode !== null, label, 30000);
+    assert.equal(child.process.exitCode, null, child.logs());
+  } finally {
+    const allowed = new Set(['config_read_start', 'config_read_complete', 'entry_load_start', 'entry_load_complete', 'runtime_start', 'runtime_ready', 'runtime_failed', 'stop_start', 'stop_complete', 'stop_failed']);
+    const phases = [];
+    for (const line of child.logs().split(/\r?\n/)) {
+      if (!line.startsWith('MIGRATED_RUNTIME_PHASE=') || line.length > 512) continue;
+      try {
+        const value = JSON.parse(line.slice('MIGRATED_RUNTIME_PHASE='.length));
+        if (value && allowed.has(value.phase) && Number.isSafeInteger(value.elapsedMs) && value.elapsedMs >= 0) phases.push({ phase: value.phase, elapsedMs: value.elapsedMs });
+      } catch {}
+    }
+    t.diagnostic('MIGRATED_RUNTIME_STARTUP_TIMING=' + JSON.stringify({ stage: label, elapsedMs: Math.round(performance.now() - child.startedAt), timeoutMs: 30000, pid: child.process.pid ?? null, exitCode: child.process.exitCode, signalCode: child.process.signalCode, phases: phases.slice(-16) }));
+  }
 }
 async function fixture(t) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'lack-migrated-business-')); fs.chmodSync(root, 0o700);
@@ -151,8 +170,7 @@ test('migrated packaged runtime serves three humans in two workspaces, actual mo
   const f = await fixture(t), api = client(f), running = start(f, f.candidateRoot);
   // Cold packaged startup is distinct from business/model waits. Keep the
   // overall 90-second test bound and default operation waits unchanged.
-  await until(() => running.logs().includes('PUBLIC_RUNTIME_READY') || running.process.exitCode !== null, 'packaged public runtime', 30000);
-  assert.equal(running.process.exitCode, null, running.logs());
+  await waitForReady(t, running, 'packaged public runtime', 'PUBLIC_RUNTIME_READY');
   assert.equal((await api.request('/health')).status, 200);
   // Admission intentionally bounds password hashing to one operation. Three
   // authenticated sessions coexist; a simultaneous login burst is not promised.
@@ -187,7 +205,7 @@ test('migrated packaged runtime serves three humans in two workspaces, actual mo
   const db = new Database(path.join(f.candidateRoot, 'db', 'lack.db'), { readonly: true });
   try { assert.equal(db.prepare("SELECT count(*) AS n FROM messages WHERE content='VIEWER_MUST_NOT_PERSIST'").get().n, 0); assert.equal(db.prepare("SELECT url FROM research_sources WHERE id='citation'").get().url, 'https://example.com/original'); assert.equal(JSON.parse(db.prepare("SELECT data FROM research_sessions WHERE id='research'").get().data).missingEvidence, true); } finally { db.close(); }
   const restarted = start(f, f.candidateRoot);
-  await until(() => restarted.logs().includes('PUBLIC_RUNTIME_READY') || restarted.process.exitCode !== null, 'restart', 30000); assert.equal(restarted.process.exitCode, null, restarted.logs());
+  await waitForReady(t, restarted, 'restart', 'PUBLIC_RUNTIME_READY');
   const nextAlice = await api.login('alice'), nextBob = await api.login('bob');
   const nextA = await api.open(t, nextAlice, f.a.id), nextB = await api.open(t, nextBob, f.b.id);
   assert.ok(JSON.stringify(nextA.messages).includes('NEW_PRIVATE_A')); assert.ok(!JSON.stringify(nextA.messages).includes('NEW_PRIVATE_B'));
@@ -195,7 +213,7 @@ test('migrated packaged runtime serves three humans in two workspaces, actual mo
   const closed = once(nextA.ws, 'close'); assert.equal((await api.request('/auth/logout', { auth: nextAlice, method: 'POST', body: {} })).status, 200); assert.equal((await closed)[0], 1008);
   nextB.ws.terminate(); assert.deepEqual(await stop(restarted), [0, null]);
   const legacy = start(f, f.recovered.legacyDataRoot, true);
-  await until(() => legacy.logs().includes('LEGACY_READY') || legacy.process.exitCode !== null, 'legacy-compatible recovered runtime', 30000); assert.equal(legacy.process.exitCode, null, legacy.logs());
+  await waitForReady(t, legacy, 'legacy-compatible recovered runtime', 'LEGACY_READY');
   assert.equal((await api.request('/health')).status, 200);
   const old = await api.open(t, null, null, true);
   assert.ok(JSON.stringify(old.messages).includes('ORIGINAL_RESEARCH_A')); assert.ok(!JSON.stringify(old.messages).includes('NEW_PRIVATE_A'));

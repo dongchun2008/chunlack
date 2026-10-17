@@ -70,6 +70,7 @@ function createAgentAuthority({db, identity, workspaceAccess, verifier, config, 
   const connections = db.prepare(`SELECT g.*, w.name AS workspace_name FROM agent_authority_grants g
     JOIN workspaces w ON w.id=g.workspace_id
     WHERE g.issuer=? AND g.subject=? AND g.client_id=? AND g.resource=? ORDER BY g.id LIMIT ?`);
+  const workspaceGrants = db.prepare('SELECT * FROM agent_authority_grants WHERE workspace_id=? ORDER BY created_at DESC,id LIMIT ?');
   const binding = db.prepare('SELECT user_id FROM external_identities WHERE issuer=? AND subject=? AND revoked_at IS NULL');
   const audit = db.prepare('INSERT INTO audit(id,workspace_id,actor_id,target_id,action,metadata,created_at) VALUES (?,?,?,?,?,?,?)');
   const prune = db.prepare(`DELETE FROM agent_authority_grants AS g WHERE expires_at<=?
@@ -121,6 +122,24 @@ function createAgentAuthority({db, identity, workspaceAccess, verifier, config, 
     }
   }
   return Object.freeze({
+    list(actor, {workspaceId} = {}) {
+      clock(); admin(actor, workspaceId);
+      // Administrative records, not usable-token evidence. Keep expired/stale
+      // records visible so the owner can revoke them without re-enabling them.
+      const grants = workspaceGrants.all(workspaceId, maxGrants).map(row => {
+        let scopes;
+        try {
+          if (typeof row.scopes !== 'string' || row.scopes.length > 256) throw Error();
+          scopes = JSON.parse(row.scopes);
+          if (!scopeList(scopes)) throw Error();
+        } catch {throw fail('invalid_grant_record', 503);}
+        return Object.freeze({id: row.id, issuer: row.issuer, subject: row.subject, resource: row.resource,
+          userId: row.user_id, workspaceId: row.workspace_id, nodeId: row.node_id, clientId: row.client_id,
+          scopes: Object.freeze(scopes), createdAt: row.created_at, expiresAt: row.expires_at});
+      });
+      return Object.freeze({grants: Object.freeze(grants), issuer: issuer.origin, resource: resource.href,
+        clientIds: Object.freeze([...clients])});
+    },
     async discover(token) {
       clock();
       // Discovery requires the same read permission as protocol/tool discovery.

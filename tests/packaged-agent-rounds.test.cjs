@@ -7,7 +7,7 @@ const caddyBin = process.env.CADDY_TEST_BIN;
 
 test('actual packaged HTTPS/WSS completes four distinct five-agent rounds with three humans, two workspaces and five registered nodes', {skip: !caddyBin, timeout: 60000}, async t => {
   const {createPackagedAgentScenario} = require('./helpers/packaged-agent-scenario.cjs');
-  const scenario = await createPackagedAgentScenario({caddyBin, mockDelayMs: 10}); t.after(() => scenario.close());
+  const scenario = await createPackagedAgentScenario({testContext: t, caddyBin, mockDelayMs: 10}); 
   for (let round = 0; round < 2; round++) {
     const results = await Promise.all([scenario.round('A', round), scenario.round('B', round)]);
     for (const result of results) {

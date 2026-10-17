@@ -20,29 +20,52 @@ const fixtureRoot = path.join(root, '.superpowers', 'sdd', '2026-10-09-multi-use
 const credentials = Object.freeze({login: 'tls-owner', password: 'public-only-packaged-tls-fixture-password'});
 async function freePort() {const server = net.createServer(); await new Promise(resolve => server.listen(0, '127.0.0.1', resolve)); const port = server.address().port; await new Promise(resolve => server.close(resolve)); return port;}
 
-async function createPackagedIngressFixture({caddyBin, threeHumans = false, configure}) {
+const { createOwnedFixture } = require('./owned-fixture-lifecycle.cjs');
+const { stopOwnedChild } = require('./owned-child-cleanup.cjs');
+
+function createPackagedIngressFixture(options = {}) {
+  return createOwnedFixture(options, signal => initializePackagedIngressFixture({ ...options, signal }));
+}
+
+async function initializePackagedIngressFixture({signal, caddyBin, threeHumans = false, configure}) {
+  signal.throwIfAborted();
+  let restarting;
+
   fs.mkdirSync(fixtureRoot, {recursive: true});
   const directory = fs.mkdtempSync(path.join(fixtureRoot, 'owned-'));
   const codeRoot = path.join(directory, 'package'), dataRoot = path.join(directory, 'data');
   const sockets = new Set(), received = new WeakMap(); let runtime, caddy, identity, collaboration, certificate;
   let closed = false, caddyOutput = '';
   const close = async () => {
-    if (closed) return; closed = true;
+    if (closed) return;
+    closed = true;
     const failures = [];
-    for (const socket of sockets) socket.terminate();
-    if (caddy && caddy.exitCode === null) {
-      const ended = once(caddy, 'exit'); caddy.kill('SIGTERM');
-      const stopped = await Promise.race([ended.then(() => true), delay(3000).then(() => false)]);
-      if (!stopped && caddy.exitCode === null) {caddy.kill('SIGKILL'); await ended;}
+    if (restarting) {
+      try { await restarting; } catch (error) { if (error.name !== 'AbortError') failures.push(error.message); }
     }
-    for (const item of [runtime, collaboration, identity]) if (item) try {await item.close();} catch (error) {failures.push(error.message);}
+    for (const socket of sockets) socket.terminate();
+    signal.removeEventListener('abort', cancelSockets);
+    if (caddy && caddy.exitCode === null && caddy.signalCode === null) {
+      try {
+        const ended = once(caddy, 'exit');
+        caddy.kill('SIGTERM');
+        await stopOwnedChild(caddy, ended, { graceMs: 3000, forceMs: 3000 });
+      } catch (error) { failures.push(error.message); }
+    }
+    for (const item of [runtime, collaboration, identity]) {
+      if (item) try { await item.close(); } catch (error) { failures.push(error.message); }
+    }
+    // Preserve diagnostic evidence if owned resources did not close.
+    if (failures.length) throw new Error('Owned fixture close failed: ' + failures.join(', '));
     const absolute = path.resolve(directory);
     if (!absolute.startsWith(path.resolve(fixtureRoot) + path.sep)) throw new Error('Unsafe fixture cleanup target');
-    fs.rmSync(absolute, {recursive: true, force: true});
-    if (failures.length) throw new Error('Owned fixture close failed: ' + failures.join(', '));
+    fs.rmSync(absolute, { recursive: true, force: true });
   };
+  function cancelSockets() { for (const socket of sockets) socket.terminate(); }
+  signal.addEventListener('abort', cancelSockets, { once: true });
 
-  const listenPort = await freePort(), webHost = 'lack.fixture.invalid', agentsHost = 'agents.fixture.invalid';
+
+  const listenPort = await (signal.throwIfAborted(), freePort)(), webHost = 'lack.fixture.invalid', agentsHost = 'agents.fixture.invalid';
   const webOrigin = 'https://' + webHost, agentsOrigin = 'https://' + agentsHost;
   const request = (surface, requestPath, options = {}) => new Promise((resolve, reject) => {
     const host = surface === 'web' ? webHost : surface === 'agents' ? agentsHost : null;
@@ -50,7 +73,7 @@ async function createPackagedIngressFixture({caddyBin, threeHumans = false, conf
     if (options.bytes !== undefined && options.json !== undefined) return reject(new Error('Ambiguous fixture body'));
     const body = options.bytes === undefined ? options.json === undefined ? undefined : JSON.stringify(options.json) : Buffer.from(options.bytes);
     const headers = {Host: host, ...(body === undefined ? {} : {'Content-Type': 'application/json', 'Content-Length': Buffer.byteLength(body)}), ...options.headers};
-    const outgoing = https.request({host: '127.0.0.1', port: listenPort, servername: host, ca: certificate, rejectUnauthorized: true,
+    const outgoing = https.request({signal, host: '127.0.0.1', port: listenPort, servername: host, ca: certificate, rejectUnauthorized: true,
       method: options.method || 'GET', path: requestPath, headers, agent: false}, response => {
       const chunks = []; let size = 0;
       response.on('data', value => {size += value.length; if (size > 1024 * 1024) outgoing.destroy(new Error('Fixture response too large')); else chunks.push(value);});
@@ -67,6 +90,7 @@ async function createPackagedIngressFixture({caddyBin, threeHumans = false, conf
     return {cookie, csrfToken: body.csrfToken};
   };
   const connect = async ({cookie, workspaceId}) => {
+    signal.throwIfAborted();
     const socket = new WebSocket('wss://127.0.0.1:' + listenPort + '/ws/workspaces/' + workspaceId,
       {servername: webHost, ca: certificate, rejectUnauthorized: true, headers: {Host: webHost, Origin: webOrigin, Cookie: cookie}});
     sockets.add(socket); const frames = []; received.set(socket, frames);
@@ -77,14 +101,15 @@ async function createPackagedIngressFixture({caddyBin, threeHumans = false, conf
     catch (error) {socket.terminate(); throw error;} finally {clearTimeout(timer);}
   };
   const frame = async (socket, predicate) => {
-    for (let i = 0; i < 100; i++) {const frames = received.get(socket); const index = frames.findIndex(predicate); if (index >= 0) return frames.splice(index, 1)[0]; await delay(30);}
+    signal.throwIfAborted();
+    for (let i = 0; i < 100; i++) {const frames = received.get(socket); const index = frames.findIndex(predicate); if (index >= 0) return frames.splice(index, 1)[0]; await delay(30, undefined, { signal });}
     throw new Error('Actual TLS workspace frame not received');
   };
 
   try {
-    execFileSync(process.env.PYTHON || 'python', ['scripts/materialize.py', '--output', codeRoot], {cwd: root, timeout: 10000, stdio: 'pipe'});
+    (signal.throwIfAborted(), execFileSync)(process.env.PYTHON || 'python', ['scripts/materialize.py', '--output', codeRoot], {cwd: root, timeout: 10000, stdio: 'pipe'});
     fs.mkdirSync(path.join(dataRoot, 'db'), {recursive: true}); fs.mkdirSync(path.join(dataRoot, 'config'));
-    identity = createIdentityStore({dbPath: path.join(dataRoot, 'db', 'identity.db')});
+    identity = (signal.throwIfAborted(), createIdentityStore)({dbPath: path.join(dataRoot, 'db', 'identity.db')});
     const passwordHash = await hashPassword(credentials.password), owner = identity.createUser({login: credentials.login, passwordHash});
     const other = identity.createUser({login: 'other-tls-owner', passwordHash});
     const workspace = identity.createWorkspace({name: 'Actual TLS A', ownerId: owner.id}), otherWorkspace = identity.createWorkspace({name: 'Actual TLS B', ownerId: other.id});
@@ -97,36 +122,47 @@ async function createPackagedIngressFixture({caddyBin, threeHumans = false, conf
     createCollaborationStore({db: collaboration, identity});
     collaboration.close(); collaboration = null; identity.close(); identity = null;
     const config = JSON.parse(fs.readFileSync(path.join(codeRoot, 'config', 'lack.config.json'), 'utf8'));
-    Object.assign(config, {httpPort: await freePort(), embeddingProvider: 'none', autoPullModels: false, jspaceEnabled: false,
+    Object.assign(config, {httpPort: await (signal.throwIfAborted(), freePort)(), embeddingProvider: 'none', autoPullModels: false, jspaceEnabled: false,
       enableMusing: false, enableTriangulation: false, enablePublicMemory: false, agents: [], llmCloudProviders: [], llmProviders: [],
       multiUser: {enabled: true, migrationReady: true}, workspaceModelGrants: {},
-      agentGateway: {enabled: true, port: await freePort(), adminTokenEnv: 'LACK_PACKAGED_TLS_FIXTURE_SECRET'},
-      publicRuntime: {webOrigin, agentsOrigin, mcpPort: await freePort(), events: {enabled: false}}});
+      agentGateway: {enabled: true, port: await (signal.throwIfAborted(), freePort)(), adminTokenEnv: 'LACK_PACKAGED_TLS_FIXTURE_SECRET'},
+      publicRuntime: {webOrigin, agentsOrigin, mcpPort: await (signal.throwIfAborted(), freePort)(), events: {enabled: false}}});
     if (configure !== undefined) {
       if (typeof configure !== 'function') throw new Error('invalid_fixture_configuration');
       configure({config, workspaceId: workspace.id, otherWorkspaceId: otherWorkspace.id});
     }
-    fs.writeFileSync(path.join(dataRoot, 'config', 'lack.config.json'), JSON.stringify(config));
+    (signal.throwIfAborted(), fs.writeFileSync)(path.join(dataRoot, 'config', 'lack.config.json'), JSON.stringify(config));
     const {startPublicRuntime} = require(path.join(codeRoot, 'gateway', 'public-runtime.cjs'));
     const runtimeEnv = {PATH: process.env.PATH, LACK_PACKAGED_TLS_FIXTURE_SECRET: randomBytes(48).toString('hex')};
-    runtime = await startPublicRuntime({config, dataRoot, env: runtimeEnv});
-    const restart = async () => {await runtime.close(); runtime = null; runtime = await startPublicRuntime({config, dataRoot, env: runtimeEnv});};
+    runtime = await (signal.throwIfAborted(), startPublicRuntime)({config, dataRoot, env: runtimeEnv});
+    const restart = () => {
+      signal.throwIfAborted();
+      if (restarting) return restarting;
+      restarting = (async () => {
+        await runtime.close();
+        runtime = null;
+        signal.throwIfAborted();
+        runtime = await startPublicRuntime({ config, dataRoot, env: runtimeEnv });
+        signal.throwIfAborted();
+      })().finally(() => { restarting = null; });
+      return restarting;
+    };
     const certFile = path.join(directory, 'fixture-cert.pem'), keyFile = path.join(directory, 'fixture-key.pem');
     const openssl = process.platform === 'win32' ? 'C:/Program Files/Git/usr/bin/openssl.exe' : 'openssl';
-    execFileSync(openssl, ['req', '-x509', '-newkey', 'rsa:2048', '-sha256', '-nodes', '-days', '1', '-keyout', keyFile, '-out', certFile,
+    (signal.throwIfAborted(), execFileSync)(openssl, ['req', '-x509', '-newkey', 'rsa:2048', '-sha256', '-nodes', '-days', '1', '-keyout', keyFile, '-out', certFile,
       '-subj', '/CN=lack.fixture.invalid', '-addext', 'subjectAltName=DNS:lack.fixture.invalid,DNS:agents.fixture.invalid'], {timeout: 10000, stdio: 'pipe'});
     certificate = fs.readFileSync(certFile);
     const candidate = path.join(directory, 'Caddyfile');
-    fs.writeFileSync(candidate, renderPublicIngress(config, {fixture: {listenPort, certFile, keyFile}}));
+    (signal.throwIfAborted(), fs.writeFileSync)(candidate, renderPublicIngress(config, {fixture: {listenPort, certFile, keyFile}}));
     const env = {...process.env, XDG_DATA_HOME: path.join(directory, 'caddy-data'), XDG_CONFIG_HOME: path.join(directory, 'caddy-config')};
-    execFileSync(caddyBin, ['validate', '--config', candidate, '--adapter', 'caddyfile'], {env, timeout: 10000, stdio: 'pipe', windowsHide: true});
-    caddy = spawn(caddyBin, ['run', '--config', candidate, '--adapter', 'caddyfile'], {env, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe']});
+    (signal.throwIfAborted(), execFileSync)(caddyBin, ['validate', '--config', candidate, '--adapter', 'caddyfile'], {env, timeout: 10000, stdio: 'pipe', windowsHide: true});
+    caddy = (signal.throwIfAborted(), spawn)(caddyBin, ['run', '--config', candidate, '--adapter', 'caddyfile'], {env, windowsHide: true, stdio: ['ignore', 'pipe', 'pipe']});
     caddy.stdout.on('data', value => {caddyOutput = (caddyOutput + value).slice(-4000);}); caddy.stderr.on('data', value => {caddyOutput = (caddyOutput + value).slice(-4000);});
     let ready = false;
     for (let i = 0; i < 80; i++) {
       if (caddy.exitCode !== null) throw new Error('Owned Caddy exited: ' + caddyOutput);
       try {if ((await request('web', '/health')).status === 200) {ready = true; break;}} catch (error) {if (!['ECONNREFUSED', 'ECONNRESET'].includes(error.code)) throw error;}
-      await delay(50);
+      await delay(50, undefined, { signal });
     }
     if (!ready) throw new Error('Owned Caddy did not become ready: ' + caddyOutput);
     return {request, login, connect, frame, close, restart, credentials,

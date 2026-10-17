@@ -1,14 +1,19 @@
 'use strict';
 const http=require('node:http');
 const P=require('../../gateway/protocol.cjs');
+const lifecycleMethods=new Set(['initialize','notifications/initialized','ping']);
+const httpProtocolVersions=new Set(['2025-11-25','2026-07-28']);
 function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPrincipal,resolveAgentConnections,events,workspaceAccess,ready=()=>true,agentOAuth}){
+  if(agentOAuth?.discoveryOnly!==undefined&&typeof agentOAuth.discoveryOnly!=='boolean'||agentOAuth?.discoveryOnly===true&&agentOAuth?.enabled!==true)P.fail('agent_mcp_configuration',503);
+  const discoveryOnly=agentOAuth?.discoveryOnly===true;
+  if(discoveryOnly&&(!Array.isArray(agentOAuth.clientIds)||agentOAuth.clientIds.length))P.fail('agent_mcp_configuration',503);
   if(store.multiUser&&!workspaceAccess)P.fail('workspace_gateway_configuration',503);
   if(store.multiUser&&events&&events.multiUser!==true)P.fail('workspace_events_configuration',503);
   if(resolveAgentPrincipal!==undefined&&(typeof resolveAgentPrincipal!=='function'||!store.multiUser||!workspaceAccess||typeof store.authenticateAgent!=='function'))P.fail('agent_mcp_configuration',503);
   if(resolveAgentPrincipal&&events?.agentAuthority===true&&typeof store.agentSubscriptionBinding!=='function')P.fail('agent_mcp_configuration',503);
   if(resolveAgentConnections!==undefined&&(typeof resolveAgentConnections!=='function'||!resolveAgentPrincipal))P.fail('agent_mcp_configuration',503);
   const resourceProfile=require('../../identity/agent-resource.cjs').createAgentResource(agentOAuth);
-  if(resourceProfile&&!resolveAgentPrincipal)P.fail('agent_mcp_configuration',503);
+  if(resourceProfile&&!resolveAgentPrincipal&&!discoveryOnly)P.fail('agent_mcp_configuration',503);
   if(typeof resolvePrincipal!=='function')throw new Error('principal_resolver_required');let closed=false;const sockets=new Set(),rates=new Map();
   const id={type:'string',pattern:'^[A-Za-z0-9_-]{1,100}$'},num={type:'integer',minimum:1,maximum:3};
   const schema=props=>({type:'object',properties:props,required:Object.keys(props),additionalProperties:false});
@@ -30,6 +35,14 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPr
     P.fail('unsupported_tool');
   }
   function error(id,code,reason){return {jsonrpc:'2.0',id:id??null,error:{code,message:reason,data:{reason}}};}
+  function lifecycleResult(method,params){
+    if(method==='initialize'){
+      P.fields(params,['protocolVersion','capabilities','clientInfo']);P.text(params.protocolVersion,100);P.object(params.capabilities);P.object(params.clientInfo);
+      return {protocolVersion:'2025-11-25',capabilities:{tools:{}},serverInfo:{name:'ChunLACK',version:'1.0.0'}};
+    }
+    P.fields(params,['_meta']);if(params._meta!==undefined)P.object(params._meta);
+    return method==='notifications/initialized'?null:{};
+  }
   const agentToken=value=>typeof value==='string'&&value.includes('.');
   function requestScope(request){
     if(request.method==='events/list')return 'events.read';
@@ -44,12 +57,14 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPr
     let requestId=null;
     try{
       P.fields(request,['jsonrpc','id','method','params']);requestId=request.id;
-      if(request.jsonrpc!=='2.0'||!(typeof requestId==='string'&&requestId.length<=100||Number.isSafeInteger(requestId))||typeof request.method!=='string')return error(null,-32600,'invalid_request');P.bounded(request);
+      const notification=request.method==='notifications/initialized'&&!Object.hasOwn(request,'id');
+      if(request.jsonrpc!=='2.0'||(!notification&&!(typeof requestId==='string'&&requestId.length<=100||Number.isSafeInteger(requestId)))||typeof request.method!=='string'||(request.method==='notifications/initialized'&&!notification))return error(null,-32600,'invalid_request');P.bounded(request);
       if(closed)P.fail('mcp_closed',503);
+      if(discoveryOnly)return error(requestId,-32001,'unauthorized');
       const agentRequest=agentToken(auth),scope=requestScope(request);let p,nodeAccess,resolved,grantId;
       const explicit=agentRequest&&!!resolveAgentConnections;
       const connectionRequest=request.method==='tools/call'&&request.params?.name===connectionTool.name;
-      if(explicit&&(['server/discover','tools/list','initialize'].includes(request.method)||connectionRequest)){
+      if(explicit&&(['server/discover','tools/list'].includes(request.method)||lifecycleMethods.has(request.method)||connectionRequest)){
         let current;
         try{
           if(auth.length>8192)P.fail('unauthorized',401);
@@ -59,9 +74,8 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPr
         if(closed)P.fail('mcp_closed',503);
         const params=request.params||{};let result;
         if(connectionRequest){P.fields(params,['name','arguments']);P.fields(params.arguments||{},[]);result={content:[{type:'text',text:JSON.stringify(current)}],structuredContent:current,isError:false};}
-        else if(request.method==='initialize'){
-          P.fields(params,['protocolVersion','capabilities','clientInfo']);P.text(params.protocolVersion,100);P.object(params.capabilities);P.object(params.clientInfo);
-          result={protocolVersion:'2025-11-25',capabilities:{tools:{}},serverInfo:{name:'ChunLACK',version:'1.0.0'}};
+        else if(lifecycleMethods.has(request.method)){
+          result=lifecycleResult(request.method,request.params===undefined?{}:request.params);if(notification)return null;
         }else{
           P.fields(params,[]);
           result=request.method==='tools/list'?{tools:agentDefinitions}:{resultType:'complete',supportedVersions:['2026-07-28'],capabilities:{tools:{},...(events?.agentAuthority===true?{events:{}}:{})}};
@@ -90,7 +104,8 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPr
       const handleNode=async()=>{
       const params=request.params||{};let result;
       if(agentRequest&&request.method.startsWith('events/')&&events?.agentAuthority!==true)P.fail('agent_events_not_ready',503);
-      if(request.method==='server/discover'){P.fields(params,[]);result={resultType:'complete',supportedVersions:['2026-07-28'],capabilities:{tools:{},...(events&&(!agentRequest||events.agentAuthority===true)?{events:{}}:{})}};}
+      if(lifecycleMethods.has(request.method)){result=lifecycleResult(request.method,request.params===undefined?{}:request.params);if(notification)return null;}
+      else if(request.method==='server/discover'){P.fields(params,[]);result={resultType:'complete',supportedVersions:['2026-07-28'],capabilities:{tools:{},...(events&&(!agentRequest||events.agentAuthority===true)?{events:{}}:{})}};}
       else if(request.method==='tools/list'){P.fields(params,[]);result={tools:definitions};}
       else if(request.method==='tools/call'){P.fields(params,['name','arguments']);const raw=call(p,params.name,params.arguments||{}),value=store.multiUser&&raw?{...raw,workspaceId:p.workspaceId}:raw;result={content:[{type:'text',text:JSON.stringify(value)}],structuredContent:value,isError:false};}
       else if(events&&request.method==='events/list'){P.fields(params,[]);result=events.list(p);}
@@ -112,10 +127,12 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPr
     function send(status,value,{scope,invalidToken=false,metadata=false}={}){
       if(res.destroyed||res.writableEnded)return;
       const headers={'Content-Type':'application/json','Cache-Control':'no-store',Connection:'close'};
+      if(status===202)delete headers['Content-Type'];
+      if(status===405)headers.Allow='POST';
       if(resourceProfile&&status===401)headers['WWW-Authenticate']=resourceProfile.challenge({error:invalidToken?'invalid_token':undefined});
       if(resourceProfile&&status===403&&scope)headers['WWW-Authenticate']=resourceProfile.challenge({scope,error:'insufficient_scope'});
       if(metadata)headers['Access-Control-Allow-Origin']='*';
-      res.writeHead(status,headers);res.end(req.method==='HEAD'?undefined:JSON.stringify(value));
+      res.writeHead(status,headers);res.end(req.method==='HEAD'||status===202?undefined:JSON.stringify(value));
     }
     try{
       if(!ready()){send(503,{error:'runtime_starting'});req.resume();return;}
@@ -123,14 +140,30 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPr
         if(!/^(127\.0\.0\.1|localhost)(:\d+)?$/.test(req.headers.host||'')||req.rawHeaders.filter((_,i)=>i%2===0).filter(h=>h.toLowerCase()==='host').length!==1){send(401,{error:'unauthorized'});req.resume();return;}
         send(200,resourceProfile.metadata,{metadata:true});req.resume();return;
       }
-      if(req.method!=='POST'||req.url!=='/mcp'){send(404,{error:'not_found'});req.resume();return;}
+      if(!['POST','GET'].includes(req.method)||req.url!=='/mcp'){send(404,{error:'not_found'});req.resume();return;}
       if(req.headers.origin||req.headers['sec-fetch-site']==='cross-site'){send(403,{error:'cross_origin_denied'});req.resume();return;}
       if(!/^(127\.0\.0\.1|localhost)(:\d+)?$/.test(req.headers.host||'')||req.rawHeaders.filter((_,i)=>i%2===0).filter(h=>h.toLowerCase()==='authorization').length!==1){send(401,{error:'unauthorized'});req.resume();return;}
+      if(discoveryOnly){send(401,{error:'unauthorized'});req.resume();return;}
       const auth=req.headers.authorization||'',token=auth.slice(7);
       if(!auth.startsWith('Bearer ')||(agentToken(token)?!resolveAgentPrincipal||token.length>8192:auth.length>256)){send(401,{error:'unauthorized'});req.resume();return;}
+      const version=req.headers['mcp-protocol-version'];
+      if(req.rawHeaders.filter((_,i)=>i%2===0).filter(h=>h.toLowerCase()==='mcp-protocol-version').length>1||(version!==undefined&&!httpProtocolVersions.has(version))){send(400,{error:'unsupported_protocol_version'});req.resume();return;}
+      if(req.method==='GET'){
+        // An unsupported SSE stream is still behind the current authentication boundary.
+        const reply=await handleRpc({jsonrpc:'2.0',id:0,method:'ping'},token);
+        if(reply.error){
+          const status=reply.error.code===-32001?401:reply.error.code===-32003?403:400;
+          send(status,{error:reply.error.data.reason},{scope:status===403?'task.read':undefined,invalidToken:status===401});
+        }else send(405,{error:'method_not_allowed'});
+        req.resume();return;
+      }
       if(!/^application\/json(?:;|$)/i.test(req.headers['content-type']||'')||Number(req.headers['content-length'])>262144){send(413,{error:'invalid_body'});req.resume();return;}
       let size=0;const chunks=[];for await(const chunk of req){size+=chunk.length;if(size>262144)P.fail('payload_too_large',413);chunks.push(chunk);}if(!req.complete||req.aborted)return;
-      const request=JSON.parse(Buffer.concat(chunks).toString('utf8')),reply=await handleRpc(request,token);send(reply.error?.code===-32001?401:reply.error?.code===-32003?403:200,reply,{scope:reply.error?.code===-32003?requestScope(request):undefined,invalidToken:reply.error?.code===-32001});
+      const request=JSON.parse(Buffer.concat(chunks).toString('utf8')),reply=await handleRpc(request,token);
+      if(reply===null){send(202);return;}
+      const notification=request&&typeof request==='object'&&!Object.hasOwn(request,'id');
+      const status=reply.error?.code===-32001?401:reply.error?.code===-32003?403:reply.error&&(notification||reply.error.code===-32600)?400:200;
+      send(status,notification&&reply.error?{jsonrpc:'2.0',error:reply.error}:reply,{scope:reply.error?.code===-32003?requestScope(request):undefined,invalidToken:reply.error?.code===-32001});
     }catch(e){req.resume();send(e instanceof P.GatewayError?e.status:400,{error:'invalid_request'});}
   });server.maxConnections=16;server.requestTimeout=40000;server.headersTimeout=10000;server.keepAliveTimeout=1000;server.on('connection',s=>{sockets.add(s);s.on('close',()=>sockets.delete(s));});const listen=server.listen.bind(server);server.listen=(...args)=>{if(args[1]!=='127.0.0.1')P.fail('loopback_binding_required');return listen(...args);};
   async function close(){if(closed)return;closed=true;for(const socket of sockets)socket.destroy();if(server.listening)await new Promise(resolve=>server.close(resolve));}

@@ -46,7 +46,7 @@ const { ESLint } = require('eslint');
 
 const LACK_CODE_ROOT = __dirname;
 async function startLackRuntime({config: suppliedConfig, dataRoot, identity: sharedIdentity, capacity: sharedCapacity,
-  env = global.process.env, publicMode = false, bindHost, webOrigin, identityPath, writerLease, deferReady = false} = {}) {
+  env = global.process.env, publicMode = false, bindHost, webOrigin, identityPath, writerLease, deferReady = false, agentAuthority} = {}) {
   const __dirname = dataRoot || LACK_CODE_ROOT;
   const process = Object.create(global.process);
   Object.defineProperty(process, 'env', {value: {...env}});
@@ -3377,7 +3377,7 @@ ownedWss = wss;
 
 if (transport) {
   const services = workspaceServices();
-  app.use(require('./identity/http.cjs').createIdentityRouter({store: services.identity, sessions: services.sessions, webOrigin: process.env.LACK_WEB_ORIGIN, oidc: services.oidc}));
+  app.use(require('./identity/http.cjs').createIdentityRouter({store: services.identity, sessions: services.sessions, webOrigin: process.env.LACK_WEB_ORIGIN, oidc: services.oidc, agentAuthority}));
   app.use('/api', transport.httpContext, (req, res, next) => {initializeWorkspace(req.workspace); next();});
 }
 
@@ -3552,7 +3552,7 @@ function listenHttp() {
 }
 async function initializeRuntime() {
   if (transport) {
-    if (config.agentGateway?.enabled === true) agentGateway = await require('./gateway/runtime.cjs').startAgentGateway({config, dataRoot: __dirname, identity: workspaceServices().identity, capacity: workspaceServices().capacity, env: process.env, ready: () => runtimeReady});
+    if (config.agentGateway?.enabled === true) agentGateway = await require('./gateway/runtime.cjs').startAgentGateway({config, dataRoot: __dirname, identity: workspaceServices().identity, capacity: workspaceServices().capacity, env: process.env, ready: () => runtimeReady, agentAuthority});
     await listenHttp();
     if (!deferReady) runtimeReady = true;
     console.log('[LACK] Workspace-authenticated runtime listening on its configured private bind. Global legacy maintenance is disabled.');
