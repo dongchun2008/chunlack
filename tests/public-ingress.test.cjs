@@ -78,6 +78,8 @@ test('production ingress renders two isolated HTTPS hosts without admin, port 80
   assert.doesNotMatch(source,/http:\/\/[^\s]|:80\b|:2019\b/);
 });
 test('ingress rendering rejects unsafe host, upstream and test certificate input before creating a config',()=>{
+  for(const agentOAuth of [{enabled:true,discoveryOnly:'true'},{enabled:true,discoveryOnly:1},{enabled:false,discoveryOnly:true}])
+    assert.throws(()=>renderPublicIngress({...config,publicRuntime:{...config.publicRuntime,agentOAuth}}),/ingress_invalid_agent_mode/);
   for(const bad of ['http://lack.example','https://127.0.0.1','https://lack.example/path','https://user:password@lack.example','https://lack.example:8443','https://lack.example\n{ admin :2019 }'])
     assert.throws(()=>renderPublicIngress({...config,publicRuntime:{...config.publicRuntime,webOrigin:bad}}),/ingress_/);
   assert.throws(()=>renderPublicIngress({...config,publicRuntime:{...config.publicRuntime,agentsOrigin:config.publicRuntime.webOrigin}}),/ingress_/);
@@ -108,7 +110,7 @@ async function servers(t) {
   t.after(async()=>{for(const ws of wss.clients)ws.terminate();await new Promise(resolve=>wss.close(resolve));for(const server of owned){server.closeAllConnections();await new Promise(resolve=>server.close(resolve));}});
   return {requests,ports:owned.map(server=>server.address().port)};
 }
-async function caddyFixture(t, {mcpPort, agentsHost=AGENTS}={}) {
+async function caddyFixture(t, {mcpPort, gatewayPort, agentOAuth, agentsHost=AGENTS}={}) {
   const cleanups=[],scope={after:cleanup=>cleanups.push(cleanup)};let removeDirectory;
   const root=folder({after:cleanup=>{removeDirectory=cleanup;}}),binary=process.env.CADDY_TEST_BIN;
   // One owning hook: connections first, then the child; remove files only on success.
@@ -124,7 +126,7 @@ async function caddyFixture(t, {mcpPort, agentsHost=AGENTS}={}) {
   } finally {
     console.log('CERTIFICATE_FIXTURE_TIMING=' + JSON.stringify({elapsedMs: Math.ceil(performance.now() - certificateStarted), timeoutMs: certificateTimeoutMs, lowCpuIsolation}));
   }
-  const c={...config,httpPort:backend.ports[0],agentGateway:{port:backend.ports[1]},publicRuntime:{...config.publicRuntime,agentsOrigin:'https://'+agentsHost,mcpPort:mcpPort??backend.ports[2]}};
+  const c={...config,httpPort:backend.ports[0],agentGateway:{port:gatewayPort??backend.ports[1]},publicRuntime:{...config.publicRuntime,agentsOrigin:'https://'+agentsHost,mcpPort:mcpPort??backend.ports[2],agentOAuth}};
   const file=path.join(root,'Caddyfile');fs.writeFileSync(file,renderPublicIngress(c,{fixture:{listenPort:port,certFile,keyFile}}),{mode:0o600});
   const env={...process.env,XDG_DATA_HOME:path.join(root,'data'),XDG_CONFIG_HOME:path.join(root,'config')};
   function caddyPhase(phase) {
@@ -252,4 +254,60 @@ test('real TLS metadata forwarding remains unavailable when the packaged Agent O
   }
   const response=await client(f.port,agentsHost,f.cert,'/mcp',{method:'POST',headers:{Host:agentsHost+':'+f.port,'Content-Type':'application/json'},body:JSON.stringify({jsonrpc:'2.0',id:1,method:'ping'})});
   assert.equal(response.status,401);assert.equal(response.headers['www-authenticate'],undefined);
+});
+
+test('real TLS discovery-only blocks all node REST routes before pairing or task mutation', {skip:!process.env.CADDY_TEST_BIN,timeout:tlsTestTimeoutMs},async t=>{
+  const a=await publicAgentFixture(t,{discoveryOnly:true}),agentsHost=new URL(a.config.publicRuntime.agentsOrigin).hostname;
+  const f=await caddyFixture(t,{mcpPort:a.ports[2],gatewayPort:a.ports[1],agentOAuth:a.config.publicRuntime.agentOAuth,agentsHost});
+  const paired=a.runtime.gateway.store.pair(a.nodes.a.pairingCode);
+  const request=(uri,options={})=>client(f.port,agentsHost,f.cert,uri,{...options,headers:{Host:agentsHost+':'+f.port,...options.headers}});
+  for(const uri of ['/.well-known/oauth-protected-resource','/.well-known/oauth-protected-resource/mcp']){
+    assert.equal((await request(uri)).status,200);
+    assert.equal((await request(uri,{method:'HEAD'})).status,200);
+  }
+  const routes=['/v1','/v1/','/v1/manifest','/v1/agents/me','/v1/openapi.json','/v1/events','/v1/events?cursor=0',
+    '/v1/heartbeat','/v1/agents/heartbeat','/v1/tasks/claim','/v1/pair','/v1/workspaces/'+a.workspaces.b.id+'/pair',
+    '/v1/tasks/'+a.tasks.a.taskId,...['heartbeat','events','result'].map(action=>'/v1/tasks/'+a.tasks.a.taskId+'/'+action),
+    '/v1/pilot/tasks/'+a.tasks.a.taskId+'/artifact','/v1/future-route'];
+  for(const method of ['GET','POST','PUT','PATCH','DELETE','HEAD','OPTIONS'])for(const uri of routes){
+    const result=await request(uri,{method,headers:{Authorization:'Bearer '+paired.token,'Content-Type':'application/json',
+      'X-Chunlack-Agent-Mode':'normal','X-Forwarded-For':'','X-Forwarded-Proto':'','X-Forwarded-Host':'','X-Real-IP':''},
+      ...(method==='POST'?{body:JSON.stringify({code:a.nodes.b.pairingCode})}:{})});
+    assert.equal(result.status,404,method+' '+uri);
+  }
+  for(const authorization of [undefined,'Bearer invalid.fixture', 'Bearer '+a.token()]){
+    const headers=authorization?{Authorization:authorization}:{};
+    assert.equal((await request('/v1/events',{headers})).status,404);
+    assert.equal((await request('/mcp',{headers})).status,401);
+  }
+  assert.equal(a.human('a',h=>h.getTask(a.tasks.a.taskId)).status,'queued');
+  assert.ok(a.runtime.gateway.store.pair(a.nodes.b.pairingCode).token);
+  const internal=await fetch(`http://127.0.0.1:${a.ports[1]}/v1/manifest`,{headers:{Authorization:'Bearer '+paired.token},signal:AbortSignal.timeout(8000)});
+  assert.equal(internal.status,200);await internal.arrayBuffer();
+});
+
+test('real TLS normal ingress cannot bypass a discovery-only application or spoof its mode', {skip:!process.env.CADDY_TEST_BIN,timeout:tlsTestTimeoutMs},async t=>{
+  const a=await publicAgentFixture(t,{discoveryOnly:true}),agentsHost=new URL(a.config.publicRuntime.agentsOrigin).hostname;
+  // Deliberately render the old normal mode against a new discovery-only app.
+  const f=await caddyFixture(t,{mcpPort:a.ports[2],gatewayPort:a.ports[1],agentsHost});
+  const paired=a.runtime.gateway.store.pair(a.nodes.a.pairingCode);
+  for(const mode of ['normal','discovery-only','']){
+    const response=await client(f.port,agentsHost,f.cert,'/v1/events',{headers:{Host:agentsHost+':'+f.port,Authorization:'Bearer '+paired.token,
+      'X-Chunlack-Agent-Mode':mode,'X-Forwarded-Proto':'','X-Forwarded-Host':'','X-Forwarded-For':'','X-Real-IP':''}});
+    assert.equal(response.status,404);
+  }
+});
+
+test('real TLS normal node REST remains authenticated and overwrites caller mode headers', {skip:!process.env.CADDY_TEST_BIN,timeout:tlsTestTimeoutMs},async t=>{
+  const a=await publicAgentFixture(t),agentsHost=new URL(a.config.publicRuntime.agentsOrigin).hostname;
+  const f=await caddyFixture(t,{mcpPort:a.ports[2],gatewayPort:a.ports[1],agentOAuth:a.config.publicRuntime.agentOAuth,agentsHost});
+  const request=(uri,options={})=>client(f.port,agentsHost,f.cert,uri,{...options,headers:{Host:agentsHost+':'+f.port,...options.headers}});
+  const paired=await request('/v1/workspaces/'+a.workspaces.a.id+'/pair',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:a.nodes.a.pairingCode})});
+  assert.equal(paired.status,200);
+  const token=JSON.parse(paired.body).token;
+  for(const uri of ['/v1/manifest','/v1/events']){
+    const response=await request(uri,{headers:{Authorization:'Bearer '+token,'X-Chunlack-Agent-Mode':'discovery-only'}});
+    assert.equal(response.status,200);
+    assert.equal((await request(uri)).status,401);
+  }
 });

@@ -10,6 +10,9 @@ function hostname(value) {
 }
 function port(value) {if (!Number.isInteger(value) || value < 1024 || value > 65535) fail('ingress_invalid_port'); return value;}
 function renderPublicIngress(config, {fixture} = {}) {
+  const oauth = config?.publicRuntime?.agentOAuth;
+  if (oauth?.discoveryOnly !== undefined && typeof oauth.discoveryOnly !== 'boolean' || oauth?.discoveryOnly === true && oauth.enabled !== true) fail('ingress_invalid_agent_mode');
+  const discoveryOnly = oauth?.discoveryOnly === true;
   const web = hostname(config?.publicRuntime?.webOrigin), agents = hostname(config?.publicRuntime?.agentsOrigin);
   const webPort = port(config?.httpPort), gatewayPort = port(config?.agentGateway?.port), mcpPort = port(config?.publicRuntime?.mcpPort);
   if (web === agents || new Set([webPort, gatewayPort, mcpPort]).size !== 3) fail('ingress_conflicting_routes');
@@ -24,7 +27,9 @@ function renderPublicIngress(config, {fixture} = {}) {
     bind = 'default_bind 127.0.0.1';
     tls = 'tls ' + JSON.stringify(fixture.certFile.replace(/\\/g, '/')) + ' ' + JSON.stringify(fixture.keyFile.replace(/\\/g, '/'));
   }
-  const values = {WEB_HOST: web, AGENTS_HOST: agents, WEB_PORT: webPort, GATEWAY_PORT: gatewayPort, MCP_PORT: mcpPort, PUBLIC_PORT: publicPort, BIND: bind, TLS: tls};
+  const values = {WEB_HOST: web, AGENTS_HOST: agents, WEB_PORT: webPort, GATEWAY_PORT: gatewayPort, MCP_PORT: mcpPort, PUBLIC_PORT: publicPort, BIND: bind, TLS: tls,
+    AGENT_MODE: discoveryOnly ? 'discovery-only' : 'normal',
+    NODE_BOUNDARY: discoveryOnly ? '@discovery_node path /v1 /v1/*\n        respond @discovery_node 404' : ''};
   return fs.readFileSync(path.join(__dirname, 'Caddyfile.template'), 'utf8').replace(/@@([A-Z_]+)@@/g, (_, name) => {
     if (!Object.hasOwn(values, name)) fail('ingress_unknown_template_field'); return String(values[name]);
   });

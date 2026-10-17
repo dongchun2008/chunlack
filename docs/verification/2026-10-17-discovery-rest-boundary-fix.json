@@ -1,0 +1,299 @@
+{
+  "schema": 1,
+  "observedAt": "2026-10-17T02:34:22.5100314+00:00",
+  "scope": "Approved public discovery-only REST boundary repair; local and isolated tests only",
+  "baseRevision": "6ca4c711486114556caed3153d842462b6d31793",
+  "changes": [
+    "Reject all public /v1 and /v1/* paths in discovery-only Caddy ingress",
+    "Reject forwarded node REST in captured discovery-only gateway mode before authentication, pairing or mutation",
+    "Overwrite ingress mode header and reject explicit application/ingress mismatch; preserve unmarked legacy normal ingress",
+    "Keep authenticated internal loopback routes and normal mode; reject malformed mode configuration"
+  ],
+  "previousRedEvidence": "2026-10-17-discovery-rest-release-blocker.json",
+  "windows": {
+    "node": "v24.19.0",
+    "counts": {
+      "tests": 856,
+      "pass": 856,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "exitCode": 0,
+    "durationMs": 756513.9913,
+    "tapSHA256": "7ed32495a8e448bf35c6189f4e8246b04d22337e35d63c04d892c7e7e953a4e2",
+    "realCaddyTLSConfigured": true,
+    "caddySHA256": "5f93a9bd555f3aac9d33af2756ba14b3519d8cca4ffd55256bdaeab444c9db2a",
+    "smokePassed": true,
+    "smokeSHA256": "f11986f4ca6071992a388765ca44f0a4d23d1332a8d0f6a1603c5cd04cec79cb",
+    "smokeScope": "Real HTTP/WebSocket and SQLite restart with two synthetic model backends, not real model or external Agent acceptance",
+    "initialFocusedAttempt": {
+      "status": "failed then explicitly aborted; not passed",
+      "tapSHA256": "0185e396163926b1044808ec3a7fa8e3977fc5d563e0670170a85de70ff5ab70",
+      "failedCases": [
+        "not ok 1 - normal Agent runtime keeps the foreign workspace independently owned and ungranted\r",
+        "not ok 2 - discovery-only runtime makes no JWKS request while preserving scoped human HTTP and internal node reads\r"
+      ],
+      "observedFreeMemoryMiB": 801,
+      "observedCPUPercent": 100,
+      "note": "Python materialization ETIMEDOUT and fixture timeout observed under resource pressure; no timeout or assertion changes. Owned process tree stop reported two child errors; subsequent exact PID lookup found both absent. Fresh full run passed after load recovered."
+    },
+    "admissionRetry": [
+      {
+        "at": "2026-10-17T10:18:54.6552943+08:00",
+        "freeMiB": 2808.0,
+        "cpuPercent": 99
+      },
+      {
+        "at": "2026-10-17T10:19:26.8616059+08:00",
+        "freeMiB": 2439.0,
+        "cpuPercent": 45
+      },
+      {
+        "at": "2026-10-17T10:19:58.5019962+08:00",
+        "freeMiB": 2549.0,
+        "cpuPercent": 26
+      }
+    ]
+  },
+  "native": {
+    "counts": {
+      "skipped": 0,
+      "tests": 8,
+      "pass": 8,
+      "todo": 0,
+      "fail": 0,
+      "cancelled": 0
+    },
+    "groups": [
+      {
+        "unit": "chunlack-runtime-rest-boundary-c05a64493638.service",
+        "reportSHA256": "e38254b3e79b1fc884f131fd6c90258f3533194017e57e54cf43745afe14abab",
+        "archiveSHA256": "3d5b2d4ce71c1fbae4d2d6edcd364c81b072683945fbf8f215b85ce6736bc411",
+        "counts": {
+          "tests": 2,
+          "pass": 2,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 0,
+        "durationMs": 15300.966778,
+        "memoryPeakBytes": 81833984,
+        "limitsVerified": true,
+        "protectedUnchanged": true,
+        "ownedUnitStopped": true,
+        "ownedCgroupEmpty": true,
+        "ownedPayloadRemoved": true,
+        "dependencyCopyFiles": 4452,
+        "dependencyCopyBytes": 38831985,
+        "nonRootLockMatched": true,
+        "packageVersionCount": 257
+      },
+      {
+        "unit": "chunlack-runtime-tls-rest-discovery-3cf817799e4e.service",
+        "reportSHA256": "ea94c3bbba06c71f04be6ab5720ee5cf5341553b1507a978d9ef8c33a9d6652f",
+        "archiveSHA256": "ce3469d9fd90bc149432f57a2ead47e897d28d657510c3e8b90d7708b892b842",
+        "counts": {
+          "tests": 1,
+          "pass": 1,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 0,
+        "durationMs": 18803.658541,
+        "memoryPeakBytes": 77197312,
+        "limitsVerified": true,
+        "protectedUnchanged": true,
+        "ownedUnitStopped": true,
+        "ownedCgroupEmpty": true,
+        "ownedPayloadRemoved": true,
+        "dependencyCopyFiles": 4452,
+        "dependencyCopyBytes": 38831985,
+        "nonRootLockMatched": true,
+        "packageVersionCount": 257
+      },
+      {
+        "unit": "chunlack-runtime-tls-rest-stale-0e0ffd0ac47f.service",
+        "reportSHA256": "799920d7ba90c8648937dbb885cec10b37f14843c7d6c81c3b49e1bff03714e4",
+        "archiveSHA256": "ce3469d9fd90bc149432f57a2ead47e897d28d657510c3e8b90d7708b892b842",
+        "counts": {
+          "tests": 1,
+          "pass": 1,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 0,
+        "durationMs": 20003.536079,
+        "memoryPeakBytes": 72454144,
+        "limitsVerified": true,
+        "protectedUnchanged": true,
+        "ownedUnitStopped": true,
+        "ownedCgroupEmpty": true,
+        "ownedPayloadRemoved": true,
+        "dependencyCopyFiles": 4452,
+        "dependencyCopyBytes": 38831985,
+        "nonRootLockMatched": true,
+        "packageVersionCount": 257
+      },
+      {
+        "unit": "chunlack-runtime-tls-rest-normal-0fe1a2d1f588.service",
+        "reportSHA256": "8626729a71407ae02c1d41a36d4aafce91437a422908bf1747ddc26ff46c35f4",
+        "archiveSHA256": "ce3469d9fd90bc149432f57a2ead47e897d28d657510c3e8b90d7708b892b842",
+        "counts": {
+          "tests": 1,
+          "pass": 1,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 0,
+        "durationMs": 17996.576718,
+        "memoryPeakBytes": 76869632,
+        "limitsVerified": true,
+        "protectedUnchanged": true,
+        "ownedUnitStopped": true,
+        "ownedCgroupEmpty": true,
+        "ownedPayloadRemoved": true,
+        "dependencyCopyFiles": 4452,
+        "dependencyCopyBytes": 38831985,
+        "nonRootLockMatched": true,
+        "packageVersionCount": 257
+      },
+      {
+        "unit": "chunlack-runtime-human-boundary-e9b78a7192ca.service",
+        "reportSHA256": "522a1fdf36d5ed8b6fef2e544ff28e7ae9fed724a755417f4fd759ef54be3d8e",
+        "archiveSHA256": "62ed0e3f733fb9850a25f5303aa784fd93d0eb2364ee4ee3c52fcbd2a33b48e0",
+        "counts": {
+          "tests": 3,
+          "pass": 3,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "exitCode": 0,
+        "durationMs": 17504.166805,
+        "memoryPeakBytes": 87101440,
+        "limitsVerified": true,
+        "protectedUnchanged": true,
+        "ownedUnitStopped": true,
+        "ownedCgroupEmpty": true,
+        "ownedPayloadRemoved": true,
+        "dependencyCopyFiles": 4452,
+        "dependencyCopyBytes": 38831985,
+        "nonRootLockMatched": true,
+        "packageVersionCount": 257
+      }
+    ],
+    "limits": {
+      "cpuQuotaPercent": 10,
+      "memoryHighBytes": 167772160,
+      "memoryMaxBytes": 201326592,
+      "privateNetwork": true,
+      "privateTmp": true,
+      "sourceAndDependencies": "read-only independent copies",
+      "swapMaxBytes": 0,
+      "user": "nobody",
+      "tasksMax": 32,
+      "runtimeMaxSeconds": 90
+    },
+    "notFullLinuxSuite": true,
+    "relayForwardingPerformanceMeasured": false
+  },
+  "review": {
+    "scopeFiles": 6,
+    "limitations": [
+      "No independent tests run by reviewer",
+      "TLS mismatch test renders current normal ingress; old unmarked proxy path is covered by direct forwarded-request regression",
+      "New internal discovery-only checks cover manifest/events, not entire task lifecycle"
+    ],
+    "actionableFindings": 0,
+    "reviewer": "independent read-only subagent"
+  },
+  "artifact": {
+    "archiveBytes": 263487,
+    "configurationIncluded": false,
+    "installed": false,
+    "archiveSHA256": "d793affff1bda571cc6a7b4ba1970d9e0379f9e7549d6136fd2a699f23018389",
+    "fileCount": 56,
+    "nativeSourceAlignment": true,
+    "sourceInputCount": 55,
+    "dependencyBinariesIncluded": false,
+    "dataIncluded": false
+  },
+  "sourceHashes": {
+    "collaboration/capacity.cjs": "1be6bf242dea364a74871e23dab81b8b46bfc82f224d184005641a904d97f90f",
+    "collaboration/context.cjs": "ed4547924de7b08870765d16bc77113f80ed956d9176f1511e664fd511797253",
+    "collaboration/controls-http.cjs": "cf3cd9e22e8ffb0f73132bf2df6c0706286d4a75b54cbd82eb81d8cd0be2be3b",
+    "collaboration/model-transport.cjs": "44d751a8851bd29f0a03f419391097f11b1a819dd2c61282cec8549588e9352a",
+    "collaboration/resources.cjs": "0c6dbad4ff70a61e5b235e4a2ca49e1b2c5c6da99f571aedd4d2cc67fcecfbe5",
+    "collaboration/state.cjs": "54d59d711e227df6db6647bf028f9ddeaa817a997bebf6120d97a2ade2f7ca2c",
+    "collaboration/store.cjs": "cdcc0eb78b47f33d5718eb2e09320ee0c3a34bb8c8a7b93e24b0419fd9651fa8",
+    "collaboration/task-control.cjs": "77a725a7db30e316de075f430d045e05cc1a109f44f07cb2fe27ae1deaa399d2",
+    "collaboration/transport.cjs": "94dcb91bc284dbc77ad845f4930ec55ade7596ce086c56bd0df5212b65c64617",
+    "gateway/admin.html": "651a7d5195645262cd9ecea394ae7831b512b8cc1907c1996cc39e9078ff652e",
+    "gateway/node-facade.cjs": "2e9b79ad46acb2cc5482c047625908ced1e71a3b4eedd6ed4905e66fdcb1ffbf",
+    "gateway/pilot-artifacts.cjs": "d68325ed90750faf62e96353d94d4631cb247f4e04e4a9b1384bb72fa2bcf683",
+    "gateway/pilot-openapi.cjs": "1e6b621e50e2e7605fcea05b6f90a7812f7e0611a8b1ddd49d381463272f9bd2",
+    "gateway/pilot-schema.cjs": "ecc2ccf9a6fd82fdb4b1dd90c9e7baa8e22e7e848d2870eb7f28bc7b94407215",
+    "gateway/protocol.cjs": "a1d982015416e10777f9135fdaba09ad84ff1c68390f883eb1f4cdc009d2852a",
+    "gateway/public-runtime.cjs": "4b32eb58a6b40a759480671f8f407a9de800f22e658fba9e5efe608f1cce4eeb",
+    "gateway/research-bridge.cjs": "80f163a4cc80eec0725074ed6e7e810fc91a2e2ce2471889c587e9dd8b2c7b68",
+    "gateway/runtime.cjs": "5e72c2bca42ac29c101b00629d1d7ab1466b085191e59de7ba579ff92964ade5",
+    "gateway/server.cjs": "35d8d9469df0e4c3b1570346a904bf5fedeae67dd8ce5052c2478766da15d110",
+    "gateway/store.cjs": "32cd930faf4967c03cba9e598518bc26eedac7d9c30a107579216dc505500ac9",
+    "gateway/workspace-access.cjs": "fb868f64ad14edaa14d24dba48b96621f2735731cdf3501063f17c249e94de63",
+    "identity/admission.cjs": "df7f27b4999455bd27a4f75e4067adff7cdf656152ec0c5424e4d19715fdab06",
+    "identity/agent-access.cjs": "32e0d085a40ebe64c350fb822e4f06c0a0ae0346818390384c00dff932647a40",
+    "identity/agent-authority.cjs": "144efe9f0828c4ddab33167553ea2787c1ee485a12fa7532f10baf2bcd074d81",
+    "identity/agent-resource.cjs": "3b4599612ba1c8372ecceafa4380771e7412b6f685c781323d10a7e061050f89",
+    "identity/http.cjs": "6fa666fe046db4297d9b71df1853c8bfb2891ecde769e2167cd7bf8a591d1002",
+    "identity/login.html": "abb63d923b724883915b900c32e8743bd9527a699b7bc8e56d430e1342f442ec",
+    "identity/membership-epochs.cjs": "d3503021035e04884ef72e03b325c9ab802151b937b6c3d572079db7ae30627a",
+    "identity/oauth-core.cjs": "136779892e395f77be4e5cbc597f400eae1359ba05968ba4ce21ec120e2315d4",
+    "identity/oauth-schema.cjs": "66c27504b69b1a1905588809299bb6bde7a390b3dae7b6031d0aa1352d688ac9",
+    "identity/oidc-http.cjs": "e5a4badcef662c1c2179d690af155d71f5239ff991a8e35eed5f23748acc8cd9",
+    "identity/oidc.cjs": "ae459a09646237683d38e3218899b392580395a7729f3ec99282f837f5663f57",
+    "identity/passwords.cjs": "16202920ce6ef04d46d1959b8feac1e979bfb682381c2b3c77e09c7e721615f0",
+    "identity/policy.cjs": "56ae44f69082b5be281dad154089a0a341d86bf1a3dd2bbcff4bf554a2ef8941",
+    "identity/sessions.cjs": "ec05c74ed26264afd16e6d78d4f096937521d7680039ad8cc4b68b5e8e1fb65d",
+    "identity/store.cjs": "2677de34881a2de1f527267a2522fffa3db9ea3fd2dd769f0901e8d666673fda",
+    "identity/workspace-shell.js": "17ba0e816b9876020832491458549826d8a08c18867cd5e307fd7775e21418c9",
+    "identity/workspace-ui.js": "678602eab4fedeac7c285ec2eceb085cd5e235630e266876bdf0dcac4e3f811a",
+    "integrations/mcp/artifact-upload.cjs": "bec8cb2cd4c22a597f7f2d63013f67deffa468d6bb3bfe570ca2d62f168ad1e4",
+    "integrations/mcp/events.cjs": "679fb62b8a4686cbfe375772f05e4db29a9ff81f1c2dda6f627312d13b27a636",
+    "integrations/mcp/pilot-server.cjs": "38fdf98279d492def0f8920a2e50d0cb773ebc464c8104f80e16a30a81c7ff47",
+    "integrations/mcp/runtime.cjs": "614dd4fb4d6be2c3538095e3dd3f811abfec9f71e4908c407d5bc60f0a1a5d02",
+    "integrations/mcp/webhook-transport.cjs": "5afae90900c1f365fefe44a0697a293dc01a28961eae33f33dee00dde8a59f4b",
+    "lack.py": "7af548d049294c87d1f5588cb1b3926b5732f2a258c9d9d81828ddbe31604454",
+    "package-lock.json": "255e393fe99249f578c6f910a501b2b490a070f34784509b760c4042304bfacc",
+    "package.json": "e79f7668fcd9078fc913ebf15a41587fbd8ce1d0fb13806ba94ff633474d39b9",
+    "scripts/accounts.cjs": "16801301abb96abf706d1d00d816c09514f67e691b36c610e3375c38061388da",
+    "scripts/materialize.py": "f697ed23529c549938090ec3936f02b3bb004f5cb059730ea8b25bdc0aec55a6",
+    "sdk/adapters/open-webui.cjs": "0b77817b75e5bdcdb02dd1e85ee7c7962afa20e5de98465dcdb9615b06a55cc8",
+    "sdk/agent-client.cjs": "99639c302833b57bf2b56b5bf116e4fd323e1fa600bf6fd76dbcada1b96b0bb1",
+    "sdk/cli.cjs": "da2ba54b433e89e3fb040163abb4e7e2f9ce204607825464a03beaa4bd9616cd",
+    "sdk/credentials.cjs": "1481ab7fabea8ed72f02154aae988df025177489242402005069f6ce39c1600c",
+    "sdk/open-webui-worker.cjs": "a9a8419729ab7094bf95de29732c76b5c06f072546b2eb44e22b05e09f8d249c",
+    "sdk/pairing.cjs": "819c8017b89377b65d00878375087bebfd915829c927ccbc9e7d0aafd855161f",
+    "sdk/transports/muse-proxy.cjs": "a656d810a9391d9549be72ba51916af91f07659f460039bd29235ead214582f8"
+  },
+  "productionChanged": false,
+  "credentialsChanged": false,
+  "deploymentApprovedByThisRequest": false,
+  "deliveryComplete": false,
+  "remainingGates": [
+    "Separate controlled-release authorization and fresh consistent backup/rollback preparation",
+    "Deployment and public client-path acceptance",
+    "Muse Laozhen and dots Xuanji native Agent computer-task closure",
+    "Multi-user and five-Agent sustained workload and actual Relay traffic comparison"
+  ]
+}

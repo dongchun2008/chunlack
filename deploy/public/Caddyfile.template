@@ -50,6 +50,7 @@
 (node_proxy) {
     reverse_proxy 127.0.0.1:@@GATEWAY_PORT@@ {
         import scrub_identity
+        header_up X-Chunlack-Agent-Mode @@AGENT_MODE@@
         header_up Host 127.0.0.1:@@GATEWAY_PORT@@
     }
 }
@@ -111,6 +112,7 @@ https://@@AGENTS_HOST@@:@@PUBLIC_PORT@@ {
         import request_boundary
         @bad_query expression `{http.request.orig_uri}.contains('?') && !{http.request.orig_uri}.matches('^/v1/events[?]cursor=[0-9]{1,12}$')`
         respond @bad_query 404
+        @@NODE_BOUNDARY@@
         @mcp_metadata {
             method GET HEAD
             expression `{http.request.orig_uri} == '/.well-known/oauth-protected-resource' || {http.request.orig_uri} == '/.well-known/oauth-protected-resource/mcp'`

@@ -41,6 +41,50 @@ test('empty enrollment is explicit and incompatible or malformed mode settings f
   ]) await assert.rejects(createAgentAccessVerifier({config: {...config, ...change}}), {code: 'invalid_agent_access_config'});
 });
 
+test('discovery-only node REST rejects forwarded requests but retains authenticated internal loopback access', {timeout: 60000}, async t => {
+  const f = await publicAgentFixture(t, {discoveryOnly: true});
+  const paired = f.runtime.gateway.store.pair(f.nodes.a.pairingCode);
+  const base = `http://127.0.0.1:${f.ports[1]}`;
+  const get = async (uri, headers = {}) => {
+    const response = await fetch(base + uri, {headers: {Authorization: 'Bearer ' + paired.token, ...headers}, signal: AbortSignal.timeout(8000)});
+    await response.arrayBuffer(); return response.status;
+  };
+  assert.equal(await get('/v1/manifest'), 200);
+  assert.equal(await get('/v1/events'), 200);
+  // Mutation of the caller's config must not reopen a running gateway.
+  f.config.publicRuntime.agentOAuth.discoveryOnly = false;
+  for (const headers of [
+    {'X-Forwarded-Proto': 'https'}, {'X-Forwarded-Host': 'agents.e2e.invalid'},
+    {'X-Forwarded-For': '192.0.2.10'}, {'X-Real-IP': '192.0.2.10'},
+    {Forwarded: 'for=192.0.2.10'}, {'X-Chunlack-Agent-Mode': 'normal'},
+    {'X-Chunlack-Agent-Mode': 'discovery-only'}, {'X-Forwarded-Proto': ''}
+  ]) assert.equal(await get('/v1/events', headers), 404);
+  const response = await fetch(base + '/v1/workspaces/' + f.workspaces.b.id + '/pair', {
+    method: 'POST', headers: {'Content-Type': 'application/json', 'X-Forwarded-Proto': 'https'},
+    body: JSON.stringify({code: f.nodes.b.pairingCode}), signal: AbortSignal.timeout(8000)
+  });
+  assert.equal(response.status, 404); await response.arrayBuffer();
+  // Denied public pairing did not consume the single-use pairing code.
+  assert.ok(f.runtime.gateway.store.pair(f.nodes.b.pairingCode).token);
+  assert.equal(f.human('a', h => h.getTask(f.tasks.a.taskId)).status, 'queued');
+});
+
+test('normal node REST preserves legacy ingress and rejects explicit ingress mode disagreement', {timeout: 60000}, async t => {
+  const f = await publicAgentFixture(t);
+  const paired = f.runtime.gateway.store.pair(f.nodes.a.pairingCode);
+  for (const [extra, expected] of [
+    [{}, 200], [{'X-Forwarded-Proto': 'https'}, 200],
+    [{'X-Forwarded-Proto': 'https', 'X-Chunlack-Agent-Mode': 'normal'}, 200],
+    [{'X-Chunlack-Agent-Mode': 'discovery-only'}, 503],
+    [{'X-Chunlack-Agent-Mode': 'unrecognized'}, 503]
+  ]) {
+    const response = await fetch(`http://127.0.0.1:${f.ports[1]}/v1/manifest`, {
+      headers: {Authorization: 'Bearer ' + paired.token, ...extra}, signal: AbortSignal.timeout(8000)
+    });
+    assert.equal(response.status, expected); await response.arrayBuffer();
+  }
+});
+
 test('packaged discovery-only runtime serves public metadata but rejects every MCP task path including paired nodes', {timeout: 60000}, async t => {
   const f = await publicAgentFixture(t, {discoveryOnly: true});
   const base = `http://127.0.0.1:${f.ports[2]}`;
