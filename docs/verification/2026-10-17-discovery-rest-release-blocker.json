@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-17",
+  "productCommit": "fa21de9cb17f9450cd69009f5ec212aa665ec531",
+  "scope": "Independent release-risk review, local reproduction and read-only backup preparation",
+  "releaseBlocked": true,
+  "finding": {
+    "severity": "P1 release gate",
+    "summary": "Discovery-only rejects MCP but does not close public paired-node REST access",
+    "authenticationRequired": true,
+    "unauthenticatedBypassProven": false,
+    "runtimeFile": "gateway/public-runtime.cjs",
+    "gatewayFile": "gateway/server.cjs",
+    "ingressFile": "deploy/public/Caddyfile.template",
+    "publicRestRoutesStillPresent": true,
+    "reviewBoundary": "Static review of the nine-file product delta from 16c54da to fa21de9; no other actionable findings reported"
+  },
+  "localReproduction": {
+    "report": ".superpowers/sdd/2026-10-14-agent-grant-routing/discovery-rest-boundary-red-20261017.tap",
+    "usesMaterializedRuntime": true,
+    "usesSyntheticWorkspaceAndToken": true,
+    "discoveryOnly": true,
+    "mcpStatus": 401,
+    "restNodeEventsStatus": 200,
+    "expectedRestStatus": [401, 403, 404],
+    "tests": 1,
+    "pass": 0,
+    "fail": 1,
+    "cancelled": 0,
+    "skipped": 0,
+    "exitCode": 1,
+    "boundary": "Loopback gateway with Caddy-equivalent forwarding headers and Host rewrite; actual HTTPS denial still requires a regression test"
+  },
+  "proposedCorrection": {
+    "status": "approval requested, not applied",
+    "requirements": [
+      "Deny all public /v1 node REST paths in discovery-only mode, including pairing, events and tasks",
+      "Keep required internal loopback node functionality and normal-mode authorization intact",
+      "Check agreement between runtime and public ingress mode",
+      "Add real HTTPS denial tests and normal-mode compatibility tests, then repeat the full regression"
+    ]
+  },
+  "readOnlyBackupPreparation": {
+    "observedAt": "2026-10-17T01:05:09.199422+00:00",
+    "dataFiles": 557,
+    "dataBytes": 13237602,
+    "dataDirectoryMode": "0700",
+    "dataSymlinks": 0,
+    "codeAndDependencyFiles": 4506,
+    "codeAndDependencyBytes": 39797237,
+    "codeAndDependencySymlinks": 10,
+    "freeDiskBytes": 31535931392,
+    "availableMemoryKiB": 1005988,
+    "historicalBackupExists": true,
+    "currentConsistentBackupCreated": false,
+    "applicationStopTimeoutSeconds": 45,
+    "httpsStopTimeoutSeconds": 15,
+    "httpsRequiresApplication": true,
+    "sendSIGKILL": true,
+    "protectedServiceBaselineUnchanged": true,
+    "boundary": "Metadata and momentary resource readings only, not backup integrity, rollback, sustained capacity or Relay traffic acceptance"
+  },
+  "existingFullRegression": {
+    "tests": 851,
+    "pass": 851,
+    "boundary": "Earlier full suite passed but omitted this newly reproduced public REST boundary; it does not clear the release blocker"
+  },
+  "productCodeChanged": false,
+  "productionChanged": false,
+  "relayChanged": false,
+  "externalGrantCreated": false,
+  "fullDeliveryAccepted": false
+}
