@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-17",
+  "scope": "Read-only browser observation and local candidate/native-snapshot dependency comparison; not a release or vendor acceptance",
+  "candidateArchiveSha256": "f451405e8b34ef877765ec512e37010b5c93a1b41264f5a504f8638e95952e36",
+  "nativeSourceArchiveSha256": "35bfae5b8e4d587faeae0854f88b251c004d39d1497f46cc451bb9fde9f0f290",
+  "localComparison": {
+    "candidateLockPackages": 257,
+    "matchedNativePackageVersions": 257,
+    "versionMismatches": [],
+    "sourceInputs": 55,
+    "sourceMismatches": [],
+    "nativeReportNonRootLockMatched": true,
+    "nativeReportPassed": true,
+    "nativeReportTests": 3,
+    "nativeReportExitCode": "0",
+    "boundary": "Comparison uses the recorded successful constrained Linux snapshot, not a new remote byte inventory"
+  },
+  "freshRemoteDependencyVerification": {
+    "status": "not_started",
+    "localRunnerFailure": "Assertion compared the native report's string exit code to numeric zero",
+    "failedBeforeSSHConnection": true,
+    "credentialsReadByFailedRunner": false,
+    "vpsChangedByFailedRunner": false,
+    "correctionRequested": true,
+    "correctionApplied": false,
+    "boundary": "Do not claim that all 4452 installed dependency files have been rehashed in this continuation"
+  },
+  "browserObservations": {
+    "browser": "Codex in-app browser",
+    "mainOrigin": {
+      "url": "https://lack.chunclaw.top/",
+      "title": "LACK v4.2.2",
+      "loginPageVisible": true,
+      "visibleControls": ["Account", "Password", "Login", "Pocket ID login", "Invitation"],
+      "authenticatedSessionAccepted": false,
+      "boundary": "Browser login-page reachability is confirmed, not a completed login or task execution"
+    },
+    "agentMetadata": {
+      "url": "https://agents.chunclaw.top/.well-known/oauth-protected-resource/mcp",
+      "newTabAttempt": "Webview attach timeout; subsequent inventory contained no new tab",
+      "existingOwnedTabNavigation": "net::ERR_BLOCKED_BY_CLIENT",
+      "httpResponseObservedInBrowser": false,
+      "restrictionBypassed": false,
+      "rootCauseConfirmed": false
+    },
+    "temporaryOwnedTabClosed": true,
+    "userTabsChanged": false,
+    "credentialsEntered": false,
+    "clientOrGrantCreated": false
+  },
+  "productionDeployment": false,
+  "relayChanged": false,
+  "fullDeliveryAccepted": false,
+  "pendingDecisions": [
+    "Controlled discovery-only release window after prerequisites pass",
+    "Minimal correction of the read-only dependency verifier's report parsing"
+  ]
+}
