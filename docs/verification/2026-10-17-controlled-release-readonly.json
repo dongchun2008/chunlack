@@ -1,0 +1,212 @@
+{
+  "schema": 1,
+  "observedAt": "2026-10-17T02:38:41.472Z",
+  "sourceRevision": "d066fd35dadfbb64b1c88b0a4b83ca5a86557da1",
+  "scope": "Read-only controlled release preparation, not deployment acceptance",
+  "rawReportSHA256": "0eac99499b31b0fd13ee5da6f72497fe511671c79a60102113603bd48a8acdfe",
+  "failedUnitReportSHA256": "c18aa6bdeba38caaa493b83a6271feeda8b1c0300d72b31248249dd7300ef5f8",
+  "health": {
+    "oldLack": {
+      "exit": 0,
+      "status": "200"
+    },
+    "humanHttps": {
+      "exit": 0,
+      "status": "200"
+    }
+  },
+  "protectedUnits": [
+    {
+      "id": "chunlack.service",
+      "active": true,
+      "unchanged": true
+    },
+    {
+      "id": "tailscaled.service",
+      "active": true,
+      "unchanged": true
+    },
+    {
+      "id": "chunlack-public.service",
+      "active": true,
+      "unchanged": true
+    },
+    {
+      "id": "chunlack-https.service",
+      "active": true,
+      "unchanged": true
+    }
+  ],
+  "expectedIngressOwns443": true,
+  "resources": {
+    "oom": {
+      "historicalCounter": 62,
+      "recentCount": 0
+    },
+    "cores": 2,
+    "diskAvailableKiB": 30793164,
+    "pressure": {
+      "cpu": 1.2,
+      "memory": 0.36,
+      "io": 3.62
+    },
+    "load1m": 0.14,
+    "memory": {
+      "totalKiB": 1651808,
+      "availableKiB": 997304,
+      "swapTotalKiB": 2097148,
+      "swapFreeKiB": 2097148
+    }
+  },
+  "dns": [
+    {
+      "host": "lack.chunclaw.top",
+      "ipv4Known": true,
+      "ipv4": [
+        "47.108.217.178"
+      ],
+      "ipv6Known": true,
+      "ipv6": []
+    },
+    {
+      "host": "agents.chunclaw.top",
+      "ipv4Known": true,
+      "ipv4": [
+        "47.108.217.178"
+      ],
+      "ipv6Known": true,
+      "ipv6": []
+    }
+  ],
+  "collectorStatus": "BLOCKED_OR_REVIEW_REQUIRED",
+  "collectorGates": [
+    "tcp_443_occupied",
+    "existing_service_failed:chunlack-agent-form-b6443d5705.service",
+    "existing_service_failed:chunlack-agent-form-e99cb94e44.service",
+    "existing_service_failed:chunlack-runtime-browser-delete-9d52f1f0f942.service",
+    "existing_service_failed:chunlack-runtime-browser-diagnostic-1d8fcf939f7f.service",
+    "existing_service_failed:chunlack-runtime-browser-diagnostic-86ba2757daf3.service",
+    "existing_service_failed:chunlack-runtime-https-sessions-767b6c2919b9.service"
+  ],
+  "failedUnits": [
+    {
+      "RuntimeMaxUSec": "1min 30s",
+      "MainPID": "0",
+      "Result": "exit-code",
+      "ExecMainStatus": "1",
+      "ControlGroup": "",
+      "MemoryCurrent": "[not set]",
+      "TasksCurrent": "[not set]",
+      "Id": "chunlack-agent-form-b6443d5705.service",
+      "LoadState": "loaded",
+      "ActiveState": "failed",
+      "SubState": "failed",
+      "FragmentPath": "/run/systemd/transient/chunlack-agent-form-b6443d5705.service",
+      "Transient": "yes",
+      "ownedGroupExists": false,
+      "groupEmpty": true,
+      "noLiveProcess": true
+    },
+    {
+      "RuntimeMaxUSec": "1min 30s",
+      "MainPID": "0",
+      "Result": "exit-code",
+      "ExecMainStatus": "226",
+      "ControlGroup": "",
+      "MemoryCurrent": "[not set]",
+      "TasksCurrent": "[not set]",
+      "Id": "chunlack-agent-form-e99cb94e44.service",
+      "LoadState": "loaded",
+      "ActiveState": "failed",
+      "SubState": "failed",
+      "FragmentPath": "/run/systemd/transient/chunlack-agent-form-e99cb94e44.service",
+      "Transient": "yes",
+      "ownedGroupExists": false,
+      "groupEmpty": true,
+      "noLiveProcess": true
+    },
+    {
+      "RuntimeMaxUSec": "1min 30s",
+      "MainPID": "0",
+      "Result": "exit-code",
+      "ExecMainStatus": "1",
+      "ControlGroup": "",
+      "MemoryCurrent": "[not set]",
+      "TasksCurrent": "[not set]",
+      "Id": "chunlack-runtime-browser-delete-9d52f1f0f942.service",
+      "LoadState": "loaded",
+      "ActiveState": "failed",
+      "SubState": "failed",
+      "FragmentPath": "/run/systemd/transient/chunlack-runtime-browser-delete-9d52f1f0f942.service",
+      "Transient": "yes",
+      "ownedGroupExists": false,
+      "groupEmpty": true,
+      "noLiveProcess": true
+    },
+    {
+      "RuntimeMaxUSec": "1min 30s",
+      "MainPID": "0",
+      "Result": "exit-code",
+      "ExecMainStatus": "1",
+      "ControlGroup": "",
+      "MemoryCurrent": "[not set]",
+      "TasksCurrent": "[not set]",
+      "Id": "chunlack-runtime-browser-diagnostic-1d8fcf939f7f.service",
+      "LoadState": "loaded",
+      "ActiveState": "failed",
+      "SubState": "failed",
+      "FragmentPath": "/run/systemd/transient/chunlack-runtime-browser-diagnostic-1d8fcf939f7f.service",
+      "Transient": "yes",
+      "ownedGroupExists": false,
+      "groupEmpty": true,
+      "noLiveProcess": true
+    },
+    {
+      "RuntimeMaxUSec": "1min 30s",
+      "MainPID": "0",
+      "Result": "exit-code",
+      "ExecMainStatus": "1",
+      "ControlGroup": "",
+      "MemoryCurrent": "[not set]",
+      "TasksCurrent": "[not set]",
+      "Id": "chunlack-runtime-browser-diagnostic-86ba2757daf3.service",
+      "LoadState": "loaded",
+      "ActiveState": "failed",
+      "SubState": "failed",
+      "FragmentPath": "/run/systemd/transient/chunlack-runtime-browser-diagnostic-86ba2757daf3.service",
+      "Transient": "yes",
+      "ownedGroupExists": false,
+      "groupEmpty": true,
+      "noLiveProcess": true
+    },
+    {
+      "RuntimeMaxUSec": "1min 30s",
+      "MainPID": "0",
+      "Result": "exit-code",
+      "ExecMainStatus": "1",
+      "ControlGroup": "",
+      "MemoryCurrent": "[not set]",
+      "TasksCurrent": "[not set]",
+      "Id": "chunlack-runtime-https-sessions-767b6c2919b9.service",
+      "LoadState": "loaded",
+      "ActiveState": "failed",
+      "SubState": "failed",
+      "FragmentPath": "/run/systemd/transient/chunlack-runtime-https-sessions-767b6c2919b9.service",
+      "Transient": "yes",
+      "ownedGroupExists": false,
+      "groupEmpty": true,
+      "noLiveProcess": true
+    }
+  ],
+  "review": {
+    "snapshot": "Existing workspace snapshot and restore APIs preserve selected files and per-database consistency but explicitly do not prove application-wide consistency or runtime rollback",
+    "release": "Requires a separately approved maintenance window, fresh quiescent backup and rollback preparation. Do not delete stale writer locks to force startup.",
+    "tcp443": "Occupied by the existing protected ChunLACK HTTPS service; not a free port and not permission to replace another service",
+    "failedUnits": "All six are transient failed records with MainPID=0 and absent cgroups. Their prior failures remain recorded; no reset-failed was issued. No live work was inferred from failed state alone."
+  },
+  "remoteFilesWritten": false,
+  "servicesChanged": false,
+  "credentialsChanged": false,
+  "deploymentAuthorized": false,
+  "deliveryComplete": false
+}
