@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "observedThroughUTC": "2026-10-17T07:18:58Z",
+  "sourceRevision": "35edf1b4878ea80dedcae4da550ea52ccc102e36",
+  "status": "bounded_isolated_real_five_agent_rounds_passed_not_full_delivery",
+  "fullPlatformDelivered": false,
+  "productCodeChanged": false,
+  "productionConfigurationChanged": false,
+  "credentialsChanged": false,
+  "clientsGrantsOrSubscriptionsCreated": false,
+  "publicPortsAdded": false,
+  "acceptanceScript": {
+    "path": "deploy/public/acceptance/real-five-agent-20261017.cjs",
+    "sha256": "0692dbdcf6b025cfdc888eb2a293890006545ef8305694ec120a8a8f0211177a",
+    "maximumInferenceAttemptsPerRun": 32,
+    "maximumOutputTokensPerRequest": 64,
+    "totalAbortBudgetMs": 180000,
+    "upstreamRequestTimeoutMs": 20000,
+    "sharedFixtureBudgetsChanged": false
+  },
+  "caddy": {
+    "version": "2.11.7",
+    "binarySHA256": "5f93a9bd555f3aac9d33af2756ba14b3519d8cca4ffd55256bdaeab444c9db2a",
+    "versionOnlyDiagnosticSeconds": 2.023,
+    "firstValidationTimeoutCauseConfirmed": false
+  },
+  "liveDirectProviderProbe": {
+    "origin": "VPS",
+    "provider": "onecat-direct",
+    "model": "qwen38-27b-nvfp4",
+    "openWebuiUsed": false,
+    "modelsHTTPStatus": 200,
+    "modelListed": true,
+    "modelsElapsedSeconds": 2.357,
+    "generationHTTPStatus": 200,
+    "generationElapsedSeconds": 0.234,
+    "nonemptyContent": true,
+    "responseModelMatches": true,
+    "finishReason": "stop",
+    "contentCharacters": 5,
+    "contentSHA256": "c2e3ac47f4a325469c1a2d5f117e463ec943c721986d5d9f09ac4540b7d80526"
+  },
+  "retainedAttempts": [
+    {
+      "attempt": 1,
+      "accepted": false,
+      "exitCode": 1,
+      "failedStage": "packaged-TLS-startup",
+      "errorCode": "ETIMEDOUT",
+      "inferenceAttempts": 0,
+      "fixtureClosed": true,
+      "rawReportSHA256": "19595a0b55be04ccd02322540c30f31dad5291bb7147d79e26665a2138ec05b4"
+    },
+    {
+      "attempt": 2,
+      "accepted": false,
+      "exitCode": 1,
+      "failedStage": "five-agent-round-0",
+      "completedRounds": 0,
+      "inferenceAttempts": 8,
+      "observedSuccessfulInference": 0,
+      "failedProxyInferenceAttempts": 8,
+      "fixtureClosed": true,
+      "windowsDirectModelsProbe": {"errorType": "RemoteDisconnected", "elapsedSeconds": 5.609},
+      "windowsDirectDisconnectRootCauseConfirmed": false,
+      "rawReportSHA256": "582b94bbb4288cb427a4f58e882df11d47744cd16f9dcf897ebf8e7ff949935d"
+    },
+    {
+      "attempt": 3,
+      "accepted": true,
+      "exitCode": 0,
+      "onlyChangedInput": "model transport via temporary localhost SSH forward through pinned VPS",
+      "scriptAndBudgetsUnchanged": true,
+      "rawReportSHA256": "43f8f52fb635e7b6903dd1d589cb85840f67679dbd063ba93be2d0f540d364e5"
+    }
+  ],
+  "acceptedIsolatedTrial": {
+    "location": "Windows",
+    "realHTTPS": true,
+    "realWSS": true,
+    "syntheticHumanAccountsLoggedIn": 3,
+    "workspacesCreated": 2,
+    "workspacesWithFiveAgentExecution": 1,
+    "agentsInExecutingWorkspace": 5,
+    "distinctModelEndpoints": 1,
+    "rounds": [
+      {"index": 0, "agentReplies": 5, "elapsedMs": 4728, "tasksCompletedAndBranchesDrained": true},
+      {"index": 1, "agentReplies": 5, "elapsedMs": 4706, "tasksCompletedAndBranchesDrained": true}
+    ],
+    "inferenceAttempts": 10,
+    "successfulInference": 10,
+    "failedInference": 0,
+    "activeInferenceAtEnd": 0,
+    "maximumConcurrentInference": 1,
+    "crossWorkspaceViewerDenied": true,
+    "replyIDsAndContentHashesPersistedAfterIsolatedRuntimeRestart": true,
+    "fixtureClosed": true,
+    "testProcessExited": true,
+    "sustainedAcceptance": false,
+    "realPocketIdLoginVerified": false,
+    "vendorAgentsVerified": false
+  },
+  "temporaryForward": {
+    "bind": "127.0.0.1 ephemeral port",
+    "destination": "existing configured model endpoint via pinned VPS SSH",
+    "maximumLifetimeSeconds": 240,
+    "remoteListenerCreated": false,
+    "listenerClosed": true,
+    "threadStopped": true,
+    "activeChannelsAfterClose": 0
+  },
+  "livePocketIdDiscovery": {
+    "HTTPStatus": 200,
+    "issuer": "https://pockid.chunclaw.top",
+    "authorization_response_iss_parameter_supported": true,
+    "client_id_metadata_document_supported": false,
+    "registration_endpoint": null,
+    "token_endpoint_auth_methods_supported": ["client_secret_basic", "client_secret_post", "none"],
+    "code_challenge_methods_supported": ["plain", "S256"],
+    "decision": "verify predefined client support and exact vendor callback before any enrollment"
+  },
+  "productionPostflight": {
+    "humanHealthHTTPStatus": 200,
+    "allFourServicePIDsAndRestartCountersUnchanged": true,
+    "servicePIDs": {"legacy": 594652, "relay": 859, "public": 690952, "https": 691047},
+    "allFourServicesActive": true,
+    "allFourRestartCounters": 0,
+    "relayUDP40000ListenerPresent": true,
+    "relayTrafficQualityMeasured": false,
+    "agentOAuthDiscoveryOnly": true,
+    "agentOAuthClientIDs": []
+  },
+  "remainingGates": [
+    "native VPS sustained multi-user and complete five-agent round acceptance",
+    "real Relay traffic quality comparison",
+    "fresh human Pocket ID login where required",
+    "actual vendor callback and client identity",
+    "separately approved external clients and workspace grants",
+    "Muse and dots own-computer task and evidence round trips",
+    "event-driven execution and final delivery audit"
+  ]
+}
