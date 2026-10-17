@@ -1,0 +1,371 @@
+{
+  "schema": 1,
+  "observedAtUTC": "2026-10-17T05:54:22.110890+00:00",
+  "status": "preaccess_published_external_agent_acceptance_pending",
+  "fullPlatformDelivered": false,
+  "scope": {
+    "updatedServices": [
+      "chunlack-public.service",
+      "chunlack-https.service"
+    ],
+    "changedConfigurationField": "publicRuntime.agentOAuth",
+    "agentBusinessAccessEnabled": false,
+    "newAgentClientsOrGrantsCreated": false,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false
+  },
+  "runtimeArtifact": {
+    "sha256": "d793affff1bda571cc6a7b4ba1970d9e0379f9e7549d6136fd2a699f23018389",
+    "files": 56,
+    "activeFileHashesMatch": true,
+    "sourceRevision": "d066fd35dadfbb64b1c88b0a4b83ca5a86557da1",
+    "productionDependencies": 257,
+    "dependencyFiles": 4452,
+    "nativeAbi": 137
+  },
+  "operationalSourceHashes": {
+    "release-discovery-safe-20261017.py": "891a5ed197313a6176be546a51ca917219a33595f9d43542d3aa661307efcb24",
+    "test-release-discovery-safe-20261017.py": "dba57cde90e36b219afb2c10da7ac4cb45468a6ba8f9228c6c27562fb03dd617",
+    "rehearse-operational-release-20261017.py": "c79c41470524d100d8078102970e2a14bc7acbc0ac6cca54c61787b7d9b7e2eb",
+    "stage-schema-compatibility-20261017.py": "d776b675cd1a524345b8fd115c0096c5a47b267fb24049de0d44ff27edc7ec60"
+  },
+  "nativeControllerTests": {
+    "passed": 15,
+    "failed": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "memoryPeakBytes": "17715200",
+    "memoryMaxBytes": 201326592,
+    "cpuPercentOfOneCore": 10,
+    "tasksMax": 32,
+    "runtimeMaxSeconds": 90,
+    "unitStoppedAndCgroupEmpty": true
+  },
+  "realServiceRehearsal": {
+    "passed": true,
+    "cases": [
+      {
+        "case": "success",
+        "result": {
+          "status": "released",
+          "records": [
+            {
+              "phase": "preflight_passed",
+              "seconds": 0
+            },
+            {
+              "phase": "https_stopped",
+              "seconds": 1.025
+            },
+            {
+              "phase": "application_stopped",
+              "seconds": 1.743
+            },
+            {
+              "phase": "consistent_backup_verified",
+              "seconds": 1.771
+            },
+            {
+              "phase": "old_code_preserved",
+              "seconds": 1.771
+            },
+            {
+              "phase": "candidate_code_installed",
+              "seconds": 1.771
+            },
+            {
+              "phase": "candidate_configuration_installed",
+              "seconds": 1.773
+            },
+            {
+              "phase": "loopback_https_acceptance_passed",
+              "seconds": 13.674
+            },
+            {
+              "phase": "public_discovery_acceptance_passed",
+              "seconds": 23.269
+            }
+          ],
+          "outageSeconds": 23.269,
+          "agentBusinessAccess": false,
+          "credentialsChanged": false,
+          "liveDataRestoredFromBackup": false
+        }
+      },
+      {
+        "case": "rollback",
+        "result": {
+          "status": "rolled_back",
+          "error": "injected_loopback_https_acceptance_passed",
+          "records": [
+            {
+              "phase": "preflight_passed",
+              "seconds": 0
+            },
+            {
+              "phase": "https_stopped",
+              "seconds": 0.98
+            },
+            {
+              "phase": "application_stopped",
+              "seconds": 1.704
+            },
+            {
+              "phase": "consistent_backup_verified",
+              "seconds": 1.71
+            },
+            {
+              "phase": "old_code_preserved",
+              "seconds": 1.71
+            },
+            {
+              "phase": "candidate_code_installed",
+              "seconds": 1.71
+            },
+            {
+              "phase": "candidate_configuration_installed",
+              "seconds": 1.805
+            },
+            {
+              "phase": "loopback_https_acceptance_passed",
+              "seconds": 13.705
+            }
+          ],
+          "elapsedSeconds": 27.605
+        }
+      }
+    ],
+    "network": "loopback HTTP high ports; TLS covered by existing native product tests",
+    "aggregateMemoryMaxBytes": 201326592,
+    "aggregateCpuPercentOfOneCore": 10,
+    "aggregateTasksMax": 32,
+    "allOwnFixtureUnitsStoppedAndEmpty": true,
+    "protectedProductionUnitsUnchanged": true
+  },
+  "actualRuntimeCompatibility": {
+    "status": "passed",
+    "boots": [
+      {
+        "runtime": "candidate",
+        "seconds": 8.909,
+        "cleanClose": true
+      },
+      {
+        "runtime": "previous",
+        "seconds": 7.89,
+        "cleanClose": true
+      }
+    ],
+    "databaseCount": 3,
+    "schemaPreserved": true,
+    "networkIsolated": true,
+    "sourceMountedReadonly": true,
+    "applicationConsistentSnapshot": false,
+    "rollbackBackup": false,
+    "actualModelCalls": false,
+    "oidcMetadataTransport": "fixture_from_tls_verified_public_discovery_and_jwks",
+    "realOidcLoginTested": false
+  },
+  "publication": {
+    "tag": "5c3786dd3ac6",
+    "status": "released",
+    "outageSeconds": 32.003,
+    "outageTargetSeconds": 120,
+    "phases": [
+      {
+        "phase": "preflight_passed",
+        "seconds": 0
+      },
+      {
+        "phase": "https_stopped",
+        "seconds": 0.107
+      },
+      {
+        "phase": "application_stopped",
+        "seconds": 0.358
+      },
+      {
+        "phase": "consistent_backup_verified",
+        "seconds": 8.504
+      },
+      {
+        "phase": "old_code_preserved",
+        "seconds": 8.506
+      },
+      {
+        "phase": "candidate_code_installed",
+        "seconds": 8.507
+      },
+      {
+        "phase": "candidate_configuration_installed",
+        "seconds": 8.515
+      },
+      {
+        "phase": "loopback_https_acceptance_passed",
+        "seconds": 21.295
+      },
+      {
+        "phase": "public_discovery_acceptance_passed",
+        "seconds": 32.002
+      }
+    ],
+    "controllerUnitStoppedAndEmpty": true,
+    "controllerMemoryPeakBytes": "70053888",
+    "backup": {
+      "root": "/var/backups/chunlack-release-5c3786dd3ac6",
+      "mode": "0o700",
+      "fileCount": 552,
+      "runtimeDatabaseCount": 3,
+      "applicationStopped": true
+    },
+    "retainedPreviousCode": "/opt/chunlack-public/previous-5c3786dd3ac6",
+    "databasesRestoredFromSnapshotDuringRelease": false
+  },
+  "serverAcceptance": {
+    "tlsVerifiedWithConfiguredHostAndSni": true,
+    "healthStatus": 200,
+    "metadataPathsStatus": 200,
+    "mcpGetAndPostStatus": 401,
+    "publicNodeRestStatus": 404,
+    "notes": "Server-side checks used loopback transport with public host names; not vendor end-to-end acceptance."
+  },
+  "postcheck": {
+    "units": {
+      "chunlack.service": {
+        "MainPID": "594652",
+        "NRestarts": "0",
+        "MemoryCurrent": "80474112",
+        "TasksCurrent": "11",
+        "MemoryMax": "469762048",
+        "ActiveState": "active"
+      },
+      "tailscaled.service": {
+        "MainPID": "859",
+        "NRestarts": "0",
+        "MemoryCurrent": "44691456",
+        "TasksCurrent": "10",
+        "MemoryMax": "infinity",
+        "ActiveState": "active"
+      },
+      "chunlack-public.service": {
+        "MainPID": "690952",
+        "NRestarts": "0",
+        "MemoryCurrent": "56655872",
+        "TasksCurrent": "11",
+        "MemoryMax": "469762048",
+        "ActiveState": "active"
+      },
+      "chunlack-https.service": {
+        "MainPID": "691047",
+        "NRestarts": "0",
+        "MemoryCurrent": "13697024",
+        "TasksCurrent": "7",
+        "MemoryMax": "134217728",
+        "ActiveState": "active"
+      }
+    },
+    "allRuntimeFileHashesMatch": true,
+    "runtimeFiles": 56,
+    "environmentUnchanged": true,
+    "agentOAuth": {
+      "enabled": true,
+      "discoveryOnly": true,
+      "resource": "https://agents.chunclaw.top/mcp"
+    },
+    "agentClientCount": 0,
+    "eventsEnabled": false,
+    "backup": {
+      "root": "/var/backups/chunlack-release-5c3786dd3ac6",
+      "mode": "0o700",
+      "fileCount": 552,
+      "runtimeDatabaseCount": 3,
+      "applicationStopped": true
+    },
+    "public443": true,
+    "relay40000": true
+  },
+  "browserChecks": {
+    "humanWeb": {
+      "url": "https://lack.chunclaw.top/",
+      "rendered": true,
+      "title": "LACK v4.2.2",
+      "privateWorkspaceLoginVisible": true,
+      "pocketIdLoginLinkVisible": true,
+      "loginCompletedThisRound": false
+    },
+    "agentMetadata": {
+      "url": "https://agents.chunclaw.top/.well-known/oauth-protected-resource/mcp",
+      "verified": false,
+      "browserError": "net::ERR_BLOCKED_BY_CLIENT",
+      "causeConfirmed": false
+    }
+  },
+  "desktopPythonPublicChecks": {
+    "https://lack.chunclaw.top/health": {
+      "status": "not_verified",
+      "errorType": "URLError"
+    },
+    "https://agents.chunclaw.top/.well-known/oauth-protected-resource/mcp": {
+      "status": "not_verified",
+      "errorType": "URLError"
+    }
+  },
+  "previousProductValidation": {
+    "localTestsPassed": 856,
+    "nativeFocusedPassed": 8,
+    "thisRoundProductSourceChanged": false,
+    "fullProductSuiteRepeatedThisRound": false,
+    "evidence": "2026-10-17-discovery-rest-boundary-fix.json"
+  },
+  "retainedFailedPreparationAttempts": [
+    {
+      "stage": "dependency_count",
+      "cause": "npm hidden metadata was included in count",
+      "productionStopped": false
+    },
+    {
+      "stage": "loopback_template",
+      "cause": "explicit :443 not matched",
+      "productionStopped": false
+    },
+    {
+      "stage": "caddy_json_contract",
+      "cause": "automatic_https field name",
+      "productionStopped": false
+    },
+    {
+      "stage": "operational_fixture",
+      "cause": "one-second probe shorter than low-CPU proxy response",
+      "productionStopped": false
+    },
+    {
+      "stage": "operational_fixture",
+      "cause": "systemd unloaded stopped transient fixture definitions",
+      "productionStopped": false
+    },
+    {
+      "stage": "compatibility_copy",
+      "cause": "historical archived WAL database treated as runtime DB",
+      "productionStopped": false
+    },
+    {
+      "stage": "compatibility_oidc",
+      "cause": "private-network fixture could not fetch public discovery",
+      "productionStopped": false
+    }
+  ],
+  "remainingAcceptance": [
+    "actual Muse agent computer task and artifact return",
+    "actual dots agent computer task and artifact return",
+    "external Agent client network/OAuth callback acceptance",
+    "fresh real-model acceptance",
+    "real multi-user and sustained five-agent collaboration"
+  ],
+  "privateEvidenceExcluded": [
+    "runtime environment and secrets",
+    "user databases and consistent backups",
+    "source data compatibility copies",
+    "raw private bootstrap logs"
+  ]
+}

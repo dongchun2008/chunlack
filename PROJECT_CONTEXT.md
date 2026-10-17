@@ -1,5 +1,7 @@
 # PROJECT_CONTEXT
 
+> 最新部署状态（2026-10-17）：公网预接入已发布，维护中断 32.003 秒；Agent 业务仍拒绝访问，未创建外部客户端或授予权限。旧 LACK、Relay 与原凭据保持不变。当前验收边界、浏览器客户端拦截及 Muse/dots 待办以 [发布说明](docs/PREACCESS_RELEASE_2026-10-17.zh-CN.md) 和 [验收记录](docs/verification/2026-10-17-preaccess-publication.json) 为准；下方早期未发布条目保留为历史。
+
 ## Project name
 LACK Hybrid Multi-Agent Platform
 

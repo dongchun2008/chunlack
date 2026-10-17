@@ -1,5 +1,7 @@
 # Public runtime lifecycle checkpoint
 
+> 2026-10-17 当前线上状态：预接入模式已经受控发布，维护中断计时 32.003 秒，仍拒绝全部 Agent 业务访问。完整范围、客户端访问限制及后续接入条件见 [发布与接入说明](PREACCESS_RELEASE_2026-10-17.zh-CN.md)。下方早期“未发布”记录保留为历史证据，不代表当前部署状态。
+
 This is a local development checkpoint, not a production deployment or an external Agent acceptance report.
 
 ## Current checkpoint, 2026-10-17
