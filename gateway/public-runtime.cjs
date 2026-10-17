@@ -37,6 +37,7 @@ function configuration(config, env) {
   if (options.agentOAuth?.discoveryOnly !== undefined && typeof options.agentOAuth.discoveryOnly !== 'boolean' ||
       options.agentOAuth?.discoveryOnly === true && options.agentOAuth?.enabled !== true) throw failure('invalid_agent_access_config');
   if (options.agentOAuth?.discoveryOnly === true && options.events?.enabled === true) throw failure('public_discovery_only_events_forbidden');
+  if (options.nodeRestPublic !== undefined && typeof options.nodeRestPublic !== 'boolean') throw failure('public_invalid_node_rest_mode');
   if (options.events?.enabled === true) require('../integrations/mcp/runtime.cjs').validatePublicEventsOptions(options.events, env).encryptionKey.fill(0);
   let agentOAuth;
   if (options.agentOAuth?.enabled === true) {
@@ -46,7 +47,7 @@ function configuration(config, env) {
     if (agentOAuth.resource !== agentsOrigin + '/mcp' ||
         config.identity?.oidc?.clientId && agentOAuth.browserClientId !== config.identity.oidc.clientId) throw failure('public_agent_resource_or_browser_mismatch');
   }
-  return {webOrigin, agentsOrigin, mcpPort: options.mcpPort, events: options.events, agentOAuth};
+  return {webOrigin, agentsOrigin, mcpPort: options.mcpPort, events: options.events, agentOAuth, nodeRestPublic: options.nodeRestPublic !== false};
 }
 function validateMigration(root) {
   const identityPath = safePath(path.join(root, 'db', 'identity.db'));
@@ -116,6 +117,8 @@ async function startMcpRuntime({gateway, root, port, ready, eventsOptions, env, 
 }
 async function startPublicRuntime({config, dataRoot, env = process.env, loadLack = () => require('../server.js'), startMcp = startMcpRuntime} = {}) {
   const options = configuration(config, env), root = safePath(dataRoot, {directory: true});
+  // Snapshot this policy before asynchronous startup; caller mutation cannot reopen REST.
+  const runtimeConfig = {...config, publicRuntime: {...config.publicRuntime, nodeRestPublic: options.nodeRestPublic}};
   const identityPath = validateMigration(root), release = writerLock(root);
   let identity, capacity, web, mcp, closing, verifier, authorityDb, agentAuthority, stopping = false;
   // A trusted runtime closure, never a configurable proof or public credential.
@@ -161,7 +164,7 @@ async function startPublicRuntime({config, dataRoot, env = process.env, loadLack
     capacity = require('../collaboration/capacity.cjs').createCapacityCoordinator({maxActive: 1, maxQueued: 100, maxQueuedPerWorkspace: 20});
     const module = loadLack();
     if (typeof module?.startLackRuntime !== 'function') throw failure('public_runtime_export_required');
-    web = await module.startLackRuntime({config, dataRoot: root, identity, capacity, env, publicMode: true, bindHost: '127.0.0.1', webOrigin: options.webOrigin, identityPath, writerLease: release, deferReady: true, agentAuthority: authorityFacade});
+    web = await module.startLackRuntime({config: runtimeConfig, dataRoot: root, identity, capacity, env, publicMode: true, bindHost: '127.0.0.1', webOrigin: options.webOrigin, identityPath, writerLease: release, deferReady: true, agentAuthority: authorityFacade});
     if (!web?.gateway?.workspaceAccess || typeof web.activate !== 'function') throw failure('public_workspace_gateway_required');
     if (verifier && !options.agentOAuth.discoveryOnly) {
       authorityDb = new Database(identityPath, {fileMustExist: true});

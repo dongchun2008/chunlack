@@ -4,8 +4,8 @@ const fs=require('node:fs');
 const path=require('node:path');
 const crypto=require('node:crypto');
 const P=require('./protocol.cjs');
-function createAgentGateway({store,adminToken,workspaceAccess,now=Date.now,pollMs=P.LIMITS.pollMs,ready=()=>true,pilotHandler,discoveryOnly=false}){
-  if(typeof discoveryOnly!=='boolean')P.fail('invalid_gateway_configuration',503);
+function createAgentGateway({store,adminToken,workspaceAccess,now=Date.now,pollMs=P.LIMITS.pollMs,ready=()=>true,pilotHandler,discoveryOnly=false,nodeRestPublic=true}){
+  if(typeof discoveryOnly!=='boolean'||typeof nodeRestPublic!=='boolean')P.fail('invalid_gateway_configuration',503);
   if(store.multiUser&&!workspaceAccess)P.fail('workspace_gateway_configuration',503);
   if(typeof adminToken!=='string'||adminToken.length<43||adminToken.length>256)P.fail('invalid_admin_credential');
   const adminDigest=P.hash(adminToken),waiting=new Map(),rates=new Map();let closed=false;
@@ -42,9 +42,9 @@ function createAgentGateway({store,adminToken,workspaceAccess,now=Date.now,pollM
       // ingress overwrites these headers; they never confer node authority.
       if(url.pathname==='/v1'||url.pathname.startsWith('/v1/')){
         const forwarded=['forwarded','x-forwarded-for','x-real-ip','x-forwarded-proto','x-forwarded-host','x-chunlack-agent-mode'].some(name=>Object.hasOwn(req.headers,name));
-        if(discoveryOnly&&forwarded){req.resume();P.fail('not_found',404);}
+        if((discoveryOnly||!nodeRestPublic)&&forwarded){req.resume();P.fail('not_found',404);}
         const ingressMode=req.headers['x-chunlack-agent-mode'];
-        if(ingressMode!==undefined&&ingressMode!==(discoveryOnly?'discovery-only':'normal')){req.resume();P.fail('ingress_mode_mismatch',503);}
+        if(ingressMode!==undefined&&ingressMode!==(discoveryOnly?'discovery-only':nodeRestPublic?'normal':'mcp-only')){req.resume();P.fail('ingress_mode_mismatch',503);}
       }
       if(store.multiUser&&(url.pathname.startsWith('/admin')||url.pathname==='/v1/pair'||url.pathname==='/'))P.fail('not_found',404);
       if(url.searchParams.has('token')||url.searchParams.has('key'))P.fail('credential_query_denied');

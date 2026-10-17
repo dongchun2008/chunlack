@@ -165,7 +165,7 @@ async function initializePackagedIngressFixture({signal, caddyBin, threeHumans =
       await delay(50, undefined, { signal });
     }
     if (!ready) throw new Error('Owned Caddy did not become ready: ' + caddyOutput);
-    return {request, login, connect, frame, close, restart, credentials,
+    return {request, login, connect, frame, close, restart, credentials, codeRoot, ownerId: owner.id, get runtime() {return runtime;},
       accounts: {owner: credentials, other: {login: 'other-tls-owner', password: credentials.password}, ...(threeHumans ? {viewer: {login: 'viewer-tls-user', password: credentials.password}} : {})},
       webOrigin, agentsOrigin, workspaceId: workspace.id, otherWorkspaceId: otherWorkspace.id};
   } catch (error) {try {await close();} catch (cleanup) {throw new AggregateError([error, cleanup], 'Fixture initialization and close failed');} throw error;}

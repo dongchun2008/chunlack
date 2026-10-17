@@ -16,9 +16,10 @@ async function bounded(promise, label) {
   try {return await Promise.race([promise, new Promise((_, reject) => {timer = setTimeout(() => reject(Error(label)), 5000);})]);}
   finally {clearTimeout(timer);}
 }
-async function publicAgentFixture(t, {agentOAuthEnabled = true, discoveryOnly = false, humanOidcEnabled = false, foreignWorkspace = false} = {}) {
+async function publicAgentFixture(t, {agentOAuthEnabled = true, discoveryOnly = false, nodeRestPublic = true, humanOidcEnabled = false, foreignWorkspace = false} = {}) {
   assert.equal(typeof agentOAuthEnabled, 'boolean');
   assert.equal(typeof discoveryOnly, 'boolean');
+  assert.equal(typeof nodeRestPublic, 'boolean');
   assert.equal(typeof humanOidcEnabled, 'boolean');
   assert.equal(typeof foreignWorkspace, 'boolean');
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'lack-agent-e2e-'));
@@ -52,7 +53,7 @@ async function publicAgentFixture(t, {agentOAuthEnabled = true, discoveryOnly = 
   const scopes = ['task.read', 'task.claim', 'task.result', 'events.read', 'events.subscribe'];
   const config = {httpPort: ports[0], multiUser: {enabled: true, migrationReady: true},
     agentGateway: {enabled: true, port: ports[1], adminTokenEnv: 'FIXTURE_GATEWAY_TOKEN'},
-    publicRuntime: {webOrigin: origin, agentsOrigin: 'https://agents.e2e.invalid', mcpPort: ports[2],
+    publicRuntime: {webOrigin: origin, agentsOrigin: 'https://agents.e2e.invalid', mcpPort: ports[2], nodeRestPublic,
       agentOAuth: {enabled: agentOAuthEnabled, discoveryOnly, issuer, resource, jwksUri: issuer + '/jwks', browserClientId: 'human-client', clientIds: discoveryOnly ? [] : ['agent-client']},
       events: {enabled: !discoveryOnly, encryptionKeyEnv: 'FIXTURE_EVENTS_KEY', allowedHosts: ['callback.example'],
         workspaceCallbackHosts: {[workspaces.a.id]: ['callback.example'], [workspaces.b.id]: ['callback.example']}}},

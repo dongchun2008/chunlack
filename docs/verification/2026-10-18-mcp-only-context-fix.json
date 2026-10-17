@@ -1,0 +1,101 @@
+{
+  "stage": "mcp-only-development-context-fix",
+  "sourceBaselineCommit": "45826fe30dc90da2d5848e213fdcdc94cf42018b",
+  "currentCorrectionScope": [
+    "Expose the fixture-generated package codeRoot in the test helper",
+    "Use the generated package workspace context in the HTTPS test"
+  ],
+  "latestCorrectionChangesProductPolicy": false,
+  "sourceSHA256": {
+    "gateway/runtime.cjs": "09b2ad730d9f5312ad4ff1973fd6a54c95527e1dc957f7fd0f93da0328d3e519",
+    "gateway/public-runtime.cjs": "483b880aa721f97ce9506c2e81ff2bdb70e51148c256e4e1a723580d8ce31aa2",
+    "gateway/server.cjs": "ccc612c653d52424ec1e57c2ea2b20531b4119eaea302ad4b7ee2cc0e65925f0",
+    "deploy/public/render-ingress.cjs": "0e11a91e164eb4591b0ce2a93ce42e5a7c3e715c8d16c367a821237c8f3400c9",
+    "tests/helpers/public-agent-fixture.cjs": "1424d3b8ba1f7b87a51e076f1568f7308b0a585bb0c6a568fdac143e8973566c",
+    "tests/helpers/packaged-ingress-fixture.cjs": "f809066fd59f9aaf7106add9f72ec19ccbac1dd755e20108f191279e987cd36c",
+    "tests/agent-mcp-only.test.cjs": "eb98424e48a3e74b334a690944a336ec616bfc46d94292494a757cc4bda89751",
+    "docs/MCP_ONLY_CONFIGURATION.zh-CN.md": "b90af9d7591178436e2d20cb554e91a6a813029ebaf94cf6471951ca68f3a448"
+  },
+  "native": {
+    "tag": "chunlack-native-mcp-only-d32a7be2432b",
+    "summary": {
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "result": "success",
+    "exitCode": 0,
+    "reportSHA256": "49c25c827b22e48ce7e973d077e788714a07055e9b6b2e658c288649c9f70eed",
+    "tapSHA256": "fe2c10b59ac0bccb6c6616edb36dfa9299c23f69a7f8dd25c7c5c51d0ef5ba27",
+    "memoryLimitBytes": 201326592,
+    "cpuPercentOfOneCore": 10,
+    "tasksMax": 32,
+    "runtimeMax": "1min 30s",
+    "memoryPeakBytes": 104497152,
+    "privateNetwork": "yes",
+    "ownedUnitsStopped": {
+      "chunlack-native-mcp-only-d32a7be2432b-test.service": {
+        "MainPID": "0",
+        "ActiveState": "inactive",
+        "cgroupEmpty": true,
+        "stopped": true
+      }
+    }
+  },
+  "earlierNativeFailure": {
+    "tag": "chunlack-native-mcp-only-3de2e93a677f",
+    "summary": {
+      "tests": 5,
+      "pass": 4,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "reason": "workspace_context_required",
+    "retained": true
+  },
+  "windows": {
+    "summary": {
+      "tests": 5,
+      "pass": 4,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "exitCode": 1,
+    "tapSHA256": "2ed32efda666e6515da05144dd059e83fe158dbec8e6ce2758d9f1e5a93caf03",
+    "failureStage": "Caddy configuration validation",
+    "errorCode": "ETIMEDOUT",
+    "validationTimeoutMs": 10000,
+    "timeoutChanged": false,
+    "httpsOAuthAssertionsReached": false
+  },
+  "compatibility": {
+    "tests": 2,
+    "pass": 2,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "modes": [
+      "discovery-only",
+      "normal"
+    ],
+    "evidence": "Completed node:test terminal report"
+  },
+  "protectedServicesUnchanged": true,
+  "publicHealthStatus": "200",
+  "relayUDPListenerCount": 4,
+  "fullRegressionCompleted": false,
+  "windowsHttpsPassed": false,
+  "productionDeployed": false,
+  "apiAccessGranted": false,
+  "vendorAgentsVerified": false,
+  "sustainedAcceptance": false,
+  "readyForDelivery": false,
+  "nextGate": "Diagnose Windows Caddy validation timeout without weakening assertions; complete full regression before any release."
+}
