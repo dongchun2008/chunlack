@@ -1,0 +1,114 @@
+{
+  "date": "2026-10-18",
+  "status": "corrections_verified_integration_not_accepted",
+  "sourceBase": "6e33e73e444f334b7af0413efe8ea2b6456fbb41",
+  "sourcePublication": "development branch only; not a production release",
+  "sourceHashes": {
+    "release-discovery-safe-20261017.py": "e9265911f0c82f54dda00a61b52ee1ea2e34f1e021213cb201e7af9dd83e72e3",
+    "test-release-discovery-safe-20261017.py": "f972e3524056c2e7aa623cbce86a435d12c8fd3a542ba00023539e5910625a01",
+    "stage-schema-compatibility-20261017.py": "a9e7a584d7edee0fde7273f4554441a1a8e34a5301a4a71edafe5c093d6d19f6",
+    "rehearse-operational-release-20261017.py": "99de7d9ac12cc71f5131aeadec2e0915e9ad5a646b4053cd4de461bde834d313"
+  },
+  "corrections": {
+    "nullComponentVersionRowsPreserved": true,
+    "partialSourceCheckedBeforeServiceStop": true,
+    "coldRecheckRetained": true,
+    "newSnapshotsNormalizedWithoutSourceMutation": true,
+    "rootProofFixtureCandidateConfigCreated": true
+  },
+  "verification": {
+    "windowsControllerSuite": {
+      "total": 42,
+      "pass": 39,
+      "skip": 3,
+      "fail": 0,
+      "seconds": 84.608
+    },
+    "linuxControllerSuite": {
+      "total": 42,
+      "pass": 42,
+      "skip": 0,
+      "fail": 0,
+      "seconds": 32.698,
+      "configuredMemoryMaxBytes": 201326592,
+      "configuredCpuPercent": 10,
+      "configuredTasksMax": 32,
+      "configuredRuntimeMaxSeconds": 90,
+      "privateNetwork": true
+    },
+    "rootProofMetadataSupplement": {
+      "total": 1,
+      "pass": 1,
+      "seconds": 0.203,
+      "scope": "synthetic private proof; not an actual formal-stage proof"
+    },
+    "liveWalSupplement": {
+      "status": "passed",
+      "componentRowCommittedInLiveWal": true,
+      "rejection": "migration_source_versions_exist",
+      "stopRequests": 0
+    },
+    "snapshotNormalization": {
+      "status": "passed",
+      "onlyNewCopiesModified": true,
+      "sourceBytesAndMtimesUnchanged": true,
+      "schemaAndRowsPreserved": true,
+      "integrityAndForeignKeys": true,
+      "journalMode": "DELETE"
+    },
+    "formalStage": {
+      "status": "failed",
+      "phase": "first fault bootstrap",
+      "error": "MODULE_NOT_FOUND for an existing runner",
+      "cause": "new private staged parent remained 0700 under umask 0077; service UID cannot traverse it",
+      "shadowMode": "0750",
+      "runnerMode": "0640",
+      "formalProofAccepted": false,
+      "faultPipelineCompleted": false
+    },
+    "lifecycleRetest": {
+      "overallStatus": "failed",
+      "unitResult": "timeout",
+      "configuredRuntimeMaxSeconds": 90,
+      "exitStatus": 15,
+      "cases": [
+        {
+          "case": "success",
+          "result": "released",
+          "seconds": 23.71
+        },
+        {
+          "case": "rollback",
+          "result": "rolled_back",
+          "seconds": 29.059
+        }
+      ],
+      "initialCleanupFailure": "rollback HTTPS fixture",
+      "finalCleanupErrors": [],
+      "allOwnFixtureUnitsStoppedAndEmpty": true,
+      "scope": "loopback HTTP fixtures, not actual production TLS or vendor acceptance"
+    },
+    "sourceSecretScan": {
+      "status": "passed",
+      "rules": "gitleaks default rules, no blanket suppression",
+      "files": 4
+    }
+  },
+  "remaining": [
+    "explicitly set only next new isolated staged-parent mode to 0750 and precheck service traversal/readability; pending human approval",
+    "diagnose whole lifecycle/cleanup timing and restore acceptance within original limits; no automatic timeout or resource increase",
+    "complete actual fault/previous/candidate/previous/repeat stage and formal proof validation"
+  ],
+  "boundaries": {
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "relayChanged": false,
+    "protectedPidsAndRestartsChanged": false,
+    "allOwnTestUnitsTerminalAndEmpty": true,
+    "unknownUiEditIncluded": false,
+    "realModelsTested": false,
+    "realOidcLoginTested": false,
+    "museDotsAcceptanceComplete": false,
+    "overallDeliveryComplete": false
+  }
+}

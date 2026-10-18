@@ -25,6 +25,9 @@ active = [None]
 release_profile = sys.argv[2] if len(sys.argv) > 2 else 'discovery-only'
 r.owned_config_fields(release_profile)
 
+# Optional migration is exercised in these private HTTP fixtures only.
+migration_contract = r.validate_migration_contract(release_profile, sys.argv[3] if len(sys.argv) > 3 else None)
+
 FIXTURE = r'''
 import http.server,json,os,re,signal,sqlite3,sys,urllib.request
 from pathlib import Path
@@ -45,6 +48,20 @@ try:
  if role=='app':
   db=sqlite3.connect(case/'data/db/test.db');fd=os.open(lock,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600)
   with os.fdopen(fd,'w') as stream:json.dump({'pid':os.getpid()},stream)
+
+  if (case/'current/version').read_text()=='new' and (case.parent/'migration-fixture.json').exists():
+   migrated=sqlite3.connect(case/'data/db/identity.db')
+   try:
+    if not migrated.execute("SELECT 1 FROM sqlite_master WHERE name='agent_authority_grants'").fetchone():
+     catalog=json.loads((case.parent/'migration-fixture.json').read_text())
+     for kind,name,table,sql in catalog:
+      if kind=='table':migrated.execute(sql)
+     for kind,name,table,sql in catalog:
+      if kind=='trigger':migrated.execute(sql)
+     migrated.execute('INSERT INTO agent_membership_epochs SELECT workspace_id,user_id,lower(hex(randomblob(16))) FROM memberships')
+     import time
+     migrated.executemany('INSERT INTO schema_version VALUES(?,1,?)',[(name,int(time.time()*1000)) for name in ('agent-authority','agent-membership-epochs')]);migrated.commit()
+   finally:migrated.close()
  server=http.server.HTTPServer(('127.0.0.1',int(port)),Handler);server.serve_forever(poll_interval=.1)
 finally:
  if db:db.close()
@@ -67,6 +84,14 @@ class Operational(tests.Fake, r.LinuxBackend):
     def __init__(self, case, fail, app_port, https_port):
         tests.Fake.__init__(self, case, fail)
         self.release_profile = release_profile
+
+        self.migration_contract = migration_contract
+        if migration_contract:
+            seed = case / 'migration-seed'
+            seed.mkdir()
+            tests.MigrationContractTests().fixture(seed)
+            for path in (seed / 'db').iterdir():
+                os.rename(path, self.data / 'db' / path.name)
         self.approved_agent_client_ids = ('isolated-rehearsal-client',) if release_profile == 'mcp-only' else ()
         if release_profile == 'mcp-only':
             prepared = json.loads(self.new_config.read_text())
@@ -92,6 +117,26 @@ class Operational(tests.Fake, r.LinuxBackend):
         os.chown(self.caddy, 0, 986)
         self.caddy.chmod(0o640)
 
+
+        if migration_contract:
+            self.settings['migrationContract'] = migration_contract
+            self.settings['stageHashes'] = r.code_inventory(self.staged)
+            self.settings['preparedHashes'] = {}
+            baseline = r.schema_details(self.data)
+            now = int(time.time() * 1000)
+            self.compatibility_proof = {'version': 1, 'status': 'passed', 'releaseProfile': release_profile,
+                'migrationContract': migration_contract, 'createdAtMs': now, 'expiresAtMs': now + 3600000,
+                'baselineSchemaDetails': baseline,
+                'bindings': {'catalogSHA256': r._canonical_hash(tests.GATE_EXPECTED_OBJECTS),
+                             'candidate': r.code_inventory(self.staged), 'previous': r.code_inventory(self.current),
+                             'baselineSchemaSHA256': r._canonical_hash(baseline),
+                             'policySHA256': r._canonical_hash(r._public_policy(json.loads(self.new_config.read_text()))),
+                             'stageHashesSHA256': r._canonical_hash(self.settings['stageHashes']),
+                             'preparedHashesSHA256': r._canonical_hash({})},
+                'boots': [{'runtime': name, 'cleanClose': True, 'dataVerified': True} for name in ('candidate', 'previous', 'candidate-repeat')],
+                'validations': {name: True for name in ('exactSchema', 'dataPreserved', 'epochsBackfilled', 'zeroGrants', 'faultAtomic', 'integrityAndForeignKeys', 'idempotent')},
+                'networkIsolated': True, 'rollbackBackup': False, 'actualModelCalls': False}
+
     def command(self, args, cap=3):
         if args[0] == 'systemctl':
             assert args[1] in ('show', 'start', 'stop')
@@ -104,6 +149,9 @@ class Operational(tests.Fake, r.LinuxBackend):
         self.baseline = self.protected()
         self.original_inode, self.staged_inode = r.inode(self.current), r.inode(self.staged)
         self.check_identity_and_permissions()
+        if migration_contract:
+            r.verify_compatibility_proof_content(self.compatibility_proof, self.settings, self.staged, self.current,
+                                                 json.loads(self.new_config.read_text()))
         self.check_original()
         self.backup.mkdir(mode=0o700)
 
@@ -221,6 +269,9 @@ def interrupted(signum, frame):
 signal.signal(signal.SIGTERM, interrupted)
 (root / 'fixture.py').write_text(FIXTURE)
 (root / 'fixture.py').chmod(0o644)
+if migration_contract:
+    (root / 'migration-fixture.json').write_text(json.dumps(tests.GATE_EXPECTED_OBJECTS))
+    (root / 'migration-fixture.json').chmod(0o644)
 before = real_state()
 results = []
 cleanup_errors = []
@@ -258,7 +309,7 @@ try:
         created.remove(r.HTTPS)
         created.remove(r.APP)
     assert before == real_state()
-    report = {'status': 'passed', 'releaseProfile': release_profile, 'cases': results, 'realServiceLifecycle': True,
+    report = {'status': 'passed', 'releaseProfile': release_profile, 'migrationContract': migration_contract, 'cases': results, 'realServiceLifecycle': True,
               'fixtureNetwork': 'loopback HTTP high ports; TLS covered by existing native product tests',
               'aggregateMemoryMax': 201326592, 'aggregateCpuPercent': 10, 'aggregateTasksMax': 32,
               'protectedUnitsUnchanged': True,

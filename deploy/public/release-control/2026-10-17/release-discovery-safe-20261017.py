@@ -1,5 +1,7 @@
 """Private operational controller: preserve live data, bounded forward/recovery work."""
 import hashlib
+import hmac
+import struct
 import json
 import os
 from pathlib import Path
@@ -167,6 +169,348 @@ def schemas(root, tick=lambda: None, cold=True):
     return result
 
 
+
+# Frozen from the accepted 2026-10-18 isolated copy, not the candidate under test.
+# Includes autoindexes (whose SQL is NULL), unlike the legacy strict digest.
+AUTHORITY_V1_OBJECTS = tuple(tuple(row) for row in json.loads(r'''[["index","sqlite_autoindex_agent_authority_grants_1","agent_authority_grants",null],["index","sqlite_autoindex_agent_authority_grants_2","agent_authority_grants",null],["index","sqlite_autoindex_agent_membership_epochs_1","agent_membership_epochs",null],["table","agent_authority_grants","agent_authority_grants","CREATE TABLE agent_authority_grants (\n        id TEXT PRIMARY KEY, issuer TEXT NOT NULL, subject TEXT NOT NULL,\n        client_id TEXT NOT NULL, resource TEXT NOT NULL,\n        user_id TEXT NOT NULL REFERENCES users(id), workspace_id TEXT NOT NULL REFERENCES workspaces(id),\n        node_id TEXT NOT NULL, membership_epoch TEXT NOT NULL, scopes TEXT NOT NULL,\n        created_at INTEGER NOT NULL, expires_at INTEGER NOT NULL,\n        UNIQUE(issuer,subject,client_id,workspace_id,node_id),\n        FOREIGN KEY(issuer,subject) REFERENCES external_identities(issuer,subject) ON DELETE CASCADE ON UPDATE CASCADE\n      )"],["table","agent_membership_epochs","agent_membership_epochs","CREATE TABLE agent_membership_epochs (\n        workspace_id TEXT NOT NULL,\n        user_id TEXT NOT NULL,\n        epoch TEXT NOT NULL CHECK(length(epoch)=32 AND epoch NOT GLOB '*[^0-9a-f]*'),\n        PRIMARY KEY(workspace_id,user_id),\n        FOREIGN KEY(workspace_id,user_id) REFERENCES memberships(workspace_id,user_id)\n          ON DELETE CASCADE ON UPDATE CASCADE\n      )"],["trigger","agent_authority_external_delete","external_identities","CREATE TRIGGER agent_authority_external_delete AFTER DELETE ON external_identities BEGIN\n        DELETE FROM agent_authority_grants WHERE issuer=OLD.issuer AND subject=OLD.subject;\n      END"],["trigger","agent_authority_external_insert","external_identities","CREATE TRIGGER agent_authority_external_insert AFTER INSERT ON external_identities BEGIN\n        DELETE FROM agent_authority_grants WHERE issuer=NEW.issuer AND subject=NEW.subject;\n      END"],["trigger","agent_authority_external_update","external_identities","CREATE TRIGGER agent_authority_external_update AFTER UPDATE ON external_identities BEGIN\n        DELETE FROM agent_authority_grants WHERE (issuer=OLD.issuer AND subject=OLD.subject)\n          OR (issuer=NEW.issuer AND subject=NEW.subject);\n      END"],["trigger","agent_membership_epochs_delete","memberships","CREATE TRIGGER agent_membership_epochs_delete\n      AFTER DELETE ON memberships BEGIN\n        DELETE FROM agent_membership_epochs WHERE workspace_id=OLD.workspace_id AND user_id=OLD.user_id;\n      END"],["trigger","agent_membership_epochs_insert","memberships","CREATE TRIGGER agent_membership_epochs_insert\n      AFTER INSERT ON memberships BEGIN\n        INSERT INTO agent_membership_epochs(workspace_id,user_id,epoch)\n        VALUES(NEW.workspace_id,NEW.user_id,lower(hex(randomblob(16))))\n        ON CONFLICT(workspace_id,user_id) DO UPDATE SET epoch=excluded.epoch;\n      END"],["trigger","agent_membership_epochs_update","memberships","CREATE TRIGGER agent_membership_epochs_update\n      AFTER UPDATE ON memberships BEGIN\n        DELETE FROM agent_membership_epochs WHERE workspace_id=OLD.workspace_id AND user_id=OLD.user_id;\n        INSERT INTO agent_membership_epochs(workspace_id,user_id,epoch)\n        VALUES(NEW.workspace_id,NEW.user_id,lower(hex(randomblob(16))))\n        ON CONFLICT(workspace_id,user_id) DO UPDATE SET epoch=excluded.epoch;\n      END"],["trigger","agent_membership_epochs_user_delete","users","CREATE TRIGGER agent_membership_epochs_user_delete\n      AFTER DELETE ON users BEGIN\n        DELETE FROM agent_membership_epochs WHERE user_id=OLD.id;\n      END"],["trigger","agent_membership_epochs_user_insert","users","CREATE TRIGGER agent_membership_epochs_user_insert\n      AFTER INSERT ON users BEGIN\n        INSERT INTO agent_membership_epochs(workspace_id,user_id,epoch)\n        SELECT workspace_id,user_id,lower(hex(randomblob(16))) FROM memberships WHERE user_id=NEW.id\n        ON CONFLICT(workspace_id,user_id) DO UPDATE SET epoch=excluded.epoch;\n      END"],["trigger","agent_membership_epochs_user_state","users","CREATE TRIGGER agent_membership_epochs_user_state\n      AFTER UPDATE OF disabled_at ON users WHEN OLD.disabled_at IS NOT NEW.disabled_at BEGIN\n        UPDATE agent_membership_epochs SET epoch=lower(hex(randomblob(16))) WHERE user_id=NEW.id;\n      END"],["trigger","agent_membership_epochs_workspace_delete","workspaces","CREATE TRIGGER agent_membership_epochs_workspace_delete\n      AFTER DELETE ON workspaces BEGIN\n        DELETE FROM agent_membership_epochs WHERE workspace_id=OLD.id;\n      END"],["trigger","agent_membership_epochs_workspace_insert","workspaces","CREATE TRIGGER agent_membership_epochs_workspace_insert\n      AFTER INSERT ON workspaces BEGIN\n        INSERT INTO agent_membership_epochs(workspace_id,user_id,epoch)\n        SELECT workspace_id,user_id,lower(hex(randomblob(16))) FROM memberships WHERE workspace_id=NEW.id\n        ON CONFLICT(workspace_id,user_id) DO UPDATE SET epoch=excluded.epoch;\n      END"],["trigger","agent_membership_epochs_workspace_state","workspaces","CREATE TRIGGER agent_membership_epochs_workspace_state\n      AFTER UPDATE OF disabled_at ON workspaces WHEN OLD.disabled_at IS NOT NEW.disabled_at BEGIN\n        UPDATE agent_membership_epochs SET epoch=lower(hex(randomblob(16))) WHERE workspace_id=NEW.id;\n      END"]]'''))
+AUTHORITY_COMPONENTS = ('agent-authority', 'agent-membership-epochs')
+AUTHORITY_TABLES = ('agent_authority_grants', 'agent_membership_epochs')
+IDENTITY_DATABASE = 'db/identity.db'
+
+
+def validate_migration_contract(profile, value):
+    owned_config_fields(profile)
+    require(value is None or (type(value) is str and value == 'agent-authority-v1'), 'migration_contract_invalid')
+    require(value is None or profile == 'mcp-only', 'migration_profile_invalid')
+    return value
+
+
+def _database_files(root, tick):
+    root = Path(root)
+    directory = root / 'db'
+    require(root.is_dir() and not root.is_symlink() and directory.is_dir() and not directory.is_symlink(),
+            'runtime_database_directory_required')
+    result, total = [], 0
+    for path in sorted(directory.rglob('*')):
+        tick()
+        metadata = path.lstat()
+        require(stat.S_ISDIR(metadata.st_mode) or stat.S_ISREG(metadata.st_mode), 'database_special_file_denied')
+        if path.is_file() and path.suffix in ('.db', '.sqlite', '.sqlite3'):
+            total += metadata.st_size
+            require(total <= 64 * 1024 * 1024 and len(result) < 1000, 'database_inventory_limit')
+            result.append(path)
+    require(bool(result), 'database_inventory_empty')
+    return result
+
+
+def _readonly_database(path, tick, cold):
+    tick()
+    wal = Path(str(path) + '-wal')
+    require(not wal.is_symlink(), 'database_wal_link_denied')
+    if cold:
+        require(not wal.exists() or wal.stat().st_size == 0, 'cold_database_wal_not_empty')
+    db = sqlite3.connect(path.resolve().as_uri() + '?mode=ro' + ('&immutable=1' if cold else ''), uri=True, timeout=1)
+    try:
+        db.setlimit(sqlite3.SQLITE_LIMIT_LENGTH, 8 * 1024 * 1024)
+        db.setlimit(sqlite3.SQLITE_LIMIT_SQL_LENGTH, 1024 * 1024)
+        db.execute('PRAGMA query_only=ON')
+        db.execute('PRAGMA cache_size=-512')
+        def progress():
+            try:
+                tick()
+                return 0
+            except RuntimeError:
+                return 1
+        db.set_progress_handler(progress, 1000)
+        if cold:
+            require(db.execute('PRAGMA quick_check').fetchall() == [('ok',)], 'database_integrity')
+            require(not db.execute('PRAGMA foreign_key_check').fetchall(), 'database_foreign_keys')
+        return db
+    except BaseException:
+        db.close()
+        raise
+
+
+def _schema_rows(db):
+    rows = db.execute('SELECT type,name,tbl_name,sql FROM sqlite_master ORDER BY type,name').fetchmany(1001)
+    require(len(rows) <= 1000, 'schema_object_limit')
+    require(sum(len(row[3] or '') for row in rows) <= 1024 * 1024, 'schema_definition_limit')
+    return rows
+
+
+def schema_details(root, tick=lambda: None, cold=True):
+    root = Path(root)
+    result = {}
+    for path in _database_files(root, tick):
+        db = _readonly_database(path, tick, cold)
+        try:
+            result[path.relative_to(root).as_posix()] = _schema_rows(db)
+        finally:
+            db.close()
+    return result
+
+
+def _object_map(rows):
+    require(type(rows) in (tuple, list), 'schema_rows_invalid')
+    result = {}
+    for row in rows:
+        require(type(row) in (tuple, list) and len(row) == 4 and
+                all(type(value) is str for value in row[:3]) and (row[3] is None or type(row[3]) is str),
+                'schema_row_invalid')
+        key = (row[0], row[1])
+        require(key not in result, 'schema_duplicate_object')
+        result[key] = tuple(row)
+    return result
+
+
+def verify_schema_transition(before, after, contract, allow_baseline=False):
+    require(type(before) is dict and type(after) is dict and before and set(before) == set(after), 'schema_database_changed')
+    old = {name: _object_map(rows) for name, rows in before.items()}
+    new = {name: _object_map(rows) for name, rows in after.items()}
+    if contract is None:
+        require(old == new, 'schema_changed_without_contract')
+        return 'unchanged'
+    require(type(contract) is str and contract == 'agent-authority-v1', 'migration_contract_invalid')
+    require(IDENTITY_DATABASE in old, 'migration_identity_required')
+    expected = _object_map(AUTHORITY_V1_OBJECTS)
+    reserved = {row[1] for row in AUTHORITY_V1_OBJECTS}
+    require(not any(row[1] in reserved for row in old[IDENTITY_DATABASE].values()), 'migration_source_not_pristine')
+    if allow_baseline and old == new:
+        return 'unchanged'
+    target = dict(old[IDENTITY_DATABASE])
+    target.update(expected)
+    require(new[IDENTITY_DATABASE] == target, 'migration_schema_not_exact')
+    require(all(old[name] == new[name] for name in old if name != IDENTITY_DATABASE), 'migration_other_database_changed')
+    return 'agent-authority-v1'
+
+
+def _quote_identifier(value):
+    return '"' + value.replace('"', '""') + '"'
+
+
+def _row_hmac(row, key):
+    value = hmac.new(key, b'chunlack-typed-row-v1\x00', hashlib.sha256)
+    value.update(struct.pack('>I', len(row)))
+    for cell in row:
+        if cell is None:
+            kind, data = b'n', b''
+        elif type(cell) is int:
+            kind, data = b'i', str(cell).encode('ascii')
+        elif type(cell) is float:
+            kind, data = b'f', struct.pack('>d', cell)
+        elif type(cell) is str:
+            kind, data = b't', cell.encode('utf-8')
+        elif type(cell) is bytes:
+            kind, data = b'b', cell
+        else:
+            raise RuntimeError('fingerprint_sqlite_value_invalid')
+        value.update(kind)
+        value.update(struct.pack('>Q', len(data)))
+        for offset in range(0, len(data), 65536):
+            value.update(memoryview(data)[offset:offset + 65536])
+    return value.digest()
+
+
+def _table_fingerprint(db, table, key, spill, tick, budget, where=''):
+    # Sorting fixed-size HMACs on private disk preserves duplicate rows exactly,
+    # without retaining raw user values or an unbounded Python Counter in RAM.
+    spill.execute('DELETE FROM row_hashes')
+    query = 'SELECT * FROM ' + _quote_identifier(table) + where
+    cursor = db.execute(query)
+    columns = [description[0] for description in cursor.description]
+    count = 0
+    for row in cursor:
+        tick()
+        budget[0] += 1
+        budget[1] += sum(len(cell.encode('utf-8')) if type(cell) is str else len(cell) if type(cell) is bytes else 8 for cell in row)
+        require(budget[0] <= 250000 and budget[1] <= 64 * 1024 * 1024, 'fingerprint_data_limit')
+        spill.execute('INSERT INTO row_hashes VALUES(?)', (_row_hmac(row, key),))
+        count += 1
+    value = hmac.new(key, b'chunlack-row-multiset-v1\x00', hashlib.sha256)
+    value.update(json.dumps(columns, ensure_ascii=True, separators=(',', ':')).encode('ascii'))
+    for (row_hash,) in spill.execute('SELECT digest FROM row_hashes ORDER BY digest'):
+        tick()
+        value.update(row_hash)
+    return {'rows': count, 'hmac': value.hexdigest()}
+
+
+def copy_data_fingerprint(root, key, tick=lambda: None):
+    require(type(key) is bytes and len(key) >= 32, 'fingerprint_private_key_required')
+    root = Path(root)
+    started = int(time.time() * 1000)
+    result = {'startedAtMs': started, 'schemas': {}, 'tables': {}, 'authorityVersions': [], 'epoch': None}
+    budget = [0, 0]
+    with tempfile.TemporaryDirectory(prefix='chunlack-fingerprint-') as tmp:
+        scratch = Path(tmp) / 'row-hashes.sqlite'
+        with scratch.open('xb'):
+            os.chmod(scratch, 0o600)
+        spill = sqlite3.connect(scratch)
+        try:
+            spill.execute('PRAGMA journal_mode=OFF')
+            spill.execute('PRAGMA synchronous=OFF')
+            spill.execute('PRAGMA cache_size=-512')
+            spill.execute('PRAGMA temp_store=FILE')
+            spill.execute('CREATE TABLE row_hashes(digest BLOB NOT NULL)')
+            for path in _database_files(root, tick):
+                tick()
+                name = path.relative_to(root).as_posix()
+                db = _readonly_database(path, tick, True)
+                try:
+                    rows = _schema_rows(db)
+                    result['schemas'][name] = rows
+                    tables = [row[1] for row in rows if row[0] == 'table' and not row[1].startswith('sqlite_')]
+                    result['tables'][name] = {}
+                    for table in tables:
+                        where = " WHERE component IS NULL OR component NOT IN ('agent-authority','agent-membership-epochs')" if name == IDENTITY_DATABASE and table == 'schema_version' else ''
+                        result['tables'][name][table] = _table_fingerprint(db, table, key, spill, tick, budget, where)
+                    if name == IDENTITY_DATABASE:
+                        require('schema_version' in tables and 'memberships' in tables, 'migration_identity_tables_missing')
+                        result['authorityVersions'] = db.execute("SELECT component,version,applied_at FROM schema_version WHERE component IN ('agent-authority','agent-membership-epochs') ORDER BY component").fetchall()
+                        if 'agent_membership_epochs' in tables:
+                            missing = db.execute('SELECT count(*) FROM memberships m LEFT JOIN agent_membership_epochs e ON e.workspace_id=m.workspace_id AND e.user_id=m.user_id WHERE e.epoch IS NULL').fetchone()[0]
+                            orphan = db.execute('SELECT count(*) FROM agent_membership_epochs e LEFT JOIN memberships m ON e.workspace_id=m.workspace_id AND e.user_id=m.user_id WHERE m.user_id IS NULL').fetchone()[0]
+                            invalid = db.execute("SELECT count(*) FROM agent_membership_epochs WHERE typeof(epoch)!='text' OR length(epoch)!=32 OR epoch GLOB '*[^0-9a-f]*'").fetchone()[0]
+                            result['epoch'] = {'missing': missing, 'orphan': orphan, 'invalid': invalid}
+                finally:
+                    db.close()
+        finally:
+            spill.close()
+    result['finishedAtMs'] = int(time.time() * 1000)
+    require(result['finishedAtMs'] >= started, 'fingerprint_clock_reversed')
+    return result
+
+
+def verify_copy_migration(before, after, contract, phase):
+    require(type(contract) is str and contract == 'agent-authority-v1', 'migration_contract_invalid')
+    require(phase in ('candidate', 'previous', 'repeat', 'fault'), 'migration_phase_invalid')
+    if phase != 'candidate':
+        verify_schema_transition(before['schemas'], after['schemas'], None)
+        require(before['tables'] == after['tables'] and before['authorityVersions'] == after['authorityVersions'] and
+                before['epoch'] == after['epoch'], 'migration_repeat_or_fault_changed_data')
+        return
+    verify_schema_transition(before['schemas'], after['schemas'], contract)
+    require(not before['authorityVersions'], 'migration_source_versions_exist')
+    old, new = before['tables'], after['tables']
+    require(set(old) == set(new), 'migration_database_inventory_changed')
+    for database, tables in old.items():
+        additions = set(AUTHORITY_TABLES) if database == IDENTITY_DATABASE else set()
+        require(set(new[database]) == set(tables) | additions, 'migration_table_inventory_changed')
+        require(all(new[database][table] == value for table, value in tables.items()), 'migration_original_rows_changed')
+    versions = after['authorityVersions']
+    require(len(versions) == 2 and [row[0] for row in versions] == list(AUTHORITY_COMPONENTS), 'migration_component_versions_invalid')
+    require(all(type(row[1]) is int and row[1] == 1 and type(row[2]) is int and
+                before['finishedAtMs'] <= row[2] <= after['startedAtMs'] for row in versions), 'migration_component_version_or_time_invalid')
+    require(new[IDENTITY_DATABASE]['agent_authority_grants']['rows'] == 0, 'migration_unexpected_grant')
+    require(after['epoch'] == {'missing': 0, 'orphan': 0, 'invalid': 0} and
+            new[IDENTITY_DATABASE]['agent_membership_epochs']['rows'] == old[IDENTITY_DATABASE]['memberships']['rows'],
+            'migration_epoch_backfill_invalid')
+
+
+
+def _canonical_hash(value):
+    return hashlib.sha256(json.dumps(value, sort_keys=True, ensure_ascii=True, separators=(',', ':')).encode()).hexdigest()
+
+
+def code_inventory(root):
+    root = Path(root)
+    require(root.is_dir() and not root.is_symlink(), 'proof_code_directory_invalid')
+    result, total = {}, 0
+    for directory, dirs, files in os.walk(root, followlinks=False):
+        base = Path(directory)
+        dirs[:] = sorted(name for name in dirs if name != 'node_modules')
+        require(not any((base / name).is_symlink() for name in dirs), 'proof_code_link_denied')
+        for name in sorted(files):
+            path = base / name
+            relative = path.relative_to(root).as_posix()
+            if relative == 'config/lack.config.json':
+                continue  # Generated deployment configuration is not executable source.
+            metadata = path.lstat()
+            require(stat.S_ISREG(metadata.st_mode), 'proof_code_special_file_denied')
+            total += metadata.st_size
+            require(metadata.st_size <= 4 * 1024 * 1024 and total <= 64 * 1024 * 1024 and len(result) < 1000,
+                    'proof_code_inventory_limit')
+            result[relative] = digest(path)
+    require(bool(result), 'proof_code_inventory_empty')
+    return result
+
+
+def _public_policy(config):
+    runtime = config.get('publicRuntime', {})
+    selected = {key: runtime[key] for key in ('webOrigin', 'agentsOrigin', 'mcpPort', 'nodeRestPublic') if key in runtime}
+    if 'agentOAuth' in runtime:
+        oauth = runtime['agentOAuth']
+        selected['agentOAuth'] = {key: oauth[key] for key in
+            ('enabled', 'discoveryOnly', 'issuer', 'resource', 'jwksUri', 'browserClientId', 'clientIds') if key in oauth}
+    if 'events' in runtime:
+        selected['events'] = {'enabled': runtime['events'].get('enabled')}
+    return {'httpPort': config.get('httpPort'), 'agentGatewayPort': config.get('agentGateway', {}).get('port'), 'runtime': selected}
+
+
+def _prepared_binding(settings):
+    return {name: value for name, value in settings.get('preparedHashes', {}).items() if name != 'schema-compatibility-report.json'}
+
+
+def verify_compatibility_proof_content(proof, settings, candidate, current, prepared, now=None):
+    contract = validate_migration_contract(settings.get('releaseProfile', 'discovery-only'), settings.get('migrationContract'))
+    require(contract == 'agent-authority-v1', 'proof_contract_required')
+    require(type(proof) is dict and proof.get('version') == 1 and proof.get('status') == 'passed' and
+            proof.get('migrationContract') == contract and proof.get('releaseProfile') == 'mcp-only', 'proof_header_invalid')
+    created, expires = proof.get('createdAtMs'), proof.get('expiresAtMs')
+    moment = int(time.time() * 1000) if now is None else now
+    require(type(created) is int and type(expires) is int and created <= moment <= expires and
+            0 < expires - created <= 3600000, 'proof_expired_or_invalid_time')
+    validate_release_config(prepared, 'mcp-only', settings.get('approvedAgentClientIds'))
+    baseline = proof.get('baselineSchemaDetails')
+    verify_schema_transition(baseline, baseline, contract, allow_baseline=True)
+    expected = {'catalogSHA256': _canonical_hash(AUTHORITY_V1_OBJECTS),
+                'candidate': code_inventory(candidate), 'previous': code_inventory(current),
+                'baselineSchemaSHA256': _canonical_hash(baseline), 'policySHA256': _canonical_hash(_public_policy(prepared)),
+                'stageHashesSHA256': _canonical_hash(settings.get('stageHashes', {})),
+                'preparedHashesSHA256': _canonical_hash(_prepared_binding(settings))}
+    require(proof.get('bindings') == expected, 'proof_binding_drift')
+    boots = proof.get('boots')
+    require(type(boots) is list and len(boots) == 3 and
+            [boot.get('runtime') for boot in boots if type(boot) is dict] == ['candidate', 'previous', 'candidate-repeat'] and
+            all(boot.get('cleanClose') is True and boot.get('dataVerified') is True for boot in boots), 'proof_boots_incomplete')
+    validations = proof.get('validations')
+    required = {'exactSchema', 'dataPreserved', 'epochsBackfilled', 'zeroGrants', 'faultAtomic', 'integrityAndForeignKeys', 'idempotent'}
+    require(type(validations) is dict and set(validations) == required and all(value is True for value in validations.values()),
+            'proof_validations_incomplete')
+    require(proof.get('networkIsolated') is True and proof.get('rollbackBackup') is False and proof.get('actualModelCalls') is False,
+            'proof_scope_invalid')
+    return proof
+
+
+def verify_compatibility_proof(report, settings, candidate, current):
+    report = Path(report)
+    require(os.name == 'posix', 'proof_private_metadata_requires_posix')
+    for parent in (report.parent, *report.parent.parents):
+        require(not parent.is_symlink(), 'proof_parent_link_denied')
+    parent_metadata = report.parent.lstat()
+    require(parent_metadata.st_uid == 0 and stat.S_IMODE(parent_metadata.st_mode) == 0o700, 'proof_parent_not_private')
+    require(report.name == 'schema-compatibility-report.json', 'proof_filename_invalid')
+    descriptor = os.open(report, os.O_RDONLY | os.O_NOFOLLOW)
+    with os.fdopen(descriptor, 'rb') as stream:
+        metadata = os.fstat(stream.fileno())
+        require(stat.S_ISREG(metadata.st_mode) and metadata.st_uid == 0 and metadata.st_nlink == 1 and
+                stat.S_IMODE(metadata.st_mode) == 0o600 and metadata.st_size <= 1024 * 1024, 'proof_file_not_private')
+        payload = stream.read(1024 * 1024 + 1)
+    require(len(payload) <= 1024 * 1024 and settings.get('preparedHashes', {}).get(report.name) == hashlib.sha256(payload).hexdigest(),
+            'proof_prepared_hash_missing_or_changed')
+    prepared = json.loads((report.parent / 'candidate-config.json').read_text())
+    return verify_compatibility_proof_content(json.loads(payload), settings, candidate, current, prepared)
+
+
+def require_pristine_authority_versions(root, tick=lambda: None, cold=True):
+    path = Path(root) / IDENTITY_DATABASE
+    db = _readonly_database(path, tick, cold)
+    try:
+        require(not db.execute("SELECT 1 FROM schema_version WHERE component IN ('agent-authority','agent-membership-epochs') LIMIT 1").fetchone(),
+                'migration_source_versions_exist')
+    finally:
+        db.close()
+
+
 def owned_config_fields(profile):
     require(type(profile) is str and profile in ('discovery-only', 'mcp-only'), 'release_profile_invalid')
     return ('agentOAuth', 'nodeRestPublic') if profile == 'mcp-only' else ('agentOAuth',)
@@ -268,6 +612,8 @@ class Transaction:
         self.records = []
         self.backed_up = False
         self.schema_before = None
+        self.schema_details_before = None
+        self.migration_contract = None
 
     def record(self, phase):
         self.records.append({'phase': phase, 'seconds': round(self.w.elapsed(), 3)})
@@ -279,6 +625,12 @@ class Transaction:
         b = self.b
         require(not (b.data / '.public-runtime.lock').exists(), 'writer_lock_remains')
         self.schema_before = schemas(b.data, self.w.tick)
+        if self.migration_contract:
+            self.schema_details_before = schema_details(b.data, self.w.tick)
+            verify_schema_transition(b.compatibility_proof['baselineSchemaDetails'], self.schema_details_before, None)
+            require_pristine_authority_versions(b.data, self.w.tick)
+            verify_compatibility_proof_content(b.compatibility_proof, b.settings, b.staged, b.current,
+                                               json.loads(b.new_config.read_text()))
         before = inventory(b.data, self.w.tick)
         private_copy_tree(b.data, b.backup / 'data', self.w.tick)
         require(before == inventory(b.data, self.w.tick) == inventory(b.backup / 'data', self.w.tick), 'backup_content_mismatch')
@@ -290,7 +642,10 @@ class Transaction:
     def execute(self):
         b = self.b
         try:
+            self.migration_contract = validate_migration_contract(self.profile, getattr(b, 'migration_contract', None))
             b.preflight()
+            if self.migration_contract:
+                require(type(getattr(b, 'compatibility_proof', None)) is dict, 'migration_proof_required')
             prepared = json.loads(b.new_config.read_text())
             validate_release_config(prepared, self.profile, self.approved_clients)
             self.record('preflight_passed')
@@ -314,7 +669,10 @@ class Transaction:
             b.start(APP, 16)
             b.start(HTTPS, 10)
             b.check_candidate('loopback')
-            require(schemas(b.data, self.w.tick, cold=False) == self.schema_before, 'candidate_schema_changed')
+            if self.migration_contract:
+                verify_schema_transition(self.schema_details_before, schema_details(b.data, self.w.tick, cold=False), self.migration_contract)
+            else:
+                require(schemas(b.data, self.w.tick, cold=False) == self.schema_before, 'candidate_schema_changed')
             self.record('loopback_https_acceptance_passed')
             b.stop(HTTPS, 6)
             atomic_copy(b.final_caddy, b.caddy, self.w.tick)
@@ -350,7 +708,10 @@ class Transaction:
         b.stop(APP, 20)
         require(not (b.data / '.public-runtime.lock').exists(), 'rollback_writer_lock_remains_no_override')
         if self.backed_up:
-            require(schemas(b.data, self.w.tick) == self.schema_before, 'rollback_schema_incompatible')
+            if self.migration_contract:
+                verify_schema_transition(self.schema_details_before, schema_details(b.data, self.w.tick), self.migration_contract, allow_baseline=True)
+            else:
+                require(schemas(b.data, self.w.tick) == self.schema_before, 'rollback_schema_incompatible')
         if b.previous.exists():
             require(inode(b.previous) == b.original_inode, 'original_code_identity_changed')
             if b.current.exists():
@@ -378,6 +739,7 @@ class LinuxBackend:
         self.settings = json.loads((self.root / 'settings.json').read_text())
         self.tag = self.settings['tag']
         self.release_profile = self.settings.get('releaseProfile', 'discovery-only')
+        self.migration_contract = self.settings.get('migrationContract')
         approved = self.settings.get('approvedAgentClientIds')
         self.approved_agent_client_ids = tuple(approved) if type(approved) is list else None
         require(re.fullmatch('[0-9a-f]{12}', self.tag) and self.root == Path('/var/lib/chunlack-release-' + self.tag), 'invalid_release_root')
@@ -439,6 +801,12 @@ class LinuxBackend:
             value = json.loads(self.command([binary, 'adapt', '--config', str(path), '--adapter', 'caddyfile'], cap=10))
             validate_caddy_document(value, expected)
 
+    def check_migration_preflight(self):
+        if validate_migration_contract(self.release_profile, self.migration_contract):
+            self.compatibility_proof = verify_compatibility_proof(self.root / 'schema-compatibility-report.json', self.settings, self.staged, self.current)
+            verify_schema_transition(self.compatibility_proof['baselineSchemaDetails'], schema_details(self.data, cold=False), None)
+            require_pristine_authority_versions(self.data, self.w.tick, cold=False)
+
     def preflight(self):
         require(os.geteuid() == 0, 'root_controller_required')
         import fcntl
@@ -457,6 +825,7 @@ class LinuxBackend:
             require(digest(self.root / relative) == expected, 'prepared_input_drift')
         for relative, expected in self.settings['stageHashes'].items():
             require(digest(self.staged / relative) == expected, 'staged_code_drift')
+        self.check_migration_preflight()
         self.original_inode, self.staged_inode = inode(self.current), inode(self.staged)
         self.check_identity_and_permissions()
         self.validate_ingress()

@@ -1,4 +1,5 @@
 import importlib.util
+from contextlib import closing
 import json
 import os
 from pathlib import Path
@@ -536,6 +537,315 @@ class CorrectionContractTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, (result.stdout + result.stderr)[-10000:])
         self.assertIn('# pass 1', result.stdout)
         self.assertIn('# fail 0', result.stdout)
+
+
+
+# Independent, accepted-copy catalog; never use the candidate as an oracle.
+GATE_EXPECTED_OBJECTS = json.loads(r'''[["index","sqlite_autoindex_agent_authority_grants_1","agent_authority_grants",null],["index","sqlite_autoindex_agent_authority_grants_2","agent_authority_grants",null],["index","sqlite_autoindex_agent_membership_epochs_1","agent_membership_epochs",null],["table","agent_authority_grants","agent_authority_grants","CREATE TABLE agent_authority_grants (\n        id TEXT PRIMARY KEY, issuer TEXT NOT NULL, subject TEXT NOT NULL,\n        client_id TEXT NOT NULL, resource TEXT NOT NULL,\n        user_id TEXT NOT NULL REFERENCES users(id), workspace_id TEXT NOT NULL REFERENCES workspaces(id),\n        node_id TEXT NOT NULL, membership_epoch TEXT NOT NULL, scopes TEXT NOT NULL,\n        created_at INTEGER NOT NULL, expires_at INTEGER NOT NULL,\n        UNIQUE(issuer,subject,client_id,workspace_id,node_id),\n        FOREIGN KEY(issuer,subject) REFERENCES external_identities(issuer,subject) ON DELETE CASCADE ON UPDATE CASCADE\n      )"],["table","agent_membership_epochs","agent_membership_epochs","CREATE TABLE agent_membership_epochs (\n        workspace_id TEXT NOT NULL,\n        user_id TEXT NOT NULL,\n        epoch TEXT NOT NULL CHECK(length(epoch)=32 AND epoch NOT GLOB '*[^0-9a-f]*'),\n        PRIMARY KEY(workspace_id,user_id),\n        FOREIGN KEY(workspace_id,user_id) REFERENCES memberships(workspace_id,user_id)\n          ON DELETE CASCADE ON UPDATE CASCADE\n      )"],["trigger","agent_authority_external_delete","external_identities","CREATE TRIGGER agent_authority_external_delete AFTER DELETE ON external_identities BEGIN\n        DELETE FROM agent_authority_grants WHERE issuer=OLD.issuer AND subject=OLD.subject;\n      END"],["trigger","agent_authority_external_insert","external_identities","CREATE TRIGGER agent_authority_external_insert AFTER INSERT ON external_identities BEGIN\n        DELETE FROM agent_authority_grants WHERE issuer=NEW.issuer AND subject=NEW.subject;\n      END"],["trigger","agent_authority_external_update","external_identities","CREATE TRIGGER agent_authority_external_update AFTER UPDATE ON external_identities BEGIN\n        DELETE FROM agent_authority_grants WHERE (issuer=OLD.issuer AND subject=OLD.subject)\n          OR (issuer=NEW.issuer AND subject=NEW.subject);\n      END"],["trigger","agent_membership_epochs_delete","memberships","CREATE TRIGGER agent_membership_epochs_delete\n      AFTER DELETE ON memberships BEGIN\n        DELETE FROM agent_membership_epochs WHERE workspace_id=OLD.workspace_id AND user_id=OLD.user_id;\n      END"],["trigger","agent_membership_epochs_insert","memberships","CREATE TRIGGER agent_membership_epochs_insert\n      AFTER INSERT ON memberships BEGIN\n        INSERT INTO agent_membership_epochs(workspace_id,user_id,epoch)\n        VALUES(NEW.workspace_id,NEW.user_id,lower(hex(randomblob(16))))\n        ON CONFLICT(workspace_id,user_id) DO UPDATE SET epoch=excluded.epoch;\n      END"],["trigger","agent_membership_epochs_update","memberships","CREATE TRIGGER agent_membership_epochs_update\n      AFTER UPDATE ON memberships BEGIN\n        DELETE FROM agent_membership_epochs WHERE workspace_id=OLD.workspace_id AND user_id=OLD.user_id;\n        INSERT INTO agent_membership_epochs(workspace_id,user_id,epoch)\n        VALUES(NEW.workspace_id,NEW.user_id,lower(hex(randomblob(16))))\n        ON CONFLICT(workspace_id,user_id) DO UPDATE SET epoch=excluded.epoch;\n      END"],["trigger","agent_membership_epochs_user_delete","users","CREATE TRIGGER agent_membership_epochs_user_delete\n      AFTER DELETE ON users BEGIN\n        DELETE FROM agent_membership_epochs WHERE user_id=OLD.id;\n      END"],["trigger","agent_membership_epochs_user_insert","users","CREATE TRIGGER agent_membership_epochs_user_insert\n      AFTER INSERT ON users BEGIN\n        INSERT INTO agent_membership_epochs(workspace_id,user_id,epoch)\n        SELECT workspace_id,user_id,lower(hex(randomblob(16))) FROM memberships WHERE user_id=NEW.id\n        ON CONFLICT(workspace_id,user_id) DO UPDATE SET epoch=excluded.epoch;\n      END"],["trigger","agent_membership_epochs_user_state","users","CREATE TRIGGER agent_membership_epochs_user_state\n      AFTER UPDATE OF disabled_at ON users WHEN OLD.disabled_at IS NOT NEW.disabled_at BEGIN\n        UPDATE agent_membership_epochs SET epoch=lower(hex(randomblob(16))) WHERE user_id=NEW.id;\n      END"],["trigger","agent_membership_epochs_workspace_delete","workspaces","CREATE TRIGGER agent_membership_epochs_workspace_delete\n      AFTER DELETE ON workspaces BEGIN\n        DELETE FROM agent_membership_epochs WHERE workspace_id=OLD.id;\n      END"],["trigger","agent_membership_epochs_workspace_insert","workspaces","CREATE TRIGGER agent_membership_epochs_workspace_insert\n      AFTER INSERT ON workspaces BEGIN\n        INSERT INTO agent_membership_epochs(workspace_id,user_id,epoch)\n        SELECT workspace_id,user_id,lower(hex(randomblob(16))) FROM memberships WHERE workspace_id=NEW.id\n        ON CONFLICT(workspace_id,user_id) DO UPDATE SET epoch=excluded.epoch;\n      END"],["trigger","agent_membership_epochs_workspace_state","workspaces","CREATE TRIGGER agent_membership_epochs_workspace_state\n      AFTER UPDATE OF disabled_at ON workspaces WHEN OLD.disabled_at IS NOT NEW.disabled_at BEGIN\n        UPDATE agent_membership_epochs SET epoch=lower(hex(randomblob(16))) WHERE workspace_id=NEW.id;\n      END"]]''')
+
+
+class MigrationContractTests(unittest.TestCase):
+    key = b'isolated-fingerprint-test-key-32!!'
+
+    def fixture(self, root):
+        (root / 'db').mkdir()
+        with closing(sqlite3.connect(root / 'db/identity.db')) as db, db:
+            db.executescript('''
+                CREATE TABLE schema_version(component TEXT PRIMARY KEY,version INTEGER NOT NULL,applied_at INTEGER NOT NULL);
+                CREATE TABLE users(id TEXT PRIMARY KEY,disabled_at INTEGER);
+                CREATE TABLE workspaces(id TEXT PRIMARY KEY,disabled_at INTEGER);
+                CREATE TABLE memberships(workspace_id TEXT,user_id TEXT,role TEXT,version INTEGER,
+                  PRIMARY KEY(workspace_id,user_id),FOREIGN KEY(user_id) REFERENCES users(id),FOREIGN KEY(workspace_id) REFERENCES workspaces(id));
+                CREATE TABLE external_identities(issuer TEXT,subject TEXT,user_id TEXT,PRIMARY KEY(issuer,subject));
+                INSERT INTO schema_version VALUES('identity',2,1);
+                INSERT INTO users VALUES('synthetic-user',NULL);
+                INSERT INTO workspaces VALUES('synthetic-workspace',NULL);
+                INSERT INTO memberships VALUES('synthetic-workspace','synthetic-user','owner',1);
+                INSERT INTO external_identities VALUES('https://synthetic.invalid','subject','synthetic-user');
+            ''')
+        with closing(sqlite3.connect(root / 'db/lack.db')) as db, db:
+            db.execute('CREATE TABLE evidence(value)')
+            db.executemany('INSERT INTO evidence VALUES(?)', [(None,), (0,), (0.0,), ('0',), (b'0',),
+                ('Unicode-\u4e2d\u6587',), ('Unicode-\u4e2d\u6587',), (b'x' * (2 * 1024 * 1024),)])
+
+    def install(self, root):
+        import time
+        with closing(sqlite3.connect(root / 'db/identity.db')) as db, db:
+            for kind, name, table, sql in GATE_EXPECTED_OBJECTS:
+                if kind == 'table':
+                    db.execute(sql)
+            for kind, name, table, sql in GATE_EXPECTED_OBJECTS:
+                if kind == 'trigger':
+                    db.execute(sql)
+            db.execute("INSERT INTO agent_membership_epochs SELECT workspace_id,user_id,? FROM memberships", ('a' * 32,))
+            db.executemany('INSERT INTO schema_version VALUES(?,1,?)',
+                [(name, int(time.time() * 1000)) for name in ('agent-authority', 'agent-membership-epochs')])
+
+    def test_explicit_contract_and_default_strict_policy(self):
+        self.assertIsNone(r.validate_migration_contract('discovery-only', None))
+        self.assertIsNone(r.validate_migration_contract('mcp-only', None))
+        self.assertEqual(r.validate_migration_contract('mcp-only', 'agent-authority-v1'), 'agent-authority-v1')
+        for profile, value in [('mcp-only','unknown'), ('discovery-only','agent-authority-v1'),
+                               ('unknown',None), ('mcp-only',False), ('mcp-only',{})]:
+            with self.subTest(profile=profile,value=value), self.assertRaises(RuntimeError):
+                r.validate_migration_contract(profile,value)
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);self.fixture(root)
+            before=r.schema_details(root)
+            self.assertEqual(r.verify_schema_transition(before,before,None),'unchanged')
+            self.install(root)
+            after=r.schema_details(root)
+            with self.assertRaises(RuntimeError):r.verify_schema_transition(before,after,None)
+            self.assertEqual(r.verify_schema_transition(before,after,'agent-authority-v1'),'agent-authority-v1')
+            self.assertEqual(r.verify_schema_transition(before,before,'agent-authority-v1',allow_baseline=True),'unchanged')
+            with self.assertRaises(RuntimeError):r.verify_schema_transition(before,before,'agent-authority-v1')
+            with self.assertRaises(RuntimeError):r.verify_schema_transition(after,after,'agent-authority-v1')
+
+    def test_exact_definitions_and_all_original_objects_required(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);self.fixture(root);before=r.schema_details(root);self.install(root);after=r.schema_details(root)
+            mutations=[]
+            for target in ['agent_authority_grants','agent_membership_epochs_insert','sqlite_autoindex_agent_authority_grants_1','users']:
+                changed=json.loads(json.dumps(after))
+                row=next(row for row in changed['db/identity.db'] if row[1]==target)
+                row[3]=(row[3] or '')+' -- changed'
+                mutations.append(changed)
+            missing=json.loads(json.dumps(after));missing['db/identity.db'].pop();mutations.append(missing)
+            extra=json.loads(json.dumps(after));extra['db/identity.db'].append(['table','extra','extra','CREATE TABLE extra(x)']);mutations.append(extra)
+            other=json.loads(json.dumps(after));other['db/lack.db'][0][3]+=' ';mutations.append(other)
+            for i, changed in enumerate(mutations):
+                with self.subTest(case=i), self.assertRaises(RuntimeError):r.verify_schema_transition(before,changed,'agent-authority-v1')
+            partial=json.loads(json.dumps(before));partial['db/identity.db'].append(GATE_EXPECTED_OBJECTS[0])
+            with self.assertRaises(RuntimeError):r.verify_schema_transition(partial,after,'agent-authority-v1')
+
+    def test_valid_copy_typed_multiset_and_idempotence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);self.fixture(root)
+            before=r.copy_data_fingerprint(root,self.key)
+            self.install(root);after=r.copy_data_fingerprint(root,self.key)
+            r.verify_copy_migration(before,after,'agent-authority-v1','candidate')
+            repeated=r.copy_data_fingerprint(root,self.key)
+            for phase in ('previous','repeat'):r.verify_copy_migration(after,repeated,'agent-authority-v1',phase)
+            self.assertNotIn('synthetic-user',json.dumps(after));self.assertNotIn(self.key.decode(),json.dumps(after))
+            other=r.copy_data_fingerprint(root,b'z'*32)
+            self.assertNotEqual(after['tables'],other['tables'])
+            with self.assertRaises(RuntimeError):r.copy_data_fingerprint(root,b'short')
+
+    def test_old_rows_deletions_overwrites_types_and_duplicates_rejected(self):
+        for sql, params in [
+            ('DELETE FROM evidence WHERE rowid=1',()),
+            ('UPDATE evidence SET value=? WHERE rowid=2',(b'0',)),
+            ('UPDATE evidence SET value=? WHERE rowid=3',(0,)),
+            ('DELETE FROM evidence WHERE rowid=6',()),
+            ('INSERT INTO evidence VALUES(?)',('extra',)),
+        ]:
+            with self.subTest(sql=sql,params=repr(params)), tempfile.TemporaryDirectory() as tmp:
+                root=Path(tmp);self.fixture(root);before=r.copy_data_fingerprint(root,self.key);self.install(root)
+                with closing(sqlite3.connect(root/'db/lack.db')) as db, db:db.execute(sql,params)
+                with self.assertRaises(RuntimeError):r.verify_copy_migration(before,r.copy_data_fingerprint(root,self.key),'agent-authority-v1','candidate')
+
+    def test_version_epoch_and_initial_grant_invariants(self):
+        for change in ('missing-version','extra-version','wrong-version','old-time','future-time','missing-epoch','wrong-epoch','wrong-binding','grant','existing-version'):
+            with self.subTest(change=change), tempfile.TemporaryDirectory() as tmp:
+                root=Path(tmp);self.fixture(root)
+                if change=='existing-version':
+                    with closing(sqlite3.connect(root/'db/identity.db')) as db, db:db.execute("INSERT INTO schema_version VALUES('agent-authority',1,1)")
+                before=r.copy_data_fingerprint(root,self.key)
+                if change=='existing-version':
+                    # A partial version-only source must fail even if the final schema is complete.
+                    with closing(sqlite3.connect(root/'db/identity.db')) as db, db:db.execute("DELETE FROM schema_version WHERE component='agent-authority'")
+                self.install(root)
+                with closing(sqlite3.connect(root/'db/identity.db')) as db, db:
+                    if change=='missing-version':db.execute("DELETE FROM schema_version WHERE component='agent-authority'")
+                    elif change=='extra-version':db.execute("INSERT INTO schema_version VALUES('unapproved',1,1)")
+                    elif change=='wrong-version':db.execute("UPDATE schema_version SET version=2 WHERE component='agent-authority'")
+                    elif change=='old-time':db.execute("UPDATE schema_version SET applied_at=1 WHERE component='agent-authority'")
+                    elif change=='future-time':db.execute("UPDATE schema_version SET applied_at=9999999999999 WHERE component='agent-authority'")
+                    elif change=='missing-epoch':db.execute('DELETE FROM agent_membership_epochs')
+                    elif change=='wrong-epoch':
+                        db.execute('PRAGMA ignore_check_constraints=ON');db.execute("UPDATE agent_membership_epochs SET epoch='bad'")
+                    elif change=='wrong-binding':db.execute("UPDATE agent_membership_epochs SET user_id='wrong'")
+                    elif change=='grant':db.execute("INSERT INTO agent_authority_grants VALUES('id','https://synthetic.invalid','subject','client','resource','synthetic-user','synthetic-workspace','node','epoch','[]',1,2)")
+                with self.assertRaises((RuntimeError,sqlite3.DatabaseError)):
+                    r.verify_copy_migration(before,r.copy_data_fingerprint(root,self.key),'agent-authority-v1','candidate')
+
+    def test_failed_migration_must_be_atomic_and_epochs_must_not_reset(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);self.fixture(root);before=r.copy_data_fingerprint(root,self.key)
+            r.verify_copy_migration(before,r.copy_data_fingerprint(root,self.key),'agent-authority-v1','fault')
+            self.install(root);after=r.copy_data_fingerprint(root,self.key)
+            with self.assertRaises(RuntimeError):r.verify_copy_migration(before,after,'agent-authority-v1','fault')
+            with closing(sqlite3.connect(root/'db/identity.db')) as db, db:db.execute('UPDATE agent_membership_epochs SET epoch=?',('b'*32,))
+            with self.assertRaises(RuntimeError):r.verify_copy_migration(after,r.copy_data_fingerprint(root,self.key),'agent-authority-v1','repeat')
+
+    def test_readonly_limits_and_symlink_rejection(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);self.fixture(root)
+            before={p.name:p.read_bytes() for p in (root/'db').iterdir()}
+            r.copy_data_fingerprint(root,self.key)
+            self.assertEqual(before,{p.name:p.read_bytes() for p in (root/'db').iterdir()})
+            called=[]
+            def stop():called.append(True);raise RuntimeError('bounded_cancel')
+            with self.assertRaisesRegex(RuntimeError,'bounded_cancel'):r.copy_data_fingerprint(root,self.key,stop)
+            self.assertTrue(called)
+            with closing(sqlite3.connect(root/'db/lack.db')) as db, db:db.execute('INSERT INTO evidence VALUES(?)',(b'x'*(9*1024*1024),))
+            with self.assertRaises((RuntimeError,sqlite3.DatabaseError)):r.copy_data_fingerprint(root,self.key)
+
+
+
+
+    def test_null_component_version_row_is_preserved_or_loss_rejected(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp);self.fixture(root)
+            with closing(sqlite3.connect(root/'db/identity.db')) as db,db:
+                db.execute('INSERT INTO schema_version VALUES(NULL,2,1)')
+            before=r.copy_data_fingerprint(root,self.key);self.install(root)
+            r.verify_copy_migration(before,r.copy_data_fingerprint(root,self.key),'agent-authority-v1','candidate')
+            with closing(sqlite3.connect(root/'db/identity.db')) as db,db:
+                db.execute('DELETE FROM schema_version WHERE component IS NULL')
+            with self.assertRaisesRegex(RuntimeError,'migration_original_rows_changed'):
+                r.verify_copy_migration(before,r.copy_data_fingerprint(root,self.key),'agent-authority-v1','candidate')
+
+
+class MigrationIntegrationTests(unittest.TestCase):
+    def prepare(self, root, fail=None):
+        import hashlib,time
+        b=Fake(root,fail)
+        seed=root/'seed';seed.mkdir();MigrationContractTests().fixture(seed)
+        for item in (seed/'db').iterdir():os.rename(item,b.data/'db'/item.name)
+        b.release_profile='mcp-only';b.approved_agent_client_ids=('fixture-agent',);b.migration_contract='agent-authority-v1'
+        prepared={'publicRuntime':{'nodeRestPublic':False,'agentOAuth':{'enabled':True,'discoveryOnly':False,'clientIds':['fixture-agent']}}}
+        b.new_config=b.root/'candidate-config.json'
+        b.new_config.write_text(json.dumps(prepared))
+        b.settings={'releaseProfile':'mcp-only','migrationContract':'agent-authority-v1','stageHashes':{'version':hashlib.sha256(b'new').hexdigest()},'preparedHashes':{},'approvedAgentClientIds':['fixture-agent']}
+        baseline=r.schema_details(b.data)
+        stable=lambda value:hashlib.sha256(json.dumps(value,sort_keys=True,ensure_ascii=True,separators=(',',':')).encode()).hexdigest()
+        now=int(time.time()*1000)
+        policy={'httpPort':None,'agentGatewayPort':None,'runtime':{'nodeRestPublic':False,'agentOAuth':{'enabled':True,'discoveryOnly':False,'clientIds':['fixture-agent']}}}
+        b.proof={'version':1,'status':'passed','releaseProfile':'mcp-only','migrationContract':'agent-authority-v1','createdAtMs':now,'expiresAtMs':now+3600000,
+          'baselineSchemaDetails':baseline,'bindings':{'catalogSHA256':stable(GATE_EXPECTED_OBJECTS),
+          'candidate':{'version':hashlib.sha256(b'new').hexdigest()},'previous':{'version':hashlib.sha256(b'old').hexdigest()},
+          'baselineSchemaSHA256':stable(baseline),'policySHA256':stable(policy),
+          'stageHashesSHA256':stable(b.settings['stageHashes']),'preparedHashesSHA256':stable({})},
+          'boots':[{'runtime':name,'cleanClose':True,'dataVerified':True} for name in ('candidate','previous','candidate-repeat')],
+          'validations':{'exactSchema':True,'dataPreserved':True,'epochsBackfilled':True,'zeroGrants':True,'faultAtomic':True,'integrityAndForeignKeys':True,'idempotent':True},
+          'networkIsolated':True,'rollbackBackup':False,'actualModelCalls':False}
+        real_preflight=b.preflight
+        def preflight():
+            real_preflight()
+            b.compatibility_proof=r.verify_compatibility_proof_content(b.proof,b.settings,b.staged,b.current,json.loads(b.new_config.read_text()))
+            with mock.patch.object(r,'verify_compatibility_proof',return_value=b.compatibility_proof):
+                r.LinuxBackend.check_migration_preflight(b)
+        b.preflight=preflight
+        real_start=b.start
+        def start(name,cap):
+            if name==r.APP and (b.current/'version').read_text()=='new':
+                with closing(sqlite3.connect(b.data/'db/identity.db')) as db:
+                    migrated=db.execute("SELECT 1 FROM sqlite_master WHERE name='agent_authority_grants'").fetchone()
+                if not migrated:MigrationContractTests().install(b.data)
+            real_start(name,cap)
+        b.start=start
+        return b
+
+    def test_exact_migration_can_release_and_rollback_preserves_new_writes(self):
+        for fail in (None,'loopback_https_acceptance_passed'):
+            with self.subTest(fail=fail),tempfile.TemporaryDirectory() as tmp:
+                b=self.prepare(Path(tmp),fail);result=r.Transaction(b).execute()
+                self.assertEqual(result['status'],'rolled_back' if fail else 'released',result)
+                with closing(sqlite3.connect(b.data/'db/identity.db')) as db:
+                    self.assertEqual(db.execute('SELECT count(*) FROM agent_authority_grants').fetchone()[0],0)
+                    self.assertEqual(db.execute('SELECT count(*) FROM agent_membership_epochs').fetchone()[0],1)
+                if fail:
+                    self.assertEqual((b.data/'new-upload').read_text(),'keep')
+                    self.assertEqual(json.loads((b.data/'config/lack.config.json').read_text())['agents'],['user-changed-model'])
+                    with closing(sqlite3.connect(b.data/'db/test.db')) as db:self.assertEqual(db.execute('SELECT value FROM evidence').fetchall(),[('new-write',)])
+
+    def test_missing_proof_and_unknown_contract_never_stop_services(self):
+        for mode in ('missing','unknown'):
+            with self.subTest(mode=mode),tempfile.TemporaryDirectory() as tmp:
+                b=self.prepare(Path(tmp))
+                if mode=='missing':b.preflight=lambda:None
+                else:b.migration_contract='unapproved'
+                result=r.Transaction(b).execute()
+                self.assertEqual(result['status'],'preflight_failed',result);self.assertTrue(all(b.active.values()))
+
+    def test_proof_status_alone_and_each_binding_drift_are_rejected(self):
+        for mode in ('status-only','candidate','previous','policy','contract','catalog','baseline','stage','prepared','expired','missing-validation','missing-boot'):
+            with self.subTest(mode=mode),tempfile.TemporaryDirectory() as tmp:
+                b=self.prepare(Path(tmp))
+                if mode=='status-only':b.proof={'status':'passed'}
+                elif mode=='candidate':(b.staged/'version').write_text('changed')
+                elif mode=='previous':(b.current/'version').write_text('changed')
+                elif mode=='policy':
+                    value=json.loads(b.new_config.read_text());value['publicRuntime']['agentOAuth']['clientIds']=['another'];b.new_config.write_text(json.dumps(value))
+                elif mode=='contract':b.settings['migrationContract']=None
+                elif mode=='catalog':b.proof['bindings']['catalogSHA256']='0'*64
+                elif mode=='baseline':b.proof['baselineSchemaDetails']['db/identity.db'].append(['table','unexpected','unexpected','CREATE TABLE unexpected(x)'])
+                elif mode=='stage':b.settings['stageHashes']['version']='0'*64
+                elif mode=='prepared':b.settings['preparedHashes']['other']='0'*64
+                elif mode=='expired':b.proof['expiresAtMs']=1
+                elif mode=='missing-validation':del b.proof['validations']['faultAtomic']
+                elif mode=='missing-boot':b.proof['boots'].pop()
+                result=r.Transaction(b).execute()
+                self.assertEqual(result['status'],'preflight_failed',result);self.assertTrue(all(b.active.values()))
+
+    def test_cold_source_drift_rejected_before_code_switch(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            b=self.prepare(Path(tmp));original=b.checkpoint
+            def drift(phase):
+                if phase=='application_stopped':
+                    with closing(sqlite3.connect(b.data/'db/identity.db')) as db,db:db.execute('CREATE TABLE late_change(x)')
+                original(phase)
+            b.checkpoint=drift;result=r.Transaction(b).execute()
+            self.assertNotEqual(result['status'],'released',result)
+            self.assertEqual((b.current/'version').read_text(),'old')
+            self.assertFalse(b.previous.exists())
+
+    def test_partial_or_tampered_migration_never_claims_successful_recovery(self):
+        for mode in ('missing','tampered','extra'):
+            with self.subTest(mode=mode),tempfile.TemporaryDirectory() as tmp:
+                b=self.prepare(Path(tmp));original=b.check_candidate
+                def corrupt(which):
+                    with closing(sqlite3.connect(b.data/'db/identity.db')) as db,db:
+                        if mode=='missing':db.execute('DROP TRIGGER agent_authority_external_insert')
+                        elif mode=='tampered':db.executescript('DROP TRIGGER agent_authority_external_insert;CREATE TRIGGER agent_authority_external_insert AFTER INSERT ON external_identities BEGIN SELECT 1;END;')
+                        else:db.execute('CREATE TABLE unknown_addition(x)')
+                    original(which)
+                b.check_candidate=corrupt;result=r.Transaction(b).execute()
+                self.assertEqual(result['status'],'recovery_requires_attention',result)
+                self.assertFalse(all(b.active.values()))
+
+
+    def test_version_only_partial_source_rejected_before_any_stop(self):
+        for component in ('agent-authority','agent-membership-epochs'):
+            with self.subTest(component=component),tempfile.TemporaryDirectory() as tmp:
+                b=self.prepare(Path(tmp))
+                with closing(sqlite3.connect(b.data/'db/identity.db')) as db,db:
+                    db.execute('INSERT INTO schema_version VALUES(?,1,1)',(component,))
+                stopped=[];original=b.stop
+                def stop(name,cap):stopped.append(name);original(name,cap)
+                b.stop=stop
+                result=r.Transaction(b).execute()
+                self.assertEqual(result['status'],'preflight_failed',result)
+                self.assertEqual(result.get('error'),'migration_source_versions_exist',result)
+                self.assertEqual(stopped,[]);self.assertTrue(all(b.active.values()))
+
+    @unittest.skipUnless(os.name=='posix','requires POSIX proof ownership and mode')
+    def test_private_proof_metadata_and_prepared_hash_binding(self):
+        import hashlib
+        with tempfile.TemporaryDirectory() as tmp:
+            b=self.prepare(Path(tmp));proof_path=b.root/'schema-compatibility-report.json'
+            proof_path.write_text(json.dumps(b.proof));proof_path.chmod(0o600);b.root.chmod(0o700)
+            b.settings['preparedHashes'][proof_path.name]=hashlib.sha256(proof_path.read_bytes()).hexdigest()
+            # Non-root test users may inspect no private root-owned proof; fail closed.
+            if os.geteuid()!=0:
+                with self.assertRaises(RuntimeError):r.verify_compatibility_proof(proof_path,b.settings,b.staged,b.current)
+                return
+            r.verify_compatibility_proof(proof_path,b.settings,b.staged,b.current)
+            proof_path.chmod(0o644)
+            with self.assertRaises(RuntimeError):r.verify_compatibility_proof(proof_path,b.settings,b.staged,b.current)
+            proof_path.chmod(0o600);proof_path.write_text(json.dumps({'status':'passed'}))
+            with self.assertRaises(RuntimeError):r.verify_compatibility_proof(proof_path,b.settings,b.staged,b.current)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

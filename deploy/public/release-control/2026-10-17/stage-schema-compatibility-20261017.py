@@ -1,5 +1,6 @@
 """Compatibility-only live DB copies, isolated network, never a rollback backup."""
 import hashlib
+import secrets
 import importlib.util
 import json
 import os
@@ -69,6 +70,11 @@ settings = json.loads((root / 'settings.json').read_text())
 release_profile = settings.get('releaseProfile', 'discovery-only')
 approved_agent_client_ids = settings.get('approvedAgentClientIds')
 control.validate_release_config(prepared, release_profile, approved_agent_client_ids)
+migration_contract = control.validate_migration_contract(release_profile, settings.get('migrationContract'))
+initial_details = control.schema_details(data) if migration_contract else None
+private_key = secrets.token_bytes(32) if migration_contract else None
+initial_data = control.copy_data_fingerprint(data, private_key) if migration_contract else None
+code_before = {'candidate': control.code_inventory(candidate), 'previous': control.code_inventory(Path('/opt/chunlack-public/current'))} if migration_contract else None
 for path in [data, *data.rglob('*')]:
     os.chown(path, 996, 987)
     path.chmod(0o700 if path.is_dir() else 0o600)
@@ -93,6 +99,23 @@ globalThis.fetch=async(input,options)=>{
 async function main(){
  const modulePath=process.argv[2],data=process.argv[3];
  const config=compatibilityConfig;
+
+ if(process.argv[4]==='fault-migration'){
+  const localRequire=require('node:module').createRequire(modulePath);
+  const Database=localRequire('better-sqlite3');
+  const identity=localRequire('../identity/store.cjs').createIdentityStore({dbPath:path.join(data,'db/identity.db')});
+  const db=new Database(path.join(data,'db/identity.db'));let observed=false;
+  try{
+   db.pragma('foreign_keys=ON');
+   try{localRequire('../identity/agent-authority.cjs').createAgentAuthority({db,identity,
+    workspaceAccess:{forHuman(){throw Error('unused_fault_access');}},
+    verifier:{verify(){throw Error('unused_fault_verify');},consume(){throw Error('unused_fault_consume');}},
+    config:compatibilityConfig.publicRuntime.agentOAuth,now:()=>NaN});}
+   catch(error){if(error.code!=='invalid_clock')throw error;observed=true;}
+  }finally{db.close();identity.close();}
+  if(!observed)throw Error('migration_fault_not_observed');
+  console.log(JSON.stringify({compatibilityBoot:'passed',faultAtomic:true}));return;
+ }
  const runtime=await require(modulePath).startPublicRuntime({config,dataRoot:data,env:process.env});
  let privateNodeReadChecked=false,validForwardedNodeDenied=false;
  try{
@@ -153,11 +176,17 @@ environment = dict(os.environ)
 environment.update(HOME=pwd.getpwnam('chunlack-public').pw_dir, USER='chunlack-public', LOGNAME='chunlack-public',
                    LACK_DATA_DIR=str(data), LACK_CONFIG_PATH=str(config_path))
 boots = []
-for name, tree, config in (('candidate', candidate, control.apply_owned_config(prepared, original, release_profile, approved_agent_client_ids)),
-                           ('previous', Path('/opt/chunlack-public/current'), original)):
+installed_config = control.apply_owned_config(prepared, original, release_profile, approved_agent_client_ids)
+boot_plan = [('candidate', candidate, installed_config), ('previous', Path('/opt/chunlack-public/current'), original)]
+if migration_contract:
+    boot_plan = [('fault', candidate, installed_config), ('previous-after-fault', Path('/opt/chunlack-public/current'), original),
+                 *boot_plan, ('candidate-repeat', candidate, installed_config)]
+last_data = initial_data
+fault_atomic = False
+for name, tree, config in boot_plan:
     config_path.write_text(json.dumps(config, indent=2) + '\n')
     started = time.monotonic()
-    process = subprocess.Popen([node, str(runner), str(tree / 'gateway/public-runtime.cjs'), str(data)],
+    process = subprocess.Popen([node, str(runner), str(tree / 'gateway/public-runtime.cjs'), str(data), 'fault-migration' if name == 'fault' else 'boot'],
                                cwd=data, env=environment, user=996, group=987, extra_groups=[987],
                                start_new_session=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     try:
@@ -183,7 +212,14 @@ for name, tree, config in (('candidate', candidate, control.apply_owned_config(p
                 pass
         raise RuntimeError('compatibility_boot_failed_' + name + '_' + '_'.join(str(v) for v in errors))
     assert not (data / '.public-runtime.lock').exists()
-    assert control.schemas(data) == initial, 'compatibility_schema_changed_' + name
+    if migration_contract:
+        after_data = control.copy_data_fingerprint(data, private_key)
+        phase = 'fault' if name in ('fault', 'previous-after-fault') else 'candidate' if name == 'candidate' else 'previous' if name == 'previous' else 'repeat'
+        control.verify_copy_migration(last_data, after_data, migration_contract, phase)
+        last_data = after_data
+        fault_atomic = fault_atomic or name == 'fault'
+    else:
+        assert control.schemas(data) == initial, 'compatibility_schema_changed_' + name
     proofs = []
     for line in out.decode(errors='strict').splitlines():
         try:
@@ -193,16 +229,36 @@ for name, tree, config in (('candidate', candidate, control.apply_owned_config(p
         except ValueError:
             pass
     assert len(proofs) == 1, 'compatibility_boot_proof_missing_' + name
-    needs_private_probe = config.get('publicRuntime', {}).get('nodeRestPublic') is False and config['publicRuntime'].get('agentOAuth', {}).get('discoveryOnly') is not True
+    needs_private_probe = name != 'fault' and config.get('publicRuntime', {}).get('nodeRestPublic') is False and config['publicRuntime'].get('agentOAuth', {}).get('discoveryOnly') is not True
     if needs_private_probe:
         assert proofs[0].get('privateNodeReadChecked') is True and proofs[0].get('validForwardedNodeDenied') is True, 'compatibility_private_node_proof_missing_' + name
-    boots.append({'runtime': name, 'seconds': round(time.monotonic() - started, 3), 'cleanClose': True,
+    if name in ('fault', 'previous-after-fault'):
+        continue
+    boots.append({'runtime': name, 'seconds': round(time.monotonic() - started, 3), 'cleanClose': True, 'dataVerified': bool(migration_contract),
                   'privateNodeReadChecked': proofs[0].get('privateNodeReadChecked', False),
                   'validForwardedNodeDenied': proofs[0].get('validForwardedNodeDenied', False)})
-report = {'status': 'passed', 'releaseProfile': release_profile, 'boots': boots, 'databaseCount': len(initial), 'schemaPreserved': True,
+report = {'status': 'passed', 'releaseProfile': release_profile, 'boots': boots, 'databaseCount': len(initial), 'schemaPreserved': not bool(migration_contract),
           'networkIsolated': True, 'sourceMountedReadonly': True, 'applicationConsistentSnapshot': False,
           'rollbackBackup': False, 'actualModelCalls': False,
           'oidcMetadataTransport': 'fixture_from_tls_verified_public_discovery_and_jwks',
           'realOidcLoginTested': False}
-(root / 'schema-compatibility-report.json').write_text(json.dumps(report, indent=2))
-print(json.dumps(report))
+if migration_contract:
+    control.require(code_before == {'candidate': control.code_inventory(candidate), 'previous': control.code_inventory(Path('/opt/chunlack-public/current'))}, 'compatibility_code_changed_during_trial')
+    created = int(time.time() * 1000)
+    report.update(version=1, migrationContract=migration_contract, createdAtMs=created, expiresAtMs=created + 3600000,
+                  baselineSchemaDetails=initial_details,
+                  bindings={'catalogSHA256': control._canonical_hash(control.AUTHORITY_V1_OBJECTS), **code_before,
+                            'baselineSchemaSHA256': control._canonical_hash(initial_details),
+                            'policySHA256': control._canonical_hash(control._public_policy(prepared)),
+                            'stageHashesSHA256': control._canonical_hash(settings.get('stageHashes', {})),
+                            'preparedHashesSHA256': control._canonical_hash(control._prepared_binding(settings))},
+                  validations={'exactSchema': True, 'dataPreserved': True, 'epochsBackfilled': True, 'zeroGrants': True,
+                               'faultAtomic': fault_atomic, 'integrityAndForeignKeys': True, 'idempotent': True})
+    control.verify_compatibility_proof_content(report, settings, candidate, Path('/opt/chunlack-public/current'), prepared)
+report_path = root / 'schema-compatibility-report.json'
+control.atomic_write((json.dumps(report, indent=2) + '\n').encode(), report_path)
+if migration_contract:
+    settings.setdefault('preparedHashes', {})[report_path.name] = control.digest(report_path)
+    control.atomic_write((json.dumps(settings, indent=2) + '\n').encode(), root / 'settings.json')
+print(json.dumps({'status': report['status'], 'releaseProfile': release_profile, 'migrationContract': migration_contract,
+                  'boots': [row['runtime'] for row in boots], 'productionChanges': False}))
