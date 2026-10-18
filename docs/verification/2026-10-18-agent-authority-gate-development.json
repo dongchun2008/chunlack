@@ -1,0 +1,96 @@
+{
+  "date": "2026-10-18",
+  "status": "development_checkpoint_not_accepted",
+  "sourceBase": "a890395c5e621ec103a64832c435bd08712c9141",
+  "productChangesCommitted": false,
+  "sourceHashes": {
+    "release-discovery-safe-20261017.py": "69704215e62c89e2138be0fc5ec6f2f3ed513575aa5eecc0f83bf410b7c40489",
+    "test-release-discovery-safe-20261017.py": "808188217a6688984725c62de441d366a21b6dd7ecae726c9fe782b707e8b633",
+    "stage-schema-compatibility-20261017.py": "a9e7a584d7edee0fde7273f4554441a1a8e34a5301a4a71edafe5c093d6d19f6",
+    "rehearse-operational-release-20261017.py": "99de7d9ac12cc71f5131aeadec2e0915e9ad5a646b4053cd4de461bde834d313"
+  },
+  "completed": {
+    "newFixtureConnectionsExplicitlyClosed": true,
+    "frozenSchemaObjects": 17,
+    "defaultStrictModePreserved": true,
+    "proofCodePolicyCatalogBindingImplemented": true,
+    "candidateAndRollbackSchemaGatesImplemented": true
+  },
+  "verification": {
+    "windows": {
+      "total": 40,
+      "pass": 37,
+      "skip": 3,
+      "fail": 0,
+      "seconds": 53.826,
+      "scope": "controller suite, before two independent review counterexamples"
+    },
+    "linux": {
+      "total": 40,
+      "pass": 40,
+      "skip": 0,
+      "fail": 0,
+      "seconds": 31.207,
+      "memoryMaxBytes": 201326592,
+      "cpuPercent": 10,
+      "tasksMax": 32,
+      "runtimeMaxSeconds": 90,
+      "privateNetwork": true,
+      "scope": "controller suite, before two independent review counterexamples"
+    },
+    "serviceLifecycle": {
+      "cases": 2,
+      "status": "passed",
+      "scenarios": [
+        "success",
+        "rollback"
+      ],
+      "ownUnitsStoppedAndEmpty": true,
+      "aggregateMemoryMaxBytes": 201326592,
+      "aggregateCpuPercent": 10,
+      "aggregateTasksMax": 32,
+      "scope": "loopback HTTP fixtures with filtered egress; not real TLS, previous production runtime or external vendor acceptance"
+    },
+    "formalStage": {
+      "status": "failed",
+      "phase": "readonly_snapshot_sqlite_backup",
+      "bootPipelineStarted": false,
+      "reason": "isolated snapshot has WAL header but no WAL/SHM sidecars; readonly backup cannot open required SQLite files",
+      "proofAccepted": false
+    },
+    "independentReview": {
+      "status": "changes_required",
+      "issues": [
+        {
+          "severity": "P2",
+          "case": "NULL component rows omitted from preserved schema_version fingerprint",
+          "reproduced": true
+        },
+        {
+          "severity": "P2",
+          "case": "version-only partial source rejected only after target services stop",
+          "reproduced": true
+        }
+      ],
+      "counterexampleRunExitCode": 1,
+      "correctionsApplied": false
+    }
+  },
+  "pending": [
+    "include NULL component rows in preserved fingerprint and add regression",
+    "add live readonly pristine-component preflight while retaining cold recheck",
+    "normalize only new isolated test snapshots before readonly mounting and prove row/schema preservation",
+    "rerun full local/native regression and actual fault/previous/candidate/previous/repeat stage pipeline",
+    "complete proof metadata validation and scope-only source synchronization after acceptance"
+  ],
+  "boundaries": {
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "relayChanged": false,
+    "protectedServicePidsAndRestartsChanged": false,
+    "realOidcLoginTested": false,
+    "realModelsTested": false,
+    "museDotsAcceptanceComplete": false,
+    "overallDeliveryComplete": false
+  }
+}
