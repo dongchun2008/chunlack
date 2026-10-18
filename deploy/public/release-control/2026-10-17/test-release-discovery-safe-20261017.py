@@ -847,5 +847,23 @@ class MigrationIntegrationTests(unittest.TestCase):
             proof_path.chmod(0o600);proof_path.write_text(json.dumps({'status':'passed'}))
             with self.assertRaises(RuntimeError):r.verify_compatibility_proof(proof_path,b.settings,b.staged,b.current)
 
+
+class RehearsalSelectionTests(unittest.TestCase):
+    def test_selection_preserves_default_and_single_case_assertions(self):
+        import ast
+        source=Path(__file__).with_name('rehearse-operational-release-20261017.py').read_text(encoding='utf-8')
+        tree=ast.parse(source)
+        functions=[n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='select_rehearsal_cases']
+        self.assertEqual(len(functions),1,'missing bounded scenario selector')
+        namespace={}
+        exec(compile(ast.Module(body=functions,type_ignores=[]),'<rehearsal-selector>','exec'),namespace)
+        select=namespace['select_rehearsal_cases']
+        expected=(('success',None),('rollback','loopback_https_acceptance_passed'))
+        self.assertEqual(select('all'),expected)
+        self.assertEqual(select('success'),expected[:1])
+        self.assertEqual(select('rollback'),expected[1:])
+        for invalid in ('','both','SUCCESS',None,1):
+            with self.subTest(invalid=invalid),self.assertRaises(ValueError):select(invalid)
+
 if __name__ == '__main__':
     unittest.main(verbosity=2)

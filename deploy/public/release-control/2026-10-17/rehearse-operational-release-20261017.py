@@ -11,6 +11,13 @@ import subprocess
 import sys
 import time
 
+def select_rehearsal_cases(selector):
+    cases=(('success',None),('rollback','loopback_https_acceptance_passed'))
+    if selector=='all':return cases
+    if selector not in ('success','rollback'):raise ValueError('invalid_rehearsal_scenario')
+    return tuple(case for case in cases if case[0]==selector)
+
+
 root = Path(sys.argv[1]).resolve(strict=True)
 tag = root.name.removeprefix('chunlack-ops-test-')
 assert re.fullmatch('[0-9a-f]{12}', tag) and root == Path('/var/lib/chunlack-ops-test-' + tag)
@@ -27,6 +34,8 @@ r.owned_config_fields(release_profile)
 
 # Optional migration is exercised in these private HTTP fixtures only.
 migration_contract = r.validate_migration_contract(release_profile, sys.argv[3] if len(sys.argv) > 3 else None)
+scenario_selector = sys.argv[4] if len(sys.argv) > 4 else 'all'
+selected_cases = select_rehearsal_cases(scenario_selector)
 
 FIXTURE = r'''
 import http.server,json,os,re,signal,sqlite3,sys,urllib.request
@@ -276,7 +285,7 @@ before = real_state()
 results = []
 cleanup_errors = []
 try:
-    for name, fail in (('success', None), ('rollback', 'loopback_https_acceptance_passed')):
+    for name, fail in selected_cases:
         case = root / name
         case.mkdir(mode=0o755)
         case.chmod(0o755)
@@ -308,8 +317,11 @@ try:
         assert not errors, errors
         created.remove(r.HTTPS)
         created.remove(r.APP)
+    assert tuple(item['case'] for item in results) == tuple(name for name, _ in selected_cases)
     assert before == real_state()
-    report = {'status': 'passed', 'releaseProfile': release_profile, 'migrationContract': migration_contract, 'cases': results, 'realServiceLifecycle': True,
+    report = {'status': 'passed', 'releaseProfile': release_profile, 'migrationContract': migration_contract, 'scenarioSelector': scenario_selector,
+              'expectedCases': [name for name, _ in selected_cases], 'completedCases': [item['case'] for item in results],
+              'cases': results, 'realServiceLifecycle': True,
               'fixtureNetwork': 'loopback HTTP high ports; TLS covered by existing native product tests',
               'aggregateMemoryMax': 201326592, 'aggregateCpuPercent': 10, 'aggregateTasksMax': 32,
               'protectedUnitsUnchanged': True,

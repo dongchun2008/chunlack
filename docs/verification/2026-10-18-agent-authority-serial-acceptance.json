@@ -1,0 +1,289 @@
+{
+  "date": "2026-10-18",
+  "status": "isolated_migration_and_lifecycle_accepted_not_production_released",
+  "sourceBase": "bcbc90b1dbf370caca684f6a674fb17ffc254de5",
+  "previousAttempt": "docs/verification/2026-10-18-agent-authority-four-corrections.json",
+  "sourcePublication": "development branch only; no production release",
+  "sourceHashes": {
+    "release-discovery-safe-20261017.py": "e9265911f0c82f54dda00a61b52ee1ea2e34f1e021213cb201e7af9dd83e72e3",
+    "test-release-discovery-safe-20261017.py": "bbed6ac230077c7a7c58d91ff90a0275998e6ac111d72a0a7846f196adb92df9",
+    "stage-schema-compatibility-20261017.py": "a9e7a584d7edee0fde7273f4554441a1a8e34a5301a4a71edafe5c093d6d19f6",
+    "rehearse-operational-release-20261017.py": "ce4d190e05aee2aaf470e0cdf6f0c423a1593f03242f50e67cce9a32aa4d41f0"
+  },
+  "approvedCorrections": {
+    "newDisposableStagedParentExplicitMode": "0750 root:987",
+    "serviceUserTraversalAndReadabilityPrecheck": true,
+    "existingDirectoryPermissionsChanged": false,
+    "serialScenarioSelection": [
+      "success",
+      "rollback"
+    ],
+    "defaultAllScenarioBehaviorPreserved": true,
+    "unknownSelectorRejected": true,
+    "allAssertionsRetained": true
+  },
+  "verification": {
+    "selectorRegression": {
+      "redObserved": true,
+      "greenObserved": true
+    },
+    "windowsControllerSuite": {
+      "total": 43,
+      "pass": 40,
+      "skip": 3,
+      "fail": 0,
+      "seconds": 74.959
+    },
+    "linuxControllerSuite": {
+      "total": 43,
+      "pass": 43,
+      "skip": 0,
+      "fail": 0,
+      "seconds": 33.8,
+      "configuredMemoryMaxBytes": 201326592,
+      "configuredCpuPercent": 10,
+      "configuredTasksMax": 32,
+      "configuredRuntimeMaxSeconds": 90,
+      "privateNetwork": true
+    },
+    "snapshotPreparation": {
+      "status": "passed",
+      "onlyNewDisposableCopiesModified": true,
+      "sourceBytesAndMtimesUnchanged": true,
+      "schemaAndRowsPreserved": true,
+      "integrityAndForeignKeys": true,
+      "journalMode": "DELETE",
+      "productionChanges": false
+    },
+    "formalStage": {
+      "status": "passed",
+      "source": "historical actual database and runtime copies, not live production migration",
+      "databaseCount": 3,
+      "phases": [
+        "fault",
+        "previous-after-fault",
+        "candidate",
+        "previous",
+        "candidate-repeat"
+      ],
+      "reportedBoots": [
+        {
+          "runtime": "candidate",
+          "seconds": 9.798,
+          "cleanClose": true,
+          "dataVerified": true,
+          "privateNodeReadChecked": true,
+          "validForwardedNodeDenied": true
+        },
+        {
+          "runtime": "previous",
+          "seconds": 8.703,
+          "cleanClose": true,
+          "dataVerified": true,
+          "privateNodeReadChecked": false,
+          "validForwardedNodeDenied": false
+        },
+        {
+          "runtime": "candidate-repeat",
+          "seconds": 9.098,
+          "cleanClose": true,
+          "dataVerified": true,
+          "privateNodeReadChecked": true,
+          "validForwardedNodeDenied": true
+        }
+      ],
+      "validations": {
+        "exactSchema": true,
+        "dataPreserved": true,
+        "epochsBackfilled": true,
+        "zeroGrants": true,
+        "faultAtomic": true,
+        "integrityAndForeignKeys": true,
+        "idempotent": true
+      },
+      "networkIsolated": true,
+      "sourceMountedReadonly": true,
+      "applicationConsistentSnapshot": false,
+      "rollbackBackup": false,
+      "actualModelCalls": false,
+      "realOidcLoginTested": false,
+      "containsPrivateRowData": false
+    },
+    "proofIntegration": {
+      "status": "passed",
+      "formalPrivateProofAccepted": true,
+      "sourceSchemaStillPristine": true,
+      "liveWalVersionOnlyPartialRejectedBeforeStop": true,
+      "noServiceStopRequests": true,
+      "proofBindsActualCandidateAndPreviousCopies": true,
+      "productionChanges": false
+    },
+    "serialLifecycle": {
+      "status": "passed",
+      "scenarios": [
+        {
+          "scenario": "success",
+          "status": "passed",
+          "expectedCases": [
+            "success"
+          ],
+          "completedCases": [
+            "success"
+          ],
+          "transaction": {
+            "status": "released",
+            "records": [
+              {
+                "phase": "preflight_passed",
+                "seconds": 0
+              },
+              {
+                "phase": "https_stopped",
+                "seconds": 0.708
+              },
+              {
+                "phase": "application_stopped",
+                "seconds": 1.401
+              },
+              {
+                "phase": "consistent_backup_verified",
+                "seconds": 2.13
+              },
+              {
+                "phase": "old_code_preserved",
+                "seconds": 2.13
+              },
+              {
+                "phase": "candidate_code_installed",
+                "seconds": 2.13
+              },
+              {
+                "phase": "candidate_configuration_installed",
+                "seconds": 2.133
+              },
+              {
+                "phase": "loopback_https_acceptance_passed",
+                "seconds": 14.327
+              },
+              {
+                "phase": "public_discovery_acceptance_passed",
+                "seconds": 22.934
+              }
+            ],
+            "outageSeconds": 22.934,
+            "releaseProfile": "mcp-only",
+            "agentBusinessAccess": false,
+            "credentialsChanged": false,
+            "liveDataRestoredFromBackup": false
+          },
+          "cleanupErrors": [],
+          "allOwnFixtureUnitsStoppedAndEmpty": true
+        },
+        {
+          "scenario": "rollback",
+          "status": "passed",
+          "expectedCases": [
+            "rollback"
+          ],
+          "completedCases": [
+            "rollback"
+          ],
+          "transaction": {
+            "status": "rolled_back",
+            "error": "injected_loopback_https_acceptance_passed",
+            "records": [
+              {
+                "phase": "preflight_passed",
+                "seconds": 0
+              },
+              {
+                "phase": "https_stopped",
+                "seconds": 0.918
+              },
+              {
+                "phase": "application_stopped",
+                "seconds": 1.686
+              },
+              {
+                "phase": "consistent_backup_verified",
+                "seconds": 2.387
+              },
+              {
+                "phase": "old_code_preserved",
+                "seconds": 2.387
+              },
+              {
+                "phase": "candidate_code_installed",
+                "seconds": 2.387
+              },
+              {
+                "phase": "candidate_configuration_installed",
+                "seconds": 2.389
+              },
+              {
+                "phase": "loopback_https_acceptance_passed",
+                "seconds": 14.792
+              }
+            ],
+            "elapsedSeconds": 28.686
+          },
+          "cleanupErrors": [],
+          "allOwnFixtureUnitsStoppedAndEmpty": true
+        }
+      ],
+      "scenarioUnitsOverlap": false,
+      "perScenarioAggregateMemoryMaxBytes": 201326592,
+      "perScenarioAggregateCpuPercent": 10,
+      "perScenarioAggregateTasksMax": 32,
+      "perUnitRuntimeMaxSeconds": 90,
+      "forwardControllerDeadlineSeconds": 55,
+      "totalControllerDeadlineSeconds": 120,
+      "scope": "real service lifecycle with synthetic loopback HTTP fixtures; no TLS or vendor acceptance claimed"
+    },
+    "observedWholeUnitSeconds": {
+      "serial-native-final": 35.327,
+      "serial-prep": 1.477,
+      "serial-stage": 38.601,
+      "serial-post-proof": 2.195,
+      "serial-ops-success": 42.43,
+      "serial-ops-rollback": 47.983
+    },
+    "sourceSecretScan": {
+      "status": "passed",
+      "files": 4,
+      "rules": "gitleaks default full rules; no blanket suppression"
+    },
+    "cohost": {
+      "status": "passed",
+      "allOwnUnitsTerminalAndEmpty": true,
+      "unitCount": 10,
+      "protectedUnitsUnchanged": true,
+      "health": {
+        "legacy": "200",
+        "publicApp": "200",
+        "publicHttps": "200"
+      }
+    },
+    "unchangedProductSuite": "No product runtime source changed in this correction. Earlier product-suite evidence is historical, not counted as rerun here."
+  },
+  "nextIntegrationGates": [
+    "Regenerate fresh private compatibility proof within its one-hour validity and take a fresh application-consistent backup before any separately approved production migration.",
+    "Production maintenance/release remains prohibited under current authorization.",
+    "Complete Muse Lao Zhen and dots Xuan Ji native own-computer event/task/evidence/receipt acceptance after account access and specifically scoped permissions are available.",
+    "Complete real five-node sustained collaboration and final onboarding/recovery acceptance; logical Agent or mock results are not substitutes."
+  ],
+  "boundaries": {
+    "productionPublished": false,
+    "productionServiceLifecycleChanged": false,
+    "credentialsChanged": false,
+    "dnsOrPortsChanged": false,
+    "relayChanged": false,
+    "protectedPidsAndRestartsChanged": false,
+    "unknownUiEditIncluded": false,
+    "realModelsTested": false,
+    "realOidcLoginTested": false,
+    "museDotsAcceptanceComplete": false,
+    "overallDeliveryComplete": false
+  },
+  "privateEvidencePolicy": "Raw copied databases, local test paths, private proof and credentials remain outside Git; this record contains only bounded sanitized evidence."
+}
