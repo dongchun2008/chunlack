@@ -167,19 +167,47 @@ def schemas(root, tick=lambda: None, cold=True):
     return result
 
 
-def revert_owned_config(original, current):
+def owned_config_fields(profile):
+    require(type(profile) is str and profile in ('discovery-only', 'mcp-only'), 'release_profile_invalid')
+    return ('agentOAuth', 'nodeRestPublic') if profile == 'mcp-only' else ('agentOAuth',)
+
+
+def validate_release_config(config, profile='discovery-only', approved_client_ids=None):
+    owned_config_fields(profile)
+    require(isinstance(config, dict) and isinstance(config.get('publicRuntime'), dict), 'release_policy_runtime')
+    runtime = config['publicRuntime']
+    oauth = runtime.get('agentOAuth')
+    require(isinstance(oauth, dict) and oauth.get('enabled') is True, 'release_policy_oauth_enabled')
+    require(oauth.get('discoveryOnly') is (profile == 'discovery-only'), 'release_policy_discovery_mode')
+    if 'nodeRestPublic' in runtime:
+        require(type(runtime['nodeRestPublic']) is bool, 'release_policy_rest_boolean')
+    if profile == 'mcp-only':
+        require(runtime.get('nodeRestPublic') is False, 'release_policy_public_rest')
+        clients = oauth.get('clientIds')
+        require(type(clients) is list and 1 <= len(clients) <= 32 and
+                all(type(value) is str and 1 <= len(value) <= 256 and
+                    not any(ord(char) <= 32 or ord(char) == 127 for char in value) and value != oauth.get('browserClientId') for value in clients) and
+                len(set(clients)) == len(clients), 'release_policy_agent_clients')
+        require(type(approved_client_ids) in (list, tuple) and list(approved_client_ids) == clients,
+                'release_policy_client_approval')
+
+
+def revert_owned_config(original, current, profile='discovery-only'):
     result = json.loads(json.dumps(current))
     previous = original.get('publicRuntime', {})
-    if 'agentOAuth' in previous:
-        result.setdefault('publicRuntime', {})['agentOAuth'] = previous['agentOAuth']
-    else:
-        result.setdefault('publicRuntime', {}).pop('agentOAuth', None)
+    for field in owned_config_fields(profile):
+        if field in previous:
+            result.setdefault('publicRuntime', {})[field] = json.loads(json.dumps(previous[field]))
+        else:
+            result.setdefault('publicRuntime', {}).pop(field, None)
     return result
 
 
-def apply_owned_config(prepared, current):
+def apply_owned_config(prepared, current, profile='discovery-only', approved_client_ids=None):
+    validate_release_config(prepared, profile, approved_client_ids)
     result = json.loads(json.dumps(current))
-    result.setdefault('publicRuntime', {})['agentOAuth'] = prepared['publicRuntime']['agentOAuth']
+    for field in owned_config_fields(profile):
+        result.setdefault('publicRuntime', {})[field] = json.loads(json.dumps(prepared['publicRuntime'][field]))
     return result
 
 
@@ -232,6 +260,9 @@ def validate_caddy_document(value, expected):
 class Transaction:
     def __init__(self, backend, window=None):
         self.b = backend
+        self.profile = getattr(backend, 'release_profile', 'discovery-only')
+        approved = getattr(backend, 'approved_agent_client_ids', None)
+        self.approved_clients = tuple(approved) if type(approved) in (list, tuple) else None
         self.w = window or Window()
         backend.w = self.w
         self.records = []
@@ -260,6 +291,8 @@ class Transaction:
         b = self.b
         try:
             b.preflight()
+            prepared = json.loads(b.new_config.read_text())
+            validate_release_config(prepared, self.profile, self.approved_clients)
             self.record('preflight_passed')
             self.w.begin()
             b.stop(HTTPS, 6)
@@ -273,7 +306,7 @@ class Transaction:
             os.rename(b.staged, b.current)
             self.record('candidate_code_installed')
             config_path = b.data / 'config/lack.config.json'
-            updated = apply_owned_config(json.loads(b.new_config.read_text()), json.loads(config_path.read_text()))
+            updated = apply_owned_config(prepared, json.loads(config_path.read_text()), self.profile, self.approved_clients)
             atomic_write((json.dumps(updated, indent=2) + '\n').encode(), config_path, self.w.tick)
             atomic_copy(b.local_caddy, b.caddy, self.w.tick)
             b.set_live_modes()
@@ -291,7 +324,7 @@ class Transaction:
             b.check_protected()
             self.record('public_discovery_acceptance_passed')
             result = {'status': 'released', 'records': self.records, 'outageSeconds': round(self.w.elapsed(), 3),
-                      'agentBusinessAccess': False, 'credentialsChanged': False,
+                      'releaseProfile': self.profile, 'agentBusinessAccess': False, 'credentialsChanged': False,
                       'liveDataRestoredFromBackup': False}
         except BaseException as error:
             code = str(error) if isinstance(error, RuntimeError) else type(error).__name__
@@ -328,7 +361,7 @@ class Transaction:
         if self.backed_up:
             original = json.loads((b.backup / 'data/config/lack.config.json').read_text())
             path = b.data / 'config/lack.config.json'
-            updated = revert_owned_config(original, json.loads(path.read_text()))
+            updated = revert_owned_config(original, json.loads(path.read_text()), self.profile)
             atomic_write((json.dumps(updated, indent=2) + '\n').encode(), path, self.w.tick)
             atomic_copy(b.backup / 'Caddyfile', b.caddy, self.w.tick)
             b.set_live_modes()
@@ -344,6 +377,9 @@ class LinuxBackend:
         self.root = Path(root).resolve(strict=True)
         self.settings = json.loads((self.root / 'settings.json').read_text())
         self.tag = self.settings['tag']
+        self.release_profile = self.settings.get('releaseProfile', 'discovery-only')
+        approved = self.settings.get('approvedAgentClientIds')
+        self.approved_agent_client_ids = tuple(approved) if type(approved) is list else None
         require(re.fullmatch('[0-9a-f]{12}', self.tag) and self.root == Path('/var/lib/chunlack-release-' + self.tag), 'invalid_release_root')
         self.current = Path('/opt/chunlack-public/current')
         self.previous = self.current.parent / ('previous-' + self.tag)
@@ -505,8 +541,26 @@ class LinuxBackend:
         require(self.request('lack.chunclaw.top', '/health')[0] == 200, 'original_https_unhealthy')
         self.command(['curl', '--noproxy', '*', '--silent', '--fail', '--max-time', str(self.w.remaining(2)), 'http://127.0.0.1:3721/health'])
 
+    def check_backend_rest(self, config):
+        port = config.get('agentGateway', {}).get('port', 13722)
+        require(type(port) is int and 1 <= port <= 65535, 'release_policy_gateway_port')
+        for method in ('GET', 'POST'):
+            for path in ('/v1/manifest', '/v1/tasks/claim'):
+                timeout = self.w.remaining(1)
+                status = self.command(['curl', '--noproxy', '*', '--silent', '--show-error',
+                                       '--max-time', str(timeout), '--connect-timeout', str(min(1, timeout)),
+                                       '-o', '/dev/null', '-w', '%{http_code}', '-X', method,
+                                       '-H', 'Authorization: Bearer discovery-denial-probe',
+                                       '-H', 'X-Forwarded-Proto: https',
+                                       '-H', 'X-Chunlack-Agent-Mode: ' + self.release_profile,
+                                       'http://127.0.0.1:' + str(port) + path], cap=2)
+                require(status.strip() == '404', 'backend_rest_not_denied')
+
     def check_candidate(self, mode):
+        config = json.loads((self.data / 'config/lack.config.json').read_text())
+        validate_release_config(config, self.release_profile, self.approved_agent_client_ids)
         self.assert_listener(mode)
+        self.check_backend_rest(config)
         require(self.request('lack.chunclaw.top', '/health')[0] == 200, 'candidate_https_unhealthy')
         for path in ('/.well-known/oauth-protected-resource', '/.well-known/oauth-protected-resource/mcp'):
             status, _, body = self.request('agents.chunclaw.top', path)

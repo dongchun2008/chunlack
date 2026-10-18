@@ -3,6 +3,7 @@ import json
 import os
 from pathlib import Path
 import socket
+import sys
 import sqlite3
 import tempfile
 import unittest
@@ -305,6 +306,236 @@ class ReleaseTests(unittest.TestCase):
             with self.assertRaisesRegex(RuntimeError, 'staged_link_changed'):
                 r.validate_staged_entry(root, link, os.getuid(), os.getgid(), {'alias': 'elsewhere'})
 
+
+
+class McpOnlyReleaseTests(unittest.TestCase):
+    def prepare(self, root, fail=None, prior='absent'):
+        b = Fake(root, fail)
+        b.release_profile = 'mcp-only'
+        b.approved_agent_client_ids = ('fixture-agent',)
+        path = b.data / 'config/lack.config.json'
+        original = config(True)
+        original['publicRuntime']['keep'] = {'user': 'original'}
+        if prior != 'absent':
+            original['publicRuntime']['nodeRestPublic'] = prior
+        path.write_text(json.dumps(original))
+        prepared = config(True)
+        prepared['publicRuntime']['agentOAuth']['discoveryOnly'] = False
+        prepared['publicRuntime']['agentOAuth']['clientIds'] = ['fixture-agent']
+        prepared['publicRuntime']['nodeRestPublic'] = False
+        b.new_config.write_text(json.dumps(prepared))
+        return b, original
+
+    def test_success_installs_mcp_flag_and_preserves_nonowned_configuration(self):
+        for prior in ('absent', True, False):
+            with self.subTest(prior=prior), tempfile.TemporaryDirectory(prefix='chunlack-mcp-') as tmp:
+                b, original = self.prepare(Path(tmp), prior=prior)
+                result = r.Transaction(b).execute()
+                self.assertEqual(result['status'], 'released', result)
+                value = json.loads((b.data / 'config/lack.config.json').read_text())
+                self.assertIs(value['publicRuntime'].get('nodeRestPublic'), False)
+                self.assertIs(value['publicRuntime']['agentOAuth']['discoveryOnly'], False)
+                self.assertEqual(value['publicRuntime']['keep'], original['publicRuntime']['keep'])
+                self.assertEqual(value['agents'], original['agents'])
+                self.assertEqual(json.loads((b.backup / 'data/config/lack.config.json').read_text()), original)
+                self.assertEqual(result.get('releaseProfile'), 'mcp-only')
+                self.assertIs(result['agentBusinessAccess'], False)
+
+    def test_mcp_rollback_restores_prior_flag_presence_and_preserves_every_new_write(self):
+        phases = ['https_stopped', 'application_stopped', 'consistent_backup_verified',
+                  'old_code_preserved', 'candidate_code_installed', 'candidate_configuration_installed',
+                  'loopback_https_acceptance_passed', 'public_discovery_acceptance_passed']
+        for prior in ('absent', True, False):
+            for phase in phases:
+                with self.subTest(prior=prior, phase=phase), tempfile.TemporaryDirectory(prefix='chunlack-mcp-') as tmp:
+                    b, original = self.prepare(Path(tmp), phase, prior)
+                    result = r.Transaction(b).execute()
+                    self.assertEqual(result['status'], 'rolled_back', result)
+                    value = json.loads((b.data / 'config/lack.config.json').read_text())
+                    self.assertEqual(value['publicRuntime'], original['publicRuntime'])
+                    written = phase in phases[-2:]
+                    self.assertEqual(value['agents'], ['user-changed-model'] if written else ['original'])
+                    self.assertEqual((b.data / 'new-upload').exists(), written)
+                    if written:
+                        self.assertEqual((b.data / 'new-upload').read_text(), 'keep')
+                    db = sqlite3.connect(b.data / 'db/test.db')
+                    try:
+                        self.assertEqual(db.execute('SELECT value FROM evidence').fetchall(), [('new-write',)] if written else [])
+                    finally:
+                        db.close()
+                    self.assertEqual((b.current / 'version').read_text(), 'old')
+                    self.assertEqual(b.caddy.read_text(), 'old-caddy')
+                    self.assertTrue(all(b.active.values()))
+
+    def test_invalid_mcp_policy_fails_before_stopping_services(self):
+        changes = [('enabled', False), ('enabled', 1), ('enabled', 'true'),
+                   ('discoveryOnly', True), ('discoveryOnly', 0), ('discoveryOnly', 'false'),
+                   ('nodeRestPublic', True), ('nodeRestPublic', 0), ('nodeRestPublic', None),
+                   ('nodeRestPublic', 'false'), ('nodeRestPublic', 'missing'),
+                   ('clientIds', ['not-approved'])]
+        for field, value in changes:
+            with self.subTest(field=field, value=value), tempfile.TemporaryDirectory(prefix='chunlack-mcp-') as tmp:
+                b, original = self.prepare(Path(tmp))
+                prepared = json.loads(b.new_config.read_text())
+                target = prepared['publicRuntime'] if field == 'nodeRestPublic' else prepared['publicRuntime']['agentOAuth']
+                if value == 'missing':
+                    target.pop(field, None)
+                else:
+                    target[field] = value
+                b.new_config.write_text(json.dumps(prepared))
+                stops = []
+                b.stop = lambda name, cap: stops.append(name)
+                result = r.Transaction(b).execute()
+                self.assertEqual(result['status'], 'preflight_failed', result)
+                self.assertEqual(stops, [])
+                self.assertTrue(all(b.active.values()))
+                self.assertEqual(json.loads((b.data / 'config/lack.config.json').read_text()), original)
+                self.assertFalse(b.previous.exists())
+
+    def test_unknown_release_profile_fails_before_stopping_services(self):
+        for profile in ('normal', '', True, {'mode': 'mcp-only'}):
+            with self.subTest(profile=profile), tempfile.TemporaryDirectory(prefix='chunlack-mcp-') as tmp:
+                b, _ = self.prepare(Path(tmp))
+                b.release_profile = profile
+                stops = []
+                b.stop = lambda name, cap: stops.append(name)
+                self.assertEqual(r.Transaction(b).execute()['status'], 'preflight_failed')
+                self.assertEqual(stops, [])
+
+    def test_default_discovery_profile_does_not_take_ownership_of_rest_flag(self):
+        with tempfile.TemporaryDirectory(prefix='chunlack-mcp-') as tmp:
+            b = Fake(Path(tmp))
+            path = b.data / 'config/lack.config.json'
+            original = config()
+            original['publicRuntime']['nodeRestPublic'] = True
+            path.write_text(json.dumps(original))
+            prepared = config(True)
+            prepared['publicRuntime']['nodeRestPublic'] = False
+            b.new_config.write_text(json.dumps(prepared))
+            result = r.Transaction(b).execute()
+            self.assertEqual(result['status'], 'released', result)
+            self.assertIs(json.loads(path.read_text())['publicRuntime']['nodeRestPublic'], True)
+
+    def backend(self, b, backend_status=404, public_status=404):
+        backend = object.__new__(r.LinuxBackend)
+        backend.data, backend.w = b.data, r.Window()
+        backend.release_profile = 'mcp-only'
+        backend.approved_agent_client_ids = ('fixture-agent',)
+        backend.probes = []
+        backend.assert_listener = lambda mode: None
+        backend.check_protected = lambda: None
+        def request(host, path, method='GET'):
+            if path == '/health':
+                return 200, '', '{}'
+            if path.startswith('/.well-known/'):
+                return 200, '', json.dumps({'resource': 'https://agents.chunclaw.top/mcp',
+                                          'authorization_servers': ['https://pockid.chunclaw.top']})
+            if path == '/mcp':
+                return 401, 'www-authenticate: bearer resource_metadata="https://agents.chunclaw.top/.well-known/oauth-protected-resource/mcp"', ''
+            return public_status, '', ''
+        def command(args, cap=3):
+            backend.probes.append(args)
+            return str(backend_status)
+        backend.request, backend.command = request, command
+        return backend
+
+    def test_candidate_checks_backend_and_public_ingress_independently(self):
+        with tempfile.TemporaryDirectory(prefix='chunlack-mcp-') as tmp:
+            b, _ = self.prepare(Path(tmp))
+            path = b.data / 'config/lack.config.json'
+            path.write_text(b.new_config.read_text())
+            backend = self.backend(b)
+            backend.check_candidate('loopback')
+            backend.check_candidate('public')
+            self.assertGreaterEqual(len(backend.probes), 4)
+            for args in backend.probes:
+                self.assertIn('--noproxy', args)
+                self.assertIn('X-Chunlack-Agent-Mode: mcp-only', args)
+                self.assertIn('X-Forwarded-Proto: https', args)
+                self.assertTrue(any(arg.startswith('http://127.0.0.1:13722/v1') for arg in args))
+
+    def test_public_denial_cannot_mask_backend_mode_mismatch(self):
+        for status in (200, 401, 503):
+            with self.subTest(status=status), tempfile.TemporaryDirectory(prefix='chunlack-mcp-') as tmp:
+                b, _ = self.prepare(Path(tmp))
+                (b.data / 'config/lack.config.json').write_text(b.new_config.read_text())
+                with self.assertRaisesRegex(RuntimeError, 'backend_rest_not_denied'):
+                    self.backend(b, backend_status=status).check_candidate('loopback')
+
+    def test_backend_denial_cannot_mask_public_ingress_mismatch(self):
+        with tempfile.TemporaryDirectory(prefix='chunlack-mcp-') as tmp:
+            b, _ = self.prepare(Path(tmp))
+            (b.data / 'config/lack.config.json').write_text(b.new_config.read_text())
+            with self.assertRaisesRegex(RuntimeError, 'rest_not_denied'):
+                self.backend(b, public_status=401).check_candidate('public')
+
+    def test_live_configuration_mismatch_fails_candidate_acceptance(self):
+        with tempfile.TemporaryDirectory(prefix='chunlack-mcp-') as tmp:
+            b, _ = self.prepare(Path(tmp))
+            with self.assertRaisesRegex(RuntimeError, 'release_policy'):
+                self.backend(b).check_candidate('loopback')
+
+ACTUAL_CORRECTION_NODE_TEST = "'use strict';\nconst test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');\nconst input=JSON.parse(process.env.CHUNLACK_CORRECTION_CASE);\nconst productRoot=process.env.CHUNLACK_TEST_PRODUCT_ROOT;\nconst {publicAgentFixture}=require(path.join(productRoot,'tests/helpers/public-agent-fixture.cjs'));\ntest('actual schema runner proves private success and catches reject-all regression',{timeout:80000},async t=>{\n const f=await publicAgentFixture(t,{nodeRestPublic:false});\n const jwks=await fetch(f.config.publicRuntime.agentOAuth.jwksUri).then(r=>r.json());\n await f.runtime.close();\n const config={...f.config,publicRuntime:{...f.config.publicRuntime,...(input.targetRuntime||{})}};\n fs.mkdirSync(path.join(f.root,'config'),{recursive:true});\n fs.writeFileSync(path.join(f.root,'config/lack.config.json'),JSON.stringify(config),{mode:0o600});\n fs.writeFileSync(path.join(f.root,'oidc-public.json'),JSON.stringify({[config.publicRuntime.agentOAuth.jwksUri]:jwks}),{mode:0o600});\n const modulePath=path.join(f.root,'package/gateway/public-runtime.cjs'),runnerPath=path.join(f.root,'compatibility-runner.cjs');\n const baseRequire=require('node:module').createRequire(runnerPath),actual=require(modulePath),actualFetch=globalThis.fetch;\n async function execute(denyPrivate){let runtime,resolveExit;const lines=[],requests=[];\n  const completion=new Promise(resolve=>{resolveExit=resolve;});\n  const sandbox={__dirname:f.root,Buffer,URL,Request,Response,AbortSignal,setTimeout,clearTimeout,\n   process:{argv:['node',runnerPath,modulePath,f.root],env:{FIXTURE_GATEWAY_TOKEN:'x'.repeat(43),FIXTURE_EVENTS_KEY:Buffer.alloc(32,42).toString('hex')},exit:resolveExit},\n   console:{log:(...values)=>lines.push(values.join(' '))},\n   require:name=>name===modulePath?{...actual,startPublicRuntime:async options=>{runtime=await actual.startPublicRuntime(options);return runtime;}}:baseRequire(name),\n   fetch:async(url,options={})=>{const address=new URL(String(url));if(address.pathname==='/v1/manifest'){const h=new Headers(options.headers),forwarded=h.has('x-forwarded-proto');requests.push({forwarded,invalid:h.get('authorization')==='Bearer compatibility-denial-probe'});if(denyPrivate&&!forwarded)return new Response('{}',{status:401});}if(address.protocol==='http:'&&address.hostname==='127.0.0.1'){const headers=new Headers(options.headers);headers.set('Connection','close');return actualFetch(url,{...options,headers});}return actualFetch(url,options);}};\n  let timer;try{new vm.Script(input.runner,{filename:runnerPath}).runInNewContext(sandbox);const exit=await Promise.race([completion,new Promise((_,reject)=>{timer=setTimeout(()=>reject(Error('actual_runner_timeout')),40000);})]);return{exit,lines,requests};}finally{clearTimeout(timer);await runtime?.close();}\n }\n\n const codeRequire=require('node:module').createRequire(modulePath),Database=codeRequire('better-sqlite3');\n const gatewayPath=path.join(f.root,'db/agent-gateway.db');\n function rows(){const db=new Database(gatewayPath);try{return db.prepare('SELECT * FROM nodes ORDER BY id').all();}finally{db.close();}}\n for(const state of ['active-full','total-full']){\n  const original=rows(),added=[];const db=new Database(gatewayPath);\n  try{const template=original[0];const wanted=state==='active-full'?5:100;\n   for(let n=original.length;n<wanted;n++){const id=require('node:crypto').randomUUID();added.push(id);db.prepare('INSERT INTO nodes(id,name,capabilities,scopes,revoked,created_at,workspace_id,created_by) VALUES(?,?,?,?,?,?,?,?)').run(id,'Synthetic capacity fixture','[\"browser.public_read\"]','[\"public\"]',state==='total-full'?1:0,Date.now(),template.workspace_id,template.created_by);}\n  }finally{db.close();}\n  try{\n   const snapshot=rows();assert.equal(snapshot.length,state==='active-full'?5:100);\n   const store=codeRequire('./store.cjs').createGatewayStore({dbPath:gatewayPath,multiUser:true});\n   try{assert.throws(()=>store.withWorkspace({workspaceId:f.workspaces.a.id,userId:f.user.id},()=>store.createNode({name:'Capacity must remain enforced',capabilities:['browser.public_read'],scopes:['public']})),error=>error.code==='node_capacity');}finally{store.close();}\n   const saturated=await execute(false);assert.equal(saturated.exit,0,state+': '+JSON.stringify(saturated.lines));\n   const proof=saturated.lines.map(line=>JSON.parse(line)).find(row=>row.compatibilityBoot==='passed');assert.equal(proof.privateNodeReadChecked,true);assert.equal(proof.validForwardedNodeDenied,true);\n   assert.deepEqual(rows(),snapshot,state+' must retain every existing node and remove only the probe');\n  }finally{const clean=new Database(gatewayPath);try{for(const id of added)clean.prepare('DELETE FROM nodes WHERE id=?').run(id);}finally{clean.close();}}\n  assert.deepEqual(rows(),original,'capacity fixture must clean only its own rows');\n }\n const beforeNormal=rows();\n const good=await execute(false);assert.equal(good.exit,0,JSON.stringify(good.lines));\n assert.ok(good.requests.some(x=>!x.forwarded&&!x.invalid),'must actually submit a valid isolated node credential');\n assert.ok(good.requests.some(x=>x.forwarded&&!x.invalid),'must deny forwarding of that same valid node credential');\n const proof=good.lines.map(line=>JSON.parse(line)).find(row=>row.compatibilityBoot==='passed');assert.equal(proof.privateNodeReadChecked,true);assert.equal(proof.validForwardedNodeDenied,true);\n assert.deepEqual(rows(),beforeNormal,'successful probe must preserve all original node rows');\n assert.equal(fs.existsSync(path.join(f.root,'.public-runtime.lock')),false);\n const denied=await execute(true);assert.equal(denied.exit,1,'rejecting every private credential must fail compatibility');\n assert.ok(denied.requests.some(x=>!x.forwarded&&!x.invalid),'negative control must reach the valid-credential check');\n assert.deepEqual(rows(),beforeNormal,'failed probe must also clean only its own row');\n assert.equal(fs.existsSync(path.join(f.root,'.public-runtime.lock')),false);\n});"
+
+
+class CorrectionContractTests(unittest.TestCase):
+    def test_explicit_approved_nonempty_clients_can_be_installed(self):
+        with tempfile.TemporaryDirectory(prefix='chunlack-client-contract-') as tmp:
+            b = Fake(Path(tmp))
+            b.release_profile = 'mcp-only'
+            b.approved_agent_client_ids = ('fixture-agent',)
+            prepared = config(True)
+            prepared['publicRuntime'].update(nodeRestPublic=False)
+            prepared['publicRuntime']['agentOAuth'].update(discoveryOnly=False, clientIds=['fixture-agent'])
+            b.new_config.write_text(json.dumps(prepared))
+            result = r.Transaction(b).execute()
+            self.assertEqual(result['status'], 'released', result)
+            live = json.loads((b.data / 'config/lack.config.json').read_text())
+            self.assertEqual(live['publicRuntime']['agentOAuth']['clientIds'], ['fixture-agent'])
+            self.assertIs(live['publicRuntime']['nodeRestPublic'], False)
+
+    def test_missing_or_different_client_approval_stops_before_services(self):
+        for approved in (None, (), ('other-client',), 'fixture-agent', True):
+            with self.subTest(approved=approved), tempfile.TemporaryDirectory(prefix='chunlack-client-contract-') as tmp:
+                b = Fake(Path(tmp))
+                b.release_profile = 'mcp-only'
+                b.approved_agent_client_ids = approved
+                prepared = config(True)
+                prepared['publicRuntime']['nodeRestPublic'] = False
+                prepared['publicRuntime']['agentOAuth'].update(discoveryOnly=False, clientIds=['fixture-agent'])
+                b.new_config.write_text(json.dumps(prepared))
+                stops = []
+                b.stop = lambda name, cap: stops.append(name)
+                result = r.Transaction(b).execute()
+                self.assertEqual(result['status'], 'preflight_failed', result)
+                self.assertEqual(stops, [])
+
+    @unittest.skipUnless(os.environ.get('CHUNLACK_TEST_PRODUCT_ROOT') and os.environ.get('CHUNLACK_TEST_NODE'),
+                         'actual product fixture requires explicit isolated source and Node paths')
+    def test_actual_product_schema_runner_checks_valid_node_and_reject_all_negative_control(self):
+        import ast
+        import subprocess
+        source = Path(__file__).with_name('stage-schema-compatibility-20261017.py').read_text()
+        tree = ast.parse(source)
+        runners = [node.args[0].value for node in ast.walk(tree)
+                   if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+                   and isinstance(node.func.value, ast.Name) and node.func.value.id == 'runner'
+                   and node.func.attr == 'write_text' and node.args
+                   and isinstance(node.args[0], ast.Constant) and isinstance(node.args[0].value, str)]
+        self.assertEqual(len(runners), 1)
+        environment = dict(os.environ, PYTHON=sys.executable)
+        target = {'publicRuntime': {'nodeRestPublic': False, 'agentOAuth': {
+            'enabled': True, 'discoveryOnly': False, 'issuer': 'https://pocket.e2e.invalid',
+            'resource': 'https://agents.e2e.invalid/mcp', 'jwksUri': 'https://pocket.e2e.invalid/jwks',
+            'browserClientId': 'human-client', 'clientIds': ['agent-client']}}}
+        installed = r.apply_owned_config(target, {}, 'mcp-only', ('agent-client',))
+        environment['CHUNLACK_CORRECTION_CASE'] = json.dumps({'runner': runners[0], 'targetRuntime': installed['publicRuntime']})
+        result = subprocess.run([environment['CHUNLACK_TEST_NODE'], '--test-reporter=tap', '-'], input=ACTUAL_CORRECTION_NODE_TEST,
+                                text=True, encoding='utf-8', capture_output=True, cwd=environment['CHUNLACK_TEST_PRODUCT_ROOT'],
+                                env=environment, timeout=85)
+        self.assertEqual(result.returncode, 0, (result.stdout + result.stderr)[-10000:])
+        self.assertIn('# pass 1', result.stdout)
+        self.assertIn('# fail 0', result.stdout)
 
 if __name__ == '__main__':
     unittest.main(verbosity=2)

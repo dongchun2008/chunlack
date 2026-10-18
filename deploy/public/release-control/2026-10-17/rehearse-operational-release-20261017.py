@@ -22,6 +22,8 @@ real_protected = ('chunlack.service', 'tailscaled.service', 'chunlack-public.ser
 r.PROTECTED = real_protected
 created = []
 active = [None]
+release_profile = sys.argv[2] if len(sys.argv) > 2 else 'discovery-only'
+r.owned_config_fields(release_profile)
 
 FIXTURE = r'''
 import http.server,json,os,re,signal,sqlite3,sys,urllib.request
@@ -64,12 +66,20 @@ def real_state():
 class Operational(tests.Fake, r.LinuxBackend):
     def __init__(self, case, fail, app_port, https_port):
         tests.Fake.__init__(self, case, fail)
+        self.release_profile = release_profile
+        self.approved_agent_client_ids = ('isolated-rehearsal-client',) if release_profile == 'mcp-only' else ()
+        if release_profile == 'mcp-only':
+            prepared = json.loads(self.new_config.read_text())
+            prepared['publicRuntime']['agentOAuth']['discoveryOnly'] = False
+            prepared['publicRuntime']['agentOAuth']['clientIds'] = list(self.approved_agent_client_ids)
+            prepared['publicRuntime']['nodeRestPublic'] = False
+            self.new_config.write_text(json.dumps(prepared))
         self.app_port, self.https_port = app_port, https_port
         self.probe_latencies = []
         self.env = case / 'runtime.env'
         self.env.write_text('FIXTURE_ONLY=1\n')
         self.env.chmod(0o600)
-        self.settings = {'envHash': r.digest(self.env), 'stageLinks': {}}
+        self.settings = {'envHash': r.digest(self.env), 'stageLinks': {}, 'releaseProfile': release_profile, 'approvedAgentClientIds': list(self.approved_agent_client_ids)}
         for base in (self.current, self.staged):
             (base / 'gateway').mkdir()
             (base / 'gateway/public-runtime.cjs').write_text('module.exports={};\n')
@@ -135,6 +145,7 @@ class Operational(tests.Fake, r.LinuxBackend):
         assert self.caddy.read_text() in (expected, 'old-caddy' if mode == 'public' else expected)
 
     def check_candidate(self, mode):
+        r.validate_release_config(json.loads((self.data / 'config/lack.config.json').read_text()), self.release_profile, self.approved_agent_client_ids)
         self.assert_listener(mode)
         assert json.loads(self.request('', '')[2])['version'] == 'new'
         self.check_protected()
@@ -234,17 +245,20 @@ try:
         active[0] = None
         assert result['status'] == ('released' if fail is None else 'rolled_back'), result
         assert result.get('outageSeconds', result.get('elapsedSeconds')) < 120
+        value = json.loads((backend.data / 'config/lack.config.json').read_text())
         if fail:
-            value = json.loads((backend.data / 'config/lack.config.json').read_text())
+            assert 'nodeRestPublic' not in value['publicRuntime']
             assert value['agents'] == ['user-changed-model'] and not value['publicRuntime']['agentOAuth']['enabled']
             assert (backend.data / 'new-upload').read_text() == 'keep'
+        else:
+            r.validate_release_config(value, release_profile, backend.approved_agent_client_ids)
         results.append({'case': name, 'result': result, 'probeLatencies': backend.probe_latencies})
         errors = cleanup([r.HTTPS, r.APP])
         assert not errors, errors
         created.remove(r.HTTPS)
         created.remove(r.APP)
     assert before == real_state()
-    report = {'status': 'passed', 'cases': results, 'realServiceLifecycle': True,
+    report = {'status': 'passed', 'releaseProfile': release_profile, 'cases': results, 'realServiceLifecycle': True,
               'fixtureNetwork': 'loopback HTTP high ports; TLS covered by existing native product tests',
               'aggregateMemoryMax': 201326592, 'aggregateCpuPercent': 10, 'aggregateTasksMax': 32,
               'protectedUnitsUnchanged': True,

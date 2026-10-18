@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-18",
+  "status": "controller-corrections-verified-migration-not-verified",
+  "scope": "four release-controller scripts only; no product-runtime changes or production publication",
+  "sourceHashes": {
+    "release-discovery-safe-20261017.py": "391d639715c0f0402456dcd5f8ac6475e83badf0e51c2d35a9e11d763da10369",
+    "test-release-discovery-safe-20261017.py": "0df07e8e946fc2b7f6175f6bbc716774eebb7c11430ab2e610a999d37ca53e92",
+    "rehearse-operational-release-20261017.py": "d0c9b67ee3bc02deed544aabd5d30a8448c3d80d1e1a4a9de5a7d64cc3c5d571",
+    "stage-schema-compatibility-20261017.py": "ec2e0046126f3fd91037ee2fceeec904887031800042439503ae679ae6008fd3"
+  },
+  "regression": {
+    "capacityRed": {
+      "exit": 1,
+      "expectedCode": "node_capacity",
+      "state": "active-full",
+      "report": "private capacity-red.log"
+    },
+    "local": {
+      "total": 27,
+      "passed": 25,
+      "skipped": 2,
+      "failed": 0,
+      "seconds": 25.992
+    },
+    "linux": {
+      "total": 27,
+      "passed": 27,
+      "skipped": 0,
+      "failed": 0,
+      "seconds": 17.812,
+      "limits": {
+        "memoryMiB": 192,
+        "cpuPercent": 10,
+        "tasksMax": 32,
+        "runtimeSeconds": 90
+      },
+      "checks": [
+        "five-active-node capacity remains enforced",
+        "100-total-node capacity including revoked remains enforced",
+        "valid private manifest 200",
+        "same valid credential forwarded manifest 404",
+        "existing node rows unchanged",
+        "temporary probe cleanup on success and rejection",
+        "reject-all private credentials fails compatibility"
+      ]
+    }
+  },
+  "independentReview": {
+    "actionableFindings": 0,
+    "staticReview": true,
+    "forcedTerminationOfProbeNotTested": true
+  },
+  "databaseMigration": {
+    "passed": false,
+    "preparationFailedBeforeDatabaseCopy": true,
+    "cause": "generated config/lack.config.json is not part of actual prior production code tree; production uses separated configuration",
+    "automaticFixApplied": false,
+    "originalSchemaPreservationGateUnchanged": true
+  },
+  "productionPublished": false,
+  "credentialsChanged": false,
+  "readyForDelivery": false
+}
