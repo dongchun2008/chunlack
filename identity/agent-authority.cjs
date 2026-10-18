@@ -21,7 +21,7 @@ function createAgentAuthority({db, identity, workspaceAccess, verifier, config, 
       if (url.protocol !== 'https:' || url.username || url.password || url.search || url.hash) throw Error();
     }
     if (issuer.origin !== config.issuer || resource.href !== config.resource ||
-        !clean(config.browserClientId) || !Array.isArray(config.clientIds) || !config.clientIds.length ||
+        !clean(config.browserClientId) || !Array.isArray(config.clientIds) ||
         config.clientIds.length > 32 || new Set(config.clientIds).size !== config.clientIds.length ||
         config.clientIds.some(id => !clean(id) || id === config.browserClientId) ||
         !db?.open || typeof db.transaction !== 'function' || typeof identity?.requireMembership !== 'function' ||

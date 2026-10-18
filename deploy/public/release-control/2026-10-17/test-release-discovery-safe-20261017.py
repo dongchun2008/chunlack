@@ -865,5 +865,47 @@ class RehearsalSelectionTests(unittest.TestCase):
         for invalid in ('','both','SUCCESS',None,1):
             with self.subTest(invalid=invalid),self.assertRaises(ValueError):select(invalid)
 
+
+class EmptyClientPolicyTests(unittest.TestCase):
+    def test_explicit_empty_approval_allows_closed_mcp_only_policy(self):
+        config={'publicRuntime':{'nodeRestPublic':False,'agentOAuth':{'enabled':True,'discoveryOnly':False,'clientIds':[],'browserClientId':'human'}}}
+        self.assertIsNone(r.validate_release_config(config,'mcp-only',[]))
+        for approved in (None,['other']):
+            with self.subTest(approved=approved),self.assertRaisesRegex(RuntimeError,'release_policy_client_approval'):
+                r.validate_release_config(config,'mcp-only',approved)
+        for clients in (None,'agent',[''],['human'],['same','same']):
+            value=json.loads(json.dumps(config));value['publicRuntime']['agentOAuth']['clientIds']=clients
+            with self.subTest(clients=clients),self.assertRaises(RuntimeError):r.validate_release_config(value,'mcp-only',[])
+
+    def test_zero_client_migration_releases_and_rolls_back_without_grants(self):
+        import hashlib
+        for fail in (None,'loopback_https_acceptance_passed'):
+            with self.subTest(fail=fail),tempfile.TemporaryDirectory() as tmp:
+                b=MigrationIntegrationTests().prepare(Path(tmp),fail)
+                config=json.loads(b.new_config.read_text());config['publicRuntime']['agentOAuth']['clientIds']=[]
+                b.new_config.write_text(json.dumps(config));b.approved_agent_client_ids=();b.settings['approvedAgentClientIds']=[]
+                policy={'httpPort':None,'agentGatewayPort':None,'runtime':{'nodeRestPublic':False,'agentOAuth':{'enabled':True,'discoveryOnly':False,'clientIds':[]}}}
+                b.proof['bindings']['policySHA256']=hashlib.sha256(json.dumps(policy,sort_keys=True,ensure_ascii=True,separators=(',',':')).encode()).hexdigest()
+                result=r.Transaction(b).execute();self.assertEqual(result['status'],'rolled_back' if fail else 'released',result)
+                with closing(sqlite3.connect(b.data/'db/identity.db')) as db:
+                    self.assertEqual(db.execute('SELECT count(*) FROM agent_authority_grants').fetchone()[0],0)
+                    self.assertEqual(db.execute('SELECT count(*) FROM agent_membership_epochs').fetchone()[0],1)
+                if fail:
+                    self.assertEqual((b.data/'new-upload').read_text(),'keep')
+                    self.assertEqual(json.loads((b.data/'config/lack.config.json').read_text())['agents'],['user-changed-model'])
+
+    def test_empty_rehearsal_selection_never_approves_an_agent(self):
+        import ast
+        source=Path(__file__).with_name('rehearse-operational-release-20261017.py').read_text(encoding='utf-8')
+        functions=[n for n in ast.parse(source).body if isinstance(n,ast.FunctionDef) and n.name=='select_rehearsal_clients']
+        self.assertEqual(len(functions),1,'missing empty client rehearsal policy')
+        namespace={};exec(compile(ast.Module(body=functions,type_ignores=[]),'<rehearsal-client-policy>','exec'),namespace)
+        select=namespace['select_rehearsal_clients']
+        self.assertEqual(select('mcp-only','empty'),())
+        self.assertEqual(select('mcp-only','configured'),('isolated-rehearsal-client',))
+        self.assertEqual(select('discovery-only','configured'),())
+        for profile,policy in [('mcp-only',''),('discovery-only','empty'),('unknown','empty')]:
+            with self.subTest(profile=profile,policy=policy),self.assertRaises(ValueError):select(profile,policy)
+
 if __name__ == '__main__':
     unittest.main(verbosity=2)

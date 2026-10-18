@@ -1,0 +1,160 @@
+{
+  "date": "2026-10-18",
+  "status": "product-regression-passed-deployment-gates-incomplete",
+  "sourceBase": "e0a15cd7e8a2162481609c63832d8ee57ea6757c",
+  "sourceBindings": [
+    {
+      "path": "identity/agent-access.cjs",
+      "sha256": "1175577c4b010fedcf0e029abb5ab95b53b571428e83f55eeab1fdc9938b7ede"
+    },
+    {
+      "path": "identity/agent-authority.cjs",
+      "sha256": "cd0f36cd51ca393057dd1eebdfad6e12466103115e498792ac013e036f9292ec"
+    },
+    {
+      "path": "integrations/mcp/pilot-server.cjs",
+      "sha256": "c150a092fba59c606f939147ee15303b0c1b10b3b21f570787b9b8ad25aa068e"
+    },
+    {
+      "path": "tests/agent-access.test.cjs",
+      "sha256": "4519c24502af8d269875e3678ec97070ce6ec19ab85e0bdaa4702823cf5f78aa"
+    },
+    {
+      "path": "tests/agent-empty-clients.test.cjs",
+      "sha256": "8b084f22a1ccbec571c731f5760c044ad6725008e3f327026400435bd36f7882"
+    },
+    {
+      "path": "deploy/public/release-control/2026-10-17/release-discovery-safe-20261017.py",
+      "sha256": "6a5b411f257c501470a781d4c897207e45229efee282ac34963371b614506c04"
+    },
+    {
+      "path": "deploy/public/release-control/2026-10-17/test-release-discovery-safe-20261017.py",
+      "sha256": "ee678fad2c073dc49d2c63d92ea2d1c7b66abb641d94b17b89fe05cd3de2c9da"
+    },
+    {
+      "path": "deploy/public/release-control/2026-10-17/rehearse-operational-release-20261017.py",
+      "sha256": "4b88fb943cf669a22e5c9635257f8e808b34c0db304f7a5a7008a4bc4c106e25"
+    },
+    {
+      "path": "tests/agent-discovery-only.test.cjs",
+      "sha256": "fe415894769d2c0ebc6690a3c9b1468a75f04db4df6759e7187dedbeffe858d4"
+    }
+  ],
+  "scope": {
+    "productModules": [
+      "identity/agent-access.cjs",
+      "identity/agent-authority.cjs",
+      "integrations/mcp/pilot-server.cjs"
+    ],
+    "externalAgentAccessGranted": false,
+    "productionPublished": false,
+    "providerRoutingChanged": false,
+    "credentialsChanged": false,
+    "dnsOrPortsChanged": false,
+    "unrelatedWorkspaceShellExcluded": true
+  },
+  "verification": {
+    "windowsProduct": {
+      "files": 115,
+      "tests": 867,
+      "pass": 867,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "seconds": 1159.639,
+      "mode": "all selected files serially, per-test budgets unchanged"
+    },
+    "linuxNative": {
+      "empty": {
+        "tests": 4,
+        "pass": 4,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "compatibility": {
+        "tests": 57,
+        "pass": 57,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "composite": {
+        "tests": 2,
+        "pass": 2,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "discovery": {
+        "tests": 5,
+        "pass": 5,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    },
+    "linuxController": {
+      "tests": 46,
+      "passed": 46,
+      "failed": 0
+    },
+    "independentReview": {
+      "paths": 9,
+      "actionableFindings": 0,
+      "scope": "static review only"
+    },
+    "secretScan": {
+      "paths": 9,
+      "leaks": 0,
+      "rules": "gitleaks default full rules; no blanket suppression"
+    },
+    "cohost": {
+      "allFourPidsAndRestartsUnchanged": true,
+      "health": {
+        "old": 200,
+        "public-app": 200,
+        "https": 200
+      }
+    }
+  },
+  "priorIncompleteAttempt": {
+    "outerDeadlineSeconds": 1200,
+    "completedCaseRecords": 795,
+    "reportedFailures": 8,
+    "result": "not accepted; retained privately",
+    "correction": "test-only PATH and stale discovery assertion; original runtime guard passed unchanged in an isolated retry"
+  },
+  "remainingGates": {
+    "historicalActualDatabaseCopies": {
+      "status": "failed-fixture-environment",
+      "phase": "previous-after-fault",
+      "error": "public_private_gateway_credential_required",
+      "requiredSyntheticVariablePresent": false,
+      "completeProofGenerated": false
+    },
+    "zeroClientServiceSuccess": {
+      "journalStatus": "passed",
+      "completeReportAudited": false
+    },
+    "zeroClientServiceRollback": {
+      "journalStatus": "passed",
+      "completeReportAudited": false
+    },
+    "productionRelease": "not started",
+    "realModels": "not rerun in this correction",
+    "realOidcLogin": "not rerun in this correction",
+    "vendorNativeComputerExecution": "not verified"
+  },
+  "boundaries": {
+    "historicalCopiesAreRollbackBackup": false,
+    "privateRowsOrCredentialsPublished": false,
+    "forwardWindowSeconds": 55,
+    "totalRecoveryWindowSeconds": 120,
+    "isolatedUnitRuntimeMaxSeconds": 90,
+    "isolatedMemoryMaxBytes": 201326592,
+    "isolatedCpuPercent": 10,
+    "isolatedTasksMax": 32
+  }
+}

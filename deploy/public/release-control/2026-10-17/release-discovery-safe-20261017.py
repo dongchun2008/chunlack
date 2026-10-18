@@ -528,7 +528,7 @@ def validate_release_config(config, profile='discovery-only', approved_client_id
     if profile == 'mcp-only':
         require(runtime.get('nodeRestPublic') is False, 'release_policy_public_rest')
         clients = oauth.get('clientIds')
-        require(type(clients) is list and 1 <= len(clients) <= 32 and
+        require(type(clients) is list and 0 <= len(clients) <= 32 and
                 all(type(value) is str and 1 <= len(value) <= 256 and
                     not any(ord(char) <= 32 or ord(char) == 127 for char in value) and value != oauth.get('browserClientId') for value in clients) and
                 len(set(clients)) == len(clients), 'release_policy_agent_clients')

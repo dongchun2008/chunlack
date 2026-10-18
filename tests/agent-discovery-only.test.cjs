@@ -33,9 +33,19 @@ test('discovery-only verifier denies a valid signed token without fetching keys 
   await assert.rejects(denied.verify(token, {scope: 'task.read'}), {code: 'service_closed'});
 });
 
-test('empty enrollment is explicit and incompatible or malformed mode settings fail closed', async () => {
+test('empty enrollment stays closed in normal mode and malformed mode settings fail closed', async () => {
+  for (const change of [{clientIds: []}, {discoveryOnly: false, clientIds: []}]) {
+    let fetches = 0;
+    const closed = await createAgentAccessVerifier({config: {...config, ...change},
+      fetchImpl: async () => {fetches++; throw new Error('unexpected_empty_policy_key_fetch');}});
+    try {
+      await assert.rejects(closed.verify('untrusted-token', {scope: 'task.read'}), {code: 'invalid_token'});
+      assert.throws(() => closed.consume({}), {code: 'invalid_token'});
+      assert.equal(fetches, 0);
+    } finally {await closed.close();}
+  }
   for (const change of [
-    {clientIds: []}, {discoveryOnly: false, clientIds: []},
+    {clientIds: null}, {clientIds: 'agent-client'},
     {discoveryOnly: true}, {discoveryOnly: 'true'}, {discoveryOnly: 1},
     {discoveryOnly: true, enabled: false, clientIds: []}
   ]) await assert.rejects(createAgentAccessVerifier({config: {...config, ...change}}), {code: 'invalid_agent_access_config'});

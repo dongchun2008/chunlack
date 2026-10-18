@@ -115,7 +115,7 @@ for(const [name,response] of [
 });
 test('configuration disallows cross-origin keys, non-HTTPS and browser-client reuse',async()=>{
   for(const change of [{jwksUri:'https://untrusted.example.test/jwks'},{issuer:'http://pocket.example.test'},
-    {resource:resource+'?access_token=private'},{clientIds:['human-login-client']},{clientIds:[]},
+    {resource:resource+'?access_token=private'},{clientIds:['human-login-client']},{clientIds:null},
     {clientIds:Array(33).fill('different')},{browserClientId:undefined}])
     await assert.rejects(createAgentAccessVerifier({config:{...config,...change}}),{code:'invalid_agent_access_config'});
 });

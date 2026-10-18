@@ -6,6 +6,7 @@ const httpProtocolVersions=new Set(['2025-11-25','2026-07-28']);
 function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPrincipal,resolveAgentConnections,events,workspaceAccess,ready=()=>true,agentOAuth}){
   if(agentOAuth?.discoveryOnly!==undefined&&typeof agentOAuth.discoveryOnly!=='boolean'||agentOAuth?.discoveryOnly===true&&agentOAuth?.enabled!==true)P.fail('agent_mcp_configuration',503);
   const discoveryOnly=agentOAuth?.discoveryOnly===true;
+  const publicDenied=discoveryOnly||(agentOAuth?.enabled===true&&Array.isArray(agentOAuth.clientIds)&&agentOAuth.clientIds.length===0);
   if(discoveryOnly&&(!Array.isArray(agentOAuth.clientIds)||agentOAuth.clientIds.length))P.fail('agent_mcp_configuration',503);
   if(store.multiUser&&!workspaceAccess)P.fail('workspace_gateway_configuration',503);
   if(store.multiUser&&events&&events.multiUser!==true)P.fail('workspace_events_configuration',503);
@@ -60,7 +61,7 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPr
       const notification=request.method==='notifications/initialized'&&!Object.hasOwn(request,'id');
       if(request.jsonrpc!=='2.0'||(!notification&&!(typeof requestId==='string'&&requestId.length<=100||Number.isSafeInteger(requestId)))||typeof request.method!=='string'||(request.method==='notifications/initialized'&&!notification))return error(null,-32600,'invalid_request');P.bounded(request);
       if(closed)P.fail('mcp_closed',503);
-      if(discoveryOnly)return error(requestId,-32001,'unauthorized');
+      if(publicDenied)return error(requestId,-32001,'unauthorized');
       const agentRequest=agentToken(auth),scope=requestScope(request);let p,nodeAccess,resolved,grantId;
       const explicit=agentRequest&&!!resolveAgentConnections;
       const connectionRequest=request.method==='tools/call'&&request.params?.name===connectionTool.name;
@@ -143,7 +144,7 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPr
       if(!['POST','GET'].includes(req.method)||req.url!=='/mcp'){send(404,{error:'not_found'});req.resume();return;}
       if(req.headers.origin||req.headers['sec-fetch-site']==='cross-site'){send(403,{error:'cross_origin_denied'});req.resume();return;}
       if(!/^(127\.0\.0\.1|localhost)(:\d+)?$/.test(req.headers.host||'')||req.rawHeaders.filter((_,i)=>i%2===0).filter(h=>h.toLowerCase()==='authorization').length!==1){send(401,{error:'unauthorized'});req.resume();return;}
-      if(discoveryOnly){send(401,{error:'unauthorized'});req.resume();return;}
+      if(publicDenied){send(401,{error:'unauthorized'});req.resume();return;}
       const auth=req.headers.authorization||'',token=auth.slice(7);
       if(!auth.startsWith('Bearer ')||(agentToken(token)?!resolveAgentPrincipal||token.length>8192:auth.length>256)){send(401,{error:'unauthorized'});req.resume();return;}
       const version=req.headers['mcp-protocol-version'];

@@ -18,6 +18,16 @@ def select_rehearsal_cases(selector):
     return tuple(case for case in cases if case[0]==selector)
 
 
+def select_rehearsal_clients(profile, policy):
+    if profile not in ('discovery-only', 'mcp-only') or policy not in ('configured', 'empty'):
+        raise ValueError('invalid_rehearsal_client_policy')
+    if policy == 'empty':
+        if profile != 'mcp-only':
+            raise ValueError('empty_rehearsal_requires_mcp_only')
+        return ()
+    return ('isolated-rehearsal-client',) if profile == 'mcp-only' else ()
+
+
 root = Path(sys.argv[1]).resolve(strict=True)
 tag = root.name.removeprefix('chunlack-ops-test-')
 assert re.fullmatch('[0-9a-f]{12}', tag) and root == Path('/var/lib/chunlack-ops-test-' + tag)
@@ -36,6 +46,8 @@ r.owned_config_fields(release_profile)
 migration_contract = r.validate_migration_contract(release_profile, sys.argv[3] if len(sys.argv) > 3 else None)
 scenario_selector = sys.argv[4] if len(sys.argv) > 4 else 'all'
 selected_cases = select_rehearsal_cases(scenario_selector)
+client_policy = sys.argv[5] if len(sys.argv) > 5 else 'configured'
+selected_clients = select_rehearsal_clients(release_profile, client_policy)
 
 FIXTURE = r'''
 import http.server,json,os,re,signal,sqlite3,sys,urllib.request
@@ -101,7 +113,7 @@ class Operational(tests.Fake, r.LinuxBackend):
             tests.MigrationContractTests().fixture(seed)
             for path in (seed / 'db').iterdir():
                 os.rename(path, self.data / 'db' / path.name)
-        self.approved_agent_client_ids = ('isolated-rehearsal-client',) if release_profile == 'mcp-only' else ()
+        self.approved_agent_client_ids = selected_clients
         if release_profile == 'mcp-only':
             prepared = json.loads(self.new_config.read_text())
             prepared['publicRuntime']['agentOAuth']['discoveryOnly'] = False
@@ -321,6 +333,7 @@ try:
     assert before == real_state()
     report = {'status': 'passed', 'releaseProfile': release_profile, 'migrationContract': migration_contract, 'scenarioSelector': scenario_selector,
               'expectedCases': [name for name, _ in selected_cases], 'completedCases': [item['case'] for item in results],
+              'clientPolicy': client_policy, 'approvedClientCount': len(selected_clients),
               'cases': results, 'realServiceLifecycle': True,
               'fixtureNetwork': 'loopback HTTP high ports; TLS covered by existing native product tests',
               'aggregateMemoryMax': 201326592, 'aggregateCpuPercent': 10, 'aggregateTasksMax': 32,
