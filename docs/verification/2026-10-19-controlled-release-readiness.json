@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-19",
+  "status": "readonly_preflight_passed_maintenance_approval_pending",
+  "observedAtMs": 1792363461549,
+  "acceptedProductCommit": "b60c32d4654e17816480d3d0383a0d3bae2fc827",
+  "acceptedIsolationRecordCommit": "d99ac163b52cf692fa07b2bdf9b80544660fd5be",
+  "checks": {
+    "currentCodeMatchesCompatibilityTestedPrevious": true,
+    "productionFilePermissionsMatch": true,
+    "baselineSchemaMatches": true,
+    "authorityTablesNotYetMigrated": true,
+    "resourceGatePass": true,
+    "minimumAvailableMemoryBytes": 402653184,
+    "minimumFreeDiskBytes": 1073741824,
+    "https443BelongsToExistingChunlackCaddy": true,
+    "servicesActiveWithoutNewRestarts": true,
+    "health": {
+      "old": 200,
+      "public": 200,
+      "https": 200
+    },
+    "publicEndpointBaseline": {
+      "GET /.well-known/oauth-protected-resource": 200,
+      "GET /.well-known/oauth-protected-resource/mcp": 200,
+      "GET /mcp": 401,
+      "POST /mcp": 401,
+      "GET /v1/manifest": 404,
+      "GET /v1/tasks/claim": 404
+    }
+  },
+  "currentPolicy": {
+    "oauthEnabled": true,
+    "discoveryOnly": true,
+    "agentClientCount": 0
+  },
+  "nextRelease": {
+    "profile": "mcp-only",
+    "migration": "agent-authority-v1",
+    "approvedAgentClientIds": [],
+    "externalAgentGrants": 0,
+    "requiresNewMaintenanceApproval": true,
+    "forwardBudgetSeconds": 55,
+    "totalRecoveryBudgetSeconds": 120,
+    "freshApplicationConsistentBackupRequired": true,
+    "compatibilityProofMustBeUnexpiredAndMatchActualReleaseInputs": true,
+    "neverRestoreOldDatabaseOverNewWrites": true,
+    "neverDeleteLegacyWriterLock": true
+  },
+  "boundaries": {
+    "productionWrites": false,
+    "productionServiceStops": false,
+    "credentialFileContentsRead": false,
+    "externalAgentAuthorizationGranted": false,
+    "oldLackRelayDnsPortsUnchanged": true,
+    "notFullDeliveryAcceptance": true
+  },
+  "remaining": [
+    "Approve a new controlled release window before switching live services.",
+    "Revalidate any drift and compatibility proof freshness immediately before release.",
+    "Complete real model, human login, and native external Agent acceptance separately; none inferred from this preflight."
+  ]
+}
