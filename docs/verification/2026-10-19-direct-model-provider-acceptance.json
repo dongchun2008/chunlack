@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-19",
+  "status": "real_provider_passed_vps_route_unavailable",
+  "acceptedProductCommit": "b60c32d4654e17816480d3d0383a0d3bae2fc827",
+  "sourceBinding": {
+    "path": "server.js",
+    "sha256": "bf95771e39811453e79f7cf7545a393880042cfc7e3670c5dbad7813d0a9fb96",
+    "matchesIsolatedCandidate": true
+  },
+  "providerAcceptance": {
+    "status": "passed",
+    "actualModel": "qwen38-27b-nvfp4",
+    "routeRole": "private LAN independent OpenAI-compatible model router",
+    "backendHealth": {
+      "reportedPort": 8106,
+      "reportedStatus": 200,
+      "backendProcessIdentityVerified": false
+    },
+    "generationRequests": 1,
+    "randomNonceMatched": true,
+    "elapsedMs": 438,
+    "maxTokens": 256,
+    "timeoutMs": 30000,
+    "redirectsAllowed": 0,
+    "apiCredentialsUsed": false,
+    "openWebUiUsed": false,
+    "observedFrom": "current Windows development machine",
+    "notPerformanceBenchmark": true,
+    "notVpsRuntimeAcceptance": true,
+    "notWorkspaceAuthorizationAcceptance": true
+  },
+  "networkChecks": {
+    "directBackendLanPort8106": {
+      "result": "ECONNREFUSED",
+      "interpretation": "Client refusal does not prove backend failure; historical loopback-only binding is not reverified by SSH."
+    },
+    "independentRouter": {
+      "healthStatus": 200,
+      "modelsStatus": 200,
+      "targetModelAdvertised": true
+    },
+    "vpsToPrivateLanRouter": {
+      "attempts": 1,
+      "generationRequests": 0,
+      "accessible": false,
+      "errorType": "URLError",
+      "elapsedSeconds": 4.038
+    }
+  },
+  "boundaries": {
+    "productionConfigurationChanged": false,
+    "serviceRestarts": false,
+    "credentialsChanged": false,
+    "relayDnsPortsChanged": false,
+    "agentGrantsCreated": 0,
+    "noOpenWebUiDependency": true
+  },
+  "remainingGates": [
+    "A supported outbound local node path or separately authorized private network route is required for VPS-to-LAN model access.",
+    "Do not configure the Windows-reachable LAN URL as a proven VPS model endpoint.",
+    "Controlled production maintenance approval remains pending.",
+    "Full runtime workspace authorization, human login and native Muse/dots end-to-end acceptance remain separate."
+  ]
+}
