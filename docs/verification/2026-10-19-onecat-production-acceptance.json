@@ -1,0 +1,103 @@
+{
+  "date": "2026-10-19",
+  "status": "production_single_agent_real_model_and_persistence_passed",
+  "productionRelease": "0104a5c97a1e",
+  "productCommit": "b60c32d4654e17816480d3d0383a0d3bae2fc827",
+  "evidenceCorrection": {
+    "previousGap": "The Oct 19 LAN-only probe did not establish VPS reachability and the release record retained a model-route delivery gap.",
+    "newEvidence": "The previously identified direct inference tailnet route is currently reachable from the VPS, is already configured in production, and passed the authenticated workspace Agent test.",
+    "supersedesModelReachabilityGapIn": "docs/verification/2026-10-19-controlled-production-release.json",
+    "noNewRouteOrConnectorNeededForThisModel": true
+  },
+  "route": {
+    "existingPrivateTailnetPeerMatchedByExactName": true,
+    "peerOnline": true,
+    "healthHttpStatus": 200,
+    "healthElapsedMs": 2258,
+    "router": "llama-openai-router",
+    "modelCatalogHttpStatus": 200,
+    "modelCatalogElapsedMs": 23,
+    "modelIds": [
+      "local-active",
+      "unlimited-ocr-cpu",
+      "qwen38-27b-nvfp4"
+    ],
+    "configuredProvider": "onecat-direct",
+    "configuredProviderType": "openai-compatible",
+    "configuredModel": "qwen38-27b-nvfp4",
+    "configuredTimeoutMs": 30000,
+    "configuredMaxTokens": 512,
+    "fallbackModels": [],
+    "requiresApiKey": false,
+    "openWebUiDependency": false
+  },
+  "workspaceAcceptance": {
+    "origin": "https://lack.chunclaw.top/",
+    "workspace": "ChunLACK",
+    "actor": "chunlack-owner",
+    "role": "owner",
+    "agent": "1Cat acceptance assistant",
+    "explicitlyMentionedExistingAgent": true,
+    "promptKind": "Public nonce only; requested no tools, delegation, commands, reflection or follow-up",
+    "nonce": "CHUNLACK_PROD_OK_20261019_C41D8E5A",
+    "submittedUserPrompts": 1,
+    "persistedUserMessagesMatchingNonce": 1,
+    "persistedExactAgentResponses": 1,
+    "promptTimestampMs": 1792367861492,
+    "responseTimestampMs": 1792367862529,
+    "messageTimestampDeltaMs": 1037,
+    "responseExact": true,
+    "responseVisibleAfterPageReload": true,
+    "realtimeConnectionAfterReload": "CONNECTED",
+    "databaseAccessForVerification": "SQLite mode=ro; query restricted to this nonce",
+    "screenshotsStoredPrivatelyNotCommitted": true
+  },
+  "cohostChecks": {
+    "chunlack.service": {
+      "active": true,
+      "pidBefore": 594652,
+      "pidAfter": 594652,
+      "restarts": 0
+    },
+    "tailscaled.service": {
+      "active": true,
+      "pidBefore": 859,
+      "pidAfter": 859,
+      "restarts": 0
+    },
+    "chunlack-public.service": {
+      "active": true,
+      "pidBefore": 717856,
+      "pidAfter": 717856,
+      "restarts": 0
+    },
+    "chunlack-https.service": {
+      "active": true,
+      "pidBefore": 717942,
+      "pidAfter": 717942,
+      "restarts": 0
+    }
+  },
+  "boundaries": {
+    "productCodeChanged": false,
+    "productionConfigurationChanged": false,
+    "credentialsChanged": false,
+    "publicPortsOpened": false,
+    "tailnetEnrollmentOrRouteChanges": false,
+    "externalAgentGrantsCreated": false,
+    "oldLackOrRelayRestarted": false,
+    "requestIsNotBusinessData": true
+  },
+  "notProven": [
+    "This single response is not a sustained capacity or five-node concurrency benchmark.",
+    "Message timestamp delta is not provider TTFT, GPU performance or independently observed HTTP request count.",
+    "This route and returned model ID do not independently attest the backend executable, GPU topology or hardware parameters.",
+    "An exact text response does not independently audit hidden tool activity; this test submitted no tool or delegation commands.",
+    "Muse and dots native cloud-computer execution and result receipt remain unverified."
+  ],
+  "remainingDeliveryGates": [
+    "Native dots and Muse account integration, least-privilege access authorization and end-to-end cloud-computer evidence.",
+    "Real multi-node collaborative acceptance and sustained workload evidence within the existing VPS and model capacity limits."
+  ],
+  "userFacingNextStep": "Existing owner can use the deployed workspace and explicitly mention the configured 1Cat Agent. Native external Agent access remains closed pending separately approved access."
+}
