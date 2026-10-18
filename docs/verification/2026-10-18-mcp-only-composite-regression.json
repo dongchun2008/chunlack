@@ -1,0 +1,129 @@
+{
+  "date": "2026-10-18",
+  "status": "related_composite_regressions_passed_no_production_release",
+  "sourceCommit": "599f7f64db96fbebb8093bd6a6f7762b26964b12",
+  "sourceArchiveSHA256": "cbcd13028bf4471e72bfc3a575fb904fe3036ff3cd12ede756a7e8bf60f298f6",
+  "newTestSHA256": "9a40539966228a6b9e27efd6c5142f5274c8b711eda1122598532e911b23ee77",
+  "productRuntimeModified": false,
+  "excludedUncommittedUi": true,
+  "newTests": 2,
+  "coverage": {
+    "startupSnapshot": {
+      "actualPublicRuntimeOrchestrator": true,
+      "realDisposableSqlite": true,
+      "applicationLoader": "injected bounded deferred fake; this case does not assert actual HTTP routing",
+      "callerNestedMutationDuringAwait": true,
+      "callerPublicRuntimeReplacementDuringAwait": true,
+      "policyRemainsFalseAfterActivation": true,
+      "ownedWriterLockReleased": true
+    },
+    "verifiedHttps": {
+      "actualGeneratedApplication": true,
+      "actualCaddy": true,
+      "certificateVerification": true,
+      "syntheticJwksAndIdentity": true,
+      "actualExternalIssuer": false,
+      "hosts": [
+        "web",
+        "agents"
+      ],
+      "validCredentials": [
+        "paired-node bearer",
+        "signed scoped OAuth access token"
+      ],
+      "getPaths": [
+        "/v1",
+        "/v1/",
+        "/v1/manifest",
+        "/v1/events",
+        "/v1/events?integration_probe=1",
+        "/v1/events/",
+        "/v1/./events",
+        "/v1/nested/../events",
+        "/v1//events",
+        "/v1/tasks/<taskId>"
+      ],
+      "publicGetChecks": 40,
+      "publicPostChecks": 4,
+      "publicRestStatus": 404,
+      "privateAuthenticatedRestRemains200": true,
+      "oauthMcpInitializeAndConnectionsRemain200": true,
+      "queuedTaskUnclaimed": true,
+      "pairingCodeUnconsumed": true,
+      "scope": "enumerated aliases only; no universal encoding or alias completeness claim"
+    }
+  },
+  "verification": {
+    "windowsFrozenRelatedGroup": {
+      "total": 7,
+      "pass": 7,
+      "fail": 0,
+      "skip": 0,
+      "cancelled": 0,
+      "tapSeconds": 18.2442682,
+      "testProcessGoMaxProcs": 1
+    },
+    "linuxFrozenRelatedGroup": {
+      "total": 7,
+      "pass": 7,
+      "fail": 0,
+      "skip": 0,
+      "cancelled": 0,
+      "tapSeconds": 39.99955662,
+      "observedWholeUnitSeconds": 40.621,
+      "memoryMaxBytes": 201326592,
+      "cpuPercent": 10,
+      "tasksMax": 32,
+      "runtimeMaxSeconds": 90,
+      "privateNetwork": true,
+      "privateTmp": true,
+      "sourceAndDependenciesReadonly": true,
+      "onlyScratchAndOwnedFixtureOutputWritable": true,
+      "unitUser": "nobody",
+      "singleProcessTestScheduling": true
+    },
+    "preservedFailedAttempt": {
+      "status": "failed",
+      "windowsLongSourcePath": true,
+      "error": "WinError 206 while materializing package; TLS assertions did not run",
+      "pass": 5,
+      "fail": 2,
+      "fixedBy": "new shorter owned cache root, no source/helper/timeout/system-setting changes",
+      "oldDirectoryAndReportRetained": true
+    },
+    "sourceSecretScan": {
+      "status": "passed",
+      "rules": "gitleaks default rules; no blanket suppression"
+    }
+  },
+  "cohost": {
+    "testsPassed": true,
+    "allOwnUnitsTerminalAndEmpty": true,
+    "protectedUnitsUnchanged": true,
+    "health": {
+      "legacy": "200",
+      "publicApp": "200",
+      "publicHttps": "200"
+    },
+    "productionChanges": false,
+    "credentialsChanged": false,
+    "relayChanged": false
+  },
+  "boundaries": {
+    "productionReleased": false,
+    "credentialsChanged": false,
+    "relayChanged": false,
+    "portsOrDnsChanged": false,
+    "externalAgentAccessGranted": false,
+    "realModelCalls": false,
+    "realHumanOidcLoginTested": false,
+    "museDotsOwnComputerAcceptance": false,
+    "overallDeliveryComplete": false
+  },
+  "remaining": [
+    "Production maintenance/release and exact first-migration scope require fresh explicit human authorization; current prohibition remains.",
+    "External client and local workspace grants require separate scoped approval.",
+    "Muse/dots native own-computer execution evidence, real sustained multi-node/multi-human collaboration and Relay quality remain unaccepted."
+  ],
+  "fullProductSuite": "Previous 861-test product-suite record is historical. This record adds and runs two composite tests within the related seven-test group; it does not claim a new full-suite run."
+}
