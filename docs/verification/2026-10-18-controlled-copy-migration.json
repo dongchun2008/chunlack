@@ -1,0 +1,100 @@
+{
+  "date": "2026-10-18",
+  "status": "isolated-copy-validation-passed-not-production-delivery",
+  "scope": "actual production database copies and read-only copies of the actual previous runtime; synthetic config only",
+  "component": {
+    "status": "passed",
+    "scope": "real authority and identity components on point-in-time production database copy only",
+    "sourceSnapshotReadonly": true,
+    "expectedAddedSchemaObjects": 17,
+    "exactSchemaDelta": true,
+    "allOriginalIdentityRowsPreserved": true,
+    "onlyTwoExpectedVersionRowsAdded": true,
+    "epochsBackfilled": true,
+    "createdGrants": 0,
+    "lateFailureRollsBackAllAdditions": true,
+    "actualPreviousIdentityModuleOpensFailedCopy": true,
+    "actualPreviousIdentityModuleReadsMigratedMemberships": true,
+    "repeatInitializationIdempotent": true,
+    "sqliteIntegrityAndForeignKeys": true,
+    "completePublicRuntimeBootTested": false,
+    "businessRuntimeBehaviorTested": false,
+    "realOidcLoginTested": false,
+    "modelCalls": 0,
+    "productionChanges": false
+  },
+  "runtime": {
+    "status": "passed",
+    "scope": "actual production DB/code copies only",
+    "boots": [
+      {
+        "runtime": "candidate",
+        "health": 200,
+        "cleanClose": true,
+        "oldRowsPreserved": true,
+        "seconds": 7.097
+      },
+      {
+        "runtime": "previous",
+        "health": 200,
+        "cleanClose": true,
+        "oldRowsPreserved": true,
+        "seconds": 0.898
+      },
+      {
+        "runtime": "candidate-repeat",
+        "health": 200,
+        "cleanClose": true,
+        "oldRowsPreserved": true,
+        "seconds": 0.602
+      }
+    ],
+    "identitySchemaAddedObjects": 17,
+    "onlyExpectedAdditiveSchema": true,
+    "originalIdentityRowsPreserved": true,
+    "originalBusinessSchemaAndRowsPreserved": true,
+    "epochsBackfilled": true,
+    "createdGrants": 0,
+    "faultInjection": "real authority initialization clock failure rolls back all schema and data additions",
+    "oldIdentityOpensFailedMigrationCopy": true,
+    "oldRuntimeOpensMigratedCopy": true,
+    "idempotent": true,
+    "copyIntegrityAndForeignKeys": true,
+    "privateNetwork": true,
+    "realOidcLoginTested": false,
+    "realModelCallsTested": false,
+    "productionChanges": false,
+    "rollbackBackup": false
+  },
+  "preparation": {
+    "runtimeFiles": 56,
+    "databaseCopies": 3,
+    "excludedGeneratedConfigOnly": "config/lack.config.json",
+    "actualProductionConfigOrCredentialsRead": false,
+    "posixReadonlyPathVerified": true,
+    "sourceSqliteCopiesAreNotCrossDatabaseCutoverBackups": true
+  },
+  "limits": {
+    "memoryMiB": 192,
+    "cpuPercent": 10,
+    "tasksMax": 32,
+    "runtimeSeconds": 90,
+    "privateNetwork": true,
+    "writesOnlyExclusiveWorkAndResults": true
+  },
+  "hashes": {
+    "executedRunnerSHA256": "9f07b827d87cf13ae030df2f362605e22f882cc6b93a0b0095cd15382f50552e",
+    "preparationSHA256": "64075c63b805b5050197947ec4d73e5a7d7f9d192ba9e9fbb3ca7b750d78666c",
+    "codeCopyManifestSHA256": "d34c0c9dc959e510c4fa42ef006d8f36f2eb3c87c94ac51d2566ad9be10b101d"
+  },
+  "terminalExitProvenByJournal": true,
+  "allOwnCgroupsEmpty": true,
+  "protectedServicePidsAndRestartCountsUnchanged": true,
+  "productionPublished": false,
+  "readyForDelivery": false,
+  "remainingGates": [
+    "integrate expected additive schema and row-preservation checks into formal release acceptance without bypassing the existing schema guard",
+    "fresh authorization before production changes",
+    "real Muse/dots own-computer evidence and actual five-node sustained acceptance"
+  ]
+}
