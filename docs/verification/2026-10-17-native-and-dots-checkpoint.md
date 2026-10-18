@@ -91,3 +91,15 @@
 - 连接、撤销、故障恢复、权限边界及最终使用文档的交付核对。
 
 Ollama 和供应商中立路由均保留；不接入 Open WebUI，不推定模型名称已经证明底层 GPU 拓扑。
+
+## 2026-10-18 后续现场核对
+
+在发布门槛串行隔离验收完成后，重新打开当前 ChatGPT 插件页进行只读核对。页面已进入可用的个人插件目录，显示“未找到插件”；本轮没有发现现成的 ChunLACK 个人插件连接。
+
+仅在未提交的自定义 MCP 表单填写公开地址 `https://agents.chunclaw.top/mcp`，没有填写客户端 ID、密钥或任何私有配置，没有勾选风险确认、创建插件、完成 OAuth 或订阅事件。
+
+高级设置已成功取得完整发现信息：回调仍为 `https://chatgpt.com/connector_platform_oauth_redirect`；授权与 Token 端点、issuer、resource 和 OIDC 文档地址均与上表一致。`openid` 和五项任务/事件权限为表单的默认可见选项，不代表实际获准。DCR 与 CIMD 仍不可用，页面仍提供自定义 OAuth 客户端方式。
+
+因此，当前不能再将“浏览器未登录”或“回调无法加载”作为已确认阻碍。当前门槛是：新的 MCP-only 与授权迁移实现尚未获准发布生产，独立 dots 客户端及本地工作区授权也尚未启用；这些都是与公开发现分离的安全步骤。本轮未提交表单，未改生产、凭据或 Relay。
+
+已完成的发布门槛本地与隔离验收见 [串行验收记录](2026-10-18-agent-authority-serial-acceptance.json)，具体使用边界见 [MCP-only 配置说明](../MCP_ONLY_CONFIGURATION.zh-CN.md)。这不新增任何 Muse/dots 原生电脑任务或持续五节点协作通过的结论。
