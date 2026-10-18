@@ -1,0 +1,110 @@
+{
+  "date": "2026-10-19",
+  "status": "production_release_failed_original_restored",
+  "attemptTag": "bd207313f3c8",
+  "acceptedProductCommit": "b60c32d4654e17816480d3d0383a0d3bae2fc827",
+  "preparation": {
+    "acceptedCandidateCodeVerified": true,
+    "dependencyPackagesVerified": 257,
+    "dependencyCopyHashesVerified": true,
+    "productionBoundCompatibilityProofPassed": true,
+    "compatibilityValidations": {
+      "exactSchema": true,
+      "dataPreserved": true,
+      "epochsBackfilled": true,
+      "zeroGrants": true,
+      "faultAtomic": true,
+      "integrityAndForeignKeys": true,
+      "idempotent": true
+    },
+    "agentClientCount": 0
+  },
+  "releaseAttempt": {
+    "status": "recovery_requires_attention",
+    "error": "OSError",
+    "recoveryError": "OSError",
+    "records": [
+      {
+        "phase": "preflight_passed",
+        "seconds": 0
+      },
+      {
+        "phase": "https_stopped",
+        "seconds": 0.12
+      },
+      {
+        "phase": "application_stopped",
+        "seconds": 0.203
+      },
+      {
+        "phase": "consistent_backup_verified",
+        "seconds": 8.802
+      },
+      {
+        "phase": "old_code_preserved",
+        "seconds": 8.803
+      },
+      {
+        "phase": "candidate_code_installed",
+        "seconds": 8.804
+      }
+    ],
+    "controllerElapsedSeconds": 9.095,
+    "notReleaseAcceptance": true
+  },
+  "cause": {
+    "component": "new operational launcher sandbox invocation, not product code",
+    "readWriteTargetWasSingleFile": true,
+    "parentDirectoryWasReadonly": true,
+    "atomicReplacementNeedsSiblingTemporaryFile": true,
+    "isolatedExactBoundaryReproduction": {
+      "status": "passed",
+      "scope": "isolated failure reproduction only",
+      "atomicWriteDeniedByReadonlyParent": true,
+      "errorNumber": 30,
+      "productionTouched": false
+    },
+    "errorNumber": 30
+  },
+  "recovery": {
+    "status": "restored",
+    "originalCodeVerified": true,
+    "originalPolicyVerified": true,
+    "originalIngressVerified": true,
+    "credentialsUnchanged": true,
+    "databaseRestoredFromBackup": false,
+    "authorityMigrationNotApplied": true,
+    "legacyWriterLockDeleted": false,
+    "health": {
+      "old": 200,
+      "public": 200,
+      "tls": 200
+    },
+    "backupInventoryAndSchemaVerified": true,
+    "backupApplicationStopped": true,
+    "backupFileCount": 552
+  },
+  "timingEvidence": {
+    "valid": false,
+    "reason": "Read-only audit interpreted server CST wall time as UTC and produced a negative duration. Its passed status and 120-second conclusion must not be accepted.",
+    "originalInvalidReportRetained": true,
+    "actualRecoveryHealthCompletionDurationNotYetAccepted": true,
+    "notEvidenceOfWindowCompliance": true
+  },
+  "protectedServices": {
+    "oldLackAndRelayPidAndRestartCountsUnchanged": true,
+    "newPublicApplicationAndHttpsRestoredActive": true,
+    "allFourOwnExecutionUnitsExited": true
+  },
+  "boundaries": {
+    "noExternalAgentGrants": true,
+    "noDnsPortOrCredentialChanges": true,
+    "noOldDataOverNewWritesRestore": true,
+    "failedArtifactsAndConsistentBackupRetained": true
+  },
+  "pending": [
+    "Approve the two minimal launcher and timing-audit corrections.",
+    "Exercise real mount boundaries, credential protection and recovery before another controlled production attempt.",
+    "Do not claim new-version delivery or Agent access from this failed attempt."
+  ]
+}
