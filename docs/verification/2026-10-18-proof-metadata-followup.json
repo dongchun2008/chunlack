@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-18",
+  "status": "additional_test_fixture_error_not_accepted",
+  "previousCheckpoint": "2026-10-18-agent-authority-gate-development.json",
+  "sourceHashes": {
+    "controller": "69704215e62c89e2138be0fc5ec6f2f3ed513575aa5eecc0f83bf410b7c40489",
+    "tests": "808188217a6688984725c62de441d366a21b6dd7ecae726c9fe782b707e8b633"
+  },
+  "test": {
+    "name": "MigrationIntegrationTests.test_private_proof_metadata_and_prepared_hash_binding",
+    "user": "root",
+    "total": 1,
+    "pass": 0,
+    "errors": 1,
+    "seconds": 0.2,
+    "processExitCode": 1,
+    "memoryMaxBytes": 100663296,
+    "cpuPercent": 10,
+    "tasksMax": 8,
+    "runtimeMaxSeconds": 20,
+    "privateNetwork": true,
+    "reason": "new test fixture lacks candidate-config.json required by the actual proof reader",
+    "productionDefectEstablished": false
+  },
+  "coverageCorrection": "Earlier Linux 40-test suite ran as nobody; the proof metadata test returned after testing non-root rejection. It did not validate root-owned proof acceptance.",
+  "cleanup": {
+    "mainPid": 0,
+    "cgroupEmpty": true,
+    "protectedServicesUnchanged": true,
+    "sshTransportRetained": false
+  },
+  "pendingCorrections": [
+    "include NULL version-component rows in preservation checks",
+    "reject version-only partial migration during live preflight while retaining cold recheck",
+    "normalize only new isolated snapshot journal mode and prove rows/schema unchanged before readonly stage trial",
+    "create the correctly named candidate configuration in the new proof metadata fixture"
+  ],
+  "boundaries": {
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "relayChanged": false,
+    "sourceCodeChangedInThisFollowup": false,
+    "allAcceptanceComplete": false
+  }
+}
