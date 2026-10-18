@@ -1,0 +1,345 @@
+{
+  "date": "2026-10-19",
+  "status": "controlled_production_release_passed_remaining_delivery_gates",
+  "attemptTag": "0104a5c97a1e",
+  "sources": {
+    "acceptedProductCommit": "b60c32d4654e17816480d3d0383a0d3bae2fc827",
+    "operationalLauncherCommit": "ee0df985a312b9f740ce491e1c03db1a8e124391",
+    "productCodeMatchesAcceptedCandidate": true
+  },
+  "corrections": {
+    "atomicIngressParentDirectoryWritable": true,
+    "existingRuntimeCredentialsSeparatelyReadonly": true,
+    "unixTimingRejectsNegativeDurations": true,
+    "priorInvalidAuditRetained": true,
+    "priorRecoveryCorrectedTiming": {
+      "status": "passed",
+      "elapsedUpperBoundSeconds": 50.583325334,
+      "within120Seconds": true,
+      "clockSource": "systemd --timestamp=unix and filesystem Unix nanoseconds",
+      "timezoneRepresentationsAgree": true,
+      "priorInvalidAuditRetained": true,
+      "usesRecoveryHealthReportMtime": true
+    }
+  },
+  "verification": {
+    "windowsLauncherTests": {
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0
+    },
+    "linuxLauncherTests": {
+      "status": "passed",
+      "tests": 13,
+      "failures": 0,
+      "skipped": 0
+    },
+    "mountAndRecoveryDrill": {
+      "status": "passed",
+      "actualLauncherReadWritePropertyUsed": true,
+      "productionPathsBoundToExclusiveFixtures": true,
+      "atomicIngressReplace": true,
+      "injectedFaultIngressRestored": true,
+      "newWritePreserved": true,
+      "credentialDirectAndAtomicWritesDenied": {
+        "direct": 30,
+        "atomic": 16
+      },
+      "credentialHashUnchanged": true,
+      "temporarySiblingsCleaned": true,
+      "productionTouched": false
+    },
+    "serviceLifecycleDrills": {
+      "network": "loopback HTTP; not vendor or model end-to-end acceptance",
+      "success": {
+        "status": "passed",
+        "expectedCases": [
+          "success"
+        ],
+        "completedCases": [
+          "success"
+        ],
+        "result": {
+          "status": "released",
+          "records": [
+            {
+              "phase": "preflight_passed",
+              "seconds": 0
+            },
+            {
+              "phase": "https_stopped",
+              "seconds": 1.056
+            },
+            {
+              "phase": "application_stopped",
+              "seconds": 1.784
+            },
+            {
+              "phase": "consistent_backup_verified",
+              "seconds": 2.408
+            },
+            {
+              "phase": "old_code_preserved",
+              "seconds": 2.408
+            },
+            {
+              "phase": "candidate_code_installed",
+              "seconds": 2.408
+            },
+            {
+              "phase": "candidate_configuration_installed",
+              "seconds": 2.41
+            },
+            {
+              "phase": "loopback_https_acceptance_passed",
+              "seconds": 14.708
+            },
+            {
+              "phase": "public_discovery_acceptance_passed",
+              "seconds": 24.009
+            }
+          ],
+          "outageSeconds": 24.009,
+          "releaseProfile": "mcp-only",
+          "agentBusinessAccess": false,
+          "credentialsChanged": false,
+          "liveDataRestoredFromBackup": false
+        },
+        "cleanupErrors": [],
+        "allOwnFixtureUnitsStoppedAndEmpty": true
+      },
+      "rollback": {
+        "status": "passed",
+        "expectedCases": [
+          "rollback"
+        ],
+        "completedCases": [
+          "rollback"
+        ],
+        "result": {
+          "status": "rolled_back",
+          "error": "injected_loopback_https_acceptance_passed",
+          "records": [
+            {
+              "phase": "preflight_passed",
+              "seconds": 0
+            },
+            {
+              "phase": "https_stopped",
+              "seconds": 0.806
+            },
+            {
+              "phase": "application_stopped",
+              "seconds": 1.702
+            },
+            {
+              "phase": "consistent_backup_verified",
+              "seconds": 2.467
+            },
+            {
+              "phase": "old_code_preserved",
+              "seconds": 2.467
+            },
+            {
+              "phase": "candidate_code_installed",
+              "seconds": 2.467
+            },
+            {
+              "phase": "candidate_configuration_installed",
+              "seconds": 2.469
+            },
+            {
+              "phase": "loopback_https_acceptance_passed",
+              "seconds": 14.565
+            }
+          ],
+          "elapsedSeconds": 28.569
+        },
+        "cleanupErrors": [],
+        "allOwnFixtureUnitsStoppedAndEmpty": true
+      }
+    },
+    "independentReview": {
+      "scope": [
+        "deploy/public/release-control/2026-10-19/launch-controlled-release.py",
+        "deploy/public/release-control/2026-10-19/test-launch-controlled-release.py"
+      ],
+      "actionableFindings": 0,
+      "staticOnly": true
+    },
+    "productionBoundCompatibility": {
+      "status": "passed",
+      "boots": [
+        {
+          "runtime": "candidate",
+          "seconds": 9.105,
+          "cleanClose": true,
+          "dataVerified": true,
+          "privateNodeReadChecked": true,
+          "validForwardedNodeDenied": true
+        },
+        {
+          "runtime": "previous",
+          "seconds": 8.196,
+          "cleanClose": true,
+          "dataVerified": true,
+          "privateNodeReadChecked": false,
+          "validForwardedNodeDenied": false
+        },
+        {
+          "runtime": "candidate-repeat",
+          "seconds": 8.704,
+          "cleanClose": true,
+          "dataVerified": true,
+          "privateNodeReadChecked": true,
+          "validForwardedNodeDenied": true
+        }
+      ],
+      "validations": {
+        "exactSchema": true,
+        "dataPreserved": true,
+        "epochsBackfilled": true,
+        "zeroGrants": true,
+        "faultAtomic": true,
+        "integrityAndForeignKeys": true,
+        "idempotent": true
+      },
+      "notApplicationConsistentBackup": true
+    },
+    "actualRelease": {
+      "status": "released",
+      "records": [
+        {
+          "phase": "preflight_passed",
+          "seconds": 0
+        },
+        {
+          "phase": "https_stopped",
+          "seconds": 0.112
+        },
+        {
+          "phase": "application_stopped",
+          "seconds": 0.365
+        },
+        {
+          "phase": "consistent_backup_verified",
+          "seconds": 8.699
+        },
+        {
+          "phase": "old_code_preserved",
+          "seconds": 8.7
+        },
+        {
+          "phase": "candidate_code_installed",
+          "seconds": 8.701
+        },
+        {
+          "phase": "candidate_configuration_installed",
+          "seconds": 8.704
+        },
+        {
+          "phase": "loopback_https_acceptance_passed",
+          "seconds": 21.803
+        },
+        {
+          "phase": "public_discovery_acceptance_passed",
+          "seconds": 32.701
+        }
+      ],
+      "outageSeconds": 32.702,
+      "releaseProfile": "mcp-only",
+      "agentBusinessAccess": false,
+      "credentialsChanged": false,
+      "liveDataRestoredFromBackup": false
+    },
+    "actualPostRelease": {
+      "status": "passed",
+      "candidateCodeMatches": true,
+      "migrationSchemaExact": true,
+      "authorityVersion": 1,
+      "authorityGrants": 0,
+      "missingMembershipEpochs": 0,
+      "integrityAndForeignKeys": {
+        "identity.db": "ok",
+        "lack.db": "ok",
+        "agent-gateway.db": "ok"
+      },
+      "consistentBackupVerified": true,
+      "backupFileCount": 552,
+      "credentialsHashUnchanged": true,
+      "nonOwnedConfigurationPreserved": true,
+      "ingressMatchesPreparedCandidate": true,
+      "publicRestRejections": 20,
+      "mcpRejectsUnauthenticated": true,
+      "oauthDiscoveryPublic": true,
+      "health": {
+        "publicTls": 200,
+        "old": 200,
+        "publicApp": 200
+      },
+      "externalAgentAccessGranted": false,
+      "databaseRestoredFromBackup": false,
+      "checkedAtMs": 1792367076315
+    },
+    "finalServices": {
+      "oldAndRelayStateUnchanged": true,
+      "ownUnitsTerminalAndEmpty": 11,
+      "services": {
+        "chunlack.service": {
+          "MainPID": "594652",
+          "NRestarts": "0",
+          "Id": "chunlack.service",
+          "ActiveState": "active"
+        },
+        "tailscaled.service": {
+          "MainPID": "859",
+          "NRestarts": "0",
+          "Id": "tailscaled.service",
+          "ActiveState": "active"
+        },
+        "chunlack-public.service": {
+          "MainPID": "717856",
+          "NRestarts": "0",
+          "Id": "chunlack-public.service",
+          "ActiveState": "active"
+        },
+        "chunlack-https.service": {
+          "MainPID": "717942",
+          "NRestarts": "0",
+          "Id": "chunlack-https.service",
+          "ActiveState": "active"
+        }
+      },
+      "resourceSnapshot": "MemoryCurrent=58384384\nTasksCurrent=11\nCPUQuotaPerSecUSec=500ms\nMemoryMax=469762048\nTasksMax=64\nId=chunlack-public.service\n\nMemoryCurrent=14479360\nTasksCurrent=7\nCPUQuotaPerSecUSec=100ms\nMemoryMax=134217728\nTasksMax=64\nId=chunlack-https.service\n"
+    }
+  },
+  "browser": {
+    "publicPageRenders": true,
+    "privateWorkspaceLoginVisible": true,
+    "pocketIdSsoPageReached": true,
+    "passkeyAuthenticationStarted": true,
+    "humanLoginAcceptance": "passed: existing Pocket ID session completed ChunLACK OIDC login",
+    "browser": "Codex in-app browser; same tab throughout",
+    "sensitiveScreenshotStoredPrivatelyNotCommitted": true,
+    "workspace": "ChunLACK",
+    "loginName": "chunlack-owner",
+    "role": "owner",
+    "realtimeConnection": "CONNECTED",
+    "existingChannelHistoryLoaded": true,
+    "noNewAuthorizationPromptObserved": true
+  },
+  "boundaries": {
+    "agentClientIdsEmpty": true,
+    "agentAuthorityGrants": 0,
+    "externalAgentAccessGranted": false,
+    "credentialsDnsPortsOldLackRelayUnchanged": true,
+    "noDatabaseRestoreOverNewWrites": true,
+    "noLegacyLockDeletion": true,
+    "forwardBudgetSeconds": 55,
+    "totalRecoveryBudgetSeconds": 120
+  },
+  "remainingDeliveryGates": [
+    "Resolve the VPS-to-private-LAN model path using an approved controlled node or private route; Windows Provider success does not prove VPS access.",
+    "Muse/dots native Agent end-to-end acceptance and any access grants remain separate; no grants were created by this release."
+  ]
+}
