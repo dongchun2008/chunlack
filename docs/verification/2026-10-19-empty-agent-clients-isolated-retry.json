@@ -1,0 +1,285 @@
+{
+  "date": "2026-10-19",
+  "status": "isolated_retry_passed_not_deployed",
+  "sourceCheckpoint": "b60c32d4654e17816480d3d0383a0d3bae2fc827",
+  "sourceBindings": [
+    {
+      "path": "identity/agent-access.cjs",
+      "sha256": "1175577c4b010fedcf0e029abb5ab95b53b571428e83f55eeab1fdc9938b7ede"
+    },
+    {
+      "path": "identity/agent-authority.cjs",
+      "sha256": "cd0f36cd51ca393057dd1eebdfad6e12466103115e498792ac013e036f9292ec"
+    },
+    {
+      "path": "integrations/mcp/pilot-server.cjs",
+      "sha256": "c150a092fba59c606f939147ee15303b0c1b10b3b21f570787b9b8ad25aa068e"
+    },
+    {
+      "path": "tests/agent-access.test.cjs",
+      "sha256": "4519c24502af8d269875e3678ec97070ce6ec19ab85e0bdaa4702823cf5f78aa"
+    },
+    {
+      "path": "tests/agent-empty-clients.test.cjs",
+      "sha256": "8b084f22a1ccbec571c731f5760c044ad6725008e3f327026400435bd36f7882"
+    },
+    {
+      "path": "deploy/public/release-control/2026-10-17/release-discovery-safe-20261017.py",
+      "sha256": "6a5b411f257c501470a781d4c897207e45229efee282ac34963371b614506c04"
+    },
+    {
+      "path": "deploy/public/release-control/2026-10-17/test-release-discovery-safe-20261017.py",
+      "sha256": "ee678fad2c073dc49d2c63d92ea2d1c7b66abb641d94b17b89fe05cd3de2c9da"
+    },
+    {
+      "path": "deploy/public/release-control/2026-10-17/rehearse-operational-release-20261017.py",
+      "sha256": "4b88fb943cf669a22e5c9635257f8e808b34c0db304f7a5a7008a4bc4c106e25"
+    },
+    {
+      "path": "tests/agent-discovery-only.test.cjs",
+      "sha256": "fe415894769d2c0ebc6690a3c9b1468a75f04db4df6759e7187dedbeffe858d4"
+    }
+  ],
+  "scope": {
+    "productChanges": false,
+    "launcherFixes": [
+      "pass fresh synthetic ISOLATED_GATE_ADMIN to isolated stage unit",
+      "require terminal empty own cgroup and report existence before SFTP download; use canonical report.json"
+    ],
+    "freshTrialTag": "314f125b3d64",
+    "productionChanges": false,
+    "productionCredentialsReadOrModified": false,
+    "externalAgentGrantsCreated": 0
+  },
+  "verification": {
+    "carriedForwardUnchangedProduct": {
+      "windows": {
+        "files": 115,
+        "passed": 867,
+        "failed": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      "linuxNative": {
+        "passed": 68
+      },
+      "linuxController": {
+        "passed": 46
+      },
+      "note": "Previously accepted unchanged source regression; not rerun for this launcher-only correction."
+    },
+    "historicalDatabaseCopy": {
+      "status": "passed",
+      "phases": [
+        "fault",
+        "previous-after-fault",
+        "candidate",
+        "previous",
+        "candidate-repeat"
+      ],
+      "boots": [
+        {
+          "runtime": "candidate",
+          "seconds": 8.602,
+          "cleanClose": true,
+          "dataVerified": true,
+          "privateNodeReadChecked": true,
+          "validForwardedNodeDenied": true
+        },
+        {
+          "runtime": "previous",
+          "seconds": 8.49,
+          "cleanClose": true,
+          "dataVerified": true,
+          "privateNodeReadChecked": false,
+          "validForwardedNodeDenied": false
+        },
+        {
+          "runtime": "candidate-repeat",
+          "seconds": 8.903,
+          "cleanClose": true,
+          "dataVerified": true,
+          "privateNodeReadChecked": true,
+          "validForwardedNodeDenied": true
+        }
+      ],
+      "validations": {
+        "exactSchema": true,
+        "dataPreserved": true,
+        "epochsBackfilled": true,
+        "zeroGrants": true,
+        "faultAtomic": true,
+        "integrityAndForeignKeys": true,
+        "idempotent": true
+      },
+      "candidateProductHashes": [
+        {
+          "path": "identity/agent-access.cjs",
+          "sha256": "1175577c4b010fedcf0e029abb5ab95b53b571428e83f55eeab1fdc9938b7ede"
+        },
+        {
+          "path": "identity/agent-authority.cjs",
+          "sha256": "cd0f36cd51ca393057dd1eebdfad6e12466103115e498792ac013e036f9292ec"
+        },
+        {
+          "path": "integrations/mcp/pilot-server.cjs",
+          "sha256": "c150a092fba59c606f939147ee15303b0c1b10b3b21f570787b9b8ad25aa068e"
+        }
+      ],
+      "applicationConsistentBackup": false,
+      "productionRestore": false
+    },
+    "privateProof": {
+      "status": "passed",
+      "formalPrivateProofAccepted": true,
+      "sourceSchemaStillPristine": true,
+      "liveWalVersionOnlyPartialRejectedBeforeStop": true,
+      "noServiceStopRequests": true,
+      "proofBindsActualCandidateAndPreviousCopies": true,
+      "productionChanges": false
+    },
+    "missingReportGuard": {
+      "passed": true,
+      "knownFailedUnitKeptFailed": true,
+      "noNonexistentReportDownload": true
+    },
+    "operationalLifecycle": {
+      "success": {
+        "passed": true,
+        "result": {
+          "status": "released",
+          "records": [
+            {
+              "phase": "preflight_passed",
+              "seconds": 0
+            },
+            {
+              "phase": "https_stopped",
+              "seconds": 0.833
+            },
+            {
+              "phase": "application_stopped",
+              "seconds": 1.578
+            },
+            {
+              "phase": "consistent_backup_verified",
+              "seconds": 2.207
+            },
+            {
+              "phase": "old_code_preserved",
+              "seconds": 2.207
+            },
+            {
+              "phase": "candidate_code_installed",
+              "seconds": 2.207
+            },
+            {
+              "phase": "candidate_configuration_installed",
+              "seconds": 2.303
+            },
+            {
+              "phase": "loopback_https_acceptance_passed",
+              "seconds": 14.904
+            },
+            {
+              "phase": "public_discovery_acceptance_passed",
+              "seconds": 24.106
+            }
+          ],
+          "outageSeconds": 24.106,
+          "releaseProfile": "mcp-only",
+          "agentBusinessAccess": false,
+          "credentialsChanged": false,
+          "liveDataRestoredFromBackup": false
+        },
+        "reportSha256": "20bc871a354e61fce85c56992394007a50726df313f7de71cf63de28623f62f6"
+      },
+      "rollback": {
+        "passed": true,
+        "result": {
+          "status": "rolled_back",
+          "error": "injected_loopback_https_acceptance_passed",
+          "records": [
+            {
+              "phase": "preflight_passed",
+              "seconds": 0
+            },
+            {
+              "phase": "https_stopped",
+              "seconds": 0.922
+            },
+            {
+              "phase": "application_stopped",
+              "seconds": 1.689
+            },
+            {
+              "phase": "consistent_backup_verified",
+              "seconds": 2.41
+            },
+            {
+              "phase": "old_code_preserved",
+              "seconds": 2.41
+            },
+            {
+              "phase": "candidate_code_installed",
+              "seconds": 2.41
+            },
+            {
+              "phase": "candidate_configuration_installed",
+              "seconds": 2.413
+            },
+            {
+              "phase": "loopback_https_acceptance_passed",
+              "seconds": 14.707
+            }
+          ],
+          "elapsedSeconds": 29.011
+        },
+        "reportSha256": "db906a21379aea5c24f018651b005e26d4b34cf107c5df97180081e47e9f50fd"
+      }
+    },
+    "networkBoundary": "Operational fixture uses loopback HTTP high ports; not real TLS or vendor acceptance.",
+    "appliedProofUnitCaps": {
+      "memoryBytes": 201326592,
+      "cpuPercent": 10,
+      "tasksMax": 32,
+      "runtimeSeconds": 90,
+      "privateNetwork": true
+    },
+    "operationalAggregateCaps": {
+      "memoryBytes": 201326592,
+      "cpuPercent": 10,
+      "tasksMax": 32,
+      "eachUnitRuntimeSeconds": 90
+    },
+    "ownUnits": {
+      "count": 11,
+      "allTerminalAndEmpty": true
+    },
+    "protectedServicesUnchanged": true,
+    "health": {
+      "old": 200,
+      "public-app": 200,
+      "public-tls": 200
+    }
+  },
+  "retainedFailure": {
+    "trialTag": "35d30d6d6cb5",
+    "reason": "isolated launcher omitted synthetic admin environment variable",
+    "originalFailurePreserved": true,
+    "failedReportNotInvented": true
+  },
+  "remainingGates": [
+    "Controlled production maintenance deployment not performed under this approval.",
+    "Real direct-model acceptance remains separate.",
+    "Pocket ID human-login and native Muse/dots Agent end-to-end acceptance remain separate."
+  ],
+  "boundaries": {
+    "noProductionPublish": true,
+    "noCredentialDnsPortOrRelayChanges": true,
+    "noOldDataOverNewWritesRestore": true,
+    "noLegacyLockDeletion": true,
+    "releaseForwardSeconds": 55,
+    "releaseTotalRecoverySeconds": 120
+  }
+}
