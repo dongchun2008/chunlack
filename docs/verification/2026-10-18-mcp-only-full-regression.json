@@ -1,0 +1,243 @@
+{
+  "scope": "mcp-only-development-verification-not-production-or-vendor-acceptance",
+  "verifiedProductCommit": "3546b2b2ba153e51afa5926517d1b43d7c00951c",
+  "sourceSnapshot": {
+    "method": "Git archive of the pinned commit into an independent directory",
+    "archiveSHA256": "96186bfaa01d4a8e00535723ca722f1040c4f32d2b0c35a378df412169185380",
+    "knownUncommittedUIIncluded": false,
+    "dependencies": "Existing local installation via junction; no install or upgrade"
+  },
+  "windowsFull": {
+    "summary": {
+      "tests": 861,
+      "suites": 0,
+      "pass": 861,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 966346.9397
+    },
+    "exitCode": 0,
+    "reporter": "node:test spec",
+    "command": "node --test --test-concurrency=1 --test-timeout=90000 tests/*.test.cjs",
+    "environment": {
+      "GOMAXPROCS": "1",
+      "PYTHON": "existing interpreter",
+      "CADDY_TEST_BIN": "previously verified portable Caddy 2.11.7"
+    },
+    "testTimeoutsChanged": false,
+    "securityAssertionsChanged": false,
+    "rawLogSHA256": "a63d7b5bc0b83cbdbcc510b0d678d52bfe904f8943bd046d2fee8aa6f5dc1999"
+  },
+  "windowsSmoke": {
+    "exitCode": 0,
+    "passed": true,
+    "scope": "Real local HTTP/WebSocket, two synthetic model backends in one channel, SQLite restart persistence, private binding and config preservation",
+    "rawLogSHA256": "f11986f4ca6071992a388765ca44f0a4d23d1332a8d0f6a1603c5cd04cec79cb"
+  },
+  "focusedWindows": {
+    "goWorkerOne": {
+      "summary": {
+        "tests": 5,
+        "suites": 0,
+        "pass": 5,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 50324.4446
+      },
+      "exitCode": 0,
+      "rawLogSHA256": "3c18a11f7628f5a3776fe8ff5c151bfe2cfb03ef1c35d4438464c02834a4b514"
+    },
+    "inheritedDefaultGo": {
+      "summary": {
+        "tests": 5,
+        "suites": 0,
+        "pass": 5,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 9116.3948
+      },
+      "exitCode": 0,
+      "rawLogSHA256": "a6e50d433a38f37d6c7b19eb3b39902a70dd58d107ea4de68b4e1b6d6d250588"
+    },
+    "packagedCaddyValidationTimeoutMs": 10000,
+    "timeoutChanged": false,
+    "actualGeneratedApplicationAndHttps": true
+  },
+  "nativeIsolated": {
+    "provenance": "Previously completed same-implementation run, not a new VPS run in this followup",
+    "tag": "chunlack-native-mcp-only-d32a7be2432b",
+    "summary": {
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "exitCode": 0,
+    "reportSHA256": "49c25c827b22e48ce7e973d077e788714a07055e9b6b2e658c288649c9f70eed",
+    "tapSHA256": "fe2c10b59ac0bccb6c6616edb36dfa9299c23f69a7f8dd25c7c5c51d0ef5ba27",
+    "sourceArchiveSHA256": "4bc2dc5b4e16826b8f756feb6be6d1f772637098f39ffbf36601036db5d3dd2f",
+    "memoryMaxBytes": 201326592,
+    "cpuPercentOfOneCore": 10,
+    "tasksMax": 32,
+    "runtimeMax": "1min 30s",
+    "privateNetwork": "yes",
+    "ownedUnitsStopped": {
+      "chunlack-native-mcp-only-d32a7be2432b-test.service": {
+        "MainPID": "0",
+        "ActiveState": "inactive",
+        "cgroupEmpty": true,
+        "stopped": true
+      }
+    },
+    "lastRecordedProtectedServicesUnchanged": true
+  },
+  "correctedDiagnostic": {
+    "scope": "Read-only process startup and no-listener config validation",
+    "stdinEnded": true,
+    "perProbeTimeoutMs": 10000,
+    "goWorkerSetting": "inherited-default",
+    "results": [
+      {
+        "label": "version-first",
+        "elapsedMs": 153,
+        "exitCode": 0,
+        "timedOut": false
+      },
+      {
+        "label": "minimal-config-no-listener",
+        "elapsedMs": 148,
+        "exitCode": 0,
+        "timedOut": false
+      },
+      {
+        "label": "version-repeat",
+        "elapsedMs": 135,
+        "exitCode": 0,
+        "timedOut": false
+      }
+    ],
+    "rawReportSHA256": "ee6721d7a86d6c6e738c8d9e6db38e6d9bc2c6e2780332560a1cfa3db4ff5fea"
+  },
+  "earlierEvidence": {
+    "earlierWindowsFailedRunsRetained": true,
+    "earlierNativeContextFailureRetained": true,
+    "invalidMinimalConfigProbe": {
+      "label": "minimal-config-no-listener",
+      "validForConclusions": false,
+      "reason": "The first diagnostic did not write/end stdin; its timeout does not establish slow config validation",
+      "originalRawReportSHA256": "9e9014cdb9c63854430f58a619a747aa995f691f1dff05a992ecdf512a7eeda5"
+    },
+    "validStartupObservations": [
+      {
+        "label": "version-first",
+        "elapsedMs": 6546,
+        "exitCode": 0
+      },
+      {
+        "label": "version-repeat",
+        "elapsedMs": 9961,
+        "exitCode": 0
+      }
+    ],
+    "loadObservations": [
+      {
+        "label": "node-version-control",
+        "elapsedMs": 2943,
+        "exitCode": 0,
+        "killed": false,
+        "signal": null,
+        "logicalCPUs": 8,
+        "systemBusyPercent": 100,
+        "freeMemoryBeforeBytes": 3443621888,
+        "freeMemoryAfterBytes": 3412291584,
+        "stdoutBytes": 10,
+        "stderrBytes": 0
+      },
+      {
+        "label": "caddy-version-inherited-runtime",
+        "elapsedMs": 5848,
+        "exitCode": 0,
+        "killed": false,
+        "signal": null,
+        "logicalCPUs": 8,
+        "systemBusyPercent": 100,
+        "freeMemoryBeforeBytes": 3410890752,
+        "freeMemoryAfterBytes": 3365236736,
+        "stdoutBytes": 56,
+        "stderrBytes": 0
+      },
+      {
+        "label": "caddy-version-one-go-worker",
+        "elapsedMs": 1979,
+        "exitCode": 0,
+        "killed": false,
+        "signal": null,
+        "logicalCPUs": 8,
+        "systemBusyPercent": 100,
+        "freeMemoryBeforeBytes": 3363618816,
+        "freeMemoryAfterBytes": 3335929856,
+        "stdoutBytes": 56,
+        "stderrBytes": 0
+      }
+    ],
+    "uniqueTimeoutRootCauseEstablished": false,
+    "causalCaution": "Host load, startup conditions and Go parallelism changed over time. Do not attribute all improvement to GOMAXPROCS=1."
+  },
+  "independentReadOnlyReview": {
+    "base": "45826fe30dc90da2d5848e213fdcdc94cf42018b",
+    "head": "3546b2b2ba153e51afa5926517d1b43d7c00951c",
+    "actionableNewRegressionsFound": false,
+    "authorizationBypassFound": false,
+    "reviewerRanTests": false,
+    "verdict": "Ready for publication planning, not production authorization",
+    "rawReviewSHA256": "d601c4d44a0206fa8f16752f6daf9cf9ace53e1a7051b55b5dadc4ac4255d843",
+    "nonblockingCoverageGaps": [
+      "No dedicated assertion mutates config during the startup await; the early snapshot was checked by inspection.",
+      "MCP-only HTTPS does not combine a valid paired-node token and path aliases across both hosts; separate HTTP token-denial and existing ingress coverage remain."
+    ],
+    "declinedToJudge": [
+      "Known unrelated uncommitted identity/workspace-shell.js change and unrelated legacy behavior",
+      "Production deployment and actual external-agent authorization/acceptance"
+    ]
+  },
+  "rawArtifactSHA256": {
+    "full-regression.spec.log": "a63d7b5bc0b83cbdbcc510b0d678d52bfe904f8943bd046d2fee8aa6f5dc1999",
+    "smoke.log": "f11986f4ca6071992a388765ca44f0a4d23d1332a8d0f6a1603c5cd04cec79cb",
+    "focused-go1.tap": "3c18a11f7628f5a3776fe8ff5c151bfe2cfb03ef1c35d4438464c02834a4b514",
+    "focused-default.tap": "a6e50d433a38f37d6c7b19eb3b39902a70dd58d107ea4de68b4e1b6d6d250588",
+    "stdin-correction.json": "ee6721d7a86d6c6e738c8d9e6db38e6d9bc2c6e2780332560a1cfa3db4ff5fea",
+    "startup-load.json": "c13bfc455d4bb812a2f5b516940f745ee8e3eeac42b58a2d42ebe8d3b007c7d2",
+    "original-diagnostic.json": "9e9014cdb9c63854430f58a619a747aa995f691f1dff05a992ecdf512a7eeda5",
+    "native-previous.json": "49c25c827b22e48ce7e973d077e788714a07055e9b6b2e658c288649c9f70eed",
+    "native-previous.tap": "fe2c10b59ac0bccb6c6616edb36dfa9299c23f69a7f8dd25c7c5c51d0ef5ba27",
+    "independent-review.txt": "d601c4d44a0206fa8f16752f6daf9cf9ace53e1a7051b55b5dadc4ac4255d843"
+  },
+  "rawArtifactsLocation": "Retained in local ignored task storage; only this summary is published",
+  "countsAreSeparateRunsNotSummed": true,
+  "followupChangesProductCode": false,
+  "vpsTouchedByThisFollowup": false,
+  "productionDeployed": false,
+  "externalApiOrWorkspaceAccessGranted": false,
+  "vendorAgentsVerified": false,
+  "sustainedRealWorkloadAcceptance": false,
+  "readyForPublicationPlanning": true,
+  "readyForProductionExecution": false,
+  "readyForDelivery": false,
+  "outstandingGates": [
+    "Prepare the controlled MCP-only publication plan and obtain a fresh scoped maintenance approval before deployment.",
+    "Fresh production preflight, consistent backup, rollback readiness and co-host service checks.",
+    "Explicit external-client, API, workspace and callback authorization; no access is implied by registration.",
+    "Real Muse Laozhen and dots Xuanji own-computer execution, task nonce, original evidence, persisted receipt and human acceptance.",
+    "Verify actual subscriptions and automatic task handoff rather than substituting a custom worker.",
+    "Sustained five-agent real local/cloud workload and Relay forwarding quality; mock rounds and listener checks are insufficient.",
+    "Final real-account onboarding, usage, revocation and recovery instructions."
+  ]
+}

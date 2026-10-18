@@ -34,3 +34,35 @@ MCP-only 不自动启用 OAuth、增加客户端白名单、建立账户绑定�
 4. 验证 MCP 无令牌被拒绝、合法授权可执行受限调用，公网所有节点 REST 路径仍为 404，内部回环继续要求合法节点身份。
 
 不能仅凭路由文本、配置保存或 HTTP 200 声称 Muse/dots 接入完成；仍需其自身电脑执行、匹配任务随机码、原始证据和持久化回执。
+
+## 2026-10-18 验证检查点
+
+验证代码基线为 `3546b2b2ba153e51afa5926517d1b43d7c00951c`。完整回归使用从 Git 导出的独立副本，不包含已知未提交的界面修改。
+
+| 验证项 | 结果 | 边界 |
+| --- | --- | --- |
+| Windows 完整回归 | 861/861，零失败、零跳过、零取消 | 测试进程设置 `GOMAXPROCS=1`；原测试超时及断言不变 |
+| Windows 默认 Go 设置的 MCP-only 同组复验 | 5/5 | 实际打包应用与 HTTPS；原 Caddy 校验上限仍为 10000 ms |
+| Linux MCP-only 隔离验证 | 5/5 | 此前同实现的证据；192 MiB、单核 10% CPU、TasksMax=32、90 秒、私有网络 |
+| HTTP/WebSocket 与重启烟雾 | 通过 | 两个模拟模型、SQLite 持久化、私有绑定和配置保留，不是真实外部 Agent |
+| 修正 stdin 后的独立诊断 | 3/3 | 版本命令、无监听最小配置校验、再次查询版本；每项仍限 10 秒 |
+
+独立只读复核未发现本次变更新增的越权或功能回归。尚未专门组合覆盖的情形包括：启动 await 期间修改调用方配置，以及在 MCP-only 的 HTTPS 测试中同时组合有效配对节点令牌、两域名和路径别名；当前分别有配置快照实现检查、HTTP 节点令牌拒绝及既有入口测试，不能写成上述组合用例已经执行。
+
+早期 Windows 校验超时和无效诊断仍保留。先前最小配置探针遗漏写入 stdin，不能据其超时判断 Caddy 校验慢。负载采样曾显示本机八个逻辑核满载，版本命令也延迟；后来默认 Go 设置恢复快速启动。因此未确认唯一根因，不能把改善单独归因于 `GOMAXPROCS=1`。
+
+计数、日志哈希及尚未完成的交付门槛见 [验收记录](verification/2026-10-18-mcp-only-full-regression.json)。本检查点不构成生产发布授权，也不是 Muse/dots 真实接入或 VPS 持续容量验收。
+
+## Windows 开发回归复现
+
+使用 Node.js 24、Python 和已经核验的便携 Caddy；在独立 PowerShell 窗口中，将 `PYTHON`、`CADDY_TEST_BIN` 指向本机实际工具路径后运行：
+
+```powershell
+$env:GOMAXPROCS = '1'
+npm test
+if ($LASTEXITCODE -ne 0) { throw 'Regression failed' }
+npm run smoke
+if ($LASTEXITCODE -ne 0) { throw 'Smoke failed' }
+```
+
+`GOMAXPROCS=1` 只约束该终端子进程的 Go 调度并行度，不是 VPS 的 CPU 百分比配额，也不是 Agent 数量上限。不要设为机器级变量；关闭独立终端后该设置不持久保留。发生超时时先保留失败报告并定位阶段，不跳过 TLS/权限断言、不先增加超时，也不停止其他用户进程。

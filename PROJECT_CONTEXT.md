@@ -1,5 +1,9 @@
 # PROJECT_CONTEXT
 
+> 最新开发验证（2026-10-18，未发布）：以已提交代码 `3546b2b2ba153e51afa5926517d1b43d7c00951c` 导出的独立副本完成 Windows 全量回归，861/861 通过，零失败、零跳过、零取消；HTTP/WebSocket、两个模拟模型、SQLite 重启持久化及配置保留烟雾测试通过。全量运行仅为测试进程设置 `GOMAXPROCS=1`，随后默认 Go 设置下的 MCP-only 同组测试也 5/5 通过。原 Caddy 校验 10 秒上限未改；诊断遗漏的 stdin 写入已修正，三项补测均通过。原限额 Linux MCP-only 5/5 为此前同实现的独立证据，不能与本轮测试简单相加。见 [验收记录](docs/verification/2026-10-18-mcp-only-full-regression.json) 和 [配置与复现说明](docs/MCP_ONLY_CONFIGURATION.zh-CN.md)。
+
+> 接入与发布边界（2026-10-18）：独立只读复核未发现此变更新增的越权或功能回归，但仍保留组合覆盖缺口。本轮未部署 MCP-only、未操作 VPS/Relay、未授予外部 API、工作区或任务权限。独立公共 PKCE 客户端“ChunLACK dots”已登记不等于玄玑已接入；Muse 老镇与 dots 玄玑自身电脑的真实任务及证据闭环仍未验收。已知未提交的界面修改未纳入测试副本或发布候选。下一步可准备受控发布方案，实际维护与外部授权仍须分别确认，整体交付目标尚未完成。
+
 > 最新真实模型补充（2026-10-17）：Windows 独立 HTTPS/WSS 运行时通过五 Agent 两轮验收，实际生成 10/10 成功，回复跨隔离运行时重启保持一致；调用经临时本机回环 SSH 转发沿用 VPS 已有模型路径，转发及测试进程已退出。VPS 四项服务身份未变。这不是 VPS 持续负载、真人 Pocket ID 新登录或 Muse/dots 接入验收；失败尝试仍保留。见[真实五 Agent 验收](docs/verification/2026-10-17-real-five-agent-isolated.md)。
 
 > 最新部署状态（2026-10-17）：公网预接入已发布，维护中断 32.003 秒；Agent 业务仍拒绝访问，未创建外部客户端或授予权限。旧 LACK、Relay 与原凭据保持不变。当前验收边界、浏览器客户端拦截及 Muse/dots 待办以 [发布说明](docs/PREACCESS_RELEASE_2026-10-17.zh-CN.md) 和 [验收记录](docs/verification/2026-10-17-preaccess-publication.json) 为准；下方早期未发布条目保留为历史。
