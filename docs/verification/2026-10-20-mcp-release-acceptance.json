@@ -1,0 +1,221 @@
+{
+  "date": "2026-10-20",
+  "status": "production_release_and_postflight_passed",
+  "releaseTag": "44af1d844a81",
+  "sourceCommit": "6c4221f984580823ff2bff47cf3e3683474e4d1d",
+  "priorVerificationRecord": "docs/verification/2026-10-20-mcp-release-probe-fix.json",
+  "scope": {
+    "profile": "mcp-only",
+    "dedicatedClientAllowlistCount": 1,
+    "workspaceAndTaskGrants": 0,
+    "eventDeliveryEnabled": false,
+    "publicNodeRestEnabled": false,
+    "credentialsChanged": false,
+    "relayChanged": false,
+    "oldLackChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false
+  },
+  "verification": {
+    "windowsDeploymentControls": {
+      "total": 92,
+      "passed": 88,
+      "skipped": 4,
+      "failed": 0,
+      "skipReason": "Linux-specific prerequisites; all four covered by native run"
+    },
+    "linuxDeploymentControls": {
+      "total": 92,
+      "passed": 92,
+      "skipped": 0,
+      "failed": 0
+    },
+    "actualHttpsFixture": {
+      "passed": true,
+      "usesActualPatchedProbe": true,
+      "usesActualCaddyAndMcpHandler": true,
+      "syntheticAuthorizationOnly": true,
+      "verifiedTls": true,
+      "allowlistCounts": [
+        0,
+        1
+      ],
+      "invalidBearerAndJwtStatus": 401,
+      "publicRestStatus": 404,
+      "untrustedCertificateCurlExit": 60
+    },
+    "nativeLimits": {
+      "memoryMaxMiB": 192,
+      "memoryHighMiB": 160,
+      "swapMax": 0,
+      "cpuPercent": 10,
+      "tasksMax": 32,
+      "perUnitSeconds": 90,
+      "aggregateSeconds": 240,
+      "businessRunsAsNonRoot": true
+    },
+    "independentReview": {
+      "actionableFindings": 0,
+      "readOnly": true
+    }
+  },
+  "release": {
+    "status": "released",
+    "records": [
+      {
+        "phase": "preflight_passed",
+        "seconds": 0
+      },
+      {
+        "phase": "https_stopped",
+        "seconds": 0.107
+      },
+      {
+        "phase": "application_stopped",
+        "seconds": 0.205
+      },
+      {
+        "phase": "consistent_backup_verified",
+        "seconds": 8.705
+      },
+      {
+        "phase": "old_code_preserved",
+        "seconds": 8.793
+      },
+      {
+        "phase": "candidate_code_installed",
+        "seconds": 8.795
+      },
+      {
+        "phase": "candidate_configuration_installed",
+        "seconds": 8.799
+      },
+      {
+        "phase": "loopback_https_acceptance_passed",
+        "seconds": 21.902
+      },
+      {
+        "phase": "public_discovery_acceptance_passed",
+        "seconds": 32.999
+      }
+    ],
+    "outageSeconds": 33,
+    "releaseProfile": "mcp-only",
+    "agentBusinessAccess": false,
+    "credentialsChanged": false,
+    "liveDataRestoredFromBackup": false,
+    "accepted": true,
+    "forwardBudgetSeconds": 55,
+    "totalRecoveryBudgetSeconds": 120,
+    "protectedServicesUnchanged": true,
+    "credentialHashUnchanged": true
+  },
+  "postflight": {
+    "status": "passed",
+    "checks": {
+      "currentCodeMatches": true,
+      "previousCodePreserved": true,
+      "credentialHashUnchanged": true,
+      "ingressMatchesCandidate": true,
+      "singleApprovedClientOnly": true,
+      "publicRestDisabled": true,
+      "eventsStillDisabled": true,
+      "consistentBackupFilesMatch": true,
+      "consistentBackupSchemasMatch": true,
+      "applicationStoppedForBackup": true,
+      "liveSchemaPreserved": true,
+      "protectedServicesUnchanged": true,
+      "publicServiceLimitsUnchanged": true,
+      "noWorkspaceOrTaskGrants": true,
+      "allHealth200": true,
+      "mcpAndRestRejections": true,
+      "discovery_/.well-known/oauth-protected-resource": true,
+      "discovery_/.well-known/oauth-protected-resource/mcp": true,
+      "publicListenerVerified": true,
+      "ownedCgroupsEmpty": true,
+      "emptyOwnedSliceStopped": true
+    },
+    "health": {
+      "public": "200",
+      "old": "200",
+      "app": "200"
+    },
+    "rejectionProbes": [
+      {
+        "method": "GET",
+        "status": 401,
+        "challenge": true
+      },
+      {
+        "method": "GET",
+        "path": "/v1",
+        "status": 404
+      },
+      {
+        "method": "GET",
+        "path": "/v1/manifest",
+        "status": 404
+      },
+      {
+        "method": "GET",
+        "path": "/v1/events",
+        "status": 404
+      },
+      {
+        "method": "GET",
+        "path": "/v1/future-route",
+        "status": 404
+      },
+      {
+        "method": "POST",
+        "status": 401,
+        "challenge": true
+      },
+      {
+        "method": "POST",
+        "path": "/v1",
+        "status": 404
+      },
+      {
+        "method": "POST",
+        "path": "/v1/manifest",
+        "status": 404
+      },
+      {
+        "method": "POST",
+        "path": "/v1/events",
+        "status": 404
+      },
+      {
+        "method": "POST",
+        "path": "/v1/future-route",
+        "status": 404
+      }
+    ],
+    "backupFiles": 552,
+    "databaseCount": 3,
+    "authorityGrants": 0,
+    "approvedClientCount": 1
+  },
+  "rollback": {
+    "consistentBackupRetained": true,
+    "previousCodeRetained": true,
+    "liveDatabaseRestored": false,
+    "noRestoreOverNewWrites": true,
+    "backupPath": "/var/backups/chunlack-release-44af1d844a81",
+    "previousCodePath": "/opt/chunlack-public/previous-44af1d844a81"
+  },
+  "browserAcceptance": {
+    "status": "not_completed",
+    "reason": "The in-app browser webview did not attach on two bounded navigation attempts. This is not evidence of service unavailability.",
+    "freshHumanLoginVerified": false
+  },
+  "remainingGates": [
+    "Fresh human browser login acceptance after this release",
+    "dots native event-to-own-browser-to-evidence-to-persisted-receipt acceptance with explicitly approved bounded grants",
+    "Muse native integration: account availability and supported task-trigger path still unverified",
+    "Sustained real multi-human and multi-node local/cloud collaboration and Relay traffic-quality acceptance",
+    "Final consolidated delivery documentation and gate audit"
+  ],
+  "readyForFullDelivery": false
+}
