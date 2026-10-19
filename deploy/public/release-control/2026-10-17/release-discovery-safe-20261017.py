@@ -24,6 +24,121 @@ def require(value, code):
         raise RuntimeError(code)
 
 
+def service_handoff_enabled(settings):
+    value = settings.get('serviceAccountHandoff')
+    require(value is None or value == 'systemd-v1', 'service_handoff_mode_invalid')
+    return value == 'systemd-v1'
+
+
+def handoff_slice(tag):
+    require(type(tag) is str and re.fullmatch('[0-9a-f]{12}', tag), 'handoff_tag_invalid')
+    return 'chunlackhandoff' + tag + '.slice'
+
+
+def handoff_probe_unit(tag, kind):
+    handoff_slice(tag)
+    require(kind in ('readable', 'candidate', 'previous', 'candidate-repeat', 'fault', 'previous-after-fault'),
+            'handoff_probe_kind_invalid')
+    return 'chunlack-handoff-' + tag + '-' + kind + '.service'
+
+
+def service_probe_arguments(tag, kind, argv, seconds=15, data_root=None, env_file=None):
+    unit, shared = handoff_probe_unit(tag, kind), handoff_slice(tag)
+    require(type(seconds) is int and 6 <= seconds <= 40, 'handoff_probe_budget_invalid')
+    require(type(argv) is list and len(argv) >= 2 and
+            all(type(value) is str and value and '\x00' not in value for value in argv) and
+            argv[0] == '/opt/chunlack-public/runtime/node/bin/node', 'handoff_probe_command_invalid')
+    expected_data = '/opt/chunlack-public/staged-' + tag + '/schema-check/data'
+    require(data_root is None or type(data_root) is str and data_root == expected_data, 'handoff_data_root_invalid')
+    expected_env = '/var/lib/chunlack-release-' + tag + '/isolation.env'
+    require(env_file is None or type(env_file) is str and env_file == expected_env, 'handoff_environment_invalid')
+    properties = [
+        'Type=exec', 'User=chunlack-public', 'Group=chunlack-public', 'Slice=' + shared,
+        'MemoryMax=192M', 'MemoryHigh=160M', 'MemorySwapMax=0', 'CPUQuota=10%', 'TasksMax=32',
+        'RuntimeMaxSec=' + str(seconds - 5), 'TimeoutStopSec=2', 'KillMode=control-group',
+        'NoNewPrivileges=yes', 'PrivateTmp=yes', 'PrivateDevices=yes', 'PrivateNetwork=yes',
+        'ProtectSystem=strict', 'ProtectHome=yes', 'UMask=0077',
+        'IPAddressDeny=any', 'IPAddressAllow=localhost', 'RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6',
+        'WorkingDirectory=' + (data_root or '/'),
+        'ReadOnlyPaths=/opt/chunlack-public/current /opt/chunlack-public/staged-' + tag +
+        '/current /opt/chunlack-public/runtime /var/lib/chunlack-public /etc/chunlack-public/runtime.env',
+    ]
+    if data_root is not None:
+        properties.append('ReadWritePaths=' + data_root)
+    if env_file is not None:
+        properties.append('EnvironmentFile=' + env_file)
+    return (['systemd-run', '--quiet', '--wait', '--pipe', '--unit=' + unit] +
+            ['--property=' + value for value in properties] +
+            ['--setenv=NODE_OPTIONS=--max-old-space-size=96', '--setenv=TMPDIR=/tmp',
+             '--setenv=HOME=' + (data_root or '/nonexistent'), '--setenv=USER=chunlack-public',
+             '--setenv=LOGNAME=chunlack-public', '--', *argv])
+
+
+def configure_handoff_slice(tag):
+    shared = handoff_slice(tag)
+    result = subprocess.run(['systemctl', 'set-property', '--runtime', shared, 'MemoryMax=192M',
+                             'MemoryHigh=160M', 'MemorySwapMax=0', 'CPUQuota=10%', 'TasksMax=32'],
+                            capture_output=True, timeout=2)
+    require(result.returncode == 0, 'handoff_slice_configuration_failed')
+    result = subprocess.run(['systemctl', 'show', shared, '-p', 'MemoryMax', '-p', 'MemoryHigh',
+                             '-p', 'MemorySwapMax', '-p', 'CPUQuotaPerSecUSec', '-p', 'TasksMax'],
+                            capture_output=True, timeout=2)
+    require(result.returncode == 0, 'handoff_slice_inspection_failed')
+    values = dict(line.split('=', 1) for line in result.stdout.decode().splitlines() if '=' in line)
+    require(values.get('MemoryMax') == '201326592' and values.get('MemoryHigh') == '167772160' and
+            values.get('MemorySwapMax') == '0' and values.get('CPUQuotaPerSecUSec') == '100ms' and
+            values.get('TasksMax') == '32', 'handoff_slice_limits_mismatch')
+    return values
+
+
+def stop_handoff_probe(tag, kind):
+    unit = handoff_probe_unit(tag, kind)
+    result = subprocess.run(['systemctl', 'stop', unit], capture_output=True, timeout=2)
+    require(result.returncode in (0, 5), 'handoff_probe_stop_failed')
+    members = Path('/sys/fs/cgroup') / handoff_slice(tag) / unit / 'cgroup.procs'
+    require(not members.exists() or not members.read_text().strip(), 'handoff_probe_processes_remain')
+
+
+def run_service_probe(tag, kind, argv, seconds=15, data_root=None, env_file=None):
+    arguments = service_probe_arguments(tag, kind, argv, seconds, data_root, env_file)
+    try:
+        result = subprocess.run(arguments, capture_output=True, timeout=seconds - 2)
+        require(len(result.stdout) + len(result.stderr) <= 512 * 1024, 'handoff_probe_output_limit')
+        return result
+    finally:
+        stop_handoff_probe(tag, kind)
+
+
+READABILITY_PROBE_JS = r"""
+const fs=require('node:fs'),uid=process.getuid(),gid=process.getgid();
+const expectedSlice=process.argv[4];
+const nnp=/^NoNewPrivs:\s+1\s*$/m.test(fs.readFileSync('/proc/self/status','utf8'));
+const grouped=fs.readFileSync('/proc/self/cgroup','utf8').includes('/'+expectedSlice+'/');
+if(uid!==Number(process.argv[2])||gid!==Number(process.argv[3])||uid===0||!nnp||!grouped)
+  throw Error('service_probe_identity_or_boundary_invalid');
+require(process.argv[1]);
+console.log(JSON.stringify({serviceProbe:'readable',uid,gid,slice:expectedSlice,noNewPrivileges:nnp}));
+"""
+
+
+def validate_service_identity(output, uid, gid, tag):
+    require(type(uid) is int and uid > 0 and type(gid) is int and gid > 0, 'handoff_expected_identity_invalid')
+    text = output.decode('utf-8') if type(output) is bytes else output
+    require(type(text) is str, 'handoff_identity_output_invalid')
+    rows = []
+    for line in text.splitlines():
+        try:
+            value = json.loads(line)
+        except ValueError:
+            continue
+        if type(value) is dict and value.get('serviceProbe') == 'readable':
+            rows.append(value)
+    require(len(rows) == 1 and rows[0].get('uid') == uid and rows[0].get('gid') == gid and
+            rows[0].get('slice') == handoff_slice(tag) and rows[0].get('noNewPrivileges') is True,
+            'handoff_identity_proof_invalid')
+    return rows[0]
+
+
 class Window:
     def __init__(self, clock=time.monotonic):
         self.clock = clock
@@ -737,6 +852,7 @@ class LinuxBackend:
     def __init__(self, root):
         self.root = Path(root).resolve(strict=True)
         self.settings = json.loads((self.root / 'settings.json').read_text())
+        service_handoff_enabled(self.settings)
         self.tag = self.settings['tag']
         self.release_profile = self.settings.get('releaseProfile', 'discovery-only')
         self.migration_contract = self.settings.get('migrationContract')
@@ -792,8 +908,30 @@ class LinuxBackend:
         for path in [self.staged, *self.staged.rglob('*')]:
             self.w.tick()
             validate_staged_entry(self.staged, path, 0, self.app_gid, self.settings['stageLinks'])
-        self.command(['runuser', '-u', 'chunlack-public', '--', '/opt/chunlack-public/runtime/node/bin/node', '-e',
-                      "require(process.argv[1]);console.log('readable')", str(self.staged / 'gateway/public-runtime.cjs')], cap=15)
+        if service_handoff_enabled(self.settings):
+            self.check_service_readability()
+        else:
+            self.command(['runuser', '-u', 'chunlack-public', '--', '/opt/chunlack-public/runtime/node/bin/node', '-e',
+                          "require(process.argv[1]);console.log('readable')", str(self.staged / 'gateway/public-runtime.cjs')], cap=15)
+
+    def check_service_readability(self):
+        available = self.w.remaining(15)
+        require(available >= 6, 'handoff_preflight_budget')
+        deadline = time.monotonic() + available
+        shared = handoff_slice(self.tag)
+        own_unit = 'chunlack-prod-release-' + self.tag + '.service'
+        actual = self.command(['systemctl', 'show', own_unit, '-p', 'Slice', '--value'], cap=2).strip()
+        require(actual == shared, 'handoff_controller_slice_mismatch')
+        configure_handoff_slice(self.tag)
+        self.w.tick()
+        seconds = min(15, int(deadline - time.monotonic()))
+        require(seconds >= 6, 'handoff_preflight_budget')
+        arguments = ['/opt/chunlack-public/runtime/node/bin/node', '-e', READABILITY_PROBE_JS,
+                     str(self.staged / 'gateway/public-runtime.cjs'), str(self.app_uid), str(self.app_gid), shared]
+        result = run_service_probe(self.tag, 'readable', arguments, seconds=seconds)
+        self.w.tick()
+        require(result.returncode == 0, 'handoff_service_readability_failed')
+        validate_service_identity(result.stdout, self.app_uid, self.app_gid, self.tag)
 
     def validate_ingress(self):
         binary = '/opt/chunlack-public/runtime/caddy/caddy'

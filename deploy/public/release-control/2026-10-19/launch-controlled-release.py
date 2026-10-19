@@ -8,7 +8,9 @@ import subprocess
 import sys
 
 
-def release_arguments(root):
+def release_arguments(root, *, service_account_handoff=False):
+    if type(service_account_handoff) is not bool:
+        raise ValueError('invalid_service_handoff_mode')
     match = re.fullmatch(r'/var/lib/chunlack-release-([0-9a-f]{12})', root) if isinstance(root, str) else None
     if not match:
         raise ValueError('invalid_release_root')
@@ -18,6 +20,7 @@ def release_arguments(root):
         '--property=MemoryMax=192M', '--property=MemoryHigh=160M', '--property=MemorySwapMax=0',
         '--property=CPUQuota=10%', '--property=TasksMax=32',
         '--property=RuntimeMaxSec=180', '--property=TimeoutStopSec=130',
+        *(['--property=Slice=chunlackhandoff' + match[1] + '.slice'] if service_account_handoff else []),
         '--property=NoNewPrivileges=yes', '--property=PrivateTmp=yes',
         '--property=ProtectSystem=strict', '--property=ProtectHome=yes', '--property=UMask=0077',
         '--property=IPAddressDeny=any', '--property=IPAddressAllow=localhost',
@@ -57,6 +60,11 @@ def launch(root):
         metadata = (base / name).lstat()
         if not stat.S_ISREG(metadata.st_mode) or metadata.st_uid != 0 or metadata.st_nlink != 1 or stat.S_IMODE(metadata.st_mode) != 0o600:
             raise ValueError('release_input_not_private')
+    settings = json.loads((base / 'settings.json').read_text())
+    mode = settings.get('serviceAccountHandoff')
+    if mode is not None and mode != 'systemd-v1':
+        raise ValueError('invalid_service_handoff_mode')
+    arguments = release_arguments(root, service_account_handoff=mode == 'systemd-v1')
     subprocess.run(arguments, check=True, timeout=10)
     print(json.dumps({'status': 'started', 'unit': arguments[2].removeprefix('--unit=')}))
 

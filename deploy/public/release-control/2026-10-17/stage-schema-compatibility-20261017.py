@@ -71,6 +71,10 @@ release_profile = settings.get('releaseProfile', 'discovery-only')
 approved_agent_client_ids = settings.get('approvedAgentClientIds')
 control.validate_release_config(prepared, release_profile, approved_agent_client_ids)
 migration_contract = control.validate_migration_contract(release_profile, settings.get('migrationContract'))
+handoff_enabled = control.service_handoff_enabled(settings)
+if handoff_enabled:
+    control.configure_handoff_slice(tag)
+handoff_identities = []
 initial_details = control.schema_details(data) if migration_contract else None
 private_key = secrets.token_bytes(32) if migration_contract else None
 initial_data = control.copy_data_fingerprint(data, private_key) if migration_contract else None
@@ -85,6 +89,14 @@ os.chown(public_fixture, 0, 987)
 public_fixture.chmod(0o640)
 runner.write_text(r'''
 'use strict';
+if(process.argv[5]){
+ const fs=require('node:fs'),uid=process.getuid(),gid=process.getgid();
+ const slice='chunlackhandoff'+process.argv[5]+'.slice';
+ const nnp=/^NoNewPrivs:\s+1\s*$/m.test(fs.readFileSync('/proc/self/status','utf8'));
+ if(uid!==996||gid!==987||!nnp||!fs.readFileSync('/proc/self/cgroup','utf8').includes('/'+slice+'/'))
+   throw Error('compatibility_service_identity_invalid');
+ console.log(JSON.stringify({serviceProbe:'readable',uid,gid,slice,noNewPrivileges:nnp}));
+}
 const fs=require('node:fs'),path=require('node:path');
 const compatibilityConfig=JSON.parse(fs.readFileSync(path.join(process.argv[3],'config/lack.config.json')));
 const privatePorts=new Set([compatibilityConfig.httpPort,compatibilityConfig.agentGateway.port,compatibilityConfig.publicRuntime.mcpPort].map(String));
@@ -186,19 +198,25 @@ fault_atomic = False
 for name, tree, config in boot_plan:
     config_path.write_text(json.dumps(config, indent=2) + '\n')
     started = time.monotonic()
-    process = subprocess.Popen([node, str(runner), str(tree / 'gateway/public-runtime.cjs'), str(data), 'fault-migration' if name == 'fault' else 'boot'],
-                               cwd=data, env=environment, user=996, group=987, extra_groups=[987],
-                               start_new_session=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    try:
-        out, err = process.communicate(timeout=40)
-    except subprocess.TimeoutExpired:
-        os.killpg(process.pid, signal.SIGTERM)
+    if handoff_enabled:
+        argv = [node, str(runner), str(tree / 'gateway/public-runtime.cjs'), str(data), 'fault-migration' if name == 'fault' else 'boot', tag]
+        process = control.run_service_probe(tag, name, argv, seconds=40, data_root=str(data), env_file=str(root / 'isolation.env'))
+        out, err = process.stdout, process.stderr
+        handoff_identities.append(control.validate_service_identity(out, 996, 987, tag))
+    else:
+        process = subprocess.Popen([node, str(runner), str(tree / 'gateway/public-runtime.cjs'), str(data), 'fault-migration' if name == 'fault' else 'boot'],
+                                   cwd=data, env=environment, user=996, group=987, extra_groups=[987],
+                                   start_new_session=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         try:
-            process.communicate(timeout=5)
+            out, err = process.communicate(timeout=40)
         except subprocess.TimeoutExpired:
-            os.killpg(process.pid, signal.SIGKILL)
-            process.communicate(timeout=5)
-        raise RuntimeError('compatibility_boot_timeout_' + name)
+            os.killpg(process.pid, signal.SIGTERM)
+            try:
+                process.communicate(timeout=5)
+            except subprocess.TimeoutExpired:
+                os.killpg(process.pid, signal.SIGKILL)
+                process.communicate(timeout=5)
+            raise RuntimeError('compatibility_boot_timeout_' + name)
     (root / ('schema-boot-' + name + '.log')).write_bytes(out + b'\nSTDERR\n' + err)
     (root / ('schema-boot-' + name + '.log')).chmod(0o600)
     if process.returncode or b'"compatibilityBoot":"passed"' not in out:
@@ -242,6 +260,8 @@ report = {'status': 'passed', 'releaseProfile': release_profile, 'boots': boots,
           'rollbackBackup': False, 'actualModelCalls': False,
           'oidcMetadataTransport': 'fixture_from_tls_verified_public_discovery_and_jwks',
           'realOidcLoginTested': False}
+if handoff_enabled:
+    report['serviceAccountHandoff'] = {'mode': 'systemd-v1', 'identities': handoff_identities, 'allBusinessNonRoot': len(handoff_identities) == len(boot_plan), 'sharedSlice': control.handoff_slice(tag)}
 if migration_contract:
     control.require(code_before == {'candidate': control.code_inventory(candidate), 'previous': control.code_inventory(Path('/opt/chunlack-public/current'))}, 'compatibility_code_changed_during_trial')
     created = int(time.time() * 1000)

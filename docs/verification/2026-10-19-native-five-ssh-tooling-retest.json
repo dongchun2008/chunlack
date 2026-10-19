@@ -1590,7 +1590,183 @@
       "relayChanged": false,
       "externalAccessGranted": false,
       "nextProposal": "Separate root-owned copy preparation from directly systemd-started non-root business probes; retain NoNewPrivileges, resource limits and read-only/network boundaries. Recheck the same handoff in release preflight before any production switch.",
-      "humanApprovalForNewRunnerCorrectionPending": true
+      "humanApprovalForNewRunnerCorrectionPending": false,
+      "resolvedBy": "Explicitly approved systemd-v1 account handoff; native account, copy compatibility, full Linux deployment regression and actual formal identity preflight passed."
     }
-  ]
+  ],
+  "accountHandoffCorrection": {
+    "status": "passed",
+    "scope": "Deployment preparation, compatibility and release preflight account handoff only; no production switch or external Agent authorization",
+    "sourceBaseCommit": "85f0749e0c15bfdc337aa10b9893ca30b4bf7bc2",
+    "files": [
+      "deploy/public/release-control/2026-10-17/release-discovery-safe-20261017.py",
+      "deploy/public/release-control/2026-10-17/stage-schema-compatibility-20261017.py",
+      "deploy/public/release-control/2026-10-19/launch-controlled-release.py",
+      "deploy/public/release-control/2026-10-19/test-service-account-handoff.py"
+    ],
+    "mode": "systemd-v1; explicit opt-in, legacy default preserved",
+    "tdd": {
+      "red": {
+        "tests": 22,
+        "failures": 22,
+        "errors": 0,
+        "skipped": 0
+      },
+      "green": {
+        "tests": 22,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "redReason": "missing systemd account handoff helper, zero runner errors"
+    },
+    "windowsDeploymentSuite": {
+      "tests": 81,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 4,
+      "passed": 77,
+      "skipReasons": [
+        "Linux socket inspection",
+        "POSIX symlink metadata",
+        "actual isolated product fixture requires explicit Linux source and Node",
+        "POSIX proof metadata"
+      ]
+    },
+    "linuxDeploymentSuite": {
+      "tag": "06bc30166311",
+      "accepted": true,
+      "tests": 81,
+      "passed": 81,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "pure": {
+        "tests": 80,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "elapsedSeconds": 21.913668604567647
+      },
+      "actualProduct": {
+        "tests": 1,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "elapsedSeconds": 14.698880033567548
+      },
+      "uid": 996,
+      "gid": 987,
+      "elapsedSeconds": 54.01950389999547,
+      "allOwnedCgroupsEmpty": true,
+      "productionUnchanged": true
+    },
+    "actualNativeCompatibility": {
+      "tag": "8b51292fba3d",
+      "status": "passed",
+      "releaseProfile": "mcp-only",
+      "boots": [
+        {
+          "runtime": "candidate",
+          "seconds": 9.785,
+          "cleanClose": true,
+          "dataVerified": false,
+          "privateNodeReadChecked": true,
+          "validForwardedNodeDenied": true
+        },
+        {
+          "runtime": "previous",
+          "seconds": 8.69,
+          "cleanClose": true,
+          "dataVerified": false,
+          "privateNodeReadChecked": true,
+          "validForwardedNodeDenied": true
+        }
+      ],
+      "databaseCount": 3,
+      "schemaPreserved": true,
+      "networkIsolated": true,
+      "sourceMountedReadonly": true,
+      "applicationConsistentSnapshot": false,
+      "rollbackBackup": false,
+      "actualModelCalls": false,
+      "oidcMetadataTransport": "fixture_from_tls_verified_public_discovery_and_jwks",
+      "realOidcLoginTested": false,
+      "serviceAccountHandoff": {
+        "mode": "systemd-v1",
+        "identities": [
+          {
+            "serviceProbe": "readable",
+            "uid": 996,
+            "gid": 987,
+            "slice": "chunlackhandoff8b51292fba3d.slice",
+            "noNewPrivileges": true
+          },
+          {
+            "serviceProbe": "readable",
+            "uid": 996,
+            "gid": 987,
+            "slice": "chunlackhandoff8b51292fba3d.slice",
+            "noNewPrivileges": true
+          }
+        ],
+        "allBusinessNonRoot": true,
+        "sharedSlice": "chunlackhandoff8b51292fba3d.slice"
+      },
+      "preparation": {
+        "status": "passed",
+        "serviceReadability": {
+          "serviceProbe": "readable",
+          "uid": 996,
+          "gid": 987,
+          "slice": "chunlackhandoff8b51292fba3d.slice",
+          "noNewPrivileges": true
+        },
+        "tag": "8b51292fba3d",
+        "candidateCodeVerified": true,
+        "dependencyCopyVerified": true,
+        "verifiedPackages": 257,
+        "existingCredentialsChanged": false,
+        "syntheticIsolationEnvironment": true,
+        "productionServiceStops": false,
+        "approvedAgentClientCount": 1
+      },
+      "allOwnedCgroupsEmpty": true,
+      "productionUnchanged": true
+    },
+    "formalReleaseIdentityPreflight": {
+      "accepted": true,
+      "check": "actual LinuxBackend.check_identity_and_permissions",
+      "uid": 996,
+      "gid": 987,
+      "elapsedSeconds": 2.47093874681741,
+      "productionSwitch": false,
+      "scope": "actual formal release identity/readability preflight only; no full preflight, lock, backup destination or production switch",
+      "allOwnedCgroupsEmpty": true,
+      "productionUnchanged": true
+    },
+    "retainedLimits": {
+      "sharedAggregateMemoryBytes": 201326592,
+      "memoryHighBytes": 167772160,
+      "swapBytes": 0,
+      "cpuPercent": 10,
+      "tasksMax": 32,
+      "eachIsolatedUnitSeconds": 90,
+      "releaseForwardSeconds": 55,
+      "releaseRecoveryTotalSeconds": 120,
+      "noNewPrivileges": true,
+      "nonRootBusiness": true,
+      "privateNetwork": true,
+      "sourceReadonly": true
+    },
+    "productionUpdated": false,
+    "credentialsChanged": false,
+    "relayChanged": false,
+    "externalAgentAccessGranted": false,
+    "modelCalls": 0,
+    "limitations": [
+      "Compatibility copy is not an application-consistent rollback backup.",
+      "No real OAuth login, native Muse/dots acceptance, sustained multi-node or Relay quality test was performed in this followup."
+    ]
+  }
 }
