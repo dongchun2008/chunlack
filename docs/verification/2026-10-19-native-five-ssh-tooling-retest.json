@@ -143,9 +143,25 @@
       "selectedMemberCount": 1,
       "ownerIsSelected": true,
       "unrelatedDisplayedUserIsSelected": false,
-      "clientCurrentlyAllowsNoGroups": true,
       "groupAccessChanged": false,
-      "loginRecoveredByHuman": true
+      "loginRecoveredByHuman": true,
+      "observationPhase": "before approved dedicated-group login save",
+      "clientAllowedNoGroupsAtObservation": true
+    },
+    "groupLoginUpdate": {
+      "status": "saved_and_ui_confirmed",
+      "allowedGroups": [
+        "chunlack-users"
+      ],
+      "groupPreviouslyObservedMemberCount": 1,
+      "otherGroupSelected": false,
+      "groupMembershipsChangedByThisTask": false,
+      "allUsersRestrictionRemoved": false,
+      "otherClientsChanged": false,
+      "pkceOrConsentChanged": false,
+      "credentialsChanged": false,
+      "workspaceOrAgentTaskGrantCreated": false,
+      "actualDotsTaskAccepted": false
     }
   },
   "production": {
@@ -154,9 +170,9 @@
     "credentialsDnsPortsChanged": false
   },
   "remaining": [
-    "Diagnose current real-model latency/queue before changing the 40-second five-Agent round criterion or production settings. The full native test still fails.",
-    "Dedicated dots group login access and read-only inference-host investigation await separate approval; no such change executed.",
-    "After native acceptance, execute the separately approved controlled maintenance window and actual dots own-browser single-task evidence round trip, then revoke temporary grants/subscriptions.",
+    "Provide an existing private SSH credential file path for the verified inference host, then continue the approved read-only diagnosis without reading conversation text or generating model calls.",
+    "The current native five-Agent real-model test still fails. Resolve or establish backend latency/queue behavior before changing any business acceptance criterion or consuming the approved publication window.",
+    "After native acceptance, complete the controlled publication and actual dots own-browser single-task evidence round trip, then revoke temporary grants/subscriptions.",
     "Muse native Agent acceptance, sustained real coexistence and final full-delivery audit remain unfinished."
   ],
   "followupAttempts": [
@@ -960,5 +976,21 @@
     "parseFromExistingProbeOutputs": true,
     "optionalUndefinedHistoricalBindingsRemoved": true,
     "scope": "only this verification JSON synchronized"
+  },
+  "inferenceHostReadonlyPreflight": {
+    "status": "credentials_required_for_runtime_inspection",
+    "existingProjectSshContractLocated": true,
+    "existingHostTrustLocated": true,
+    "liveEd25519IdentityMatchesExistingTrust": true,
+    "authenticationAttempted": false,
+    "projectPasswordEnvironmentAvailable": false,
+    "existingMonitorPageHttpStatus": 200,
+    "existingMonitorDataHttpStatus": 401,
+    "currentQueueGpuCpuAndServiceFlagsVerified": false,
+    "modelRequestsGenerated": false,
+    "newGpuOrMetricsSamplerStarted": false,
+    "anyProductionServiceOrPortChanged": false,
+    "privateCredentialFilePathRequested": true,
+    "oldDeploymentNotesUsedOnlyToLocateEntryPoints": true
   }
 }
