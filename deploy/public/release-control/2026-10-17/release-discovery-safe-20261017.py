@@ -1011,9 +1011,13 @@ class LinuxBackend:
 
     def request(self, host, path, method='GET'):
         timeout = self.w.remaining(2)
-        output = self.command(['curl', '--noproxy', '*', '--silent', '--show-error', '--max-time', str(timeout),
-                               '--connect-timeout', str(min(1, timeout)), '--resolve', host + ':443:127.0.0.1',
-                               '-D', '-', '-X', method, '-H', 'Authorization: Bearer discovery-denial-probe', 'https://' + host + path], cap=3)
+        arguments = ['curl', '--noproxy', '*', '--silent', '--show-error', '--max-time', str(timeout),
+                     '--connect-timeout', str(min(1, timeout)), '--resolve', host + ':443:127.0.0.1',
+                     '-D', '-', '-X', method, '-H', 'Authorization: Bearer discovery-denial-probe']
+        if path == '/mcp' and method == 'POST':
+            arguments += ['-H', 'Content-Type: application/json', '--data-binary',
+                          json.dumps({'jsonrpc': '2.0', 'id': 1, 'method': 'ping', 'params': {}}, separators=(',', ':'))]
+        output = self.command([*arguments, 'https://' + host + path], cap=3)
         head, _, body = output.partition('\r\n\r\n')
         if not body and '\n\n' in output:
             head, _, body = output.partition('\n\n')

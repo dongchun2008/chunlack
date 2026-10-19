@@ -1,0 +1,367 @@
+{
+  "date": "2026-10-20",
+  "status": "verification_passed_approved_controlled_release_not_yet_executed",
+  "sourceBaseCommit": "60467c9f6f6b23e9ca71c8f1eb7d8fc7221f3ff7",
+  "changeFiles": [
+    "deploy/public/release-control/2026-10-17/release-discovery-safe-20261017.py",
+    "deploy/public/release-control/2026-10-20/test-mcp-release-probe.py"
+  ],
+  "change": "Only POST /mcp release probes receive application/json and a JSON-RPC ping body; existing 401/resource_metadata acceptance, GET/REST behavior, TLS validation, request budgets and recovery windows remain unchanged.",
+  "red": {
+    "tests": 11,
+    "failures": 1,
+    "errors": 0,
+    "skipped": 0,
+    "expectedFailure": "test_mcp_post_has_valid_json_ping"
+  },
+  "green": {
+    "tests": 11,
+    "pass": 11,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "windowsDeploymentControls": {
+    "tests": 92,
+    "pass": 88,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 4,
+    "elapsedSeconds": 60.75167510000756,
+    "expectedSkipReasons": [
+      "Linux socket inspection",
+      "POSIX symlink metadata",
+      "explicit isolated product/Node fixture",
+      "POSIX proof metadata"
+    ]
+  },
+  "linuxDeploymentControls": {
+    "tag": "640d774e0834",
+    "tests": 92,
+    "pass": 92,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "pure": {
+      "mode": "pure",
+      "uid": 996,
+      "gid": 987,
+      "tests": 91,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 19.798268098384142,
+      "accepted": true
+    },
+    "actualProduct": {
+      "mode": "product",
+      "uid": 996,
+      "gid": 987,
+      "tests": 1,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 13.403306102380157,
+      "accepted": true
+    },
+    "actualHttps": {
+      "accepted": true,
+      "profiles": [
+        {
+          "allowlistCount": 0,
+          "mcp": [
+            {
+              "method": "GET",
+              "token": "invalid_bearer",
+              "status": 401,
+              "challenge": true
+            },
+            {
+              "method": "GET",
+              "token": "invalid_jwt",
+              "status": 401,
+              "challenge": true
+            },
+            {
+              "method": "POST",
+              "token": "invalid_bearer",
+              "status": 401,
+              "challenge": true
+            },
+            {
+              "method": "POST",
+              "token": "invalid_jwt",
+              "status": 401,
+              "challenge": true
+            }
+          ],
+          "publicRestChecks": 4,
+          "publicRestDenied": true,
+          "malformedControlStatus": 401,
+          "untrustedCertificateCurlExit": 60
+        },
+        {
+          "allowlistCount": 1,
+          "mcp": [
+            {
+              "method": "GET",
+              "token": "invalid_bearer",
+              "status": 401,
+              "challenge": true
+            },
+            {
+              "method": "GET",
+              "token": "invalid_jwt",
+              "status": 401,
+              "challenge": true
+            },
+            {
+              "method": "POST",
+              "token": "invalid_bearer",
+              "status": 401,
+              "challenge": true
+            },
+            {
+              "method": "POST",
+              "token": "invalid_jwt",
+              "status": 401,
+              "challenge": true
+            }
+          ],
+          "publicRestChecks": 4,
+          "publicRestDenied": true,
+          "malformedControlStatus": 413,
+          "untrustedCertificateCurlExit": 60
+        }
+      ],
+      "runtimeLimits": {
+        "uid": 996,
+        "gid": 987,
+        "memory": "201326592",
+        "high": "167772160",
+        "swap": "0",
+        "cpu": "10000 100000",
+        "tasks": "32",
+        "nnp": true
+      },
+      "actualControllerRequestMethod": true,
+      "actualProductionIngressRenderer": true,
+      "tlsCertificateValidationRetained": true,
+      "syntheticAuthResolversOnly": true,
+      "realModelCalls": 0,
+      "productionTouched": false,
+      "cleanupErrors": [],
+      "elapsedSeconds": 13.413312269374728
+    },
+    "countsAreSeparate": "The HTTPS fixture is recorded separately, not added to the 92 unittest cases.",
+    "sharedLimits": {
+      "CPUQuotaPerSecUSec": "100ms",
+      "MemoryHigh": "167772160",
+      "MemoryMax": "201326592",
+      "MemorySwapMax": "0",
+      "TasksMax": "32"
+    },
+    "unitSeconds": 90,
+    "totalSeconds": 240,
+    "elapsedSeconds": 67.99322000000393,
+    "cleanupErrors": [],
+    "allOwnedCgroupsEmpty": true,
+    "productionUnchanged": true
+  },
+  "independentReadOnlyReview": {
+    "findings": 0,
+    "scope": [
+      "deploy/public/release-control/2026-10-17/release-discovery-safe-20261017.py",
+      "deploy/public/release-control/2026-10-20/test-mcp-release-probe.py"
+    ],
+    "staticOnly": true,
+    "residualLimits": [
+      "Unit negative fixtures reject GET first; POST negative acceptance assertion is not independently mutation-tested.",
+      "Unit REST negative coverage selects the future-route path.",
+      "Actual Linux HTTPS, resource enforcement and future production recovery are separate evidence, not claims made by the reviewer."
+    ]
+  },
+  "candidatePreparation": {
+    "tag": "44af1d844a81",
+    "accepted": true,
+    "preparation": {
+      "status": "passed",
+      "serviceReadability": {
+        "serviceProbe": "readable",
+        "uid": 996,
+        "gid": 987,
+        "slice": "chunlackhandoff44af1d844a81.slice",
+        "noNewPrivileges": true
+      },
+      "tag": "44af1d844a81",
+      "candidateCodeVerified": true,
+      "dependencyCopyVerified": true,
+      "verifiedPackages": 257,
+      "existingCredentialsChanged": false,
+      "syntheticIsolationEnvironment": true,
+      "productionServiceStops": false,
+      "approvedAgentClientCount": 1
+    },
+    "copyCompatibility": {
+      "status": "passed",
+      "releaseProfile": "mcp-only",
+      "boots": [
+        {
+          "runtime": "candidate",
+          "seconds": 10.344,
+          "cleanClose": true,
+          "dataVerified": false,
+          "privateNodeReadChecked": true,
+          "validForwardedNodeDenied": true
+        },
+        {
+          "runtime": "previous",
+          "seconds": 9.791,
+          "cleanClose": true,
+          "dataVerified": false,
+          "privateNodeReadChecked": true,
+          "validForwardedNodeDenied": true
+        }
+      ],
+      "databaseCount": 3,
+      "schemaPreserved": true,
+      "networkIsolated": true,
+      "sourceMountedReadonly": true,
+      "applicationConsistentSnapshot": false,
+      "rollbackBackup": false,
+      "actualModelCalls": false,
+      "oidcMetadataTransport": "fixture_from_tls_verified_public_discovery_and_jwks",
+      "realOidcLoginTested": false,
+      "serviceAccountHandoff": {
+        "mode": "systemd-v1",
+        "identities": [
+          {
+            "serviceProbe": "readable",
+            "uid": 996,
+            "gid": 987,
+            "slice": "chunlackhandoff44af1d844a81.slice",
+            "noNewPrivileges": true
+          },
+          {
+            "serviceProbe": "readable",
+            "uid": 996,
+            "gid": 987,
+            "slice": "chunlackhandoff44af1d844a81.slice",
+            "noNewPrivileges": true
+          }
+        ],
+        "allBusinessNonRoot": true,
+        "sharedSlice": "chunlackhandoff44af1d844a81.slice"
+      }
+    },
+    "sharedResourceLimits": {
+      "CPUQuotaPerSecUSec": "100ms",
+      "MemoryHigh": "167772160",
+      "MemoryMax": "201326592",
+      "MemorySwapMax": "0",
+      "TasksMax": "32"
+    },
+    "productionUnchanged": true,
+    "allOwnedCgroupsEmpty": true,
+    "rollbackBackup": false,
+    "applicationConsistentSnapshot": false
+  },
+  "finalReadonlyPreflight": {
+    "status": "passed",
+    "candidateFiles": 56,
+    "previousFiles": 56,
+    "preparedChecks": {
+      "release.py": true,
+      "stage.py": true,
+      "launcher.py": true,
+      "candidate-config.json": true,
+      "Caddyfile.loopback": true,
+      "Caddyfile.final": true,
+      "oidc-public.json": true,
+      "dependencies.json": true,
+      "approved-client.json": true,
+      "expected-code.json": true
+    },
+    "liveInputChecks": {
+      "configHash": true,
+      "envHash": true,
+      "caddyHash": true
+    },
+    "approvedClientCount": 1,
+    "changesOnlyApprovedAllowlist": true,
+    "migrationRepeated": false,
+    "destinationsFree": {
+      "backup": true,
+      "previous": true,
+      "failed": true
+    },
+    "servicesBefore": {
+      "chunlack.service": {
+        "MainPID": "594652",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "tailscaled.service": {
+        "MainPID": "859",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "chunlack-public.service": {
+        "MainPID": "732616",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "chunlack-https.service": {
+        "MainPID": "732658",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      }
+    },
+    "servicesAfter": {
+      "chunlack.service": {
+        "MainPID": "594652",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "tailscaled.service": {
+        "MainPID": "859",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "chunlack-public.service": {
+        "MainPID": "732616",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "chunlack-https.service": {
+        "MainPID": "732658",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      }
+    },
+    "resourceHeadroomPassed": true,
+    "productionMutated": false,
+    "credentialsChanged": false,
+    "relayChanged": false,
+    "modelCalls": 0,
+    "elapsedSeconds": 0.8111725570634007
+  },
+  "originalWindowsToolCacheFailures": {
+    "productChangesAddedBecauseOfCacheErrors": false,
+    "restartedLiveJob": false,
+    "description": "REPL block-scoped cache values were restored from existing evidence. A tool-tail access to ignored stdin failed after the candidate child had started; that same child was observed to completion, not restarted."
+  },
+  "priorFailureRetained": "docs/verification/2026-10-20-readonly-preflight-and-controlled-rollback.json",
+  "publicationConstraints": {
+    "forwardSeconds": 55,
+    "totalRecoverySeconds": 120,
+    "consistentColdBackupRequired": true,
+    "preserveNewWrites": true,
+    "repeatAuthorityMigration": false,
+    "credentialsDnsPortsOldLackRelayChanges": false,
+    "externalWorkspaceOrTaskGrants": false,
+    "realModelCalls": 0
+  },
+  "productionUpdatedByThisRecord": false,
+  "readyForFullDelivery": false
+}
