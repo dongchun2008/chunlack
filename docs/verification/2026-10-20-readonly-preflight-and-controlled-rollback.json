@@ -1,0 +1,382 @@
+{
+  "date": "2026-10-20",
+  "status": "readonly_preflight_fixed_controlled_publication_rolled_back_not_delivered",
+  "sourceBaseCommit": "a064fbcc0ca9ea0709ab99a50ab0ab36155d8455",
+  "approvedScope": "Fix readonly manifest parsing and retest, then original scoped controlled dots-only release; retain all original limits and safety measures; no credential or Relay changes.",
+  "readonlyCorrection": {
+    "source": "deploy/public/release-control/2026-10-20/readonly-preflight.py",
+    "tests": "deploy/public/release-control/2026-10-20/test-readonly-preflight.py",
+    "change": "Select expected-code.json candidate and previous file maps explicitly, rather than treating the outer object as a filename map.",
+    "oldBehaviorReproduced": {
+      "tests": 1,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0
+    },
+    "correctedContractTests": {
+      "tests": 9,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "nativeResult": {
+      "status": "passed",
+      "candidateFiles": 56,
+      "previousFiles": 56,
+      "preparedChecks": {
+        "release.py": true,
+        "stage.py": true,
+        "launcher.py": true,
+        "candidate-config.json": true,
+        "Caddyfile.loopback": true,
+        "Caddyfile.final": true,
+        "oidc-public.json": true,
+        "dependencies.json": true,
+        "approved-client.json": true,
+        "expected-code.json": true
+      },
+      "liveInputChecks": {
+        "configHash": true,
+        "envHash": true,
+        "caddyHash": true
+      },
+      "approvedClientCount": 1,
+      "changesOnlyApprovedAllowlist": true,
+      "migrationRepeated": false,
+      "destinationsFree": {
+        "backup": true,
+        "previous": true,
+        "failed": true
+      },
+      "servicesBefore": {
+        "chunlack.service": {
+          "MainPID": "594652",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "tailscaled.service": {
+          "MainPID": "859",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-public.service": {
+          "MainPID": "717856",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-https.service": {
+          "MainPID": "717942",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        }
+      },
+      "servicesAfter": {
+        "chunlack.service": {
+          "MainPID": "594652",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "tailscaled.service": {
+          "MainPID": "859",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-public.service": {
+          "MainPID": "717856",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-https.service": {
+          "MainPID": "717942",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        }
+      },
+      "resourceHeadroomPassed": true,
+      "productionMutated": false,
+      "credentialsChanged": false,
+      "relayChanged": false,
+      "modelCalls": 0,
+      "elapsedSeconds": 0.9067734777927399
+    },
+    "ownedUnitStoppedAndEmpty": true,
+    "unitConfiguration": {
+      "memoryBytes": 201326592,
+      "memoryHighBytes": 167772160,
+      "swapBytes": 0,
+      "cpuPercent": 10,
+      "tasksMax": 32,
+      "unitSeconds": 90,
+      "privateNetwork": true,
+      "noNewPrivileges": true
+    },
+    "postExitObservation": "The successful transient unit had unloaded before property inspection. Its not-found default property values are not claimed as actual runtime limits. Actual subsequent release and isolated diagnostic runtime limits are independently recorded below."
+  },
+  "controlledPublication": {
+    "accepted": false,
+    "tag": "8b51292fba3d",
+    "report": {
+      "status": "rolled_back",
+      "error": "mcp_not_denied",
+      "records": [
+        {
+          "phase": "preflight_passed",
+          "seconds": 0
+        },
+        {
+          "phase": "https_stopped",
+          "seconds": 0.103
+        },
+        {
+          "phase": "application_stopped",
+          "seconds": 0.193
+        },
+        {
+          "phase": "consistent_backup_verified",
+          "seconds": 9.084
+        },
+        {
+          "phase": "old_code_preserved",
+          "seconds": 9.087
+        },
+        {
+          "phase": "candidate_code_installed",
+          "seconds": 9.09
+        },
+        {
+          "phase": "candidate_configuration_installed",
+          "seconds": 9.094
+        }
+      ],
+      "elapsedSeconds": 24.689
+    },
+    "runningLimits": {
+      "RuntimeMaxUSec": "3min",
+      "MainPID": "732420",
+      "Result": "success",
+      "ExecMainStatus": "0",
+      "Slice": "chunlackhandoff8b51292fba3d.slice",
+      "CPUQuotaPerSecUSec": "100ms",
+      "MemoryHigh": "167772160",
+      "MemoryMax": "201326592",
+      "MemorySwapMax": "0",
+      "TasksMax": "32",
+      "NoNewPrivileges": "yes",
+      "ActiveState": "active",
+      "SubState": "running"
+    },
+    "terminalState": {
+      "RuntimeMaxUSec": "3min",
+      "MainPID": "0",
+      "Result": "exit-code",
+      "ExecMainStatus": "1",
+      "Slice": "chunlackhandoff8b51292fba3d.slice",
+      "CPUQuotaPerSecUSec": "100ms",
+      "MemoryHigh": "167772160",
+      "MemoryMax": "201326592",
+      "MemorySwapMax": "0",
+      "TasksMax": "32",
+      "NoNewPrivileges": "yes",
+      "ActiveState": "failed",
+      "SubState": "failed"
+    },
+    "elapsedObservationSeconds": 32.686537981033325,
+    "credentialHashUnchanged": true,
+    "protectedServicesUnchanged": true,
+    "servicesBefore": {
+      "chunlack.service": {
+        "MainPID": "594652",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "tailscaled.service": {
+        "MainPID": "859",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "chunlack-public.service": {
+        "MainPID": "717856",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "chunlack-https.service": {
+        "MainPID": "717942",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      }
+    },
+    "servicesAfter": {
+      "chunlack.service": {
+        "MainPID": "594652",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "tailscaled.service": {
+        "MainPID": "859",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "chunlack-public.service": {
+        "MainPID": "732616",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "chunlack-https.service": {
+        "MainPID": "732658",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      }
+    },
+    "actualFailureDetails": "The release report retained mcp_not_denied, not the individual HTTP status or response headers. No unobserved production HTTP status is asserted.",
+    "forwardBudgetSeconds": 55,
+    "totalRecoveryBudgetSeconds": 120,
+    "repeatAuthorityMigration": false,
+    "workspaceOrTaskGrantsCreated": false
+  },
+  "rollbackVerification": {
+    "checks": {
+      "previousCodeRestored": true,
+      "configHashRestored": true,
+      "credentialHashUnchanged": true,
+      "ingressHashRestored": true,
+      "clientAllowlistEmpty": true,
+      "publicRestDenied": true,
+      "backupFilesMatch": true,
+      "backupSchemasMatch": true,
+      "backupWasApplicationStopped": true,
+      "healthy": true,
+      "ownedCgroupsEmpty": true
+    },
+    "httpStatuses": {
+      "publicHttps": "200",
+      "originalLack": "200",
+      "publicApp": "200",
+      "mcp": "401",
+      "rest": "404"
+    },
+    "backupFileCount": 552,
+    "failedCandidateRetained": true,
+    "rollbackVerified": true,
+    "liveDataRestoredFromBackup": false,
+    "productionMutatedByCheck": false
+  },
+  "isolatedCauseReproduction": {
+    "accepted": true,
+    "scope": "Actual unchanged failed-candidate MCP HTTP implementation, synthetic denial resolvers, non-root UID/GID and private network; not real Pocket ID token validation, native vendor execution or full HTTPS ingress acceptance.",
+    "runtimeLimits": {
+      "uid": 996,
+      "gid": 987,
+      "memory": "201326592",
+      "high": "167772160",
+      "swap": "0",
+      "cpu": "10000 100000",
+      "tasks": "32",
+      "noNewPrivileges": true
+    },
+    "httpRequests": 8,
+    "cases": [
+      {
+        "allowlistCount": 0,
+        "get": {
+          "status": 401,
+          "challenge": true,
+          "body": {
+            "error": "unauthorized"
+          }
+        },
+        "malformed": {
+          "status": 401,
+          "challenge": true,
+          "body": {
+            "error": "unauthorized"
+          }
+        },
+        "valid": {
+          "status": 401,
+          "challenge": true,
+          "body": {
+            "error": "unauthorized"
+          }
+        },
+        "jwt": {
+          "status": 401,
+          "challenge": true,
+          "body": {
+            "error": "unauthorized"
+          }
+        }
+      },
+      {
+        "allowlistCount": 1,
+        "get": {
+          "status": 401,
+          "challenge": true,
+          "body": {
+            "error": "unauthorized"
+          }
+        },
+        "malformed": {
+          "status": 413,
+          "challenge": false,
+          "body": {
+            "error": "invalid_body"
+          }
+        },
+        "valid": {
+          "status": 401,
+          "challenge": true,
+          "body": {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "error": {
+              "code": -32001,
+              "message": "unauthorized",
+              "data": {
+                "reason": "unauthorized"
+              }
+            }
+          }
+        },
+        "jwt": {
+          "status": 401,
+          "challenge": true,
+          "body": {
+            "jsonrpc": "2.0",
+            "id": 1,
+            "error": {
+              "code": -32001,
+              "message": "unauthorized",
+              "data": {
+                "reason": "unauthorized"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "productionServicesUnchanged": true,
+    "cleanupErrors": [],
+    "modelCalls": 0,
+    "realCredentialsUsed": false
+  },
+  "diagnosis": {
+    "releaseProbeMissingJsonBodyAndContentType": true,
+    "emptyClientListHadMaskedProbeDefect": true,
+    "validJsonWithInvalidBearerStillReturns401AndResourceChallenge": true,
+    "isolatedMalformedPostWithNonemptyAllowlistReturns413": true,
+    "productAuthenticationRelaxationNeeded": false
+  },
+  "nextRequiredChange": {
+    "status": "awaiting_human_confirmation",
+    "scope": "Correct only release MCP probe request framing, retain 401 and resource_metadata assertions, add invalid-Bearer/JWT and malformed-request regressions, retest locally and at original Linux limits, then use a fresh private release tag and verified backup/rollback path for another scoped attempt.",
+    "productAuthenticationChange": false,
+    "credentialOrRelayChange": false,
+    "newAttemptMustNotReuseOccupiedBackupOrFailedCandidatePaths": true
+  },
+  "readyForDelivery": false,
+  "remainingVendorAcceptance": [
+    "dots own-browser event, task ID/nonce, screenshot, persisted receipt, human acceptance and revocation remain unverified.",
+    "Muse account access and supported native task trigger remain unresolved.",
+    "Sustained real multi-user/multi-node and Relay traffic quality acceptance remain outstanding."
+  ]
+}
