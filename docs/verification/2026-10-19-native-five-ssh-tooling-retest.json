@@ -1,6 +1,6 @@
 {
   "date": "2026-10-19",
-  "status": "not_accepted",
+  "status": "native_low_contention_retest_passed_full_delivery_unfinished",
   "scope": "Current-source native five-logical-Agent bounded isolated retest; not external vendor or sustained-load acceptance",
   "sourceCommit": "e3110cb6274e01086a94e5865f1da06071a1c44c",
   "sourceArchiveSHA256": "0e1d6121997ae1ca3651ff5f2f1b8df7e7bb5ce0ead133653e196bdb5b69ec95",
@@ -170,10 +170,11 @@
     "credentialsDnsPortsChanged": false
   },
   "remaining": [
-    "Provide an existing private SSH credential file path for the verified inference host, then continue the approved read-only diagnosis without reading conversation text or generating model calls.",
-    "The current native five-Agent real-model test still fails. Resolve or establish backend latency/queue behavior before changing any business acceptance criterion or consuming the approved publication window.",
-    "After native acceptance, complete the controlled publication and actual dots own-browser single-task evidence round trip, then revoke temporary grants/subscriptions.",
-    "Muse native Agent acceptance, sustained real coexistence and final full-delivery audit remain unfinished."
+    "The low-contention current committed product package passed two rounds with five replies each and restart persistence; earlier busy-backend failures remain valid and sustained coexistence is not accepted.",
+    "Complete the already-scoped controlled dots-only allowlist publication only after current release preflight and backup/recovery checks; do not grant other clients or change credentials, ports, DNS, old LACK or Relay.",
+    "Complete dots own-browser event, claim, nonce-and-screenshot result storage and receipt verification, then revoke temporary grants/subscriptions.",
+    "Muse native Agent acceptance remains blocked by unavailable account access and an unverified supported native task-trigger path.",
+    "Complete bounded sustained real multi-user/multi-node coexistence, Relay traffic-quality evidence and final requirement-by-requirement delivery audit."
   ],
   "followupAttempts": [
     {
@@ -806,6 +807,175 @@
         "thirdFailureDuringShutdown": "Correlates with cleanup; the diagnostic does not capture the underlying exception and does not prove a second backend timeout.",
         "durationFormatterDefect": "Runner duration() only formats one minute plus remaining seconds. For 192 seconds this does not match systemd 3min 12s. No repair yet; original raw report retained and actual business failure remains."
       }
+    },
+    {
+      "tag": "6624cddd6015",
+      "scope": "isolated committed-current-package real-model acceptance after passive idle precheck; not production or native Muse/dots",
+      "sourceCommit": "a4ed16322e6f43494ea533fd328af2632d0164e1",
+      "archiveSha256": "e78a0f979ef62ac4ecf6f58fbfebbec11c640c5117ed4b6a0068997b61ebb938",
+      "originalAcceptanceScriptSha256": "0692dbdcf6b025cfdc888eb2a293890006545ef8305694ec120a8a8f0211177a",
+      "diagnosticsOnlyScriptSha256": "18c23f0a0e6dd8ee7009dfa7970a35f247fae7e298a8064ad0671c61771e7a4b",
+      "sourceArchiveRefreshedFromCurrentCommittedHead": true,
+      "knownUncommittedWorkspaceShellExcluded": true,
+      "noBusinessAssertionsOrRequestDeadlinesChanged": true,
+      "idlePreflight": {
+        "scope": "existing-metrics-only, no generation",
+        "samples": [
+          {
+            "at_utc": "2026-10-19T13:31:10Z",
+            "vllm:num_requests_running": 0,
+            "vllm:num_requests_waiting": 0,
+            "vllm:generation_tokens_total": 657370
+          },
+          {
+            "at_utc": "2026-10-19T13:31:13Z",
+            "vllm:num_requests_running": 0,
+            "vllm:num_requests_waiting": 0,
+            "vllm:generation_tokens_total": 657370
+          }
+        ],
+        "user_service": {
+          "MainPID": "2241115",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "idle_gate_passed": true,
+        "does_not_reserve_capacity": true
+      },
+      "accepted": true,
+      "totalPhaseElapsedSeconds": 69.04540020000422,
+      "rounds": [
+        {
+          "index": 0,
+          "agentReplies": 5,
+          "elapsedMs": 7950,
+          "messages": [
+            {
+              "id": "1a63e7d2-0e40-40e8-aa80-4146743dc108",
+              "contentSha256": "24ed1b423f42890e35f2da7a653b9ebc9677a60ec1727f6e46e3962016d4df4a"
+            },
+            {
+              "id": "ccd27c2c-57e7-4022-9df3-0f845693ec8f",
+              "contentSha256": "850e946a1b951762502f2f656a27fb460adc03fd7887124d827452e9ebd8d91b"
+            },
+            {
+              "id": "976b5937-5228-4b0c-900b-9d3d58a5591a",
+              "contentSha256": "c5252c6b097e79852de6932496492cae45a7166e7891e9c4381c9f31ec8b6536"
+            },
+            {
+              "id": "a3335c8e-406a-4f89-9216-910f0b999816",
+              "contentSha256": "1a8cef761a37cfca64abd0d9e7a0d216cc51a35421e4ec8dbc3e4755b2d31b81"
+            },
+            {
+              "id": "8f4d772e-2c6c-45d2-96d5-183cf65c3e05",
+              "contentSha256": "8eb491c7b3e5c0ca6190e4ac37b51756c40ee3721f39f096830dd5393fb9c6f6"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "agentReplies": 5,
+          "elapsedMs": 3796,
+          "messages": [
+            {
+              "id": "da707081-875a-49a5-8a87-fb1ac3d411fc",
+              "contentSha256": "24ed1b423f42890e35f2da7a653b9ebc9677a60ec1727f6e46e3962016d4df4a"
+            },
+            {
+              "id": "0cb2990b-2583-45d5-8f94-0a9db7292b9e",
+              "contentSha256": "850e946a1b951762502f2f656a27fb460adc03fd7887124d827452e9ebd8d91b"
+            },
+            {
+              "id": "df9d029b-47c6-4e9c-bf6d-58f0e9441122",
+              "contentSha256": "c5252c6b097e79852de6932496492cae45a7166e7891e9c4381c9f31ec8b6536"
+            },
+            {
+              "id": "62eb8f00-e1cd-47d0-a3a8-4746e8ca96a1",
+              "contentSha256": "1a8cef761a37cfca64abd0d9e7a0d216cc51a35421e4ec8dbc3e4755b2d31b81"
+            },
+            {
+              "id": "a98f7ffb-9936-45ed-a720-5331f560c492",
+              "contentSha256": "8eb491c7b3e5c0ca6190e4ac37b51756c40ee3721f39f096830dd5393fb9c6f6"
+            }
+          ]
+        }
+      ],
+      "metrics": {
+        "inferenceAttempts": 10,
+        "successfulInference": 10,
+        "failedInference": 0,
+        "activeInference": 0,
+        "maxActiveInference": 1
+      },
+      "exactRepliesPersistedAfterRestart": true,
+      "crossWorkspaceViewerDenied": true,
+      "businessUid": 65534,
+      "actualNodeUidObserved": true,
+      "limits": {
+        "sharedSeconds": 240,
+        "preparationSeconds": 40,
+        "businessSeconds": 191,
+        "memoryBytes": 201326592,
+        "cpuQuotaPercent": 10,
+        "tasksMax": 32,
+        "noSwap": true,
+        "modelRequestMaxMs": 20000,
+        "fiveReplyStageMs": 40000,
+        "maxInferenceAttempts": 32
+      },
+      "memoryPeakBytes": 168534016,
+      "protectedServicesUnchanged": true,
+      "protectedServiceBaseline": {
+        "chunlack.service": {
+          "MainPID": "594652",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "tailscaled.service": {
+          "MainPID": "859",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-public.service": {
+          "MainPID": "717856",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-https.service": {
+          "MainPID": "717942",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        }
+      },
+      "protectedServicePostflight": {
+        "chunlack.service": {
+          "MainPID": "594652",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "tailscaled.service": {
+          "MainPID": "859",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-public.service": {
+          "MainPID": "717856",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-https.service": {
+          "MainPID": "717942",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        }
+      },
+      "cgroupsEmptyAfterStop": true,
+      "cleanupErrors": [],
+      "productionUpdated": false,
+      "credentialsChanged": false,
+      "externalAgentAccessGranted": false,
+      "sustainedAcceptance": false,
+      "nativeVendorAcceptance": false
     }
   ],
   "readonlyBackendFollowup": {
@@ -992,5 +1162,382 @@
     "anyProductionServiceOrPortChanged": false,
     "privateCredentialFilePathRequested": true,
     "oldDeploymentNotesUsedOnlyToLocateEntryPoints": true
+  },
+  "inferenceHostAuthenticatedDiagnosis": {
+    "observedAtUtc": "2026-10-19T13:24:50Z",
+    "scope": "authorized read-only SSH diagnosis; no inference generation, installation, configuration or service changes",
+    "trustedHostIdentityMatched": true,
+    "authenticatedUid": 1000,
+    "passwordSavedOrLogged": false,
+    "generationRequestsCreated": 0,
+    "serviceScopeCorrection": {
+      "systemManagerObservation": "inactive unit does not describe the live user-managed model",
+      "actualManager": "systemd user manager",
+      "unit": "1cat-vllm.service",
+      "state": {
+        "exit": 0,
+        "MainPID": "2241115",
+        "NRestarts": "0",
+        "MemoryCurrent": "6943703040",
+        "CPUUsageNSec": "245760224535000",
+        "ActiveState": "active",
+        "SubState": "running",
+        "ActiveEnterTimestamp": "Sun 2026-09-06 18:11:05 CST"
+      }
+    },
+    "modelTechnicalFlags": {
+      "--served-model-name": "qwen38-27b-nvfp4",
+      "--tensor-parallel-size": "2",
+      "--dtype": "half",
+      "--kv-cache-dtype": "fp8_e5m2",
+      "--max-model-len": "131072",
+      "--max-num-seqs": "1",
+      "--max-num-batched-tokens": "2048",
+      "--gpu-memory-utilization": "0.85",
+      "--host": "127.0.0.1",
+      "--port": "8106"
+    },
+    "listener": {
+      "exit": 0,
+      "addresses": [
+        "127.0.0.1:8106"
+      ],
+      "pids": [
+        "2241115"
+      ]
+    },
+    "physicalGpuModelRequeried": false,
+    "aliasDoesNotAttestQuantization": true,
+    "existingCollectors": {
+      "1cat-vllm.service": {
+        "exit": 0,
+        "MainPID": "2241115",
+        "NRestarts": "0",
+        "MemoryCurrent": "6943703040",
+        "CPUUsageNSec": "245760224535000",
+        "ActiveState": "active",
+        "SubState": "running",
+        "ActiveEnterTimestamp": "Sun 2026-09-06 18:11:05 CST"
+      },
+      "llama-openai-router.service": {
+        "exit": 0,
+        "MainPID": "2347022",
+        "NRestarts": "0",
+        "MemoryCurrent": "13168640",
+        "CPUUsageNSec": "430698168000",
+        "ActiveState": "active",
+        "SubState": "running",
+        "ActiveEnterTimestamp": "Sun 2026-09-06 19:29:04 CST"
+      },
+      "llama-energy-collector.service": {
+        "exit": 0,
+        "MainPID": "698473",
+        "NRestarts": "0",
+        "MemoryCurrent": "118013952",
+        "CPUUsageNSec": "21167982630000",
+        "ActiveState": "active",
+        "SubState": "running",
+        "ActiveEnterTimestamp": "Fri 2026-09-25 07:02:07 CST"
+      },
+      "llama-performance-collector.service": {
+        "exit": 0,
+        "MainPID": "1854340",
+        "NRestarts": "0",
+        "MemoryCurrent": "78954496",
+        "CPUUsageNSec": "881040857000",
+        "ActiveState": "active",
+        "SubState": "running",
+        "ActiveEnterTimestamp": "Fri 2026-09-25 22:48:28 CST"
+      }
+    },
+    "memorySnapshotKiB": {
+      "MemTotal": 65791356,
+      "MemAvailable": 49834756,
+      "SwapTotal": 8388604,
+      "SwapFree": 4347388
+    },
+    "health": {
+      "status": 200,
+      "elapsed_ms": 42.73,
+      "bytes": 0
+    },
+    "metricsRead": {
+      "status": 200,
+      "elapsed_ms": 18.64,
+      "bytes": 58042
+    },
+    "passiveExistingMetrics": {
+      "interval_seconds": 8.063,
+      "start": {
+        "vllm:num_requests_running": 1,
+        "vllm:num_requests_waiting": 0,
+        "vllm:kv_cache_usage_perc": 0.08333333333333337,
+        "vllm:prompt_tokens_total": 19966977,
+        "vllm:generation_tokens_total": 642247,
+        "vllm:request_success_total": 1564
+      },
+      "end": {
+        "vllm:num_requests_running": 1,
+        "vllm:num_requests_waiting": 0,
+        "vllm:kv_cache_usage_perc": 0.09259259259259256,
+        "vllm:prompt_tokens_total": 19966977,
+        "vllm:generation_tokens_total": 642655,
+        "vllm:request_success_total": 1564
+      },
+      "counter_deltas": {
+        "vllm:prompt_tokens_total": 0,
+        "vllm:generation_tokens_total": 408,
+        "vllm:request_success_total": 0
+      },
+      "cumulative_latency_buckets": {
+        "vllm:time_to_first_token_seconds_bucket": {
+          "0.001": 0,
+          "0.005": 0,
+          "0.01": 0,
+          "0.02": 0,
+          "0.04": 0,
+          "0.06": 0,
+          "0.08": 0,
+          "0.1": 0,
+          "0.25": 47,
+          "0.5": 191,
+          "0.75": 288,
+          "1.0": 379,
+          "2.5": 723,
+          "5.0": 1001,
+          "7.5": 1207,
+          "10.0": 1314,
+          "20.0": 1458,
+          "40.0": 1524,
+          "80.0": 1551,
+          "160.0": 1567,
+          "640.0": 1571,
+          "2560.0": 1571,
+          "+Inf": 1571
+        },
+        "vllm:e2e_request_latency_seconds_bucket": {
+          "0.3": 10,
+          "0.5": 36,
+          "0.8": 112,
+          "1.0": 135,
+          "1.5": 176,
+          "2.0": 256,
+          "2.5": 320,
+          "5.0": 637,
+          "10.0": 786,
+          "15.0": 1003,
+          "20.0": 1186,
+          "30.0": 1396,
+          "40.0": 1448,
+          "50.0": 1491,
+          "60.0": 1500,
+          "120.0": 1547,
+          "240.0": 1564,
+          "480.0": 1564,
+          "960.0": 1564,
+          "1920.0": 1564,
+          "7680.0": 1564,
+          "+Inf": 1564
+        },
+        "vllm:request_queue_time_seconds_bucket": {
+          "0.3": 1313,
+          "0.5": 1315,
+          "0.8": 1317,
+          "1.0": 1318,
+          "1.5": 1320,
+          "2.0": 1320,
+          "2.5": 1323,
+          "5.0": 1334,
+          "10.0": 1485,
+          "15.0": 1523,
+          "20.0": 1535,
+          "30.0": 1550,
+          "40.0": 1554,
+          "50.0": 1557,
+          "60.0": 1558,
+          "120.0": 1560,
+          "240.0": 1564,
+          "480.0": 1564,
+          "960.0": 1564,
+          "1920.0": 1564,
+          "7680.0": 1564,
+          "+Inf": 1564
+        }
+      }
+    },
+    "failedTestWindowNumericEngineStats": [
+      {
+        "time_epoch_us": "1792414353161113",
+        "prompt_tokens_per_second": 800.4,
+        "generation_tokens_per_second": 36.7,
+        "running_requests": 1,
+        "waiting_requests": 0,
+        "kv_cache_percent": 8.3
+      },
+      {
+        "time_epoch_us": "1792414363161666",
+        "prompt_tokens_per_second": 0,
+        "generation_tokens_per_second": 50.9,
+        "running_requests": 1,
+        "waiting_requests": 0,
+        "kv_cache_percent": 8.3
+      },
+      {
+        "time_epoch_us": "1792414373161762",
+        "prompt_tokens_per_second": 1005.6,
+        "generation_tokens_per_second": 17.7,
+        "running_requests": 1,
+        "waiting_requests": 1,
+        "kv_cache_percent": 9.3
+      },
+      {
+        "time_epoch_us": "1792414383162406",
+        "prompt_tokens_per_second": 0,
+        "generation_tokens_per_second": 49.6,
+        "running_requests": 1,
+        "waiting_requests": 2,
+        "kv_cache_percent": 9.3
+      },
+      {
+        "time_epoch_us": "1792414393163074",
+        "prompt_tokens_per_second": 0,
+        "generation_tokens_per_second": 48.8,
+        "running_requests": 1,
+        "waiting_requests": 2,
+        "kv_cache_percent": 10.2
+      },
+      {
+        "time_epoch_us": "1792414403163393",
+        "prompt_tokens_per_second": 61.4,
+        "generation_tokens_per_second": 38.8,
+        "running_requests": 1,
+        "waiting_requests": 0,
+        "kv_cache_percent": 7.4
+      },
+      {
+        "time_epoch_us": "1792414413164980",
+        "prompt_tokens_per_second": 842,
+        "generation_tokens_per_second": 32.1,
+        "running_requests": 1,
+        "waiting_requests": 1,
+        "kv_cache_percent": 8.3
+      }
+    ],
+    "assessment": {
+      "verified": [
+        "The live user service has max-num-seqs=1 and two tensor-parallel workers.",
+        "Existing numeric logs overlap the failed acceptance window and show one running request and up to two waiting requests.",
+        "The diagnostic session created no generation requests; existing generation counters increased during observation.",
+        "The failed acceptance retained its 20-second upstream guard and 40-second five-reply stage deadline."
+      ],
+      "supportedInference": "Shared single-sequence backend queueing contributes to the observed timeout risk; low-latency health checks do not establish generation latency.",
+      "unverified": [
+        "Exact attribution of each failed test request to backend queue, prefill and decode time.",
+        "Physical GPU model and actual weight quantization were not re-queried.",
+        "Stable five-agent acceptance, sustained multi-user operation, and native Muse/dots execution are not established by these read-only checks."
+      ],
+      "recommendation": "Keep the shared inference service and its settings unchanged. Establish a bounded low-contention retest, then distinguish queue, inference and round-level budgets without suppressing failures or changing assertions merely to pass."
+    },
+    "priorNativeAcceptanceVerdictUnchanged": "not_accepted",
+    "productionUpdated": false,
+    "relayChanged": false,
+    "credentialsChanged": false,
+    "externalAgentAccessGranted": false
+  },
+  "commandCorrections": {
+    "status": "passed",
+    "scope": "local command and read-only release-policy trial corrections only; no product or production change",
+    "gitStatusParser": {
+      "format": "porcelain-v1-NUL",
+      "leadingStatusWhitespacePreserved": true,
+      "testCount": 8,
+      "tests": [
+        {
+          "name": "old_trim_error_reproduced",
+          "passed": true
+        },
+        {
+          "name": "leading_unstaged_space_preserved",
+          "passed": true
+        },
+        {
+          "name": "two_records_preserved",
+          "passed": true
+        },
+        {
+          "name": "empty_status",
+          "passed": true
+        },
+        {
+          "name": "staged_columns_preserved",
+          "passed": true
+        },
+        {
+          "name": "path_spaces_preserved",
+          "passed": true
+        },
+        {
+          "name": "malformed_record_rejected",
+          "passed": true
+        },
+        {
+          "name": "rename_not_silently_reinterpreted",
+          "passed": true
+        }
+      ],
+      "unexpectedPathsRejected": true,
+      "preexistingWorkspaceShellNotStaged": true
+    },
+    "policyCommand": {
+      "constructionScope": "placeholder resolved inside the persistent Node execution context, not the outer orchestration context",
+      "sourceCompiled": true,
+      "readonlyCases": [
+        {
+          "name": "single_approved_client_policy",
+          "passed": true
+        },
+        {
+          "name": "revert_preserves_original",
+          "passed": true
+        },
+        {
+          "name": "unrelated_current_fields_preserved",
+          "passed": true
+        },
+        {
+          "name": "public_rest_rejected",
+          "passed": true
+        },
+        {
+          "name": "unapproved_client_list_rejected",
+          "passed": true
+        },
+        {
+          "name": "duplicate_client_rejected",
+          "passed": true
+        },
+        {
+          "name": "human_login_client_reuse_rejected",
+          "passed": true
+        },
+        {
+          "name": "wrong_mode_rejected",
+          "passed": true
+        },
+        {
+          "name": "already_migrated_no_repeat_contract",
+          "passed": true
+        }
+      ],
+      "passedCases": 9,
+      "productionConfigUnchanged": true,
+      "externalAccessGranted": false,
+      "controllerSha256": "6a5b411f257c501470a781d4c897207e45229efee282ac34963371b614506c04"
+    },
+    "productChanged": false,
+    "credentialsChanged": false,
+    "relayChanged": false,
+    "nativeRetestPassedInLowContentionOnly": true,
+    "sourceHeadBeforeEvidenceSync": "a4ed16322e6f43494ea533fd328af2632d0164e1"
   }
 }
