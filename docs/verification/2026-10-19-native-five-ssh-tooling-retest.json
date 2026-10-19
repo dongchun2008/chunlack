@@ -137,7 +137,16 @@
     "workspaceGrantCreated": false,
     "taskSubscriptionCreated": false,
     "nativeComputerTaskAccepted": false,
-    "productionAllowlistChangedThisAttempt": false
+    "productionAllowlistChangedThisAttempt": false,
+    "groupReadOnlyCheck": {
+      "dedicatedGroup": "chunlack-users",
+      "selectedMemberCount": 1,
+      "ownerIsSelected": true,
+      "unrelatedDisplayedUserIsSelected": false,
+      "clientCurrentlyAllowsNoGroups": true,
+      "groupAccessChanged": false,
+      "loginRecoveredByHuman": true
+    }
   },
   "production": {
     "maintenanceExecuted": false,
@@ -145,10 +154,10 @@
     "credentialsDnsPortsChanged": false
   },
   "remaining": [
-    "Identity handoff is now proven. A bounded diagnostic retest with an explicitly approved duration change is proposed; no time limit is increased yet.",
-    "Complete native retest before consuming the approved controlled maintenance window.",
-    "Complete actual dots consent, one-task own-browser evidence round trip and revoke test grants/subscriptions.",
-    "Muse native Agent acceptance and sustained real coexistence remain separate unfinished gates."
+    "Diagnose current real-model latency/queue before changing the 40-second five-Agent round criterion or production settings. The full native test still fails.",
+    "Dedicated dots group login access and read-only inference-host investigation await separate approval; no such change executed.",
+    "After native acceptance, execute the separately approved controlled maintenance window and actual dots own-browser single-task evidence round trip, then revoke temporary grants/subscriptions.",
+    "Muse native Agent acceptance, sustained real coexistence and final full-delivery audit remain unfinished."
   ],
   "followupAttempts": [
     {
@@ -334,6 +343,622 @@
         "sustained or external vendor acceptance"
       ],
       "failure": "Business unit reached its remaining 53-second budget before a final report was written. This does not identify a product defect or establish success of the remaining calls."
+    },
+    {
+      "kind": "bounded_240_second_diagnostic",
+      "status": "not_accepted",
+      "unit": "chunlack-native-five-1672296e97db.service",
+      "preparationUnit": "chunlack-native-five-1672296e97db-prepare.service",
+      "state": {
+        "RuntimeMaxUSec": "3min 12s",
+        "MainPID": "0",
+        "Result": "exit-code",
+        "ExecMainCode": "1",
+        "ExecMainStatus": "1",
+        "ControlGroup": "",
+        "MemoryCurrent": "[not set]",
+        "MemoryPeak": "168726528",
+        "CPUUsageNSec": "3276639000",
+        "TasksCurrent": "[not set]",
+        "CPUQuotaPerSecUSec": "100ms",
+        "MemoryHigh": "167772160",
+        "MemoryMax": "201326592",
+        "MemorySwapMax": "0",
+        "TasksMax": "32",
+        "IPAddressAllow": "127.0.0.0/8 ::1/128 100.72.70.102/32",
+        "IPAddressDeny": "::/0 0.0.0.0/0",
+        "User": "nobody",
+        "Group": "nogroup",
+        "LoadState": "loaded",
+        "ActiveState": "failed",
+        "SubState": "failed"
+      },
+      "phaseStates": {
+        "chunlack-native-five-1672296e97db-prepare.service": {
+          "RuntimeMaxUSec": "40s",
+          "MainPID": "0",
+          "Result": "success",
+          "ExecMainCode": "1",
+          "ExecMainStatus": "0",
+          "ControlGroup": "",
+          "MemoryCurrent": "[not set]",
+          "MemoryPeak": "168296448",
+          "CPUUsageNSec": "2685481000",
+          "TasksCurrent": "[not set]",
+          "CPUQuotaPerSecUSec": "100ms",
+          "MemoryHigh": "167772160",
+          "MemoryMax": "201326592",
+          "MemorySwapMax": "0",
+          "TasksMax": "32",
+          "IPAddressAllow": "127.0.0.0/8 ::1/128 100.72.70.102/32",
+          "IPAddressDeny": "::/0 0.0.0.0/0",
+          "User": "root",
+          "Group": "root",
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "exited"
+        },
+        "chunlack-native-five-1672296e97db.service": {
+          "RuntimeMaxUSec": "3min 12s",
+          "MainPID": "0",
+          "Result": "exit-code",
+          "ExecMainCode": "1",
+          "ExecMainStatus": "1",
+          "ControlGroup": "",
+          "MemoryCurrent": "[not set]",
+          "MemoryPeak": "168726528",
+          "CPUUsageNSec": "3276639000",
+          "TasksCurrent": "[not set]",
+          "CPUQuotaPerSecUSec": "100ms",
+          "MemoryHigh": "167772160",
+          "MemoryMax": "201326592",
+          "MemorySwapMax": "0",
+          "TasksMax": "32",
+          "IPAddressAllow": "127.0.0.0/8 ::1/128 100.72.70.102/32",
+          "IPAddressDeny": "::/0 0.0.0.0/0",
+          "User": "nobody",
+          "Group": "nogroup",
+          "LoadState": "loaded",
+          "ActiveState": "failed",
+          "SubState": "failed"
+        }
+      },
+      "progressEvents": [
+        {
+          "event": "begin",
+          "stage": "setup",
+          "elapsedMs": 0.045966,
+          "at": "2026-10-19T12:52:15.857Z",
+          "metrics": {
+            "inferenceAttempts": 0,
+            "successfulInference": 0,
+            "failedInference": 0,
+            "activeInference": 0,
+            "maxActiveInference": 0
+          }
+        },
+        {
+          "event": "stage",
+          "stage": "packaged-TLS-startup",
+          "elapsedMs": 7.675549,
+          "at": "2026-10-19T12:52:15.865Z",
+          "metrics": {
+            "inferenceAttempts": 0,
+            "successfulInference": 0,
+            "failedInference": 0,
+            "activeInference": 0,
+            "maxActiveInference": 0
+          }
+        },
+        {
+          "event": "fixture-created",
+          "stage": "packaged-TLS-startup",
+          "elapsedMs": 16198.722618,
+          "at": "2026-10-19T12:52:32.056Z",
+          "metrics": {
+            "inferenceAttempts": 0,
+            "successfulInference": 0,
+            "failedInference": 0,
+            "activeInference": 0,
+            "maxActiveInference": 0
+          }
+        },
+        {
+          "event": "three-logins-completed",
+          "stage": "packaged-TLS-startup",
+          "elapsedMs": 25503.408145,
+          "at": "2026-10-19T12:52:41.361Z",
+          "metrics": {
+            "inferenceAttempts": 0,
+            "successfulInference": 0,
+            "failedInference": 0,
+            "activeInference": 0,
+            "maxActiveInference": 0
+          }
+        },
+        {
+          "event": "stage",
+          "stage": "spawn-five-agents",
+          "elapsedMs": 26230.058004,
+          "at": "2026-10-19T12:52:42.087Z",
+          "metrics": {
+            "inferenceAttempts": 0,
+            "successfulInference": 0,
+            "failedInference": 0,
+            "activeInference": 0,
+            "maxActiveInference": 0
+          }
+        },
+        {
+          "event": "agent-spawned",
+          "stage": "spawn-five-agents",
+          "elapsedMs": 26354.363545,
+          "at": "2026-10-19T12:52:42.212Z",
+          "metrics": {
+            "inferenceAttempts": 0,
+            "successfulInference": 0,
+            "failedInference": 0,
+            "activeInference": 0,
+            "maxActiveInference": 0
+          }
+        },
+        {
+          "event": "agent-spawned",
+          "stage": "spawn-five-agents",
+          "elapsedMs": 26405.504909,
+          "at": "2026-10-19T12:52:42.263Z",
+          "metrics": {
+            "inferenceAttempts": 0,
+            "successfulInference": 0,
+            "failedInference": 0,
+            "activeInference": 0,
+            "maxActiveInference": 0
+          }
+        },
+        {
+          "event": "agent-spawned",
+          "stage": "spawn-five-agents",
+          "elapsedMs": 26456.543424,
+          "at": "2026-10-19T12:52:42.314Z",
+          "metrics": {
+            "inferenceAttempts": 0,
+            "successfulInference": 0,
+            "failedInference": 0,
+            "activeInference": 0,
+            "maxActiveInference": 0
+          }
+        },
+        {
+          "event": "agent-spawned",
+          "stage": "spawn-five-agents",
+          "elapsedMs": 26507.569298,
+          "at": "2026-10-19T12:52:42.365Z",
+          "metrics": {
+            "inferenceAttempts": 0,
+            "successfulInference": 0,
+            "failedInference": 0,
+            "activeInference": 0,
+            "maxActiveInference": 0
+          }
+        },
+        {
+          "event": "agent-spawned",
+          "stage": "spawn-five-agents",
+          "elapsedMs": 26599.207372,
+          "at": "2026-10-19T12:52:42.457Z",
+          "metrics": {
+            "inferenceAttempts": 0,
+            "successfulInference": 0,
+            "failedInference": 0,
+            "activeInference": 0,
+            "maxActiveInference": 0
+          }
+        },
+        {
+          "event": "stage",
+          "stage": "five-agent-round-0",
+          "elapsedMs": 26599.339909,
+          "at": "2026-10-19T12:52:42.457Z",
+          "metrics": {
+            "inferenceAttempts": 0,
+            "successfulInference": 0,
+            "failedInference": 0,
+            "activeInference": 0,
+            "maxActiveInference": 0
+          }
+        },
+        {
+          "event": "inference-start",
+          "stage": "five-agent-round-0",
+          "elapsedMs": 27202.235003,
+          "at": "2026-10-19T12:52:43.060Z",
+          "metrics": {
+            "inferenceAttempts": 1,
+            "successfulInference": 0,
+            "failedInference": 0,
+            "activeInference": 1,
+            "maxActiveInference": 0
+          }
+        },
+        {
+          "event": "inference-failed",
+          "stage": "five-agent-round-0",
+          "elapsedMs": 47205.75522,
+          "at": "2026-10-19T12:53:03.063Z",
+          "metrics": {
+            "inferenceAttempts": 1,
+            "successfulInference": 0,
+            "failedInference": 1,
+            "activeInference": 1,
+            "maxActiveInference": 1
+          }
+        },
+        {
+          "event": "inference-settled",
+          "stage": "five-agent-round-0",
+          "elapsedMs": 47206.251917,
+          "at": "2026-10-19T12:53:03.064Z",
+          "metrics": {
+            "inferenceAttempts": 1,
+            "successfulInference": 0,
+            "failedInference": 1,
+            "activeInference": 0,
+            "maxActiveInference": 1
+          }
+        },
+        {
+          "event": "inference-start",
+          "stage": "five-agent-round-0",
+          "elapsedMs": 47302.952037,
+          "at": "2026-10-19T12:53:03.160Z",
+          "metrics": {
+            "inferenceAttempts": 2,
+            "successfulInference": 0,
+            "failedInference": 1,
+            "activeInference": 1,
+            "maxActiveInference": 1
+          }
+        },
+        {
+          "event": "inference-success",
+          "stage": "five-agent-round-0",
+          "elapsedMs": 66117.093134,
+          "at": "2026-10-19T12:53:21.974Z",
+          "metrics": {
+            "inferenceAttempts": 2,
+            "successfulInference": 1,
+            "failedInference": 1,
+            "activeInference": 1,
+            "maxActiveInference": 1
+          }
+        },
+        {
+          "event": "inference-settled",
+          "stage": "five-agent-round-0",
+          "elapsedMs": 66117.488211,
+          "at": "2026-10-19T12:53:21.975Z",
+          "metrics": {
+            "inferenceAttempts": 2,
+            "successfulInference": 1,
+            "failedInference": 1,
+            "activeInference": 0,
+            "maxActiveInference": 1
+          }
+        },
+        {
+          "event": "inference-start",
+          "stage": "five-agent-round-0",
+          "elapsedMs": 66301.136696,
+          "at": "2026-10-19T12:53:22.158Z",
+          "metrics": {
+            "inferenceAttempts": 3,
+            "successfulInference": 1,
+            "failedInference": 1,
+            "activeInference": 1,
+            "maxActiveInference": 1
+          }
+        },
+        {
+          "event": "inference-failed",
+          "stage": "five-agent-round-0",
+          "elapsedMs": 66907.006318,
+          "at": "2026-10-19T12:53:22.764Z",
+          "metrics": {
+            "inferenceAttempts": 3,
+            "successfulInference": 1,
+            "failedInference": 2,
+            "activeInference": 1,
+            "maxActiveInference": 1
+          }
+        },
+        {
+          "event": "inference-settled",
+          "stage": "five-agent-round-0",
+          "elapsedMs": 66907.15996,
+          "at": "2026-10-19T12:53:22.765Z",
+          "metrics": {
+            "inferenceAttempts": 3,
+            "successfulInference": 1,
+            "failedInference": 2,
+            "activeInference": 0,
+            "maxActiveInference": 1
+          }
+        }
+      ],
+      "phaseError": null,
+      "cleanupErrors": [],
+      "totalPhaseElapsedSeconds": 96.63212669998757,
+      "sharedBudgetSeconds": 240,
+      "reservedCleanupSeconds": 20,
+      "runtimeBudgetSeconds": 192,
+      "uidProof": {
+        "uid": 65534,
+        "gid": 65534,
+        "pid": 725579,
+        "at": "2026-10-19T12:52:15.167Z"
+      },
+      "nodeUid65534Observed": true,
+      "cgroupEmptyAfterStop": true,
+      "baseline": {
+        "chunlack.service": {
+          "MainPID": "594652",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "tailscaled.service": {
+          "MainPID": "859",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-public.service": {
+          "MainPID": "717856",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-https.service": {
+          "MainPID": "717942",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        }
+      },
+      "postflight": {
+        "chunlack.service": {
+          "MainPID": "594652",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "tailscaled.service": {
+          "MainPID": "859",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-public.service": {
+          "MainPID": "717856",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-https.service": {
+          "MainPID": "717942",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        }
+      },
+      "protectedServicesUnchanged": true,
+      "reportPresent": true,
+      "report": {
+        "scope": "isolated-current-package-real-inference-not-production-or-Muse-dots",
+        "humans": 3,
+        "workspaces": 2,
+        "agentsInTestWorkspace": 5,
+        "maxTokensPerRequest": 64,
+        "maxInferenceAttempts": 32,
+        "rounds": [],
+        "productionChanged": false,
+        "openWebuiUsed": false,
+        "vendorAgentsVerified": false,
+        "realPocketIdLoginVerified": false,
+        "sustainedAcceptance": false,
+        "crossWorkspaceViewerDenied": true,
+        "accepted": false,
+        "failedStage": "five-agent-round-0",
+        "errorCode": "Error",
+        "errorLabel": "acceptance_wait_failed:five-real-replies",
+        "fixtureClosed": true,
+        "metrics": {
+          "inferenceAttempts": 3,
+          "successfulInference": 1,
+          "failedInference": 2,
+          "activeInference": 0,
+          "maxActiveInference": 1
+        }
+      },
+      "sourceArchiveSha256": "0e1d6121997ae1ca3651ff5f2f1b8df7e7bb5ce0ead133653e196bdb5b69ec95",
+      "sourceCommit": "e3110cb6274e01086a94e5865f1da06071a1c44c",
+      "sourceScriptChanged": true,
+      "sourceScriptDiagnosticsOnly": true,
+      "originalSourceScriptSHA256": "0692dbdcf6b025cfdc888eb2a293890006545ef8305694ec120a8a8f0211177a",
+      "diagnosticScriptSHA256": "18c23f0a0e6dd8ee7009dfa7970a35f247fae7e298a8064ad0671c61771e7a4b",
+      "network": "systemd address allowlist: loopback and existing model tailnet IPv4; no private network namespace",
+      "accepted": false,
+      "unchangedAssertionLines": 18,
+      "diagnosticsContainMessageOrCredentialContent": false,
+      "interpretation": {
+        "outerBudgetReached": false,
+        "firstRoundFortySecondWaitFailed": true,
+        "firstInferenceFailedAfterMs": 20003.520216999998,
+        "secondInferenceSucceededAfterMs": 18814.141096999992,
+        "thirdFailureDuringShutdown": "Correlates with cleanup; the diagnostic does not capture the underlying exception and does not prove a second backend timeout.",
+        "durationFormatterDefect": "Runner duration() only formats one minute plus remaining seconds. For 192 seconds this does not match systemd 3min 12s. No repair yet; original raw report retained and actual business failure remains."
+      }
     }
-  ]
+  ],
+  "readonlyBackendFollowup": {
+    "health": {
+      "remoteExit": 0,
+      "result": {
+        "checks": [
+          {
+            "path": "/health",
+            "httpStatus": 200,
+            "keys": [
+              "active_alias",
+              "active_model",
+              "backends",
+              "router",
+              "status",
+              "time"
+            ],
+            "summary": {
+              "status": "ok",
+              "router": "llama-openai-router",
+              "active_model": "qwen38-27b-nvfp4"
+            },
+            "elapsedMs": 63.11
+          },
+          {
+            "path": "/v1/models",
+            "httpStatus": 200,
+            "keys": [
+              "data",
+              "object"
+            ],
+            "modelIds": [
+              "local-active",
+              "unlimited-ocr-cpu",
+              "qwen38-27b-nvfp4"
+            ],
+            "elapsedMs": 21.28
+          }
+        ],
+        "vps": {
+          "loadavg": [
+            "0.00",
+            "0.00",
+            "0.00"
+          ],
+          "memAvailableKiB": 986096
+        }
+      },
+      "error": ""
+    },
+    "backendShape": {
+      "remoteExit": 0,
+      "result": {
+        "backendHealthShape": [
+          {
+            "keys": [
+              "alias",
+              "health",
+              "id",
+              "port"
+            ],
+            "statusFields": {},
+            "children": {
+              "health": {
+                "keys": [
+                  "body",
+                  "ok",
+                  "status"
+                ],
+                "statusFields": {
+                  "status": 200
+                },
+                "children": {}
+              }
+            }
+          },
+          {
+            "keys": [
+              "alias",
+              "health",
+              "id",
+              "port"
+            ],
+            "statusFields": {},
+            "children": {
+              "health": {
+                "keys": [
+                  "body",
+                  "ok",
+                  "status"
+                ],
+                "statusFields": {
+                  "status": 200
+                },
+                "children": {}
+              }
+            }
+          }
+        ]
+      },
+      "error": ""
+    },
+    "advertisedEndpointMetadata": {
+      "remoteExit": 0,
+      "result": {
+        "activeModel": "qwen38-27b-nvfp4",
+        "activeAlias": "local-active",
+        "backends": [
+          {
+            "id": "unlimited-ocr-cpu",
+            "alias": "unlimited-ocr-cpu",
+            "port": 8103,
+            "healthStatus": 200,
+            "healthBodyKeys": [
+              "status"
+            ],
+            "healthSummary": {
+              "status": "ok"
+            }
+          },
+          {
+            "id": "qwen38-27b-q4",
+            "alias": "qwen38-27b-nvfp4",
+            "port": 8106,
+            "healthStatus": 200
+          }
+        ]
+      },
+      "error": ""
+    },
+    "directMetricsAttempt": {
+      "remoteExit": 0,
+      "result": {
+        "endpointRole": "health-advertised active-model backend",
+        "port": 8106,
+        "errorType": "URLError",
+        "elapsedMs": 48.03
+      },
+      "error": ""
+    },
+    "generationOrConfigurationChanged": false,
+    "limitations": [
+      "Fast health/models responses do not prove stable generation latency or an empty inference queue.",
+      "VPS load and available memory are a point-in-time snapshot, not sustained-capacity evidence.",
+      "Backend ids and aliases do not prove actual quantization, executable or GPU topology.",
+      "The backend metrics connection failed; no port, firewall, route or authentication was changed."
+    ]
+  },
+  "durationFormatCorrection": {
+    "status": "passed",
+    "positiveCases": 14,
+    "rejectedBoundaryCases": 5,
+    "totalCases": 19,
+    "original192SecondDisplay": "1min 132s",
+    "fixed192SecondDisplay": "3min 12s",
+    "actualRuntimeDisplayMatches": true,
+    "actualPreparationDisplayMatches": true,
+    "businessFailureRetained": true,
+    "modelRerun": false,
+    "scope": "private test runner helper only; no SSH or model generation",
+    "fixedRunnerSHA256": "58e727d34f33d2e23b58e51c585df7f317325d04478ada16ff4c3f74b8ed8dd6",
+    "regressionSourceSHA256": "c2f7267555f9b5230231b6a555023122d5a94f2d86138d78004a2e076aa67044",
+    "actualRawSummaryRewritten": false,
+    "actualBusinessVerdict": "not_accepted"
+  },
+  "recordConstructionCorrection": {
+    "parseFromExistingProbeOutputs": true,
+    "optionalUndefinedHistoricalBindingsRemoved": true,
+    "scope": "only this verification JSON synchronized"
+  }
 }
