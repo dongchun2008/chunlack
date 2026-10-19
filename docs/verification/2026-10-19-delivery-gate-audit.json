@@ -1,0 +1,340 @@
+{
+  "date": "2026-10-19T14:39:54.909Z",
+  "status": "incomplete_production_delivery_not_accepted",
+  "scope": "Evidence reconciliation only; no production switch, client registration, permission grant, credential or Relay change",
+  "sourceCommit": "bcf879b680a250d49c43451e2dcb528e3dbb6010",
+  "currentStateEvidence": {
+    "vps": {
+      "servicesBefore": {
+        "chunlack.service": {
+          "MainPID": "594652",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "tailscaled.service": {
+          "MainPID": "859",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-public.service": {
+          "MainPID": "717856",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-https.service": {
+          "MainPID": "717942",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        }
+      },
+      "servicesAfter": {
+        "chunlack.service": {
+          "MainPID": "594652",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "tailscaled.service": {
+          "MainPID": "859",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-public.service": {
+          "MainPID": "717856",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-https.service": {
+          "MainPID": "717942",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        }
+      },
+      "unchanged": true,
+      "probeOrigin": "VPS loopback with certificate and hostname verification; not user network",
+      "httpStatuses": {
+        "lack.chunclaw.top/health": "200",
+        "agents.chunclaw.top/.well-known/oauth-protected-resource/mcp": "200",
+        "agents.chunclaw.top/mcp": "401",
+        "agents.chunclaw.top/v1/manifest": "404"
+      },
+      "publicAgentPolicy": {
+        "enabled": true,
+        "discoveryOnly": false,
+        "clientCount": 0,
+        "nodeRestPublic": false
+      },
+      "envSHA256": "d965dca65755172673d4aab1f07cd6e1b9fa57ed091319786a54169be331a8e3",
+      "credentialsWritten": false,
+      "productionMutated": false
+    },
+    "localDirectHttps": [
+      {
+        "url": "https://lack.chunclaw.top/health",
+        "exit": 35,
+        "statusAndSeconds": "000 0.039917",
+        "error": "curl: (35) schannel: failed to receive handshake, SSL/TLS connection failed\r\n",
+        "origin": "local Windows curl direct; OS TLS validation retained; no session cookies"
+      },
+      {
+        "url": "https://agents.chunclaw.top/.well-known/oauth-protected-resource/mcp",
+        "exit": 35,
+        "statusAndSeconds": "000 0.196834",
+        "error": "curl: (35) schannel: failed to receive handshake, SSL/TLS connection failed\r\n",
+        "origin": "local Windows curl direct; OS TLS validation retained; no session cookies"
+      }
+    ],
+    "inAppBrowser": {
+      "healthPageObserved": true,
+      "healthStatus": "ok",
+      "version": "4.2.2",
+      "loginPageRendered": true,
+      "workspaceSessionAuthenticated": false,
+      "newOauthFlowStarted": false,
+      "observation": "The in-app browser successfully reached the health and private workspace login pages; direct curl TLS errors are not proof of browser failure."
+    }
+  },
+  "gates": [
+    {
+      "id": "production-https-and-human-login",
+      "status": "partially_verified",
+      "evidence": [
+        "docs/verification/2026-10-19-controlled-production-release.json",
+        "currentStateEvidence"
+      ],
+      "proven": [
+        "Prior real Pocket ID login reached owner workspace with live connection and history.",
+        "Current certificate-checked VPS health and in-app browser login page render."
+      ],
+      "missing": [
+        "Fresh authenticated workspace acceptance for the next release; no user passkey action was attempted in this followup."
+      ]
+    },
+    {
+      "id": "consistent-backup-and-rollback",
+      "status": "verified_for_prior_release_next_release_pending",
+      "evidence": [
+        "docs/verification/2026-10-19-controlled-production-release.json",
+        "docs/verification/2026-10-19-native-five-ssh-tooling-retest.json"
+      ],
+      "proven": [
+        "Prior controlled release retained a checked 552-file application-consistent backup.",
+        "Current account handoff, database copy compatibility and actual formal identity preflight passed."
+      ],
+      "missing": [
+        "Next release requires a new application-consistent backup and all original 55-second forward/120-second total recovery checks."
+      ],
+      "warning": "A live-data compatibility copy is not an application-consistent rollback backup."
+    },
+    {
+      "id": "native-account-handoff",
+      "status": "verified",
+      "evidence": [
+        "docs/verification/2026-10-19-native-five-ssh-tooling-retest.json"
+      ],
+      "proven": [
+        "22 regression cases first failed against the missing helper, then passed.",
+        "Windows deployment suite: 77 passed, four platform skips.",
+        "Linux deployment suite: 81 passed, zero failures, errors or skips.",
+        "Actual non-root UID 996/GID 987 and shared aggregate resource limits were verified.",
+        "Actual formal LinuxBackend identity and readability check passed."
+      ],
+      "missing": []
+    },
+    {
+      "id": "direct-local-model",
+      "status": "partially_verified",
+      "evidence": [
+        "docs/verification/2026-10-19-onecat-production-acceptance.json",
+        "docs/verification/2026-10-19-native-five-ssh-tooling-retest.json"
+      ],
+      "proven": [
+        "Prior real production browser prompt and exact persisted model response passed.",
+        "VPS low-contention two rounds with five logical Agents returned 10/10 replies and retained them after isolated restart."
+      ],
+      "missing": [
+        "Sustained multi-user and local/cloud coexistence under measured backend contention."
+      ],
+      "warning": "Ten logical Agent replies are not five physical external nodes, and earlier busy-backend failures remain valid."
+    },
+    {
+      "id": "provider-neutral-local-and-cloud",
+      "status": "not_reaccepted_in_this_followup",
+      "evidence": [
+        "AGENTS.md",
+        "ARCHITECTURE.md",
+        "PROJECT_CONTEXT.md",
+        "docs/verification/2026-10-18-mcp-only-full-regression.json"
+      ],
+      "proven": [
+        "Retain provider-neutral routing and Ollama as explicit non-regression constraints.",
+        "Historical smoke evidence used two synthetic providers in one channel."
+      ],
+      "missing": [
+        "Do not claim real mixed local/cloud provider acceptance from the 81 deployment tests; those tests do not exercise real cloud inference.",
+        "No new cloud-provider credential was read or configured."
+      ]
+    },
+    {
+      "id": "multiple-real-humans-and-workspaces",
+      "status": "partially_verified",
+      "evidence": [
+        "docs/verification/2026-10-19-native-five-ssh-tooling-retest.json",
+        "docs/verification/2026-10-19-controlled-production-release.json"
+      ],
+      "proven": [
+        "One real owner production login was historically accepted.",
+        "Isolated three-human/two-workspace permission and five-logical-Agent persistence checks passed using synthetic users."
+      ],
+      "missing": [
+        "Sustained acceptance with multiple actual humans and multiple actual external nodes."
+      ]
+    },
+    {
+      "id": "public-agent-security-boundary",
+      "status": "verified_closed_access_only",
+      "evidence": [
+        "currentStateEvidence",
+        "docs/verification/2026-10-19-native-five-ssh-tooling-retest.json"
+      ],
+      "proven": [
+        "Current public client allowlist is empty.",
+        "Current public node REST remains disabled: manifest returns 404.",
+        "Current unauthenticated MCP returns 401; resource discovery returns 200."
+      ],
+      "missing": [
+        "Positive authenticated external-Agent access and subsequent revocation remain unverified."
+      ]
+    },
+    {
+      "id": "dots-own-cloud-computer",
+      "status": "not_accepted",
+      "evidence": [
+        "docs/verification/2026-10-19-dots-preauthorization-and-relay-readonly.json",
+        "docs/verification/2026-10-19-native-five-ssh-tooling-retest.json"
+      ],
+      "proven": [
+        "A dedicated public PKCE client and previously observed connection draft are preparation evidence only."
+      ],
+      "missing": [
+        "Complete approved allowlist publication after correcting the pending readonly preflight script.",
+        "Obtain action-time confirmation before final external connector creation or expanded sensitive access.",
+        "Verify event delivery into the actual dot conversation, real own-browser execution, task ID and nonce, screenshot, stored receipt and human acceptance.",
+        "Verify duplicate handling, cancellation, restart/retry and removal of temporary subscription/grant."
+      ],
+      "warning": "No worker, server-side page fetch, model-only response or event HTTP 2xx may substitute for native Agent execution."
+    },
+    {
+      "id": "muse-laozhen-own-cloud-computer",
+      "status": "external_prerequisites_missing",
+      "evidence": [
+        "docs/MUSE_DOTS_INTEGRATION.zh-CN.md",
+        "docs/EXTERNAL_AGENT_ONBOARDING_2026-10-17.zh-CN.md"
+      ],
+      "proven": [
+        "Public HTTPS is the chosen integration route; no new Tailscale/Tunnel installation is required by this plan."
+      ],
+      "missing": [
+        "User account access is unavailable in the latest provided state; no new login was attempted.",
+        "Confirm supported connector authentication, exact callback/client identity and native Agent trigger/result path.",
+        "Verify a real own-browser task and stored receipt; retain unknown status until supported and tested."
+      ],
+      "warning": "Muse Gadgets BLE and a generic Linux worker are not substitutes for Muse native Agent acceptance."
+    },
+    {
+      "id": "research-original-source-integrity",
+      "status": "not_reaccepted_in_this_followup",
+      "evidence": [
+        "PROJECT_CONTEXT.md",
+        "docs/DELIVERY_READINESS_2026-10-11.zh-CN.md"
+      ],
+      "proven": [
+        "Original-source retention and explicit missing-evidence labeling remain delivery requirements."
+      ],
+      "missing": [
+        "This account-handoff regression does not itself validate SIPHON failure behavior, source links, reviewer independence or a complete real research task."
+      ]
+    },
+    {
+      "id": "windows-mac-spark-node-onboarding",
+      "status": "not_accepted_for_all_devices",
+      "evidence": [
+        "docs/MUSE_DOTS_INTEGRATION.zh-CN.md",
+        "docs/verification/2026-10-19-native-five-ssh-tooling-retest.json"
+      ],
+      "proven": [
+        "A model service, a physical machine and a native task-executing Agent must be accepted separately."
+      ],
+      "missing": [
+        "Prove per-device identity, bounded capabilities, actual task execution, returned artifacts and revocation for each requested machine or Agent."
+      ],
+      "warning": "The present five-Agent test is not evidence that five distinct physical machines are connected."
+    },
+    {
+      "id": "sustained-load-and-relay-quality",
+      "status": "not_accepted",
+      "evidence": [
+        "docs/verification/2026-10-19-dots-preauthorization-and-relay-readonly.json",
+        "docs/verification/2026-10-19-native-five-ssh-tooling-retest.json",
+        "currentStateEvidence"
+      ],
+      "proven": [
+        "Protected service PIDs, restart counts, states and credential hash remain unchanged.",
+        "Prior Relay counters had nonzero traffic with no observed send errors."
+      ],
+      "missing": [
+        "Measure real forwarding latency/loss and traffic under a bounded sustained multi-user/five-Agent workload with suitable endpoints."
+      ],
+      "warning": "Active service state, listener checks or cumulative counters alone do not prove sustained Relay quality."
+    },
+    {
+      "id": "final-user-guides-and-delivery-notification",
+      "status": "pending_final_acceptance",
+      "evidence": [
+        "docs/DELIVERY_READINESS_2026-10-11.zh-CN.md",
+        "docs/MUSE_DOTS_INTEGRATION.zh-CN.md",
+        "docs/EXTERNAL_AGENT_ONBOARDING_2026-10-17.zh-CN.md"
+      ],
+      "proven": [
+        "Human and Agent HTTPS entrypoints are distinct; Slack/Raft are references, Open WebUI is not an integration dependency."
+      ],
+      "missing": [
+        "Consolidate final validated user/administrator guides and label historical status correctly.",
+        "Supply verified onboarding, access, revocation, recovery and capacity limits without implying unfinished vendor support.",
+        "Notify delivery only after every required gate has acceptable direct evidence."
+      ]
+    }
+  ],
+  "nextActions": [
+    {
+      "action": "Repair the readonly release preflight manifest lookup to use the existing candidate/previous maps without changing the manifest or runtime code.",
+      "state": "awaiting_direct_human_confirmation_after_disclosed_script_bug",
+      "productionSwitchAllowedByThisAudit": false
+    },
+    {
+      "action": "Retest that readonly preflight, then continue only the previously approved bounded dots-only release workflow.",
+      "state": "not_started"
+    },
+    {
+      "action": "After a separately confirmed actual connector/access step, run the unique-task native dots acceptance and revoke temporary access.",
+      "state": "not_started"
+    },
+    {
+      "action": "Recheck Muse account availability and supported native trigger path without substituting workers.",
+      "state": "external_prerequisite"
+    },
+    {
+      "action": "Complete remaining sustained/multi-user/multi-node and research evidence acceptance before final delivery.",
+      "state": "not_started"
+    }
+  ],
+  "changes": {
+    "production": false,
+    "credentials": false,
+    "relay": false,
+    "dns": false,
+    "ports": false,
+    "externalGrants": false,
+    "modelCalls": 0
+  },
+  "readyForFullDelivery": false
+}
