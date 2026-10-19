@@ -1,0 +1,190 @@
+{
+  "date": "2026-10-19",
+  "status": "partial_progress_no_native_test_or_vendor_acceptance_claimed",
+  "approvedScope": {
+    "nativeRunnerTransportFix": true,
+    "readonlyDiagnosticTransportFix": true,
+    "dotsTemporaryPublicPageTask": true,
+    "dotsShellPrivateFileCrossWorkspaceAccess": false,
+    "revokeTestAccessAfterAcceptance": true
+  },
+  "syntaxCorrection": {
+    "originalSyntaxFailed": true,
+    "originalFailureLastLine": "SyntaxError: unterminated string literal (detected at line 15)",
+    "fixedRunnerParsed": true,
+    "preparerParsed": true,
+    "nestedRemoteScriptsParsed": 2,
+    "testScriptChanged": false,
+    "limitsChanged": false,
+    "relayLocalAndRemoteParsed": true,
+    "readonlyDiagnosticExecutedSuccessfully": true,
+    "limitsOrAcceptanceScriptChanged": false
+  },
+  "nativeFiveAttempt": {
+    "sourceCommit": "e3110cb6274e01086a94e5865f1da06071a1c44c",
+    "acceptanceScriptSha256": "0692dbdcf6b025cfdc888eb2a293890006545ef8305694ec120a8a8f0211177a",
+    "archiveSha256": "0e1d6121997ae1ca3651ff5f2f1b8df7e7bb5ce0ead133653e196bdb5b69ec95",
+    "stage": "SFTP-exclusive-file-upload",
+    "outcome": "failed_before_any_test_unit_started",
+    "error": "Paramiko OSError: File not open for writing",
+    "openModeUsed": "x",
+    "newWriteModeCorrectionNotApplied": true,
+    "newCorrectionRequiresConfirmation": true,
+    "requestedLimits": {
+      "memoryMiB": 192,
+      "cpuPercent": 10,
+      "tasksMax": 32,
+      "runtimeSeconds": 90
+    },
+    "limitsAppliedInLiveApplicationTest": false,
+    "modelInferenceRequests": 0,
+    "unitAudit": {
+      "MainPID": "0",
+      "LoadState": "not-found",
+      "ActiveState": "inactive"
+    },
+    "ownedArtifactSizes": {
+      "source.tar": {
+        "bytes": 5734400,
+        "mode": "0o600",
+        "uid": 0,
+        "gid": 0
+      },
+      "prepare-and-run.py": {
+        "bytes": 0,
+        "mode": "0o644",
+        "uid": 0,
+        "gid": 0
+      }
+    },
+    "localModeProbe": {
+      "outcome": "failed",
+      "error": "AttributeError: BufferedFile._FLAG_WRITE does not exist; probe not counted as passing"
+    },
+    "historicalNativeSuccessNotSuperseded": "docs/verification/2026-10-17-native-and-dots-checkpoint.md records an earlier Oct 18 constrained native success; it is not a rerun of the current source or a sustained workload result."
+  },
+  "relayObservation": {
+    "tailscaleVersion": "1.102.3",
+    "readonlyCommands": [
+      "tailscale version",
+      "tailscale debug --help",
+      "tailscale debug metrics",
+      "tailscale debug peer-relay-sessions"
+    ],
+    "durationSeconds": 10.018778372555971,
+    "samples": 3,
+    "allMetricQueriesExitZero": true,
+    "cumulativeForwardedBytes": 651110862,
+    "cumulativeForwardedPackets": 2404662,
+    "forwardedBytesDelta": 0,
+    "forwardedPacketsDelta": 0,
+    "rxqOverflowDelta": 0,
+    "positiveCounterNames": [],
+    "sessionQuery": {
+      "exitCode": 0,
+      "rawPrivateOutputNotRetained": true,
+      "format": "not-json; session count not inferred"
+    },
+    "serviceAfter": {
+      "MainPID": "859",
+      "NRestarts": "0",
+      "ActiveState": "active"
+    },
+    "generatedTestTraffic": false,
+    "forwardingActivityDuringWindowProven": false,
+    "qualityOrThroughputAcceptance": false,
+    "rawSanitizedMetricsSha256": "fb0eb6bc90300e5a49e9b9c8cc64ace2b40442299eee7f47d27538a4b5123600"
+  },
+  "dotsBrowser": {
+    "signedInPluginPage": true,
+    "customMcpFormAvailable": true,
+    "serverUrl": "https://agents.chunclaw.top/mcp",
+    "registrationMode": "predefined public OAuth client",
+    "callbackLoaded": "https://chatgpt.com/connector_platform_oauth_redirect",
+    "authorizationUrl": "https://pockid.chunclaw.top/authorize",
+    "tokenUrl": "https://pockid.chunclaw.top/api/oidc/token",
+    "resource": "https://agents.chunclaw.top/mcp",
+    "storedClientDescriptorChecks": {
+      "publicClient": true,
+      "pkceRequired": true,
+      "tokenEndpointNone": true,
+      "consentRequired": true,
+      "noClientSecret": true,
+      "exactCallback": true,
+      "issuer": true,
+      "name": true
+    },
+    "clientIdFilledFromPrivateFile": true,
+    "clientIdNotPublished": true,
+    "clientSecretNotReadOrEntered": true,
+    "draftOidcScopes": [
+      "openid"
+    ],
+    "draftDefaultTaskEventScopes": [
+      "task.read",
+      "task.claim",
+      "task.result",
+      "events.read",
+      "events.subscribe"
+    ],
+    "riskAcknowledgementNotSelected": true,
+    "pluginCreationNotSubmitted": true,
+    "oauthAuthorizationNotCompleted": true,
+    "subscriptionsCreated": 0,
+    "workspaceGrantsCreated": 0,
+    "nodeRegistrationNotSubmitted": true,
+    "grantPanelNoSelectableClientOrNode": true,
+    "pocketIdAdminSessionExpired": true,
+    "userPresenceReauthenticationRequested": true,
+    "liveClientApiPermissionVerificationPending": true
+  },
+  "officialReferences": [
+    {
+      "url": "https://developers.openai.com/plugins/build/auth",
+      "purpose": "OAuth metadata, PKCE, predefined clients and exact callback rules"
+    },
+    {
+      "url": "https://developers.openai.com/plugins/build/plugins",
+      "purpose": "Public predefined OAuth client with token endpoint authentication method none"
+    }
+  ],
+  "protectedServicesAfter": {
+    "chunlack.service": {
+      "MainPID": "594652",
+      "NRestarts": "0",
+      "ActiveState": "active"
+    },
+    "tailscaled.service": {
+      "MainPID": "859",
+      "NRestarts": "0",
+      "ActiveState": "active"
+    },
+    "chunlack-public.service": {
+      "MainPID": "717856",
+      "NRestarts": "0",
+      "ActiveState": "active"
+    },
+    "chunlack-https.service": {
+      "MainPID": "717942",
+      "NRestarts": "0",
+      "ActiveState": "active"
+    }
+  },
+  "boundaries": {
+    "productCodeChanged": false,
+    "productionConfigChanged": false,
+    "credentialsChanged": false,
+    "dnsOrPortsChanged": false,
+    "oldLackOrRelayRestarted": false,
+    "newAppOrHttpsRestarted": false,
+    "externalAccessGranted": false,
+    "rawTokensPrivateClientIdsOrDatabaseRowsPublished": false
+  },
+  "remainingGates": [
+    "Confirm the newly found SFTP write-mode correction before a fresh owned-directory retry under unchanged limits.",
+    "User completes Pocket ID passkey authentication; recheck the live dedicated client before granting any access.",
+    "Enable only the approved dots client/API permissions and owned browser.public_read node with a fresh controlled maintenance window if startup configuration must change; no grant currently exists.",
+    "Execute the single dots own-computer task, persist nonce and screenshot evidence and result receipt, then revoke the temporary access.",
+    "Muse native account availability, sustained real multi-user/multi-node workload and Relay quality comparison remain separate."
+  ]
+}
