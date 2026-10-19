@@ -1,0 +1,109 @@
+{
+  "date": "2026-10-20",
+  "status": "targeted_local_regression_passed_real_cloud_acceptance_pending",
+  "sourceCommit": "2315ddd9ae1dad79d5f619ba568143e065749d9f",
+  "nodeVersion": "v24.19.0",
+  "tests": [
+    "tests/providers.test.cjs",
+    "tests/workspace-background-models.test.cjs",
+    "tests/workspace-capacity-models.test.cjs",
+    "tests/workspace-models.test.cjs"
+  ],
+  "command": "node --test --test-concurrency=1 --test-reporter=tap tests/providers.test.cjs tests/workspace-background-models.test.cjs tests/workspace-capacity-models.test.cjs tests/workspace-models.test.cjs",
+  "result": {
+    "tests": 31,
+    "passed": 31,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMilliseconds": 9156.9325,
+    "exitCode": 0
+  },
+  "coverage": [
+    "Existing Ollama and OpenAI-compatible providers use separate transports in one runtime",
+    "Cloud fallback stays within configured models; cross-provider cloud fallback requires opt-in",
+    "Local-only blocks cloud primary before transport; missing credentials and unknown providers send no traffic",
+    "Timeout, real loopback HTTP abort, queue recovery, shared capacity and cancellation",
+    "Workspace model grants rechecked for primary, fallback and queued execution",
+    "Membership removal while queued prevents traffic and removal during execution prevents private output delivery",
+    "Viewer metadata permission does not grant generation permission",
+    "Memory/cache scope, source URL/excerpt persistence and source-substitution rejection",
+    "Traversal/symlink boundary and default-disabled Moderator shell"
+  ],
+  "evidenceBoundaries": {
+    "modelResponses": "Synthetic test transports, not real cloud inference",
+    "actualHttp": "Loopback slow-model timeout fixture only",
+    "productionModelCalls": 0,
+    "vendorNativeExecutionVerified": false,
+    "realMixedLocalCloudVerified": false,
+    "fullSuite": false,
+    "additiveWithEarlierSuites": false
+  },
+  "readOnlyProductionRefresh": {
+    "services": {
+      "chunlack.service": {
+        "MainPID": "594652",
+        "NRestarts": "0",
+        "MemoryCurrent": "87801856",
+        "CPUQuotaPerSecUSec": "500ms",
+        "MemoryMax": "469762048",
+        "TasksMax": "64",
+        "ActiveState": "active"
+      },
+      "tailscaled.service": {
+        "MainPID": "859",
+        "NRestarts": "0",
+        "MemoryCurrent": "37347328",
+        "CPUQuotaPerSecUSec": "infinity",
+        "MemoryMax": "infinity",
+        "TasksMax": "1857",
+        "ActiveState": "active"
+      },
+      "chunlack-public.service": {
+        "MainPID": "734054",
+        "NRestarts": "0",
+        "MemoryCurrent": "68034560",
+        "CPUQuotaPerSecUSec": "500ms",
+        "MemoryMax": "469762048",
+        "TasksMax": "64",
+        "ActiveState": "active"
+      },
+      "chunlack-https.service": {
+        "MainPID": "734167",
+        "NRestarts": "0",
+        "MemoryCurrent": "14667776",
+        "CPUQuotaPerSecUSec": "100ms",
+        "MemoryMax": "134217728",
+        "TasksMax": "64",
+        "ActiveState": "active"
+      }
+    },
+    "health": {
+      "curlExit": 0,
+      "httpStatus": "200"
+    },
+    "mode": "read-only, no model calls, no service changes"
+  },
+  "workspaceState": {
+    "unrelatedUiChangePreserved": true,
+    "unrelatedUiChangeStaged": false,
+    "productCodeModified": false,
+    "productionModified": false,
+    "credentialsModified": false,
+    "relayModified": false
+  },
+  "testSourceSha256": {
+    "tests/providers.test.cjs": "b70e039448f8338100698471cdc47c867204573471cf9cdd3bee1b3ab7c082fb",
+    "tests/workspace-background-models.test.cjs": "6e71461d0512668e0671c2b8a3d98a4f1c8e57a70f6b8f4bdab89e365bdc7415",
+    "tests/workspace-capacity-models.test.cjs": "5619907b1ba7d6c2a60554ba4f896d91628bb808b100a1d9745b2aa543331e88",
+    "tests/workspace-models.test.cjs": "d5573da27ece87225e0bd896f04bffa7fe0a8f3fa6ac5a1df2a1997b90b6332a"
+  },
+  "remaining": [
+    "Obtain an explicitly authorized direct cloud inference endpoint, model and private credential file if required",
+    "Verify real local/cloud collaboration and fallback in a bounded isolated workflow",
+    "Complete post-release human browser and native dots/Muse acceptance",
+    "Complete real multiple-human/device and sustained load/Relay quality gates"
+  ],
+  "readyForFullDelivery": false
+}
