@@ -136,7 +136,9 @@
     "grantPanelNoSelectableClientOrNode": true,
     "pocketIdAdminSessionExpired": true,
     "userPresenceReauthenticationRequested": true,
-    "liveClientApiPermissionVerificationPending": true
+    "liveClientApiPermissionVerificationPending": true,
+    "independentAdminPageRedirectedToLogin": true,
+    "userPresenceReauthenticationCompleted": false
   },
   "officialReferences": [
     {
@@ -186,5 +188,49 @@
     "Enable only the approved dots client/API permissions and owned browser.public_read node with a fresh controlled maintenance window if startup configuration must change; no grant currently exists.",
     "Execute the single dots own-computer task, persist nonce and screenshot evidence and result receipt, then revoke the temporary access.",
     "Muse native account availability, sustained real multi-user/multi-node workload and Relay quality comparison remain separate."
+  ],
+  "postAttemptCleanup": {
+    "ownedPartialUploadRemoved": true,
+    "ownedDirectoryAbsent": true,
+    "testUnitAfter": {
+      "MainPID": "0",
+      "NRestarts": "0",
+      "LoadState": "not-found",
+      "ActiveState": "inactive"
+    },
+    "protectedServicesUnchanged": true,
+    "protectedServicesAfter": {
+      "chunlack.service": {
+        "MainPID": "594652",
+        "NRestarts": "0",
+        "LoadState": "loaded",
+        "ActiveState": "active"
+      },
+      "tailscaled.service": {
+        "MainPID": "859",
+        "NRestarts": "0",
+        "LoadState": "loaded",
+        "ActiveState": "active"
+      },
+      "chunlack-public.service": {
+        "MainPID": "717856",
+        "NRestarts": "0",
+        "LoadState": "loaded",
+        "ActiveState": "active"
+      },
+      "chunlack-https.service": {
+        "MainPID": "717942",
+        "NRestarts": "0",
+        "LoadState": "loaded",
+        "ActiveState": "active"
+      }
+    },
+    "productionFilesOrLocksTouched": false,
+    "localFailureEvidenceRetained": true
+  },
+  "nextRequiredHumanActions": [
+    "Complete Pocket ID passkey verification; independent administrative navigation still redirects to login.",
+    "Confirm the new SFTP exclusive-write mode correction and fresh-directory retry under unchanged limits.",
+    "Approve the separately requested controlled configuration maintenance window before enabling the approved dots client in startup configuration."
   ]
 }
