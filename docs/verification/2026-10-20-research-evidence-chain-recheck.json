@@ -1,0 +1,117 @@
+{
+  "date": "2026-10-20",
+  "status": "targeted_synthetic_research_regression_passed_not_full_delivery",
+  "scope": "Independent followup while release-probe correction awaits direct human confirmation. No product change, production access expansion or controlled release retry.",
+  "sourceCommit": "35a14016850811bcfa16c34c04d922aa1bda4a9b",
+  "execution": {
+    "tool": "exec_command",
+    "outputChunkId": "496629",
+    "exitCode": 0,
+    "command": "node --test --test-concurrency=1 --test-timeout=90000 --test-reporter=tap tests/research.test.cjs tests/research-gateway.test.cjs tests/workspace-capacity-research.test.cjs",
+    "runtime": "Node v24.19.0",
+    "python": "Explicit existing Python interpreter for materialization",
+    "tests": 43,
+    "passed": 43,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMs": 1840.6844,
+    "files": [
+      "tests/research.test.cjs",
+      "tests/research-gateway.test.cjs",
+      "tests/workspace-capacity-research.test.cjs"
+    ],
+    "testCasesAndTimeoutsChanged": false,
+    "rawOutputProvenance": "Complete TAP output was returned by exec_command chunk 496629 in this conversation; this JSON is the observed summary, not an independently captured raw TAP archive."
+  },
+  "discardedObservation": {
+    "kind": "PowerShell wrapper",
+    "terminalExitCode": 0,
+    "stdoutBytes": 0,
+    "stderrBytes": 0,
+    "acceptedAsTestEvidence": false,
+    "reason": "A zero exit without a test report was not used to claim passing tests. The existing terminal tool then executed the same unchanged three-file test scope."
+  },
+  "sourceBindings": {
+    "embeddedServerSHA256": "bf95771e39811453e79f7cf7545a393880042cfc7e3670c5dbad7813d0a9fb96",
+    "tests": [
+      {
+        "path": "tests/research.test.cjs",
+        "sha256": "5b839bc35071d37449b928eaaaa028e964f20534f21a1f85cf77f45339442416"
+      },
+      {
+        "path": "tests/research-gateway.test.cjs",
+        "sha256": "a380d2719209da6d9fe64c8d5852f9e1a66e73d401c960d307ce013b59406fd4"
+      },
+      {
+        "path": "tests/workspace-capacity-research.test.cjs",
+        "sha256": "3f707ca0b8df971cd5d187fd9334f576cc73bb95c4903cc36089ecb55740e721"
+      }
+    ],
+    "workingTreeCaveat": "Known unrelated identity/workspace-shell.js changes were neither modified, staged nor deployed; this is a targeted working-tree regression, not a claim of clean-snapshot full-suite or release acceptance."
+  },
+  "verifiedUnderFixtures": [
+    {
+      "requirement": "No synthetic-facts fallback on empty or failed search",
+      "evidence": "Empty search and unusable-page cases do not manufacture claims or invoke an answer-generation path; saved notes retain explicit missing-evidence status.",
+      "anchors": [
+        "runResearch",
+        "search_unavailable_or_empty",
+        "insufficient_evidence"
+      ]
+    },
+    {
+      "requirement": "Original sources survive collection and rendering",
+      "evidence": "Source IDs, original URLs, excerpts and references remain across collection, persistence and the full multi-question report. Broken references are visibly marked missing.",
+      "anchors": [
+        "formatResearchSummary",
+        "renderResearchEvidence"
+      ]
+    },
+    {
+      "requirement": "Verification cannot invent supporting evidence",
+      "evidence": "Unknown sources, invented/nonmatching quotes, incomplete or duplicate decisions, missing support, malformed JSON and model failures fail closed. External retrieval does not become a trusted supporting source merely by being returned.",
+      "anchors": [
+        "validateResearchDecisions",
+        "reviewResearchEvidence",
+        "normalizeExternalRetrieval"
+      ]
+    },
+    {
+      "requirement": "Retriever, verifier and summarizer are distinct task roles",
+      "evidence": "Configured three-role sequencing and persisted evidence-bound synthesis pass; invalid or duplicate roles are rejected before model calls. Partial, conflicting or insufficient evidence is not promoted into a supported conclusion. Invalid summary claim IDs or added prose are rejected.",
+      "anchors": [
+        "resolveResearchRole",
+        "dispatchResearchStage",
+        "reviewResearchEvidence"
+      ]
+    },
+    {
+      "requirement": "Privacy and delegation remain bounded",
+      "evidence": "Local-only role evidence cannot be handed to a role without local-only policy. External research rejects private material. Root step limits, cancellation occupancy until acknowledgement and bridge-close orphan prevention pass.",
+      "anchors": [
+        "dispatchResearchStage",
+        "createResearchBridge",
+        "createCapacityCoordinator"
+      ]
+    }
+  ],
+  "limitations": [
+    "All model and web-source content in this run was synthetic or fixture data; no real model inference or live web research was requested.",
+    "Passing exact-quote checks does not establish semantic truth or independent human fact verification.",
+    "This is not production research persistence acceptance, a real Pocket ID login, native Muse/dots own-computer execution or sustained multi-node load acceptance.",
+    "No full regression suite was rerun; these 43 tests must not be added to historical full-suite counts as if they were one run."
+  ],
+  "boundaries": {
+    "productCodeChanged": false,
+    "credentialsReadOrChanged": false,
+    "vpsTouched": false,
+    "relayTouched": false,
+    "externalAgentGrantsOrSubscriptionsCreated": false,
+    "realModelCalls": 0,
+    "productionReleaseRetried": false
+  },
+  "nextAction": "Await direct human confirmation to correct the disclosed MCP release probe framing, preserve 401/resource_metadata assertions and existing safety gates, retest and use a fresh bounded release attempt.",
+  "readyForProductionDelivery": false
+}
