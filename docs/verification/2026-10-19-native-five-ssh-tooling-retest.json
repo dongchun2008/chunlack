@@ -1,0 +1,153 @@
+{
+  "date": "2026-10-19",
+  "status": "not_accepted",
+  "scope": "Current-source native five-logical-Agent bounded isolated retest; not external vendor or sustained-load acceptance",
+  "sourceCommit": "e3110cb6274e01086a94e5865f1da06071a1c44c",
+  "sourceArchiveSHA256": "0e1d6121997ae1ca3651ff5f2f1b8df7e7bb5ce0ead133653e196bdb5b69ec95",
+  "sourceTestScriptSHA256": "0692dbdcf6b025cfdc888eb2a293890006545ef8305694ec120a8a8f0211177a",
+  "approvedChanges": {
+    "sftpScriptOpenMode": "wx (exclusive create with write access)",
+    "isolatedLocalSshDependencies": true,
+    "globalPythonChanged": false,
+    "productCodeChanged": false,
+    "testAssertionsChanged": false
+  },
+  "sshTooling": {
+    "python": "CPython 3.13; explicitly selected executable; -I plus explicit private site-packages path",
+    "source": "https://pypi.org/simple",
+    "privateImportExit": 0,
+    "versions": {
+      "paramiko": "5.1.0",
+      "bcrypt": "5.0.0",
+      "cryptography": "50.0.2",
+      "invoke": "3.0.3",
+      "pynacl": "1.6.2",
+      "cffi": "2.1.1",
+      "pycparser": "3.11"
+    },
+    "wheelSHA256": {
+      "paramiko-5.1.0-py3-none-any.whl": "d9fe6d67a9d0bbf3eb85b051d26ab850b678c02d060f32915b944e5ca6d0d9e1",
+      "bcrypt-5.0.0-cp39-abi3-win_amd64.whl": "64ee8434b0da054d830fa8e89e1c8bf30061d539044a39524ff7dec90481e5c2",
+      "cryptography-50.0.2-cp311-abi3-win_amd64.whl": "7afa5a6602a9f29af1f3a2965f831bae7c9d5d597b7cbb716d41ab3b7d89879c",
+      "invoke-3.0.3-py3-none-any.whl": "f11327165e5cbb89b2ad1d88d3292b5113332c43b8553b494da435d6ec6f5053",
+      "pynacl-1.6.2-cp38-abi3-win_amd64.whl": "62985f233210dee6548c223301b6c25440852e13d59a8b81490203c3227c5ba0",
+      "cffi-2.1.1-cp313-cp313-win_amd64.whl": "1aa5645c30469b09530c4ebca77ebf8f17618293c58f8549cb1a543a50236e7d",
+      "pycparser-3.11-py3-none-any.whl": "51d5a8ba2be0bbe440b99d2112604c95bbbc3c2748a64260186c541e1729cd80"
+    },
+    "caveat": "Wheel SHA-256 values are recorded from retrieved files, not an independent security audit."
+  },
+  "attempt": {
+    "unit": "chunlack-native-five-c7463a72a770.service",
+    "state": {
+      "RuntimeMaxUSec": "1min 30s",
+      "MainPID": "0",
+      "Result": "exit-code",
+      "ExecMainCode": "1",
+      "ExecMainStatus": "1",
+      "ControlGroup": "",
+      "MemoryCurrent": "[not set]",
+      "MemoryPeak": "168546304",
+      "CPUUsageNSec": "2747373000",
+      "TasksCurrent": "[not set]",
+      "CPUQuotaPerSecUSec": "100ms",
+      "MemoryHigh": "167772160",
+      "MemoryMax": "201326592",
+      "MemorySwapMax": "0",
+      "TasksMax": "32",
+      "IPAddressAllow": "127.0.0.0/8 ::1/128 100.72.70.102/32",
+      "IPAddressDeny": "::/0 0.0.0.0/0",
+      "LoadState": "loaded",
+      "ActiveState": "failed",
+      "SubState": "failed"
+    },
+    "nodeUid65534Observed": false,
+    "cgroupEmptyAfterStop": true,
+    "baseline": {
+      "chunlack.service": {
+        "MainPID": "594652",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "tailscaled.service": {
+        "MainPID": "859",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "chunlack-public.service": {
+        "MainPID": "717856",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "chunlack-https.service": {
+        "MainPID": "717942",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      }
+    },
+    "postflight": {
+      "chunlack.service": {
+        "MainPID": "594652",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "tailscaled.service": {
+        "MainPID": "859",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "chunlack-public.service": {
+        "MainPID": "717856",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "chunlack-https.service": {
+        "MainPID": "717942",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      }
+    },
+    "protectedServicesUnchanged": true,
+    "reportPresent": false,
+    "report": null,
+    "sourceArchiveSha256": "0e1d6121997ae1ca3651ff5f2f1b8df7e7bb5ce0ead133653e196bdb5b69ec95",
+    "sourceCommit": "e3110cb6274e01086a94e5865f1da06071a1c44c",
+    "network": "systemd address allowlist: loopback and the existing model tailnet IPv4; no private network namespace",
+    "sourceScriptChanged": false,
+    "accepted": false,
+    "failedStage": "preparer_identity_drop",
+    "error": "PermissionError: [Errno 1] Operation not permitted at os.setuid(65534)",
+    "inferenceProgramStarted": false,
+    "modelCalls": 0,
+    "remoteArtifactsRetainedForDiagnosis": true,
+    "rootCause": "Not established. Unit configuration advertises cap_setuid in its bounding set; effective runtime capability and denial mechanism were not observed."
+  },
+  "dots": {
+    "pocketIdApi": "ChunLACK Agent API",
+    "resource": "https://agents.chunclaw.top/mcp",
+    "client": "ChunLACK dots (dedicated public PKCE client; identifier omitted)",
+    "userDelegatedScopes": [
+      "task.read",
+      "task.claim",
+      "task.result",
+      "events.read",
+      "events.subscribe"
+    ],
+    "apiRequestPermissionsSaved": true,
+    "m2mEnabled": false,
+    "workspaceGrantCreated": false,
+    "taskSubscriptionCreated": false,
+    "nativeComputerTaskAccepted": false,
+    "productionAllowlistChangedThisAttempt": false
+  },
+  "production": {
+    "maintenanceExecuted": false,
+    "oldLackOrRelayChanged": false,
+    "credentialsDnsPortsChanged": false
+  },
+  "remaining": [
+    "Correct the test preparation/execution identity handoff without root business execution or increased limits, subject to approval.",
+    "Complete native retest before consuming the approved controlled maintenance window.",
+    "Complete actual dots consent, one-task own-browser evidence round trip and revoke test grants/subscriptions.",
+    "Muse native Agent acceptance and sustained real coexistence remain separate unfinished gates."
+  ]
+}
