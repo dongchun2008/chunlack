@@ -1,0 +1,215 @@
+{
+  "date": "2026-10-20",
+  "status": "real_inference_and_source_binding_passed_semantic_quality_not_accepted",
+  "sourceCommit": "d0b064c020a30bcaef34c41eeaf8d8633ac17fe6",
+  "tag": "f73f7a6517bd",
+  "scope": "fixed original public source, actual deployed core functions, real local inference, isolated file persistence; not open-search, production workspace, vendor or human acceptance",
+  "actualCoreSectionsMatchedProduction": 7,
+  "source": {
+    "url": "https://raw.githubusercontent.com/python/peps/main/peps/pep-0020.rst",
+    "canonicalUrl": "https://peps.python.org/pep-0020/",
+    "retrievedAt": "2026-10-19T23:48:10.817Z",
+    "originalBytes": 1648,
+    "originalSha256": "742999637cc96eef52e8148fdf65a6065a0953daee92bb48b8c739efcf6def07",
+    "excerpt": "Errors should never pass silently.\n    Unless explicitly silenced.",
+    "excerptSha256": "f6a4e5741fdb270bb356889c08caccbbf2ba316248da3cdf4ccfc75a93c9ccba",
+    "selection": "Two adjacent original lines, original indentation retained; fixed-source acquisition, not open web search"
+  },
+  "transport": {
+    "model": "qwen38-27b-nvfp4",
+    "provider": "existing direct local OpenAI-compatible route",
+    "actualRequests": 8,
+    "successfulRequests": 8,
+    "failedRequests": 0,
+    "maxActive": 1,
+    "requestCap": 12,
+    "perRequestTimeoutSeconds": 20,
+    "maxOutputTokens": 512,
+    "cloudCalls": 0,
+    "modelCredentialsUsed": false
+  },
+  "roles": {
+    "retriever": "source-retriever",
+    "verifier": "source-verifier",
+    "summarizer": "source-summarizer",
+    "distinctAgentIdentities": 3,
+    "distinctModels": 1
+  },
+  "pipeline": {
+    "structuralAccepted": true,
+    "phase": "Review complete with gaps",
+    "evidenceStatus": "reviewed_with_gaps",
+    "questions": 3,
+    "claims": 6,
+    "modelSupportedClaims": 5,
+    "summaryStatus": "complete",
+    "partialSupportVisible": true,
+    "humanReviewWarningVisible": true,
+    "filePersistenceReadbackMatched": true,
+    "databasePersistenceVerified": false,
+    "actualSearch": false
+  },
+  "claims": [
+    {
+      "claimId": "C1",
+      "text": "The PEP 20 excerpt states that errors should never pass silently.",
+      "status": "partially_supported",
+      "sourceId": "S1",
+      "sourceUrl": "https://raw.githubusercontent.com/python/peps/main/peps/pep-0020.rst",
+      "verificationEvidence": [
+        {
+          "sourceId": "S1",
+          "excerptStart": 0,
+          "excerptLength": 66,
+          "exactMatch": true
+        }
+      ]
+    },
+    {
+      "claimId": "C2",
+      "text": "The PEP 20 excerpt states that errors should never pass silently unless explicitly silenced.",
+      "status": "supported",
+      "sourceId": "S1",
+      "sourceUrl": "https://raw.githubusercontent.com/python/peps/main/peps/pep-0020.rst",
+      "verificationEvidence": [
+        {
+          "sourceId": "S1",
+          "excerptStart": 0,
+          "excerptLength": 66,
+          "exactMatch": true
+        }
+      ]
+    },
+    {
+      "claimId": "C3",
+      "text": "The excerpt states that errors should never pass silently.",
+      "status": "supported",
+      "sourceId": "S2",
+      "sourceUrl": "https://raw.githubusercontent.com/python/peps/main/peps/pep-0020.rst",
+      "verificationEvidence": [
+        {
+          "sourceId": "S2",
+          "excerptStart": 0,
+          "excerptLength": 66,
+          "exactMatch": true
+        }
+      ]
+    },
+    {
+      "claimId": "C4",
+      "text": "The excerpt qualifies this rule with the phrase \"Unless explicitly silenced.\"",
+      "status": "supported",
+      "sourceId": "S2",
+      "sourceUrl": "https://raw.githubusercontent.com/python/peps/main/peps/pep-0020.rst",
+      "verificationEvidence": [
+        {
+          "sourceId": "S2",
+          "excerptStart": 0,
+          "excerptLength": 66,
+          "exactMatch": true
+        }
+      ]
+    },
+    {
+      "claimId": "C5",
+      "text": "The text states that errors should never pass silently.",
+      "status": "supported",
+      "sourceId": "S3",
+      "sourceUrl": "https://raw.githubusercontent.com/python/peps/main/peps/pep-0020.rst",
+      "verificationEvidence": [
+        {
+          "sourceId": "S3",
+          "excerptStart": 0,
+          "excerptLength": 66,
+          "exactMatch": true
+        }
+      ]
+    },
+    {
+      "claimId": "C6",
+      "text": "The text states that errors may pass silently if explicitly silenced.",
+      "status": "supported",
+      "sourceId": "S3",
+      "sourceUrl": "https://raw.githubusercontent.com/python/peps/main/peps/pep-0020.rst",
+      "verificationEvidence": [
+        {
+          "sourceId": "S3",
+          "excerptStart": 0,
+          "excerptLength": 66,
+          "exactMatch": true
+        }
+      ]
+    }
+  ],
+  "qualityAssessment": {
+    "accepted": false,
+    "humanAccepted": false,
+    "observations": [
+      "C1 and the near-equivalent unqualified C3/C5 claims received inconsistent partially_supported versus supported ratings.",
+      "Some retrieved claims restate the excerpt instead of directly answering a generated question; source matching alone does not validate answer relevance.",
+      "The model-rated supported count is not a count of human-approved conclusions."
+    ],
+    "action": "Retain original excerpts, all claim statuses and missing-evidence warnings; require explicit human review and an evidence-based consistency/relevance design before claiming automatic research quality."
+  },
+  "isolation": {
+    "identity": {
+      "uid": 996,
+      "gid": 987,
+      "node": "v24.21.0",
+      "noNewPrivileges": true
+    },
+    "limits": {
+      "memoryMax": "201326592",
+      "memoryHigh": "167772160",
+      "swapMax": "0",
+      "cpuMax": "10000 100000",
+      "tasksMax": "32"
+    },
+    "prepareMaxSeconds": 40,
+    "businessMaxSeconds": 200,
+    "totalPhaseMaxSeconds": 240,
+    "elapsedSeconds": 23.55130692664534,
+    "units": [
+      {
+        "name": "chunlack-research-real-f73f7a6517bd-prepare.service",
+        "result": "success",
+        "exitCode": "0",
+        "memoryPeakBytes": 2990080,
+        "user": "root",
+        "noNewPrivileges": "yes"
+      },
+      {
+        "name": "chunlack-research-real-f73f7a6517bd-business.service",
+        "result": "success",
+        "exitCode": "0",
+        "memoryPeakBytes": 22659072,
+        "user": "chunlack-public",
+        "noNewPrivileges": "yes"
+      }
+    ],
+    "ownedCgroupsEmpty": true,
+    "ownedSliceStopped": true
+  },
+  "invariants": {
+    "protectedServicesUnchanged": true,
+    "protectedConfigurationHashesUnchanged": true,
+    "productionDataWritten": false,
+    "credentialsChanged": false,
+    "relayChanged": false,
+    "externalAgentGrantsCreated": false
+  },
+  "attemptRecovery": {
+    "firstLocalObserverEnded": true,
+    "verifiedRemoteRootAbsentBeforeTerminalRetry": true,
+    "firstRemoteUnitsNotStarted": true,
+    "finalTrialRunOnce": true
+  },
+  "notVerified": [
+    "Open-ended live search and scraper behavior",
+    "Production multi-user workspace research persistence and restart",
+    "Real cloud inference and fallback",
+    "Native Muse/dots event-to-own-computer execution",
+    "Multiple actual humans/devices and sustained Relay forwarding quality"
+  ],
+  "readyForFullDelivery": false
+}
