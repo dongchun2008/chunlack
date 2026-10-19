@@ -145,9 +145,195 @@
     "credentialsDnsPortsChanged": false
   },
   "remaining": [
-    "Correct the test preparation/execution identity handoff without root business execution or increased limits, subject to approval.",
+    "Identity handoff is now proven. A bounded diagnostic retest with an explicitly approved duration change is proposed; no time limit is increased yet.",
     "Complete native retest before consuming the approved controlled maintenance window.",
     "Complete actual dots consent, one-task own-browser evidence round trip and revoke test grants/subscriptions.",
     "Muse native Agent acceptance and sustained real coexistence remain separate unfinished gates."
+  ],
+  "followupAttempts": [
+    {
+      "kind": "serial_prepare_and_systemd_nobody_execution",
+      "status": "not_accepted",
+      "unit": "chunlack-native-five-863ebe9b0500.service",
+      "preparationUnit": "chunlack-native-five-863ebe9b0500-prepare.service",
+      "state": {
+        "RuntimeMaxUSec": "53s",
+        "MainPID": "0",
+        "Result": "timeout",
+        "ExecMainCode": "2",
+        "ExecMainStatus": "15",
+        "ControlGroup": "",
+        "MemoryCurrent": "[not set]",
+        "MemoryPeak": "168189952",
+        "CPUUsageNSec": "3176447000",
+        "TasksCurrent": "[not set]",
+        "CPUQuotaPerSecUSec": "100ms",
+        "MemoryHigh": "167772160",
+        "MemoryMax": "201326592",
+        "MemorySwapMax": "0",
+        "TasksMax": "32",
+        "IPAddressAllow": "127.0.0.0/8 ::1/128 100.72.70.102/32",
+        "IPAddressDeny": "::/0 0.0.0.0/0",
+        "User": "nobody",
+        "Group": "nogroup",
+        "LoadState": "loaded",
+        "ActiveState": "failed",
+        "SubState": "failed"
+      },
+      "phaseStates": {
+        "chunlack-native-five-863ebe9b0500-prepare.service": {
+          "RuntimeMaxUSec": "1min 20s",
+          "MainPID": "0",
+          "Result": "success",
+          "ExecMainCode": "1",
+          "ExecMainStatus": "0",
+          "ControlGroup": "",
+          "MemoryCurrent": "[not set]",
+          "MemoryPeak": "168296448",
+          "CPUUsageNSec": "2635102000",
+          "TasksCurrent": "[not set]",
+          "CPUQuotaPerSecUSec": "100ms",
+          "MemoryHigh": "167772160",
+          "MemoryMax": "201326592",
+          "MemorySwapMax": "0",
+          "TasksMax": "32",
+          "IPAddressAllow": "127.0.0.0/8 ::1/128 100.72.70.102/32",
+          "IPAddressDeny": "::/0 0.0.0.0/0",
+          "User": "root",
+          "Group": "root",
+          "LoadState": "loaded",
+          "ActiveState": "active",
+          "SubState": "exited"
+        },
+        "chunlack-native-five-863ebe9b0500.service": {
+          "RuntimeMaxUSec": "53s",
+          "MainPID": "0",
+          "Result": "timeout",
+          "ExecMainCode": "2",
+          "ExecMainStatus": "15",
+          "ControlGroup": "",
+          "MemoryCurrent": "[not set]",
+          "MemoryPeak": "168189952",
+          "CPUUsageNSec": "3176447000",
+          "TasksCurrent": "[not set]",
+          "CPUQuotaPerSecUSec": "100ms",
+          "MemoryHigh": "167772160",
+          "MemoryMax": "201326592",
+          "MemorySwapMax": "0",
+          "TasksMax": "32",
+          "IPAddressAllow": "127.0.0.0/8 ::1/128 100.72.70.102/32",
+          "IPAddressDeny": "::/0 0.0.0.0/0",
+          "User": "nobody",
+          "Group": "nogroup",
+          "LoadState": "loaded",
+          "ActiveState": "failed",
+          "SubState": "failed"
+        }
+      },
+      "phaseError": null,
+      "cleanupErrors": [],
+      "totalPhaseElapsedSeconds": 80.29440460001933,
+      "sharedBudgetSeconds": 90,
+      "reservedCleanupSeconds": 10,
+      "runtimeBudgetSeconds": 53,
+      "uidProof": {
+        "uid": 65534,
+        "gid": 65534,
+        "pid": 725084,
+        "at": "2026-10-19T12:44:33.885Z"
+      },
+      "nodeUid65534Observed": true,
+      "cgroupEmptyAfterStop": true,
+      "baseline": {
+        "chunlack.service": {
+          "MainPID": "594652",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "tailscaled.service": {
+          "MainPID": "859",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-public.service": {
+          "MainPID": "717856",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-https.service": {
+          "MainPID": "717942",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        }
+      },
+      "postflight": {
+        "chunlack.service": {
+          "MainPID": "594652",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "tailscaled.service": {
+          "MainPID": "859",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-public.service": {
+          "MainPID": "717856",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        },
+        "chunlack-https.service": {
+          "MainPID": "717942",
+          "NRestarts": "0",
+          "ActiveState": "active"
+        }
+      },
+      "protectedServicesUnchanged": true,
+      "reportPresent": false,
+      "report": null,
+      "sourceArchiveSha256": "0e1d6121997ae1ca3651ff5f2f1b8df7e7bb5ce0ead133653e196bdb5b69ec95",
+      "sourceCommit": "e3110cb6274e01086a94e5865f1da06071a1c44c",
+      "sourceScriptChanged": false,
+      "network": "systemd address allowlist: loopback and existing model tailnet IPv4; no private network namespace",
+      "accepted": false,
+      "diagnosticEvents": [
+        {
+          "timeMicros": "1792413885079117",
+          "kind": "application_import"
+        },
+        {
+          "timeMicros": "1792413885381555",
+          "kind": "application_listening"
+        },
+        {
+          "timeMicros": "1792413909179165",
+          "kind": "model_route",
+          "ok": true,
+          "durationMs": 7099,
+          "attempt": 0
+        },
+        {
+          "timeMicros": "1792413926333801",
+          "kind": "runtime_limit"
+        }
+      ],
+      "proven": {
+        "preparationExitedSuccessfully": true,
+        "businessUidAndGid65534": true,
+        "sourceAcceptanceScriptUnchanged": true,
+        "sharedBudgetMaintained": true,
+        "ownedCgroupsEmpty": true,
+        "protectedServicesUnchanged": true,
+        "atLeastOneRealModelSuccess": true
+      },
+      "notProven": [
+        "five agents completed one round",
+        "two complete rounds",
+        "ten replies preserved across restart",
+        "zero inference failures or drained inference metrics",
+        "sustained or external vendor acceptance"
+      ],
+      "failure": "Business unit reached its remaining 53-second budget before a final report was written. This does not identify a product defect or establish success of the remaining calls."
+    }
   ]
 }
