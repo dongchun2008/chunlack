@@ -1,5 +1,7 @@
 # PROJECT_CONTEXT
 
+> 当前发布快照（2026-10-20）：`44af1d844a81` 已受控发布，中断 33 秒，保留 552 文件一致性备份、3 个数据库结构检查与旧版本。MCP-only 已识别一个专用 dots 客户端标识，但工作区／任务授权仍为 0、事件关闭、公网节点 REST 关闭；未修改凭据、旧 LACK、Relay、DNS 或端口。当前版本的真人浏览器登录和外部 Agent 原生任务闭环尚未验收。见[发布验收](docs/verification/2026-10-20-mcp-release-acceptance.json)、[最新逐项审计](docs/verification/2026-10-20-delivery-gate-audit.json)、[使用手册](docs/USER_GUIDE.zh-CN.md)和[接入说明](docs/MUSE_DOTS_INTEGRATION.zh-CN.md)。下列旧日期的“最新”条目均为历史快照，不应覆盖本段。
+
 > 最新开发验证（2026-10-18，未发布）：以已提交代码 `3546b2b2ba153e51afa5926517d1b43d7c00951c` 导出的独立副本完成 Windows 全量回归，861/861 通过，零失败、零跳过、零取消；HTTP/WebSocket、两个模拟模型、SQLite 重启持久化及配置保留烟雾测试通过。全量运行仅为测试进程设置 `GOMAXPROCS=1`，随后默认 Go 设置下的 MCP-only 同组测试也 5/5 通过。原 Caddy 校验 10 秒上限未改；诊断遗漏的 stdin 写入已修正，三项补测均通过。原限额 Linux MCP-only 5/5 为此前同实现的独立证据，不能与本轮测试简单相加。见 [验收记录](docs/verification/2026-10-18-mcp-only-full-regression.json) 和 [配置与复现说明](docs/MCP_ONLY_CONFIGURATION.zh-CN.md)。
 
 > 接入与发布边界（2026-10-18）：独立只读复核未发现此变更新增的越权或功能回归，但仍保留组合覆盖缺口。本轮未部署 MCP-only、未操作 VPS/Relay、未授予外部 API、工作区或任务权限。独立公共 PKCE 客户端“ChunLACK dots”已登记不等于玄玑已接入；Muse 老镇与 dots 玄玑自身电脑的真实任务及证据闭环仍未验收。已知未提交的界面修改未纳入测试副本或发布候选。下一步可准备受控发布方案，实际维护与外部授权仍须分别确认，整体交付目标尚未完成。
