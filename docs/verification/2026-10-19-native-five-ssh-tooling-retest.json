@@ -1539,5 +1539,58 @@
     "relayChanged": false,
     "nativeRetestPassedInLowContentionOnly": true,
     "sourceHeadBeforeEvidenceSync": "a4ed16322e6f43494ea533fd328af2632d0164e1"
-  }
+  },
+  "publicationPreparationAttempts": [
+    {
+      "tag": "fd77f0167aa8",
+      "scope": "isolated candidate preparation only; no production update",
+      "accepted": false,
+      "stage": "non-root module readability probe inside root preparation unit",
+      "error": "runuser cannot set user id: Operation not permitted",
+      "modelCalls": 0,
+      "databaseCompatibilityStageStarted": false,
+      "reportsPresent": [],
+      "resourceLimits": {
+        "memoryBytes": 201326592,
+        "cpuPercent": 10,
+        "tasksMax": 32,
+        "unitMaxSeconds": 90
+      },
+      "preparationState": {
+        "chunlack-dots-fd77f0167aa8-prepare.service": {
+          "RuntimeMaxUSec": "1min 30s",
+          "MainPID": "0",
+          "Result": "exit-code",
+          "ExecMainStatus": "1",
+          "ControlGroup": "",
+          "MemoryPeak": "168083456",
+          "CPUQuotaPerSecUSec": "100ms",
+          "MemoryMax": "201326592",
+          "TasksMax": "32",
+          "ReadOnlyPaths": "/opt/chunlack-public/current /var/lib/chunlack-public /etc/chunlack-public/runtime.env /opt/chunlack-public/runtime",
+          "PrivateNetwork": "no",
+          "LoadState": "loaded",
+          "ActiveState": "failed",
+          "SubState": "failed"
+        }
+      },
+      "diagnostic": {
+        "diagnosticUnitCompleted": true,
+        "businessProbeReturnCode": 1,
+        "effectiveSetUidCapabilityPresent": false,
+        "boundingSetUidCapabilityPresent": true,
+        "noNewPrivileges": "1",
+        "privateNetwork": true,
+        "cgroupEmpty": true
+      },
+      "productionServicesAndInputHashesUnchanged": true,
+      "ownedCgroupsEmpty": true,
+      "cleanupErrors": [],
+      "credentialsChanged": false,
+      "relayChanged": false,
+      "externalAccessGranted": false,
+      "nextProposal": "Separate root-owned copy preparation from directly systemd-started non-root business probes; retain NoNewPrivileges, resource limits and read-only/network boundaries. Recheck the same handoff in release preflight before any production switch.",
+      "humanApprovalForNewRunnerCorrectionPending": true
+    }
+  ]
 }
