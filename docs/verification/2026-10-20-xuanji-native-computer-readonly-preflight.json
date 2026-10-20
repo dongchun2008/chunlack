@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-20",
+  "scope": "Read-only location and visual inspection of the existing native dot and its own cloud computer",
+  "result": "native-dot-and-computer-view-observed; single-task-acceptance-not-started",
+  "observed": {
+    "dotName": "玄玑",
+    "dotHome": "https://chatgpt.com/dots/home",
+    "nativeDotProfileAvailable": true,
+    "computerLabel": "玄玑 的电脑",
+    "computerStatus": "ready",
+    "computerViewerRenderedActualDesktopAndBrowser": true,
+    "viewerControlOwner": "玄玑",
+    "takeOverControlSelected": false,
+    "viewerCloseActionPerformedAfterEvidence": true
+  },
+  "officialReference": {
+    "url": "https://learn.chatgpt.com/docs/dots/computers-and-apps",
+    "findings": [
+      "The native dot profile exposes its own cloud computer; viewing it and taking control are separate actions.",
+      "A dot can use supported account plugins, subject to the plugin account, permissions and execution environment."
+    ],
+    "accountSpecificPluginUseIndependentlyTested": false
+  },
+  "uiRecovery": {
+    "dynamicAccessibilityIndicesChanged": true,
+    "unsubmittedSlackSetupDialogOpenedThenClosed": true,
+    "slackConnectionSubmitted": false,
+    "computerViewOpenedUsingFreshScreenshotGroundedCoordinates": true
+  },
+  "privateEvidence": {
+    "localScreenshotSaved": true,
+    "screenshotOrUnrelatedConversationContentsCommitted": false,
+    "privateCredentialsOrIdentifiersRecorded": false
+  },
+  "boundaries": {
+    "messageSentToDot": false,
+    "nodeRegistered": false,
+    "businessGrantCreated": false,
+    "taskCreatedClaimedOrExecuted": false,
+    "guestBrowserOperatedOrCommandExecuted": false,
+    "eventEnabledOrSubscriptionCreated": false,
+    "productionCredentialsDnsPortsOldLackOrRelayChanged": false
+  },
+  "pending": [
+    "User confirmation for the separately proposed bounded single-task trial and temporary business access.",
+    "A dedicated registered node and account/client/node authorization.",
+    "Actual native-dot MCP invocation, task claim, native browser activity, evidence result receipt and final revocation."
+  ],
+  "readyForNativeDotsAcceptance": false,
+  "readyForFullDelivery": false
+}
