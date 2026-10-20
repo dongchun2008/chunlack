@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-21",
+  "scope": "Read-only timing evidence repair and existing connector sign-in; no republication or business authorization",
+  "originalPayloadCommit": "27139edf8fbb130309e436e47bd72ea6f765e186",
+  "readyForFullDelivery": false,
+  "timingEvidence": {
+    "historicalManagerStartingStartedAndSucceededRecordsFound": true,
+    "completedTransientUnitCollected": true,
+    "originalFailureReportPreserved": true,
+    "wholeUnitConservativeUpperBoundSeconds": 38.386799,
+    "startToResultFileSeconds": 38.290193807,
+    "controllerRecordedWindowSeconds": 31.811,
+    "configuredForwardLimitSeconds": 55,
+    "configuredTotalRecoveryLimitSeconds": 120,
+    "realEvidenceWithinOriginalLimits": true,
+    "wallAndMonotonicDifferenceMicroseconds": 1,
+    "repeatPublicationPerformed": false,
+    "offlineRegression": {
+      "tests": 10,
+      "passed": 9,
+      "errors": 1,
+      "exitCode": 1,
+      "pendingCase": "test_reported_forward_budget_is_not_relaxed",
+      "finding": "The fixture assigns a 55.001-second controller window to an approximately 38-second invocation. The implementation rejects inconsistent evidence before the fixture's expected failed-budget result.",
+      "proposedFixtureOnlyCorrection": "Construct a consistent 60-second invocation while retaining the 55.001-second rejected controller window and all original limits.",
+      "correctionApprovalPending": true,
+      "allTestsPassed": false
+    }
+  },
+  "connector": {
+    "target": "Existing ChunLACK Xuanji connector and primary account",
+    "initialUiState": "Authentication update required",
+    "existingAccountReconnectSubmitted": true,
+    "accountOrClientCreated": false,
+    "pocketIdLoginOrConsentPageObserved": false,
+    "pocketIdConsentSubmitted": false,
+    "postReconnectUiState": "Account remains listed; authentication-update warning and reconnect button no longer shown",
+    "silentExistingSessionReuse": "possible but not independently verified",
+    "postReconnectReadOnlyProbe": {
+      "caller": "Codex connector control probe, not native dots own-computer acceptance",
+      "operation": "chunlack_connections_list",
+      "result": "missing_permissions_or_scopes",
+      "errorCode": "UNAUTHORIZED",
+      "reason": "www_authenticate_reauth",
+      "requestedScopes": ["openid", "task.read"],
+      "actualMissingScopeOrGrantRootCauseProven": false,
+      "actualInboundEnvelopeCaptured": false
+    },
+    "furtherSignInRetriesStopped": true,
+    "connectionUsableProven": false,
+    "nativeOwnComputerTaskAcceptanceCompleted": false,
+    "businessGrantCreatedOrRestored": false,
+    "taskCreated": false,
+    "newOAuthScopeApproved": false
+  },
+  "boundaries": {
+    "productCodeChanged": false,
+    "productionServicesRestarted": false,
+    "productionDataMutated": false,
+    "clientSecretOrPasswordChanged": false,
+    "credentialContentsPrintedOrCommitted": false,
+    "relayModified": false,
+    "dnsOrPortsChanged": false,
+    "privateJournalOrScreenshotCommitted": false
+  },
+  "nextGates": [
+    "Obtain confirmation for the single inconsistent timing fixture and rerun its complete offline regression.",
+    "Distinguish the connector's scope challenge from live business-grant rejection without silently widening scopes or restoring grants.",
+    "Stop before any new Pocket ID consent submission; human verification and scope review remain required if such a page appears.",
+    "Native dots and Muse own-computer task evidence remains a separate incomplete acceptance gate."
+  ]
+}
