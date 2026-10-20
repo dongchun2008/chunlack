@@ -1,0 +1,81 @@
+{
+  "date": "2026-10-21",
+  "status": "official_connector_support_rechecked_public_rest_closed_muse_native_acceptance_pending",
+  "sourceCommit": "adaf4eea9a0e3a90ae1ce707f6257728994091c5",
+  "officialSource": {
+    "url": "https://www.meta.com/help/artificial-intelligence/1687253048996149/",
+    "title": "How Muse works with Connectors",
+    "opened": true,
+    "supports": [
+      "User-guided Custom Connectors for services outside the connector list.",
+      "Muse manages connector credentials in its Secure Credentials Store."
+    ],
+    "doesNotEstablish": [
+      "A universal custom-connector MCP or REST authentication contract.",
+      "OAuth callback/client registration details for this account.",
+      "That custom connectors have the proactive updates offered by some built-in connectors.",
+      "A supported external native-Agent wake API, isolated task conversation, or own-computer task completion."
+    ]
+  },
+  "publicBoundary": {
+    "checkedAt": "2026-10-20T23:18:28.356Z",
+    "requests": 3,
+    "credentialsSent": false,
+    "tlsVerificationDisabled": false,
+    "modelCalls": 0,
+    "results": [
+      {
+        "path": "/v1/manifest",
+        "status": 404,
+        "oauthResourceChallenge": false
+      },
+      {
+        "path": "/v1/openapi.json",
+        "status": 404,
+        "oauthResourceChallenge": false
+      },
+      {
+        "path": "/mcp",
+        "status": 401,
+        "oauthResourceChallenge": true
+      }
+    ]
+  },
+  "interpretation": {
+    "restManifestPubliclyAvailable": false,
+    "restOpenapiPubliclyAvailable": false,
+    "mcpRequiresAuthorization": true,
+    "oauthBusinessSuccessProvenByThisProbe": false,
+    "scopeChallengeDoesNotGrantTaskAuthority": true,
+    "museNativeExecutionProven": false,
+    "museAccountLoginVerifiedInThisFollowup": false,
+    "museAccountStateBasis": "Prior user report of unavailable access; this follow-up did not inspect an authenticated Muse account."
+  },
+  "documentationRepair": {
+    "file": "docs/MUSE_CUSTOM_CONNECTOR_PREFLIGHT.zh-CN.md",
+    "oldStateExplicitlyHistorical": true,
+    "currentRestClosureExplained": true,
+    "implementedContractNotAdvertisedAsEnabled": true,
+    "noCredentialRequestForClosedRest": true,
+    "dotsAcceptanceNotReusedAsMuseAcceptance": true,
+    "dailyConversationQuietRequirementIncluded": true
+  },
+  "changes": {
+    "productCode": false,
+    "productionServices": false,
+    "credentials": false,
+    "relay": false,
+    "dns": false,
+    "ports": false,
+    "newExternalGrants": 0,
+    "newAgentMessages": 0,
+    "modelCalls": 0,
+    "subscriptions": 0
+  },
+  "remaining": [
+    "Recover user access to the actual Muse account.",
+    "Determine supported custom connector protocol and authentication before configuring any client or grant.",
+    "If Muse only supports REST, obtain a separately designed and approved exposure change; do not silently bypass MCP-only.",
+    "Accept one native own-browser task with original evidence and receipt; independently verify any wake and conversation-isolation claims."
+  ]
+}

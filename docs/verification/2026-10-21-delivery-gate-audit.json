@@ -2,7 +2,7 @@
   "date": "2026-10-21",
   "status": "incomplete_delivery_native_pilot_accepted_historical_checkpoint_copied",
   "scope": "Prior manual native-dot acceptance plus off-host copy and read-only database recovery probe of a historical cold checkpoint; isolated native conversation design remains proposed.",
-  "sourceCommit": "b8c13d1f1b88ebef498e15f0b15a8f19257d8a0d",
+  "sourceCommit": "adaf4eea9a0e3a90ae1ce707f6257728994091c5",
   "currentStateEvidence": {
     "modulePublication": "docs/verification/2026-10-20-mcp-request-metadata-publication.json",
     "timingClosure": "docs/verification/2026-10-21-mcp-timing-and-connector-followup.json",
@@ -18,7 +18,8 @@
     "nodeRestPublic": false,
     "allFourServicePidsAndRestartCountsUnchanged": true,
     "nativePilotHumanAccepted": true,
-    "offHostCheckpoint": "docs/verification/2026-10-21-offhost-checkpoint-copy-verification.json"
+    "offHostCheckpoint": "docs/verification/2026-10-21-offhost-checkpoint-copy-verification.json",
+    "museProtocolPreflight": "docs/verification/2026-10-21-muse-public-preflight-recheck.json"
   },
   "gates": [
     {
@@ -162,14 +163,18 @@
       "status": "external_prerequisites_missing",
       "evidence": [
         "docs/MUSE_DOTS_INTEGRATION.zh-CN.md",
-        "docs/EXTERNAL_AGENT_ONBOARDING_2026-10-17.zh-CN.md"
+        "docs/EXTERNAL_AGENT_ONBOARDING_2026-10-17.zh-CN.md",
+        "docs/MUSE_CUSTOM_CONNECTOR_PREFLIGHT.zh-CN.md",
+        "docs/verification/2026-10-21-muse-public-preflight-recheck.json"
       ],
       "proven": [
-        "Public HTTPS is the chosen integration route; no new Tailscale/Tunnel installation is required by this plan."
+        "Public HTTPS is the chosen integration route; no new Tailscale/Tunnel installation is required by this plan.",
+        "Meta Custom Connectors support rechecked against the user-supplied official page; general custom authentication and external wake remain unspecified.",
+        "Current credential-free, TLS-verified GET probes: REST manifest and OpenAPI 404; MCP 401 with OAuth resource metadata challenge. Documentation now distinguishes historical REST contract from the closed current public boundary."
       ],
       "missing": [
         "User account access is unavailable in the latest provided state; no new login was attempted.",
-        "Confirm supported connector authentication, exact callback/client identity and native Agent trigger/result path.",
+        "Confirm Muse account custom-connector MCP/authentication compatibility, exact callback/client identity and native trigger/result path; REST is currently closed and cannot be assumed available.",
         "Verify a real own-browser task and stored receipt; retain unknown status until supported and tested."
       ],
       "warning": "Muse Gadgets BLE and a generic Linux worker are not substitutes for Muse native Agent acceptance."
@@ -259,7 +264,7 @@
   ],
   "nextActions": [
     {
-      "action": "Confirm Muse account access and supported native connector/callback/trigger path without substituting workers.",
+      "action": "When the actual Muse account is available, confirm custom-connector MCP/authentication compatibility and native callback/trigger/result behavior. REST-only compatibility requires a separately approved boundary change, not a silent fallback.",
       "state": "external_prerequisite"
     },
     {
@@ -286,12 +291,11 @@
     "relay": false,
     "dns": false,
     "ports": false,
-    "offHostHistoricalCheckpointCopiesCreated": 1,
-    "localDatabaseFilesRecovered": 3,
-    "modelCalls": 0,
-    "newExternalAgentMessages": 0,
     "newExternalGrants": 0,
-    "eventSubscriptionsCreated": 0
+    "newAgentMessages": 0,
+    "eventSubscriptionsCreated": 0,
+    "modelCalls": 0,
+    "credentialFreePublicReads": 3
   },
   "readyForFullDelivery": false,
   "historicalAudit": "docs/verification/2026-10-20-delivery-gate-audit.json",

@@ -2,7 +2,9 @@
 
 本方案用于把 Muse 老镇自身的任务执行和云端电脑能力接入 ChunLACK，而不是在 Muse 电脑中运行一个冒充 Muse 的 worker。当前采用自托管、公网 HTTPS 路线，入口为 `https://agents.chunclaw.top`。本说明不构成真实接通验收，也不要求在 Muse 电脑安装 Tailscale、Tunnel 或后台进程。
 
-2026-10-14 状态：无凭据的 REST manifest 和 POST MCP 已返回 401；认证后的实际工具调用及 Muse 原生执行仍待验证。现有 MCP 为专属节点 Bearer 认证，Agent OAuth 尚未就绪。先确认账号支持的认证方式，不复用 Pocket ID 真人登录客户端或 ID token。
+2026-10-21 当前状态：公网采用 MCP-only 边界。无凭据 GET `/v1/manifest` 和 `/v1/openapi.json` 实测均返回 404，GET `/mcp` 返回带 OAuth 资源提示的 401；REST 契约已经实现不等于公网开放。Agent OAuth 已实现，玄玑已完成一次人工触发的原生任务验收且临时授权已撤销；这不证明 Muse 支持相同的认证和任务路径。Muse 老镇账号最新已知仍无法登录，协议兼容性及真实执行尚待验证。见[本次无凭据入口核对](verification/2026-10-21-muse-public-preflight-recheck.json)。
+
+历史记录（2026-10-14，非当前状态）：当时无凭据 REST manifest 和 POST MCP 返回 401，MCP 使用专属节点 Bearer 认证，Agent OAuth 尚未就绪。不要把这一历史状态当作当前连接配置，也不要复用 Pocket ID 真人登录客户端或 ID token。
 
 ## 官方能力和验证边界
 
@@ -39,9 +41,9 @@ Meta 的说明确认：可以要求 Muse 为列表外的服务创建 Custom Conn
 未知项不要推测成功；不要向我索取真实密钥。请先报告协议和认证兼容性。
 ```
 
-## 当前 ChunLACK HTTPS 接口
+## 已实现的节点 REST 契约（当前公网关闭）
 
-接口来自 `gateway/node-facade.cjs`。后端只监听 `127.0.0.1`，经受限 HTTPS 反向代理提供公网入口；Muse 中的 localhost 指 Muse 的机器，不能拿它代替 VPS 地址。当前入口存在不代表账号连接、节点授权或截图上传已验收。
+以下接口契约来自 `gateway/node-facade.cjs`，不代表当前公网可用。节点后端只监听 `127.0.0.1`；当前 MCP-only 公网入口拒绝全部 `/v1/*`，不能按下表直接接入 Muse。Muse 中的 localhost 指 Muse 的机器，不能拿它代替 VPS 地址。只有先确认 Muse 支持的协议、再另行批准对应入口和授权，才能安排认证验收；不要为了消除 404 自动改入口模式或公开管理 API。
 
 | 方法与路径 | 请求 | 作用与边界 |
 | --- | --- | --- |
@@ -56,9 +58,9 @@ Meta 的说明确认：可以要求 Muse 为列表外的服务创建 Custom Conn
 | POST `/v1/pilot/tasks/{taskId}/artifact` | 原始 PNG/JPEG | 上传实际截图，不接受图片 URL、SVG 或模型生成图片代替证据 |
 | POST `/v1/tasks/{taskId}/result` | 协议结果 JSON | 提交结果；成功结果须引用已存储且属于该任务的图片 |
 
-除 `/health` 外，以上接口使用 `Authorization: Bearer <node credential>`。JSON 请求使用 `Content-Type: application/json`。节点必须在预批准列表内，且只有 `browser.public_read` 能力和 `public` 范围；不给 Muse 管理员或配对接口权限。
+在另行明确批准的 REST 模式中，除 `/health` 外，上述节点接口使用 `Authorization: Bearer <node credential>`，JSON 请求使用 `Content-Type: application/json`。这不是当前公网 MCP OAuth 的配置说明，不能把节点令牌、OAuth access token 和 ID token 混用。节点必须在预批准列表内，且只有 `browser.public_read` 能力和 `public` 范围；不给 Muse 管理员或配对接口权限。
 
-REST 试点现在支持先读取指定任务，再按批准的 taskId 精确领取。新增接口复用原任务归属和领取检查，不新增管理员权限。指定任务已被领取、已取消、已结束、已过期或执行槽位占用时，不改领其他排队任务。调用者不得把 HTTP 204 当成重新执行或改领其他任务的授权。
+已实现的 REST 试点契约支持先读取指定任务，再按批准的 taskId 精确领取，但当前公网不开放这一契约。接口复用原任务归属和领取检查，不新增管理员权限。指定任务已被领取、已取消、已结束、已过期或执行槽位占用时，不改领其他排队任务。调用者不得把 HTTP 204 当成重新执行或改领其他任务的授权。
 
 OpenAPI 的认证和接口能力不等于 Muse 已支持导入。服务地址使用上述公网 HTTPS，节点授权和供应商账号兼容性须分别确认，不使用测试证书部署。该说明提供受限连接器操作契约，结果提交只描述有实际证据的成功分支；不要求用假结果掩盖执行失败，也不为真实 Muse 自动唤醒提供接口。
 
@@ -106,11 +108,13 @@ X-Pilot-Event-Id: <stable unique upload event ID>
 ## 从评估到一次真实验证
 
 1. Muse 先返回上述能力核对结果，确认连接器请求主体、认证和上传方式。
-2. 兼容性明确后，用户批准专用节点及一次认证检查。凭据通过安全配置交付，不进入聊天或 Git；若必须 OAuth，先补齐并验收该链路。
-3. 首先只检查认证 manifest 或 MCP 工具发现；不在探测阶段领取任务，也不把公网 `/health` 的 404 误判为连接失败。
+2. 兼容性明确后，用户批准专用节点及一次认证检查。凭据通过安全配置交付，不进入聊天或 Git。当前公网应先评估 Muse 是否支持已有 MCP OAuth 流程；若 Muse 只支持 REST，先停止并说明模式不匹配，不恢复公网 `/v1/*`，也不提前索取节点凭据。
+3. 当前公网只可按已确认且获批的 MCP 流程进行工具发现；只有 REST 入口另外获批后才考虑认证 manifest。不在探测阶段领取任务，也不把公网 `/health` 或已关闭 REST 的 404 误判为整个平台故障。
 4. 用户批准唯一公开网页任务，由 Muse 领取并使用自身电脑执行。先采用用户在 Muse 对话中手动启动，不假设外部自动唤醒。
 5. 验收任务编号、校验码、实际浏览器活动、截图和 ChunLACK 落库结果，测试后停止并撤销不再需要的访问。
 
 ## 当前尚未完成
 
 真实 Muse 自定义连接器认证兼容性、专属节点授权、实际截图上传、自身电脑执行和自动唤醒均未验证。公网 TLS 已进行只读检查，但不等于 Muse 账号已连接；本地模拟测试不能替代真实接入验收。
+
+老镇接入也需要单独确认任务会话和通知位置，默认不把任务正文、技术日志、截图编码或回执刷入用户的日常对话。独立任务入口和原生执行能力未经验证时，不承诺会话或记忆隔离，也不以普通 worker 代替老镇。
