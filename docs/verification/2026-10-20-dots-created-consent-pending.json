@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-20",
+  "scope": "Actual custom MCP connection creation and OAuth consent-page arrival",
+  "result": "connection-created; OAuth-consent-pending-user-confirmation",
+  "supersedesOnlyCreationStatusIn": "2026-10-20-dots-oauth-discovery-browser-recheck.json",
+  "authorizationBoundary": {
+    "userApprovedConnectionCreationAndStartingOAuth": true,
+    "userRequestedStopAtConsentPage": true,
+    "consentSubmitConfirmationReceived": false,
+    "consentSubmittedByAgent": false
+  },
+  "actionsCompleted": [
+    "Configured ChunLACK 玄玑 using the existing dedicated public OAuth client, no secret and token endpoint authentication method none.",
+    "Kept openid, task.read, task.claim and task.result selected in the connection draft; deselected both event scopes.",
+    "Submitted Create as plugin after the user's specific confirmation.",
+    "Selected Connect ChunLACK 玄玑 to start the approved OAuth flow.",
+    "Observed the actual Pocket ID consent page and stopped before its Login button.",
+    "Re-observed that same page in the following goal turn; consent still pending."
+  ],
+  "observedConsent": {
+    "provider": "https://pockid.chunclaw.top",
+    "clientDisplayName": "ChunLACK dots",
+    "visiblePermissions": ["email", "task.read", "task.claim", "task.result"],
+    "eventPermissionsVisible": false,
+    "privateScreenshotSaved": true,
+    "screenshotCommitted": false
+  },
+  "notProven": [
+    "OAuth code exchange and token acceptance",
+    "Authenticated MCP initialize or tool listing",
+    "Workspace/node/task business authorization",
+    "Native dots computer execution and persistent result receipt",
+    "Event-driven wake or event subscription"
+  ],
+  "nextGates": [
+    "Obtain action-time confirmation for the four visible consent items before submitting the Login button.",
+    "Inspect the resulting ChatGPT connection state; do not replay authorization URLs or copy credentials.",
+    "Verify authenticated MCP behavior separately from workspace business authorization; do not bypass a legitimate authorization denial.",
+    "Obtain a separate bounded business-grant approval before permitting a real task; retain task ID, nonce, native browser activity, screenshot and persisted receipt as distinct evidence."
+  ],
+  "boundaries": {
+    "newOAuthClientOrSecretCreated": false,
+    "credentialDnsPortOrRelayChanges": false,
+    "businessGrantCreated": false,
+    "eventSubscriptionOrTaskCreated": false,
+    "modelCallsOrChatMessagesSent": false,
+    "authorizationCodeCookieTokenOrPrivateClientIdentifierRecorded": false
+  },
+  "readyForNativeDotsAcceptance": false,
+  "readyForFullDelivery": false
+}
