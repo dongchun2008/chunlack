@@ -1,0 +1,269 @@
+{
+  "date": "2026-10-21",
+  "status": "incomplete_delivery_one_manual_native_dots_task_human_accepted",
+  "scope": "Owner-approved single native dots task, bounded temporary grant, result/artifact read-only verification and revocation; no service or product changes.",
+  "sourceCommit": "d0de7cc09220aa832d42d25dfcb3da2c76083be5",
+  "currentStateEvidence": {
+    "modulePublication": "docs/verification/2026-10-20-mcp-request-metadata-publication.json",
+    "timingClosure": "docs/verification/2026-10-21-mcp-timing-and-connector-followup.json",
+    "nativeTrial": "docs/verification/2026-10-21-native-dots-single-task-acceptance.json",
+    "browser": {
+      "authenticatedOwnerWorkspaceObserved": true,
+      "pocketIdFlowCompletedUsingExistingSession": true,
+      "freshPasskeyCeremonyObserved": false,
+      "taskEvidenceViewedAfterGrantRevocation": true
+    },
+    "grantsAfter": 0,
+    "eventsEnabled": false,
+    "nodeRestPublic": false,
+    "allFourServicePidsAndRestartCountsUnchanged": true,
+    "nativePilotHumanAccepted": true
+  },
+  "gates": [
+    {
+      "id": "production-https-and-human-login",
+      "status": "authenticated_owner_workspace_verified_current_module_release",
+      "evidence": [
+        "docs/verification/2026-10-20-mcp-release-acceptance.json",
+        "docs/verification/2026-10-21-native-dots-single-task-acceptance.json"
+      ],
+      "proven": [
+        "Current release certificate-checked production health returned 200; prior release had real owner login.",
+        "Current owner completed the Pocket ID flow using an existing session, entered ChunLACK with owner controls, created/revoked the approved grant and viewed task evidence."
+      ],
+      "missing": [],
+      "warning": "Existing identity-provider session reuse is not a new passkey ceremony or additional real-human acceptance."
+    },
+    {
+      "id": "consistent-backup-and-rollback",
+      "status": "verified_for_current_release",
+      "evidence": [
+        "docs/verification/2026-10-20-mcp-release-acceptance.json",
+        "docs/verification/2026-10-20-mcp-release-probe-fix.json",
+        "docs/verification/2026-10-20-mcp-request-metadata-publication.json",
+        "docs/verification/2026-10-21-mcp-timing-and-connector-followup.json"
+      ],
+      "proven": [
+        "Current release made and verified a stopped-application 552-file consistent backup and three database schemas.",
+        "Actual controlled release outage 33 seconds; 55-second forward and 120-second total recovery budgets retained.",
+        "Old code and backup preserved; live data not restored over new writes; failure paths covered by deployment-control tests.",
+        "Metadata-only publication retained a 552-file/three-database cold backup and old code; controller window 31.811 seconds, independent whole-unit upper bound 38.386799 seconds, timing regression 10/10."
+      ],
+      "missing": [],
+      "warning": "The backup is on the same VPS, not an independently verified off-host recovery copy."
+    },
+    {
+      "id": "native-account-handoff",
+      "status": "verified",
+      "evidence": [
+        "docs/verification/2026-10-20-mcp-release-probe-fix.json"
+      ],
+      "proven": [
+        "Current deployment-control suite: Windows 88 passed, four platform skips; Linux 92 passed, zero skips.",
+        "Non-root business UID 996/GID 987 and original constrained native resources verified."
+      ],
+      "missing": []
+    },
+    {
+      "id": "direct-local-model",
+      "status": "partially_verified",
+      "evidence": [
+        "docs/verification/2026-10-19-onecat-production-acceptance.json",
+        "docs/verification/2026-10-19-native-five-ssh-tooling-retest.json"
+      ],
+      "proven": [
+        "Prior real production browser prompt and exact persisted model response passed.",
+        "VPS low-contention two rounds with five logical Agents returned 10/10 replies and retained them after isolated restart."
+      ],
+      "missing": [
+        "Sustained multi-user and local/cloud coexistence under measured backend contention."
+      ],
+      "warning": "Ten logical Agent replies are not five physical external nodes, and earlier busy-backend failures remain valid."
+    },
+    {
+      "id": "provider-neutral-local-and-cloud",
+      "status": "not_reaccepted_in_this_followup",
+      "evidence": [
+        "AGENTS.md",
+        "ARCHITECTURE.md",
+        "PROJECT_CONTEXT.md",
+        "docs/verification/2026-10-18-mcp-only-full-regression.json"
+      ],
+      "proven": [
+        "Retain provider-neutral routing and Ollama as explicit non-regression constraints.",
+        "Historical smoke evidence used two synthetic providers in one channel."
+      ],
+      "missing": [
+        "Do not claim real mixed local/cloud provider acceptance from the 81 deployment tests; those tests do not exercise real cloud inference.",
+        "No new cloud-provider credential was read or configured."
+      ]
+    },
+    {
+      "id": "multiple-real-humans-and-workspaces",
+      "status": "partially_verified",
+      "evidence": [
+        "docs/verification/2026-10-19-native-five-ssh-tooling-retest.json",
+        "docs/verification/2026-10-19-controlled-production-release.json"
+      ],
+      "proven": [
+        "One real owner production login was historically accepted.",
+        "Isolated three-human/two-workspace permission and five-logical-Agent persistence checks passed using synthetic users."
+      ],
+      "missing": [
+        "Sustained acceptance with multiple actual humans and multiple actual external nodes."
+      ]
+    },
+    {
+      "id": "public-agent-security-boundary",
+      "status": "one_positive_native_trial_and_scoped_revocation_verified",
+      "evidence": [
+        "docs/verification/2026-10-20-mcp-release-acceptance.json",
+        "docs/verification/2026-10-20-mcp-release-probe-fix.json",
+        "docs/verification/2026-10-21-native-dots-single-task-acceptance.json"
+      ],
+      "proven": [
+        "One approved dedicated client identifier published; zero workspace/task authority grants.",
+        "Public node REST closed, invalid-auth MCP GET and valid JSON-RPC POST return 401 with resource challenge.",
+        "Events remain disabled.",
+        "One approved native task used one bounded grant; matching result/artifact persisted, grant revoked with audit, post-revocation read-only control probe denied. Current grant count is zero."
+      ],
+      "missing": [],
+      "warning": "Positive acceptance covers one approved node/capability/three-scope path, not every external authorization combination."
+    },
+    {
+      "id": "dots-own-cloud-computer",
+      "status": "one_manual_native_task_human_accepted",
+      "evidence": [
+        "docs/verification/2026-10-20-mcp-release-acceptance.json",
+        "docs/MUSE_DOTS_INTEGRATION.zh-CN.md",
+        "docs/verification/2026-10-21-native-dots-single-task-acceptance.json"
+      ],
+      "proven": [
+        "Dedicated public PKCE client and its one-item production allowlist are preparation only; zero local business grants.",
+        "Native conversation was sent one authorized instruction; actual task transitioned queued to leased to succeeded, attempt 1, with matched challenge and accepted receipt.",
+        "Native computer-use activity was observed; native reply image and server artifact are byte-identical and visually inspected.",
+        "Temporary authority was revoked immediately after execution, audit pair verified; original draft restored.",
+        "After reviewing the actual screenshot, the user separately confirmed acceptance; the owner UI and read-only database show accepted with a persisted acceptance timestamp."
+      ],
+      "missing": [
+        "Automatic Events delivery and native duplicate/cancel/timeout/restart behavior remain unverified."
+      ],
+      "warning": "No worker, server-side page fetch, model-only response or event HTTP 2xx may substitute for native Agent execution."
+    },
+    {
+      "id": "muse-laozhen-own-cloud-computer",
+      "status": "external_prerequisites_missing",
+      "evidence": [
+        "docs/MUSE_DOTS_INTEGRATION.zh-CN.md",
+        "docs/EXTERNAL_AGENT_ONBOARDING_2026-10-17.zh-CN.md"
+      ],
+      "proven": [
+        "Public HTTPS is the chosen integration route; no new Tailscale/Tunnel installation is required by this plan."
+      ],
+      "missing": [
+        "User account access is unavailable in the latest provided state; no new login was attempted.",
+        "Confirm supported connector authentication, exact callback/client identity and native Agent trigger/result path.",
+        "Verify a real own-browser task and stored receipt; retain unknown status until supported and tested."
+      ],
+      "warning": "Muse Gadgets BLE and a generic Linux worker are not substitutes for Muse native Agent acceptance."
+    },
+    {
+      "id": "research-original-source-integrity",
+      "status": "local_regression_verified_real_research_pending",
+      "evidence": [
+        "docs/verification/2026-10-20-research-evidence-chain-recheck.json"
+      ],
+      "proven": [
+        "43 synthetic-data local research/gateway/source/capacity regressions passed.",
+        "Search failure and missing evidence remain explicit; source URL/excerpt/source identifiers and quote matching checked by those tests."
+      ],
+      "missing": [
+        "Complete a real original-source research task with retrieval, independent checking and preserved final citations; synthetic tests are not real retrieval."
+      ]
+    },
+    {
+      "id": "windows-mac-spark-node-onboarding",
+      "status": "not_accepted_for_all_devices",
+      "evidence": [
+        "docs/MUSE_DOTS_INTEGRATION.zh-CN.md",
+        "docs/verification/2026-10-19-native-five-ssh-tooling-retest.json"
+      ],
+      "proven": [
+        "A model service, a physical machine and a native task-executing Agent must be accepted separately."
+      ],
+      "missing": [
+        "Prove per-device identity, bounded capabilities, actual task execution, returned artifacts and revocation for each requested machine or Agent."
+      ],
+      "warning": "The present five-Agent test is not evidence that five distinct physical machines are connected."
+    },
+    {
+      "id": "sustained-load-and-relay-quality",
+      "status": "not_accepted",
+      "evidence": [
+        "docs/verification/2026-10-19-dots-preauthorization-and-relay-readonly.json",
+        "docs/verification/2026-10-19-native-five-ssh-tooling-retest.json",
+        "currentStateEvidence"
+      ],
+      "proven": [
+        "Protected service PIDs, restart counts, states and credential hash remain unchanged.",
+        "Prior Relay counters had nonzero traffic with no observed send errors."
+      ],
+      "missing": [
+        "Measure real forwarding latency/loss and traffic under a bounded sustained multi-user/five-Agent workload with suitable endpoints."
+      ],
+      "warning": "Active service state, listener checks or cumulative counters alone do not prove sustained Relay quality."
+    },
+    {
+      "id": "final-user-guides-and-delivery-notification",
+      "status": "current_guides_reconciled_final_acceptance_pending",
+      "evidence": [
+        "docs/USER_GUIDE.zh-CN.md",
+        "docs/MUSE_DOTS_INTEGRATION.zh-CN.md",
+        "docs/AGENT_GRANT_ADMIN_GUIDE.zh-CN.md",
+        "docs/verification/2026-10-20-mcp-release-acceptance.json",
+        "docs/verification/2026-10-21-native-dots-single-task-acceptance.json"
+      ],
+      "proven": [
+        "Current guides distinguish one allowed client, one manually accepted native dots pilot, zero remaining business grants, and still-unverified Muse/automatic execution.",
+        "Access, trial, scope, cancellation/revocation, backup and no-restore-over-new-writes guidance consolidated.",
+        "Current context and integration guide updated for one manual native success, explicit human-acceptance distinction, revoked authority and scope-challenge troubleshooting."
+      ],
+      "missing": [
+        "Verify current browser/identity and remaining real-provider, real-human, real-node and sustained Relay gates before final delivery notice."
+      ]
+    }
+  ],
+  "nextActions": [
+    {
+      "action": "Confirm Muse account access and supported native connector/callback/trigger path without substituting workers.",
+      "state": "external_prerequisite"
+    },
+    {
+      "action": "Separately scope native cancellation/recovery or automatic Events testing; current Events remain disabled.",
+      "state": "not_authorized_by_single_task_success"
+    },
+    {
+      "action": "Complete real mixed-provider, actual-human/device, source-quality and sustained Relay/load gates before full-delivery notice.",
+      "state": "remaining_gates_open"
+    }
+  ],
+  "changes": {
+    "productCode": false,
+    "productionServices": false,
+    "credentials": false,
+    "relay": false,
+    "dns": false,
+    "ports": false,
+    "temporaryExternalGrantsCreated": 1,
+    "temporaryExternalGrantsRevoked": 1,
+    "remainingExternalGrants": 0,
+    "pilotTasksCreated": 1,
+    "pilotTasksSucceeded": 1,
+    "pilotArtifactsStored": 1,
+    "operatorInitiatedLackModelCalls": 0,
+    "pilotHumanAcceptances": 1
+  },
+  "readyForFullDelivery": false,
+  "historicalAudit": "docs/verification/2026-10-20-delivery-gate-audit.json",
+  "carryForwardPolicy": "Unchanged gates retain dated prior evidence; a single manual native success does not reaccept unrelated model, multi-human, physical-node, Events or sustained-load gates."
+}

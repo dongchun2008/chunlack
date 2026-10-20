@@ -1,0 +1,106 @@
+{
+  "date": "2026-10-21",
+  "status": "manual_native_single_task_human_accepted",
+  "readyForFullDelivery": false,
+  "authorization": {
+    "directHumanApproval": true,
+    "maximumLifetimeSeconds": 3600,
+    "capability": "browser.public_read",
+    "scopes": [
+      "task.read",
+      "task.claim",
+      "task.result"
+    ],
+    "grantsBefore": 0,
+    "temporaryGrantsCreated": 1,
+    "temporaryGrantsRevoked": 1,
+    "grantsAfter": 0,
+    "createAndRevokeAuditVerified": true,
+    "newClientOrCredentialCreated": false,
+    "eventsEnabled": false
+  },
+  "task": {
+    "taskIdSHA256": "f90ae27e17e3985c359df88ba1a2ad3c4094af4ed3b056752232c9ca9ec84650",
+    "createdBy": "authenticated owner UI",
+    "taskType": "browser.public_read",
+    "targetUrl": "https://example.com/",
+    "deadlineMilliseconds": 299998,
+    "status": "succeeded",
+    "attempt": 1,
+    "exactlyOneTaskCreated": true,
+    "executionElapsedMilliseconds": 202233,
+    "challengeMatched": true,
+    "title": "Example Domain",
+    "executedAtUTC": "2026-10-20T22:50:43.394Z",
+    "persistedAckAccepted": true,
+    "persistedAckStatus": "succeeded",
+    "taskResultAndArtifactBound": true
+  },
+  "nativeExecution": {
+    "entry": "Existing Xuanji native dot conversation",
+    "oneInstructionSent": true,
+    "nativeReadMarkerObserved": true,
+    "nativeComputerUseIndicatorObserved": true,
+    "nativeFinalReceiptObserved": true,
+    "nativeProcessingIndicatorEnded": true,
+    "originalDraftRestored": true,
+    "operatorClaimedTask": false,
+    "operatorBrowsedTarget": false,
+    "operatorGeneratedScreenshot": false,
+    "workerOrWorkOrCodexSubstituted": false,
+    "activityDescriptionOrigin": "node self-description, corroborated by native UI activity and matching reply artifact; not signed hardware attestation",
+    "fullPrimitiveTraceExported": false
+  },
+  "artifact": {
+    "contentType": "image/jpeg",
+    "sizeBytes": 56110,
+    "width": 1165,
+    "height": 747,
+    "sha256": "6b1e1defdccbc8d83938580c01fa78cf7278209da398be3112ee44331e8a2cb3",
+    "serverDownloadHashMatched": true,
+    "nativeReplyArtifactByteIdentical": true,
+    "visuallyInspected": true,
+    "visualObservation": "Public example-domain informational page, with multilingual explanatory text and Learn more link; not an authenticated/private page"
+  },
+  "acceptance": {
+    "state": "accepted",
+    "acceptedAt": 1792537033793,
+    "humanAcceptanceSubmitted": true,
+    "humanConfirmationRequested": true,
+    "ackDoesNotMeanHumanAcceptance": true,
+    "humanConfirmationReceived": true,
+    "persistedStateReadOnlyVerified": true,
+    "acceptanceDidNotCreateTaskOrGrant": true
+  },
+  "revocation": {
+    "ownerUiRevokeSubmitted": true,
+    "remainingGrantCount": 0,
+    "auditVerified": true,
+    "postRevokeControlProbeDenied": true,
+    "postRevokeControlProbeReason": "www_authenticate_reauth",
+    "noSignInRetryAfterDenial": true,
+    "noNativeTaskToolCallRequestedAfterCompletion": true
+  },
+  "coexistence": {
+    "allFourServicePidsAndRestartCountsUnchanged": true,
+    "configurationHashUnchanged": true,
+    "credentialFileHashUnchanged": true,
+    "productModuleHashUnchanged": true,
+    "oldLackOrRelayModified": false,
+    "dnsOrPortsChanged": false,
+    "servicesRestarted": false,
+    "relayThroughputMeasured": false
+  },
+  "evidencePrivacy": {
+    "rawAccountClientWorkspaceGrantTaskAndChallengeValuesKeptPrivate": true,
+    "rawJournalsAndBrowserScreenshotsNotCommitted": true,
+    "onlyRedactedRecordCommitted": true
+  },
+  "limitations": [
+    "One manually triggered public-browser task; not automatic dispatch or Events acceptance.",
+    "Human acceptance applies only to this one public-browser pilot, not the full platform delivery.",
+    "Native duplicate/cancel/timeout/restart cases were not exercised by this single success.",
+    "Muse Laozhen account and own-computer acceptance remain separate and incomplete.",
+    "This does not prove real mixed local/cloud inference, five physical nodes, multiple actual humans or sustained Relay quality."
+  ]
+}

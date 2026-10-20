@@ -1,6 +1,8 @@
 # PROJECT_CONTEXT
 
-> 当前发布快照（2026-10-20）：`44af1d844a81` 已受控发布，中断 33 秒，保留 552 文件一致性备份、3 个数据库结构检查与旧版本。MCP-only 已识别一个专用 dots 客户端标识，但工作区／任务授权仍为 0、事件关闭、公网节点 REST 关闭；未修改凭据、旧 LACK、Relay、DNS 或端口。当前版本的真人浏览器登录和外部 Agent 原生任务闭环尚未验收。见[发布验收](docs/verification/2026-10-20-mcp-release-acceptance.json)、[最新逐项审计](docs/verification/2026-10-20-delivery-gate-audit.json)、[使用手册](docs/USER_GUIDE.zh-CN.md)和[接入说明](docs/MUSE_DOTS_INTEGRATION.zh-CN.md)。下列旧日期的“最新”条目均为历史快照，不应覆盖本段。
+> 当前发布快照（2026-10-21）：仅 MCP 元数据兼容模块的候选 `27139edf8fbb` 已受控发布，维护窗口 31.811 秒，历史 systemd journal 核对整个发布单元上界 38.386799 秒；保留发布时 552 文件、3 个数据库的一致性备份和旧代码。计时夹具复测 10/10 通过，未为取证重新发布。当前所有者通过既有 Pocket ID 会话进入工作区。MCP-only、一个专用 dots 客户端、事件关闭及公网节点 REST 关闭的边界保留。见[模块发布记录](docs/verification/2026-10-20-mcp-request-metadata-publication.json)、[计时与认证后续](docs/verification/2026-10-21-mcp-timing-and-connector-followup.json)和[最新逐项审计](docs/verification/2026-10-21-delivery-gate-audit.json)。下列旧日期条目均为历史快照。
+
+> 玄玑单任务验收（2026-10-21）：经单独批准的一小时、三项任务权限临时授权下，玄玑原生对话领取唯一公开网页任务（attempt=1），使用自身云端浏览器并回传结果和截图；原生回复附件与服务端保存的 56,110 字节 JPEG 的 SHA-256 相同。任务为 `succeeded`、回执 `accepted: true`；本人另行核对并明确确认后，证据状态已持久化为 `accepted`，记录验收时间，不把服务回执自动当作人工验收。临时授权已撤销，创建／撤销审计已只读复核，当前授权数为 0；四个服务进程、配置和凭据未变。此次是人工触发单任务，不是 Events 自动唤起、长期稳定性或 Muse 接入验收。见[单任务记录](docs/verification/2026-10-21-native-dots-single-task-acceptance.json)、[接入说明](docs/MUSE_DOTS_INTEGRATION.zh-CN.md)和[使用手册](docs/USER_GUIDE.zh-CN.md)。
 
 > 最新开发验证（2026-10-18，未发布）：以已提交代码 `3546b2b2ba153e51afa5926517d1b43d7c00951c` 导出的独立副本完成 Windows 全量回归，861/861 通过，零失败、零跳过、零取消；HTTP/WebSocket、两个模拟模型、SQLite 重启持久化及配置保留烟雾测试通过。全量运行仅为测试进程设置 `GOMAXPROCS=1`，随后默认 Go 设置下的 MCP-only 同组测试也 5/5 通过。原 Caddy 校验 10 秒上限未改；诊断遗漏的 stdin 写入已修正，三项补测均通过。原限额 Linux MCP-only 5/5 为此前同实现的独立证据，不能与本轮测试简单相加。见 [验收记录](docs/verification/2026-10-18-mcp-only-full-regression.json) 和 [配置与复现说明](docs/MCP_ONLY_CONFIGURATION.zh-CN.md)。
 
