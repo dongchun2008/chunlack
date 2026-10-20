@@ -1,0 +1,44 @@
+{
+  "recordedAt": "2026-10-20T11:53:19.3108733Z",
+  "scope": "Fresh production human OIDC sign-in and browser refresh acceptance only",
+  "result": "passed",
+  "sourceRevisionBeforeRecord": "946e336fcadec8978451de867e2768268c454b8e",
+  "method": {
+    "browser": "Codex in-app browser",
+    "userCompletedPocketIdAuthentication": true,
+    "freshEntry": "https://lack.chunclaw.top/auth/oidc/login",
+    "action": "Selected Continue to identity provider after the user authenticated in Pocket ID",
+    "returnedTo": "https://lack.chunclaw.top/",
+    "replayedCallbackOrCopiedCookies": false
+  },
+  "observed": {
+    "pageTitle": "LACK v4.2.2",
+    "workspace": "ChunLACK",
+    "account": "chunlack-owner",
+    "role": "owner",
+    "realtimeStatus": "CONNECTED",
+    "existingChannelHistoryLoaded": true,
+    "existingAgentsVisible": 2,
+    "browserRefreshRetainedAuthenticatedWorkspace": true,
+    "initialRefreshObservation": "Transient initialization had neither identity nor login form; subsequent full accessibility observation showed the owner workspace and CONNECTED",
+    "unexpectedConsentPrompt": false
+  },
+  "evidence": {
+    "source": "Direct browser accessibility observations before and after refresh, plus a private local screenshot",
+    "screenshotCommitted": false,
+    "authorizationCodesCookiesTokensOrCredentialsRecorded": false
+  },
+  "boundaries": {
+    "productCodeChanged": false,
+    "productionDeploymentPerformed": false,
+    "credentialsPermissionsDnsPortsOrRelayChanged": false,
+    "modelCallsOrChatMessagesSent": false,
+    "externalAgentAccessGranted": false
+  },
+  "limitations": [
+    "This proves the current human sign-in callback, owner workspace loading, refresh persistence and displayed realtime connection only.",
+    "It does not prove global DNS propagation, new server IP, external Agent execution, multiple real users, cloud inference or sustained Relay quality.",
+    "Prior external-browser login evidence remains historical and is not rewritten by this observation."
+  ],
+  "readyForFullDelivery": false
+}
