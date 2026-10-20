@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-21",
+  "status": "historical_checkpoint_offhost_copy_and_database_probe_passed_full_application_recovery_pending",
+  "sourceCommit": "b8c13d1f1b88ebef498e15f0b15a8f19257d8a0d",
+  "checkpoint": {
+    "releasePrefix": "27139edf8fbb",
+    "applicationStoppedManifest": true,
+    "manifestSha256": "ef0c7dcd0ad0fda7f0f0d373cc4a79ac6a4164fbce3568d439468abd2fed3774",
+    "dataFiles": 552,
+    "dataBytes": 11652894,
+    "allDataFileHashesMatchOriginalManifest": true,
+    "symlinksOrNonRegularDataEntries": 0,
+    "archiveBytes": 14131200,
+    "archiveSha256": "a99fa8709b0efa57658eab32ee16dc4172285bd4e0c9ca46055c2c4b650ec589",
+    "archiveMemberCount": 1417
+  },
+  "transfer": {
+    "transport": "host-key-pinned SSH stdout archive stream",
+    "rateCapBytesPerSecond": 524288,
+    "elapsedSeconds": 26.96,
+    "remoteFilesCreated": 0,
+    "remoteDataModified": false,
+    "localDestination": "private Windows owner-controlled directory; exact path retained only in private evidence",
+    "localAcl": "current user and SYSTEM only; inheritance blocked at root and verified on archive/recovery directory",
+    "storedInGit": false
+  },
+  "databaseProbe": {
+    "scope": "three checkpoint database files only",
+    "databases": [
+      {
+        "database": "agent-gateway.db",
+        "quickCheck": "ok",
+        "foreignKeyViolations": 0,
+        "schemaObjects": 25,
+        "logicalSchemaSha256": "37036d87b9ba97d7ee4de4039cf678329adfed272a7d9d35b4785bd2dff10965",
+        "openedReadOnly": true,
+        "immutable": true
+      },
+      {
+        "database": "identity.db",
+        "quickCheck": "ok",
+        "foreignKeyViolations": 0,
+        "schemaObjects": 26,
+        "logicalSchemaSha256": "5070e55513ee47e46abb6499e0c8942ee8f14d87c9228c2a869425c7a31ec005",
+        "openedReadOnly": true,
+        "immutable": true
+      },
+      {
+        "database": "lack.db",
+        "quickCheck": "ok",
+        "foreignKeyViolations": 0,
+        "schemaObjects": 11,
+        "logicalSchemaSha256": "028d15c637e5aac9cf1d3aa64057b60a059d134d44c06961b99927712ae7cdaf",
+        "openedReadOnly": true,
+        "immutable": true
+      }
+    ],
+    "sourceDatabaseBytesVerifiedAgainstManifest": true,
+    "originalManifestSchemaFingerprintsPreserved": true,
+    "originalSchemaFingerprintAlgorithmReevaluated": false,
+    "logicalSchemaFingerprintMethod": "SHA-256 of compact UTF-8 JSON sqlite_master tuples ordered by type,name; not asserted equal to the publisher fingerprint algorithm",
+    "productStarted": false,
+    "modelCalls": 0
+  },
+  "protectedServices": {
+    "comparedBeforeAndAfter": true,
+    "statesPidsAndRestartCountsUnchanged": true,
+    "relayForwardingPerformanceMeasured": false
+  },
+  "notProven": [
+    "This is the previous stopped-application release checkpoint, not a fresh snapshot of current production data.",
+    "Later native-dot trial task, artifact and acceptance are not included.",
+    "No application process was started from this recovery copy; this is not full disaster-recovery acceptance.",
+    "Current deployed application code, its Node/runtime dependencies and production runtime.env were not separately acquired or boot-tested; historical nested backup material is not proof of a complete current runtime.",
+    "No source production database, credential, DNS, port, service configuration, old LACK or Relay was modified."
+  ],
+  "nextGate": "Document and prove a complete isolated application recovery path without overwriting live state or publishing secrets."
+}

@@ -1,8 +1,8 @@
 {
   "date": "2026-10-21",
-  "status": "incomplete_delivery_one_manual_native_dots_task_human_accepted",
-  "scope": "Owner-approved single native dots task, bounded temporary grant, result/artifact read-only verification and revocation; no service or product changes.",
-  "sourceCommit": "d0de7cc09220aa832d42d25dfcb3da2c76083be5",
+  "status": "incomplete_delivery_native_pilot_accepted_historical_checkpoint_copied",
+  "scope": "Prior manual native-dot acceptance plus off-host copy and read-only database recovery probe of a historical cold checkpoint; isolated native conversation design remains proposed.",
+  "sourceCommit": "b8c13d1f1b88ebef498e15f0b15a8f19257d8a0d",
   "currentStateEvidence": {
     "modulePublication": "docs/verification/2026-10-20-mcp-request-metadata-publication.json",
     "timingClosure": "docs/verification/2026-10-21-mcp-timing-and-connector-followup.json",
@@ -17,7 +17,8 @@
     "eventsEnabled": false,
     "nodeRestPublic": false,
     "allFourServicePidsAndRestartCountsUnchanged": true,
-    "nativePilotHumanAccepted": true
+    "nativePilotHumanAccepted": true,
+    "offHostCheckpoint": "docs/verification/2026-10-21-offhost-checkpoint-copy-verification.json"
   },
   "gates": [
     {
@@ -41,16 +42,22 @@
         "docs/verification/2026-10-20-mcp-release-acceptance.json",
         "docs/verification/2026-10-20-mcp-release-probe-fix.json",
         "docs/verification/2026-10-20-mcp-request-metadata-publication.json",
-        "docs/verification/2026-10-21-mcp-timing-and-connector-followup.json"
+        "docs/verification/2026-10-21-mcp-timing-and-connector-followup.json",
+        "docs/verification/2026-10-21-offhost-checkpoint-copy-verification.json"
       ],
       "proven": [
         "Current release made and verified a stopped-application 552-file consistent backup and three database schemas.",
         "Actual controlled release outage 33 seconds; 55-second forward and 120-second total recovery budgets retained.",
         "Old code and backup preserved; live data not restored over new writes; failure paths covered by deployment-control tests.",
-        "Metadata-only publication retained a 552-file/three-database cold backup and old code; controller window 31.811 seconds, independent whole-unit upper bound 38.386799 seconds, timing regression 10/10."
+        "Metadata-only publication retained a 552-file/three-database cold backup and old code; controller window 31.811 seconds, independent whole-unit upper bound 38.386799 seconds, timing regression 10/10.",
+        "A private off-host copy of the historical 552-file cold checkpoint was verified against its original manifest; three local restored database files passed read-only quick_check and foreign_key_check."
       ],
-      "missing": [],
-      "warning": "The backup is on the same VPS, not an independently verified off-host recovery copy."
+      "missing": [
+        "Complete application startup recovery with the required code/runtime and safely provisioned configuration.",
+        "Define and verify recovery freshness; this checkpoint predates later production writes."
+      ],
+      "warning": "Off-host historical checkpoint copy now verified. It predates the accepted native-dot trial; full isolated application startup, runtime/secret recovery and a current-data recovery point remain unverified.",
+      "offHostRecovery": "historical_checkpoint_copy_and_database_probe_only"
     },
     {
       "id": "native-account-handoff",
@@ -231,6 +238,23 @@
       "missing": [
         "Verify current browser/identity and remaining real-provider, real-human, real-node and sustained Relay gates before final delivery notice."
       ]
+    },
+    {
+      "id": "native-agent-conversation-reading-isolation",
+      "status": "proposed_design_native_feasibility_pending",
+      "evidence": [
+        "docs/superpowers/specs/2026-10-21-native-agent-conversation-isolation-design.md"
+      ],
+      "proven": [
+        "Official documentation supports separate cloud task conversations and event delivery to the subscribing chat.",
+        "Inspected MCP subscription identity binds workspace/node/task/callback/grant, not a verified independent native-dot conversation."
+      ],
+      "missing": [
+        "Obtain approval for one native setup request or locate an independent supported UI entry without sending to the daily chat.",
+        "Prove the independent destination retains the intended native Agent and cloud-computer capability, not a generic worker substitute.",
+        "Implement and accept quiet routing with no main-chat fallback, then verify actual daily-chat noninterference."
+      ],
+      "warning": "Independent visible conversations do not prove independent vendor memory. No new message, grant, subscription or event activation occurred in this follow-up."
     }
   ],
   "nextActions": [
@@ -245,6 +269,14 @@
     {
       "action": "Complete real mixed-provider, actual-human/device, source-quality and sustained Relay/load gates before full-delivery notice.",
       "state": "remaining_gates_open"
+    },
+    {
+      "action": "Verify the complete off-host application recovery path and recovery freshness; historical database-copy integrity is insufficient.",
+      "state": "remaining_gate_open"
+    },
+    {
+      "action": "Resolve independent native task destination feasibility before implementing the proposed quiet route. Do not send messages to the daily dot chat without the pending specific confirmation.",
+      "state": "pending_design_and_initialization_confirmation"
     }
   ],
   "changes": {
@@ -254,14 +286,12 @@
     "relay": false,
     "dns": false,
     "ports": false,
-    "temporaryExternalGrantsCreated": 1,
-    "temporaryExternalGrantsRevoked": 1,
-    "remainingExternalGrants": 0,
-    "pilotTasksCreated": 1,
-    "pilotTasksSucceeded": 1,
-    "pilotArtifactsStored": 1,
-    "operatorInitiatedLackModelCalls": 0,
-    "pilotHumanAcceptances": 1
+    "offHostHistoricalCheckpointCopiesCreated": 1,
+    "localDatabaseFilesRecovered": 3,
+    "modelCalls": 0,
+    "newExternalAgentMessages": 0,
+    "newExternalGrants": 0,
+    "eventSubscriptionsCreated": 0
   },
   "readyForFullDelivery": false,
   "historicalAudit": "docs/verification/2026-10-20-delivery-gate-audit.json",
