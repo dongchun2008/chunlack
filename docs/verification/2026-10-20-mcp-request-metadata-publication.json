@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-20",
+  "scope": "code-only bounded MCP params._meta compatibility update",
+  "payloadCommit": "27139edf8fbb130309e436e47bd72ea6f765e186",
+  "productPublished": true,
+  "finalAcceptanceComplete": false,
+  "readyForFullDelivery": false,
+  "changedExecutableFiles": ["integrations/mcp/pilot-server.cjs"],
+  "installedMcpSHA256": "ffba28dad12095d483cd07c83eaa2d7c92aa0754f1798e32a4f4c1b657fcb5a8",
+  "verification": {
+    "fullLocalRegression": {"tests": 874, "passed": 874, "failed": 0, "cancelled": 0, "skipped": 0, "exitCode": 0},
+    "linuxProtocolIsolation": {"batches": 2, "passedPerBatch": 27, "memoryMiB": 192, "cpuPercent": 10, "tasksMax": 32, "secondsPerUnit": 90},
+    "localControllerChecks": [
+      {"suite": "release controller", "tests": 46, "passed": 42, "skipped": 4},
+      {"suite": "launcher", "tests": 13, "passed": 13},
+      {"suite": "service account handoff", "tests": 22, "passed": 22},
+      {"suite": "MCP release probe", "tests": 11, "passed": 11}
+    ],
+    "controllerSkipSupplements": {"actualProductSchemaCasePassed": 1, "linuxPosixCasesPassed": 3, "remainingUncoveredSkips": 0},
+    "privateOperationalRehearsals": {"successPassed": true, "rollbackPassed": true, "productionSwitched": false, "cohostServicesUnchanged": true},
+    "databaseCopyCompatibility": {
+      "passed": true,
+      "databaseCount": 3,
+      "schemaPreserved": true,
+      "candidateBootSeconds": 9.275,
+      "previousBootSeconds": 9.406,
+      "bothClosedCleanly": true,
+      "businessUid": 996,
+      "businessGid": 987,
+      "privateNodeReadChecked": true,
+      "validForwardedNodeDenied": true,
+      "actualModelCalls": false,
+      "applicationConsistentSnapshot": false,
+      "rollbackBackup": false,
+      "fullDataFingerprintChecked": false
+    }
+  },
+  "publication": {
+    "controllerStatus": "released",
+    "configuredForwardSeconds": 55,
+    "configuredRecoverySeconds": 120,
+    "controllerRecordedWindowSeconds": 31.811,
+    "loopbackAcceptancePassed": true,
+    "publicAcceptancePassed": true,
+    "consistentColdBackupVerified": true,
+    "backupFileCount": 552,
+    "backupDatabaseCount": 3,
+    "previousCodeRetained": true,
+    "liveDataRestoredFromBackup": false,
+    "newSchemaMigration": false,
+    "independentStartToResultTimingAudit": "pending",
+    "wrapperExitCode": 1,
+    "wrapperFailure": "invalid_unix_timestamp: completed transient systemd unit was collected before post-exit start timestamp inspection",
+    "originalFailureReportPreserved": true,
+    "repeatPublicationPerformed": false,
+    "finalTimingRepairRequiresConfirmation": true
+  },
+  "readonlyPostpublication": {
+    "passed": true,
+    "publicDnsAndTlsVerified": true,
+    "httpsHealth": 200,
+    "oauthResourceDiscovery": 200,
+    "unauthenticatedMcpGetAndPost": 401,
+    "mcpResourceChallengePresent": true,
+    "publicRestGetAndPost": 404,
+    "installedCodeMatchesCandidate": true,
+    "configurationValuesUnchanged": true,
+    "runtimeCredentialFileHashUnchanged": true,
+    "ingressConfigurationHashUnchanged": true,
+    "authorizationTableFingerprintsUnchanged": true,
+    "oldLackPidAndRestartStateUnchanged": true,
+    "tailscalePidAndRestartStateUnchanged": true,
+    "relayThroughputTested": false
+  },
+  "securityBoundaries": {
+    "mcpOnly": true,
+    "eventsEnabled": false,
+    "newExternalAgentAccessGranted": false,
+    "existingAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsOrPortsChanged": false,
+    "oldLackOrRelayModified": false,
+    "productionWriterLockDeleted": false,
+    "metadataUsedAsAuthority": false
+  },
+  "remainingGates": [
+    "Independent publication timing evidence must be completed without repeating publication.",
+    "The actual failing native dots request envelope has not been captured; metadata compatibility is not proven to be its only blocker.",
+    "Native dots own-computer task, nonce, screenshot and persisted receipt acceptance remains incomplete; no trial grant was restored.",
+    "Muse native account and own-computer acceptance remains unavailable.",
+    "Physical node onboarding, additional real-human/workspace acceptance, sustained workload and semantic evidence-quality gates remain separate."
+  ]
+}
