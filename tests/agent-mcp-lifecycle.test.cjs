@@ -44,6 +44,108 @@ const initialize = {jsonrpc: '2.0', id: 1, method: 'initialize', params: {
   protocolVersion: '2025-11-25', capabilities: {}, clientInfo: {name: 'local-contract-test', version: '1.0.0'}}};
 const initialized = {jsonrpc: '2.0', method: 'notifications/initialized'};
 
+test('request metadata is accepted across lifecycle, discovery and scoped reads without changing the request', {timeout: 15000}, async t => {
+  const f = await fixture(t);
+  const metadata = [{}, {progressToken: 'local-progress'}, {progressToken: 0},
+    {'com.example/correlation': {label: 'local-only'}},
+    {'io.modelcontextprotocol/protocolVersion': '2026-07-28'}];
+  for (const _meta of metadata) {
+    const init = await f.request({...initialize, params: {...initialize.params, _meta}});
+    assert.equal(init.json.result?.protocolVersion, '2025-11-25');
+    const listed = await f.request({jsonrpc: '2.0', id: 21, method: 'tools/list', params: {_meta}});
+    assert.ok(listed.json.result?.tools.some(tool => tool.name === 'chunlack_connections_list'));
+    const discover = await f.request({jsonrpc: '2.0', id: 22, method: 'server/discover', params: {_meta}});
+    assert.equal(discover.json.result?.resultType, 'complete');
+    const connection = await f.request({jsonrpc: '2.0', id: 23, method: 'tools/call', params: {
+      name: 'chunlack_connections_list', arguments: {}, _meta}});
+    assert.ok(connection.json.result?.structuredContent.connections.some(item => item.grantId === f.grant.id));
+    const body = {jsonrpc: '2.0', id: 24, method: 'tools/call', params: {
+      name: 'pilot.read_task', arguments: {grantId: f.grant.id, taskId: f.task.taskId}, _meta}};
+    const original = structuredClone(body);
+    const read = await f.mcp.handleRpc(body, f.token(['task.read']));
+    assert.equal(read.result?.structuredContent.taskId, f.task.taskId);
+    assert.deepEqual(body, original, 'normalization must not mutate the caller request');
+  }
+});
+
+test('request metadata cannot choose a grant, cross a workspace or restore revoked authorization', {timeout: 15000}, async t => {
+  const f = await fixture(t);
+  const _meta = {grantId: f.grant.id, workspaceId: f.workspaces.b.id, scope: 'task.claim'};
+  const request = {jsonrpc: '2.0', id: 25, method: 'tools/call', params: {
+    name: 'pilot.read_task', arguments: {taskId: f.task.taskId}, _meta}};
+  assert.equal((await f.request(request)).json.error?.data.reason, 'invalid_id');
+  request.params.arguments.grantId = f.grant.id;
+  assert.equal((await f.request(request)).json.result?.structuredContent.workspaceId, f.workspaces.a.id);
+  const other = f.enqueue('b');
+  assert.equal((await f.request({...request, params: {...request.params,
+    arguments: {grantId: f.grant.id, taskId: other.taskId}}})).json.error?.data.reason, 'unknown_task');
+  assert.equal((await f.request(request, {token: 'invalid.signature.token'})).status, 401);
+  const claim = {...request, params: {...request.params, name: 'pilot.claim_task'}};
+  assert.equal((await f.request(claim)).status, 403, 'metadata cannot upgrade a read-only token');
+  assert.equal(f.human('alice', 'a', h => h.getTask(f.task.taskId)).status, 'queued');
+  f.authority.revoke(f.actor('alice', 'a'), {workspaceId: f.workspaces.a.id, grantId: f.grant.id});
+  const revoked = await f.request(request);
+  assert.equal(revoked.status, 401);
+  assert.equal(revoked.json.error?.data.reason, 'unauthorized');
+  assert.equal(f.human('alice', 'a', h => h.getTask(f.task.taskId)).status, 'queued');
+});
+
+test('metadata normalization preserves envelope and tool argument allowlists', {timeout: 15000}, async t => {
+  const f = await fixture(t);
+  const valid = {jsonrpc: '2.0', id: 26, method: 'tools/call', params: {
+    name: 'chunlack_connections_list', arguments: {}, _meta: {progressToken: 'local'}}};
+  for (const body of [
+    {...valid, unexpected: true},
+    {...valid, params: {...valid.params, unexpected: true}},
+    {...valid, params: {...valid.params, arguments: {unexpected: true}}},
+    {...valid, params: {...valid.params, arguments: {_meta: {}}}}
+  ]) {
+    const reply = await f.request(body);
+    assert.equal(reply.json.error?.code, -32602);
+    assert.equal(reply.json.error?.data.reason, 'unsupported_field');
+  }
+  assert.ok((await f.request(valid)).json.result?.structuredContent.connections.length);
+});
+
+test('malformed metadata and progress tokens are rejected consistently for requests and notifications', {timeout: 15000}, async t => {
+  const f = await fixture(t);
+  for (const _meta of [null, [], true, 'text', 1, {progressToken: null}, {progressToken: true},
+    {progressToken: []}, {progressToken: {}}, {progressToken: 1.5}]) {
+    for (const body of [
+      {jsonrpc: '2.0', id: 27, method: 'tools/list', params: {_meta}},
+      {jsonrpc: '2.0', id: 28, method: 'ping', params: {_meta}},
+      {...initialized, params: {_meta}}
+    ]) {
+      const reply = await f.request(body);
+      assert.equal(reply.json.error?.code, -32602);
+      if (!Object.hasOwn(body, 'id')) assert.equal(reply.status, 400);
+    }
+  }
+});
+
+test('metadata retains request size, depth and unsafe-field limits', {timeout: 15000}, async t => {
+  const f = await fixture(t);
+  const body = _meta => ({jsonrpc: '2.0', id: 29, method: 'tools/list', params: {_meta}});
+  assert.equal((await f.request(body({'com.example/padding': 'x'.repeat(262144)}))).status, 413);
+  let nested = {};
+  for (let i = 0; i < 14; i++) nested = {child: nested};
+  assert.equal((await f.request(body({'com.example/depth': nested}))).json.error?.data.reason, 'payload_too_deep');
+  const unsafe = await f.request(body(JSON.parse('{"__proto__":{"safe":true}}')));
+  assert.equal(unsafe.json.error?.data.reason, 'sensitive_or_unsafe_field');
+});
+
+test('opaque paired nodes also accept metadata without gaining scoped-tool arguments', {timeout: 15000}, async t => {
+  const f = await fixture(t), options = {token: f.gateway.pair(f.browser.pairingCode).token};
+  const _meta = {progressToken: 'paired-local', grantId: 'not-an-authority-selector'};
+  assert.equal((await f.request({...initialize, params: {...initialize.params, _meta}}, options)).json.result?.protocolVersion, '2025-11-25');
+  assert.ok((await f.request({jsonrpc: '2.0', id: 30, method: 'tools/list', params: {_meta}}, options)).json.result?.tools.length);
+  const read = {jsonrpc: '2.0', id: 31, method: 'tools/call', params: {
+    name: 'pilot.read_task', arguments: {taskId: f.task.taskId}, _meta}};
+  assert.equal((await f.request(read, options)).json.result?.structuredContent.taskId, f.task.taskId);
+  assert.equal((await f.request({...read, params: {...read.params,
+    arguments: {...read.params.arguments, unexpected: true}}}, options)).json.error?.data.reason, 'unsupported_field');
+});
+
 test('standard initialization notification allows subsequent scoped discovery and task read', {timeout: 15000}, async t => {
   const f = await fixture(t);
   const first = await f.request(initialize);

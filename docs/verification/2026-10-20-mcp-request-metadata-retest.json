@@ -1,0 +1,156 @@
+{
+  "recordedAt": "2026-10-20T15:10:58.439Z",
+  "scope": "MCP request metadata compatibility and evidence-preserving local/isolated regression",
+  "baseCommit": "f79143376f1c783ad4379ab701806722cb9f631e",
+  "readyForFullDelivery": false,
+  "implementation": {
+    "file": "integrations/mcp/pilot-server.cjs",
+    "productionBaselineSha256": "c150a092fba59c606f939147ee15303b0c1b10b3b21f570787b9b8ad25aa068e",
+    "testedSha256": "ffba28dad12095d483cd07c83eaa2d7c92aa0754f1798e32a4f4c1b657fcb5a8",
+    "behavior": "Validate and remove params._meta only after bounding the complete request. Metadata never supplies identity, grant selection, scopes or tool arguments.",
+    "preserved": [
+      "strict tool argument fields",
+      "JWT and live grant checks",
+      "workspace isolation",
+      "request size/depth/unsafe-field limits",
+      "MCP-only public REST denial",
+      "existing provider routing including Ollama"
+    ],
+    "protocolScope": "Request metadata compatibility only; not complete 2026 protocol certification.",
+    "actualNativeClientEnvelopeCaptured": false,
+    "soleCauseOfLiveClientFailureConfirmed": false
+  },
+  "tdd": {
+    "redObserved": true,
+    "redCommand": "node --test --test-concurrency=1 --test-reporter=tap --test-name-pattern=^request.metadata.is.accepted tests/agent-mcp-lifecycle.test.cjs",
+    "redExitCode": 1,
+    "redFailure": "Metadata-bearing initialization was rejected before implementation.",
+    "focusedFinal": {
+      "tests": 27,
+      "pass": 27,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    }
+  },
+  "testCorrections": [
+    {
+      "change": "Corrected only the new revoked-grant expectation to HTTP 401 and asserted unauthorized plus unchanged queued task.",
+      "basis": "With and without metadata, an explicitly selected deleted grant returned unauthorized. Read-only token privilege escalation separately remained forbidden."
+    },
+    {
+      "change": "Used the execution tool directly after the first custom local wrapper timed out without retaining intermediate output.",
+      "productTimeoutChanged": false
+    }
+  ],
+  "uiRecovery": {
+    "issue": "Pre-existing local changes had removed the Agent authorization entry, implementation and exported method.",
+    "explicitlyApproved": true,
+    "privateOriginalBackupRetained": true,
+    "originalBackupSha256": "54b9754d7ea238c6649f640946903f568529cccbd4bf7c26c74f746785e40144",
+    "restoredOnlyExistingFunctionality": true,
+    "netDiffAgainstHead": false,
+    "focusedTests": {
+      "tests": 8,
+      "pass": 8,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "actualBusinessAuthorizationCreated": false
+  },
+  "broadInitialAttempt": {
+    "tests": 27,
+    "pass": 24,
+    "fail": 0,
+    "cancelled": 1,
+    "skipped": 2,
+    "note": "One runtime test timed out; two HTTPS tests initially lacked CADDY_TEST_BIN. The unchanged runtime test passed alone; final full regression used the existing portable Caddy and had no skips."
+  },
+  "fullRegression": {
+    "command": "node --test --test-concurrency=1 --test-timeout=90000 --test-reporter=tap tests/*.test.cjs",
+    "caddyTestBinary": "existing portable Caddy 2.11.7; no system installation",
+    "first": {
+      "exitCode": 1,
+      "tests": 874,
+      "pass": 865,
+      "fail": 9,
+      "cancelled": 0,
+      "skipped": 0,
+      "uiFailuresBeforeApprovedRestoration": 8,
+      "otherFailure": "legacy server entry cannot bypass the public data-root writer guard",
+      "otherFailureUnmodifiedSingleRetryPassed": true,
+      "definitiveCauseOfTransientReadinessFailureConfirmed": false,
+      "rawTapSha256": "061d0676ae6811aea47416981b9a2f88753b51fc2f3bf455e9d346c3a152470c"
+    },
+    "final": {
+      "exitCode": 0,
+      "tests": 874,
+      "pass": 874,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "rawTapSha256": "56ab0eb43206a3f13398e44e77a900c08ad9532b2817354f6564441743e62cf0"
+    }
+  },
+  "linuxIsolation": {
+    "actualTestFiles": [
+      {
+        "file": "tests/agent-mcp-http.test.cjs",
+        "tests": 10,
+        "pass": 10,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      },
+      {
+        "file": "tests/agent-mcp-lifecycle.test.cjs",
+        "tests": 17,
+        "pass": 17,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0
+      }
+    ],
+    "repeatBatchesPassed": 2,
+    "sourceHashesVerified": true,
+    "initialFailuresPreserved": [
+      "Noninteractive SSH PATH did not contain the existing Node binary; readonly service mapping established its exact path.",
+      "PrivateTmp hid the first test directory; the unit exited 226/NAMESPACE before executing tests. Explicit private-directory bindings were then approved and added."
+    ],
+    "globalSoftwareInstalled": false,
+    "systemPathChanged": false,
+    "productionPermissionsChanged": false,
+    "initialFailedUnitTerminationVerified": true,
+    "initialFailedOwnDirectoryRemoved": true,
+    "successfulOwnDirectoryRemoved": true,
+    "protectedServicePidsRestartCountsAndActiveStatesUnchanged": true,
+    "liveEvidence": {
+      "observedUnitCount": 2,
+      "correlation": "Manually checked exact unit names with systemd .service suffix and matching unique working directory.",
+      "actualUid": 65534,
+      "actualGid": 65534,
+      "memoryMaxBytes": 201326592,
+      "cpuMax": "10000 100000",
+      "cpuQuotaPercent": 10,
+      "tasksMax": 32,
+      "runtimeMaxSeconds": 90,
+      "kernelNoNewPrivileges": true,
+      "privateNetworkNamespace": true,
+      "sourceReadOnlyMount": true,
+      "automaticSummaryCommand": "Failed because the diagnostic matcher omitted the .service suffix; correction was requested, not silently applied.",
+      "rawObservationsSha256": "fbea5e1ab96244af313c68f944fe92103e725f7b2c908d1939c0328ace20a566"
+    },
+    "noNativeVendorAcceptanceClaim": true
+  },
+  "boundaries": {
+    "productionPublished": false,
+    "credentialsDnsPortsOrRelayChanged": false,
+    "externalAgentReauthorized": false,
+    "newAgentTasksCreated": false,
+    "newAgentEventsEnabled": false,
+    "originalNativeBrowserTaskAccepted": false
+  },
+  "nextGate": "Commit only the exact tested patch, its two test files and this redacted record after scanning; then perform fresh release preflight and the conditionally approved bounded release."
+}

@@ -62,6 +62,13 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPr
       if(request.jsonrpc!=='2.0'||(!notification&&!(typeof requestId==='string'&&requestId.length<=100||Number.isSafeInteger(requestId)))||typeof request.method!=='string'||(request.method==='notifications/initialized'&&!notification))return error(null,-32600,'invalid_request');P.bounded(request);
       if(closed)P.fail('mcp_closed',503);
       if(publicDenied)return error(requestId,-32001,'unauthorized');
+      if(request.params&&Object.hasOwn(request.params,'_meta')){
+        const {_meta,...params}=P.object(request.params);P.object(_meta);
+        if(_meta.progressToken!==undefined&&typeof _meta.progressToken!=='string'&&!Number.isSafeInteger(_meta.progressToken))P.fail('invalid_metadata');
+        // Metadata is envelope context, never a grant selector or tool argument.
+        // The original envelope was bounded above, before metadata is discarded.
+        request={...request,params};
+      }
       const agentRequest=agentToken(auth),scope=requestScope(request);let p,nodeAccess,resolved,grantId;
       const explicit=agentRequest&&!!resolveAgentConnections;
       const connectionRequest=request.method==='tools/call'&&request.params?.name===connectionTool.name;
@@ -122,7 +129,7 @@ function createPilotMcp({store,artifacts,uploads,resolvePrincipal,resolveAgentPr
         return await store.withWorkspace({workspaceId:current.workspaceId,userId:current.createdBy},handleNode);
       }
       return nodeAccess?await nodeAccess.run(handleNode):await handleNode();
-    }catch(e){const reason=e instanceof P.GatewayError?e.code:e.reason||'mcp_error';const invalid=['unsupported_field','unsupported_tool','invalid_object','missing_tool_field','invalid_id','invalid_text','sensitive_or_unsafe_field'].includes(reason);return error(requestId,e.rpcCode||(invalid?-32602:-32000),reason);}
+    }catch(e){const reason=e instanceof P.GatewayError?e.code:e.reason||'mcp_error';const invalid=['unsupported_field','unsupported_tool','invalid_object','invalid_metadata','missing_tool_field','invalid_id','invalid_text','sensitive_or_unsafe_field'].includes(reason);return error(requestId,e.rpcCode||(invalid?-32602:-32000),reason);}
   }
   const server=http.createServer(async(req,res)=>{
     function send(status,value,{scope,invalidToken=false,metadata=false}={}){

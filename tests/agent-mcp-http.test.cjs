@@ -11,6 +11,20 @@ const {createArtifactUpload} = require('../integrations/mcp/artifact-upload.cjs'
 const {createPilotEvents} = require('../integrations/mcp/events.cjs');
 
 const rpc = (name, args = {}) => ({jsonrpc: '2.0', id: 1, method: 'tools/call', params: {name, arguments: args}});
+
+test('legacy signed-JWT binding accepts metadata but cannot upgrade a read-only grant', async t => {
+  const f = await fixture(t, {scopes: ['task.read']});
+  const read = rpc('pilot.read_task', {taskId: f.task.taskId});
+  read.params._meta = {progressToken: 7, scope: 'task.claim', workspaceId: f.workspaces.b.id};
+  const allowed = await f.request(read);
+  assert.equal(allowed.body.result?.structuredContent.taskId, f.task.taskId);
+  assert.equal(allowed.body.result?.structuredContent.workspaceId, f.workspaces.a.id);
+  assert.equal(f.legacyResolutions(), 0);
+  const claim = rpc('pilot.claim_task', {taskId: f.task.taskId});
+  claim.params._meta = read.params._meta;
+  assert.equal((await f.request(claim)).status, 403);
+  assert.equal(f.human('alice', 'a', h => h.getTask(f.task.taskId)).status, 'queued');
+});
 async function fixture(t, {scopes = ['task.read', 'task.claim', 'task.result', 'events.read', 'events.subscribe'], enabled = true,
   withEvents = false, beforeResolve} = {}) {
   const cleanups = []; let mcp, events;
