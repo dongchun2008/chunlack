@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-20",
+  "status": "fresh_owner_session_verified_browser_ui_not_observed",
+  "userReport": "User completed sign-in in the external browser and requested verification.",
+  "observation": {
+    "origin": "Pinned SSH; SQLite mode=ro and query_only; selected only fixed session timestamps, revocation state, known login and workspace role",
+    "serverUtc": "2026-10-20T00:02:00.053766+00:00",
+    "login": "chunlack-owner",
+    "createdUtc": "2026-10-19T23:58:01.837000+00:00",
+    "lastSeenUtc": "2026-10-20T00:01:57.314000+00:00",
+    "active": true,
+    "revoked": false,
+    "ageSeconds": 238.2,
+    "workspace": {
+      "name": "ChunLACK",
+      "role": "owner"
+    },
+    "sessionCreationAuditMatched": true,
+    "freshActiveSessionWithin15Minutes": true
+  },
+  "proven": [
+    "A fresh active application session exists for chunlack-owner.",
+    "The account is an owner member of the ChunLACK workspace.",
+    "Activity was observed shortly before the read-only server query."
+  ],
+  "notProven": [
+    "External Chrome page content and selected workspace were not directly observed because its browser-control connection is unavailable.",
+    "CONNECTED WebSocket UI indicator and post-login model/Agent actions were not visually verified.",
+    "This query does not independently identify the authentication method; Pocket ID completion is user-reported.",
+    "No external Agent connector or task authorization is established by human login."
+  ],
+  "privacy": {
+    "sessionTokensSelected": false,
+    "csrfHashesSelected": false,
+    "passwordFieldsSelected": false,
+    "externalSubjectIdentifiersSelected": false
+  },
+  "sideEffects": {
+    "productionMutated": false,
+    "sessionsCreatedRevokedOrChanged": false,
+    "credentialsChanged": false,
+    "relayChanged": false,
+    "externalAgentGrantsCreated": false
+  },
+  "readyForFullDelivery": false
+}
