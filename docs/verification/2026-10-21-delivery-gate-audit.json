@@ -2,7 +2,7 @@
   "date": "2026-10-21",
   "status": "incomplete_delivery_native_pilot_accepted_historical_checkpoint_copied",
   "scope": "Prior manual native-dot acceptance plus off-host copy and read-only database recovery probe of a historical cold checkpoint; isolated native conversation design remains proposed.",
-  "sourceCommit": "f8ad9a0881f2a9ec410684cda912f55afe36fbb7",
+  "sourceCommit": "27eb35a9f1d58ab9f7356fbf2028ca32b9009fed",
   "currentStateEvidence": {
     "modulePublication": "docs/verification/2026-10-20-mcp-request-metadata-publication.json",
     "timingClosure": "docs/verification/2026-10-21-mcp-timing-and-connector-followup.json",
@@ -20,7 +20,8 @@
     "nativePilotHumanAccepted": true,
     "offHostCheckpoint": "docs/verification/2026-10-21-offhost-checkpoint-copy-verification.json",
     "museProtocolPreflight": "docs/verification/2026-10-21-muse-public-preflight-recheck.json",
-    "researchSearchPreflight": "docs/verification/2026-10-21-research-search-newline-retest.json"
+    "researchSearchPreflight": "docs/verification/2026-10-21-research-search-newline-retest.json",
+    "researchSourceUrlDefect": "docs/verification/2026-10-21-research-source-url-defect.json"
   },
   "gates": [
     {
@@ -182,18 +183,21 @@
     },
     {
       "id": "research-original-source-integrity",
-      "status": "local_regression_and_live_empty_search_observed_real_research_pending",
+      "status": "live_search_source_url_defect_reproduced_real_research_blocked",
       "evidence": [
         "docs/verification/2026-10-20-research-evidence-chain-recheck.json",
-        "docs/verification/2026-10-21-research-search-newline-retest.json"
+        "docs/verification/2026-10-21-research-search-newline-retest.json",
+        "docs/verification/2026-10-21-research-source-url-defect.json"
       ],
       "proven": [
         "43 synthetic-data local research/gateway/source/capacity regressions passed.",
         "Search failure and missing evidence remain explicit; source URL/excerpt/source identifiers and quote matching checked by those tests.",
-        "One approved diagnostic-only newline correction compiled and ran the actual generated search functions with real axios/cheerio dependencies: two HTTP 200 responses in 2843 ms, both visibly no-result pages, zero extracted URLs and zero model calls. This is not a completed research trial."
+        "One approved diagnostic-only newline correction compiled and ran the actual generated search functions with real axios/cheerio dependencies: two HTTP 200 responses in 2843 ms, both visibly no-result pages, zero extracted URLs and zero model calls. This is not a completed research trial.",
+        "A broader real query returned three results in one HTTP 200 response, but the unchanged HTML parser mangled all protocol-relative DuckDuckGo links. Offline replay of that actual response failed the original-source URL contract as expected."
       ],
       "missing": [
-        "Complete a real original-source research task with retrieval, independent checking and preserved final citations; synthetic tests are not real retrieval."
+        "Complete a real original-source research task with retrieval, independent checking and preserved final citations; synthetic tests are not real retrieval.",
+        "Correct shared HTML/lite result URL normalization and prove original-source acquisition through the corrected product path before accepting a real three-role research task."
       ]
     },
     {
@@ -285,6 +289,10 @@
     {
       "action": "Resolve independent native task destination feasibility before implementing the proposed quiet route. Do not send messages to the daily dot chat without the pending specific confirmation.",
       "state": "pending_design_and_initialization_confirmation"
+    },
+    {
+      "action": "Approve the bounded search-source normalization repair and local regressions; retain original source URLs without opening production or changing model routes.",
+      "state": "awaiting_bounded_fix_confirmation"
     }
   ],
   "changes": {
@@ -294,8 +302,8 @@
     "relay": false,
     "dns": false,
     "ports": false,
-    "diagnosticNewlineCorrections": 1,
-    "liveSearchRequests": 2,
+    "liveSearchRequests": 1,
+    "offlineContractFailuresReproduced": 1,
     "modelCalls": 0,
     "newAgentMessages": 0,
     "newExternalGrants": 0,

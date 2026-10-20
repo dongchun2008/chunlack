@@ -1,0 +1,74 @@
+{
+  "date": "2026-10-21",
+  "status": "live_duckduckgo_source_url_defect_reproduced_product_fix_pending",
+  "sourceCommit": "27eb35a9f1d58ab9f7356fbf2028ca32b9009fed",
+  "liveObservation": {
+    "query": "IANA example domains",
+    "requestCount": 1,
+    "elapsedMs": 1603,
+    "responseStatus": 200,
+    "responseBytes": 32761,
+    "responseSha256": "2e4b24ef552d92720c3b18399accc4576ff515e9bedc54f2d8140ec0dc994da1",
+    "returnedUrlCount": 3,
+    "malformedReturnedUrlCount": 3,
+    "rawProtocolRelativeLinkCount": 3
+  },
+  "rootCause": {
+    "authoritativeSource": "lack.py: embedded SERVER_JS searchDuckDuckGo",
+    "consumer": "scripts/materialize.py embedded_sources",
+    "htmlBranch": "Protocol-relative //duckduckgo.com/l/ links satisfy startsWith slash, then an extra origin is prepended, producing https://duckduckgo.com//duckduckgo.com/l/.",
+    "originalSourceLoss": "uddg contains the original source URL, but the parser returns a malformed search-engine URL rather than that original source.",
+    "liteBranch": "The current http-prefix-only filter does not accept protocol-relative result links; that branch has no equivalent source normalization."
+  },
+  "offlineReplay": {
+    "actualCapturedResponseUsed": true,
+    "originalGeneratedFunctionsUsed": true,
+    "expectedContractFailureConfirmed": true,
+    "expectedOriginalTargets": [
+      "https://www.iana.org/help/example-domains?a",
+      "https://www.iana.org/help/example-domains",
+      "https://en.wikipedia.org/wiki/Example.com"
+    ],
+    "networkRequests": 0,
+    "modelCalls": 0
+  },
+  "notProven": [
+    "The original source pages have not yet been fetched through a corrected product path.",
+    "No full retrieval/verification/summary run or original-source claim acceptance has occurred.",
+    "The proposed normalizer would provide URL-syntax checks, not proof against DNS rebinding or arbitrary redirect SSRF."
+  ],
+  "proposedBoundedFix": {
+    "status": "awaiting_confirmation",
+    "files": [
+      "lack.py",
+      "gateway/research-search.cjs",
+      "tests/research-search.test.cjs"
+    ],
+    "behavior": [
+      "Use standard URL parsing for absolute, protocol-relative and root-relative result links.",
+      "Unwrap recognized DuckDuckGo result redirects once, retaining the original target query/path.",
+      "Apply the same normalization and deduplication to HTML and lite results without changing search providers.",
+      "Reject invalid schemes, embedded credentials, internal navigation and literal private/local destinations before treating a URL as a public source.",
+      "Add regressions for actual observed link shape, query encoding, deduplication, lite fallback, empty results and malformed redirects."
+    ],
+    "constraints": [
+      "Local development and bounded verification only; no production deployment.",
+      "No provider/router/Ollama, credential, permission, port, DNS, Relay or native-Agent-message change."
+    ]
+  },
+  "changes": {
+    "productCode": false,
+    "productionServices": false,
+    "credentials": false,
+    "relay": false,
+    "dns": false,
+    "ports": false,
+    "newGrants": 0,
+    "newAgentMessages": 0,
+    "eventSubscriptions": 0,
+    "modelCalls": 0
+  },
+  "privacy": {
+    "rawSearchHtmlAndTrackingParameters": "retained only in ignored private evidence, not committed"
+  }
+}
