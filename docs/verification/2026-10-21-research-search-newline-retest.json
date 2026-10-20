@@ -1,0 +1,79 @@
+{
+  "date": "2026-10-21",
+  "recordedAt": "2026-10-20T23:25:06.241Z",
+  "status": "diagnostic_newline_fixed_live_query_returned_no_results_real_research_pending",
+  "executionCheckoutCommit": "f8ad9a0881f2a9ec410684cda912f55afe36fbb7",
+  "embeddedCodeBaselineCommit": "adaf4eea9a0e3a90ae1ce707f6257728994091c5",
+  "interveningChanges": "documentation only; no product source changes",
+  "scope": "One approved diagnostic-only newline escaping correction and one real search preflight; no model calls or native Agent messages.",
+  "correction": {
+    "originalFailureRetained": true,
+    "originalHarnessSha256": "61826511658171b3b8a16cefc5248bb773b30755ff528058efa2f698edfb2f01",
+    "correctedHarnessSha256": "e8c2290861e077e9b0e0859f64600645d7136a65d747b9e3634822a8579fc337",
+    "literalNewlineReplacedWithEscapedNewline": 1,
+    "otherHarnessChanges": 0,
+    "syntaxCompilationPassed": true
+  },
+  "limits": {
+    "requestTimeoutMs": 8000,
+    "maxSearchResults": 3,
+    "outerTimeoutMs": 60000,
+    "limitsIncreased": false
+  },
+  "search": {
+    "query": "site:iana.org/help/example-domains reserved example domains documentation",
+    "requestCount": 2,
+    "elapsedMs": 2843,
+    "urls": [],
+    "responses": [
+      {
+        "status": 200,
+        "bytes": 9446,
+        "sha256": "b1a2424e5bda1d7dfc5cf8f807b8020fdfb71b408c0d781ca8edd70e94be4ac6",
+        "noResultsMessageObserved": true,
+        "resultTitleAnchorCount": 0,
+        "resultUrlAnchorCount": 0,
+        "externalLinkCount": 0,
+        "challengeTextObserved": false
+      },
+      {
+        "status": 200,
+        "bytes": 8073,
+        "sha256": "34207743980e05f5c211b2bbcbaf13d8fce1b35d76e4ecfc4d1ed5494022fffd",
+        "noResultsMessageObserved": true,
+        "resultTitleAnchorCount": 0,
+        "resultUrlAnchorCount": 0,
+        "externalLinkCount": 0,
+        "challengeTextObserved": false
+      }
+    ],
+    "transportErrors": []
+  },
+  "interpretation": {
+    "diagnosticExecutionPassed": true,
+    "actualOriginalSourcesRetrieved": false,
+    "parserLostExistingResultLinksDemonstrated": false,
+    "searchResponsesExplicitlyEmptyForThisQuery": true,
+    "searchEngineGenerallyBrokenProven": false,
+    "runResearchInvoked": false,
+    "retrievalVerificationSummaryCompleted": false,
+    "realResearchAccepted": false
+  },
+  "changes": {
+    "productCode": false,
+    "productionServices": false,
+    "credentials": false,
+    "relay": false,
+    "dns": false,
+    "ports": false,
+    "modelCalls": 0,
+    "nativeAgentMessages": 0,
+    "grants": 0,
+    "eventSubscriptions": 0
+  },
+  "evidencePrivacy": {
+    "originalAndCorrectedScripts": "retained only in ignored private evidence directory",
+    "rawSearchHtml": "retained privately; not committed"
+  },
+  "nextStep": "A separately scoped real-source, three-role research trial remains needed. Do not treat HTTP 200, the diagnostic fix, or this empty-result query as successful original-source research."
+}
