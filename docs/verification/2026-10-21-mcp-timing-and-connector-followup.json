@@ -17,14 +17,16 @@
     "repeatPublicationPerformed": false,
     "offlineRegression": {
       "tests": 10,
-      "passed": 9,
-      "errors": 1,
-      "exitCode": 1,
-      "pendingCase": "test_reported_forward_budget_is_not_relaxed",
-      "finding": "The fixture assigns a 55.001-second controller window to an approximately 38-second invocation. The implementation rejects inconsistent evidence before the fixture's expected failed-budget result.",
-      "proposedFixtureOnlyCorrection": "Construct a consistent 60-second invocation while retaining the 55.001-second rejected controller window and all original limits.",
-      "correctionApprovalPending": true,
-      "allTestsPassed": false
+      "passed": 10,
+      "errors": 0,
+      "exitCode": 0,
+      "correctedCase": "test_reported_forward_budget_is_not_relaxed",
+      "originalFinding": "The original fixture assigned a 55.001-second controller window to an approximately 38-second invocation. The implementation correctly rejected inconsistent evidence before the fixture's expected failed-budget result.",
+      "approvedFixtureOnlyCorrection": "Construct a consistent 60-second invocation while retaining the 55.001-second rejected controller window and all original limits.",
+      "correctionApprovalPending": false,
+      "fixtureUnitDurationSeconds": 60,
+      "implementationChangedForRetest": false,
+      "allTestsPassed": true
     }
   },
   "connector": {
@@ -77,7 +79,7 @@
     "privateJournalOrScreenshotCommitted": false
   },
   "nextGates": [
-    "Obtain confirmation for the single inconsistent timing fixture and rerun its complete offline regression.",
+    "Timing fixture correction and all 10 offline regression cases are complete. No repeat publication is required.",
     "A zero-row local business authority boundary is confirmed. It must remain closed under the current instructions; actual token scopes and native task acceptance remain unverified.",
     "Stop before any new Pocket ID consent submission; human verification and scope review remain required if such a page appears.",
     "Native dots and Muse own-computer task evidence remains a separate incomplete acceptance gate."
