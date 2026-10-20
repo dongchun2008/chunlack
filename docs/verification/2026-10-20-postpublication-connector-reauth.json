@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-20",
+  "observedAtUTC": "2026-10-20 15:43:51 UTC",
+  "operation": "chunlack_connections_list",
+  "caller": "Codex connector control probe; not native dots own-computer acceptance",
+  "readOnly": true,
+  "result": "reauthentication_required",
+  "errorCode": "UNAUTHORIZED",
+  "reason": "run_with_credentials_failed_to_invoke_with_refreshed_token",
+  "chunlackBusinessResponseObserved": false,
+  "actualInboundEnvelopeCaptured": false,
+  "metadataFixNativeAcceptanceProven": false,
+  "externalAgentGrantCreatedOrRestored": false,
+  "taskCreated": false,
+  "productionChanged": false,
+  "credentialsReadOrChanged": false,
+  "action": "Request approval to initiate existing connector OAuth sign-in, stop at consent, require human passkey verification; do not restore workspace grants."
+}
