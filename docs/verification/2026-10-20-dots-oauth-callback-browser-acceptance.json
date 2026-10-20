@@ -1,0 +1,65 @@
+{
+  "date": "2026-10-20",
+  "scope": "User-approved Pocket ID consent and actual ChatGPT OAuth callback acceptance",
+  "result": "OAuth-callback-and-connected-account-verified",
+  "supersedesPendingConsentStatusIn": "2026-10-20-dots-created-consent-pending.json",
+  "approval": {
+    "userConfirmedAtActionTime": true,
+    "visibleConsentItems": ["email", "task.read", "task.claim", "task.result"],
+    "eventScopesRequestedOnConsentPage": false,
+    "businessAuthorizationExplicitlyExcluded": true,
+    "taskExecutionExplicitlyExcluded": true
+  },
+  "observedFlow": [
+    "Re-observed the same Pocket ID consent page and unchanged four visible permissions.",
+    "Submitted its Login button only after the user's specific confirmation.",
+    "Observed ChatGPT connector OAuth callback processing.",
+    "Observed return to the personal plugins page with ChunLACK 玄玑 in Installed and Created by you.",
+    "Opened plugin management and observed Connected accounts with a Primary account.",
+    "Management showed OAuth as both supported and used authentication, the expected MCP URL, and association date 2026-10-20."
+  ],
+  "connection": {
+    "name": "ChunLACK 玄玑",
+    "mcpUrl": "https://agents.chunclaw.top/mcp",
+    "authenticationUsed": "OAuth",
+    "connectedAccountVisible": true,
+    "developmentMode": true,
+    "privateScreenshotSaved": true,
+    "screenshotCommitted": false
+  },
+  "businessBoundaryObservation": {
+    "currentWorkspace": "ChunLACK",
+    "agentGrantPanelOpenedReadOnly": true,
+    "nodeSelectorHadNoSelectableNode": true,
+    "createGrantButtonDisabled": true,
+    "noGrantFormValueEntered": true,
+    "noGrantSubmitted": true,
+    "grantCountIndependentlyEnumerated": false,
+    "panelClosedAfterInspection": true
+  },
+  "notProven": [
+    "A business MCP tool call accepted with the new token",
+    "Token payload contents, exact granted token scope set or renewal behavior",
+    "A registered native dots execution node and its scoped business grant",
+    "Native dots computer task execution, evidence upload, persisted receipt or human acceptance",
+    "Event subscription or automatic wake",
+    "Full production delivery across all required platforms and providers"
+  ],
+  "nextPrerequisites": [
+    "Separately approve and register a dedicated native dots node with bounded capabilities; no generic worker substitute.",
+    "Separately approve a short-lived account/client/node business grant before reading or claiming any real task.",
+    "Then validate one task with task ID, random challenge, native browser activity, public-page screenshot and persistent result receipt; inspect failures without broadening permissions."
+  ],
+  "boundaries": {
+    "newClientOrSecretCreated": false,
+    "credentialsReadCopiedOrRecorded": false,
+    "authorizationCodeCookieTokenOrPrivateIdentifierRecorded": false,
+    "workspaceBusinessGrantCreated": false,
+    "eventEnabledOrSubscriptionCreated": false,
+    "taskCreatedOrExecuted": false,
+    "modelCallOrChatMessageSent": false,
+    "productionCodeDnsPortOldLackOrRelayChanged": false
+  },
+  "readyForNativeDotsAcceptance": false,
+  "readyForFullDelivery": false
+}
