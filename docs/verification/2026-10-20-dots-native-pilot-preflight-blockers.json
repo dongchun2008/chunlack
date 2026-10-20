@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-20",
+  "scope": "Native dots pilot preflight, approved temporary-grant cleanup and isolated protocol diagnosis",
+  "readyForFullDelivery": false,
+  "nativePilot": {
+    "nodeName": "dots-xuanji-pilot",
+    "capabilities": ["browser.public_read"],
+    "temporaryGrantScopes": ["task.read", "task.claim", "task.result"],
+    "temporaryGrantCreated": true,
+    "initialNativePreflight": "Native reply reported unavailable tool search",
+    "connectorRefresh": "Nine tools became available in the connected tool registry",
+    "secondNativePreflight": "Native reply reported McpServerError: unsupported_field",
+    "independentCodexDiagnostic": "One actual connection-list call also returned McpServerError: unsupported_field; this was not native task acceptance",
+    "actualClientEnvelopeCaptured": false,
+    "tasksCreated": 0,
+    "leasesCreated": 0,
+    "artifactsUploaded": 0,
+    "nativeExampleBrowserTaskExecuted": false,
+    "eventsEnabled": false,
+    "genericWorkerSubstitution": false
+  },
+  "approvedCleanup": {
+    "method": "Pinned SSH and one bounded transaction under the existing service account",
+    "committed": true,
+    "revokedGrantCount": 1,
+    "remainingPilotGrants": 0,
+    "auditVerified": true,
+    "otherGrantsUnchangedInTransaction": true,
+    "nodeDeleted": false,
+    "databaseAttributesUnchanged": true,
+    "protectedServicePidsRestartCountsAndActiveStatesUnchanged": true,
+    "limits": {
+      "memoryMaxMiB": 192,
+      "memoryHighMiB": 160,
+      "memorySwapMax": 0,
+      "cpuQuotaPercent": 10,
+      "tasksMax": 32,
+      "runtimeMaxSeconds": 30,
+      "privateNetwork": true,
+      "noNewPrivileges": true
+    }
+  },
+  "isolatedProtocolDiagnostic": {
+    "recordedAt": "2026-10-20T13:35:05.386Z",
+    "fixtureCorrection": "Corrected one missing closing brace after a parse-time failure",
+    "sourceSha256": "c150a092fba59c606f939147ee15303b0c1b10b3b21f570787b9b8ad25aa068e",
+    "networkListeners": 0,
+    "realCredentials": 0,
+    "modelCalls": 0,
+    "usesMockedPrincipal": true,
+    "cases": [
+      {"name": "connection_without_metadata", "observed": "success", "expectedObservationMatched": true},
+      {"name": "connection_progress_metadata", "observed": "unsupported_field", "rpcCode": -32602, "expectedObservationMatched": true},
+      {"name": "tool_list_without_metadata", "observed": "success", "expectedObservationMatched": true},
+      {"name": "tool_list_protocol_metadata", "observed": "unsupported_field", "rpcCode": -32602, "expectedObservationMatched": true},
+      {"name": "ping_progress_metadata", "observed": "success", "expectedObservationMatched": true},
+      {"name": "initialize_metadata", "observed": "unsupported_field", "rpcCode": -32602, "expectedObservationMatched": true},
+      {"name": "unknown_tool_argument", "observed": "unsupported_field", "rpcCode": -32602, "expectedObservationMatched": true}
+    ],
+    "metadataCompatibilityGapReproduced": true,
+    "rootCauseOfLiveClientFailureConfirmed": false,
+    "interpretation": "All seven diagnostic observations matched expectations. Three metadata-bearing requests were rejected; this reproduces a compatibility gap, not a fixed or passing end-to-end integration."
+  },
+  "browserControl": {
+    "consecutiveControlTimeouts": 3,
+    "originalDraftPrivatelyPreserved": true,
+    "draftRestorationVerified": false,
+    "furtherTypingStopped": true
+  },
+  "boundaries": {
+    "productCodeChanged": false,
+    "productionDeploymentPerformed": false,
+    "credentialsDnsOrPortsChanged": false,
+    "oldLackOrRelayConfigurationChanged": false,
+    "privateIdentifiersCredentialsAndScreenshotsIncluded": false,
+    "nextProductCompatibilityPatchAwaitingApproval": true
+  }
+}
