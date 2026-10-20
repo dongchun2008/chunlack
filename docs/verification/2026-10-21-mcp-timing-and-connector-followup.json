@@ -48,6 +48,19 @@
     },
     "furtherSignInRetriesStopped": true,
     "connectionUsableProven": false,
+    "additionalReadonlyDiagnosis": {
+      "productionModuleMatchesPublishedPayload": true,
+      "totalBusinessGrantRows": 0,
+      "unexpiredBusinessGrantRows": 0,
+      "databaseOpenedReadOnly": true,
+      "sourceBehavior": "The MCP explicit-connection branch rejects an empty resolved connections list with insufficient_scope. Its HTTP 403 challenge requests task.read, including when a valid OAuth identity has no local business grant.",
+      "sourceFiles": ["integrations/mcp/pilot-server.cjs", "identity/agent-authority.cjs"],
+      "emptyLocalGrantBlockerConfirmed": true,
+      "actualTokenScopeContentsInspected": false,
+      "emptyGrantProvenSoleCauseOfCurrentToolError": false,
+      "repeatingSignInCannotCreateLocalBusinessAuthority": true,
+      "allFourServicePidsAndRestartCountsMatchPostpublicationBaseline": true
+    },
     "nativeOwnComputerTaskAcceptanceCompleted": false,
     "businessGrantCreatedOrRestored": false,
     "taskCreated": false,
@@ -65,7 +78,7 @@
   },
   "nextGates": [
     "Obtain confirmation for the single inconsistent timing fixture and rerun its complete offline regression.",
-    "Distinguish the connector's scope challenge from live business-grant rejection without silently widening scopes or restoring grants.",
+    "A zero-row local business authority boundary is confirmed. It must remain closed under the current instructions; actual token scopes and native task acceptance remain unverified.",
     "Stop before any new Pocket ID consent submission; human verification and scope review remain required if such a page appears.",
     "Native dots and Muse own-computer task evidence remains a separate incomplete acceptance gate."
   ]
