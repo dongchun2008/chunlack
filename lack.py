@@ -689,6 +689,7 @@ const SEARCH_MAX_RESULTS = config.searchMaxResults || 5;
 const SCRAPE_TIMEOUT = config.scrapeTimeout || 8000;
 
 async function searchDuckDuckGo(query, maxResults = SEARCH_MAX_RESULTS) {
+    const {normalizeSearchResultUrl} = require('./gateway/research-search.cjs');
     const searchUrls = [
         `https://html.duckduckgo.com/html/?q=${encodeURIComponent(query)}`,
         `https://lite.duckduckgo.com/lite/?q=${encodeURIComponent(query)}`
@@ -704,14 +705,13 @@ async function searchDuckDuckGo(query, maxResults = SEARCH_MAX_RESULTS) {
             const results = [];
             if (baseUrl.includes('html.duckduckgo.com')) {
                 $('.result__url').each((i, el) => {
-                    let href = $(el).attr('href');
-                    if (href && href.startsWith('/')) href = 'https://duckduckgo.com' + href;
-                    if (href && href.startsWith('http') && results.length < maxResults) results.push(href);
+                    const href = normalizeSearchResultUrl($(el).attr('href'), baseUrl);
+                    if (href && !results.includes(href) && results.length < maxResults) results.push(href);
                 });
             } else {
                 $('a').each((i, el) => {
-                    const href = $(el).attr('href');
-                    if (href && href.startsWith('http') && results.length < maxResults) results.push(href);
+                    const href = normalizeSearchResultUrl($(el).attr('href'), baseUrl);
+                    if (href && !results.includes(href) && results.length < maxResults) results.push(href);
                 });
             }
             if (results.length > 0) return results;

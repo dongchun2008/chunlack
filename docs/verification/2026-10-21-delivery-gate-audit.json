@@ -1,8 +1,8 @@
 {
   "date": "2026-10-21",
   "status": "incomplete_delivery_native_pilot_accepted_historical_checkpoint_copied",
-  "scope": "Prior manual native-dot acceptance plus off-host copy and read-only database recovery probe of a historical cold checkpoint; isolated native conversation design remains proposed.",
-  "sourceCommit": "27eb35a9f1d58ab9f7356fbf2028ca32b9009fed",
+  "scope": "Bounded local search-source URL repair, complete local regressions and one real primary-source acquisition probe; prior native and production evidence remains dated and unchanged.",
+  "sourceCommit": "9eed53734c1ac8cb912eeb57d2acaba9f783bea9",
   "currentStateEvidence": {
     "modulePublication": "docs/verification/2026-10-20-mcp-request-metadata-publication.json",
     "timingClosure": "docs/verification/2026-10-21-mcp-timing-and-connector-followup.json",
@@ -21,7 +21,8 @@
     "offHostCheckpoint": "docs/verification/2026-10-21-offhost-checkpoint-copy-verification.json",
     "museProtocolPreflight": "docs/verification/2026-10-21-muse-public-preflight-recheck.json",
     "researchSearchPreflight": "docs/verification/2026-10-21-research-search-newline-retest.json",
-    "researchSourceUrlDefect": "docs/verification/2026-10-21-research-source-url-defect.json"
+    "researchSourceUrlDefect": "docs/verification/2026-10-21-research-source-url-defect.json",
+    "researchSourceUrlFix": "docs/verification/2026-10-21-research-source-url-fix.json"
   },
   "gates": [
     {
@@ -183,21 +184,24 @@
     },
     {
       "id": "research-original-source-integrity",
-      "status": "live_search_source_url_defect_reproduced_real_research_blocked",
+      "status": "local_source_acquisition_verified_full_research_pending",
       "evidence": [
         "docs/verification/2026-10-20-research-evidence-chain-recheck.json",
         "docs/verification/2026-10-21-research-search-newline-retest.json",
-        "docs/verification/2026-10-21-research-source-url-defect.json"
+        "docs/verification/2026-10-21-research-source-url-defect.json",
+        "docs/verification/2026-10-21-research-source-url-fix.json"
       ],
       "proven": [
         "43 synthetic-data local research/gateway/source/capacity regressions passed.",
         "Search failure and missing evidence remain explicit; source URL/excerpt/source identifiers and quote matching checked by those tests.",
         "One approved diagnostic-only newline correction compiled and ran the actual generated search functions with real axios/cheerio dependencies: two HTTP 200 responses in 2843 ms, both visibly no-result pages, zero extracted URLs and zero model calls. This is not a completed research trial.",
-        "A broader real query returned three results in one HTTP 200 response, but the unchanged HTML parser mangled all protocol-relative DuckDuckGo links. Offline replay of that actual response failed the original-source URL contract as expected."
+        "A broader real query returned three results in one HTTP 200 response, but the unchanged HTML parser mangled all protocol-relative DuckDuckGo links. Offline replay of that actual response failed the original-source URL contract as expected.",
+        "Approved shared HTML/lite normalization repair passed 93 targeted tests, all 927 local tests with zero skips, and the existing mock-provider HTTP/WebSocket/persistence smoke test.",
+        "The actual corrected generated search and scrape functions returned three original URLs and acquired a 773-character IANA excerpt with source URL and SHA-256 preserved: two HTTP 200 requests in 2707 ms, zero model calls."
       ],
       "missing": [
-        "Complete a real original-source research task with retrieval, independent checking and preserved final citations; synthetic tests are not real retrieval.",
-        "Correct shared HTML/lite result URL normalization and prove original-source acquisition through the corrected product path before accepting a real three-role research task."
+        "Complete a real original-source research task with retrieval, independent checking and preserved final citations; local source acquisition and synthetic tests are not a full three-role model trial.",
+        "This source repair is not deployed. Any production release requires a separately approved scope and applicable isolation, backup and recovery gates."
       ]
     },
     {
@@ -291,19 +295,19 @@
       "state": "pending_design_and_initialization_confirmation"
     },
     {
-      "action": "Approve the bounded search-source normalization repair and local regressions; retain original source URLs without opening production or changing model routes.",
-      "state": "awaiting_bounded_fix_confirmation"
+      "action": "Use the verified original-source acquisition path when separately scoping a real retriever/verifier/summarizer trial; retain gaps and original citations. This local patch is not production acceptance.",
+      "state": "real_research_trial_pending"
     }
   ],
   "changes": {
-    "productCode": false,
+    "productCode": true,
     "productionServices": false,
     "credentials": false,
     "relay": false,
     "dns": false,
     "ports": false,
     "liveSearchRequests": 1,
-    "offlineContractFailuresReproduced": 1,
+    "primarySourceRequests": 1,
     "modelCalls": 0,
     "newAgentMessages": 0,
     "newExternalGrants": 0,

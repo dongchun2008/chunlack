@@ -1,0 +1,128 @@
+{
+  "date": "2026-10-21",
+  "timezone": "Asia/Shanghai",
+  "status": "local_regressions_and_bounded_live_source_acquisition_passed_not_deployed",
+  "sourceCommit": "9eed53734c1ac8cb912eeb57d2acaba9f783bea9",
+  "scope": {
+    "productFiles": [
+      "lack.py",
+      "gateway/research-search.cjs",
+      "tests/research-search.test.cjs"
+    ],
+    "productionDeployment": false,
+    "modelRoutingChanged": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "nativeAgentMessages": 0
+  },
+  "priorDefect": "docs/verification/2026-10-21-research-source-url-defect.json",
+  "implementation": [
+    "Normalize DuckDuckGo HTML and lite relative, protocol-relative and wrapped result URLs through one pure helper.",
+    "Unwrap a single uddg destination once, preserve original-source query parameters and fragment, and deduplicate before applying the existing result count.",
+    "Reject non-HTTP(S), credentials, ambiguous redirect targets, known local names and non-public literal IPs using the existing address validator.",
+    "Empty or failed search remains empty; no synthetic source or fact fallback was added."
+  ],
+  "limits": {
+    "dnsAndRedirectSsrfDefense": "Not established by this syntactic/literal-address helper; existing scraper DNS and redirect behavior is unchanged.",
+    "threeRoleResearchAcceptance": false,
+    "realModelAcceptance": false,
+    "linuxIsolationRetested": false,
+    "reason": "This approved scope was local regressions and bounded real source acquisition, not production release or full three-role model execution."
+  },
+  "verification": {
+    "targeted": {
+      "tests": 93,
+      "pass": 93,
+      "fail": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "durationMs": 1922.0395
+    },
+    "full": {
+      "tests": 927,
+      "pass": 927,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "durationMs": 402480.1093
+    },
+    "smoke": {
+      "exitCode": 0,
+      "checks": [
+        "real HTTP and WebSocket",
+        "two mock model backends in one channel",
+        "SQLite restart persistence",
+        "private bind",
+        "config preservation"
+      ],
+      "realModels": false
+    },
+    "live": {
+      "query": "IANA example domains",
+      "urls": [
+        "https://www.iana.org/help/example-domains?a",
+        "https://www.iana.org/help/example-domains",
+        "https://en.wikipedia.org/wiki/Example.com"
+      ],
+      "sourceUrl": "https://www.iana.org/help/example-domains?a",
+      "sourceAcquired": true,
+      "excerptCharacters": 773,
+      "excerptSha256": "3a0a0afa8628af3f3345cf21db2633832cc9f2eaa4048ee3a82fae8f1250bed5",
+      "containsExpectedTitle": true,
+      "requests": 2,
+      "responses": [
+        {
+          "status": 200,
+          "bytes": 32761,
+          "sha256": "2e4b24ef552d92720c3b18399accc4576ff515e9bedc54f2d8140ec0dc994da1",
+          "challenge": false
+        },
+        {
+          "status": 200,
+          "bytes": 6774,
+          "sha256": "3b8669627aee51b99102e51348e1d9c0b17fe949a481f3272b8f350b2a075c5f",
+          "challenge": false
+        }
+      ],
+      "errors": [],
+      "elapsedMs": 2707,
+      "modelCalls": 0,
+      "execution": "actual patched generated search and scrape functions; no full application or three-role model workflow",
+      "budgets": {
+        "perRequestMs": 8000,
+        "searchResultLimit": 3,
+        "outerMs": 60000,
+        "primarySourceFetchLimit": 1
+      }
+    },
+    "initialDiagnosticFailures": [
+      {
+        "stage": "Python stdin decoding",
+        "error": "UnicodeEncodeError",
+        "networkRequests": 0
+      },
+      {
+        "stage": "REPL environment reference",
+        "error": "process is not defined",
+        "networkRequests": 0
+      },
+      {
+        "stage": "explicit module import",
+        "error": "node:process is not allowed in node_repl",
+        "networkRequests": 0
+      }
+    ],
+    "diagnosticRemediation": "Use Python -X utf8 for the diagnostic child only; inherited environment and product files remain unchanged."
+  },
+  "codeGitBlobs": {
+    "lack.py": "9be0f7e2ef32612d4ba4fda5eb1c36f44e5c3cef",
+    "gateway/research-search.cjs": "367f1c18712e9e6132fd9f69f45c6b0267e7180c",
+    "tests/research-search.test.cjs": "99fa32ed8c52c0c01149191b31a3702ef7679588"
+  },
+  "rawEvidenceExcludedFromGit": true,
+  "conclusion": "The corrected generated product search/scrape path acquired one primary IANA source in this local bounded probe. This does not prove a complete deployed retriever/verifier/summarizer workflow."
+}
