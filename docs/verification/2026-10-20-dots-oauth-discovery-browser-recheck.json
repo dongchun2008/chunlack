@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-20",
+  "scope": "Read-only ChatGPT personal MCP connection discovery with an unsubmitted local form draft",
+  "result": "discovery-and-callback-loaded; creation-pending-confirmation",
+  "observed": {
+    "authenticatedPluginPage": true,
+    "personalPluginListDisplayedNoPlugins": true,
+    "customMcpEntryAvailable": true,
+    "draftName": "ChunLACK 玄玑",
+    "mcpEndpoint": "https://agents.chunclaw.top/mcp",
+    "authentication": "OAuth",
+    "registrationMethod": "custom OAuth client",
+    "callback": "https://chatgpt.com/connector_platform_oauth_redirect",
+    "tokenAuthenticationMethod": "none",
+    "authorizationEndpoint": "https://pockid.chunclaw.top/authorize",
+    "tokenEndpoint": "https://pockid.chunclaw.top/api/oidc/token",
+    "issuer": "https://pockid.chunclaw.top",
+    "resource": "https://agents.chunclaw.top/mcp",
+    "oidcDiscovery": "https://pockid.chunclaw.top/.well-known/openid-configuration",
+    "draftSelectedDefaultScopes": ["openid", "task.read", "task.claim", "task.result"],
+    "draftEventScopesDeselected": ["events.read", "events.subscribe"],
+    "riskAcknowledgementChecked": false,
+    "createSubmitted": false,
+    "oauthConsentSubmitted": false,
+    "businessGrantCreated": false
+  },
+  "loadingEvidence": {
+    "initialNavigationObservationTimedOut": true,
+    "sameTabRecoveredWithoutReloadOrDuplicateCreation": true,
+    "oauthAndCallbackEventuallyDisplayed": true
+  },
+  "officialReference": "https://developers.openai.com/plugins/build/auth",
+  "callbackAssessment": "Current official guidance requires the exact connection management callback; the observed stable callback matches the previously configured callback. This does not prove the OAuth code exchange.",
+  "privateEvidence": {
+    "localScreenshotSaved": true,
+    "screenshotCommitted": false,
+    "clientIdentifierOrSecretRecorded": false
+  },
+  "limitations": [
+    "No connection created, token obtained, task read or claimed, result submitted, subscription created or native dots computer operation performed.",
+    "Form scope selections are a draft, not proof of the eventual requested or granted token scopes.",
+    "Action-time confirmation is required before creating the connection; inspect actual consent before any new permission approval."
+  ],
+  "productionCredentialsDnsPortsAndRelayChanged": false,
+  "readyForNativeDotsAcceptance": false,
+  "readyForFullDelivery": false
+}
