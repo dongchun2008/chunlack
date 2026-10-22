@@ -1,0 +1,113 @@
+{
+  "date": "2026-10-22",
+  "timezone": "Asia/Shanghai",
+  "status": "local_batching_regressions_passed_real_research_reacceptance_pending",
+  "sourceBase": "06417ab61bee08ac11fe4d814db657ca5de873c9",
+  "implementation": {
+    "modifiedProductAndTestFiles": [
+      "lack.py",
+      "tests/research.test.cjs"
+    ],
+    "maximumClaimsPerVerificationBatch": 3,
+    "preserveEveryClaim": true,
+    "allTrustedSourcesRetainedForEachBatch": true,
+    "originalDecisionAndExactQuoteValidationUnchanged": true,
+    "commitOnlyAfterAllBatchesAndQuestionsPass": true,
+    "summaryMustIncludeEverySupportedClaim": true,
+    "providerRoutingUnchanged": true,
+    "ollamaPreserved": true
+  },
+  "regression": {
+    "red": {
+      "productBeforeRepair": true,
+      "tests": 55,
+      "pass": 40,
+      "expectedFailures": 15,
+      "reporter": "Node default; private raw log retained"
+    },
+    "targeted": {
+      "tests": 112,
+      "pass": 112,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "durationMs": 1341.6166
+    },
+    "full": {
+      "tests": 946,
+      "pass": 946,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "exitCode": 0,
+      "durationMs": 1042975.9335,
+      "portableHttpsToolProvided": true
+    },
+    "smoke": {
+      "exitCode": 0,
+      "actualHttpAndWebSocket": true,
+      "twoMockModelBackends": true,
+      "sqliteRestartPersistence": true,
+      "privateBind": true,
+      "configPreservation": true,
+      "realModels": false
+    },
+    "sourceBlobsUnchangedDuringFullRegression": true,
+    "codeGitBlobs": {
+      "lack.py": "87012dc0224848c036574c03bf5c487177d6149f",
+      "tests/research.test.cjs": "5b9e925aa91aa62e361fa394079d8b85761f02d6"
+    }
+  },
+  "priorRealTrial": {
+    "accepted": false,
+    "acquiredOriginalPageSnapshots": 6,
+    "uniquePrimaryPages": 2,
+    "claimsRetainedUnverified": 27,
+    "trialRequests": 11,
+    "successfulTrialRequests": 8,
+    "failedTrialRequests": 3,
+    "diagnosticRequests": 2,
+    "cumulativeActualRequestsUsed": 13,
+    "originalRequestLimit": 20,
+    "additionalActualRequestsInThisLocalPhase": 0,
+    "phase": "Verification failed",
+    "summaryExecuted": false,
+    "firstNineDecisionsPassedOriginalValidator": true,
+    "confirmedDiagnosticBoundary": "Previously failed saved prompt reached the configured 20-second whole-request deadline before response headers; successful saved control returned 200 in 18841 ms and passed the unchanged validator.",
+    "underlyingServerDelayCause": "Not established; queueing, generation duration, other workload and transport latency remain unverified.",
+    "temporaryForwardsClosed": true,
+    "rawPromptsResponsesAndOriginalExcerptsExcludedFromGit": true
+  },
+  "callVolume": {
+    "priorSavedMaterialProjection": {
+      "questionGeneration": 1,
+      "extraction": 6,
+      "verificationBatches": 9,
+      "summarization": 1,
+      "totalSuccessfulLogicalCalls": 17
+    },
+    "maximumLogicalCallsUnderExistingCollectionLimitsWithoutRetriesOrFallbacks": 44,
+    "remarks": "Batching reduces response size but increases calls. The projection is not real acceptance or a new budget; any future trial must separately authorize and enforce its actual request limit."
+  },
+  "limits": {
+    "newRealTrialBudgetApproved": false,
+    "productionDeployed": false,
+    "productionChanged": false,
+    "credentialsChanged": false,
+    "existingGrantsChanged": false,
+    "relayChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "nativeAgentMessages": 0,
+    "readyForFullDelivery": false
+  },
+  "toolingFailuresRetained": [
+    {
+      "stage": "first targeted command redirection",
+      "issue": "PowerShell wildcard path did not resolve to a new log file; tests did not start.",
+      "resolution": "After explicit approval, rerun with an exact exclusive log path; no product, assertion, timeout or budget changes."
+    }
+  ]
+}

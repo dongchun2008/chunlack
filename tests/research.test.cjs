@@ -40,6 +40,8 @@ function runtime(options = {}) {
     async scrapeText(url) { scraped.push(url); return options.contents?.[url] ?? (options.content === undefined ? 'The fixture launched in 2020.' : options.content); },
     async queryOllamaWithRetry(...args) {
       calls.push(args);
+      if (args[4] === 'verifier' && typeof options.onVerify === 'function') return options.onVerify({args, session});
+      if (args[4] === 'summarizer' && typeof options.onSummary === 'function') return options.onSummary({args, session});
       if (args[4] === 'verifier') return options.verificationResponse === undefined ? JSON.stringify({decisions: [{claimId: 'C1', status: 'supported', reason: 'The excerpt states the launch year.', evidence: [{sourceId: 'S1', quote: 'The fixture launched in 2020.'}]}]}) : options.verificationResponse;
       if (args[4] === 'summarizer') return options.summaryResponse === undefined ? JSON.stringify({claimIds: ['C1']}) : options.summaryResponse;
       if (args[1].startsWith('Generate 3 sub-questions')) {
@@ -54,7 +56,7 @@ function runtime(options = {}) {
   context.workspaceTransport = () => null;
   context.workspaceServices = () => null;
   context.workspaceResources = () => null;
-  const api = vm.runInContext(section('function workspaceSetting(', 'function workspaceTransport(') + section('function scopedResourceDir(', 'function workspaceAuthorizeModel(') + section('function persistWorkspaceResearch(', 'function scheduleWorkspaceMaintenance(') + section('function workspaceClients()', 'function initializeWorkspace(') + section('function formatResearchSummary(', '// ==================== CLEANUP') + '\n({runResearch, formatResearchSummary})', context);
+  const api = vm.runInContext(section('function workspaceSetting(', 'function workspaceTransport(') + section('function scopedResourceDir(', 'function workspaceAuthorizeModel(') + section('function persistWorkspaceResearch(', 'function scheduleWorkspaceMaintenance(') + section('function workspaceClients()', 'function initializeWorkspace(') + section('function formatResearchSummary(', '// ==================== CLEANUP') + '\n({runResearch, formatResearchSummary, reviewResearchEvidence})', context);
   return {api, session, calls, writes, messages, scraped};
 }
 
@@ -284,3 +286,157 @@ for (const summaryResponse of ['[OLLAMA_ERROR] timeout', '{"claimIds":["invented
     assert.ok(!r.api.formatResearchSummary(r.session).includes('invented conclusion'));
   });
 }
+
+
+function batchMaterial(args) {
+  return JSON.parse(args[1].split('\nData:\n')[1]);
+}
+function batchDecisions(material) {
+  return {decisions: material.claims.map(claim => ({claimId: claim.claimId, status: 'supported', reason: 'The saved synthetic source states the claim.', evidence: [{sourceId: claim.sourceId, quote: claim.text}]}))};
+}
+function seedBatchSession(r, counts) {
+  let claimNumber = 0;
+  const notes = counts.map((count, noteIndex) => {
+    const sentences = year => Array.from({length: count}, (_, i) => 'Fixture ' + noteIndex + ' item ' + i + ' launched in ' + year + '.');
+    const sources = [2020, 2021].map((year, index) => ({sourceId: 'S' + noteIndex + '_' + index, url: 'https://example.org/note-' + noteIndex + '/source-' + index, excerpt: sentences(year).join(' '), truncated: false}));
+    const evidence = Array.from({length: count}, (_, i) => {
+      const sourceIndex = i < Math.ceil(count / 2) ? 0 : 1;
+      return {claimId: 'C' + (++claimNumber), text: sentences(sourceIndex ? 2021 : 2020)[i], sourceId: sources[sourceIndex].sourceId, status: 'unverified'};
+    });
+    return {question: 'Synthetic question ' + noteIndex, status: 'unverified', sources, evidence, facts: evidence.map(item => item.text)};
+  });
+  Object.assign(r.session, {notes, sources: notes.flatMap(note => note.sources), evidence: notes.flatMap(note => note.evidence), verifiedCount: 0, evidenceStatus: 'unverified'});
+}
+async function reviewBatchSession(r) {
+  await r.api.reviewResearchEvidence(r.session, {retriever: {id: 'researcher'}, verifier: {id: 'verifier'}, summarizer: {id: 'summarizer'}}, update => Object.assign(r.session, update));
+}
+for (const count of [0, 1, 3, 4, 6, 7, 9, 10]) {
+  test('verification uses three-claim batches without loss at boundary ' + count, async () => {
+    const batches = [];
+    const r = collaborative({
+      onVerify({args, session}) {
+        const material = batchMaterial(args);
+        batches.push(material.claims.map(claim => claim.claimId));
+        assert.ok(session.evidence.every(claim => claim.status === 'unverified' && !claim.verification));
+        assert.equal(session.verifiedCount, 0);
+        return JSON.stringify(batchDecisions(material));
+      },
+      onSummary({args}) { return JSON.stringify({claimIds: batchMaterial(args).claims.map(claim => claim.claimId).reverse()}); }
+    });
+    seedBatchSession(r, [count]);
+    const expected = r.session.evidence.map(claim => claim.claimId);
+    await reviewBatchSession(r);
+    assert.deepEqual(batches.map(batch => batch.length), Array.from({length: Math.ceil(count / 3)}, (_, i) => Math.min(3, count - i * 3)));
+    assert.deepEqual(batches.flat(), expected);
+    assert.equal(r.session.verifiedCount, count);
+    assert.equal(r.session.summary.status, count ? 'complete' : 'skipped_no_supported_claims');
+    assert.equal(r.calls.filter(call => call[4] === 'summarizer').length, count ? 1 : 0);
+    if (count) assert.deepEqual(JSON.parse(JSON.stringify(r.session.summary.claimIds)), [...expected].reverse());
+  });
+}
+
+test('batched full collection persists all claims, original sources, quotes and complete synthesis', async () => {
+  const facts = Array.from({length: 5}, (_, i) => 'Fixture item ' + i + ' launched in 2020.');
+  const sizes = [];
+  const r = collaborative({urls: ['https://example.org/source-a', 'https://example.org/source-b'], content: facts.join(' '), extract: facts.map(text => 'FACT: ' + text).join('\n'),
+    onVerify({args, session}) {
+      const material = batchMaterial(args); sizes.push(material.claims.length);
+      assert.ok(session.evidence.every(claim => claim.status === 'unverified'));
+      return JSON.stringify(batchDecisions(material));
+    },
+    onSummary({args}) { return JSON.stringify({claimIds: batchMaterial(args).claims.map(claim => claim.claimId)}); }
+  });
+  await r.api.runResearch('fixture', r.session.topic, 'general');
+  assert.deepEqual(sizes, [3, 3, 3, 1]);
+  assert.equal(r.session.phase, 'Review complete');
+  const saved = r.writes.get(path.join('/fixture-research', 'fixture.json'));
+  assert.equal(saved.evidence.length, 10); assert.equal(saved.verifiedCount, 10);
+  assert.deepEqual(saved.summary.claimIds, saved.evidence.map(claim => claim.claimId));
+  assert.deepEqual(saved.sources.map(source => source.url), ['https://example.org/source-a', 'https://example.org/source-b']);
+  assert.ok(saved.evidence.every(claim => claim.verification.verifierId === 'verifier' && claim.verification.evidence[0].quote === claim.text));
+  const report = r.api.formatResearchSummary(r.session);
+  for (const source of saved.sources) assert.ok(report.includes(source.url));
+  for (const fact of facts) assert.ok(report.includes('Quote: ' + fact));
+  assert.deepEqual(r.calls.filter(call => call[4] === 'verifier').map(call => call[0]), Array(4).fill('review-model'));
+  assert.equal(r.calls.find(call => call[4] === 'summarizer')[0], 'summary-model');
+});
+
+for (const kind of ['model_failure', 'malformed_json', 'missing_decision', 'previous_batch_claim', 'duplicate_decision', 'invented_quote', 'unknown_source']) {
+  test('later batch ' + kind + ' cannot promote any question or run synthesis', async () => {
+    let batch = 0, priorClaim;
+    const r = collaborative({onVerify({args, session}) {
+      const material = batchMaterial(args), output = batchDecisions(material);
+      assert.ok(session.evidence.every(claim => claim.status === 'unverified' && !claim.verification));
+      batch++;
+      if (batch === 1) priorClaim = {...output.decisions[0]};
+      if (batch === 3) {
+        if (kind === 'model_failure') return '[OLLAMA_ERROR] bounded fixture failure';
+        if (kind === 'malformed_json') return 'not JSON';
+        if (kind === 'missing_decision') output.decisions.pop();
+        if (kind === 'previous_batch_claim') output.decisions[0] = priorClaim;
+        if (kind === 'duplicate_decision') output.decisions[1] = output.decisions[0];
+        if (kind === 'invented_quote') output.decisions[0].evidence = [{sourceId: material.claims[0].sourceId, quote: 'This sentence is absent from the original sources.'}];
+        if (kind === 'unknown_source') output.decisions[0].evidence = [{sourceId: 'absent', quote: material.claims[0].text}];
+      }
+      return JSON.stringify(output);
+    }, onSummary() { assert.fail('A failed batch must never reach synthesis'); }});
+    seedBatchSession(r, [4, 4]);
+    await reviewBatchSession(r);
+    assert.equal(batch, 3);
+    assert.equal(r.session.phase, 'Verification failed');
+    assert.equal(r.session.evidenceStatus, 'verification_failed');
+    assert.equal(r.session.verifiedCount, 0);
+    assert.ok(r.session.notes.every(note => note.status === 'unverified'));
+    assert.ok(r.session.evidence.every(claim => claim.status === 'unverified' && !claim.verification));
+    assert.equal(r.calls.filter(call => call[4] === 'summarizer').length, 0);
+  });
+}
+
+test('late batch retains other trusted sources for conflicts and preserves unresolved gaps in synthesis', async () => {
+  const sizes = [];
+  const r = collaborative({onVerify({args}) {
+    const material = batchMaterial(args), output = batchDecisions(material); sizes.push(material.claims.length);
+    if (material.claims.length === 1) {
+      const claim = material.claims[0], other = material.sources.find(source => source.sourceId !== claim.sourceId);
+      assert.ok(other, 'A later batch must retain the full trusted source context');
+      output.decisions[0] = {claimId: claim.claimId, status: 'conflicting', reason: 'The two saved synthetic sources disagree.', evidence: [
+        {sourceId: claim.sourceId, quote: claim.text}, {sourceId: other.sourceId, quote: claim.text.replace('2021', '2020')}
+      ]};
+    }
+    return JSON.stringify(output);
+  }, onSummary({args}) { return JSON.stringify({claimIds: batchMaterial(args).claims.map(claim => claim.claimId)}); }});
+  seedBatchSession(r, [4]);
+  await reviewBatchSession(r);
+  assert.deepEqual(sizes, [3, 1]);
+  assert.equal(r.session.verifiedCount, 3); assert.equal(r.session.phase, 'Review complete with gaps');
+  assert.deepEqual(JSON.parse(JSON.stringify(r.session.summary.claimIds)), ['C1', 'C2', 'C3']);
+  const report = r.api.formatResearchSummary(r.session);
+  assert.match(report, /\[CONFLICTING\]/);
+  assert.ok(report.includes('https://example.org/note-0/source-0') && report.includes('https://example.org/note-0/source-1'));
+});
+
+test('failure in a later collection batch persists all evidence as unverified', async () => {
+  let batch = 0;
+  const facts = Array.from({length: 5}, (_, i) => 'Fixture item ' + i + ' launched in 2020.');
+  const r = collaborative({urls: ['https://example.org/source-a', 'https://example.org/source-b'], content: facts.join(' '), extract: facts.map(text => 'FACT: ' + text).join('\n'),
+    onVerify({args}) { return ++batch === 2 ? '[OLLAMA_ERROR] fixture timeout' : JSON.stringify(batchDecisions(batchMaterial(args))); },
+    onSummary() { assert.fail('Synthesis is not allowed after failure'); }
+  });
+  await r.api.runResearch('fixture', r.session.topic, 'general');
+  assert.equal(batch, 2);
+  const saved = r.writes.get(path.join('/fixture-research', 'fixture.json'));
+  assert.equal(saved.phase, 'Verification failed'); assert.equal(saved.evidence.length, 10); assert.equal(saved.verifiedCount, 0);
+  assert.ok(saved.evidence.every(claim => claim.status === 'unverified' && !claim.verification));
+  assert.equal(saved.sources.length, 2); assert.ok(saved.sources.every(source => source.excerpt && source.excerptSha256));
+  assert.equal(r.calls.filter(call => call[4] === 'summarizer').length, 0);
+});
+
+test('summary cannot omit a supported claim from a later verification batch', async () => {
+  const r = collaborative({onVerify({args}) { return JSON.stringify(batchDecisions(batchMaterial(args))); },
+    onSummary({args}) { return JSON.stringify({claimIds: batchMaterial(args).claims.slice(0, 3).map(claim => claim.claimId)}); }});
+  seedBatchSession(r, [4]);
+  await reviewBatchSession(r);
+  assert.equal(r.session.verifiedCount, 4);
+  assert.equal(r.session.phase, 'Summary failed'); assert.equal(r.session.summary.status, 'failed');
+  assert.ok(r.session.evidence.every(claim => claim.status === 'supported'));
+});

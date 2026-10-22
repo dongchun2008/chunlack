@@ -3050,10 +3050,16 @@ async function reviewResearchEvidence(session, roles, update) {
   try {
     for (const note of session.notes) {
       if (!note.evidence.length) continue;
-      const material = {question: note.question, claims: note.evidence.map(({claimId, text, sourceId}) => ({claimId, text, sourceId})), sources: note.sources.map(({sourceId, url, excerpt, truncated}) => ({sourceId, url, excerpt, truncated}))};
-      const prompt = 'Review each claim against the saved excerpts. Judge entailment, qualifications and contradictions, not agreement with another agent. Return {"decisions":[{"claimId":"C1","status":"supported|partially_supported|conflicting|insufficient_evidence","reason":"brief reason","evidence":[{"sourceId":"S1","quote":"exact contiguous excerpt of 8-2000 characters"}]}]}. Include every claim exactly once. Supported/partial claims must quote their original source. Conflicts require two distinct source URLs. Never invent a quote. For missing evidence use insufficient_evidence and an empty evidence list.\nData:\n' + JSON.stringify(material);
-      const raw = await dispatchResearchStage({sessionId: session.id, stage: 'verify', role: roles.verifier, input: material, prompt, system});
-      pending.push({note, decisions: validateResearchDecisions(raw, note)});
+      const decisions = [];
+      // Bound response size without committing any partial verification.
+      for (let offset = 0; offset < note.evidence.length; offset += 3) {
+        const batchNote = {...note, evidence: note.evidence.slice(offset, offset + 3)};
+        const material = {question: note.question, claims: batchNote.evidence.map(({claimId, text, sourceId}) => ({claimId, text, sourceId})), sources: note.sources.map(({sourceId, url, excerpt, truncated}) => ({sourceId, url, excerpt, truncated}))};
+        const prompt = 'Review each claim against the saved excerpts. Judge entailment, qualifications and contradictions, not agreement with another agent. Return {"decisions":[{"claimId":"C1","status":"supported|partially_supported|conflicting|insufficient_evidence","reason":"brief reason","evidence":[{"sourceId":"S1","quote":"exact contiguous excerpt of 8-2000 characters"}]}]}. Include every claim exactly once. Supported/partial claims must quote their original source. Conflicts require two distinct source URLs. Never invent a quote. For missing evidence use insufficient_evidence and an empty evidence list.\nData:\n' + JSON.stringify(material);
+        const raw = await dispatchResearchStage({sessionId: session.id, stage: 'verify', role: roles.verifier, input: material, prompt, system});
+        decisions.push(...validateResearchDecisions(raw, batchNote));
+      }
+      pending.push({note, decisions});
     }
   } catch (error) {
     update({phase: 'Verification failed', evidenceStatus: 'verification_failed', logs: [...session.logs, 'Verification failed or returned invalid evidence. No claims were promoted and no synthesis was run.']});
