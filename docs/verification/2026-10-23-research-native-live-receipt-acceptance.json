@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-23",
+  "timezone": "Asia/Shanghai",
+  "status": "passed_scoped_native_research_acceptance_not_published",
+  "sourceCommit": "75a7aca23d5b1be5b606cf8ac78b087062f6964e",
+  "documentationBaselineCommit": "eb46601b6d6d0f45d69b130e0291b59d62a6b6bd",
+  "productionPublished": false,
+  "readyForFullDelivery": false,
+  "scope": {
+    "acceptedTests": 151,
+    "groups": [
+      108,
+      43
+    ],
+    "realModelCalls": 0,
+    "description": "Native Linux regression of research search, evidence workflow, workspace isolation and actual packaged HTTPS research report; not a new real-provider or external-agent trial."
+  },
+  "authorizationBudget": {
+    "originalAuthorizedUnits": 3,
+    "originalUnitsConsumed": 3,
+    "supplementalAuthorizedUnits": 1,
+    "supplementalUnitsConsumed": 1,
+    "totalUnitsConsumed": 4,
+    "remainingUnits": 0,
+    "originalBudgetReset": false
+  },
+  "attempts": [
+    {
+      "ordinal": 1,
+      "tests": 108,
+      "pass": 108,
+      "fail": 0,
+      "accepted": false,
+      "reason": "Live resource proof was not captured before successful transient unit collection; post-collection default properties were not accepted as actual limits."
+    },
+    {
+      "ordinal": 2,
+      "tests": 108,
+      "pass": 108,
+      "fail": 0,
+      "accepted": true,
+      "limitsVerified": true,
+      "uid": 65534,
+      "gid": 65534,
+      "elapsedMs": 8650.612,
+      "exitCode": 0,
+      "allProcessesGone": true,
+      "cgroupEmpty": true
+    },
+    {
+      "ordinal": 3,
+      "tests": 43,
+      "pass": 42,
+      "fail": 1,
+      "accepted": false,
+      "liveLimitsVerified": true,
+      "exitCode": 1,
+      "reason": "Isolated source manifest omitted deploy/public/Caddyfile.template; actual HTTPS acceptance failed with ENOENT. Original failed report retained."
+    },
+    {
+      "ordinal": 4,
+      "authorization": "explicit_one_unit_supplement",
+      "tests": 43,
+      "pass": 43,
+      "fail": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "accepted": true,
+      "limitsVerified": true,
+      "uid": 65534,
+      "gid": 65534,
+      "elapsedMs": 28115.301,
+      "exitCode": 0,
+      "allProcessesGone": true,
+      "cgroupEmpty": true
+    }
+  ],
+  "liveEvidence": {
+    "limitsReadWhileActive": true,
+    "businessUidAndGid": 65534,
+    "testsBlockedUntilLiveProofSaved": true,
+    "gatePublishedAtomically": true,
+    "matchingNoncePidAndExitReceiptRequired": true,
+    "postCollectionDefaultsNeverUsedForLimitProof": true,
+    "observationTimeoutNeverRelaunchesUnit": true
+  },
+  "limits": {
+    "memoryMaxBytes": 201326592,
+    "memoryHighBytes": 167772160,
+    "memorySwapMaxBytes": 0,
+    "cpuQuotaPercent": 10,
+    "tasksMax": 32,
+    "runtimeMaxSeconds": 85,
+    "stopMaxSeconds": 5,
+    "totalMaxSeconds": 90,
+    "privateNetwork": true,
+    "privateTmp": true,
+    "noNewPrivileges": true,
+    "protectSystem": "strict",
+    "protectHome": true,
+    "businessUser": "nobody",
+    "businessGroup": "nogroup",
+    "sourceAndDependencyCopies": "read-only",
+    "writes": "exclusive scratch, results and packaged test fixture directories only",
+    "productionConfigAndData": "inaccessible"
+  },
+  "localRegression": {
+    "evidenceAndGateChecks": 46,
+    "passed": true,
+    "realChildGateModes": [
+      "valid",
+      "wrong_nonce",
+      "no_release"
+    ],
+    "supplementalBudgetResetRejected": true,
+    "fifthUnitRejected": true,
+    "originalUnitReplacementRejected": true,
+    "templateManifestHashVerified": true,
+    "actualTemplateRenderPassed": true,
+    "networkRequests": 0
+  },
+  "testFiles": [
+    "tests/research-search.test.cjs",
+    "tests/research.test.cjs",
+    "tests/workspace-shell.test.cjs",
+    "tests/workspace-models.test.cjs",
+    "tests/workspace-store.test.cjs",
+    "tests/workspace-source-reader.test.cjs",
+    "tests/research-report-runtime.test.cjs"
+  ],
+  "httpsCoverage": {
+    "actualPackagedRuntime": true,
+    "actualCaddyTls": true,
+    "authorizedRestReport": true,
+    "unauthenticatedRejected": true,
+    "foreignWorkspaceRejected": true,
+    "pullCommandRejected": true,
+    "reportSurvivesRestart": true,
+    "workspacePanelTextDom": true,
+    "pixelVisualAcceptance": false
+  },
+  "artifactIntegrity": {
+    "sourceManifestFiles": 113,
+    "addedTemplate": {
+      "path": "deploy/public/Caddyfile.template",
+      "bytes": 4654,
+      "sha256": "765332bb563d15033062daadeb704b78f9ecb87af6bc9c954516d03114819ed4"
+    },
+    "accepted108TapSha256": "9ca931bb640eb850644a2fe98042a89748b63e72800f38cc8ea0e46e9d428b6f",
+    "accepted43TapSha256": "dc5f52df19014ed212c9d8b397232595de5c8e4b84d64330a36d6b6a14ceb6d5",
+    "supplementalPrivateReportSha256": "5bc81fa83b927e09b942cce2a4344a75ef256dec94666b79c4248a24b7e79038",
+    "originalFailedEvidenceRetained": true
+  },
+  "protection": {
+    "protectedServicePidsRestartsAndActiveStatesUnchanged": true,
+    "protectedFilesAndTcpUdpListenerAddressesUnchanged": true,
+    "allOwnedUnitsStopped": true,
+    "ownedRemoteDirectoryRemoved": true,
+    "productionServicesStopped": false,
+    "productionServicesRestarted": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false
+  },
+  "remainingDeliveryGates": [
+    "This source candidate has not been published to production.",
+    "No new real mixed-provider, multi-human or sustained multi-device acceptance is claimed.",
+    "No Muse or dots permissions, messaging, event subscription or further native-agent task was performed.",
+    "Full production delivery remains subject to its separate outstanding gates and controlled release authorization."
+  ]
+}
