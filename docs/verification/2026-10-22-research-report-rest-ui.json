@@ -1,0 +1,157 @@
+{
+  "date": "2026-10-22",
+  "state": "local-regression-passed-unpublished",
+  "baseCommit": "419811572155f9720a95cb2cc8b6c9b793cd4306",
+  "uiBlob": "425978da64d6c4bfac81c644a88a103fc4f0ce2e",
+  "scope": [
+    "Render actual evidence and ordered summary references in the existing workspace research panel",
+    "Display every claim, model decision, original URL and excerpt, verbatim citation, failed source and missing-evidence warning as text",
+    "Keep legacy claims explicitly unverified and reject stale responses after workspace changes",
+    "Use authorized research REST and the actual workspace panel in the acceptance adapter; preserve public /pull denial"
+  ],
+  "files": [
+    "identity/workspace-shell.js",
+    "tests/workspace-shell.test.cjs",
+    "tests/helpers/workspace-document.cjs",
+    "deploy/public/acceptance/research-report.cjs",
+    "tests/research-report-runtime.test.cjs"
+  ],
+  "verification": {
+    "red": {
+      "tests": 17,
+      "pass": 14,
+      "fail": 3,
+      "expectedMissingCurrentEvidenceRendering": true
+    },
+    "initialTargeted": {
+      "tests": 18,
+      "pass": 17,
+      "fail": 1,
+      "reason": "New test incorrectly expected 403 for foreign-workspace access; actual deny-first response was 404"
+    },
+    "authorizedCorrection": "Only the new foreign-workspace HTTP expected status was changed from 403 to 404; product authorization unchanged",
+    "logs": {
+      "targeted-after-404.tap": {
+        "sha256": "1d8c0810ed444af0c243007bb06b554969e58ef1dc2f0b3f03d41d353376c63e",
+        "tests": 18,
+        "pass": 18,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 15879.6808,
+        "failedTests": []
+      },
+      "remaining-targeted.tap": {
+        "sha256": "777c56a5df7b222f2d5ca3daa34b2eb818f406350f9ba950cd65e4fb0f5878fc",
+        "tests": 80,
+        "pass": 80,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 7424.2572,
+        "failedTests": []
+      },
+      "full.tap": {
+        "sha256": "22627cca4e495d2d178c6386c677d315ec2e48c06a7023ad0f8a999095cc100d",
+        "tests": 952,
+        "pass": 948,
+        "fail": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 1261320.3753,
+        "failedTests": [
+          "migrated packaged runtime serves three humans in two workspaces, actual model routes, restart and legacy-compatible recovery",
+          "actual packaged HTTPS/WSS completes four distinct five-agent rounds with three humans, two workspaces and five registered nodes",
+          "actual materialized LACK serves its referenced login/workspace scripts through verified HTTPS",
+          "actual embedded process enforces human identity, viewer denial and workspace separation without global config writes"
+        ]
+      },
+      "failed-original-rerun.tap": {
+        "sha256": "8ca05c9106f1820e55077b82fec3d06ab264d374a137665da1ad101f15023ba9",
+        "tests": 8,
+        "pass": 8,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 66681.4835,
+        "failedTests": []
+      },
+      "full-second.tap": {
+        "sha256": "78f6cda55173272d8c883f338bdb2d4f90ec7ccda90c33c14b3d0f481dada6aa",
+        "tests": 952,
+        "pass": 952,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0,
+        "duration_ms": 516961.019,
+        "failedTests": []
+      },
+      "smoke-final.log": {
+        "sha256": "f11986f4ca6071992a388765ca44f0a4d23d1332a8d0f6a1603c5cd04cec79cb",
+        "passed": true
+      }
+    },
+    "offlineSavedRealReplay": {
+      "accepted": true,
+      "scope": "saved real results replay through actual workspace panel with text-only DOM",
+      "newInferenceRequests": 0,
+      "networkCalls": 0,
+      "restRequests": 1,
+      "claims": 25,
+      "summaryClaims": 25,
+      "sources": 15,
+      "sessionSha256": "5ba74100726b2ebc209a5c17dae0ddb65142fc01a6b090818e8a85562dd34fd0",
+      "reportSha256": "6322aa5175dbe5d4648b25cb5dc85ebc55d1f76ab5cb70cf222861e00eb0fe42",
+      "productionPublished": false,
+      "fullRealAcceptance": false,
+      "visualBrowserAcceptance": false
+    }
+  },
+  "firstFullRunFailuresRetained": true,
+  "intermittentFailureAssessment": "The first full run had runtime/Caddy startup timeouts and ingress_conflicting_routes. All four failed files passed unchanged in a standalone rerun, and a subsequent complete run passed. The underlying intermittent cause is not established; no test timeouts, budgets, safety assertions or production policies were relaxed.",
+  "realInferenceBudgets": {
+    "previousIndependentTrial": {
+      "used": 13,
+      "max": 20,
+      "reset": false
+    },
+    "currentIndependentTrial": {
+      "used": 17,
+      "max": 20,
+      "reset": false
+    },
+    "newRequestsInThisPhase": 0
+  },
+  "lastRealTrial": {
+    "accepted": false,
+    "modelStagesComplete": true,
+    "modelReviewedClaims": 25,
+    "summaryClaimReferences": 25,
+    "failedStage": "read-actual-final-report",
+    "reportConsumerUsedDisabledPull": true,
+    "notReclassifiedAsAccepted": true
+  },
+  "boundaries": {
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "existingGrantsChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false,
+    "publicPullEnabled": false,
+    "nativeAgentMessages": 0
+  },
+  "acceptanceLimits": {
+    "textDomContract": true,
+    "actualLocalHTTPSAndWSS": true,
+    "syntheticProviderIntegration": true,
+    "offlineSavedRealReplay": true,
+    "visualBrowserAcceptance": false,
+    "newRealProviderEndToEnd": false,
+    "overallProductionDeliveryAccepted": false
+  }
+}

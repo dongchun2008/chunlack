@@ -361,23 +361,76 @@
       if (!state || !state.workspace || !client.can('read')) return;
       const d = dialog('研究来源与证据');
       await act(async () => {
-        const response = await client.request(`/api/research/session/${encodeURIComponent(id)}`); if (!d.live()) return;
-        const session = response.session || response, sources = Array.isArray(session.sources) ? session.sources : [], ids = new Set();
-        d.body.append(node('h3', session.topic || '研究结果'));
-        if (!sources.length || session.evidenceStatus !== 'verified') d.body.append(node('p', '缺证或尚未核验：不能仅凭 Agent 输出认定结论成立。'));
-        for (const source of sources) {
-          const section = node('section'); section.className = 'workspace-source'; ids.add(source.sourceId);
-          section.append(node('strong', source.sourceId || '未编号来源'));
-          let url; try {url = new URL(source.url);} catch (_) {}
+        const response = await client.request('/api/research/session/' + encodeURIComponent(id)); if (!d.live()) return;
+        const session = response.session || response;
+        const sources = (Array.isArray(session.sources) ? session.sources : []).filter(source => source && typeof source === 'object');
+        const byId = new Map(sources.map(source => [source.sourceId, source]));
+        const legacy = !Object.hasOwn(session, 'evidence');
+        const claims = (Array.isArray(legacy ? session.claims : session.evidence) ? (legacy ? session.claims : session.evidence) : []).map(claim => claim || {});
+        const labels = {supported: '模型认为支持', partially_supported: '模型认为部分支持', conflicting: '存在冲突', insufficient_evidence: '证据不足', unverified: '未核验'};
+        const refs = claim => Array.isArray(claim.verification?.evidence) ? claim.verification.evidence : [];
+        const validRef = ref => {
+          const source = ref && byId.get(ref.sourceId);
+          return !!(source && source.status === 'retrieved' && typeof source.excerpt === 'string' && typeof ref.quote === 'string' && ref.quote.trim() && source.excerpt.includes(ref.quote));
+        };
+        const fullySupported = claim => !legacy && claim.status === 'supported' && refs(claim).length > 0 && refs(claim).every(validRef) && refs(claim).some(ref => ref.sourceId === claim.sourceId);
+        const sourceLink = (parent, source) => {
+          let url; try {url = new URL(source?.url);} catch (_) {}
           if (url && url.protocol === 'https:' && !url.username && !url.password) {
-            const link = node('a', source.url); link.href = source.url; link.target = '_blank'; link.rel = 'noopener noreferrer'; section.append(link);
-          } else section.append(node('p', '缺证：来源链接缺失或不安全，不提供可点击链接。'));
+            const link = node('a', source.url); link.href = source.url; link.target = '_blank'; link.rel = 'noopener noreferrer'; parent.append(link);
+          } else parent.append(node('p', '缺证：来源链接缺失或不安全，不提供可点击链接。'));
+        };
+        d.body.append(node('h3', session.topic || '研究结果'));
+        d.body.append(node('p', '模型核验不等于事实已获人工确认；请核对原始来源、逐字引文和缺证提示。'));
+        d.body.append(node('p', '研究状态：' + (session.phase || '未知') + ' / ' + (session.evidenceStatus || 'unverified')));
+        if (legacy) d.body.append(node('p', '旧数据：未重新核验，不沿用旧版 verified 标记认定事实成立。'));
+        if (!sources.length) d.body.append(node('p', '缺证：没有原始来源。'));
+        const summary = session.summary || {}, summaryPanel = node('section'); summaryPanel.className = 'workspace-research-summary';
+        summaryPanel.append(node('h3', '证据摘要'), node('p', '摘要状态：' + (summary.status || '缺证：尚未生成摘要')));
+        if (summary.summarizerId) summaryPanel.append(node('p', '汇总 Agent：' + summary.summarizerId));
+        for (const claimId of Array.isArray(summary.claimIds) ? summary.claimIds : []) {
+          const claim = claims.find(item => item.claimId === claimId), item = node('p', '[' + claimId + '] ' + (claim?.text || '缺证：摘要引用的陈述不存在'));
+          item.className = 'workspace-summary-claim'; item.dataset.claimId = claimId; summaryPanel.append(item);
+          if (!claim || !fullySupported(claim)) summaryPanel.append(node('p', '缺证：摘要条目未获完整模型支持或引用无效'));
+        }
+        d.body.append(summaryPanel, node('h3', '全部陈述与模型核验'));
+        if (!claims.length) d.body.append(node('p', '缺证：没有可展示的陈述'));
+        for (const claim of claims) {
+          const section = node('section'); section.className = 'workspace-research-claim'; section.dataset.claimId = claim.claimId || ''; section.dataset.status = legacy ? 'unverified' : (claim.status || 'unverified');
+          const status = section.dataset.status;
+          section.append(node('strong', claim.claimId || '未编号陈述'), node('p', claim.text || claim.claim || '缺证：未提供陈述'), node('p', '模型核验：' + (labels[status] || '未知状态') + ' (' + status + ')'));
+          if (claim.sourceId) {section.append(node('p', '原始来源：' + claim.sourceId)); sourceLink(section, byId.get(claim.sourceId));}
+          if (claim.verification) {
+            section.append(node('p', '核验 Agent：' + (claim.verification.verifierId || '未记录')), node('p', '核验时间：' + (claim.verification.reviewedAt || '未记录')), node('p', '模型核验理由：' + (claim.verification.reason || '未记录')));
+          }
+          if (legacy || !refs(claim).length || !['supported', 'partially_supported'].includes(status)) section.append(node('p', '缺证或尚未充分核验：不能仅凭 Agent 输出认定结论成立。'));
+          if (legacy) {
+            const ids = Array.isArray(claim.sourceIds) ? claim.sourceIds : claim.sourceId ? [claim.sourceId] : [];
+            section.append(node('p', '旧版引用：' + (ids.join(', ') || '缺失')));
+          }
+          for (const ref of refs(claim)) {
+            section.append(node('p', '逐字引文来源：' + (ref?.sourceId || '缺失'))); sourceLink(section, byId.get(ref?.sourceId));
+            section.append(node('blockquote', ref?.quote || '缺证：未提供逐字引文'));
+            if (!validRef(ref)) section.append(node('p', '缺证：引用来源不存在或引文与原始摘录不匹配'));
+          }
+          d.body.append(section);
+        }
+        d.body.append(node('h3', '原始来源与摘录'));
+        for (const source of sources) {
+          const section = node('section'); section.className = 'workspace-source';
+          section.append(node('strong', source.sourceId || '未编号来源')); sourceLink(section, source);
+          section.append(node('p', '获取状态：' + (source.status || '旧数据：状态未知')));
+          if (source.status !== 'retrieved') section.append(node('p', '缺证：来源尚未成功获取，或缺少获取状态。'));
+          if (source.truncated) section.append(node('p', '摘录已截断：不能据此认定已覆盖原文全部内容。'));
           section.append(node('blockquote', source.excerpt || '缺证：未提供原始摘录。')); d.body.append(section);
         }
-        for (const claim of Array.isArray(session.claims) ? session.claims : []) {
-          const referenced = Array.isArray(claim.sourceIds) ? claim.sourceIds : claim.sourceId ? [claim.sourceId] : [];
-          const supported = referenced.length && referenced.every(sourceId => ids.has(sourceId));
-          d.body.append(node('p', `${supported ? '待核验' : '缺证'}：${claim.text || claim.claim || '未提供结论'}${referenced.length ? ' [' + referenced.join(', ') + ']' : ''}`));
+        for (const note of Array.isArray(session.notes) ? session.notes : []) {
+          if (!note) continue;
+          const section = node('section'); section.className = 'workspace-research-note';
+          section.append(node('h4', note.question || '研究子问题'), node('p', '子问题状态：' + (note.status || '未知')));
+          if (note.status !== 'supported') section.append(node('p', '缺证提示：该子问题未获完整模型支持。'));
+          if (note.answer) section.append(node('p', '子问题记录（不是额外已核验结论）：' + note.answer));
+          d.body.append(section);
         }
       });
     }

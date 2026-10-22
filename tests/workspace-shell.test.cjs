@@ -2,25 +2,7 @@
 const test = require('node:test');
 const assert = require('node:assert/strict');
 const {mountWorkspaceShell} = require('../identity/workspace-shell.js');
-// A unit DOM deliberately forbids HTML parsing. Real browser/layout acceptance
-// is a separate gate; this checks text rendering and menu behavior, not pixels.
-class Element {
-  constructor(tag) {this.tagName = tag; this.children = []; this.style = {}; this.dataset = {}; this.hidden = false; this.disabled = false; this.value = ''; this.textContent = ''; this.attributes = {};}
-  set innerHTML(value) {throw new Error('Dynamic HTML must not be used by the workspace shell');}
-  append(...nodes) {for (const node of nodes) {this.children.push(node); node.parentNode = this;}}
-  prepend(node) {this.children.unshift(node); node.parentNode = this;}
-  replaceChildren(...nodes) {this.children = []; this.append(...nodes); this.textContent = '';}
-  setAttribute(key, value) {this.attributes[key] = String(value);}
-  remove() {if (this.parentNode) this.parentNode.children = this.parentNode.children.filter(node => node !== this);}
-  focus() {}
-}
-function documentFixture() {
-  const body = new Element('body'), head = new Element('head');
-  const walk = root => [root, ...root.children.flatMap(walk)];
-  const document = {body, head, createElement: tag => new Element(tag), getElementById: id => walk(body).find(node => node.id === id), defaultView: {confirm: () => true, navigator: {clipboard: {writeText: async () => {}}}}};
-  for (const id of ['messageInput', 'sendBtn', 'studioSpawnBtn', 'groundBtn', 'moderatorBtn', 'fileInput', 'sendThreadReply']) {const node = new Element('button'); node.id = id; body.append(node);}
-  return {document, walk: () => walk(body)};
-}
+const {documentFixture} = require('./helpers/workspace-document.cjs');
 function setup(t, {role = 'viewer', login = '<img src=x onerror=alert(1)>', response = {}} = {}) {
   const f = documentFixture(), requests = [], account = {id: 'user-fixture', login};
   const state = {status: 'ready', user: account, workspace: {id: 'workspace-a', name: '<script>workspace</script>', role}, workspaces: [{id: 'workspace-a', name: 'A', role}], generation: 1};
@@ -138,4 +120,60 @@ test('viewer evidence has no approval and a panel reset discards a late image wi
   assert.ok(!f.walk().some(node => node.textContent === '确认人工验收'));
   f.view.clear(); release(new Blob([Buffer.from([1])], {type: 'image/png'})); await pending;
   assert.deepEqual(created, []); assert.ok(!f.walk().some(node => node.textContent === 'Old private title'));
+});
+
+function currentResearchSession() {
+  const excerpt = '<script>not executable</script> Exact original quote.';
+  const states = ['supported', 'partially_supported', 'conflicting', 'insufficient_evidence', 'unverified'];
+  return {id: 'report-current', topic: 'Current evidence', phase: 'Review complete with gaps', evidenceStatus: 'reviewed_with_gaps',
+    sources: [{sourceId: 'S1', url: 'https://example.com/original?a=1&b=2', status: 'retrieved', excerpt, truncated: true}],
+    evidence: states.map((status, index) => ({claimId: 'C' + (index + 1), text: 'Claim ' + status, sourceId: 'S1', status,
+      ...(status === 'unverified' ? {} : {verification: {verifierId: '<img verifier>', reviewedAt: '2026-10-22T00:00:00Z', reason: 'Reason ' + status, evidence: [{sourceId: 'S1', quote: excerpt}]}})})),
+    summary: {status: 'complete', summarizerId: 'summary-agent', claimIds: ['C2', 'C1']},
+    notes: [{question: 'Question without evidence', status: 'fetch_failed', answer: 'Unverified note only'}]};
+}
+test('current evidence report renders every decision, ordered summary, original links, verbatim quotes and missing-evidence notes as text', async t => {
+  const session = currentResearchSession(), f = setup(t, {response: {session}});
+  await f.view.openResearch(session.id);
+  const text = f.walk().map(n => n.textContent).join('\n');
+  for (const claim of session.evidence) {assert.ok(text.includes(claim.text), claim.claimId); assert.ok(text.includes(claim.status));}
+  assert.ok(text.includes('模型核验不等于事实已获人工确认'));
+  assert.ok(text.includes(session.sources[0].excerpt)); assert.ok(text.includes('摘录已截断'));
+  assert.ok(text.includes('Question without evidence')); assert.ok(text.includes('Unverified note only'));
+  assert.ok(text.includes('summary-agent')); assert.ok(text.includes('<img verifier>'));
+  assert.ok(!f.walk().some(n => ['img', 'script'].includes(n.tagName)));
+  const summary = f.walk().find(n => n.className === 'workspace-research-summary');
+  assert.ok(summary); assert.deepEqual(summary.children.filter(n => n.className === 'workspace-summary-claim').map(n => n.dataset.claimId), ['C2', 'C1']);
+  assert.equal(f.walk().filter(n => n.className === 'workspace-research-claim').length, 5);
+  assert.ok(f.walk().filter(n => n.tagName === 'a').every(n => n.href === session.sources[0].url && n.rel === 'noopener noreferrer'));
+});
+test('report exposes absent citations, nonverbatim quotes, failed sources and unknown summary references without promoting them', async t => {
+  const session = currentResearchSession();
+  session.evidence[0].verification.evidence = [{sourceId: 'S9', quote: 'Invented quote'}, {sourceId: 'S1', quote: 'Not in original'}];
+  session.sources.push({sourceId: 'S2', url: 'https://user:password@example.com/', status: 'fetch_failed', excerpt: ''});
+  session.summary.claimIds = ['C5', 'C99'];
+  const f = setup(t, {response: session}); await f.view.openResearch(session.id);
+  const text = f.walk().map(n => n.textContent).join('\n');
+  assert.ok(text.includes('缺证：引用来源不存在或引文与原始摘录不匹配'));
+  assert.ok(text.includes('缺证：摘要条目未获完整模型支持或引用无效'));
+  assert.ok(text.includes('C99')); assert.ok(text.includes('fetch_failed'));
+  assert.ok(!f.walk().some(n => n.tagName === 'a' && n.href.includes('password')));
+});
+test('legacy verified flag remains unverified and current empty evidence does not silently revive legacy claims', async t => {
+  const legacy = {topic: 'Legacy', evidenceStatus: 'verified', sources: [], claims: [{text: 'Old claim', sourceIds: ['S9']}]};
+  const f = setup(t, {response: legacy}); await f.view.openResearch('legacy');
+  let text = f.walk().map(n => n.textContent).join('\n'); assert.ok(text.includes('Old claim')); assert.ok(text.includes('旧数据：未重新核验'));
+  f.client.request = async () => ({...legacy, evidence: []}); await f.view.openResearch('current-empty');
+  text = f.walk().map(n => n.textContent).join('\n'); assert.ok(!text.includes('Old claim')); assert.ok(text.includes('缺证：没有可展示的陈述'));
+});
+test('late research response is discarded after workspace switch and report read never sends a command or mutation', async t => {
+  const f = setup(t); let release;
+  f.client.request = async (path, options) => {f.requests.push({path, options}); return new Promise(resolve => {release = resolve;});};
+  const pending = f.view.openResearch('private-id'); f.state.workspace = {...f.state.workspace, id: 'workspace-b'}; f.state.generation++; f.view.render(f.state);
+  release(currentResearchSession()); await pending;
+  assert.ok(!f.walk().some(n => n.textContent === 'Current evidence'));
+  assert.deepEqual(f.requests, [{path: '/api/research/session/private-id', options: undefined}]);
+});
+test('research panel without current workspace read permission makes no request', async t => {
+  const f = setup(t); f.client.can = () => false; await f.view.openResearch('denied'); assert.equal(f.requests.length, 0);
 });
