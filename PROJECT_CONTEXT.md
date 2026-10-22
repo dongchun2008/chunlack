@@ -350,3 +350,12 @@ The single-node implementation still lives in the embedded sources in lack.py. O
 - Confirmed startup break: simple-git 4 exports a named factory; the legacy callable require import must be adapted. New Git fixtures also need safe HOME/XDG isolation instead of GIT_CONFIG_GLOBAL. Repair confirmation requested, not yet applied.
 - One SDK fetch failure passed a separate rerun; cause remains unknown. A full enlarged-suite rerun, smoke and native upgraded-dependency validation are required.
 - See `docs/verification/2026-10-12-dependency-security-checkpoint.md`. Do not confuse this uncommitted candidate with the earlier accepted native runtime-only retest.
+
+## 2026-10-23 隔离真实研究闭环验收（未发布）
+
+- 当前源码 `75a7aca23d5b1be5b606cf8ac78b087062f6964e` 通过本轮独立预算验收：16/20 次实际 1Cat 推理，零失败，串行最多 1 个请求；最长 9.558 秒，转发控制器总耗时 124.098 秒，未扩展 20 秒单请求及 10 分钟总预算。此前独立轮次 13/20、17/20 分别保留，不重置。
+- 检索员、核验员、汇总员是三个不同逻辑 Agent，但共享一个真实模型；不等于不同模型独立核验、云端混合供应商或物理节点验收。
+- 24 条模型判为 supported 的陈述、26 处逐字引文和 24 个摘要引用均保留来源；六份 IANA 原文快照对应两种不同摘录正文。九条非 IANA 候选因本轮出站白名单被拒绝，保留 fetch_failed，不生成替代事实。模型支持不等于事实已经人工确认。
+- 实际 HTTPS/WSS 研究流程、获授权的研究 REST、现有 workspace-shell 文本 DOM 展示及隔离运行时重启持久化通过；不是像素级浏览器验收，公网 `/pull` 继续禁用。
+- 临时本机回环转发与独占测试运行时均已关闭；未发布生产，未改现有凭据、授权、DNS、端口或 Relay，未向原生 Agent 日常对话发送消息。整体交付门槛仍未全部完成。
+- 详见 [真实验收记录](docs/verification/2026-10-23-real-research-rest-acceptance.json) 与 [逐项交付审计](docs/verification/2026-10-23-delivery-gate-audit.json)。

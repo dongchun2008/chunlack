@@ -1,0 +1,509 @@
+{
+  "date": "2026-10-23",
+  "status": "passed_bounded_real_local_model_research_not_published",
+  "sourceCommit": "75a7aca23d5b1be5b606cf8ac78b087062f6964e",
+  "scope": "real 1Cat research through isolated HTTPS/WSS, authorized research REST, actual workspace panel text DOM, and isolated restart persistence",
+  "approvedBudget": {
+    "maxActualInferenceRequests": 20,
+    "perRequestTimeoutMs": 20000,
+    "totalExecutionBudgetMs": 600000,
+    "serial": true
+  },
+  "measured": {
+    "inferenceCount": 16,
+    "maxInferenceMs": 9558,
+    "stages": {
+      "questions": 1,
+      "extract": 6,
+      "verify": 8,
+      "summarize": 1
+    },
+    "verifiedQuotes": 26,
+    "claims": 24,
+    "summaryReferences": 24,
+    "retrievedSnapshots": 6,
+    "distinctSourceContents": 2,
+    "wholeForwardControllerMs": 124098,
+    "reportHash": "b3ac7b0a33915f41ffad762ba051afae6fb036f1dc473422439ca0fe5c532e4a",
+    "sessionHash": "f0c1efe343b16bcc244245ace7edcbea45eba59b4b8a0033813932ea59431e00"
+  },
+  "stageEvidence": [
+    {
+      "attempt": 1,
+      "stage": "questions",
+      "durationMs": 1350,
+      "responseModel": "qwen38-27b-nvfp4",
+      "usage": {
+        "prompt_tokens": 66,
+        "total_tokens": 120,
+        "completion_tokens": 54,
+        "prompt_tokens_details": null
+      },
+      "sha256": "1e5e53a980a82fa057613dbd00921c0425b9b207cb570ec50260bef7da9f7dcb"
+    },
+    {
+      "attempt": 2,
+      "stage": "extract",
+      "durationMs": 2317,
+      "responseModel": "qwen38-27b-nvfp4",
+      "usage": {
+        "prompt_tokens": 585,
+        "total_tokens": 675,
+        "completion_tokens": 90,
+        "prompt_tokens_details": null
+      },
+      "sha256": "3e183cfa0dcdc0ab6ab2d006cea80a6eeee1466700c40f8eb1e2e23309366153"
+    },
+    {
+      "attempt": 3,
+      "stage": "extract",
+      "durationMs": 2152,
+      "responseModel": "qwen38-27b-nvfp4",
+      "usage": {
+        "prompt_tokens": 284,
+        "total_tokens": 376,
+        "completion_tokens": 92,
+        "prompt_tokens_details": null
+      },
+      "sha256": "3013198a2ddd77ce9266d36b8fb8952fbfc8ca909e774dce5feebb1fe71867f4"
+    },
+    {
+      "attempt": 4,
+      "stage": "extract",
+      "durationMs": 3224,
+      "responseModel": "qwen38-27b-nvfp4",
+      "usage": {
+        "prompt_tokens": 585,
+        "total_tokens": 725,
+        "completion_tokens": 140,
+        "prompt_tokens_details": null
+      },
+      "sha256": "39cc0e6ddb7c391581b991be633cb3487f6b59e0541daa570c691e41d212c4c0"
+    },
+    {
+      "attempt": 5,
+      "stage": "extract",
+      "durationMs": 2140,
+      "responseModel": "qwen38-27b-nvfp4",
+      "usage": {
+        "prompt_tokens": 283,
+        "total_tokens": 374,
+        "completion_tokens": 91,
+        "prompt_tokens_details": null
+      },
+      "sha256": "628b0bcb1874e292936d2a4fc9f736b910abb62a7cd76af24059acb5309e27ec"
+    },
+    {
+      "attempt": 6,
+      "stage": "extract",
+      "durationMs": 1494,
+      "responseModel": "qwen38-27b-nvfp4",
+      "usage": {
+        "prompt_tokens": 284,
+        "total_tokens": 342,
+        "completion_tokens": 58,
+        "prompt_tokens_details": null
+      },
+      "sha256": "900c91c923aeb515dfbf5191808f7a22c9f2306d265645b72a15cc4eba94c38e"
+    },
+    {
+      "attempt": 7,
+      "stage": "extract",
+      "durationMs": 1540,
+      "responseModel": "qwen38-27b-nvfp4",
+      "usage": {
+        "prompt_tokens": 585,
+        "total_tokens": 637,
+        "completion_tokens": 52,
+        "prompt_tokens_details": null
+      },
+      "sha256": "3146a60abfce4673dcb02689fd761e599b4d3234870a7bdcb553975088a4c024"
+    },
+    {
+      "attempt": 8,
+      "stage": "verify",
+      "durationMs": 6932,
+      "responseModel": "qwen38-27b-nvfp4",
+      "usage": {
+        "prompt_tokens": 1059,
+        "total_tokens": 1377,
+        "completion_tokens": 318,
+        "prompt_tokens_details": null
+      },
+      "sha256": "c418ffaa14782c95fdf78d689c6ebe87d7b8a746deccca7fd09cdb87323d65eb"
+    },
+    {
+      "attempt": 9,
+      "stage": "verify",
+      "durationMs": 9558,
+      "responseModel": "qwen38-27b-nvfp4",
+      "usage": {
+        "prompt_tokens": 1061,
+        "total_tokens": 1513,
+        "completion_tokens": 452,
+        "prompt_tokens_details": null
+      },
+      "sha256": "8dafc2a1198c472c6f36569b1f8c890565680ace36c1d05cc80d86d865c3ad8f"
+    },
+    {
+      "attempt": 10,
+      "stage": "verify",
+      "durationMs": 6802,
+      "responseModel": "qwen38-27b-nvfp4",
+      "usage": {
+        "prompt_tokens": 1058,
+        "total_tokens": 1368,
+        "completion_tokens": 310,
+        "prompt_tokens_details": null
+      },
+      "sha256": "61c53f4f412ba6fc348dcbd7570bc001155dbd365182bf4e27709c7fa9a97200"
+    },
+    {
+      "attempt": 11,
+      "stage": "verify",
+      "durationMs": 8713,
+      "responseModel": "qwen38-27b-nvfp4",
+      "usage": {
+        "prompt_tokens": 1105,
+        "total_tokens": 1520,
+        "completion_tokens": 415,
+        "prompt_tokens_details": null
+      },
+      "sha256": "5a09b6f6ab5adeafc0b213d89205146d77e60a6008a6911dcfdf52b3e138771d"
+    },
+    {
+      "attempt": 12,
+      "stage": "verify",
+      "durationMs": 8574,
+      "responseModel": "qwen38-27b-nvfp4",
+      "usage": {
+        "prompt_tokens": 1095,
+        "total_tokens": 1503,
+        "completion_tokens": 408,
+        "prompt_tokens_details": null
+      },
+      "sha256": "9f34e41fd5866dd5aaad18ba9a242cd70454933999ba7956fea61d4b839ca9ed"
+    },
+    {
+      "attempt": 13,
+      "stage": "verify",
+      "durationMs": 6760,
+      "responseModel": "qwen38-27b-nvfp4",
+      "usage": {
+        "prompt_tokens": 1076,
+        "total_tokens": 1383,
+        "completion_tokens": 307,
+        "prompt_tokens_details": null
+      },
+      "sha256": "caa47391b4a310f87086b3d7dc1710328802ba2086a321612f9456df18a003c9"
+    },
+    {
+      "attempt": 14,
+      "stage": "verify",
+      "durationMs": 6820,
+      "responseModel": "qwen38-27b-nvfp4",
+      "usage": {
+        "prompt_tokens": 1078,
+        "total_tokens": 1388,
+        "completion_tokens": 310,
+        "prompt_tokens_details": null
+      },
+      "sha256": "d4f43d9b35fdc5aaac1b9fab819b1fe8e6e5f46ee754fa9f0c11495274b49b09"
+    },
+    {
+      "attempt": 15,
+      "stage": "verify",
+      "durationMs": 7019,
+      "responseModel": "qwen38-27b-nvfp4",
+      "usage": {
+        "prompt_tokens": 1072,
+        "total_tokens": 1395,
+        "completion_tokens": 323,
+        "prompt_tokens_details": null
+      },
+      "sha256": "182fafe81228f9f38f90f65e2a5256991765cafcc8bc6b8bcc807906fcf4b565"
+    },
+    {
+      "attempt": 16,
+      "stage": "summarize",
+      "durationMs": 4600,
+      "responseModel": "qwen38-27b-nvfp4",
+      "usage": {
+        "prompt_tokens": 1781,
+        "total_tokens": 1954,
+        "completion_tokens": 173,
+        "prompt_tokens_details": null
+      },
+      "sha256": "f828c030807ffd7385aac490f22621b90a0b611dd7a323a7c8265c862dfa014c"
+    }
+  ],
+  "model": {
+    "requested": "qwen38-27b-nvfp4",
+    "providerNeutralAdapter": true,
+    "distinctRoleAgents": 3,
+    "roles": [
+      "retriever",
+      "verifier",
+      "summarizer"
+    ],
+    "rolesShareOneModel": true,
+    "cloudFallback": false
+  },
+  "sourceEvidence": {
+    "retrievedSnapshots": 6,
+    "distinctExcerptContents": 2,
+    "searchRequests": 3,
+    "primarySourceRequests": 6,
+    "deniedNonIanaCandidates": 9,
+    "allDeniedCandidatesRetainFetchFailed": true,
+    "sourceUrlQueryParametersRetained": true,
+    "sourceExcerptsAndSavedHtmlHashesChecked": true,
+    "verbatimQuotes": 26,
+    "sourceSnapshots": [
+      {
+        "sourceId": "S1",
+        "url": "https://www.iana.org/domains/reserved",
+        "status": "retrieved",
+        "excerptSha256": "608abe6c67338ce71288cb5054c0db2e92fa87244d35852a811e4c4dbc36debc",
+        "truncated": false
+      },
+      {
+        "sourceId": "S2",
+        "url": "https://www.iana.org/help/example-domains?a",
+        "status": "retrieved",
+        "excerptSha256": "3a0a0afa8628af3f3345cf21db2633832cc9f2eaa4048ee3a82fae8f1250bed5",
+        "truncated": false
+      },
+      {
+        "sourceId": "S3",
+        "url": "https://en.wikipedia.org/wiki/Special-Use_Domain_Name",
+        "status": "fetch_failed",
+        "truncated": false
+      },
+      {
+        "sourceId": "S4",
+        "url": "https://www.rfc-editor.org/info/rfc2606/",
+        "status": "fetch_failed",
+        "truncated": false
+      },
+      {
+        "sourceId": "S5",
+        "url": "https://en.wikipedia.org/wiki/Example.com",
+        "status": "fetch_failed",
+        "truncated": false
+      },
+      {
+        "sourceId": "S6",
+        "url": "https://www.iana.org/domains/reserved",
+        "status": "retrieved",
+        "excerptSha256": "608abe6c67338ce71288cb5054c0db2e92fa87244d35852a811e4c4dbc36debc",
+        "truncated": false
+      },
+      {
+        "sourceId": "S7",
+        "url": "https://www.iana.org/help/example-domains",
+        "status": "retrieved",
+        "excerptSha256": "3a0a0afa8628af3f3345cf21db2633832cc9f2eaa4048ee3a82fae8f1250bed5",
+        "truncated": false
+      },
+      {
+        "sourceId": "S8",
+        "url": "https://nameocean.net/article/reserved-domains-and-documentation-why-examplecom-matters-for-your-projects/",
+        "status": "fetch_failed",
+        "truncated": false
+      },
+      {
+        "sourceId": "S9",
+        "url": "https://enterno.io/en/articles/example-com",
+        "status": "fetch_failed",
+        "truncated": false
+      },
+      {
+        "sourceId": "S10",
+        "url": "https://www.rfc-editor.org/info/rfc2606/",
+        "status": "fetch_failed",
+        "truncated": false
+      },
+      {
+        "sourceId": "S11",
+        "url": "https://www.iana.org/help/example-domains?a",
+        "status": "retrieved",
+        "excerptSha256": "3a0a0afa8628af3f3345cf21db2633832cc9f2eaa4048ee3a82fae8f1250bed5",
+        "truncated": false
+      },
+      {
+        "sourceId": "S12",
+        "url": "https://www.iana.org/domains/reserved",
+        "status": "retrieved",
+        "excerptSha256": "608abe6c67338ce71288cb5054c0db2e92fa87244d35852a811e4c4dbc36debc",
+        "truncated": false
+      },
+      {
+        "sourceId": "S13",
+        "url": "https://en.wikipedia.org/wiki/.example",
+        "status": "fetch_failed",
+        "truncated": false
+      },
+      {
+        "sourceId": "S14",
+        "url": "https://en.wikipedia.org/wiki/Example.com",
+        "status": "fetch_failed",
+        "truncated": false
+      },
+      {
+        "sourceId": "S15",
+        "url": "https://nameocean.net/article/reserved-domains-and-reserved-judgment-why-examplecom-matters-more-than-you-think/",
+        "status": "fetch_failed",
+        "truncated": false
+      }
+    ],
+    "successfulNetworkResponses": [
+      {
+        "url": "https://html.duckduckgo.com/html/?q=IANA%20example%20domains%20What%20are%20the%20specific%20domain%20names%20reserved%20by%20IANA%20for%20use%20in%20documentation%20and%20examples%3F",
+        "status": 200,
+        "bytes": 34637,
+        "sha256": "5ca4dbcf3823f0cea546d92b08a1208c0393daec7bec35cb403b1c1b81666f01"
+      },
+      {
+        "url": "https://www.iana.org/domains/reserved",
+        "status": 200,
+        "bytes": 10948,
+        "sha256": "600b83257eec324b6697d09c7037126c921ec558948bca1911394c41282434b4"
+      },
+      {
+        "url": "https://www.iana.org/help/example-domains?a",
+        "status": 200,
+        "bytes": 6774,
+        "sha256": "3b8669627aee51b99102e51348e1d9c0b17fe949a481f3272b8f350b2a075c5f"
+      },
+      {
+        "url": "https://html.duckduckgo.com/html/?q=IANA%20example%20domains%20How%20should%20developers%20and%20authors%20utilize%20these%20reserved%20domains%20to%20avoid%20conflicts%20with%20real-world%20websites%3F",
+        "status": 200,
+        "bytes": 34322,
+        "sha256": "934e03c03f001aff9c67864a8472213d63c7d3322644a9c713c5661aba7e7930"
+      },
+      {
+        "url": "https://www.iana.org/domains/reserved",
+        "status": 200,
+        "bytes": 10948,
+        "sha256": "600b83257eec324b6697d09c7037126c921ec558948bca1911394c41282434b4"
+      },
+      {
+        "url": "https://www.iana.org/help/example-domains",
+        "status": 200,
+        "bytes": 6774,
+        "sha256": "3b8669627aee51b99102e51348e1d9c0b17fe949a481f3272b8f350b2a075c5f"
+      },
+      {
+        "url": "https://html.duckduckgo.com/html/?q=IANA%20example%20domains%20Are%20there%20any%20restrictions%20or%20guidelines%20regarding%20the%20use%20of%20these%20example%20domains%20in%20production%20environments%3F",
+        "status": 200,
+        "bytes": 34399,
+        "sha256": "47918ed457e5397779d825ab04387ccbd7313cb50b2991b1b173b21bf2841a67"
+      },
+      {
+        "url": "https://www.iana.org/help/example-domains?a",
+        "status": 200,
+        "bytes": 6774,
+        "sha256": "3b8669627aee51b99102e51348e1d9c0b17fe949a481f3272b8f350b2a075c5f"
+      },
+      {
+        "url": "https://www.iana.org/domains/reserved",
+        "status": 200,
+        "bytes": 10948,
+        "sha256": "600b83257eec324b6697d09c7037126c921ec558948bca1911394c41282434b4"
+      }
+    ]
+  },
+  "report": {
+    "route": "GET /api/research/session/:id",
+    "consumer": "authorized research REST and actual workspace-shell text DOM; not pixel/browser acceptance",
+    "allClaimsRendered": true,
+    "orderedSummaryReferencesRetained": true,
+    "reportSha256": "b3ac7b0a33915f41ffad762ba051afae6fb036f1dc473422439ca0fe5c532e4a",
+    "sessionSha256": "f0c1efe343b16bcc244245ace7edcbea45eba59b4b8a0033813932ea59431e00",
+    "persistedAfterIsolatedRestart": true,
+    "publicPullRemainsDisabled": true,
+    "modelSupportIsNotHumanFactAcceptance": true
+  },
+  "cleanup": {
+    "fixtureClosed": true,
+    "forwardClosed": true,
+    "childExitCode": 0,
+    "activeInference": 0
+  },
+  "sshPreparation": {
+    "initialDefaultPythonImportFailed": true,
+    "initialBundledPythonImportFailed": true,
+    "modelCallsBeforeDependencyReady": 0,
+    "isolatedDirectoryOnly": true,
+    "globalPythonChanged": false,
+    "restoredPreviouslyRecordedWheelHashes": true,
+    "packages": {
+      "paramiko": {
+        "version": "5.1.0",
+        "wheelSha256": "d9fe6d67a9d0bbf3eb85b051d26ab850b678c02d060f32915b944e5ca6d0d9e1"
+      },
+      "bcrypt": {
+        "version": "5.0.0",
+        "wheelSha256": "64ee8434b0da054d830fa8e89e1c8bf30061d539044a39524ff7dec90481e5c2"
+      },
+      "cryptography": {
+        "version": "50.0.2",
+        "wheelSha256": "7afa5a6602a9f29af1f3a2965f831bae7c9d5d597b7cbb716d41ab3b7d89879c"
+      },
+      "invoke": {
+        "version": "3.0.3",
+        "wheelSha256": "f11327165e5cbb89b2ad1d88d3292b5113332c43b8553b494da435d6ec6f5053"
+      },
+      "pynacl": {
+        "version": "1.6.2",
+        "wheelSha256": "62985f233210dee6548c223301b6c25440852e13d59a8b81490203c3227c5ba0"
+      },
+      "cffi": {
+        "version": "2.1.1",
+        "wheelSha256": "1aa5645c30469b09530c4ebca77ebf8f17618293c58f8549cb1a543a50236e7d"
+      },
+      "pycparser": {
+        "version": "3.11",
+        "wheelSha256": "51d5a8ba2be0bbe440b99d2112604c95bbbc3c2748a64260186c541e1729cd80"
+      }
+    },
+    "independentSecurityAudit": false
+  },
+  "historicalBudgets": {
+    "firstIndependentTrial": {
+      "used": 13,
+      "max": 20,
+      "reset": false
+    },
+    "secondIndependentTrial": {
+      "used": 17,
+      "max": 20,
+      "reset": false
+    },
+    "thisIndependentTrial": {
+      "used": 16,
+      "max": 20
+    }
+  },
+  "boundaries": {
+    "productionPublished": false,
+    "productCodeChanged": false,
+    "existingCredentialsChanged": false,
+    "existingAuthorizationChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false,
+    "vpsFilesWritten": false,
+    "vpsListenersCreated": false,
+    "nativeAgentMessages": 0
+  },
+  "limitations": [
+    "Three distinct logical Agent roles shared one real model; this is not a mixed-provider or independent-model verification trial.",
+    "The report used the actual workspace-shell through a text DOM; this is not pixel-level real-browser acceptance.",
+    "Source egress was restricted to IANA primary pages; denied non-IANA candidates remain fetch_failed.",
+    "Model-supported claims are not human-verified truth; broader topic, contradiction and missing-evidence quality require additional acceptance.",
+    "The tested source URL, verifier batching and report UI patches remain unpublished; no production release was attempted.",
+    "No new real-human, physical-device, Muse, dots, Events, sustained-load, Relay-quality or full off-host recovery acceptance is implied."
+  ],
+  "overallProductionDeliveryAccepted": false
+}
