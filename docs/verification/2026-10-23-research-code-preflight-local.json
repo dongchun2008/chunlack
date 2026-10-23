@@ -1,0 +1,112 @@
+{
+  "date": "2026-10-23",
+  "timezone": "Asia/Shanghai",
+  "status": "local_preflight_accepted_remote_scenarios_pending",
+  "payloadSourceCommit": "75a7aca23d5b1be5b606cf8ac78b087062f6964e",
+  "baselineDocumentationCommit": "001e315084794fed43f86604f32db40ddc14dc42",
+  "productionPublished": false,
+  "readyForFullDelivery": false,
+  "newLocalTests": {
+    "tests": 17,
+    "pass": 17,
+    "fail": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "pythonWarnings": false
+  },
+  "existingLocalRegression": {
+    "controllerLauncherHandoffAndProbe": {
+      "tests": 92,
+      "pass": 88,
+      "platformSkipped": 4,
+      "failed": 0
+    },
+    "legacyReadonlyManifest": {
+      "tests": 9,
+      "pass": 9,
+      "failed": 0,
+      "skipped": 0,
+      "exitCode": 0
+    }
+  },
+  "retainedFailures": [
+    "Legacy manifest contract accepted an out-of-scope password-module change.",
+    "Initial new Events validation accepted float zero; corrected with strict None/False checks.",
+    "Initial generic runner passed -v to a positional-path contract script; original invocation failure retained and nine original assertions rerun unchanged.",
+    "Independent review confirmed dependency drift, publisher byte reserialization, authority-schema drift and source-loader caching gaps.",
+    "First full-run sandbox omitted the staged parent mapping; corrected only that mapping, with all assertions retained."
+  ],
+  "independentReview": {
+    "originalFindings": 4,
+    "allDeterministicallyReproduced": true,
+    "fixesConfirmedAtSourceReviewLevel": true,
+    "blockingRegressionsReported": 0,
+    "testsIndependentlyRerunByReviewer": false
+  },
+  "newCoverage": {
+    "exactThreeFileAllowlist": true,
+    "unchangedExistingAndEmptyClientLists": true,
+    "dependencyContentsAndNestedDependenciesBound": true,
+    "publisherByteChangeRejectedWithoutConfigRewrite": true,
+    "authorityRowsAndSchemaIndexesTriggersFingerprinted": true,
+    "mainAndLiveWalBytesPreservedInSyntheticTest": true,
+    "verifiedSourceCompiledWithoutBytecodeCache": true,
+    "freshCandidateBoundTwoBootProofRequired": true,
+    "runPathExecutedOnSyntheticMappedFilesystem": true,
+    "nativeOsIdentityAndServiceChecksMockedInLocalRunTest": true
+  },
+  "candidatePreparation": {
+    "status": "prepared",
+    "changedExecutableFiles": [
+      "gateway/research-search.cjs",
+      "identity/workspace-shell.js",
+      "server.js"
+    ],
+    "nonDependencyCandidateInventoryFiles": 57,
+    "nonDependencyPreviousInventoryFiles": 56,
+    "payloadHashes": {
+      "gateway/research-search.cjs": "768ddd5471fdb05988716e36384a51e94e1900297249ff5741ad11c1f86d0d26",
+      "identity/workspace-shell.js": "208a39f7a7e760c4ab7dd9408856c2ca46f9bbbe19095c12e1cc77a099b85169",
+      "server.js": "4ff50b80c6cf1be54ffec9bc84d286825ade096b8b14158d017f4f976d1f8073"
+    },
+    "existingAllowedClientCount": 1,
+    "configurationValuesChanged": false,
+    "configurationCanonicalRoundtripChecked": true,
+    "dependencyCopiesMatch": true,
+    "authorityFingerprintCapturedReadOnly": true,
+    "protectedServicesUnchanged": true,
+    "modelCalls": 0,
+    "productionSwitched": false
+  },
+  "budget": {
+    "newStageAuthorizedTopLevelScenarios": 3,
+    "newStageStarted": 0,
+    "newStageRemaining": 3,
+    "eachScenarioIncludesAllOwnedBusinessChildren": true,
+    "aggregateMemoryMiB": 192,
+    "aggregateCpuPercent": 10,
+    "aggregateTasksMax": 32,
+    "swapBytes": 0,
+    "maxSecondsPerScenario": 90,
+    "privateNetworkRequired": true,
+    "priorBudgetsReset": false
+  },
+  "publicationGate": {
+    "conditionallyAuthorized": true,
+    "allThreeNativeScenariosPassed": false,
+    "consistentColdBackupStillRequired": true,
+    "previousCodeMustBeRetained": true,
+    "forwardSeconds": 55,
+    "totalRecoverySeconds": 120,
+    "restoreOverNewWritesAllowed": false,
+    "deleteRetainedWriterLockAllowed": false,
+    "oldLackRelayCredentialsAuthorizationDnsPortsChangesAllowed": false
+  },
+  "remaining": [
+    "Native candidate and previous-version database-copy compatibility.",
+    "Bounded operational success rehearsal.",
+    "Bounded injected-failure rollback rehearsal.",
+    "Fresh read-only code preflight, controlled publication and postpublication acceptance."
+  ],
+  "scopeWarning": "This record proves local preflight work and non-switching preparation only; no native scenario or production delivery is accepted."
+}
