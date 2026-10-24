@@ -1,0 +1,62 @@
+{
+  "recordDate": "2026-10-24",
+  "timezone": "Asia/Shanghai",
+  "status": "human_oidc_workspace_acceptance_passed",
+  "productionReleaseEvidenceCommit": "57e859ac465ceec5db1495e52eedac9a5983159b",
+  "payloadCommit": "75a7aca23d5b1be5b606cf8ac78b087062f6964e",
+  "fullDeliveryComplete": false,
+  "observedBrowserFlow": {
+    "applicationLoginEntry": "https://lack.chunclaw.top/auth/oidc/login",
+    "identityProviderOrigin": "https://pockid.chunclaw.top",
+    "finalOrigin": "https://lack.chunclaw.top/",
+    "sameBrowserNewFlow": true,
+    "userConfirmedReturnToApplication": true,
+    "authenticatedWorkspaceVisible": true,
+    "workspaceName": "ChunLACK",
+    "expectedExistingOwnerAccountVisible": true,
+    "ownerRoleVisible": true,
+    "memberNodeTaskAndAgentGrantControlsVisible": true,
+    "visibleAgentCount": 2,
+    "connectionIndicator": "CONNECTED",
+    "rawWebsocketHandshakeMeasured": false,
+    "callbackHttpStatusCaptured": false,
+    "authorizationCodesCookiesAndTokensRead": false
+  },
+  "firstInteraction": {
+    "outcome": "Session ID is missing",
+    "applicationCallbackCompleted": false,
+    "originalErrorNotHidden": true,
+    "accountOrProviderConfigurationChanged": false
+  },
+  "acceptedInteraction": {
+    "outcome": "returned_to_authenticated_workspace",
+    "newScopesGranted": false,
+    "businessGrantsCreated": 0,
+    "credentialsChanged": false,
+    "identityBindingChanged": false
+  },
+  "retainedDataObservation": {
+    "historicalCompletedTaskSummaryVisible": true,
+    "taskResultDetailOpened": false,
+    "allHistoricalDataIntegrityProvenByThisUiCheck": false,
+    "historicalModelRepliesNotCountedAsFreshInference": true
+  },
+  "boundaries": {
+    "modelCalls": 0,
+    "messagesSentToAgents": 0,
+    "tasksCreated": 0,
+    "agentGrantsCreated": 0,
+    "additionalIsolatedTestUnitsStarted": 0,
+    "productionRestartedForThisLoginCheck": false,
+    "relayChanged": false
+  },
+  "privateScreenshot": {
+    "retained": true,
+    "committedToGit": false
+  },
+  "scopeLimits": [
+    "This proves the existing human login reached the authenticated workspace after the release.",
+    "It does not prove fresh model inference, all external-Agent capabilities, or all physical nodes.",
+    "The earlier Python public TLS handshake failure remains separately recorded and undiagnosed."
+  ]
+}
