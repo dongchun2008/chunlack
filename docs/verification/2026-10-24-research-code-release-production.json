@@ -1,0 +1,164 @@
+{
+  "recordDate": "2026-10-24",
+  "timezone": "Asia/Shanghai",
+  "status": "research_code_published_human_login_acceptance_pending",
+  "fullDeliveryComplete": false,
+  "payloadCommit": "75a7aca23d5b1be5b606cf8ac78b087062f6964e",
+  "prepublicationEvidenceCommit": "1261fe45b8536da70389ff00218ec037c4c846c5",
+  "changedExecutableFiles": [
+    "gateway/research-search.cjs",
+    "identity/workspace-shell.js",
+    "server.js"
+  ],
+  "transactionStatus": "released",
+  "transactionPhases": [
+    {
+      "phase": "preflight_passed",
+      "seconds": 0
+    },
+    {
+      "phase": "https_stopped",
+      "seconds": 0.053
+    },
+    {
+      "phase": "application_stopped",
+      "seconds": 0.146
+    },
+    {
+      "phase": "consistent_backup_verified",
+      "seconds": 8.74
+    },
+    {
+      "phase": "old_code_preserved",
+      "seconds": 8.742
+    },
+    {
+      "phase": "candidate_code_installed",
+      "seconds": 8.743
+    },
+    {
+      "phase": "candidate_configuration_installed",
+      "seconds": 8.799
+    },
+    {
+      "phase": "loopback_https_acceptance_passed",
+      "seconds": 22.343
+    },
+    {
+      "phase": "public_discovery_acceptance_passed",
+      "seconds": 33.536
+    }
+  ],
+  "timing": {
+    "forwardWindowSeconds": 33.537,
+    "forwardLimitSeconds": 55,
+    "totalElapsedUpperBoundSeconds": 40.093653791,
+    "totalRecoveryLimitSeconds": 120,
+    "withinRecoveryLimit": true,
+    "measurementSource": "VPS Unix nanoseconds captured BEFORE launcher invocation, compared with result.json Unix nanosecond mtime; conservative upper bound",
+    "privateLegacyAuditorLabelIsNotUsedAsProvenance": true,
+    "liveUnitStartMonotonicCaptured": true
+  },
+  "publisherLimitsObservedWhileRunning": {
+    "memoryMaxBytes": 201326592,
+    "memoryHighBytes": 167772160,
+    "memorySwapMaxBytes": 0,
+    "cpuQuotaPerSecond": "100ms",
+    "tasksMax": 32,
+    "noNewPrivileges": true,
+    "terminalGcDefaultsNotUsedAsLimitEvidence": true
+  },
+  "recovery": {
+    "coldConsistentBackupVerified": true,
+    "backupFiles": 553,
+    "backupDatabases": 3,
+    "previousCodeRetained": true,
+    "restoreOverNewWritesPerformed": false,
+    "retainedWriterLockDeleted": false
+  },
+  "postflight": {
+    "exactCandidateInstalled": true,
+    "targetServicesActive": true,
+    "oldLackAndRelayUnchanged": true,
+    "configurationBytesCredentialsAuthorityAndDependenciesUnchanged": true,
+    "listenersUnchanged": true,
+    "verifiedHttpsChecks": [
+      {
+        "host": "lack.chunclaw.top",
+        "path": "/health",
+        "method": "GET",
+        "status": 200,
+        "tlsVerified": true
+      },
+      {
+        "host": "agents.chunclaw.top",
+        "path": "/.well-known/oauth-protected-resource/mcp",
+        "method": "GET",
+        "status": 200,
+        "tlsVerified": true
+      },
+      {
+        "host": "agents.chunclaw.top",
+        "path": "/mcp",
+        "method": "GET",
+        "status": 401,
+        "tlsVerified": true
+      },
+      {
+        "host": "agents.chunclaw.top",
+        "path": "/v1/manifest",
+        "method": "GET",
+        "status": 404,
+        "tlsVerified": true
+      },
+      {
+        "host": "agents.chunclaw.top",
+        "path": "/v1/tasks/claim",
+        "method": "POST",
+        "status": 404,
+        "tlsVerified": true
+      }
+    ],
+    "browserPublicLoginPage": {
+      "loaded": true,
+      "pageTitle": "LACK v4.2.2",
+      "pocketIdLoginLinkVisible": true,
+      "authenticatedWorkspaceVerified": false
+    },
+    "externalPythonCheck": {
+      "status": "failed_before_http",
+      "source": "local-windows-python-urllib",
+      "target": "https://lack.chunclaw.top/health",
+      "errorClass": "URLError/SSLEOFError",
+      "errorCode": "UNEXPECTED_EOF_WHILE_READING",
+      "processExitCode": 1,
+      "serverCauseEstablished": false,
+      "certificateValidationDisabled": false,
+      "productionChanged": false
+    }
+  },
+  "oauth": {
+    "clientAllowlistUnchanged": true,
+    "workspaceBusinessGrantsAdded": 0,
+    "credentialsChanged": false,
+    "newScopesRequested": false,
+    "actualHumanCallbackVerifiedAfterThisRelease": false
+  },
+  "modelCalls": 0,
+  "testAllowance": {
+    "originalConsumed": 3,
+    "originalAuthorized": 3,
+    "additionalCompatibilityConsumed": 1,
+    "additionalCompatibilityAuthorized": 1,
+    "allowanceReset": false,
+    "successAndRollbackScenariosRerun": false
+  },
+  "publicationExecutedOnce": true,
+  "automaticRetryPerformed": false,
+  "privateRawEvidenceRetained": true,
+  "pending": [
+    "Complete the existing Pocket ID human login and verify the callback and authenticated workspace.",
+    "Do not treat this three-file publication as acceptance of all real models, devices or external Agents.",
+    "Investigate the separately retained Windows Python TLS handshake failure without weakening certificate validation."
+  ]
+}
