@@ -1,0 +1,133 @@
+{
+  "recordDate": "2026-10-24",
+  "timezone": "Asia/Shanghai",
+  "status": "prepublication_gates_passed",
+  "productionPublished": false,
+  "fullDeliveryComplete": false,
+  "payloadCommit": "75a7aca23d5b1be5b606cf8ac78b087062f6964e",
+  "preflightImplementationCommit": "57d29c5f2b3811f145750582e986fd3b33120b3f",
+  "changedExecutableFiles": [
+    "gateway/research-search.cjs",
+    "identity/workspace-shell.js",
+    "server.js"
+  ],
+  "originalScenarios": [
+    {
+      "scenario": "compatibility",
+      "status": "passed",
+      "elapsedMs": 58751.324,
+      "limitsVerified": true,
+      "businessNonRootVerified": true,
+      "privateNetworkVerified": true,
+      "allOwnProcessesStopped": true,
+      "rehearsalOnly": true
+    },
+    {
+      "scenario": "success",
+      "status": "passed",
+      "elapsedMs": 42504.764,
+      "limitsVerified": true,
+      "businessNonRootVerified": true,
+      "privateNetworkVerified": true,
+      "allOwnProcessesStopped": true,
+      "rehearsalOnly": true
+    },
+    {
+      "scenario": "rollback",
+      "status": "passed",
+      "elapsedMs": 47522.017,
+      "limitsVerified": true,
+      "businessNonRootVerified": true,
+      "privateNetworkVerified": true,
+      "allOwnProcessesStopped": true,
+      "rehearsalOnly": true
+    }
+  ],
+  "budget": {
+    "originalAuthorized": 3,
+    "originalConsumed": 3,
+    "originalRemaining": 0,
+    "additionalAuthorized": 1,
+    "additionalConsumed": 1,
+    "additionalRemaining": 0,
+    "originalAllowanceReset": false
+  },
+  "additionalCompatibility": {
+    "status": "passed",
+    "elapsedMs": 59748.525,
+    "memoryMaxBytes": 201326592,
+    "cpuPercent": 10,
+    "tasksMax": 32,
+    "memorySwapMaxBytes": 0,
+    "privateNetworkVerified": true,
+    "businessNonRootVerified": true,
+    "allOwnProcessesStopped": true,
+    "oldEvidenceUnchanged": true,
+    "onlyOwnSuccessfulTestCopyCleaned": true,
+    "databaseCount": 3,
+    "schemaPreserved": true,
+    "createdAtMs": 1792853054657,
+    "expiresAtMs": 1792856654657,
+    "bindings": {
+      "candidateSha256": "712731e0d1cc9c8b71e58f3933a6694e5bbed99ebe295183110e5ef0fc5d7181",
+      "previousSha256": "1559cdbd60a7d93e3721ac8defdb0f726e8d8630e19949088112d919ebd440d0",
+      "configSha256": "1ed22c1256793e7c6bb07ff102f285b7b63789aad581f797581755805973cdcf",
+      "payloadCommit": "75a7aca23d5b1be5b606cf8ac78b087062f6964e",
+      "dependencySha256": "5d1e5e56e0ce865a41e881262d72ee711225fb3940b9556416a30cf6dcc639a0"
+    },
+    "coldBackup": false,
+    "applicationConsistentSnapshot": false,
+    "realOidcLoginTested": false
+  },
+  "readonlyPreflight": {
+    "status": "passed",
+    "changedExecutableFiles": [
+      "gateway/research-search.cjs",
+      "identity/workspace-shell.js",
+      "server.js"
+    ],
+    "approvedClientCount": 1,
+    "configurationBytesUnchanged": true,
+    "authorityUnchanged": true,
+    "dependenciesUnchanged": true,
+    "controllerLoadedFromVerifiedSource": true,
+    "copyProofBoundAndFresh": true,
+    "productionMutated": false,
+    "modelCalls": 0,
+    "forwardSeconds": 55,
+    "recoverySeconds": 120
+  },
+  "protectedServicesUnchanged": true,
+  "protectedFilesAndListenersUnchanged": true,
+  "productCodeChangedByThisStep": false,
+  "productionConfigurationChanged": false,
+  "credentialsChanged": false,
+  "authorizationsChanged": false,
+  "relayChanged": false,
+  "actualModelCalls": 0,
+  "evidenceDigests": {
+    "originalParsedReceiptSha256": "ddb0f61fa88167cbeebed7a4b7fd84a4116e4248b18ad9bc8786e001aff357bd",
+    "supplementParsedReceiptSha256": "44c7b6e481d8c76c538b1eb87b90a21f0f2cfaccee70c3fafa0be749130d1fee"
+  },
+  "operatorInputs": {
+    "newScriptsScanned": 2,
+    "secretFindings": 0,
+    "sha256": {
+      "supplement-69f8d474901b-run.py": "e49c88bac8d868f4cb94678788c196a3ce5eebf54f9aebf19cdff94ad1b2f434",
+      "publication-69f8d474901b-run.py": "6feb79061ff13c57eb450026305430e765b4625eace06966248cbab06d71491e"
+    }
+  },
+  "productionWindow": {
+    "forwardSeconds": 55,
+    "totalRecoverySeconds": 120,
+    "coldConsistentBackupRequired": true,
+    "previousCodeRetained": true,
+    "restoreOverNewWritesAllowed": false,
+    "deleteRetainedWriterLockAllowed": false
+  },
+  "limitations": [
+    "This is a prepublication gate receipt, not a production delivery acceptance.",
+    "The compatibility copies are not a cold backup.",
+    "No new real-model or external-Agent execution occurred."
+  ]
+}
