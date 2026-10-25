@@ -54,6 +54,11 @@ def main():
     runtime_files.append((repository / "scripts/accounts.cjs", args.output / "scripts/accounts.cjs"))
     for name in ("package.json", "package-lock.json"):
         runtime_files.append((repository / name, args.output / name))
+    for locale, guide_name in (("zh-CN", "USER_GUIDE.zh-CN.md"), ("en", "USER_GUIDE.en.md")):
+        guide_source = repository / "docs" / guide_name
+        if guide_source.is_symlink() or not guide_source.resolve().is_relative_to((repository / "docs").resolve()):
+            raise ValueError("Linked help source is not permitted")
+        runtime_files.append((guide_source, args.output / "identity" / "help" / (locale + ".md")))
     config_path = args.output / "config/lack.config.json"
     # Check the complete output plan before the first write. Configuration and
     # databases already present in output are not overwritten or copied from source.

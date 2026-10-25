@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "status": "LOCAL_VERIFIED_NOT_RELEASED",
+  "recordedAt": "2026-10-25T11:48:32.719Z",
+  "displayTimezone": "Asia/Shanghai",
+  "branch": "cloud-agent-pilot-foundation",
+  "baseCommit": "f2ad81a66221a4f34725a91c28c5ac9bb50d50ca",
+  "scope": {
+    "languages": [
+      "zh-CN",
+      "en"
+    ],
+    "workspaceAndLogin": true,
+    "privateHelp": true,
+    "sevenExactReadOnlyDisplayAssets": true,
+    "translationExcludes": [
+      "user_and_workspace_names",
+      "prompts",
+      "models",
+      "chat_content",
+      "source_urls",
+      "quotations",
+      "evidence"
+    ],
+    "sourceFiles": {
+      "deploy/public/Caddyfile.template": "a5ce80b7968f188f0879fb9c5c8929991b13b229",
+      "identity/login.html": "7b8558a044da4ac3639d2eb183e6d0e97fcb4ec7",
+      "identity/workspace-shell.js": "b93eb2a9871c8cc6ac473e76a8ca637afd27d44e",
+      "identity/workspace-ui.js": "489f55cc7244e523030107cc600bc64f227018fa",
+      "lack.py": "d89dd1947e57cad4cc34c5b60608baf4aa872900",
+      "scripts/materialize.py": "cb4ad1155a826b95b027e51ac366a551622ef375",
+      "tests/agent-create-ui.test.cjs": "b2261c9e9b0ca3dd3a724995292d1304aa9c7403",
+      "tests/packaged-public-ingress.test.cjs": "3195afa7edeb713278a81877f8a4acd5d81f7e2f",
+      "identity/chat-messages.js": "4d1d9e2374ac919d4369916fc0141cb705db9f8a",
+      "identity/display.js": "eec8fcfb116379332c431315922c6de4e1a4b088",
+      "identity/help-assets.cjs": "f777c28690d232fd03a2b53c3488988aabc9db8c",
+      "identity/help.js": "ac0c6aaedd2e0f9fe91c01b7cc10f9d5d8060dd8",
+      "identity/messages.js": "0edcf98fd10d000db68f8c6195cdfd38296edca1",
+      "tests/i18n-assets.test.cjs": "d198a124c5c530fe51be3acd13f4c198028f0a42",
+      "tests/i18n-catalog-contract.test.cjs": "5c27c55338505a9b7fdafd8e4765bce6fc47ffe5",
+      "tests/i18n-help.test.cjs": "6cbbe6de6d07fbe601aa85aa707020415e6206da",
+      "tests/i18n-main.test.cjs": "8e94b072c60796e34d4bd9155c08c9585838ab77",
+      "tests/i18n-materialize.test.cjs": "8713640585bb6666424582d24b708823a7aebc08",
+      "tests/i18n-storage.test.cjs": "4d163307d6b2e4d798bc3cc0f4bcc2ac0e95a797",
+      "tests/i18n-ui.test.cjs": "0fbfd3dc606048ca6faea76cf9c8e71a6f357521",
+      "tests/i18n-workspace-reset.test.cjs": "643409e205dfa246ff729f99edc6703c75f24edc"
+    }
+  },
+  "approvedCorrections": [
+    "preserve workspace selector accessibility translation binding",
+    "retire Ralph badge binding when clearing workspace",
+    "load actual display helpers in original form fixture",
+    "expose only seven exact GET/HEAD display assets on human HTTPS host",
+    "localize two Chinese captions while preserving English catalog",
+    "clear form reset status via existing display helper to retire binding",
+    "set only X-Content-Type-Options with a separate deferred Caddy header directive"
+  ],
+  "verification": {
+    "nodeVersion": "24.19.0",
+    "caddyVersion": "2.11.7",
+    "execution": "serial local Windows node:test; original test deadlines preserved; portable Caddy enabled",
+    "targeted": {
+      "tests": 152,
+      "pass": 152,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 29790.2028,
+      "exitCode": 0,
+      "files": 14,
+      "reportSha256": "8b7e51d0fe10b32575a7b21c9d57b8080a2e024d3ed53ee3679285f5446e4ad2"
+    },
+    "full": {
+      "tests": 1078,
+      "pass": 1078,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 658917.4913,
+      "exitCode": 0,
+      "files": 127,
+      "reportSha256": "b30873d5b8b5f89b5614aa19da20260dea4edb626ccf8c91b7436420ff23fc37",
+      "startedAt": "2026-10-25T11:36:21.589Z",
+      "endedAt": "2026-10-25T11:47:20.695Z"
+    },
+    "smoke": {
+      "exitCode": 0,
+      "realHttpAndWebSocket": true,
+      "twoSyntheticModelBackends": true,
+      "sqliteRestartPersistence": true,
+      "privateBind": true,
+      "configurationPreserved": true,
+      "stdoutSha256": "2682a8ad10a54d082e60a99229d562b855cb7c1eb9e01c2760f6d470d286e02e"
+    }
+  },
+  "priorFailureHistory": {
+    "earlierFull": {
+      "tests": 1067,
+      "pass": 1051,
+      "fail": 16,
+      "exitCode": 1
+    },
+    "previousTargeted": {
+      "tests": 152,
+      "pass": 149,
+      "fail": 3,
+      "exitCode": 1,
+      "causes": [
+        "form reset left stale language bindings: two new regressions",
+        "duplicate nosniff response header: one new real TLS regression"
+      ]
+    },
+    "priorFailuresRetainedPrivately": true,
+    "assertionsRelaxed": false,
+    "testTimeoutsRaised": false
+  },
+  "limits": {
+    "newLinuxIsolationRuns": 0,
+    "linuxAcceptanceForThisCandidate": false,
+    "productionPublished": false,
+    "realModelInvocations": 0,
+    "externalAgentCalls": 0,
+    "agentConfigurationChanged": false,
+    "identityPermissionsChanged": false,
+    "credentialsChanged": false,
+    "dnsOrPortsChanged": false,
+    "relayChanged": false
+  },
+  "remainingGates": [
+    "fresh authorized Linux isolation budget and current candidate verification",
+    "fresh scoped production preparation and controlled maintenance authorization",
+    "post-release real user verification"
+  ],
+  "github": {
+    "syncNotAcceptanceOfProduction": true,
+    "commitAndPushReceiptRecordedSeparately": true
+  }
+}

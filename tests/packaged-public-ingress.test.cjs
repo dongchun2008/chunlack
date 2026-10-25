@@ -68,3 +68,29 @@ test('actual packaged WSS uses the scoped path and shared identity, while agents
   assert.equal((await fixture.request('web', '/v1/agents/me')).status, 404);
   assert.equal((await fixture.request('web', '/mcp', {method: 'POST', json: {}})).status, 404);
 });
+
+
+test('real HTTPS exposes only exact read-only display assets on the human host', {skip: !caddyBin, timeout: 30000}, async t => {
+  const fs = require('node:fs'), path = require('node:path');
+  const {createPackagedIngressFixture} = require('./helpers/packaged-ingress-fixture.cjs');
+  const fixture = await createPackagedIngressFixture({testContext: t, caddyBin});
+  const scripts = ['i18n.js', 'messages.js', 'chat-messages.js', 'help.js', 'display.js'].map(name => '/identity/' + name);
+  const guides = ['/identity/help/zh-CN.md', '/identity/help/en.md'];
+  for (const asset of [...scripts, ...guides]) {
+    const get = await fixture.request('web', asset);
+    assert.equal(get.status, 200, 'GET ' + asset);
+    assert.match(get.headers['content-type'], guides.includes(asset) ? /^text\/plain;.*charset=utf-8/i : /javascript/i);
+    assert.match(get.headers['cache-control'], /(^|,)\s*no-store\s*(,|$)/);
+    assert.equal(get.headers['x-content-type-options'], 'nosniff');
+    const head = await fixture.request('web', asset, {method: 'HEAD'});
+    assert.equal(head.status, 200, 'HEAD ' + asset); assert.equal(head.text, '');
+    assert.ok(Number(head.headers['content-length']) > 0);
+    for (const method of ['POST', 'PATCH', 'DELETE']) assert.equal((await fixture.request('web', asset, {method, json: {}})).status, 404, method + ' ' + asset);
+    for (const method of ['GET', 'HEAD']) assert.equal((await fixture.request('agents', asset, {method})).status, 404, 'agents ' + method + ' ' + asset);
+    if (guides.includes(asset)) {
+      const name = asset.endsWith('/en.md') ? 'USER_GUIDE.en.md' : 'USER_GUIDE.zh-CN.md';
+      assert.equal(get.text, fs.readFileSync(path.join(__dirname, '..', 'docs', name), 'utf8'));
+    }
+  }
+  for (const route of ['/identity/help/fr.md', '/identity/help/zh.md', '/identity/help-assets.cjs', '/identity/display.js/extra', '/identity/help/en.md/extra', '/identity/i18n.js?cache=1', '/identity/help/en.md?cache=1']) assert.equal((await fixture.request('web', route)).status, 404, route);
+});

@@ -4,24 +4,36 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="referrer" content="no-referrer">
-  <title>登录 | ChunLACK</title>
+  <title data-i18n="登录 | ChunLACK">登录 | ChunLACK</title>
   <style>body{margin:0;background:#f3f5e8;color:#29391f;font-family:Georgia,serif}</style>
 </head>
 <body>
+  <script src="/identity/i18n.js"></script>
+  <script src="/identity/messages.js"></script>
+  <script src="/identity/chat-messages.js"></script>
+  <script src="/identity/help.js"></script>
+  <script src="/identity/display.js"></script>
   <script src="/identity/workspace-ui.js"></script>
   <script src="/identity/workspace-shell.js"></script>
   <script>
     'use strict';
     let view;
+    const safeStorage = name => {try {return window[name] || null;} catch (_) {return null;}};
+    const displayRoot = globalThis.ChunLackDisplay?.createDisplay({document, window, fetch: window.fetch.bind(window), profile: 'login'});
+    displayRoot?.bind(document);
+    const helpButton = document.createElement('button'); helpButton.type = 'button';
+    helpButton.style.cssText = 'margin:12px;padding:8px 12px;font:inherit;border-radius:8px;color:#29391f;background:#e7eccf;border:1px solid #9ba96d';
+    if (displayRoot) displayRoot.set(helpButton, 'textContent', displayRoot.ui('登录帮助')); else helpButton.textContent = '登录帮助';
+    helpButton.onclick = () => displayRoot?.openHelp(); document.body.prepend(helpButton);
     const client = ChunLackWorkspace.createWorkspaceClient({
-      fetch: window.fetch.bind(window), WebSocket: window.WebSocket, storage: window.sessionStorage,
-      legacyStorage: window.localStorage, location: window.location,
-      onReset: () => view && view.clear(),
-      onIdentity: state => {if (view) view.render(state); if (state.status === 'ready') window.location.replace('/');},
+      fetch: window.fetch.bind(window), WebSocket: window.WebSocket, storage: safeStorage('sessionStorage'),
+      legacyStorage: safeStorage('localStorage'), location: window.location,
+      onReset: () => {displayRoot?.closeHelp(); displayRoot?.setUser(null); if (view) view.clear();},
+      onIdentity: state => {displayRoot?.setUser(state.user ? state.user.id : null); if (view) view.render(state); if (state.status === 'ready') window.location.replace('/');},
       onError: error => view && view.notify(error)
     });
-    view = ChunLackWorkspaceShell.mountWorkspaceShell({client, document});
-    window.addEventListener('pagehide', () => {view.close(); client.close();}, {once: true});
+    view = ChunLackWorkspaceShell.mountWorkspaceShell({client, document, i18n: displayRoot?.i18n});
+    window.addEventListener('pagehide', () => {view.close(); client.close(); displayRoot?.dispose();}, {once: true});
     client.boot().catch(error => view.notify(error));
   </script>
 </body>

@@ -23,9 +23,16 @@
     let controller = new AbortController(), socket = null, retryTimer = null, retryCount = 0, retryWindow = clock.now(), pendingLogoutCsrf = '';
     const saved = key => {try {return storage?.getItem(key);} catch {return null;}};
     const save = value => {try {value === null ? storage?.removeItem(workspaceKey) : storage?.setItem(workspaceKey, value);} catch { /* selection can remain in this tab's memory */ }};
+    function isDisplayLocalePreference(target, key) {
+      if (!/^chunlack\.ui\.locale\.v1\.(?:anonymous|user:(?:[A-Za-z0-9_.!~*'()-]|%[0-9A-F]{2}){1,768})$/.test(key)) return false;
+      try {
+        const value = target.getItem(key);
+        return typeof value === 'string' && value.length <= 80 && Intl.getCanonicalLocales(value)[0] === value;
+      } catch {return false;}
+    }
     function clearOwnedStorage(target) {
       if (!target) return;
-      try {for (let i = target.length - 1; i >= 0; i--) {const key = target.key(i); if (key && /^(lack_|chunlack\.)/.test(key) && ![workspaceKey, 'lack_theme'].includes(key)) target.removeItem(key);}} catch {}
+      try {for (let i = target.length - 1; i >= 0; i--) {const key = target.key(i); if (key && /^(lack_|chunlack\.)/.test(key) && ![workspaceKey, 'lack_theme'].includes(key) && !isDisplayLocalePreference(target, key)) target.removeItem(key);}} catch {}
     }
     clearOwnedStorage(storage); clearOwnedStorage(legacyStorage);
     function snapshot() {return Object.freeze({status, user, workspace, workspaces: Object.freeze([...workspaces]), generation});}

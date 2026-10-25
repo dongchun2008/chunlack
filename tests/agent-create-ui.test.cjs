@@ -9,29 +9,35 @@ const root = path.resolve(__dirname, '..');
 const html = JSON.parse(execFileSync(process.env.PYTHON || 'python', ['-c', 'import json,runpy; print(json.dumps(runpy.run_path("scripts/materialize.py")["embedded_sources"]()["INDEX_HTML"]))'], {cwd: root, encoding: 'utf8', maxBuffer: 4 * 1024 * 1024}));
 const script = [...html.matchAll(/<script>([\s\S]*?)<\/script>/g)].at(-1)[1];
 const ast = require('espree').parse(script, {ecmaVersion: 'latest', range: true});
-const names = new Set(['handleSpawn', 'createAgentForm']);
+const names = new Set(['handleSpawn', 'createAgentForm', 'displayLabel', 'setDisplay']);
 const source = ast.body.filter(n => n.type === 'FunctionDeclaration' && names.has(n.id.name)).map(n => script.slice(...n.range)).join('\n');
 const ids = ['createAgentModal', 'createAgentForm', 'createAgentFields', 'createAgentName', 'createAgentProvider', 'createAgentModel', 'createAgentPrompt', 'createAgentChannels', 'createAgentStrictChannel', 'createAgentStatus', 'createAgentSubmit', 'createAgentCancel', 'createAgentRetry', 'studioSpawnBtn'];
 function deferred() {let resolve; const promise = new Promise(r => {resolve = r;}); return {promise, resolve};}
 function response(body, status = 200) {return {ok: status >= 200 && status < 300, status, json: async () => body};}
-function fixture(t, fetcher) {
+function fixture(t, fetcher, options = {}) {
   const elements = new Map(), sent = [], requests = [], notices = [];
   const document = {activeElement: null, getElementById: id => elements.get(id), createElement: () => element()};
   function element(id = '') {return {id, value: '', disabled: false, hidden: false, textContent: '', style: {display: 'none'}, children: [],
     appendChild(child) {this.children.push(child);}, replaceChildren(...children) {this.children = children; this.value = '';},
     setAttribute() {}, focus() {document.activeElement = this;}};}
   for (const id of ids) elements.set(id, element(id));
+  document.documentElement = {lang: 'zh-CN'};
+  const displayRoot = options.i18n ? require('../identity/display.js').createDisplay({
+    document, window: {navigator: {languages: ['zh-CN']}, addEventListener() {}, removeEventListener() {}},
+    engine: require('../identity/i18n.js'), messages: require('../identity/messages.js'),
+    chatMessages: require('../identity/chat-messages.js'), help: {catalogs: {'zh-CN': {}, en: {}}}, storage: null
+  }) : null;
   let generation = 1;
   const socket = {readyState: 1, send: value => sent.push(JSON.parse(value))};
   const context = vm.createContext({document, WebSocket: {OPEN: 1}, ws: socket, activeWorkspaceScope: 'alice:workspace-a',
-    workspaceClient: {snapshot: () => ({generation})}, agentCreateForm: null, AbortController, setTimeout, clearTimeout,
+    workspaceClient: {snapshot: () => ({generation})}, displayRoot, agentCreateForm: null, AbortController, setTimeout, clearTimeout,
     availableLlmProviders: [{id: 'ollama', configured: true}, {id: 'direct-test', configured: true}],
     showToast: (message, type) => notices.push({message, type}),
     prompt() {throw new Error('native_dialog_unavailable');}, alert() {throw new Error('native_dialog_unavailable');},
     fetch: async (url, options) => {requests.push({url, options}); return fetcher ? fetcher(url, options) : response(url === '/api/llm-providers' ? {providers: [{id: 'ollama', configured: true}, {id: 'direct-test', configured: true}, {id: 'hidden', configured: false}], defaultProvider: 'direct-test'} : {models: ['model-a']});}});
   vm.runInContext(source, context);
-  t.after(() => context.agentCreateForm?.reset());
-  return {context, elements, sent, requests, notices, socket, document,
+  t.after(() => {try {context.agentCreateForm?.reset();} finally {displayRoot?.dispose();}});
+  return {context, elements, sent, requests, notices, socket, document, displayRoot,
     open: () => context.handleSpawn(), cancel: () => elements.get('createAgentCancel').onclick(),
     submit: () => {elements.get('createAgentName').value ||= 'Research'; return elements.get('createAgentForm').onsubmit({preventDefault() {}});},
     switchWorkspace() {generation++; context.activeWorkspaceScope = 'bob:workspace-b'; context.agentCreateForm?.reset();}};
@@ -181,4 +187,55 @@ test('pending creation does not retain private draft or lock across identity gen
   assert.equal(f.elements.get('createAgentName').value, '');
   assert.equal(f.elements.get('createAgentFields').disabled, false);
   await f.submit(); assert.equal(f.sent.length, 3);
+});
+
+test('real language controller updates loading labels without fetching again or replacing form input', async t => {
+  const providers = deferred();
+  const f = fixture(t, url => url === '/api/llm-providers' ? providers.promise : response({models: ['model-original']}), {i18n: true});
+  const opening = f.open(); await new Promise(setImmediate);
+  f.elements.get('createAgentName').value = '原始 Agent / original';
+  f.elements.get('createAgentPrompt').value = 'Do not translate this prompt 原文';
+  assert.equal(f.elements.get('createAgentStatus').textContent, '正在加载可用供应商…');
+  f.displayRoot.i18n.setLocale('en');
+  assert.equal(f.elements.get('createAgentStatus').textContent, 'Loading available providers…');
+  assert.equal(f.requests.length, 1); assert.equal(f.sent.length, 0);
+  providers.resolve(response({providers: [{id: 'provider-original', configured: true}], defaultProvider: 'provider-original'}));
+  await opening;
+  assert.equal(f.elements.get('createAgentName').value, '原始 Agent / original');
+  assert.equal(f.elements.get('createAgentPrompt').value, 'Do not translate this prompt 原文');
+  assert.equal(f.elements.get('createAgentProvider').value, 'provider-original');
+  assert.equal(f.elements.get('createAgentModel').value, 'model-original');
+  assert.equal(f.elements.get('createAgentStatus').textContent, 'Select a model and enter an Agent name.');
+  f.displayRoot.i18n.setLocale('zh-CN'); assert.equal(f.requests.length, 2); assert.equal(f.sent.length, 0);
+  await f.submit(); assert.equal(f.sent.length, 1);
+  assert.equal(f.sent[0].systemPrompt, 'Do not translate this prompt 原文');
+  assert.equal(f.sent[0].name, '原始 Agent / original');
+});
+
+test('cancel retires real localized status bindings and ignores late model results', async t => {
+  const models = deferred();
+  const f = fixture(t, url => url === '/api/llm-providers' ? response({providers: [{id: 'local', configured: true}]}) : models.promise, {i18n: true});
+  const opening = f.open(); await new Promise(setImmediate);
+  f.displayRoot.i18n.setLocale('en');
+  assert.equal(f.elements.get('createAgentStatus').textContent, 'Loading models…');
+  f.cancel();
+  f.displayRoot.i18n.setLocale('zh-CN'); f.displayRoot.i18n.setLocale('en');
+  assert.equal(f.elements.get('createAgentStatus').textContent, '');
+  models.resolve(response({models: ['late-unrelated']})); await opening;
+  assert.equal(f.elements.get('createAgentModel').children.length, 0);
+  assert.equal(f.elements.get('createAgentModal').style.display, 'none'); assert.equal(f.sent.length, 0);
+});
+
+test('real language changes preserve duplicate submission lock and retire acknowledged status', async t => {
+  const f = fixture(t, undefined, {i18n: true}); await f.open(); await f.submit();
+  const requestCount = f.requests.length;
+  f.displayRoot.i18n.setLocale('en');
+  assert.equal(f.elements.get('createAgentStatus').textContent, 'Submitted. Waiting for server confirmation…');
+  await f.submit(); f.cancel(); await f.open(); await f.submit();
+  assert.equal(f.sent.length, 1); assert.equal(f.requests.length, requestCount);
+  assert.equal(f.elements.get('createAgentSubmit').disabled, true);
+  f.context.agentCreateForm.receive({type: 'spawn_confirm', agent: {name: 'Research', provider: 'direct-test', model: 'model-a'}});
+  f.displayRoot.i18n.setLocale('zh-CN'); f.displayRoot.i18n.setLocale('en');
+  assert.equal(f.elements.get('createAgentStatus').textContent, '');
+  assert.equal(f.elements.get('createAgentModal').style.display, 'none'); assert.equal(f.sent.length, 1);
 });

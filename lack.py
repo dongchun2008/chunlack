@@ -3440,6 +3440,7 @@ if (transport) {
   app.use('/api', transport.httpContext, (req, res, next) => {initializeWorkspace(req.workspace); next();});
 }
 
+app.use(require('./identity/help-assets.cjs').createDisplayAssetHandler({codeRoot: LACK_CODE_ROOT}));
 app.get('/identity/runtime-mode.js', (req, res) => {
   res.setHeader('Cache-Control', 'no-store'); res.setHeader('X-Content-Type-Options', 'nosniff');
   res.type('application/javascript').send(`Object.defineProperty(globalThis, 'LACK_MULTI_USER', {value: ${!!transport}});`);
@@ -5411,79 +5412,80 @@ INDEX_HTML = r'''<!DOCTYPE html>
 </head>
 <body>
 <div class="neuro-menu">
-  <div class="brand"><span class="brand-mark" aria-hidden="true">L</span><span class="brand-name">LACK</span><span class="brand-caption">人与 AGENT 的协作空间</span></div>
+  <div class="brand"><span class="brand-mark" aria-hidden="true">L</span><span class="brand-name">LACK</span><span class="brand-caption" data-i18n="人与 AGENT 的协作空间">人与 AGENT 的协作空间</span></div>
   <div class="neuro-status">
-    <span id="agentCount">Agents: 0</span>
-    <span id="ralphStatusBadge" class="ralph-badge">🧬 Ralph active</span>
-    <button class="ground-btn" id="groundBtn" title="调用当前频道的 Agent，可能产生模型费用">发起协作 &nearr;</button>
+    <select id="interfaceLanguage" hidden aria-label="界面语言" data-i18n-aria-label="界面语言" style="font:inherit;max-width:7rem;padding:4px;border-radius:6px;background:var(--white);color:var(--black)"><option value="zh-CN">中文</option><option value="en">English</option></select>
+    <span id="agentCount" data-i18n="Agents: {p0}" data-i18n-params="{&quot;p0&quot;:0}">Agents: 0</span>
+    <span id="ralphStatusBadge" class="ralph-badge" data-i18n="Ralph active">Ralph active</span>
+    <button class="ground-btn" id="groundBtn" title="调用当前频道的 Agent，可能产生模型费用" data-i18n="发起协作 ↗" data-i18n-title="调用当前频道的 Agent，可能产生模型费用">发起协作 &nearr;</button>
     <details class="management-menu">
-      <summary>工作台</summary>
+      <summary data-i18n="工作台">工作台</summary>
       <div class="management-popover">
-        <button class="top-btn" id="treeBtn">项目文件</button>
-        <button class="ground-btn" id="graphBtn">运行图表</button>
-        <button class="moderator-btn off" id="moderatorBtn">Moderator OFF</button>
-        <button class="cron-btn" id="cronBtn">重置数据 / CRON</button>
-        <small>重置操作会清除数据，请谨慎使用。</small>
+        <button class="top-btn" id="treeBtn" data-i18n="项目文件">项目文件</button>
+        <button class="ground-btn" id="graphBtn" data-i18n="运行图表">运行图表</button>
+        <button class="moderator-btn off" id="moderatorBtn" data-i18n="Moderator OFF">Moderator OFF</button>
+        <button class="cron-btn" id="cronBtn" data-i18n="重置数据 / CRON">重置数据 / CRON</button>
+        <small data-i18n="重置操作会清除数据，请谨慎使用。">重置操作会清除数据，请谨慎使用。</small>
       </div>
     </details>
-    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="切换明暗主题" title="切换明暗主题">&#9680;</button>
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="切换明暗主题" title="切换明暗主题" data-i18n-aria-label="切换明暗主题" data-i18n-title="切换明暗主题">&#9680;</button>
   </div>
 </div>
 <div class="neuro-desktop">
   <div class="chat-container">
-    <aside class="workspace-rail" aria-label="频道与 Agent 导航">
-      <div class="workspace-caption"><div class="eyebrow">YOUR WORKSPACE / 01</div><h2>我的协作空间</h2><button class="studio-button" id="studioSpawnBtn">添加 Agent <span aria-hidden="true">+</span></button></div>
+    <aside class="workspace-rail" aria-label="频道与 Agent 导航" data-i18n-aria-label="频道与 Agent 导航">
+      <div class="workspace-caption"><div class="eyebrow" data-i18n="YOUR WORKSPACE / 01">YOUR WORKSPACE / 01</div><h2 data-i18n="我的协作空间">我的协作空间</h2><button class="studio-button" id="studioSpawnBtn" data-i18n-nodes="[[0,&quot;添加 Agent&quot;]]">添加 Agent <span aria-hidden="true">+</span></button></div>
       <div class="sidebar" id="sidebar"></div>
-      <div class="rail-footer"><strong>不同模型，同一个团队。</strong>通过频道共享上下文与想法。</div>
+      <div class="rail-footer" data-i18n-nodes="[[1,&quot;通过频道共享上下文与想法。&quot;]]"><strong data-i18n="不同模型，同一个团队。">不同模型，同一个团队。</strong>通过频道共享上下文与想法。</div>
     </aside>
     <div class="main-chat">
       <div class="chat-heading">
-        <button class="quiet-button sidebar-toggle" id="sidebarToggle" aria-controls="workspaceRail" aria-expanded="false" aria-label="打开或关闭频道导航">&#9776;</button>
-        <div><div class="chat-header" id="currentChatName">#general</div><p class="chat-subtitle">交流想法，让协作发生。</p></div>
-        <button class="quiet-button" data-draft="/help">命令帮助 &nearr;</button>
+        <button class="quiet-button sidebar-toggle" id="sidebarToggle" aria-controls="workspaceRail" aria-expanded="false" aria-label="打开或关闭频道导航" data-i18n-aria-label="打开或关闭频道导航">&#9776;</button>
+        <div><div class="chat-header" id="currentChatName">#general</div><p class="chat-subtitle" data-i18n="交流想法，让协作发生。">交流想法，让协作发生。</p></div>
+        <button class="quiet-button" data-draft="/help" data-i18n="命令帮助 ↗">命令帮助 &nearr;</button>
       </div>
-      <section class="welcome-panel" aria-label="开始协作">
+      <section class="welcome-panel" aria-label="开始协作" data-i18n-aria-label="开始协作">
         <div class="welcome-inner">
           <div class="welcome-art" aria-hidden="true"><span class="pixel-tile"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span class="art-connector"></span><span class="pixel-tile second"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
-          <div class="eyebrow">A SPACE FOR YOUR NEXT IDEA</div>
-          <h1>一起把想法，<br>变成<span>值得交付的成果。</span></h1>
-          <p class="welcome-copy">为 Agent 分配不同角色，在同一个频道交换观点。<br>由你提出目标，让团队从一次清晰的讨论开始。</p>
+          <div class="eyebrow" data-i18n="A SPACE FOR YOUR NEXT IDEA">A SPACE FOR YOUR NEXT IDEA</div>
+          <h1 data-i18n-nodes="[[0,&quot;一起把想法，&quot;],[2,&quot;变成&quot;]]">一起把想法，<br>变成<span data-i18n="值得交付的成果。">值得交付的成果。</span></h1>
+          <p class="welcome-copy" data-i18n-nodes="[[0,&quot;为 Agent 分配不同角色，在同一个频道交换观点。&quot;],[2,&quot;由你提出目标，让团队从一次清晰的讨论开始。&quot;]]">为 Agent 分配不同角色，在同一个频道交换观点。<br>由你提出目标，让团队从一次清晰的讨论开始。</p>
           <div class="starter-grid">
-            <button class="starter-card" data-draft="请围绕以下主题展开讨论，各自提出观点与依据，最后列出分歧。仅讨论，不执行工具。主题："><span class="card-number">01 /</span><strong>讨论一个想法 &nearr;</strong><small>多一种视角，少一个盲点。</small></button>
-            <button class="starter-card" data-draft="请把以下目标拆解为可执行步骤，标注依赖、风险和验收标准。本轮只输出计划，不执行工具。目标："><span class="card-number">02 /</span><strong>拆解一项任务 &nearr;</strong><small>把模糊目标变成具体步骤。</small></button>
-            <button class="starter-card" data-draft="请审查以下方案，指出缺失信息、风险和改进建议。仅讨论，不执行工具。方案："><span class="card-number">03 /</span><strong>找一位审查伙伴 &nearr;</strong><small>在执行之前，先问好问题。</small></button>
+            <button class="starter-card" data-draft="请围绕以下主题展开讨论，各自提出观点与依据，最后列出分歧。仅讨论，不执行工具。主题："><span class="card-number">01 /</span><strong data-i18n="讨论一个想法 ↗">讨论一个想法 &nearr;</strong><small data-i18n="多一种视角，少一个盲点。">多一种视角，少一个盲点。</small></button>
+            <button class="starter-card" data-draft="请把以下目标拆解为可执行步骤，标注依赖、风险和验收标准。本轮只输出计划，不执行工具。目标："><span class="card-number">02 /</span><strong data-i18n="拆解一项任务 ↗">拆解一项任务 &nearr;</strong><small data-i18n="把模糊目标变成具体步骤。">把模糊目标变成具体步骤。</small></button>
+            <button class="starter-card" data-draft="请审查以下方案，指出缺失信息、风险和改进建议。仅讨论，不执行工具。方案："><span class="card-number">03 /</span><strong data-i18n="找一位审查伙伴 ↗">找一位审查伙伴 &nearr;</strong><small data-i18n="在执行之前，先问好问题。">在执行之前，先问好问题。</small></button>
           </div>
-          <p class="welcome-note">当前暂无可显示的消息。首次使用请先配置模型服务并添加 Agent。<br>点击上方卡片只会填入草稿，发送后才会提交任务。</p>
+          <p class="welcome-note" data-i18n-nodes="[[0,&quot;当前暂无可显示的消息。首次使用请先配置模型服务并添加 Agent。&quot;],[2,&quot;点击上方卡片只会填入草稿，发送后才会提交任务。&quot;]]">当前暂无可显示的消息。首次使用请先配置模型服务并添加 Agent。<br>点击上方卡片只会填入草稿，发送后才会提交任务。</p>
         </div>
       </section>
       <div class="messages-area" id="messagesArea"></div>
       <div class="composer-shell">
       <div class="input-area">
-        <label class="file-upload-btn" title="添加文本附件"><span aria-hidden="true">+</span><input type="file" id="fileInput" aria-label="添加文本附件" style="display:none" accept=".txt,.md,.json,.csv,.log,.py,.js,.html,.css"></label>
+        <label class="file-upload-btn" title="添加文本附件" data-i18n-title="添加文本附件"><span aria-hidden="true">+</span><input type="file" id="fileInput" aria-label="添加文本附件" style="display:none" accept=".txt,.md,.json,.csv,.log,.py,.js,.html,.css" data-i18n-aria-label="添加文本附件"></label>
         <div id="filePreview" style="display:flex; align-items:center; gap:4px;"></div>
-        <textarea id="messageInput" rows="1" aria-label="消息或任务" placeholder="描述你的想法或任务，输入 / 查看命令…"></textarea>
-        <button id="sendBtn">发送 &uarr;</button>
+        <textarea id="messageInput" rows="1" aria-label="消息或任务" placeholder="描述你的想法或任务，输入 / 查看命令…" data-i18n-aria-label="消息或任务" data-i18n-placeholder="描述你的想法或任务，输入 / 查看命令…"></textarea>
+        <button id="sendBtn" data-i18n="发送 ↑">发送 &uarr;</button>
         <div id="uploadSpinner" class="spinner" style="display:none;"></div>
       </div>
-      <div class="composer-hint"><span>Enter 发送 · Shift + Enter 换行</span><span>发送前，请确认参与频道的 Agent 与模型。</span></div>
+      <div class="composer-hint"><span data-i18n="Enter 发送 · Shift + Enter 换行">Enter 发送 · Shift + Enter 换行</span><span data-i18n="发送前，请确认参与频道的 Agent 与模型。">发送前，请确认参与频道的 Agent 与模型。</span></div>
       </div>
     </div>
     <div class="thread-panel" id="threadPanel">
-      <div class="thread-header"><span>Thread</span><i class="fas fa-times" id="closeThreadBtn" style="cursor:pointer"></i></div>
+      <div class="thread-header"><span data-i18n="Thread">Thread</span><i class="fas fa-times" id="closeThreadBtn" style="cursor:pointer"></i></div>
       <div class="thread-messages" id="threadMessages"></div>
-      <div class="thread-input"><textarea id="threadReplyInput" rows="2" placeholder="Reply..."></textarea><button id="sendThreadReply">Reply</button></div>
+      <div class="thread-input"><textarea id="threadReplyInput" rows="2" placeholder="Reply..." data-i18n-placeholder="Reply..."></textarea><button id="sendThreadReply" data-i18n="Reply">Reply</button></div>
     </div>
   </div>
 </div>
-<div class="bottom-bar"><span>LACK STUDIO / v4.2.2 · 混合模型协作工作台</span><span id="statusText" role="status" aria-live="polite">CONNECTING</span></div>
-<div id="agentThinkingToast" class="agent-thinking-overlay" style="display:none;"><i class="fas fa-spinner fa-pulse"></i> Agent is thinking...</div>
+<div class="bottom-bar"><span data-i18n="LACK STUDIO / v4.2.2 · 混合模型协作工作台">LACK STUDIO / v4.2.2 · 混合模型协作工作台</span><span id="statusText" role="status" aria-live="polite" data-i18n="CONNECTING">CONNECTING</span></div>
+<div id="agentThinkingToast" class="agent-thinking-overlay" style="display:none;" data-i18n-nodes="[[1,&quot;Agent is thinking...&quot;]]"><i class="fas fa-spinner fa-pulse"></i> Agent is thinking...</div>
 
-<div id="agentModal" class="modal"><div class="modal-content"><h3>Agent Details & Edit</h3><input type="text" id="editAgentId" hidden><label>Name:</label><input type="text" id="editAgentName"><label>LLM Provider:</label><select id="editAgentProvider"></select><label>Model:</label><select id="editAgentModel"></select><label>System Prompt:</label><textarea id="editAgentPrompt" rows="3"></textarea><label>Channels (comma):</label><input type="text" id="editAgentChannels"><label>Strict Channel (optional):</label><input type="text" id="editAgentStrictChannel" placeholder="Leave empty for all"><div class="modal-buttons"><button id="removeAgentBtn">Remove Agent</button><button id="saveAgentBtn">Save</button><button id="closeModalBtn">Cancel</button></div></div></div>
-<div id="quickSwitcherModal" class="modal"><div class="modal-content"><input type="text" id="switcherInput" placeholder="Jump... Ctrl+K"><div class="shortcut-hint">Ctrl+K</div></div></div>
+<div id="agentModal" class="modal"><div class="modal-content"><h3 data-i18n="Agent Details &amp; Edit">Agent Details & Edit</h3><input type="text" id="editAgentId" hidden><label data-i18n="Name:">Name:</label><input type="text" id="editAgentName"><label data-i18n="LLM Provider:">LLM Provider:</label><select id="editAgentProvider"></select><label data-i18n="Model:">Model:</label><select id="editAgentModel"></select><label data-i18n="System Prompt:">System Prompt:</label><textarea id="editAgentPrompt" rows="3"></textarea><label data-i18n="Channels (comma):">Channels (comma):</label><input type="text" id="editAgentChannels"><label data-i18n="Strict Channel (optional):">Strict Channel (optional):</label><input type="text" id="editAgentStrictChannel" placeholder="Leave empty for all" data-i18n-placeholder="Leave empty for all"><div class="modal-buttons"><button id="removeAgentBtn" data-i18n="Remove Agent">Remove Agent</button><button id="saveAgentBtn" data-i18n="Save">Save</button><button id="closeModalBtn" data-i18n="Cancel">Cancel</button></div></div></div>
+<div id="quickSwitcherModal" class="modal"><div class="modal-content"><input type="text" id="switcherInput" placeholder="Jump... Ctrl+K" data-i18n-placeholder="Jump... Ctrl+K"><div class="shortcut-hint">Ctrl+K</div></div></div>
 <div id="graphModal" class="modal"><div class="modal-content" style="width:98vw; height:92vh; display:flex; flex-direction:column; padding:0.5rem; max-width:98vw; max-height:92vh;">
   <div style="display:flex; justify-content:space-between; padding:4px 8px; align-items:center;">
-    <h3>📊 Agent Metrics: CPU / Memory / TPS / J‑space Coherence</h3>
-    <button id="closeGraphBtn" style="background:none;border:none;font-size:24px;">✕</button>
+    <h3 data-i18n="📊 Agent Metrics: CPU / Memory / TPS / J‑space Coherence">📊 Agent Metrics: CPU / Memory / TPS / J‑space Coherence</h3>
+    <button aria-label="Close" data-i18n-aria-label="Close" id="closeGraphBtn" style="background:none;border:none;font-size:24px;">✕</button>
   </div>
   <div id="graphLabels" class="graph-labels"></div>
   <div style="flex:1; background:var(--off-white); margin:4px 0; border:2px solid var(--black); position:relative;">
@@ -5497,9 +5499,9 @@ INDEX_HTML = r'''<!DOCTYPE html>
 <!-- Tree Modal -->
 <div id="treeModal" class="modal tree-modal">
   <div class="modal-content">
-    <h2>📂 Repository Tree</h2>
+    <h2 data-i18n="📂 Repository Tree">📂 Repository Tree</h2>
     <div id="treeView" class="file-tree"></div>
-    <div class="modal-buttons"><button id="closeTreeBtn">Close</button></div>
+    <div class="modal-buttons"><button id="closeTreeBtn" data-i18n="Close">Close</button></div>
   </div>
 </div>
 
@@ -5507,24 +5509,29 @@ INDEX_HTML = r'''<!DOCTYPE html>
 
 <div id="createAgentModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="createAgentTitle">
   <form id="createAgentForm" class="modal-content">
-    <h3 id="createAgentTitle">添加 Agent</h3>
+    <h3 id="createAgentTitle" data-i18n="添加 Agent">添加 Agent</h3>
     <fieldset id="createAgentFields">
-      <label for="createAgentName">名称</label><input id="createAgentName" required maxlength="64" autocomplete="off">
-      <label for="createAgentProvider">模型供应商</label><select id="createAgentProvider" required></select>
-      <label for="createAgentModel">模型</label><select id="createAgentModel" required></select>
-      <label for="createAgentPrompt">系统提示词</label><textarea id="createAgentPrompt" rows="3" maxlength="8192"></textarea>
-      <label for="createAgentChannels">参与频道（英文逗号分隔）</label><input id="createAgentChannels" required maxlength="1000">
-      <label for="createAgentStrictChannel">限定频道（可留空）</label><input id="createAgentStrictChannel" maxlength="100">
+      <label for="createAgentName" data-i18n="名称">名称</label><input id="createAgentName" required maxlength="64" autocomplete="off">
+      <label for="createAgentProvider" data-i18n="模型供应商">模型供应商</label><select id="createAgentProvider" required></select>
+      <label for="createAgentModel" data-i18n="模型">模型</label><select id="createAgentModel" required></select>
+      <label for="createAgentPrompt" data-i18n="系统提示词">系统提示词</label><textarea id="createAgentPrompt" rows="3" maxlength="8192"></textarea>
+      <label for="createAgentChannels" data-i18n="参与频道（英文逗号分隔）">参与频道（英文逗号分隔）</label><input id="createAgentChannels" required maxlength="1000">
+      <label for="createAgentStrictChannel" data-i18n="限定频道（可留空）">限定频道（可留空）</label><input id="createAgentStrictChannel" maxlength="100">
     </fieldset>
     <p id="createAgentStatus" role="status" aria-live="polite"></p>
-    <div class="modal-buttons"><button id="createAgentRetry" type="button">重新加载</button><button id="createAgentCancel" type="button">取消</button><button id="createAgentSubmit" type="submit" disabled>创建 Agent</button></div>
+    <div class="modal-buttons"><button id="createAgentRetry" type="button" data-i18n="重新加载">重新加载</button><button id="createAgentCancel" type="button" data-i18n="取消">取消</button><button id="createAgentSubmit" type="submit" disabled data-i18n="创建 Agent">创建 Agent</button></div>
   </form>
 </div>
 <script src="/identity/runtime-mode.js"></script>
+<script src="/identity/i18n.js"></script>
+<script src="/identity/messages.js"></script>
+<script src="/identity/chat-messages.js"></script>
+<script src="/identity/help.js"></script>
+<script src="/identity/display.js"></script>
 <script src="/identity/workspace-ui.js"></script>
 <script src="/identity/workspace-shell.js"></script>
 <script>
-let ws, currentStoreId = 'general', username = localStorage.getItem('lack_username') || 'human_' + Math.floor(Math.random()*1000), userId = '', agents = [], researchSessions = [], channels = [], currentThreadId = null, graphInterval = null, graphCanvas, graphCtx, resizeListener = false, availableLlmProviders = [];
+let ws, currentStoreId = 'general', username = readDisplayStorage('lack_username') || 'human_' + Math.floor(Math.random()*1000), userId = '', agents = [], researchSessions = [], channels = [], currentThreadId = null, graphInterval = null, graphCanvas, graphCtx, resizeListener = false, availableLlmProviders = [];
 let pendingFile = null;
 let moderatorState = false;
 const jspaceEnabled = true;
@@ -5534,7 +5541,31 @@ let graphWorkerUrl = null;
 const fileReaders = new Set();
 let agentCreateForm = null;
 
+
+let displayRoot = null, displayLocaleUnsubscribe = null, displayGraphSnapshot = null;
+function safeBrowserStorage(name) {try {return window[name] || null;} catch (_) {return null;}}
+function readDisplayStorage(key) {try {return safeBrowserStorage('localStorage')?.getItem(key) || null;} catch (_) {return null;}}
+function displayLabel(id, params = {}) {
+  return displayRoot ? displayRoot.ui(id, params) : id.replace(/\{([A-Za-z_][A-Za-z0-9_]*)\}/g, (all, key) => Object.hasOwn(params, key) ? String(params[key]) : all);
+}
+function displayText(value) {return displayRoot ? displayRoot.text(value) : String(value);}
+function setDisplay(node, property, value) {if (displayRoot) displayRoot.set(node, property, value); else node[property] = value; return value;}
+function bindDisplay(node) {if (displayRoot) displayRoot.bind(node);}
+function releaseDisplay(node) {if (displayRoot && node) displayRoot.release(node);}
+function initializeDisplay() {
+  if (displayRoot || !globalThis.ChunLackDisplay || !globalThis.ChunLackI18n) return;
+  displayRoot = ChunLackDisplay.createDisplay({document, window, fetch: window.fetch.bind(window), profile: globalThis.LACK_MULTI_USER === false ? 'legacy' : 'workspace'});
+  bindDisplay(document);
+  displayLocaleUnsubscribe = displayRoot.i18n.subscribe(() => {
+    for (const node of document.querySelectorAll('[data-display-timestamp]')) node.textContent = formatTime(Number(node.dataset.displayTimestamp));
+    if (displayGraphSnapshot && document.getElementById('graphModal').style.display === 'flex') drawGraph(displayGraphSnapshot);
+  });
+  window.addEventListener('pagehide', () => {displayLocaleUnsubscribe?.(); displayRoot.dispose();}, {once: true});
+}
+function openPrivateHelp() {if (!displayRoot?.openHelp()) showToast(displayLabel('私有帮助暂不可用，请重新加载页面。'), 'error');}
+
 function clearWorkspacePresentation() {
+  displayRoot?.closeHelp(); displayRoot?.setUser(null); displayGraphSnapshot = null;
   agentCreateForm?.reset();
   clearInterval(researchInterval); clearInterval(thinkingInterval); clearInterval(graphInterval); clearTimeout(legacyReconnectTimer);
   researchInterval = thinkingInterval = graphInterval = legacyReconnectTimer = null;
@@ -5547,7 +5578,7 @@ function clearWorkspacePresentation() {
   currentThreadId = null; currentStoreId = 'general'; username = ''; userId = ''; moderatorState = false; activeWorkspaceScope = null;
   document.body.classList.remove('chunlack-public-ready', 'sidebar-open');
   for (const id of ['messagesArea', 'sidebar', 'threadMessages', 'filePreview', 'agentDetailContent', 'graphLabels', 'treeContent', 'toast']) {
-    const element = document.getElementById(id); if (element) element.replaceChildren();
+    const element = document.getElementById(id); if (element) {releaseDisplay(element); element.replaceChildren();}
   }
   for (const element of document.querySelectorAll('.modal')) element.style.display = 'none';
   for (const element of document.querySelectorAll('.workspace-reaction-picker')) element.remove();
@@ -5555,20 +5586,21 @@ function clearWorkspacePresentation() {
   const thread = document.getElementById('threadPanel'); if (thread) thread.classList.remove('open');
   const detail = document.getElementById('agentDetailPopup'); if (detail) detail.classList.remove('show');
   const thinking = document.getElementById('agentThinkingToast'); if (thinking) thinking.style.display = 'none';
-  const badge = document.getElementById('ralphStatusBadge'); if (badge) {badge.textContent = ''; badge.style.display = 'none';}
+  const badge = document.getElementById('ralphStatusBadge'); if (badge) {setDisplay(badge, 'textContent', ''); badge.style.display = 'none';}
   const title = document.getElementById('currentChatName'); if (title) title.textContent = '#general';
   if (graphCtx && graphCanvas) graphCtx.clearRect(0, 0, graphCanvas.width, graphCanvas.height);
   if (workspaceView) workspaceView.clear();
 }
 
 async function init() {
+  initializeDisplay();
   if (globalThis.LACK_MULTI_USER === false) {initializeChatUi(); return;}
   document.body.classList.add('chunlack-public');
   const publicStyle = document.createElement('style');
   publicStyle.textContent = '.chunlack-public:not(.chunlack-public-ready) .neuro-menu,.chunlack-public:not(.chunlack-public-ready) .neuro-desktop,.chunlack-public:not(.chunlack-public-ready) .bottom-bar{visibility:hidden}.chunlack-public .workspace-cover,.chunlack-public .workspace-panel{top:var(--workspace-toolbar-height,48px)}';
   document.head.append(publicStyle);
   if (globalThis.LACK_MULTI_USER !== true || !globalThis.ChunLackWorkspace || !globalThis.ChunLackWorkspaceShell) {
-    const error = document.createElement('p'); error.textContent = '无法确认登录模式，已停止连接。请检查服务后重新加载。'; document.body.append(error); return;
+    const error = document.createElement('p'); setDisplay(error, "textContent", displayLabel("无法确认登录模式，已停止连接。请检查服务后重新加载。")); document.body.append(error); return;
   }
   const nativeFetch = window.fetch.bind(window);
   const alignToolbar = () => {
@@ -5579,10 +5611,10 @@ async function init() {
     menu.style.top = height + 'px'; desktop.style.top = height + menu.getBoundingClientRect().height + 'px';
   };
   workspaceClient = ChunLackWorkspace.createWorkspaceClient({fetch: nativeFetch, WebSocket: window.WebSocket, location,
-    storage: sessionStorage, legacyStorage: localStorage, onReset: clearWorkspacePresentation,
+    storage: safeBrowserStorage('sessionStorage'), legacyStorage: safeBrowserStorage('localStorage'), onReset: clearWorkspacePresentation,
     onIdentity: state => {
       if (workspaceView) workspaceView.render(state);
-      for (const id of ['treeBtn', 'cronBtn']) {const element = document.getElementById(id); if (element) {element.disabled = true; element.title = '公网多用户模式不开放主机文件或 cron 操作';}}
+      for (const id of ['treeBtn', 'cronBtn']) {const element = document.getElementById(id); if (element) {element.disabled = true; setDisplay(element, "title", displayLabel("公网多用户模式不开放主机文件或 cron 操作"));}}
       requestAnimationFrame(alignToolbar);
     },
     onWorkspace: selected => {
@@ -5593,16 +5625,17 @@ async function init() {
       document.body.classList.add('chunlack-public-ready'); alignToolbar();
     }, onError: error => workspaceView && workspaceView.notify(error), onReconnect: () => connect()});
   window.fetch = (url, options) => workspaceClient.fetch(url, options);
-  workspaceView = ChunLackWorkspaceShell.mountWorkspaceShell({client: workspaceClient, document});
+  workspaceView = ChunLackWorkspaceShell.mountWorkspaceShell({client: workspaceClient, document, i18n: displayRoot?.i18n});
+  const unsubscribeToolbarLocale = displayRoot?.i18n.subscribe(() => requestAnimationFrame(alignToolbar));
   window.addEventListener('resize', alignToolbar);
-  window.addEventListener('pagehide', () => {workspaceClient.close(); workspaceView.close(); window.removeEventListener('resize', alignToolbar);}, {once: true});
+  window.addEventListener('pagehide', () => {unsubscribeToolbarLocale?.(); workspaceClient.close(); workspaceView.close(); window.removeEventListener('resize', alignToolbar);}, {once: true});
   await workspaceClient.boot();
 }
 
 function showToast(msg, type = 'info') {
   const toast = document.getElementById('toast');
   toast.className = `toast ${type}`;
-  toast.innerText = msg;
+  setDisplay(toast, "innerText", msg);
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 3000);
 }
@@ -5682,7 +5715,7 @@ function initializeChatUi() {
   document.getElementById('darkModeToggle').onclick = () => { document.body.classList.toggle('dark-mode'); if(document.getElementById('graphModal').style.display === 'flex') fetchAndDrawGraph(); };
   document.getElementById('groundBtn').onclick = () => sendCommand('/ground');
   document.getElementById('graphBtn').onclick = () => openGraphModal();
-  document.getElementById('cronBtn').onclick = () => { if(confirm('⚠️ CRON WIPE: Delete ALL cron jobs, add heartbeats, reset ALL data. Are you sure?')) fetch('/api/cron/wipe',{method:'POST'}).then(r=>r.json()).then(d=>{if(d.success) location.reload(); else alert('Error: '+d.error);}); };
+  document.getElementById('cronBtn').onclick = () => { if(confirm(displayLabel("⚠️ CRON WIPE: Delete ALL cron jobs, add heartbeats, reset ALL data. Are you sure?"))) fetch('/api/cron/wipe',{method:'POST'}).then(r=>r.json()).then(d=>{if(d.success) location.reload(); else alert(displayLabel("Error: {p0}", {p0: d.error}));}); };
   document.getElementById('closeThreadBtn').onclick = closeThreadPanel;
   document.getElementById('sendThreadReply').onclick = sendThreadReply;
   document.addEventListener('keydown', e => { if((e.ctrlKey||e.metaKey) && e.key === 'k') { e.preventDefault(); document.getElementById('quickSwitcherModal').style.display = 'flex'; document.getElementById('switcherInput').focus(); } });
@@ -5701,7 +5734,7 @@ function initializeChatUi() {
     if (!file) return;
     const uploadGeneration = workspaceClient ? workspaceClient.snapshot().generation : null;
     const MAX_SIZE = 512 * 1024;
-    if (file.size > MAX_SIZE) { showToast(`File too large (max 512KB)`, 'error'); fileInput.value = ''; return; }
+    if (file.size > MAX_SIZE) { showToast(displayLabel("File too large (max 512KB)"), 'error'); fileInput.value = ''; return; }
     const previewDiv = document.getElementById('filePreview');
     previewDiv.innerHTML = `<span class="file-name-chip">📎 ${escapeHtml(file.name)} <i class="fas fa-times-circle" id="removeFileChip" style="cursor:pointer"></i></span>`;
     document.getElementById('removeFileChip').onclick = () => { previewDiv.innerHTML = ''; pendingFile = null; fileInput.value = ''; };
@@ -5711,8 +5744,8 @@ function initializeChatUi() {
       const base64 = await readFileAsBase64(file);
       if (workspaceClient && uploadGeneration !== workspaceClient.snapshot().generation) return;
       pendingFile = { name: file.name, contentBase64: base64, size: file.size };
-      showToast(`File "${file.name}" ready to send`, 'success');
-    } catch (err) { if (!workspaceClient || uploadGeneration === workspaceClient.snapshot().generation) {showToast(`Failed to read file`, 'error'); pendingFile = null; previewDiv.innerHTML = '';} }
+      showToast(displayLabel("File \"{p0}\" ready to send", {p0: file.name}), 'success');
+    } catch (err) { if (!workspaceClient || uploadGeneration === workspaceClient.snapshot().generation) {showToast(displayLabel("Failed to read file"), 'error'); pendingFile = null; previewDiv.innerHTML = '';} }
     finally { spinner.style.display = 'none'; fileInput.value = ''; }
   });
 
@@ -5726,17 +5759,17 @@ function initializeChatUi() {
     const strictChannel = document.getElementById('editAgentStrictChannel').value.trim() || null;
     ws.send(JSON.stringify({type:'update_agent',id,name,model,provider,systemPrompt:prompt,channels:chans,strictChannel}));
     document.getElementById('agentModal').style.display='none';
-    showToast(`Agent "${name}" updated`, 'success');
+    showToast(displayLabel("Agent \"{p0}\" updated", {p0: name}), 'success');
   };
   document.getElementById('closeModalBtn').onclick = () => { document.getElementById('agentModal').style.display='none'; };
   document.getElementById('removeAgentBtn').onclick = async () => {
     const agentId = document.getElementById('editAgentId').value;
     const agentName = document.getElementById('editAgentName').value;
-    if (confirm(`Delete agent "${agentName}" permanently?`)) {
+    if (confirm(displayLabel("Delete agent \"{p0}\" permanently?", {p0: agentName}))) {
       const resp = await fetch(`/api/agent/${agentId}`, { method: 'DELETE' });
       const result = await resp.json();
-      if (resp.ok && result.success) { document.getElementById('agentModal').style.display='none'; showToast(`Agent "${agentName}" removed`, 'success'); }
-      else { showToast(result.reason || 'Cannot remove agent', 'error'); }
+      if (resp.ok && result.success) { document.getElementById('agentModal').style.display='none'; showToast(displayLabel("Agent \"{p0}\" removed", {p0: agentName}), 'success'); }
+      else { showToast(result.reason || displayLabel("Cannot remove agent"), 'error'); }
     }
   };
 
@@ -5768,19 +5801,20 @@ function initStudioControls() {
   });
   document.querySelectorAll('[data-draft]').forEach(button => {
     button.onclick = () => {
+      if (button.dataset.draft.trim().toLowerCase() === '/help') {openPrivateHelp(); return;}
       const input = document.getElementById('messageInput');
-      if (input.value.trim() && !confirm('替换当前未发送的草稿？')) return;
-      input.value = button.dataset.draft;
+      if (input.value.trim() && !confirm(displayLabel("替换当前未发送的草稿？"))) return;
+      input.value = displayText(displayLabel(button.dataset.draft));
       input.focus();
       autoGrow();
     };
   });
   document.getElementById('studioSpawnBtn').onclick = () => {
     if (!ws || ws.readyState !== WebSocket.OPEN) {
-      showToast('尚未连接服务，请稍后再试。', 'error');
+      showToast(displayLabel("尚未连接服务，请稍后再试。"), 'error');
       return;
     }
-    handleSpawn().catch(() => showToast('无法添加 Agent，请检查模型服务配置。', 'error'));
+    handleSpawn().catch(() => showToast(displayLabel("无法添加 Agent，请检查模型服务配置。"), 'error'));
   };
 }
 
@@ -5799,7 +5833,7 @@ function connect() {
   const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
   ws = workspaceClient ? workspaceClient.createSocket() : new WebSocket(protocol+'//'+location.host);
   ws.onopen = () => {
-    document.getElementById('statusText').innerText = 'CONNECTED';
+    setDisplay(document.getElementById('statusText'), "innerText", displayLabel("CONNECTED"));
     ws.send(JSON.stringify({type:'join',channelId:currentStoreId}));
     if (!workspaceClient) ws.send(JSON.stringify({type:'set_username',username}));
   };
@@ -5807,14 +5841,14 @@ function connect() {
     const d = JSON.parse(e.data);
     switch(d.type) {
       case 'channels': channels = d.channels; renderSidebar(); break;
-      case 'agents_list': agents = d.agents; document.getElementById('agentCount').innerText = 'Agents: '+agents.length; renderSidebar(); updateModeratorButton(); if (document.getElementById('graphModal').style.display === 'flex') fetchAndDrawGraph(); break;
+      case 'agents_list': agents = d.agents; setDisplay(document.getElementById('agentCount'), "innerText", displayLabel("Agents: {p0}", {p0: agents.length})); renderSidebar(); updateModeratorButton(); if (document.getElementById('graphModal').style.display === 'flex') fetchAndDrawGraph(); break;
       case 'history': renderMessages(d.messages); break;
       case 'new_message': if(d.channelId === currentStoreId) appendMessage(d.message); break;
       case 'research_update': fetchResearchSessions(); break;
       case 'thread_messages': renderThreadMessages(d.messages); currentThreadId = d.threadId; openThreadPanel(); break;
       case 'thread_update': if(currentThreadId === d.threadId) renderThreadMessages(d.messages); break;
       case 'models_list': populateModelSelect(d.models); break;
-      case 'spawn_confirm': agentCreateForm?.receive(d); appendSystemMessage('Agent '+d.agent.name+' created.'); showToast(`Agent ${d.agent.name} spawned`, 'success'); break;
+      case 'spawn_confirm': agentCreateForm?.receive(d); appendSystemMessage(displayLabel("Agent {p0} created.", {p0: d.agent.name})); showToast(displayLabel("Agent {p0} spawned", {p0: d.agent.name}), 'success'); break;
       case 'error': agentCreateForm?.receive(d); showToast(d.message, 'error'); break;
       case 'cron_reset': location.reload(); break;
       case 'graph_ack': openGraphModal(); break;
@@ -5822,14 +5856,14 @@ function connect() {
         const badge = document.getElementById('ralphStatusBadge');
         if (d.storeId === currentStoreId && d.active) {
           badge.style.display = 'inline-block';
-          badge.textContent = `Ralph gen ${d.generation} · ${d.goal || ''}`;
+          setDisplay(badge, "textContent", displayLabel("Ralph gen {p0} · {p1}", {p0: d.generation, p1: d.goal || ''}));
         } else if (d.storeId === currentStoreId && !d.active) {
           badge.style.display = 'none';
         }
         break;
     }
   };
-  ws.onclose = () => { agentCreateForm?.disconnected(); document.getElementById('statusText').innerText = 'DISCONNECTED'; if (!workspaceClient) legacyReconnectTimer = setTimeout(connect,3000); };
+  ws.onclose = () => { agentCreateForm?.disconnected(); setDisplay(document.getElementById('statusText'), "innerText", displayLabel("DISCONNECTED")); if (!workspaceClient) legacyReconnectTimer = setTimeout(connect,3000); };
 }
 
 async function loadLlmProviders() {
@@ -5857,19 +5891,19 @@ function populateModelSelect(models) {
 
 function renderSidebar() {
   const sidebar = document.getElementById('sidebar'); if(!sidebar) return;
-  sidebar.innerHTML = '';
-  addSection('CHANNELS', channels.map(c => ({ id: c.id, name: '#'+c.name, type:'channel', icon:'fa-hashtag' })));
-  addSection('AGENTS', agents.map(a => {
+  releaseDisplay(sidebar); sidebar.innerHTML = '';
+  addSection(displayLabel("CHANNELS"), channels.map(c => ({ id: c.id, name: '#'+c.name, type:'channel', icon:'fa-hashtag' })));
+  addSection(displayLabel("AGENTS"), agents.map(a => {
     let roleIcon = '🤖';
     return { id: a.id, name: a.name, type:'agent', icon:roleIcon, status:a.status, model: a.model, weights: a.weights, ePoolSize: a.ePoolSize, xPoolSize: a.xPoolSize, strictChannel: a.strictChannel };
   }));
-  addSection('RESEARCH', researchSessions.map(s => ({ id: s.id, name: s.topic.substring(0,20), type:'research', icon:'fa-flask', progress:s.metric })));
+  addSection(displayLabel("RESEARCH"), researchSessions.map(s => ({ id: s.id, name: s.topic.substring(0,20), type:'research', icon:'fa-flask', progress:s.metric })));
 }
 
 function addSection(title, items) {
   if(!items.length) return;
   const section = document.createElement('div'); section.className = 'sidebar-section';
-  const header = document.createElement('div'); header.className = 'sidebar-header'; header.innerHTML = `<i class="fas fa-chevron-down"></i> ${title}`;
+  const header = document.createElement('div'); header.className = 'sidebar-header'; header.innerHTML = '<i class="fas fa-chevron-down"></i> '; const caption = document.createElement('span'); setDisplay(caption, 'textContent', title); header.appendChild(caption);
   let itemsDiv = document.createElement('div'); itemsDiv.className = 'channel-list';
   header.onclick = () => { itemsDiv.style.display = itemsDiv.style.display === 'none' ? 'block' : 'none'; };
   section.appendChild(header);
@@ -5878,7 +5912,7 @@ function addSection(title, items) {
     if (item.type === 'agent') {
       div = document.createElement('div');
       div.className = 'agent-item';
-      const strictHtml = item.strictChannel ? `<span class="role-badge" title="Strict channel">🔒${escapeHtml(item.strictChannel)}</span>` : '';
+      const strictHtml = item.strictChannel ? `<span class="role-badge" title="Strict channel" data-i18n-title="Strict channel">🔒${escapeHtml(item.strictChannel)}</span>` : '';
       div.innerHTML = `
         <div class="agent-info" data-agent-id="${escapeHtml(item.id)}">
           <span style="font-size:1.2rem;">${item.icon || '🤖'}</span>
@@ -5886,13 +5920,14 @@ function addSection(title, items) {
           <span class="agent-status status-${escapeHtml(['online','thinking','queued','offline'].includes(item.status) ? item.status : 'offline')}"></span>
           ${strictHtml}
         </div>
-        <i class="fas fa-trash-alt remove-agent" data-agent-id="${escapeHtml(item.id)}" title="Remove"></i>
+        <i class="fas fa-trash-alt remove-agent" data-agent-id="${escapeHtml(item.id)}" title="Remove" data-i18n-title="Remove"></i>
       `;
+      bindDisplay(div);
       const infoDiv = div.querySelector('.agent-info');
       infoDiv.onclick = (e) => { e.stopPropagation(); showAgentDetails(item.id); };
       const trash = div.querySelector('.remove-agent');
       if (workspaceClient && !workspaceClient.can('manage')) trash.hidden = true;
-      trash.onclick = async (e) => { e.stopPropagation(); if(confirm(`Permanently remove agent "${item.name}"?`)) { const resp = await fetch(`/api/agent/${item.id}`, { method: 'DELETE' }); const result = await resp.json(); if (resp.ok && result.success) { showToast(`Agent "${item.name}" removed`, 'success'); } else { showToast(result.reason || 'Cannot remove agent', 'error'); } } };
+      trash.onclick = async (e) => { e.stopPropagation(); if(confirm(displayLabel("Permanently remove agent \"{p0}\"?", {p0: item.name}))) { const resp = await fetch(`/api/agent/${item.id}`, { method: 'DELETE' }); const result = await resp.json(); if (resp.ok && result.success) { showToast(displayLabel("Agent \"{p0}\" removed", {p0: item.name}), 'success'); } else { showToast(result.reason || displayLabel("Cannot remove agent"), 'error'); } } };
     } else {
       div = document.createElement('div'); div.className = 'channel-item';
       div.innerHTML = `<i class="fas ${item.icon}"></i> ${escapeHtml(item.name)}`;
@@ -5911,17 +5946,18 @@ function showAgentDetails(agentId) {
   const agent = agents.find(a => a.id === agentId);
   if (!agent) return;
   const content = document.getElementById('agentDetailContent');
-  content.innerHTML = `
+  releaseDisplay(content); content.innerHTML = `
     <h3>${escapeHtml(agent.name)}</h3>
-    <p><strong>Model:</strong> ${escapeHtml(agent.model)}</p>
-    <p><strong>Provider:</strong> ${escapeHtml(agent.provider || 'ollama')}</p>
-    <p><strong>Strict Channel:</strong> ${escapeHtml(agent.strictChannel || 'None')}</p>
-    <p><strong>Status:</strong> ${escapeHtml(agent.status)}</p>
-    <p><strong>Exploit/Explore:</strong> ${agent.weights ? agent.weights.exploitation.toFixed(2) + ' / ' + agent.weights.exploration.toFixed(2) : 'N/A'}</p>
-    <p><strong>E-pool / X-pool:</strong> ${agent.ePoolSize || 0} / ${agent.xPoolSize || 0}</p>
-    <p><strong>J-space enabled:</strong> ${agent.jspaceEnabled ? '✅' : '❌'}</p>
-    <button class="edit-agent-detail">Edit</button>
+    <p><strong data-i18n="Model:">Model:</strong> ${escapeHtml(agent.model)}</p>
+    <p><strong data-i18n="Provider:">Provider:</strong> ${escapeHtml(agent.provider || 'ollama')}</p>
+    <p><strong data-i18n="Strict Channel:">Strict Channel:</strong> ${escapeHtml(agent.strictChannel || 'None')}</p>
+    <p><strong data-i18n="Status:">Status:</strong> ${escapeHtml(agent.status)}</p>
+    <p><strong data-i18n="Exploit/Explore:">Exploit/Explore:</strong> ${agent.weights ? agent.weights.exploitation.toFixed(2) + ' / ' + agent.weights.exploration.toFixed(2) : 'N/A'}</p>
+    <p><strong data-i18n="E-pool / X-pool:">E-pool / X-pool:</strong> ${agent.ePoolSize || 0} / ${agent.xPoolSize || 0}</p>
+    <p><strong data-i18n="J-space enabled:">J-space enabled:</strong> ${agent.jspaceEnabled ? '✅' : '❌'}</p>
+    <button class="edit-agent-detail" data-i18n="Edit">Edit</button>
   `;
+  bindDisplay(content);
   const editButton = content.querySelector('.edit-agent-detail');
   editButton.disabled = !!workspaceClient && !workspaceClient.can('manage');
   editButton.onclick = () => openEditModal(agentId);
@@ -5936,7 +5972,7 @@ function updateRalphBadge() {
 }
 
 function renderMessages(messages) {
-  const container = document.getElementById('messagesArea'); container.innerHTML = '';
+  const container = document.getElementById('messagesArea'); releaseDisplay(container); container.innerHTML = '';
   const groups = []; let cur = null;
   for(const msg of messages) {
     if(msg.senderType === 'system') { if(cur) groups.push(cur); groups.push({sender:msg.sender, messages:[msg], lastTimestamp:msg.timestamp}); cur=null; continue; }
@@ -5969,6 +6005,7 @@ function createMessageElement(msg, showSender) {
   if(showSender) {
     const senderSpan = document.createElement('div'); senderSpan.className = 'message-sender';
     senderSpan.innerHTML = `${escapeHtml(msg.sender)} <span class="message-timestamp">${formatTime(msg.timestamp)}</span>`;
+    const timestamp = senderSpan.querySelector('.message-timestamp'); if (timestamp) timestamp.dataset.displayTimestamp = String(msg.timestamp);
     contentDiv.appendChild(senderSpan);
   }
   const textDiv = document.createElement('div'); textDiv.className = 'message-text';
@@ -5976,12 +6013,13 @@ function createMessageElement(msg, showSender) {
   contentDiv.appendChild(textDiv);
   if(msg.replyCount > 0) {
     const badge = document.createElement('div'); badge.className = 'reply-badge';
-    badge.innerHTML = `<i class="fas fa-reply-all"></i> ${msg.replyCount} replies`;
+    badge.innerHTML = '<i class="fas fa-reply-all"></i> '; const caption = document.createElement('span'); setDisplay(caption, 'textContent', displayLabel('{count} replies', {count: msg.replyCount})); badge.appendChild(caption);
     badge.onclick = () => fetchThread(msg.id);
     contentDiv.appendChild(badge);
   }
   const actions = document.createElement('div'); actions.className = 'message-actions';
-  actions.innerHTML = `<i class="fas fa-reply action-icon" title="Reply"></i><i class="fas fa-plus-circle action-icon" title="React"></i><i class="fas fa-thumbtack action-icon" title="Pin"></i><i class="fas fa-copy action-icon" title="Copy"></i>`;
+  actions.innerHTML = `<i class="fas fa-reply action-icon" title="Reply" data-i18n-title="Reply"></i><i class="fas fa-plus-circle action-icon" title="React" data-i18n-title="React"></i><i class="fas fa-thumbtack action-icon" title="Pin" data-i18n-title="Pin"></i><i class="fas fa-copy action-icon" title="Copy" data-i18n-title="Copy"></i>`;
+  bindDisplay(actions);
   actions.querySelector('.fa-reply').onclick = () => fetchThread(msg.id);
   actions.querySelector('.fa-plus-circle').onclick = (e) => { e.stopPropagation(); showReactionPicker(msg.id, e); };
   actions.querySelector('.fa-thumbtack').onclick = () => sendCommand(`/pin ${msg.id}`);
@@ -5992,18 +6030,19 @@ function createMessageElement(msg, showSender) {
 }
 
 function appendMessage(msg) { const container = document.getElementById('messagesArea'); const groupDiv = document.createElement('div'); groupDiv.className = 'message-group'; groupDiv.appendChild(createMessageElement(msg,true)); container.appendChild(groupDiv); container.scrollTop = container.scrollHeight; }
-function appendSystemMessage(text) { const container = document.getElementById('messagesArea'); const div = document.createElement('div'); div.className = 'message'; div.innerHTML = `<div class="message-avatar">S</div><div class="message-content"><em>${escapeHtml(text)}</em></div>`; container.appendChild(div); container.scrollTop = container.scrollHeight; }
+function appendSystemMessage(text) { const container = document.getElementById('messagesArea'); const div = document.createElement('div'); div.className = 'message'; div.innerHTML = `<div class="message-avatar">S</div><div class="message-content"><em></em></div>`; setDisplay(div.querySelector('em'), 'textContent', text); container.appendChild(div); container.scrollTop = container.scrollHeight; }
 function fetchThread(mid) { ws.send(JSON.stringify({type:'reply_in_thread',parentId:mid,content:'',storeId:currentStoreId})); }
-function renderThreadMessages(messages) { const container = document.getElementById('threadMessages'); container.innerHTML = ''; for(const msg of messages) { const div = document.createElement('div'); div.className = 'message'; div.innerHTML = `<strong>${escapeHtml(msg.sender)}</strong> ${formatTime(msg.timestamp)}<br>${formatCode(escapeHtml(msg.content))}`; container.appendChild(div); } container.scrollTop = container.scrollHeight; }
+function renderThreadMessages(messages) { const container = document.getElementById('threadMessages'); releaseDisplay(container); container.innerHTML = ''; for(const msg of messages) { const div = document.createElement('div'); div.className = 'message'; div.innerHTML = `<strong>${escapeHtml(msg.sender)}</strong> <span class="message-timestamp" data-display-timestamp="${escapeHtml(msg.timestamp)}">${formatTime(msg.timestamp)}</span><br>${formatCode(escapeHtml(msg.content))}`; container.appendChild(div); } container.scrollTop = container.scrollHeight; }
 function sendThreadReply() { const txt = document.getElementById('threadReplyInput').value.trim(); if(txt && currentThreadId) { ws.send(JSON.stringify({type:'reply_in_thread',parentId:currentThreadId,content:txt,storeId:currentStoreId})); document.getElementById('threadReplyInput').value = ''; } }
 function openThreadPanel() { document.getElementById('threadPanel').classList.add('open'); ws.send(JSON.stringify({type:'open_thread',threadId:currentThreadId})); }
 function closeThreadPanel() { document.getElementById('threadPanel').classList.remove('open'); if(currentThreadId) ws.send(JSON.stringify({type:'close_thread',threadId:currentThreadId})); currentThreadId = null; }
 
 function sendMessage() {
+  if (/^\/help\s*$/i.test(document.getElementById('messageInput').value.trim())) {openPrivateHelp(); return;}
   let finalMessage = '';
   if (pendingFile) {
     let fileContent;
-    try { fileContent = atob(pendingFile.contentBase64); } catch(e) { showToast('Failed to decode file', 'error'); return; }
+    try { fileContent = atob(pendingFile.contentBase64); } catch(e) { showToast(displayLabel("Failed to decode file"), 'error'); return; }
     const MAX_CHARS = 1500;
     const truncated = fileContent.length > MAX_CHARS ? fileContent.substring(0, MAX_CHARS) + '\n...(truncated)' : fileContent;
     const fileBlock = `📎 **File: ${pendingFile.name}**\n\`\`\`\n${truncated}\n\`\`\``;
@@ -6021,8 +6060,8 @@ function sendMessage() {
   autoGrow();
 }
 
-function sendCommand(cmd) { if(ws) ws.send(JSON.stringify({type:'message',content:cmd})); }
-function formatTime(ts) { return new Date(ts).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'}); }
+function sendCommand(cmd) { if (/^\/help\s*$/i.test(String(cmd).trim())) {openPrivateHelp(); return;} if(ws) ws.send(JSON.stringify({type:'message',content:cmd})); }
+function formatTime(ts) { return new Date(ts).toLocaleTimeString(displayRoot ? displayRoot.i18n.getLocale() : [],{hour:'2-digit',minute:'2-digit'}); }
 function formatCode(t) { return t.replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>'); }
 function autoGrow() { const ta = document.getElementById('messageInput'); ta.style.height = 'auto'; ta.style.height = Math.min(ta.scrollHeight,200)+'px'; }
 let slashTimeout;
@@ -6065,11 +6104,11 @@ function openEditModal(agentId) {
   const initModal = async () => {
     const providers = availableLlmProviders.length ? availableLlmProviders : await loadLlmProviders();
     const providerSelect = document.getElementById('editAgentProvider');
-    providerSelect.innerHTML = '';
+    releaseDisplay(providerSelect); providerSelect.innerHTML = '';
     (providers || []).forEach(p => {
       const opt = document.createElement('option');
       opt.value = p.id;
-      opt.textContent = `${p.id}${p.configured ? '' : ' (unconfigured)'}`;
+      setDisplay(opt, 'textContent', p.configured ? p.id : displayLabel('{provider} (unconfigured)', {provider: p.id}));
       opt.disabled = !p.configured;
       providerSelect.appendChild(opt);
     });
@@ -6085,7 +6124,7 @@ function openEditModal(agentId) {
   document.getElementById('editAgentPrompt').value = agent.systemPrompt;
   document.getElementById('editAgentChannels').value = agent.channels.join(',');
   document.getElementById('editAgentStrictChannel').value = agent.strictChannel || '';
-  initModal().catch(() => showToast('Failed to load provider/model list', 'error'));
+  initModal().catch(() => showToast(displayLabel("Failed to load provider/model list"), 'error'));
   document.getElementById('agentModal').style.display = 'block';
   document.getElementById('agentDetailPopup').classList.remove('show');
 }
@@ -6107,7 +6146,7 @@ function createAgentForm() {
   function reset() {
     stopLoad(); clearTimeout(ackTimer); ackTimer = null; state = null;
     modal.style.display = 'none'; fields.disabled = false; submit.disabled = true;
-    provider.replaceChildren(); model.replaceChildren(); status.textContent = '';
+    provider.replaceChildren(); model.replaceChildren(); setDisplay(status, 'textContent', '');
     for (const name of ['Name', 'Prompt', 'Channels', 'StrictChannel']) field(name).value = '';
   }
   function fill(select, values) {
@@ -6127,7 +6166,7 @@ function createAgentForm() {
     if (!current(s) || s.pending) return;
     stopLoad(); const request = revision, selected = provider.value; controller = new AbortController();
     s.models = []; model.replaceChildren(); model.disabled = true; submit.disabled = true; retry.disabled = true;
-    status.textContent = '正在加载模型…';
+    setDisplay(status, "textContent", displayLabel("正在加载模型…"));
     try {
       if (!s.providers.includes(selected)) throw new Error('provider_not_available');
       const data = await read('/api/models?provider=' + encodeURIComponent(selected));
@@ -6135,9 +6174,9 @@ function createAgentForm() {
       s.models = Array.isArray(data.models) ? data.models.filter(value => typeof value === 'string' && value.length > 0) : [];
       if (!s.models.length) throw new Error('no_models');
       fill(model, s.models); model.disabled = false; submit.disabled = !connected(s);
-      status.textContent = '请选择模型并填写 Agent 名称。';
+      setDisplay(status, "textContent", displayLabel("请选择模型并填写 Agent 名称。"));
     } catch (error) {
-      if (current(s) && request === revision) status.textContent = '模型加载失败或没有获准使用的模型。请重新加载或选择其他供应商。';
+      if (current(s) && request === revision) setDisplay(status, "textContent", displayLabel("模型加载失败或没有获准使用的模型。请重新加载或选择其他供应商。"));
     } finally {
       if (current(s) && request === revision) {clearTimeout(loadTimer); retry.disabled = false;}
     }
@@ -6148,7 +6187,7 @@ function createAgentForm() {
     stopLoad(); const request = revision; controller = new AbortController();
     s.providers = []; s.models = []; provider.replaceChildren(); model.replaceChildren();
     provider.disabled = model.disabled = submit.disabled = retry.disabled = true;
-    status.textContent = '正在加载可用供应商…';
+    setDisplay(status, "textContent", displayLabel("正在加载可用供应商…"));
     try {
       const data = await read('/api/llm-providers');
       if (!current(s) || request !== revision) return;
@@ -6159,26 +6198,26 @@ function createAgentForm() {
       provider.disabled = false;
       await loadModels();
     } catch (error) {
-      if (current(s) && request === revision) status.textContent = '供应商加载失败或当前工作区没有已配置的供应商。请重新加载，或联系工作区所有者。';
+      if (current(s) && request === revision) setDisplay(status, "textContent", displayLabel("供应商加载失败或当前工作区没有已配置的供应商。请重新加载，或联系工作区所有者。"));
     } finally {
       if (current(s) && request === revision) {clearTimeout(loadTimer); retry.disabled = false;}
     }
   }
   function uncertain() {
-    if (state?.pending) status.textContent = '尚未确认创建结果。请刷新并核对 Agent 列表后再试，勿重复提交。';
+    if (state?.pending) setDisplay(status, "textContent", displayLabel("尚未确认创建结果。请刷新并核对 Agent 列表后再试，勿重复提交。"));
   }
   form.onsubmit = event => {
     event.preventDefault(); const s = state;
     if (!connected(s) || s.pending || submit.disabled) return;
     const name = field('Name').value.trim(), strict = field('StrictChannel').value.trim();
     const channels = [...new Set(field('Channels').value.split(',').map(value => value.trim()).filter(Boolean))];
-    if (!name || !channels.length || (strict && !channels.includes(strict))) {status.textContent = '请填写名称和参与频道；限定频道必须属于参与频道。'; return;}
-    if (!s.providers.includes(provider.value) || !s.models.includes(model.value)) {status.textContent = '请选择已加载并获准使用的供应商和模型。'; return;}
+    if (!name || !channels.length || (strict && !channels.includes(strict))) {setDisplay(status, "textContent", displayLabel("请填写名称和参与频道；限定频道必须属于参与频道。")); return;}
+    if (!s.providers.includes(provider.value) || !s.models.includes(model.value)) {setDisplay(status, "textContent", displayLabel("请选择已加载并获准使用的供应商和模型。")); return;}
     const packet = {type: 'spawn_agent', name, provider: provider.value, model: model.value, systemPrompt: field('Prompt').value, channels, strictChannel: strict || null};
     s.pending = packet; fields.disabled = submit.disabled = retry.disabled = true;
-    status.textContent = '已提交，正在等待服务端确认…';
+    setDisplay(status, "textContent", displayLabel("已提交，正在等待服务端确认…"));
     try {s.socket.send(JSON.stringify(packet)); ackTimer = setTimeout(uncertain, 10000);}
-    catch (error) {s.pending = null; fields.disabled = false; submit.disabled = !connected(s); retry.disabled = false; status.textContent = '连接不可用，未发送创建请求。请重新连接后再试。';}
+    catch (error) {s.pending = null; fields.disabled = false; submit.disabled = !connected(s); retry.disabled = false; setDisplay(status, "textContent", displayLabel("连接不可用，未发送创建请求。请重新连接后再试。"));}
   };
   provider.onchange = loadModels; retry.onclick = loadProviders;
   cancel.onclick = () => {if (state?.pending) modal.style.display = 'none'; else reset(); document.getElementById('studioSpawnBtn')?.focus();};
@@ -6201,7 +6240,7 @@ function createAgentForm() {
       }
       if (state && current(state)) {modal.style.display = 'flex'; field('Name').focus(); return;}
       reset(); const s = {...context(), providers: [], models: [], pending: null}; state = s;
-      if (!connected(s)) {reset(); showToast('尚未连接服务，请稍后再试。', 'error'); return;}
+      if (!connected(s)) {reset(); showToast(displayLabel("尚未连接服务，请稍后再试。"), 'error'); return;}
       field('Prompt').value = 'You are helpful.'; field('Channels').value = 'general,siphon,code';
       modal.style.display = 'flex'; field('Name').focus(); await loadProviders();
     },
@@ -6211,7 +6250,7 @@ function createAgentForm() {
       if (frame.type === 'spawn_confirm' && frame.agent && ['name', 'provider', 'model'].every(key => frame.agent[key] === s.pending[key])) {reset(); document.getElementById('studioSpawnBtn')?.focus();}
       else if (frame.type === 'error') uncertain();
     },
-    disconnected() {submit.disabled = true; if (state?.pending) uncertain(); else if (state) status.textContent = '连接已断开，请关闭表单并在重新连接后再试。';}
+    disconnected() {submit.disabled = true; if (state?.pending) uncertain(); else if (state) setDisplay(status, "textContent", displayLabel("连接已断开，请关闭表单并在重新连接后再试。"));}
   };
 }
 function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
@@ -6223,7 +6262,7 @@ function updateModeratorButton() {
     const on = mod.isCodeModerator;
     btn.classList.remove('on', 'off');
     btn.classList.add(on ? 'on' : 'off');
-    btn.innerText = on ? 'Moderator ON' : 'Moderator OFF';
+    setDisplay(btn, "innerText", on ? displayLabel("Moderator ON") : displayLabel("Moderator OFF"));
     moderatorState = on;
   }
 }
@@ -6355,6 +6394,7 @@ function processMetrics(data) {
 }
 
 function drawGraph(data) {
+  displayGraphSnapshot = data;
   if (!graphCtx || !graphCanvas) return;
   const container = graphCanvas.parentElement;
   const w = container.clientWidth, h = container.clientHeight;
@@ -6372,7 +6412,7 @@ function drawGraph(data) {
     graphCtx.fillStyle = text;
     graphCtx.font = '14px monospace';
     graphCtx.textAlign = 'center';
-    graphCtx.fillText('No agents to display', w/2, h/2);
+    graphCtx.fillText(displayText(displayLabel('No agents to display')), w/2, h/2);
     return;
   }
 
@@ -6530,7 +6570,7 @@ function drawGraph(data) {
       graphCtx.moveTo(x, yOffset + pad.top + innerH);
       graphCtx.lineTo(x, yOffset + pad.top + innerH + 6);
       graphCtx.stroke();
-      const timeStr = new Date(t).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+      const timeStr = formatTime(t);
       graphCtx.fillStyle = text;
       graphCtx.fillText(timeStr, x, yOffset + pad.top + innerH + 18);
     }
@@ -6546,7 +6586,7 @@ async function openTreeModal() {
     const data = await res.json();
     renderTree(data, container);
   } catch(e) {
-    container.innerHTML = '<p>Failed to load tree.</p>';
+    container.innerHTML = '<p></p>'; setDisplay(container.firstChild, 'textContent', displayLabel('Failed to load tree.'));
   }
 }
 

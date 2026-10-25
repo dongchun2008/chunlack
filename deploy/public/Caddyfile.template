@@ -69,8 +69,8 @@
     request_body {
         max_size 2097152
     }
+    header >X-Content-Type-Options nosniff
     header {
-        X-Content-Type-Options nosniff
         Referrer-Policy no-referrer
         Cache-Control no-store
         Strict-Transport-Security "max-age=300"
@@ -83,7 +83,7 @@ https://@@WEB_HOST@@:@@PUBLIC_PORT@@ {
         import request_boundary
         @human_read {
             method GET HEAD
-            path_regexp human_read ^(/|/login|/health|/[A-Za-z0-9_-]+[.](js|css|svg|png|ico|html)|/identity/(runtime-mode|workspace-ui|workspace-shell)[.]js|/auth/[A-Za-z0-9_/-]+|/api/llm-providers|/api/(bootstrap|workspaces|channels|messages|tasks|nodes|models|agents|research|research-sessions|evidence|artifacts)(/[A-Za-z0-9_-]+)*)$
+            path_regexp human_read ^(/|/login|/health|/[A-Za-z0-9_-]+[.](js|css|svg|png|ico|html)|/identity/(runtime-mode|workspace-ui|workspace-shell|i18n|messages|chat-messages|help|display)[.]js|/identity/help/(zh-CN|en)[.]md|/auth/[A-Za-z0-9_/-]+|/api/llm-providers|/api/(bootstrap|workspaces|channels|messages|tasks|nodes|models|agents|research|research-sessions|evidence|artifacts)(/[A-Za-z0-9_-]+)*)$
         }
         handle @human_read {
             import web_proxy
