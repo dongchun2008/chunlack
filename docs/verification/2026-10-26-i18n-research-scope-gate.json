@@ -1,0 +1,349 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-26",
+  "status": "local_scope_gate_verified_not_published",
+  "scope": "Read-only production source reconciliation and local rehearsal gate only",
+  "source": {
+    "checkoutBaseCommit": "54f853bd2d49cff5d0a97970a3578afc67211be2",
+    "payloadCommit": "b2620ac3a5733a815d0e008175661eec7fa81ec6",
+    "productionObservation": "2026-10-25T22:34:02.806Z",
+    "secondReadObservation": "2026-10-25T22:55:31.110Z",
+    "productionFiles": 57,
+    "candidateFiles": 66,
+    "changedFiles": 20,
+    "independentFixture": "tests/fixtures/i18n-release-scope-20261026.json",
+    "testedGitBlobs": {
+      "deploy/public/release-control/2026-10-25/i18n-release-gate.py": "a0054a8bd783c2720dc2a0ddb46bcfc77418ede6",
+      "deploy/public/release-control/2026-10-25/test-i18n-release-scope.py": "309c09022e14c4ca23714257ad797d8f4a0f407d",
+      "tests/i18n-release-scope.test.cjs": "a4a26062a1614577a82e2a48a3259b92fbf5251b",
+      "tests/fixtures/i18n-release-scope-20261026.json": "5c900168029a9c64ec1674185b62433077a511ae"
+    },
+    "extraChanges": [
+      {
+        "path": "collaboration/capacity.cjs",
+        "classification": "pending-research-runtime-controls",
+        "previousHash": "1be6bf242dea364a74871e23dab81b8b46bfc82f224d184005641a904d97f90f",
+        "candidateHash": "fdfc0fbe3798c737ad5fdcb42b7d36fa901ad03e53d92db2a7050db827fd6710",
+        "semanticJsonEqual": null
+      },
+      {
+        "path": "collaboration/model-transport.cjs",
+        "classification": "pending-research-runtime-controls",
+        "previousHash": "44d751a8851bd29f0a03f419391097f11b1a819dd2c61282cec8549588e9352a",
+        "candidateHash": "fee1b40325786e2e71ae176d7766725da02eb6c7b762d79929b38a78a4b6119a",
+        "semanticJsonEqual": null
+      },
+      {
+        "path": "collaboration/task-control.cjs",
+        "classification": "pending-research-runtime-controls",
+        "previousHash": "77a725a7db30e316de075f430d045e05cc1a109f44f07cb2fe27ae1deaa399d2",
+        "candidateHash": "6f31471c99f35ad6ca5ae406cff8f5b0dbeae70c8d6c8c1876939c36f809e7a3",
+        "semanticJsonEqual": null
+      },
+      {
+        "path": "gateway/admin.html",
+        "classification": "crlf-to-lf-only",
+        "previousHash": "95d6d56fed3c2c08448b059d7634fbbb043dc93d4ed9e56d25704a89cf533a62",
+        "candidateHash": "651a7d5195645262cd9ecea394ae7831b512b8cc1907c1996cc39e9078ff652e",
+        "semanticJsonEqual": null
+      },
+      {
+        "path": "package.json",
+        "classification": "crlf-to-lf-only",
+        "previousHash": "d6635cd11cf97ad7cfa2e904a75cb33be28bbb8714098460fd8881bb4151b09f",
+        "candidateHash": "e79f7668fcd9078fc913ebf15a41587fbd8ce1d0fb13806ba94ff633474d39b9",
+        "semanticJsonEqual": true
+      },
+      {
+        "path": "package-lock.json",
+        "classification": "crlf-to-lf-only",
+        "previousHash": "04c40836a08ed99f77c85f8297e11c55e0797fd35485dc04056d00942dedc3b5",
+        "candidateHash": "255e393fe99249f578c6f910a501b2b490a070f34784509b760c4042304bfacc",
+        "semanticJsonEqual": true
+      }
+    ]
+  },
+  "implementation": {
+    "originalFourteenFileScopePreserved": true,
+    "extraSourceTransitionsPinned": true,
+    "researchRuntimeMustRemainComplete": true,
+    "formatOnlyMustBeExactCRLFToLF": true,
+    "installedDependencyContentMustRemainUnchanged": true,
+    "rawConfigurationAndAuthorityChecksPreserved": true,
+    "productionCliDisabled": true,
+    "forwardWindowSeconds": 55,
+    "totalRecoveryWindowSeconds": 120
+  },
+  "verification": {
+    "redRegression": {
+      "expectedFailure": true,
+      "reason": "old gate rejected complete observed20-file payload",
+      "exitCode": 1
+    },
+    "scope": {
+      "tests": 10,
+      "pass": 10,
+      "exitCode": 0,
+      "includesTransactionRefusalBeforeServiceStop": true
+    },
+    "formatGuardMutation": {
+      "noOpGuardWasDetected": true,
+      "expectedFailure": true,
+      "exitCode": 1
+    },
+    "originalGate": {
+      "tests": 18,
+      "pass": 18,
+      "exitCode": 0
+    },
+    "readonly": {
+      "tests": 17,
+      "pass": 17,
+      "exitCode": 0
+    },
+    "legacyController": {
+      "tests": 46,
+      "pass": 42,
+      "skipped": 4,
+      "skipReason": "Existing Linux-specific cases are not runnable on Windows",
+      "exitCode": 0
+    },
+    "actualSixSourceSimulations": {
+      "scenarios": 2,
+      "pass": 2,
+      "exitCode": 0,
+      "realSourceBytes": true,
+      "actualApplicationOrCaddyProcesses": false,
+      "priorCommandFailurePreserved": true
+    },
+    "firstFullRun": {
+      "tests": 1080,
+      "suites": 0,
+      "pass": 1079,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "exitCode": 1,
+      "unmodifiedTest": "tests/agent-mcp-http.test.cjs",
+      "error": "fetch failed",
+      "failurePreserved": true
+    },
+    "unchangedMcpDiagnostic": {
+      "tests": 10,
+      "pass": 10,
+      "exitCode": 0,
+      "rootCauseConfirmed": false
+    },
+    "finalFullRun": {
+      "tests": 1080,
+      "suites": 0,
+      "pass": 1080,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "files": 129,
+      "exitCode": 0,
+      "startedAt": "2026-10-25T22:53:10.829Z",
+      "finishedAt": "2026-10-25T23:03:39.249Z",
+      "perTestTimeoutMs": 90000,
+      "concurrency": 1,
+      "loopbackMcpErrorCodeDiagnosticOnly": true,
+      "noFailureReportedByDiagnostic": true
+    },
+    "smoke": {
+      "exitCode": 0,
+      "realHttpAndWebSocket": true,
+      "twoMockModelBackends": true,
+      "sqliteRestartPersistence": true,
+      "privateBindAndConfigurationPreservation": true,
+      "actualModelCalls": 0
+    },
+    "independentReview": {
+      "completed": true,
+      "implementationFindings": 0,
+      "coverageFindingResolved": true,
+      "mutationNegativeControlVerified": true
+    }
+  },
+  "productionBoundary": {
+    "productionPublished": false,
+    "productionServicesStoppedOrRestarted": false,
+    "deployedControllerModified": false,
+    "credentialsModified": false,
+    "grantsModified": false,
+    "agentConfigurationsModified": false,
+    "dnsOrPortsModified": false,
+    "relayModified": false,
+    "actualModelCalls": 0,
+    "productionConfigurationOrDataCopied": false,
+    "readonlyObservationServicesAndListenersUnchanged": true
+  },
+  "inactivePreviousCode": {
+    "files": 57,
+    "hashesMatchProductionInventory": true,
+    "activated": false,
+    "includesConfiguration": false,
+    "includesData": false,
+    "includesDependencies": false,
+    "includesCredentials": false
+  },
+  "linuxRehearsalBudget": {
+    "approvedMaximum": 3,
+    "used": 0,
+    "reset": false,
+    "perUnitSeconds": 90,
+    "memoryMiB": 192,
+    "cpuPercent": 10,
+    "tasksMax": 32,
+    "swap": 0,
+    "privateNetwork": true
+  },
+  "limitations": [
+    "First full run had one MCP HTTP fetch failure that was not reproduced; its root cause remains unconfirmed and is not claimed fixed.",
+    "No new Linux unit or real-process LACK/Caddy cutover rehearsal was executed.",
+    "No production publication, real model acceptance or external Agent grant was performed.",
+    "Overall production delivery remains incomplete."
+  ],
+  "next": "Complete the separately approved local real-process rehearsal adapter, then use only the existing three approved isolated Linux units if all local gates pass; do not publish production.",
+  "secretScan": {
+    "tool": "gitleaks 8.30.1",
+    "rawExitCode": 1,
+    "rawFindings": 14,
+    "independentlyVerifiedSourceChecksums": 14,
+    "unclassifiedFindings": 0,
+    "userExplicitlyApprovedDisposition": true,
+    "scannerRulesChanged": false,
+    "blanketIgnoreAdded": false,
+    "disposition": "Every finding is a SHA-256 checksum of an independently verified source file, not a credential.",
+    "findings": [
+      {
+        "rule": "generic-api-key",
+        "file": "tests/fixtures/i18n-release-scope-20261026.json",
+        "line": 22,
+        "sourcePath": "gateway/pilot-openapi.cjs",
+        "manifestSection": "previous",
+        "classification": "verified SHA256 source-file checksum, not a credential",
+        "independentlyBoundToProductionInventoryAndActualSource": true
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "tests/fixtures/i18n-release-scope-20261026.json",
+        "line": 31,
+        "sourcePath": "gateway/workspace-access.cjs",
+        "manifestSection": "previous",
+        "classification": "verified SHA256 source-file checksum, not a credential",
+        "independentlyBoundToProductionInventoryAndActualSource": true
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "tests/fixtures/i18n-release-scope-20261026.json",
+        "line": 33,
+        "sourcePath": "identity/agent-access.cjs",
+        "manifestSection": "previous",
+        "classification": "verified SHA256 source-file checksum, not a credential",
+        "independentlyBoundToProductionInventoryAndActualSource": true
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "tests/fixtures/i18n-release-scope-20261026.json",
+        "line": 39,
+        "sourcePath": "identity/oauth-core.cjs",
+        "manifestSection": "previous",
+        "classification": "verified SHA256 source-file checksum, not a credential",
+        "independentlyBoundToProductionInventoryAndActualSource": true
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "tests/fixtures/i18n-release-scope-20261026.json",
+        "line": 40,
+        "sourcePath": "identity/oauth-schema.cjs",
+        "manifestSection": "previous",
+        "classification": "verified SHA256 source-file checksum, not a credential",
+        "independentlyBoundToProductionInventoryAndActualSource": true
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "tests/fixtures/i18n-release-scope-20261026.json",
+        "line": 43,
+        "sourcePath": "identity/passwords.cjs",
+        "manifestSection": "previous",
+        "classification": "verified SHA256 source-file checksum, not a credential",
+        "independentlyBoundToProductionInventoryAndActualSource": true
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "tests/fixtures/i18n-release-scope-20261026.json",
+        "line": 58,
+        "sourcePath": "sdk/credentials.cjs",
+        "manifestSection": "previous",
+        "classification": "verified SHA256 source-file checksum, not a credential",
+        "independentlyBoundToProductionInventoryAndActualSource": true
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "tests/fixtures/i18n-release-scope-20261026.json",
+        "line": 79,
+        "sourcePath": "gateway/pilot-openapi.cjs",
+        "manifestSection": "candidate",
+        "classification": "verified SHA256 source-file checksum, not a credential",
+        "independentlyBoundToProductionInventoryAndActualSource": true
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "tests/fixtures/i18n-release-scope-20261026.json",
+        "line": 88,
+        "sourcePath": "gateway/workspace-access.cjs",
+        "manifestSection": "candidate",
+        "classification": "verified SHA256 source-file checksum, not a credential",
+        "independentlyBoundToProductionInventoryAndActualSource": true
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "tests/fixtures/i18n-release-scope-20261026.json",
+        "line": 90,
+        "sourcePath": "identity/agent-access.cjs",
+        "manifestSection": "candidate",
+        "classification": "verified SHA256 source-file checksum, not a credential",
+        "independentlyBoundToProductionInventoryAndActualSource": true
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "tests/fixtures/i18n-release-scope-20261026.json",
+        "line": 104,
+        "sourcePath": "identity/oauth-core.cjs",
+        "manifestSection": "candidate",
+        "classification": "verified SHA256 source-file checksum, not a credential",
+        "independentlyBoundToProductionInventoryAndActualSource": true
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "tests/fixtures/i18n-release-scope-20261026.json",
+        "line": 105,
+        "sourcePath": "identity/oauth-schema.cjs",
+        "manifestSection": "candidate",
+        "classification": "verified SHA256 source-file checksum, not a credential",
+        "independentlyBoundToProductionInventoryAndActualSource": true
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "tests/fixtures/i18n-release-scope-20261026.json",
+        "line": 108,
+        "sourcePath": "identity/passwords.cjs",
+        "manifestSection": "candidate",
+        "classification": "verified SHA256 source-file checksum, not a credential",
+        "independentlyBoundToProductionInventoryAndActualSource": true
+      },
+      {
+        "rule": "generic-api-key",
+        "file": "tests/fixtures/i18n-release-scope-20261026.json",
+        "line": 126,
+        "sourcePath": "sdk/credentials.cjs",
+        "manifestSection": "candidate",
+        "classification": "verified SHA256 source-file checksum, not a credential",
+        "independentlyBoundToProductionInventoryAndActualSource": true
+      }
+    ]
+  }
+}

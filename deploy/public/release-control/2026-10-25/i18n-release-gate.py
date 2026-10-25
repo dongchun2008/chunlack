@@ -19,6 +19,33 @@ ALLOWED_FILES = (
     'identity/display.js', 'identity/help-assets.cjs',
     'identity/help/zh-CN.md', 'identity/help/en.md', 'deploy/public/Caddyfile.template',
 )
+# Reviewed against the read-only production inventory on 2026-10-26.
+# These are exact source transitions, not additional wildcard permissions.
+RESEARCH_FILES = (
+    'collaboration/capacity.cjs', 'collaboration/model-transport.cjs',
+    'collaboration/task-control.cjs',
+)
+FORMAT_ONLY_FILES = ('gateway/admin.html', 'package.json', 'package-lock.json')
+EXTRA_FILE_BINDINGS = {
+    'collaboration/capacity.cjs': (
+        '1be6bf242dea364a74871e23dab81b8b46bfc82f224d184005641a904d97f90f',
+        'fdfc0fbe3798c737ad5fdcb42b7d36fa901ad03e53d92db2a7050db827fd6710'),
+    'collaboration/model-transport.cjs': (
+        '44d751a8851bd29f0a03f419391097f11b1a819dd2c61282cec8549588e9352a',
+        'fee1b40325786e2e71ae176d7766725da02eb6c7b762d79929b38a78a4b6119a'),
+    'collaboration/task-control.cjs': (
+        '77a725a7db30e316de075f430d045e05cc1a109f44f07cb2fe27ae1deaa399d2',
+        '6f31471c99f35ad6ca5ae406cff8f5b0dbeae70c8d6c8c1876939c36f809e7a3'),
+    'gateway/admin.html': (
+        '95d6d56fed3c2c08448b059d7634fbbb043dc93d4ed9e56d25704a89cf533a62',
+        '651a7d5195645262cd9ecea394ae7831b512b8cc1907c1996cc39e9078ff652e'),
+    'package.json': (
+        'd6635cd11cf97ad7cfa2e904a75cb33be28bbb8714098460fd8881bb4151b09f',
+        'e79f7668fcd9078fc913ebf15a41587fbd8ce1d0fb13806ba94ff633474d39b9'),
+    'package-lock.json': (
+        '04c40836a08ed99f77c85f8297e11c55e0797fd35485dc04056d00942dedc3b5',
+        '255e393fe99249f578c6f910a501b2b490a070f34784509b760c4042304bfacc'),
+}
 ASSETS = (
     '/identity/i18n.js', '/identity/messages.js', '/identity/chat-messages.js',
     '/identity/help.js', '/identity/display.js',
@@ -106,8 +133,27 @@ def validate_scope(manifests, approved):
     require(set(before) <= set(after) and set(ALLOWED_FILES) <= set(after), 'code_deletion_denied')
     changed = sorted(name for name in set(before) | set(after) if before.get(name) != after.get(name))
     require(type(approved) is list and changed == approved and bool(changed) and
-            set(changed) <= set(ALLOWED_FILES), 'i18n_code_scope_changed')
+            set(changed) <= set(ALLOWED_FILES) | set(EXTRA_FILE_BINDINGS), 'i18n_code_scope_changed')
+    research_present = (set(before) | set(after)) & set(RESEARCH_FILES)
+    research_changed = set(changed) & set(RESEARCH_FILES)
+    if research_present:
+        require(set(RESEARCH_FILES) <= set(before) & set(after) and
+                (not research_changed or research_changed == set(RESEARCH_FILES)),
+                'research_runtime_incomplete')
+        if not research_changed:
+            require(all(after[name] == EXTRA_FILE_BINDINGS[name][1] for name in RESEARCH_FILES),
+                    'research_runtime_incomplete')
+    for name in set(changed) & set(EXTRA_FILE_BINDINGS):
+        require((before.get(name), after[name]) == EXTRA_FILE_BINDINGS[name],
+                'reviewed_extra_source_changed')
     return changed
+
+
+def validate_format_only(previous, candidate):
+    require(type(previous) is bytes and type(candidate) is bytes and
+            previous.replace(b'\r\n', b'\n') == candidate and b'\r' not in candidate,
+            'non_line_ending_change')
+    return True
 
 
 def expected_ingress(previous):
@@ -148,6 +194,9 @@ def validate_prepared(backend):
     dependencies = reference.dependency_fingerprint(b.current)
     require(dependencies == reference.dependency_fingerprint(b.staged) == settings.get('dependencyFingerprint'),
             'dependency_content_changed')
+    for name in FORMAT_ONLY_FILES:
+        if name in changed:
+            validate_format_only(checked_bytes(b.current / name), checked_bytes(b.staged / name))
     raw = checked_bytes(b.data / 'config/lack.config.json', 1024 * 1024)
     require(raw == checked_bytes(b.new_config, 1024 * 1024) and
             hashlib.sha256(raw).hexdigest() == settings.get('configHash'), 'configuration_bytes_changed')
