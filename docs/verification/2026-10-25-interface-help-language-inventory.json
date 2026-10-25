@@ -1,0 +1,112 @@
+{
+  "date": "2026-10-25",
+  "status": "inventory-complete-design-not-approved",
+  "sourceCommit": "712886bd55ae977c29a37260f5c58ad2a968daf6",
+  "userRequirement": {
+    "interfaceMultilingual": true,
+    "helpMultilingual": true,
+    "requiredLanguages": [
+      "zh-CN",
+      "en"
+    ],
+    "additionalLanguagesExtensible": true
+  },
+  "method": {
+    "cachedSourcesMatchedCurrentGitBlobs": true,
+    "workingTreeCleanBeforeAudit": true,
+    "bootstrapEmbeddedConstantsParsedWithPythonAst": true,
+    "javascriptStringsParsedWithEspree": true,
+    "htmlStaticTextAndAttributesExtractedSeparately": true,
+    "countsAreCandidateFragmentsNotTranslationKeyCoverage": true,
+    "noRuntimeLanguageOrBrowserRenderingAcceptance": true
+  },
+  "sourceBlobs": {
+    "lack.py": "fac3c5c3a16c77c65a4c4f8257e087dadaa52c82",
+    "identity/workspace-shell.js": "425978da64d6c4bfac81c644a88a103fc4f0ce2e",
+    "identity/login.html": "af2146e4cd745cc544ee3e5d4173c47893f0f522",
+    "docs/USER_GUIDE.zh-CN.md": "cf9a770447f8a61d2779a913cf631f79049a78f1"
+  },
+  "observations": {
+    "counts": {
+      "shell": {
+        "chineseLiteralOccurrences": 183,
+        "uniqueChineseFragments": 171
+      },
+      "mainInlineScripts": {
+        "count": 1,
+        "chineseLiteralOccurrences": 17,
+        "uniqueChineseFragments": 16
+      },
+      "mainStaticHtml": {
+        "chineseTextOccurrences": 40,
+        "chineseAttributeOccurrences": 10
+      },
+      "guide": {
+        "language": "zh-CN",
+        "headings": 14,
+        "englishSiblingFound": false
+      }
+    },
+    "mainAndLoginHtmlLanguage": "zh-CN",
+    "browserLanguageSelectionFoundInInspectedUi": false,
+    "existingI18nFrameworkFoundInInspectedUi": false,
+    "cssTranslateIsNotLanguageTranslation": true,
+    "help": {
+      "runtimeSource": "lack.py -> SERVER_JS -> help command handler",
+      "generatedServerLine": 3903,
+      "language": "en",
+      "persistedWithAddMessage": true,
+      "broadcastToSharedChannel": true
+    },
+    "currentHelpCanDescribeFeaturesNotAvailableInRestrictedRuntime": true
+  },
+  "requiredSafetyBoundaries": {
+    "personalUiLanguageMustNotChangeOtherMembersView": true,
+    "doNotTranslateOrRewriteStoredConversationOrEvidence": true,
+    "doNotChangeAgentPromptsProviderRoutingOrConfiguration": true,
+    "doNotEnableCommandsByDocumentingOrTranslatingThem": true,
+    "keepApiErrorCodesAndProtocolIdentifiersStable": true,
+    "renderTranslatedTextSafely": true,
+    "protectCrossAccountAndCrossWorkspaceIsolation": true
+  },
+  "proposedAcceptanceAreasNotExecuted": [
+    "Chinese and English static/dynamic UI plus accessible attributes",
+    "Login, expiry, error and authorization dialogs",
+    "Personal language persistence and unavailable-storage handling",
+    "Missing-key and locale fallback",
+    "Shared-channel help independent of author language",
+    "Guide parity and current permission-aware command descriptions",
+    "Preserve source quotations, URLs, model output and Agent names",
+    "Desktop/mobile layout and no duplicate listeners after switching",
+    "Existing auth, workspace, report and routing regressions"
+  ],
+  "openDecisions": [
+    {
+      "decision": "Implementation approach",
+      "recommended": "Lightweight static language packs compatible with existing frontend",
+      "approved": false
+    },
+    {
+      "decision": "First-stage coverage",
+      "recommended": "Interface, login/dialogs, command help and matched Chinese/English user guides",
+      "approved": false
+    }
+  ],
+  "execution": {
+    "productFilesModified": false,
+    "testsRun": false,
+    "realInferenceCalls": 0,
+    "vpsContacted": false,
+    "productionPublished": false,
+    "agentConfigurationChanged": false,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "relayChanged": false
+  },
+  "diagnosticIncident": {
+    "initialPythonStdinUsedWindowsDefaultEncoding": true,
+    "failedBeforeSourceParsing": true,
+    "repeatedWithExplicitUtf8": true,
+    "productChanges": false
+  }
+}
