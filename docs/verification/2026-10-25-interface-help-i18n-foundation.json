@@ -1,0 +1,136 @@
+{
+  "date": "2026-10-25",
+  "status": "foundation-selected-tests-passed-ui-integration-incomplete",
+  "sourceBaseCommit": "89337030e9a981bf8c525ea36fc4beb3a85278a0",
+  "engineeringDefaults": {
+    "approach": "Lightweight static JavaScript locale packs; no framework migration or translation service",
+    "selectionAuthority": "Continuing execution goal and previously stated low-resource requirement; internal API choices made by implementer, not individually reviewed by user",
+    "initialLocales": [
+      "zh-CN",
+      "en"
+    ],
+    "preferenceScope": "human account and current browser; anonymous separate; not workspace or Agent configuration",
+    "crossDevicePreferenceSynchronization": false
+  },
+  "implemented": {
+    "controllerFile": "identity/i18n.js",
+    "runtimeDependencies": 0,
+    "canonicalPreferenceNamespace": "chunlack.ui.locale.v1.",
+    "browserPreferenceAndChineseFallback": true,
+    "accountAndAnonymousIsolation": true,
+    "storageFailureFallback": true,
+    "scopedStorageEventHandling": true,
+    "controllerInstanceIsolation": true,
+    "explicitWeakMapBrandedLabels": true,
+    "plainApiDataRemainsUntranslated": true,
+    "namedParametersValidated": true,
+    "textAndAccessibleAttributeBindings": true,
+    "htmlUrlEventStyleAndInputValueBindingsRejected": true,
+    "releasedAndClosedViewsIgnoreLateUpdates": true,
+    "diagnosticsExcludeExceptionTextAndValues": true
+  },
+  "red": {
+    "expectedFailure": "Missing createI18n export before implementation",
+    "tests": 1,
+    "fail": 1,
+    "exitCode": 1
+  },
+  "tests": {
+    "foundation": {
+      "tests": 24,
+      "pass": 24,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 163.6,
+      "exitCode": 0
+    },
+    "selectedExistingCompatibility": {
+      "tests": 24,
+      "pass": 24,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 2042.8098,
+      "exitCode": 0,
+      "files": [
+        "tests/materialize-workspace.test.cjs",
+        "tests/workspace-shell.test.cjs",
+        "tests/workspace-chat-ui.test.cjs"
+      ]
+    },
+    "fullApplicationSuiteRerunThisCheckpoint": false,
+    "actualBrowserRenderingTested": false,
+    "publicLanguageSwitchVerified": false
+  },
+  "documentation": {
+    "files": [
+      "docs/USER_GUIDE.zh-CN.md",
+      "docs/USER_GUIDE.en.md"
+    ],
+    "englishGuideCompleteCorrespondingTranslation": true,
+    "savedSources": [
+      "docs/verification/2026-10-21-native-dots-single-task-acceptance.json",
+      "docs/verification/2026-10-24-research-release-human-login-acceptance.json",
+      "docs/MUSE_DOTS_INTEGRATION.zh-CN.md"
+    ],
+    "statusCorrections": [
+      "Native Xuanji single-task human acceptance occurred; not Events or continuous availability",
+      "Post-release human login acceptance occurred Oct24; zero fresh model calls in that check",
+      "Muse Laozhen historical; new Suhua connection unverified",
+      "Language UI local development and unpublished; no claim of current live VPS state"
+    ]
+  },
+  "phaseProgress": {
+    "foundation": "selected-tests-passed",
+    "pairedGuides": "updated-from-saved-records",
+    "workspaceUiAndCatalogs": "not-integrated",
+    "mainUiAndLogin": "not-integrated",
+    "privateHelpAndManualServing": "not-integrated",
+    "fullRegressionAndDesktopMobileRendering": "pending-after-integration",
+    "nativeAndProductionAcceptance": "not-authorized-or-executed"
+  },
+  "sourceBlobs": {
+    "identity/i18n.js": "1eb3a623bd8c8a039d3bccc263ac067b41009a3a",
+    "tests/i18n.test.cjs": "bb9fd97d4f38eec333e6529eab6a802b74557bac"
+  },
+  "nativeUnitsStarted": 0,
+  "priorNativeUnitBudgetStillConsumed": 4,
+  "priorNativeUnitBudgetMaximum": 4,
+  "priorBudgetReset": false,
+  "productionPublished": false,
+  "vpsContacted": false,
+  "actualInferenceCalls": 0,
+  "agentConfigurationChanged": false,
+  "credentialsChanged": false,
+  "authorizationsChanged": false,
+  "relayChanged": false,
+  "artifacts": {
+    "red.tap": {
+      "bytes": 1120,
+      "sha256": "f838b26d4c16f47e8b0480de1ce79eb1aaf0b440f2276a7b5c4f7f7a344015c0"
+    },
+    "red.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "foundation.tap": {
+      "bytes": 5587,
+      "sha256": "a35556b50e4ab1b3d04f0c59cd1504dd65daeeea08abac7ebb924f3c9e9af0ac"
+    },
+    "foundation.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "existing-ui-compatibility.tap": {
+      "bytes": 6813,
+      "sha256": "a95e02621ec0b2d91e9558e6518ecab38c65f74f1ec3eccd4099290e609c8da0"
+    },
+    "existing-ui-compatibility.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}
