@@ -1,0 +1,215 @@
+{
+  "schemaVersion": 1,
+  "status": "LINUX_TARGETED_VERIFIED_CANDIDATE_NOT_RELEASED",
+  "recordedAt": "2026-10-25T13:04:08.468Z",
+  "displayTimezone": "Asia/Shanghai",
+  "sourceCommit": "b2620ac3a5733a815d0e008175661eec7fa81ec6",
+  "localWindowsPrerequisite": {
+    "fullTests": 1078,
+    "passed": 1078,
+    "exitCode": 0,
+    "record": "2026-10-25-interface-help-i18n-integration.json"
+  },
+  "budget": {
+    "newAuthorizedUnits": 3,
+    "newConsumedUnits": 3,
+    "newRemainingUnits": 0,
+    "priorBudgetsReset": false,
+    "eachTotalSecondsMaximum": 90,
+    "memoryMaximumMiB": 192,
+    "cpuPercent": 10,
+    "tasksMaximum": 32,
+    "swapBytes": 0,
+    "privateNetwork": true
+  },
+  "preflight": {
+    "nodeVersion": "v24.21.0",
+    "minimumAvailableMemoryKiB": 393216,
+    "observedAvailableMemoryKiB": 996720,
+    "allProtectedServicesInitiallyActive": true,
+    "sshHostFingerprintMatched": true,
+    "existingCaddyHashMatched": true
+  },
+  "units": [
+    {
+      "mode": "prepare",
+      "uid": 0,
+      "gid": 0,
+      "proofDurationSeconds": 23.491374098,
+      "wholeUnitDurationSeconds": 23.999774,
+      "timingSource": "live ExecMainStartTimestampMonotonic plus matching same-boot journal deactivation; transient terminal fields unavailable after collection",
+      "counts": null,
+      "limits": {
+        "memoryMaxBytes": 201326592,
+        "memoryHighBytes": 167772160,
+        "memorySwapMaxBytes": 0,
+        "cpuQuotaPerSecond": "100ms",
+        "tasksMax": 32,
+        "runtimeMax": "1min 25s",
+        "stopTimeout": "5s",
+        "privateNetwork": "yes",
+        "noNewPrivileges": "yes",
+        "killMode": "control-group"
+      },
+      "privateNetworkNamespaceVerified": true,
+      "observedWhileRunning": true,
+      "jobExitCode": 0,
+      "pidGone": true,
+      "cgroupEmpty": true,
+      "memoryPeakAvailable": false
+    },
+    {
+      "mode": "test-0",
+      "uid": 65534,
+      "gid": 65534,
+      "proofDurationSeconds": 20.846351045,
+      "wholeUnitDurationSeconds": 21.322202,
+      "timingSource": "live ExecMainStartTimestampMonotonic plus matching same-boot journal deactivation; transient terminal fields unavailable after collection",
+      "counts": {
+        "tests": 148,
+        "pass": 148,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "limits": {
+        "memoryMaxBytes": 201326592,
+        "memoryHighBytes": 167772160,
+        "memorySwapMaxBytes": 0,
+        "cpuQuotaPerSecond": "100ms",
+        "tasksMax": 32,
+        "runtimeMax": "1min 25s",
+        "stopTimeout": "5s",
+        "privateNetwork": "yes",
+        "noNewPrivileges": "yes",
+        "killMode": "control-group"
+      },
+      "privateNetworkNamespaceVerified": true,
+      "observedWhileRunning": true,
+      "jobExitCode": 0,
+      "pidGone": true,
+      "cgroupEmpty": true,
+      "memoryPeakAvailable": false
+    },
+    {
+      "mode": "test-1",
+      "uid": 65534,
+      "gid": 65534,
+      "proofDurationSeconds": 56.844331656,
+      "wholeUnitDurationSeconds": 57.212125,
+      "timingSource": "live ExecMainStartTimestampMonotonic plus matching same-boot journal deactivation; transient terminal fields unavailable after collection",
+      "counts": {
+        "tests": 4,
+        "pass": 4,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "limits": {
+        "memoryMaxBytes": 201326592,
+        "memoryHighBytes": 167772160,
+        "memorySwapMaxBytes": 0,
+        "cpuQuotaPerSecond": "100ms",
+        "tasksMax": 32,
+        "runtimeMax": "1min 25s",
+        "stopTimeout": "5s",
+        "privateNetwork": "yes",
+        "noNewPrivileges": "yes",
+        "killMode": "control-group"
+      },
+      "privateNetworkNamespaceVerified": true,
+      "observedWhileRunning": true,
+      "jobExitCode": 0,
+      "pidGone": true,
+      "cgroupEmpty": true,
+      "memoryPeakAvailable": false
+    }
+  ],
+  "testProofs": [
+    {
+      "tests": 148,
+      "pass": 148,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 19697.901923,
+      "sha256": "a3b7d349c4c83fb2b15e38b47d746079125a3145c7f4a3f992522556cdc8050e"
+    },
+    {
+      "tests": 4,
+      "pass": 4,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 55898.587451,
+      "sha256": "0eda6c172b9e6aca6e4347f922d09247f7730070201569a31f95e5478f0f52c8"
+    }
+  ],
+  "evidenceNotes": {
+    "transientUnitsCollected": true,
+    "terminalSystemdTimingFieldsUnavailableAfterCollection": true,
+    "journalTimingMatchedSameBootAndSpecificUnits": true,
+    "liveStartPrecedesJournalStartAndProofStart": true,
+    "proofEndPrecedesJournalDeactivation": true,
+    "wholeUnitDurationUnder90Seconds": true,
+    "memoryPeakMeasurementUnavailable": true,
+    "memoryLimitVerifiedWhileRunning": true,
+    "failedInitialTimingDiagnosticRetainedPrivately": true,
+    "noTestsRerunToRecoverTiming": true
+  },
+  "integrity": {
+    "sourceArchiveSha256": "37965caea9ac4535649573d6206cb199c4c00bdebfe63a6c860320994e59c356",
+    "sourceArchiveFromCommittedFilesOnly": true,
+    "sourceArchiveCheckedBeforeExtraction": true,
+    "dependencyCopiesHashChecked": true,
+    "caddyCopyHashChecked": true,
+    "preparationUid": 0,
+    "businessUid": 65534,
+    "businessGid": 65534,
+    "allJobsExitCodeZero": true,
+    "allPidsGone": true,
+    "allCgroupsEmpty": true,
+    "ownedRemoteDirectoryRemoved": true
+  },
+  "cohostProtection": {
+    "servicesAndPidsUnchanged": true,
+    "protectedFilesUnchanged": true,
+    "existingTcpAndUdpListenersUnchanged": true,
+    "relayUnchanged": true
+  },
+  "candidate": {
+    "files": 66,
+    "bytes": 1208320,
+    "sha256": "b907296c9ed2ddd3faf48294ab9e42eecaf40b7e88b60f27e24f82d9fea3369a",
+    "activated": false,
+    "storage": "private local preparation directory; not uploaded or activated as a production release",
+    "codeManifestSha256": "fe95f42b538fea82c172529cb26e582f9136ac745955e413fae4e04a25dec44d",
+    "secretScanExitCode": 0,
+    "configurationIncluded": false,
+    "credentialsIncluded": false,
+    "dataIncluded": false,
+    "dependenciesIncluded": false,
+    "ingressTemplateRendered": false,
+    "releaseControllerCompatibilityValidated": false
+  },
+  "unchanged": {
+    "productionPublished": false,
+    "existingServicesStopped": false,
+    "realModelInvocations": 0,
+    "externalAgentCalls": 0,
+    "agentConfigurationChanged": false,
+    "credentialsChanged": false,
+    "businessGrantsChanged": false,
+    "dnsChanged": false,
+    "existingPortsChanged": false,
+    "relayChanged": false
+  },
+  "remainingGates": [
+    "new multi-file production release scope and compatible release-controller preparation",
+    "authorized compatibility and rollback rehearsals for this exact candidate",
+    "fresh production preflight and maintenance window",
+    "post-release human login and bilingual interface/help verification"
+  ]
+}
