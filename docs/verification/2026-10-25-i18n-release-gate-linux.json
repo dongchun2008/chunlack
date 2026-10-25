@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "status": "LINUX_GATE_REGRESSIONS_VERIFIED_NOT_RELEASED",
+  "recordedAt": "2026-10-25T14:44:36.069Z",
+  "displayTimezone": "Asia/Shanghai",
+  "sourceCommit": "a217355cbd3bcf5fc4599fda438cbb31ecd23f8a",
+  "runtimePayloadCommit": "b2620ac3a5733a815d0e008175661eec7fa81ec6",
+  "prerequisiteRecord": "2026-10-25-i18n-release-gate.json",
+  "budget": {
+    "authorizedNewUnits": 3,
+    "consumedNewUnits": 3,
+    "remainingNewUnits": 0,
+    "priorBudgetsReset": false,
+    "eachMaximumSeconds": 90,
+    "memoryMiB": 192,
+    "cpuPercent": 10,
+    "tasks": 32,
+    "swapBytes": 0,
+    "privateNetwork": true
+  },
+  "verification": {
+    "localTimingBoundaryCases": 5,
+    "localRunnerCompilationPassed": true,
+    "readonlyPreflightPassed": true,
+    "existingNodeVersion": "v24.21.0",
+    "observedAvailableMemoryKiB": 993684,
+    "existingCaddyHashMatched": true,
+    "sourceArchiveSha256": "0131f48be054761db895d8e38a15e364ed514e4c7ed496bd4a62baa3d085eff6",
+    "sourceArchiveFromCommittedFilesOnly": true,
+    "sourceAndDependencyCopiesHashVerified": true,
+    "nativePythonTests": 81,
+    "pass": 81,
+    "fail": 0,
+    "errors": 0,
+    "skipped": 0,
+    "groupCounts": [
+      35,
+      46
+    ],
+    "actualNodeIntegrationExplicitlyEnabled": true,
+    "formerlyWindowsSkippedCases": [
+      {
+        "name": "test_actual_product_schema_runner_checks_valid_node_and_reject_all_negative_control",
+        "nativePassed": true
+      },
+      {
+        "name": "test_private_proof_metadata_and_prepared_hash_binding",
+        "nativePassed": true
+      },
+      {
+        "name": "test_real_linux_listener_boundaries",
+        "nativePassed": true
+      },
+      {
+        "name": "test_symlink_mode_is_not_treated_as_target_write_permission",
+        "nativePassed": true
+      }
+    ],
+    "reportSha256": [
+      "2c48f2335e7a67ca983f1811b5fe6a1d264d22c6cc20c9e243f1429a08832864",
+      "df7f3d99334b63a7667502322f9812eb71f515fd6d5b9046e00a5d6d8915d5ac"
+    ]
+  },
+  "units": [
+    {
+      "mode": "prepare",
+      "uid": 0,
+      "gid": 0,
+      "proofSeconds": 25.705833735,
+      "wholeUnitSeconds": 26.335953,
+      "timingSource": "live ExecMainStartTimestampMonotonic and same-unit same-boot journal deactivation",
+      "counts": null,
+      "resourceLimits": {
+        "memoryMaxBytes": 201326592,
+        "memoryHighBytes": 167772160,
+        "memorySwapMaxBytes": 0,
+        "cpuQuotaPerSecond": "100ms",
+        "tasksMax": 32,
+        "runtimeMax": "1min 25s",
+        "stopTimeout": "5s",
+        "privateNetwork": "yes",
+        "noNewPrivileges": "yes",
+        "killMode": "control-group"
+      },
+      "limitsObservedWhileRunning": true,
+      "privateNetworkNamespaceVerified": true,
+      "pidGone": true,
+      "cgroupEmpty": true,
+      "exitCode": 0
+    },
+    {
+      "mode": "test-0",
+      "uid": 65534,
+      "gid": 65534,
+      "proofSeconds": 30.501898147,
+      "wholeUnitSeconds": 31.33844,
+      "timingSource": "live ExecMainStartTimestampMonotonic and same-unit same-boot journal deactivation",
+      "counts": {
+        "tests": 35,
+        "fail": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expectedFailures": 0,
+        "unexpectedSuccesses": 0,
+        "pass": 35
+      },
+      "resourceLimits": {
+        "memoryMaxBytes": 201326592,
+        "memoryHighBytes": 167772160,
+        "memorySwapMaxBytes": 0,
+        "cpuQuotaPerSecond": "100ms",
+        "tasksMax": 32,
+        "runtimeMax": "1min 25s",
+        "stopTimeout": "5s",
+        "privateNetwork": "yes",
+        "noNewPrivileges": "yes",
+        "killMode": "control-group"
+      },
+      "limitsObservedWhileRunning": true,
+      "privateNetworkNamespaceVerified": true,
+      "pidGone": true,
+      "cgroupEmpty": true,
+      "exitCode": 0
+    },
+    {
+      "mode": "test-1",
+      "uid": 65534,
+      "gid": 65534,
+      "proofSeconds": 38.201237479,
+      "wholeUnitSeconds": 38.889007,
+      "timingSource": "live ExecMainStartTimestampMonotonic and same-unit same-boot journal deactivation",
+      "counts": {
+        "tests": 46,
+        "fail": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expectedFailures": 0,
+        "unexpectedSuccesses": 0,
+        "pass": 46
+      },
+      "resourceLimits": {
+        "memoryMaxBytes": 201326592,
+        "memoryHighBytes": 167772160,
+        "memorySwapMaxBytes": 0,
+        "cpuQuotaPerSecond": "100ms",
+        "tasksMax": 32,
+        "runtimeMax": "1min 25s",
+        "stopTimeout": "5s",
+        "privateNetwork": "yes",
+        "noNewPrivileges": "yes",
+        "killMode": "control-group"
+      },
+      "limitsObservedWhileRunning": true,
+      "privateNetworkNamespaceVerified": true,
+      "pidGone": true,
+      "cgroupEmpty": true,
+      "exitCode": 0
+    }
+  ],
+  "protection": {
+    "protectedServicesAndPidsUnchanged": true,
+    "protectedFilesUnchanged": true,
+    "existingTcpAndUdpListenersUnchanged": true,
+    "allOwnedProcessesStopped": true,
+    "allOwnedCgroupsEmpty": true,
+    "ownedRemoteDirectoryRemoved": true,
+    "memoryPeakMeasurementUnavailableAfterTransientCollection": true
+  },
+  "boundaries": {
+    "testType": "native regression and real-file fault simulations; not operational production release rehearsal",
+    "businessUid": 65534,
+    "preparationUid": 0,
+    "productionControllerCliRemainsDisabled": true,
+    "productionPublished": false,
+    "productionServicesStopped": false,
+    "realModelInvocations": 0,
+    "agentConfigurationChanged": false,
+    "credentialsChanged": false,
+    "businessGrantsChanged": false,
+    "existingPortsChanged": false,
+    "relayChanged": false
+  },
+  "remainingGates": [
+    "operational rehearsal of the exact candidate controller with real disposable application and HTTPS processes",
+    "fresh exact candidate compatibility and rollback proof",
+    "fresh read-only production preflight and authorized maintenance window",
+    "post-release human login and bilingual interface/help acceptance"
+  ]
+}
