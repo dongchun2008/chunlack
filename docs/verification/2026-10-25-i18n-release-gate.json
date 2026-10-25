@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "status": "LOCAL_GATE_SIMULATIONS_VERIFIED_NOT_RELEASED",
+  "recordedAt": "2026-10-25T14:29:09.807Z",
+  "displayTimezone": "Asia/Shanghai",
+  "baseCommit": "9e6782cb593e5bb524804e70c1219f421776a35b",
+  "runtimePayloadCommit": "b2620ac3a5733a815d0e008175661eec7fa81ec6",
+  "sourceBlobs": {
+    "deploy/public/release-control/2026-10-25/i18n-release-gate.py": "eda03e352b6e9574002e51f097361f2f05df0564",
+    "deploy/public/release-control/2026-10-25/test-i18n-release-gate.py": "64dede1f4d4aea12b244d0352d802bb60589ac54",
+    "docs/superpowers/plans/2026-10-25-i18n-release-gate.md": "e81e3e61d21312a89c51e50b9de9fcca218a7534",
+    "tests/i18n-release-gate.test.cjs": "cc929d14b8b18a4cba5b69940337da7bb912c49f"
+  },
+  "scope": {
+    "newCandidateController": true,
+    "existingControllersModified": false,
+    "codePathsMaximum": 14,
+    "displayAssetPaths": 7,
+    "rawConfigurationWrites": false,
+    "liveDataRestoration": false,
+    "productionCliEnabled": false,
+    "forwardSeconds": 55,
+    "totalRecoverySeconds": 120
+  },
+  "verification": {
+    "newPythonTests": {
+      "tests": 18,
+      "pass": 18,
+      "fail": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "reportSha256": "648e395af97649d40d2ce3ef16424a56b8b5a07e56328bf38b355753dd4292ea"
+    },
+    "referenceController": {
+      "tests": 46,
+      "pass": 42,
+      "fail": 0,
+      "platformSkipped": 4,
+      "exitCode": 0,
+      "skipReason": "existing POSIX/Linux-only cases on Windows; not counted as native acceptance"
+    },
+    "referenceReadonlyGate": {
+      "tests": 17,
+      "pass": 17,
+      "fail": 0,
+      "skipped": 0,
+      "exitCode": 0
+    },
+    "fullNodeSuite": {
+      "tests": 1079,
+      "pass": 1079,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 640683.6755,
+      "exitCode": 0,
+      "files": 128,
+      "includesNewPythonWrapper": true,
+      "pythonTestsInsideWrapperNotAddedAgainToNodeTotal": true,
+      "portableCaddyEnabled": true,
+      "reportSha256": "f58a503001cf1ef8664c463ac384302d0c6e891fb739da7d9fceb8d33b14364f",
+      "startedAt": "2026-10-25T14:16:32.701Z",
+      "endedAt": "2026-10-25T14:27:13.513Z"
+    },
+    "smoke": {
+      "exitCode": 0,
+      "realHttpAndWebSocket": true,
+      "twoSyntheticModelBackends": true,
+      "sqliteRestartPersistence": true,
+      "privateBind": true,
+      "configurationPreserved": true
+    },
+    "independentReview": {
+      "completedBeforeApprovedMinimalFixes": true,
+      "additionalConfirmedFindings": 0,
+      "readOnly": true,
+      "executedTests": false
+    }
+  },
+  "faultCoverage": [
+    "cold consistent backup and raw noncanonical configuration preservation",
+    "every transaction checkpoint and preservation of new database rows/uploads/configuration",
+    "atomic copy interrupted before or after replacement",
+    "rename completed before exception with inode-based recovery",
+    "candidate startup failure with one recovery attempt",
+    "recovery failure reported as attention and not retried",
+    "configuration changed before stop causes preflight rejection without overwrite",
+    "unowned ingress change retained with attention report",
+    "foreign writer lock retained without override",
+    "schema drift rejects unsafe rollback",
+    "unexpected files, deletion and traversal rejected",
+    "dependency, authority, environment, configuration and candidate drift rejected",
+    "expired proof and wrong ingress/controller binding rejected",
+    "exact ingress asset/header transition only",
+    "55/120-second deadline and interrupted transaction",
+    "HEAD uses curl --head, not custom HEAD method",
+    "production CLI refuses execution"
+  ],
+  "priorFailures": {
+    "redMissingImplementation": {
+      "tests": 18,
+      "failed": 18,
+      "exitCode": 1
+    },
+    "firstImplementation": {
+      "tests": 18,
+      "errors": 31,
+      "exitCode": 1,
+      "causes": [
+        "SQLite test connections not explicitly closed before Windows directory cleanup",
+        "reference invalid-path ValueError did not match the new gate RuntimeError contract"
+      ]
+    },
+    "approvedFixes": [
+      "wrapper expected count corrected from 20 to actual 18 without removing cases",
+      "SQLite closing plus transaction context preserves commits and closes handles",
+      "convert reference path ValueError to RuntimeError; invalid paths still rejected"
+    ],
+    "assertionsRelaxed": false,
+    "timeoutsRaised": false
+  },
+  "limits": {
+    "newVpsUnits": 0,
+    "newLinuxRehearsals": 0,
+    "productionPublished": false,
+    "existingServicesStopped": false,
+    "realModelInvocations": 0,
+    "agentConfigurationChanged": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false
+  },
+  "remainingGates": [
+    "fresh authorized Linux verification including the four platform-specific legacy cases",
+    "operational rehearsal for the exact controller/payload and proof bindings",
+    "fresh compatibility proof, read-only production preflight and scoped maintenance authorization",
+    "post-release human login and bilingual interface/help verification"
+  ]
+}
