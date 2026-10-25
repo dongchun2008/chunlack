@@ -1,0 +1,83 @@
+{
+  "date": "2026-10-25",
+  "status": "candidate-prepared-release-blocked",
+  "sourceCommit": "43ddc34fbd88cca3a2974514dd72a35239783eab",
+  "candidatePayload": {
+    "payloadCommit": "43ddc34fbd88cca3a2974514dd72a35239783eab",
+    "files": {
+      "server.js": {
+        "sha256": "c1b01e9c0e95151fa070cb8274f1fe0e15e3df8f05800717d083415751a9d449",
+        "bytes": 258235
+      },
+      "collaboration/capacity.cjs": {
+        "sha256": "fdfc0fbe3798c737ad5fdcb42b7d36fa901ad03e53d92db2a7050db827fd6710",
+        "bytes": 22431
+      },
+      "collaboration/task-control.cjs": {
+        "sha256": "6f31471c99f35ad6ca5ae406cff8f5b0dbeae70c8d6c8c1876939c36f809e7a3",
+        "bytes": 6962
+      },
+      "collaboration/model-transport.cjs": {
+        "sha256": "fee1b40325786e2e71ae176d7766725da02eb6c7b762d79929b38a78a4b6119a",
+        "bytes": 3990
+      }
+    },
+    "configurationIncluded": false,
+    "dependenciesIncluded": false,
+    "credentialsIncluded": false,
+    "productionPublished": false
+  },
+  "productionBaseline": {
+    "inventoryFiles": 57,
+    "totalBytes": 916900
+  },
+  "allowedChangedFiles": [
+    "collaboration/capacity.cjs",
+    "collaboration/model-transport.cjs",
+    "collaboration/task-control.cjs",
+    "server.js"
+  ],
+  "previousHashes": {
+    "server.js": "4ff50b80c6cf1be54ffec9bc84d286825ade096b8b14158d017f4f976d1f8073",
+    "collaboration/capacity.cjs": "1be6bf242dea364a74871e23dab81b8b46bfc82f224d184005641a904d97f90f",
+    "collaboration/task-control.cjs": "77a725a7db30e316de075f430d045e05cc1a109f44f07cb2fe27ae1deaa399d2",
+    "collaboration/model-transport.cjs": "44d751a8851bd29f0a03f419391097f11b1a819dd2c61282cec8549588e9352a"
+  },
+  "excludedExistingDifference": {
+    "file": "identity/workspace-shell.js",
+    "reason": "Full materialization differs from live UI; excluded from this task-bounds payload. Stage must overlay four files onto then-current production, not replace the full generated tree."
+  },
+  "offlineChecks": {
+    "checks": 3,
+    "passed": true,
+    "fourFileOverlayExact": true,
+    "existingUiPreserved": true,
+    "oldThreeFileGateStillRejects": true,
+    "oldGateSHA256": "5c9cf83f7c763a7e216feb865849c7eba761efa7f9dc40b990f1f67f0e69b18d",
+    "productionMutated": false
+  },
+  "publicationGates": {
+    "linuxSelectedRegressionsPassed": true,
+    "fourFileScopeGateAdapted": false,
+    "candidateBoundDatabaseCompatibilityFresh": false,
+    "candidateBoundSuccessAndFailureRollbackRehearsalsPassed": false,
+    "freshMaintenanceWindowApproved": false,
+    "productionPreflightPassed": false,
+    "publicationAllowed": false
+  },
+  "futureLimits": {
+    "forwardSeconds": 55,
+    "totalRecoverySeconds": 120,
+    "doNotOverwriteNewWrites": true,
+    "doNotDeleteExistingWriterLocks": true
+  },
+  "configurationIncluded": false,
+  "dependenciesIncluded": false,
+  "credentialsIncluded": false,
+  "productionPublished": false,
+  "actualInferenceCalls": 0,
+  "agentConfigurationChanged": false,
+  "credentialsChanged": false,
+  "authorizationsChanged": false,
+  "relayChanged": false
+}

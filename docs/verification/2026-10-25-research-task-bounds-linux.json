@@ -1,0 +1,237 @@
+{
+  "date": "2026-10-25",
+  "scope": "Selected native Linux regressions for strict research task bounds; not production or real-provider acceptance",
+  "sourceCommit": "43ddc34fbd88cca3a2974514dd72a35239783eab",
+  "status": "passed",
+  "sourceBundle": {
+    "files": 238,
+    "bytes": 2672640,
+    "sha256": "ad08726d295ee775c6ce6d7dc165b69b05d213853fff2ed80b1a5b1ac02ab798"
+  },
+  "runtime": {
+    "node": "v24.21.0",
+    "testUser": 65534,
+    "caddy": "existing verified binary copied into isolated source",
+    "singleProcessTestScheduler": true
+  },
+  "executionPlan": {
+    "maximumUnits": 4,
+    "consumedUnits": 4,
+    "preparationUnits": 1,
+    "testUnits": 3,
+    "oldBudgetsReset": false,
+    "serial": true
+  },
+  "limits": {
+    "memoryMaxBytes": 201326592,
+    "memoryHighBytes": 167772160,
+    "cpuPercent": 10,
+    "tasksMax": 32,
+    "swapMaxBytes": 0,
+    "runtimeSeconds": 85,
+    "stopSeconds": 5,
+    "totalSecondsPerUnit": 90,
+    "privateNetwork": true,
+    "noNewPrivileges": true
+  },
+  "runnerPolicyChecks": {
+    "passed": 19,
+    "rejectedInvalidLimitOrIdentity": true
+  },
+  "counts": {
+    "tests": 158,
+    "pass": 158,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "groups": [
+    {
+      "files": [
+        "tests/research-task-bounds.test.cjs",
+        "tests/workspace-capacity-models.test.cjs",
+        "tests/workspace-capacity-research.test.cjs",
+        "tests/workspace-capacity.test.cjs",
+        "tests/workspace-task-control.test.cjs",
+        "tests/research-gateway.test.cjs"
+      ],
+      "expected": 49
+    },
+    {
+      "files": [
+        "tests/research-search.test.cjs",
+        "tests/research.test.cjs"
+      ],
+      "expected": 108
+    },
+    {
+      "files": [
+        "tests/research-report-runtime.test.cjs"
+      ],
+      "expected": 1
+    }
+  ],
+  "units": [
+    {
+      "purpose": "copy-and-verify-isolated-dependencies",
+      "passed": true,
+      "uid": 0,
+      "gid": 0,
+      "limitsVerifiedWhileRunning": true,
+      "networkNamespaceIsolated": true,
+      "noNewPrivileges": true,
+      "executionReleasedAfterLiveProof": true,
+      "exitCode": 0,
+      "elapsedSeconds": 24.303030041,
+      "originalPidGone": true,
+      "originalCgroupEmpty": true,
+      "terminalUnitInactive": true,
+      "counts": null,
+      "artifacts": {
+        "service.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "purpose": "test-0",
+      "passed": true,
+      "uid": 65534,
+      "gid": 65534,
+      "limitsVerifiedWhileRunning": true,
+      "networkNamespaceIsolated": true,
+      "noNewPrivileges": true,
+      "executionReleasedAfterLiveProof": true,
+      "exitCode": 0,
+      "elapsedSeconds": 17.749358533,
+      "originalPidGone": true,
+      "originalCgroupEmpty": true,
+      "terminalUnitInactive": true,
+      "counts": {
+        "tests": 49,
+        "pass": 49,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "artifacts": {
+        "service.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "tests.tap": {
+          "bytes": 12291,
+          "sha256": "a24edab59a0c8bc1a3cd5cdadfa9f0755c0c4cf3b029b7ffb10f271e76434636"
+        },
+        "test-exit.json": {
+          "bytes": 92,
+          "sha256": "844e67f38a88a87aaa6742385e9878f912b66b78d1b68eca4a851c7fa0da6947"
+        }
+      }
+    },
+    {
+      "purpose": "test-1",
+      "passed": true,
+      "uid": 65534,
+      "gid": 65534,
+      "limitsVerifiedWhileRunning": true,
+      "networkNamespaceIsolated": true,
+      "noNewPrivileges": true,
+      "executionReleasedAfterLiveProof": true,
+      "exitCode": 0,
+      "elapsedSeconds": 9.141743065,
+      "originalPidGone": true,
+      "originalCgroupEmpty": true,
+      "terminalUnitInactive": true,
+      "counts": {
+        "tests": 108,
+        "pass": 108,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "artifacts": {
+        "service.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "tests.tap": {
+          "bytes": 21106,
+          "sha256": "58efbf7b8fba4e915c7134d5b882631e7dcb072b61bf1f64966e09a1af1e8d7f"
+        },
+        "test-exit.json": {
+          "bytes": 93,
+          "sha256": "6084815563bc51f654552e58d16190d449526f639f5b67095cac182b08a802dd"
+        }
+      }
+    },
+    {
+      "purpose": "test-2",
+      "passed": true,
+      "uid": 65534,
+      "gid": 65534,
+      "limitsVerifiedWhileRunning": true,
+      "networkNamespaceIsolated": true,
+      "noNewPrivileges": true,
+      "executionReleasedAfterLiveProof": true,
+      "exitCode": 0,
+      "elapsedSeconds": 29.741637159,
+      "originalPidGone": true,
+      "originalCgroupEmpty": true,
+      "terminalUnitInactive": true,
+      "counts": {
+        "tests": 1,
+        "pass": 1,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "artifacts": {
+        "service.log": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "tests.tap": {
+          "bytes": 1333,
+          "sha256": "fadb8389b7f06f2ba12c3925b7390d9f9317ba1bbbeed0b1142ffd8ba92b405c"
+        },
+        "test-exit.json": {
+          "bytes": 92,
+          "sha256": "cf00abdfe77c28d47663014e7e3d135273d1277988483707361835aca7f9978a"
+        }
+      }
+    }
+  ],
+  "dependencyCopy": {
+    "passed": true,
+    "uid": 0,
+    "files": 4462,
+    "bytes": 38850588,
+    "dependencySha256": "622bfa3e1c1b3b39e32a085550f85ad0a27adf0001f26d38561e18370b88f51b",
+    "caddyCopyHashVerified": true,
+    "sourceArchiveHashVerified": true
+  },
+  "postflight": {
+    "existingFourServicesUnchanged": true,
+    "protectedCodeAndCredentialFilesAndListenersUnchanged": true,
+    "allOwnedUnitsStopped": true,
+    "ownedRemoteDirectoryRemoved": true
+  },
+  "prelaunchIncident": {
+    "runtimeEnvironmentImportUnsupported": true,
+    "remoteConnectionBeforeIncident": false,
+    "unitsConsumedBeforeIncident": 0,
+    "productOrTestChanges": false
+  },
+  "productionPublished": false,
+  "actualInferenceCalls": 0,
+  "agentConfigurationChanged": false,
+  "credentialsChanged": false,
+  "authorizationsChanged": false,
+  "relayChanged": false
+}
