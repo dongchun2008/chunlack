@@ -2,7 +2,7 @@
 const {test}=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const path=require('node:path');const os=require('node:os');const vm=require('node:vm');const {execFileSync}=require('node:child_process');const {once}=require('node:events');
 const {createGatewayStore}=require('../gateway/store.cjs');const {createAgentGateway}=require('../gateway/server.cjs');const {createResearchBridge,normalizeExternalRetrieval}=require('../gateway/research-bridge.cjs');const {AgentClient}=require('../sdk/agent-client.cjs');
 const root=path.resolve(__dirname,'..'),sources=JSON.parse(execFileSync(process.env.PYTHON||'python',['-c','import json,runpy; print(json.dumps(runpy.run_path("scripts/materialize.py")["embedded_sources"]()))'],{cwd:root,encoding:'utf8'}));
-const start=sources.SERVER_JS.indexOf('function formatResearchSummary('),end=sources.SERVER_JS.indexOf('async function runResearch(',start);
+const start=sources.SERVER_JS.indexOf('function formatResearchSummary('),end=sources.SERVER_JS.indexOf('async function runResearchBody(',start);
 const settingsStart=sources.SERVER_JS.indexOf('function workspaceSetting('),settingsEnd=sources.SERVER_JS.indexOf('function workspaceTransport(',settingsStart);
 assert.ok(settingsStart>=0&&settingsEnd>settingsStart);
 test('actual external verification uses the existing evidence gate; invented quotes fail',async t=>{

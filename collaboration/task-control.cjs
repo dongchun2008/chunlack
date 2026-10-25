@@ -60,6 +60,7 @@ function createWorkspaceTaskControl({identity, capacity, now = Date.now, onState
     const invoke = async () => {
       const executing = capacity.currentTask(); rootSignal = executing.signal;
       rootSignal.throwIfAborted(); principal('task.execute');
+      if (current && limits.modelPolicy !== undefined) capacity.restrictModelPolicy(limits.modelPolicy);
       if (current && delegate) {
         if (record.delegations >= record.maxDelegations) fail('task_delegation_budget');
         record.delegations++; record.maxDepthSeen = Math.max(record.maxDepthSeen, executing.depth);
@@ -71,18 +72,19 @@ function createWorkspaceTaskControl({identity, capacity, now = Date.now, onState
     try {
       return await (current && !delegate ? invoke() : capacity.withTaskScope({workspaceId: actor.workspaceId, taskId,
         createdBy: actor.userId, maxSteps: limits.maxSteps ?? 50, maxDepth: limits.maxDepth ?? 3,
-        maxCost: limits.maxCost, deadlineAt: Math.min(record.deadlineAt, now() + timeoutMs)}, invoke));
+        maxCost: limits.maxCost, modelPolicy: limits.modelPolicy, deadlineAt: Math.min(record.deadlineAt, now() + timeoutMs)}, invoke));
     } catch (error) {
       const code = typeof error?.code === 'string' && /^[a-z_]{1,64}$/.test(error.code) ? error.code : 'task_failed';
       // A rejected delegate may be handled by its parent. Only the root's
       // unhandled failure finalizes the root; cancellation always cascades.
       if (record.cancelled || code === 'task_cancelled') change(record, 'cancelled', 'task_cancelled');
-      else if (!current) change(record, code.includes('deadline') ? 'needs_attention' : 'failed', code);
+      else if (!current) change(record, code.includes('deadline') || code === 'task_model_timeout' ? 'needs_attention' : 'failed', code);
       throw error;
     } finally {
       record.activeBranches--;
       if (record.cancelled && !record.activeBranches) change(record, 'cancelled', 'task_cancelled');
       else if (!record.activeBranches && record.state === 'running') change(record, 'completed');
+      if (!record.activeBranches) capacity.retireTask(record.taskId);
     }
   }
   function getTask(taskId) {

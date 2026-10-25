@@ -1,0 +1,163 @@
+{
+  "scope": "local-bounded-research-and-lifecycle-repair-not-production",
+  "date": "2026-10-25",
+  "baseCommit": "8171582c895b8f9aa594b199f32be1d65d74f06e",
+  "implementationFiles": {
+    "lack.py": "bf6a52d43f48dbda03fe36db514ecfbcf522af80e42e83a8f30c26c9ff458b2e",
+    "collaboration/capacity.cjs": "fdfc0fbe3798c737ad5fdcb42b7d36fa901ad03e53d92db2a7050db827fd6710",
+    "collaboration/task-control.cjs": "6f31471c99f35ad6ca5ae406cff8f5b0dbeae70c8d6c8c1876939c36f809e7a3",
+    "collaboration/model-transport.cjs": "fee1b40325786e2e71ae176d7766725da02eb6c7b762d79929b38a78a4b6119a",
+    "tests/research-gateway.test.cjs": "4b93684e6549473070351b6805feb815716478daef7c7b142ac69c9722e5f660"
+  },
+  "approvedChanges": [
+    "Live policy propagation to queued and executing requests",
+    "Retry and fallback reauthorization after asynchronous boundaries",
+    "Branch-aware root retirement rejecting retained callbacks and nested scopes",
+    "Gateway fixture source boundary correction",
+    "Valid callback regressions replacing invalid earlier one-off diagnostic"
+  ],
+  "strictPublicResearch": {
+    "maxActualInferenceStarts": 20,
+    "requestTimeoutMs": 20000,
+    "rootTimeoutMs": 300000,
+    "serial": true,
+    "automaticModelRetry": false,
+    "modelFallback": false,
+    "externalAgentDispatch": false,
+    "automaticSearchRetryOrFallback": false,
+    "countingBoundary": "Each invocation of the provider inference transport, including failed dispatches; discovery is excluded. Dispatch is not proof of remote GPU start or completion."
+  },
+  "targeted": {
+    "tests": 157,
+    "pass": 157,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "rawLogSHA256": "6048725599f8aa7618d50df052bd288bdcc8c58718efb092f85e2b70da2a9155"
+  },
+  "newBoundsRegressionCases": 20,
+  "full": {
+    "tests": 972,
+    "pass": 972,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "duration_ms": 474972.9464,
+    "exitCode": 0,
+    "command": "node --test --test-reporter=tap --test-concurrency=1 --test-timeout=90000 tests/*.test.cjs",
+    "rawLogSHA256": "c7c7d33b3e81326e043667f0b3757e899df3c057d488b1ae4e4fc33f64f888a7",
+    "singleCompletePassingRun": true,
+    "countsNotStitchedFromSeparateRuns": true,
+    "sourceHashesMatchedAfterRun": true,
+    "environment": {
+      "node": "existing explicit Node 24 runtime",
+      "python": "existing explicit Python runtime",
+      "CADDY_TEST_BIN": "existing portable Caddy 2.11.7",
+      "GOMAXPROCS": "1 for this test process only",
+      "CaddySHA256": "5f93a9bd555f3aac9d33af2756ba14b3519d8cca4ffd55256bdaeab444c9db2a",
+      "testTimeoutMs": 90000,
+      "fixtureDeadlinesChanged": false
+    }
+  },
+  "smoke": {
+    "exitCode": 0,
+    "passed": true,
+    "scope": "Local HTTP/WebSocket, two synthetic model backends, SQLite restart persistence, private binding and configuration preservation",
+    "rawLogSHA256": "f11986f4ca6071992a388765ca44f0a4d23d1332a8d0f6a1603c5cd04cec79cb"
+  },
+  "priorFailures": {
+    "originalFull": {
+      "tests": 962,
+      "pass": 961,
+      "fail": 1,
+      "skipped": 0,
+      "cancelled": 0,
+      "reason": "Research gateway test extracted functions only up to old runResearch boundary and omitted dispatchResearchStage after wrapper insertion."
+    },
+    "followupRed": {
+      "tests": 19,
+      "pass": 11,
+      "fail": 8,
+      "rawLogSHA256": "50d03fac41b0ef76602cdc59e21153b201afbf3b8d8a97dfda016211a5de1d5e"
+    },
+    "retainedScopeRed": {
+      "tests": 1,
+      "pass": 0,
+      "fail": 1,
+      "rawLogSHA256": "a2f6c85fc07c6c591205786446fe33b086376e9b90f4e352f26b95fbc02c9f1f"
+    },
+    "invalidLateDiagnostic": {
+      "retained": true,
+      "reason": "return42 typo; not counted as proof",
+      "supersededBy": "Actual strict/ordinary retained-callback and retained-scope RED-to-GREEN tests"
+    },
+    "followupFull": {
+      "tests": 972,
+      "pass": 970,
+      "fail": 2,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 824585.8372,
+      "exitCode": 1,
+      "failures": [
+        "public-ingress: OpenSSL test certificate generation exceeded unchanged 5000 ms limit",
+        "public-runtime: isolated import child exceeded its unchanged startup limit"
+      ],
+      "uniqueRootCauseEstablished": false
+    }
+  },
+  "review": {
+    "independentReviewer": "Parfit",
+    "reviewBeforeRepairs": true,
+    "findings": [
+      "Queued timeout snapshot",
+      "Retry and fallback snapshot",
+      "Inherited completed-root late continuation"
+    ],
+    "repairEvidence": "Queued/in-flight policy, mid-flight/backoff routing, ordinary/strict late callbacks, retained-scope entry and unsettled capacity all have behavioral RED-to-GREEN coverage. Final complete suite passes 972/972.",
+    "postFixIndependentReviewRepeated": false
+  },
+  "boundaries": {
+    "productionPublished": false,
+    "vpsContacted": false,
+    "realInferenceCalls": 0,
+    "existingAgentConfigurationChanged": false,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "relayChanged": false,
+    "newDependencies": false,
+    "newDaemon": false
+  },
+  "limitations": [
+    "Local synthetic results do not prove production or real-provider acceptance.",
+    "HTTP abort does not confirm remote GPU termination; unconfirmed occupied slots are retained until actual settlement.",
+    "No external Muse/dots execution or permission has been enabled.",
+    "The existing production three-role research Agent configuration remains pending separate approval.",
+    "Earlier isolated child-start/certificate-generation timeouts are preserved; a later passing run does not establish a unique cause or prove timing flakiness eliminated."
+  ],
+  "readyForGitHubSync": true,
+  "readyForProduction": false,
+  "fullPlatformDeliveryComplete": false,
+  "unchangedTimeoutRetest": {
+    "tests": 2,
+    "pass": 2,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "testOrProductChangesBetweenRuns": false,
+    "limitsIncreased": false,
+    "certificateFixtureElapsedMs": 467,
+    "rawLogSHA256": "784bd5b4ac21088cf4813ad447942ca3334452cab72e0f1e1fb061972a2586fa"
+  },
+  "syncGate": "Explicit-file secret scan and staged-byte verification required before commit/push; commit/remote receipts retained in ignored evidence storage.",
+  "syncPreparation": {
+    "initialCheckFailed": true,
+    "reason": "The existing Git helper trims leading whitespace; porcelain status slicing truncated the first filename. No extra repository file changes existed.",
+    "firstScanDidNotRun": true,
+    "firstScanReason": "Preparation had stopped before creating the scan directory.",
+    "correctedMethod": "Git native filename interfaces; scan actual staged bytes and verify normalization against tested working files.",
+    "productCodeOrTestsChangedForSync": false
+  }
+}

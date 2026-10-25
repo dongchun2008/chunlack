@@ -72,10 +72,68 @@ function createCapacityCoordinator({maxActive = 1, maxQueued = 100, maxQueuedPer
     for (const [taskId, entry] of remoteQueue) if (entry.deadlineAt <= now()) {remoteQueue.delete(taskId); ready.delete(taskId);}
     for (const [taskId, until] of ready) if (until <= now() || !remoteQueue.has(taskId)) ready.delete(taskId);
     if (handoff && (handoff.until <= now() || !remoteQueue.has(handoff.taskId))) {ready.delete(handoff.taskId); handoff = null;}
-    for (const [taskId, root] of roots) if (root.deadlineAt <= now()) {root.controller.abort(failure('task_deadline')); roots.delete(taskId);}
+    for (const [taskId, root] of roots) if (root.deadlineAt <= now()) {root.controller.abort(failure('task_deadline')); root.policyListeners.clear(); roots.delete(taskId);}
+  }
+  function modelPolicy(value, previous = null) {
+    const keys = ['maxRequests', 'requestTimeoutMs', 'allowRetry', 'allowFallback', 'allowExternal', 'serial'];
+    if (!value || Array.isArray(value) || typeof value !== 'object' || Object.keys(value).some(key => !keys.includes(key))) throw failure('invalid_model_policy', 400);
+    const next = {maxRequests: value.maxRequests ?? 100, requestTimeoutMs: value.requestTimeoutMs ?? 300000,
+      allowRetry: value.allowRetry ?? true, allowFallback: value.allowFallback ?? true, allowExternal: value.allowExternal ?? true, serial: value.serial ?? false};
+    if (!Number.isSafeInteger(next.maxRequests) || next.maxRequests < 1 || next.maxRequests > 100 || !Number.isSafeInteger(next.requestTimeoutMs) || next.requestTimeoutMs < 100 || next.requestTimeoutMs > 300000 || ['allowRetry', 'allowFallback', 'allowExternal', 'serial'].some(key => typeof next[key] !== 'boolean')) throw failure('invalid_model_policy', 400);
+    if (previous) {
+      next.maxRequests = Math.min(next.maxRequests, previous.maxRequests);
+      next.requestTimeoutMs = Math.min(next.requestTimeoutMs, previous.requestTimeoutMs);
+      for (const key of ['allowRetry', 'allowFallback', 'allowExternal']) next[key] = next[key] && previous[key];
+      next.serial = next.serial || previous.serial;
+    }
+    return Object.freeze(next);
+  }
+  function setModelPolicy(root, value) {
+    root.modelPolicy = modelPolicy(value, root.modelPolicy);
+    for (const listener of [...root.policyListeners]) {
+      try {listener(root.modelPolicy);} catch {if (!root.controller.signal.aborted) root.controller.abort(failure('task_model_failed'));}
+    }
+  }
+  function onModelPolicyChange(listener) {
+    const scope = scopes.getStore(); if (!scope) return () => {};
+    const actor = requireWorkspaceContext();
+    if (actor.workspaceId !== scope.workspaceId || actor.userId !== scope.root.createdBy) throw failure('task_owner_mismatch', 403);
+    if (typeof listener !== 'function' || scope.root.policyListeners.size >= maxQueued + maxActive) throw failure('invalid_model_policy_listener', 400);
+    scope.root.controller.signal.throwIfAborted();
+    scope.root.policyListeners.add(listener);
+    return () => scope.root.policyListeners.delete(listener);
+  }
+  function retireTask(taskId) {
+    const root = roots.get(id(taskId)); if (!root) return false;
+    const actor = requireWorkspaceContext();
+    if (actor.workspaceId !== root.workspaceId || actor.userId !== root.createdBy) throw failure('task_owner_mismatch', 403);
+    roots.delete(taskId);
+    if (!root.controller.signal.aborted) root.controller.abort(failure('task_completed'));
+    root.policyListeners.clear();
+    return true;
+  }
+  function restrictModelPolicy(value) {
+    const scope = scopes.getStore(), actor = requireWorkspaceContext();
+    if (!scope || actor.workspaceId !== scope.workspaceId || actor.userId !== scope.root.createdBy) throw failure('task_owner_mismatch', 403);
+    scope.root.controller.signal.throwIfAborted();
+    setModelPolicy(scope.root, value);
+  }
+  function stopCurrentTask(code) {
+    if (!['task_model_budget', 'task_model_timeout', 'task_model_failed', 'task_deadline', 'task_external_forbidden'].includes(code)) throw failure('invalid_task_failure', 400);
+    const scope = scopes.getStore(), error = failure(code);
+    if (!scope) return error;
+    if (!scope.root.controller.signal.aborted) scope.root.controller.abort(error);
+    return scope.root.controller.signal.reason;
+  }
+  function beginModelRequest() {
+    const scope = scopes.getStore(); if (!scope) return;
+    scope.root.controller.signal.throwIfAborted();
+    if (scope.deadlineAt <= now()) throw stopCurrentTask('task_deadline');
+    if (scope.root.modelPolicy && scope.root.modelRequests >= scope.root.modelPolicy.maxRequests) throw stopCurrentTask('task_model_budget');
+    scope.root.modelRequests++;
   }
   function select() {
-    const entries = [...local.values()].filter(entry => entry.state === 'queued').concat([...remoteQueue.values()].filter(entry => ready.has(entry.taskId))).sort((a, b) => a.sequence - b.sequence);
+    const entries = [...local.values()].filter(entry => entry.state === 'queued' && !(entry.scope?.root.modelPolicy?.serial && [...local.values()].some(running => running.state === 'running' && running.scope?.root === entry.scope.root))).concat([...remoteQueue.values()].filter(entry => ready.has(entry.taskId))).sort((a, b) => a.sequence - b.sequence);
     if (!entries.length) return null;
     const workspaces = [...new Set(entries.map(entry => entry.workspaceId))], previous = workspaces.indexOf(lastWorkspace);
     const workspaceId = workspaces[(previous + 1) % workspaces.length];
@@ -167,6 +225,7 @@ function createCapacityCoordinator({maxActive = 1, maxQueued = 100, maxQueuedPer
     if (!spec || typeof fn !== 'function') throw failure('invalid_task_scope', 400);
     const workspaceId = id(spec.workspaceId), taskId = id(spec.taskId), parent = scopes.getStore();
     if (parent && parent.workspaceId !== workspaceId) throw failure('workspace_context_mismatch', 403);
+    parent?.root.controller.signal.throwIfAborted();
     if (spec.approvalRequired === true) throw failure('approval_required', 403);
     const depth = parent ? parent.depth + 1 : 0;
     const maxDepth = parent?.root.maxDepth ?? spec.maxDepth ?? 3;
@@ -178,8 +237,10 @@ function createCapacityCoordinator({maxActive = 1, maxQueued = 100, maxQueuedPer
       const createdBy = id(spec.createdBy), maxSteps = spec.maxSteps ?? 20, maxCost = spec.maxCost;
       if (!Number.isSafeInteger(maxSteps) || maxSteps < 1 || maxSteps > 100 || maxCost !== undefined && (!Number.isFinite(maxCost) || maxCost < 0)) throw failure('invalid_task_scope', 400);
       expire(); if (roots.size >= maxQueued || roots.has(taskId)) throw failure('task_scope_capacity', 429);
-      root = {workspaceId, taskId, createdBy, maxSteps, maxDepth, maxCost, steps: 0, spentCost: 0, reservedCost: 0, deadlineAt, controller: new AbortController()}; roots.set(taskId, root);
+      const policy = spec.modelPolicy === undefined ? null : modelPolicy(spec.modelPolicy);
+      root = {workspaceId, taskId, createdBy, maxSteps, maxDepth, maxCost, modelPolicy: policy, policyListeners: new Set(), modelRequests: 0, steps: 0, spentCost: 0, reservedCost: 0, deadlineAt, controller: new AbortController()}; roots.set(taskId, root);
     } else if (spec.createdBy !== undefined && spec.createdBy !== root.createdBy) throw failure('task_owner_mismatch', 403);
+    if (parent && spec.modelPolicy !== undefined) setModelPolicy(root, spec.modelPolicy);
     const scope = Object.freeze({workspaceId, taskId, depth, deadlineAt, root});
     return scopes.run(scope, () => fn(Object.freeze({workspaceId, taskId, rootTaskId: root.taskId, createdBy: root.createdBy, depth, signal: root.controller.signal})));
   }
@@ -189,7 +250,7 @@ function createCapacityCoordinator({maxActive = 1, maxQueued = 100, maxQueuedPer
   }
   function close() {
     if (closed) return; closed = true; clearInterval(timer); source = null; listeners.clear(); ready.clear(); remoteQueue.clear(); handoff = null;
-    for (const root of roots.values()) root.controller.abort(failure('capacity_closed', 503)); roots.clear();
+    for (const root of roots.values()) {root.controller.abort(failure('capacity_closed', 503)); root.policyListeners.clear();} roots.clear();
     for (const entry of [...local.values()]) cancelEntry(entry, failure('capacity_closed', 503));
   }
   const timer = setInterval(() => {try {refresh();} catch {}}, 250); timer.unref();
@@ -201,8 +262,8 @@ function createCapacityCoordinator({maxActive = 1, maxQueued = 100, maxQueuedPer
       await new Promise(resolve => setTimeout(resolve, 10));
     }
   }
-  return Object.freeze({submit, cancel, status, refresh, close, drain, restoreExternalLeases, bindLeaseSource, releaseExternal, claimExternal, assertCanQueue, withTaskScope,
-    currentTask() {const scope=scopes.getStore();return scope?Object.freeze({workspaceId:scope.workspaceId,taskId:scope.taskId,rootTaskId:scope.root.taskId,createdBy:scope.root.createdBy,depth:scope.depth,deadlineAt:scope.deadlineAt,signal:scope.root.controller.signal}):null;},
+  return Object.freeze({submit, cancel, status, refresh, close, drain, restoreExternalLeases, bindLeaseSource, releaseExternal, claimExternal, assertCanQueue, withTaskScope, restrictModelPolicy, beginModelRequest, stopCurrentTask, onModelPolicyChange, retireTask,
+    currentTask() {const scope=scopes.getStore();return scope?Object.freeze({workspaceId:scope.workspaceId,taskId:scope.taskId,rootTaskId:scope.root.taskId,createdBy:scope.root.createdBy,depth:scope.depth,deadlineAt:scope.deadlineAt,modelPolicy:scope.root.modelPolicy,modelRequests:scope.root.modelRequests,signal:scope.root.controller.signal}):null;},
     onAvailable(fn) {if (closed || typeof fn !== 'function' || listeners.size >= 8) throw failure('invalid_capacity_listener', 503); listeners.add(fn); return () => listeners.delete(fn);}});
 }
 module.exports = {createCapacityCoordinator};
