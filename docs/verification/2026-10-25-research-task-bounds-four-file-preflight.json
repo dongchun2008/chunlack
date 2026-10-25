@@ -1,0 +1,208 @@
+{
+  "date": "2026-10-25",
+  "status": "local-gate-passed-publication-blocked",
+  "baseCommit": "48df500af60182c04461bb265f1a3baf296030b8",
+  "runtimePayloadCommit": "43ddc34fbd88cca3a2974514dd72a35239783eab",
+  "scope": {
+    "newReleaseTooling": [
+      "deploy/public/release-control/2026-10-25/readonly-research-bounds-preflight.py",
+      "deploy/public/release-control/2026-10-25/test-readonly-research-bounds-preflight.py"
+    ],
+    "runtimePayloadFiles": [
+      "collaboration/capacity.cjs",
+      "collaboration/model-transport.cjs",
+      "collaboration/task-control.cjs",
+      "server.js"
+    ],
+    "existingUiDifferenceExcluded": true,
+    "legacyThreeFileGateModified": false,
+    "productRuntimeModifiedThisPhase": false
+  },
+  "implementation": {
+    "type": "fixed four-file wrapper compiling pinned legacy gate from source",
+    "basePreflightSHA256": "5c9cf83f7c763a7e216feb865849c7eba761efa7f9dc40b990f1f67f0e69b18d",
+    "entrySourceSHA256": "8d99b21043bf2a4497c83d4694788120d77bf2bafe15e8c8b5d4d9958037f4bb",
+    "allowedScopeClientConfigurable": false,
+    "bytecodeCacheUsed": false,
+    "requiresBaseSourceInTrustedManifest": true,
+    "allLegacyChecksDelegated": true,
+    "preparedFileNames": [
+      "preflight.py",
+      "base-code-preflight.py"
+    ],
+    "bothFilesMustAlsoBeInPreparedHashes": true
+  },
+  "localTests": {
+    "red": {
+      "expectedAssertionFailure": true,
+      "tests": 1,
+      "failures": 1,
+      "scope": "Legacy gate rejects the exact new four-file payload"
+    },
+    "legacy": {
+      "tests": 17,
+      "pass": 17,
+      "exitCode": 0,
+      "profileUnchanged": true
+    },
+    "fourFile": {
+      "tests": 24,
+      "pass": 24,
+      "exitCode": 0
+    },
+    "actualCliFailClosedChecks": [
+      {
+        "name": "missing-arguments",
+        "passed": true,
+        "exitCode": 1,
+        "error": "root_and_trusted_hashes_required",
+        "productionMutated": false
+      },
+      {
+        "name": "non-native-windows-identity",
+        "passed": true,
+        "exitCode": 1,
+        "error": "readonly_gate_requires_posix_root",
+        "productionMutated": false
+      }
+    ],
+    "fullApplication": {
+      "tests": 972,
+      "pass": 972,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 462875.8103,
+      "exitCode": 0,
+      "files": 118,
+      "scope": "Complete local application test command; no real-provider acceptance"
+    },
+    "smoke": {
+      "passed": true,
+      "exitCode": 0,
+      "scope": "Local HTTP/WebSocket, two mock model backends, SQLite restart persistence, private bind and configuration preservation"
+    },
+    "firstFullLauncher": {
+      "exitCode": 0,
+      "testReceiptAvailable": false,
+      "acceptedAsSuccessfulTestRun": false,
+      "replacedByExplicitNodeAndTestFileList": true,
+      "firstAttemptExecutionCountNotProven": true
+    },
+    "diagnosticProcessQuery": {
+      "initialCommandParseFailed": true,
+      "correctedReadonlyQueryUsed": true,
+      "noProcessesSignalled": true
+    }
+  },
+  "review": {
+    "actionableFindings": 0,
+    "scope": "Two new release-tooling files relative to base commit",
+    "residualLimits": [
+      "Sandbox actual run invokes loaded base gate directly; wrapper delegation tested separately with mocked backend",
+      "Native ownership, file permissions and systemd enforcement simulated in local tests",
+      "No publication or production acceptance established"
+    ]
+  },
+  "nativeEvidence": {
+    "additionalUnitsStarted": 0,
+    "previousUnitBudgetConsumed": 4,
+    "previousUnitBudgetMaximum": 4,
+    "oldBudgetReset": false,
+    "nativeWrapperEndToEndVerified": false,
+    "realOwnershipAndSystemdChecksSimulatedLocally": true
+  },
+  "remainingGates": {
+    "newNativeAllowanceRequired": true,
+    "nativeFourFileGatePassed": false,
+    "candidateBoundDatabaseCompatibilityFresh": false,
+    "candidateBoundSuccessAndFailureRollbackRehearsalsPassed": false,
+    "freshMaintenanceWindowApproved": false,
+    "productionPreflightPassed": false,
+    "publicationAllowed": false
+  },
+  "futureOperationalBounds": {
+    "forwardSeconds": 55,
+    "totalRecoverySeconds": 120,
+    "unitMemoryMaxBytes": 201326592,
+    "unitCpuPercent": 10,
+    "unitTasksMax": 32,
+    "unitSwapMaxBytes": 0,
+    "unitTotalSeconds": 90,
+    "privateNetwork": true,
+    "doNotOverwriteNewWrites": true,
+    "doNotDeleteExistingWriterLocks": true
+  },
+  "separateRequirement": {
+    "multilingualInterfaceAndHelp": "Inventory recorded; implementation approach not yet approved; not included in this runtime payload"
+  },
+  "productionPublished": false,
+  "vpsContacted": false,
+  "actualInferenceCalls": 0,
+  "agentConfigurationChanged": false,
+  "credentialsChanged": false,
+  "authorizationsChanged": false,
+  "relayChanged": false,
+  "artifacts": {
+    "red.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "red.stderr.log": {
+      "bytes": 911,
+      "sha256": "6086782eef194c502ed9a5492b408073b00162387e967237e2465b5f38c98f1e"
+    },
+    "legacy.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "legacy.stderr.log": {
+      "bytes": 2938,
+      "sha256": "376f9c834cef213271b9ad14170fc7ac10a293f67a9fd3ee070085f326e2ddb7"
+    },
+    "four-file.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "four-file.stderr.log": {
+      "bytes": 4052,
+      "sha256": "0eaf9327382f232468919f1b9b8f92c31e01905fd07f2fbbd34c40ffff43da82"
+    },
+    "full.tap": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "full.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "full-direct.tap": {
+      "bytes": 238323,
+      "sha256": "120495016181c8f6d33d5b7fe55f52c09b7b4adcc7d7b6f04da5e10370b7d945"
+    },
+    "full-direct.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "smoke.stdout.log": {
+      "bytes": 132,
+      "sha256": "2682a8ad10a54d082e60a99229d562b855cb7c1eb9e01c2760f6d470d286e02e"
+    },
+    "smoke.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "synchronizationPreflightIncident": {
+    "staleExpectedCommit": "712886bd55ae977c29a37260f5c58ad2a968daf6",
+    "actualPhaseBaseline": "48df500af60182c04461bb265f1a3baf296030b8",
+    "stoppedBeforeStaging": true,
+    "unrelatedChangesFound": false,
+    "rawEarlierEvidencePreserved": true,
+    "correctionScope": "sync baseline and audit metadata only",
+    "productCodeChanged": false,
+    "testsRerun": false,
+    "nativeUnitsAdded": 0
+  }
+}
