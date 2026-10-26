@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "clientDate": "2026-10-27",
+  "status": "private-native-bootstrap-offline-contracts-passed-positive-linux-not-yet-run",
+  "parentCheckpoint": "e4ca3022e0d7641e82244a890ceefc8d7c8a2799",
+  "verification": {
+    "groups": {
+      "processPolicy": {
+        "tests": 15,
+        "pass": 15,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "bootstrapPipes": {
+        "tests": 4,
+        "pass": 4,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "totalTests": 19,
+    "totalPass": 19,
+    "totalFail": 0,
+    "totalSkipped": 0,
+    "ranOn": "Windows",
+    "realStdioBootstrap": true,
+    "realBusinessProcessesStarted": false,
+    "nativeKernelAttestationProduced": false
+  },
+  "implemented": {
+    "preparedOwnedProcessLifecycle": true,
+    "preparedInputAndAdapterHashBindings": true,
+    "executeVerifiedAdapterBytes": true,
+    "sourceManifestCheckedBeforeStart": true,
+    "modelsDisabledAndExternalAgentAccessDenied": true,
+    "minimumNativeResourceAndIdentityPolicy": true,
+    "preserveDataAndCloseEvidence": true,
+    "connectsExistingOwnedFacadeAndStdioServer": true
+  },
+  "artifactBindings": {
+    "processAdapterSha256": "4d7b3b52a569eb2c91bc33b6ea1e8efb5601f37d7bf856e32a9da7e8a31b8856",
+    "bootstrapSha256": "844ab7e43dbd2204f8e30dfd07f81a03080a854464e2a3e1d6753f462c13a67f",
+    "policyTestsSha256": "fff7bdc73830ea8a8938b7f76840e209ff574b6e3cf5d48fad3cb2f58cdff0f5",
+    "bootstrapTestsSha256": "9951cde07eefe3542e5e0aace44dc73f38a4c4d423cf1bc53c80f4b025192b25",
+    "policyReceiptSha256": "445a27b95100da271d511d1eba51be9b9f17f30826ce5bf124a20cd5e72827ec",
+    "bootstrapReceiptSha256": "4215ad539484929a4cf5b6b8e8f63d4aefb73c221903e64ebeef9aadb35e3e75"
+  },
+  "boundaries": {
+    "productSourceChanged": false,
+    "privateSourceCommitted": false,
+    "actualLackBoots": 0,
+    "actualCaddyBoots": 0,
+    "productionAccessed": false,
+    "fullRegressionRerun": false,
+    "previousSingleSharedDataRetestReplayed": false,
+    "linuxUnitsConsumed": 0,
+    "originalLinuxUnitMaximum": 3,
+    "linuxBudgets": {
+      "seconds": 90,
+      "memoryMiB": 192,
+      "cpuPercent": 10,
+      "tasks": 32,
+      "swapBytes": 0,
+      "privateNetwork": true
+    },
+    "productionPublication": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "remaining": [
+    "Prepare exact old/candidate payloads, synthetic data and configuration and matching ingress under owned paths.",
+    "Produce genuine native two-boot copy proof and applied identity/resource receipts inside the approved unit budgets.",
+    "Run the unchanged Python gate Transaction for success and rollback, including preservation of late writes.",
+    "Pass fresh applicable production release gates and obtain maintenance approval before publication."
+  ],
+  "limitations": [
+    "Windows contracts and synthetic kernel-policy samples do not prove Linux process startup, signals, cgroup isolation or cutover.",
+    "Bootstrap stdio tests performed status and close only; no LACK or Caddy executable was started.",
+    "Private process-lifecycle branches require the planned actual-process native tests before acceptance.",
+    "The platform goal, multilingual production rollout and long-term native Agent integration remain incomplete."
+  ]
+}
