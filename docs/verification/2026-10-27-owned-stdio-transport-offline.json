@@ -1,0 +1,67 @@
+{
+  "schema": 1,
+  "clientDate": "2026-10-27",
+  "status": "private-stdio-transport-tests-passed-native-transaction-pending",
+  "scope": "offline-private-release-rehearsal-adapter",
+  "parentCheckpoint": "bd71a609238c3f9dc62a3caddf53ed9836c5999b",
+  "verification": {
+    "command": "python -B <private-owned-directory>/test_owned_stdio_transport.py",
+    "exitCode": 0,
+    "tests": 17,
+    "pass": 17,
+    "fail": 0,
+    "skipped": 0,
+    "syntheticOnly": true,
+    "realSubprocessPipes": true,
+    "pythonToNodeOwnedFacade": true,
+    "requestTimeoutAndLateReplyIsolation": true,
+    "queueWaitIncludedInDeadline": true,
+    "malformedAndOversizedFramesRejected": true,
+    "requestScopeRestricted": true,
+    "errorMessagesNotReturned": true,
+    "eofCleanupVerified": true,
+    "unsettledProcessNotKilledOrReportedClosed": true
+  },
+  "artifactBindings": {
+    "serverSha256": "eef307cf92cbc2b102c29abdfbccd66402388ecc0821a3a044af1ced0ce62fe5",
+    "transportSha256": "1cd9758a68ca3b57c870b58269daa525e654bcd6568fe0087edf30ba710eb35e",
+    "testsSha256": "53c972470755f63dc9fe7f0657b65be16ccc4cf0c9c8bf829e539a34e3358e3c",
+    "testReceiptSha256": "e6b853c801481193419e3ffd373017728c492846d53b653be17967e4a9ef39a8"
+  },
+  "boundaries": {
+    "productSourceChanged": false,
+    "privateAdapterSourcesCommitted": false,
+    "actualLackBoots": 0,
+    "actualCaddyBoots": 0,
+    "fullRepositoryRegressionRerun": false,
+    "linuxUnitsConsumed": 0,
+    "linuxUnitsOriginalMaximum": 3,
+    "linuxLimitsUnchanged": {
+      "seconds": 90,
+      "memoryMiB": 192,
+      "cpuPercent": 10,
+      "tasks": 32,
+      "swapBytes": 0,
+      "privateNetwork": true
+    },
+    "productionPublication": false,
+    "productionServiceOperations": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false
+  },
+  "remaining": [
+    "Bootstrap prepared owned native processes and exact old/candidate payloads with synthetic configuration.",
+    "Obtain genuine native identity, resource and expiring database-copy compatibility proof inside the approved units.",
+    "Execute the unchanged Python transaction for real success and failure rollback, preserving late writes.",
+    "Pass applicable release gates and obtain fresh production maintenance approval before any publication."
+  ],
+  "limitations": [
+    "Synthetic process peers validate transport behavior, not LACK/Caddy cutover or native Linux isolation.",
+    "A timed-out request has uncertain outcome; new non-cleanup work is rejected.",
+    "A process still alive after shutdown deadline retains its handle and is reported cleanup_pending, not forcibly killed by the transport.",
+    "Native bootstrap, real transaction execution and production delivery remain incomplete."
+  ]
+}
