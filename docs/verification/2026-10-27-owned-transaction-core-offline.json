@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "clientDate": "2026-10-27",
+  "timezone": "Asia/Shanghai",
+  "phase": "owned-transaction-core-offline",
+  "status": "offline-component-tests-passed-not-end-to-end-acceptance",
+  "implemented": {
+    "ownedProcessFacade": [
+      "Fixed action and service allowlists; no shell, arbitrary process IDs, URLs, credentials or headers from protocol requests.",
+      "Queued lifecycle operations with duplicate request rejection and idempotent closure.",
+      "Observed app-stop requirements retain zero exit, no forced close and writer-lock absence.",
+      "Bounded public-response fields exclude Set-Cookie and exception text; nested error codes remain visible."
+    ],
+    "independentPythonBackend": [
+      "Owned relative paths and occupied rollback-target rejection.",
+      "Loads the pinned unchanged Transaction gate without constructing the operational LinuxBackend or invoking its service-control methods.",
+      "Reuses the base HTTP acceptance validation with owned request, listener and private REST adapters.",
+      "Requires actual Linux UID 996/GID 987, NoNewPrivileges, zero capabilities, loopback-only interfaces and scoped cgroup resource limits before enabling effects.",
+      "Retains 55-second forward and 120-second recovery windows, with an additional independent 90-second rehearsal budget."
+    ]
+  },
+  "tests": {
+    "node": {
+      "exitCode": 0,
+      "counts": {
+        "tests": 8,
+        "pass": 8,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    "python": {
+      "exitCode": 0,
+      "tests": 12,
+      "pass": 12,
+      "fail": 0,
+      "skipped": 0
+    },
+    "totalOfflineComponentTests": 20,
+    "fixtures": "synthetic in-process objects and parser inputs, not actual application processes",
+    "fullRegressionRerun": false,
+    "actualLackBoots": 0
+  },
+  "provenance": {
+    "gitHeadBeforeRecord": "61e2dd42a80e1f0e79325cdedd74a994fc45473e",
+    "pinnedTransactionGateSha256": "4cb0ee578acc4808664a6625332351bcde6b247523a0df508446220c2270e06a",
+    "privateNodeFacadeSha256": "327cc537b2368cec3360922d876abfd4be812d15420ab95d6a294563357cbd27",
+    "privatePythonBackendSha256": "7bf7cd6e40857034565b24e6b1571ec1e55c37204692a38d4b50fe3ed654b519",
+    "privateNodeTapSha256": "2d7f4250cbc9fe4abbe766394c80749ac4075e906406f2a60d1b0fc6bb2562f9",
+    "privatePythonOutputSha256": "6bdb06863650897762d41ea333301cce21e94d56471cf8ce409f5d5507083f15",
+    "sourceCodeRemainsPrivateAndUncommitted": true
+  },
+  "remaining": [
+    "Implement and validate a bounded serialized subprocess transport around the owned facade.",
+    "Prepare exact reviewed old/candidate payloads, synthetic MCP-only configuration and genuine expiring native copy proof; do not invent UID, network or resource evidence.",
+    "Exercise actual Python Transaction success and fault rollback with actual owned processes and late writes in separately controlled native units.",
+    "Only after all native and deployment gates pass, seek the applicable fresh production maintenance authorization and perform final user acceptance."
+  ],
+  "limitations": [
+    "This phase did not start LACK or Caddy processes.",
+    "Unit fixture observations and parser samples are not native kernel attestations.",
+    "The positive native preflight, real RPC timeout/late-response handling and real Transaction cutover/rollback are not yet tested.",
+    "Production co-host health was not probed from isolated tests; no such acceptance is claimed."
+  ],
+  "previousAcceptedScopes": {
+    "fullLocalRegression": {
+      "tests": 1105,
+      "passed": 1105,
+      "commit": "ab04853a086a4655ec3e3043e63b61f314c25904"
+    },
+    "sharedDataPrerequisite": {
+      "tests": 1,
+      "passed": 1,
+      "commit": "61e2dd42a80e1f0e79325cdedd74a994fc45473e",
+      "repeatNotPerformed": true
+    }
+  },
+  "boundaries": {
+    "linuxUnitsUsed": 0,
+    "nativeUnitQuotaReset": false,
+    "actualModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productionPublication": false,
+    "productionRestart": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "repositoryProductOrExistingTestsChanged": false,
+    "onlyVerificationRecordMayBeCommitted": true
+  },
+  "productionDeliveryComplete": false
+}
