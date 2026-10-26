@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "clientDate": "2026-10-27",
+  "timezone": "Asia/Shanghai",
+  "phase": "shared-data-local-prerequisite-retest",
+  "status": "local-prerequisite-passed-not-transaction-or-production-acceptance",
+  "execution": {
+    "approvedMaximumRuns": 1,
+    "runsUsed": 1,
+    "startedAt": "2026-10-26T23:15:26.892Z",
+    "endedAt": "2026-10-26T23:15:35.034Z",
+    "elapsedMs": 8139,
+    "exitCode": 0,
+    "signal": null,
+    "counts": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "perTestLimitMs": 90000,
+    "originalRequestTimeoutsPreserved": true,
+    "automaticRerun": false
+  },
+  "corrections": {
+    "dataMarkerUses": "existing workspace-scoped project_states via requireMembership, runWithWorkspace, saveProjectState and loadProjectState",
+    "migrationClassificationUnchanged": true,
+    "authorizationChecksRetained": true,
+    "newSchemaObjectsCreated": false,
+    "errorReport": {
+      "primaryFailure": null,
+      "cleanupFailures": []
+    },
+    "originalFailedTrialPreserved": true
+  },
+  "evidence": {
+    "schemaVersion": 1,
+    "status": "shared-data-local-passed",
+    "platform": "win32",
+    "sourceFiles": {
+      "previous": 57,
+      "candidate": 66
+    },
+    "boots": [
+      {
+        "runtime": "previous",
+        "healthy": true,
+        "humanLogin": true,
+        "publicRestDenied": true,
+        "cleanClose": true,
+        "writerLockReleased": true,
+        "closeMechanism": "private-ipc-sigterm-handler",
+        "entrySha256": "483b880aa721f97ce9506c2e81ff2bdb70e51148c256e4e1a723580d8ce31aa2",
+        "identity": {
+          "uid": null,
+          "gid": null,
+          "noNewPrivileges": null
+        }
+      },
+      {
+        "runtime": "candidate",
+        "healthy": true,
+        "humanLogin": true,
+        "publicRestDenied": true,
+        "cleanClose": true,
+        "writerLockReleased": true,
+        "closeMechanism": "private-ipc-sigterm-handler",
+        "entrySha256": "483b880aa721f97ce9506c2e81ff2bdb70e51148c256e4e1a723580d8ce31aa2",
+        "identity": {
+          "uid": null,
+          "gid": null,
+          "noNewPrivileges": null
+        }
+      },
+      {
+        "runtime": "previous",
+        "healthy": true,
+        "humanLogin": true,
+        "publicRestDenied": true,
+        "cleanClose": true,
+        "writerLockReleased": true,
+        "closeMechanism": "private-ipc-sigterm-handler",
+        "entrySha256": "483b880aa721f97ce9506c2e81ff2bdb70e51148c256e4e1a723580d8ce31aa2",
+        "identity": {
+          "uid": null,
+          "gid": null,
+          "noNewPrivileges": null
+        }
+      }
+    ],
+    "databaseCount": 3,
+    "sameDataRoot": true,
+    "schemaPreserved": true,
+    "lateDatabaseWritePreserved": true,
+    "lateArtifactWritePreserved": true,
+    "rawConfigurationPreserved": true,
+    "coldDatabaseValidator": "unchanged pinned controller schemas()",
+    "controllerSha256": "63ed0731c21411dbe91fbb7a4a7e2f5330df80a49f490f29c47342b7098cdcc1",
+    "productionCopyProof": false,
+    "transactionCutoverProven": false,
+    "nativeLinuxIdentityProven": false,
+    "actualModelCalls": 0,
+    "externalAgentCalls": 0,
+    "linuxUnitsUsed": 0,
+    "productionChanged": false,
+    "limitations": [
+      "Manual owned-directory version activation is not Python Transaction execution.",
+      "No production copy proof or Linux identity attestation is emitted.",
+      "This is one same-root synthetic database prerequisite, not production deployment acceptance."
+    ]
+  },
+  "provenance": {
+    "gitHeadBeforeRecord": "ab04853a086a4655ec3e3043e63b61f314c25904",
+    "previousSourceManifestSha256": "712731e0d1cc9c8b71e58f3933a6694e5bbed99ebe295183110e5ef0fc5d7181",
+    "candidateSourceManifestSha256": "bce4b18a3ef8ba9fe8581e709feb77eacef6b0807b989ed096ea9ff1ebba12a6",
+    "privateTapSha256": "8ec245d65b0e81876a83b4755d3b41d5930ce6ca778ab33fa7b8ed08e01cb14a",
+    "privateFixtureSourcesNotCommitted": true,
+    "publicRecordIsNotStandaloneReproductionSource": true
+  },
+  "previousFullRegression": {
+    "tests": 1105,
+    "passed": 1105,
+    "failures": 0,
+    "verificationCommit": "ab04853a086a4655ec3e3043e63b61f314c25904",
+    "rerunForThisTrial": false
+  },
+  "boundaries": {
+    "productionPublication": false,
+    "linuxUnitsUsed": 0,
+    "actualModelCalls": 0,
+    "externalAgentCalls": 0,
+    "repositoryProductOrExistingTestsChanged": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "sourcePublication": false
+  },
+  "limitations": [
+    "This trial uses actual Windows child processes with private IPC shutdown; null UID/GID/noNewPrivileges values are not native Linux identity evidence.",
+    "The same-root version activations are not execution of the Python Transaction implementation.",
+    "The new split error report was observed empty on the successful path; combined-failure injection was not performed in this single trial.",
+    "The previous 1105-test full run and this one private prerequisite test are distinct scopes, not a new 1106-test full run."
+  ],
+  "nextStep": "Build and exercise the independent owned-path Python transaction backend, then obtain native identity and isolated cutover/rollback evidence before any production maintenance."
+}
