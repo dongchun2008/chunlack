@@ -1,0 +1,290 @@
+{
+  "schemaVersion": 1,
+  "phase": "independent-public-process-local-diagnostic-regression",
+  "status": "local-regression-passed-not-production-delivery",
+  "clientDate": "2026-10-27",
+  "timezone": "Asia/Shanghai",
+  "execution": {
+    "approvedMaximumRuns": 1,
+    "runsUsed": 1,
+    "startedAt": "2026-10-26T22:48:58.664Z",
+    "endedAt": "2026-10-26T22:56:29.030Z",
+    "elapsedMs": 450366,
+    "exitCode": 0,
+    "signal": null,
+    "testFileCount": 131,
+    "testFiles": [
+      "tests/agent-access-boundaries.test.cjs",
+      "tests/agent-access.test.cjs",
+      "tests/agent-authority.test.cjs",
+      "tests/agent-client-pilot.test.cjs",
+      "tests/agent-client.test.cjs",
+      "tests/agent-create-ui.test.cjs",
+      "tests/agent-discovery-budget.test.cjs",
+      "tests/agent-discovery-human-boundary.test.cjs",
+      "tests/agent-discovery-only.test.cjs",
+      "tests/agent-empty-clients.test.cjs",
+      "tests/agent-events-binding.test.cjs",
+      "tests/agent-events-ciphertext.test.cjs",
+      "tests/agent-events-runtime.test.cjs",
+      "tests/agent-gateway-authority-boundaries.test.cjs",
+      "tests/agent-gateway-authority.test.cjs",
+      "tests/agent-grant-admin-http.test.cjs",
+      "tests/agent-grant-admin-ui.test.cjs",
+      "tests/agent-grant-discovery-boundaries.test.cjs",
+      "tests/agent-grant-routing.test.cjs",
+      "tests/agent-mcp-http.test.cjs",
+      "tests/agent-mcp-lifecycle.test.cjs",
+      "tests/agent-mcp-only-composite.test.cjs",
+      "tests/agent-mcp-only.test.cjs",
+      "tests/agent-resource.test.cjs",
+      "tests/browser-pilot-seed.test.cjs",
+      "tests/chat-response-policy.test.cjs",
+      "tests/collaboration-migration.test.cjs",
+      "tests/dependency-security.test.cjs",
+      "tests/dots-mcp-local-pilot.test.cjs",
+      "tests/gateway-migration.test.cjs",
+      "tests/gateway.test.cjs",
+      "tests/i18n-assets.test.cjs",
+      "tests/i18n-catalog-contract.test.cjs",
+      "tests/i18n-help.test.cjs",
+      "tests/i18n-main.test.cjs",
+      "tests/i18n-materialize.test.cjs",
+      "tests/i18n-release-gate.test.cjs",
+      "tests/i18n-release-scope.test.cjs",
+      "tests/i18n-storage.test.cjs",
+      "tests/i18n-ui.test.cjs",
+      "tests/i18n-workspace-reset.test.cjs",
+      "tests/i18n.test.cjs",
+      "tests/identity-http.test.cjs",
+      "tests/identity-session.test.cjs",
+      "tests/identity-store.test.cjs",
+      "tests/independent-public-process.test.cjs",
+      "tests/materialize-workspace.test.cjs",
+      "tests/mcp-artifact-upload.test.cjs",
+      "tests/mcp-events-cleanup.test.cjs",
+      "tests/mcp-events-lifecycle.test.cjs",
+      "tests/mcp-events.test.cjs",
+      "tests/membership-epochs-boundaries.test.cjs",
+      "tests/membership-epochs.test.cjs",
+      "tests/migrated-runtime-business.test.cjs",
+      "tests/muse-connector-api.test.cjs",
+      "tests/muse-proxy.test.cjs",
+      "tests/muse-transport-pilot.test.cjs",
+      "tests/node-facade.test.cjs",
+      "tests/oauth-core.test.cjs",
+      "tests/oidc-login.test.cjs",
+      "tests/oidc-review-regressions.test.cjs",
+      "tests/open-webui-node.test.cjs",
+      "tests/owned-child-cleanup.test.cjs",
+      "tests/owned-source-tree.test.cjs",
+      "tests/packaged-agent-rounds.test.cjs",
+      "tests/packaged-ingress-cancellation.test.cjs",
+      "tests/packaged-node-lifecycle.test.cjs",
+      "tests/packaged-public-ingress.test.cjs",
+      "tests/pilot-artifacts.test.cjs",
+      "tests/pilot-mcp.test.cjs",
+      "tests/pilot-result.test.cjs",
+      "tests/pilot-schema.test.cjs",
+      "tests/pilot-script.test.cjs",
+      "tests/pilot-store.test.cjs",
+      "tests/private-memory-legacy.test.cjs",
+      "tests/providers.test.cjs",
+      "tests/public-agent-admin.test.cjs",
+      "tests/public-agent-runtime.test.cjs",
+      "tests/public-agent-scope-events.test.cjs",
+      "tests/public-deployment-assets.test.cjs",
+      "tests/public-ingress.test.cjs",
+      "tests/public-preflight-native-output.test.cjs",
+      "tests/public-preflight.test.cjs",
+      "tests/public-runtime-cleanup.test.cjs",
+      "tests/public-runtime.test.cjs",
+      "tests/research-gateway.test.cjs",
+      "tests/research-report-runtime.test.cjs",
+      "tests/research-search.test.cjs",
+      "tests/research-task-bounds.test.cjs",
+      "tests/research.test.cjs",
+      "tests/sdk-pairing-binding.test.cjs",
+      "tests/task-deadline-clock.test.cjs",
+      "tests/template-index-idempotency.test.cjs",
+      "tests/test-runner-policy.test.cjs",
+      "tests/webhook-transport.test.cjs",
+      "tests/workspace-background-models.test.cjs",
+      "tests/workspace-browser-fixture.test.cjs",
+      "tests/workspace-capacity-gateway.test.cjs",
+      "tests/workspace-capacity-models.test.cjs",
+      "tests/workspace-capacity-research.test.cjs",
+      "tests/workspace-capacity-stress.test.cjs",
+      "tests/workspace-capacity.test.cjs",
+      "tests/workspace-chat-ui.test.cjs",
+      "tests/workspace-context.test.cjs",
+      "tests/workspace-controls-http.test.cjs",
+      "tests/workspace-events-runtime.test.cjs",
+      "tests/workspace-gateway-boundaries.test.cjs",
+      "tests/workspace-gateway.test.cjs",
+      "tests/workspace-http.test.cjs",
+      "tests/workspace-ingress-lifecycle.test.cjs",
+      "tests/workspace-invite-ui.test.cjs",
+      "tests/workspace-mcp.test.cjs",
+      "tests/workspace-migration-apply.test.cjs",
+      "tests/workspace-migration.test.cjs",
+      "tests/workspace-models.test.cjs",
+      "tests/workspace-public-connector.test.cjs",
+      "tests/workspace-public-pairing.test.cjs",
+      "tests/workspace-resources.test.cjs",
+      "tests/workspace-restore-trial.test.cjs",
+      "tests/workspace-runtime.test.cjs",
+      "tests/workspace-shell.test.cjs",
+      "tests/workspace-snapshot-closed-wal.test.cjs",
+      "tests/workspace-snapshot-review-boundaries.test.cjs",
+      "tests/workspace-snapshot-root-coverage.test.cjs",
+      "tests/workspace-snapshot.test.cjs",
+      "tests/workspace-source-reader.test.cjs",
+      "tests/workspace-store.test.cjs",
+      "tests/workspace-task-control.test.cjs",
+      "tests/workspace-ui-auth-recovery.test.cjs",
+      "tests/workspace-ui.test.cjs",
+      "tests/workspace-websocket.test.cjs"
+    ],
+    "serial": true,
+    "perTestOuterLimitMs": 90000,
+    "originalInnerTimeoutsUnchanged": true,
+    "automaticRerun": false
+  },
+  "counts": {
+    "tests": 1105,
+    "pass": 1105,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "focus": {
+    "formerlyFailingTests": [
+      {
+        "name": "empty Agent clients over verified HTTPS deny OAuth and valid paired-node MCP while migration and private REST remain available",
+        "passed": true
+      },
+      {
+        "name": "independent CLI and Caddy serve verified TLS and real human login",
+        "passed": true
+      },
+      {
+        "name": "independent CLI actually boots the selected hash-bound source instead of regenerating it",
+        "passed": true
+      },
+      {
+        "name": "actual materialized import allocates no data directory, listeners or retained startup timers",
+        "passed": true
+      }
+    ],
+    "phaseObserver": {
+      "childSummaries": [
+        {
+          "requests": 42,
+          "sockets": 42,
+          "operations": 4,
+          "observerErrors": 0,
+          "dropped": 0
+        },
+        {
+          "requests": 47,
+          "sockets": 47,
+          "operations": 28,
+          "observerErrors": 0,
+          "dropped": 0
+        },
+        {
+          "requests": 11,
+          "sockets": 11,
+          "operations": 6,
+          "observerErrors": 0,
+          "dropped": 0
+        },
+        {
+          "requests": 0,
+          "sockets": 0,
+          "operations": 20,
+          "observerErrors": 0,
+          "dropped": 0
+        }
+      ],
+      "coveredOriginalFiles": [
+        "tests/agent-empty-clients.test.cjs",
+        "tests/independent-public-process.test.cjs",
+        "tests/owned-source-tree.test.cjs",
+        "tests/public-runtime.test.cjs"
+      ],
+      "rawErrorCodesObserved": [
+        "ABORT_ERR",
+        "ECONNREFUSED"
+      ],
+      "diagnosticRecordCount": 1077
+    },
+    "workspaceHttpObserver": {
+      "file": "tests/workspace-controls-http.test.cjs",
+      "summary": [
+        {
+          "requests": 101,
+          "sockets": 25,
+          "origins": 12,
+          "transportErrors": 0,
+          "observerErrors": 0
+        }
+      ]
+    }
+  },
+  "precedingEvidence": {
+    "fourFileTargetedDiagnostic": {
+      "files": 4,
+      "runsPerFile": 1,
+      "tests": 46,
+      "passed": 46,
+      "failures": 0,
+      "originalQuotaConsumed": 4
+    },
+    "previousFullRegression": {
+      "tests": 1105,
+      "passed": 1101,
+      "failures": 4,
+      "preserved": true
+    },
+    "rootCause": "Earlier intermittent timeouts were not reproduced; no cause has been established and no product or timeout fix is claimed."
+  },
+  "provenance": {
+    "gitHead": "a08271d3829af0b860a5f30c9fee726cbbc0aa0b",
+    "gitStatusUnchangedBeforeAndAfter": true,
+    "uncommittedLocalFixturePaths": [
+      "tests/helpers/independent-public-process-fixture.cjs",
+      "tests/helpers/independent-public-process-preload.cjs",
+      "tests/helpers/owned-atomic-publish.py",
+      "tests/helpers/owned-source-tree.cjs",
+      "tests/independent-public-process.test.cjs",
+      "tests/owned-source-tree.test.cjs"
+    ],
+    "fixtureSourcesIncludedInRunButNotCommitted": true,
+    "privateRawOutputSha256": "fe83d45a7bffcdbaa7803eece237b2c6152fc6eec810c30418c5fa9b5fbf7588",
+    "privateRawStderrSha256": "eefa03b58bb9a6ec4c12575e4c780063a674fbdf50d09eeb49d2f433ba7227c1",
+    "testFileListSha256": "e3cea0c89153f04050f0fb5351bceea56f2803aa083f203f78aa21ea9ac96d49"
+  },
+  "boundaries": {
+    "repositoryProductOrTestEdits": false,
+    "originalRequestsConnectionPoolsRetriesTimeoutsOrAssertionsChanged": false,
+    "linuxUnitsUsed": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productionPublication": false,
+    "productionServiceRestart": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "sourceFilesCommitted": false,
+    "onlyThisSanitizedVerificationRecordApprovedForSync": true
+  },
+  "limitations": [
+    "One passing local run does not establish the root cause or eliminate intermittency.",
+    "This record does not establish native Linux, real-model, external-Agent, shared-database transaction, cutover, rollback, or production delivery acceptance.",
+    "Six fixture and test sources remain local and uncommitted; this record is not a claim that Git HEAD alone reproduces all 1105 tests."
+  ],
+  "nextStep": "Continue the remaining transaction and controlled-release gates only within the applicable approved scopes; do not publish production on this local receipt alone."
+}
