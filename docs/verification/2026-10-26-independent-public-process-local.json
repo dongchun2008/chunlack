@@ -1,0 +1,225 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-26",
+  "status": "local-component-regression-passed-unpublished",
+  "component": "Independent actual public-runtime CLI and Caddy test fixture",
+  "baselineCommit": "b84398cea597ae48c999933737f90fb2f6954b0e",
+  "sourceFiles": {
+    "tests/helpers/independent-public-process-fixture.cjs": {
+      "bytes": 17744,
+      "sha256": "20b58d9db239ed0393fb3c2e00356498d31f11574ff9201a3ff10c3dad1c8e12"
+    },
+    "tests/helpers/independent-public-process-preload.cjs": {
+      "bytes": 2426,
+      "sha256": "a7f4a8f667686d1d85ac03386b400cf551c39d9e73a478c85a24e3716c5b20ea"
+    },
+    "tests/independent-public-process.test.cjs": {
+      "bytes": 13561,
+      "sha256": "f32eb7f3bd87861cd4297c4a3c6e381d1d92642896331014014fe4d7abc402e8"
+    }
+  },
+  "sourcePublication": {
+    "newFixtureSourcesCommitted": false,
+    "recordOnlySync": true,
+    "reason": "Explicit scope permits verification record only; three fixture/test sources remain local"
+  },
+  "targeted": {
+    "tests": 8,
+    "pass": 8,
+    "fail": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "exitCode": 0,
+    "tapSha256": "fafda7c2eaebc7072db8ac40b82649a5dcaeca07f63266c5da26b7dcb4f2de50"
+  },
+  "redGreen": {
+    "redExitCode": 1,
+    "redFailure": "Initialization command timed out at unchanged 20-second deadline, owned child exited, diagnostic directory was deleted",
+    "greenExitCode": 0,
+    "controlledFailureInjection": "Only external materialization command replaced by a real owned Node child in an isolated harness; no mocked timer or process-handle cleanup",
+    "assertions": [
+      "Original command deadline expires",
+      "Original failure code retained before cleanup",
+      "Actual controlled child PID stopped by requested SIGTERM",
+      "Failure diagnostics remain after successful cleanup",
+      "No cleanup failure, active app, active ingress or writer lock"
+    ]
+  },
+  "coverage": [
+    "Separate real application CLI and Caddy PIDs",
+    "Verified owned TLS certificate and real authentication with synthetic account",
+    "Public node REST rejected",
+    "Normal CLI close releases writer lock without deleting it artificially",
+    "SQLite, artifact and late raw configuration writes survive actual CLI restart",
+    "Cancellation prevents later ingress startup",
+    "Failed Caddy validator logs and file location survive cleanup",
+    "Concurrent start and stop transitions serialized",
+    "Already-aborted initialization refused",
+    "CLI preload refuses non-owned boundary"
+  ],
+  "historical": {
+    "priorFullBeforeInitializationFix": {
+      "startedAt": "2026-10-26T05:23:23.689Z",
+      "endedAt": "2026-10-26T05:30:09.547Z",
+      "pid": 31404,
+      "exitCode": 0,
+      "signal": null,
+      "files": 130,
+      "counts": {
+        "tests": 1087,
+        "suites": 0,
+        "pass": 1087,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "failures": []
+    },
+    "priorSmoke": {
+      "exitCodeObservedInOriginalToolResult": 0,
+      "logSha256": "2682a8ad10a54d082e60a99229d562b855cb7c1eb9e01c2760f6d470d286e02e",
+      "output": "PASS: real HTTP + WebSocket, two mock model backends in one channel, SQLite restart persistence, private bind, config preservation."
+    },
+    "recordVariableRecovery": {
+      "fromSavedReceipts": true,
+      "testsRerunForRecovery": false
+    }
+  },
+  "platform": {
+    "tested": "Windows",
+    "cliClose": "Private IPC emits existing SIGTERM handler event; not proof of OS-delivered POSIX signal",
+    "posixIdentityProofEstablished": false
+  },
+  "scanner": {
+    "tool": "gitleaks",
+    "version": "8.30.1",
+    "sourceScanExitCode": 0,
+    "sourceFilesScanned": 3,
+    "findings": 0,
+    "rulesChanged": false
+  },
+  "nativeBudget": {
+    "unitsUsed": 0,
+    "unitsMaximum": 3,
+    "perUnitSeconds": 90,
+    "memoryMiB": 192,
+    "cpuPercent": 10,
+    "tasksMax": 32,
+    "swap": 0,
+    "network": "isolated"
+  },
+  "boundaries": {
+    "productionPublished": false,
+    "productionServicesStopped": false,
+    "realModelRequests": 0,
+    "vendorAgentRequests": 0,
+    "credentialsChanged": false,
+    "authorityChanged": false,
+    "agentConfigurationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false
+  },
+  "notEstablished": [
+    "Exact previous/candidate source switch through the Python transaction gate",
+    "Linux low-resource actual-process cutover and rollback rehearsals",
+    "Native business UID/GID/no-new-privileges and actual POSIX signal proof",
+    "Production delivery"
+  ],
+  "review": {
+    "reviewer": "01a1756f-72cb-7c63-a1f6-06fae4ac3bc1",
+    "basis": "Applied patch excerpts, retained context and red-green tool results; not a new whole-file review",
+    "originalFindingsResolved": true,
+    "initializationTimeoutFindingResolved": true,
+    "nativeOrProductionVerification": false
+  },
+  "interimFullFailure": {
+    "test": "initialized notification rechecks revocation and rejects malformed envelopes without a false acknowledgement",
+    "file": "tests/agent-mcp-lifecycle.test.cjs",
+    "line": 207,
+    "error": "fetch failed",
+    "status": "Not reproduced in unchanged 17-test file or diagnostic 1088-test full repeat; no transport/test/product fix made; root cause remains unconfirmed",
+    "testSourceChanged": false
+  },
+  "fullAttempt1": {
+    "startedAt": "2026-10-26T06:07:45.204Z",
+    "endedAt": "2026-10-26T06:14:41.354Z",
+    "exitCode": 1,
+    "signal": null,
+    "files": 130,
+    "counts": {
+      "tests": 1088,
+      "suites": 0,
+      "pass": 1087,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "failures": [
+      "not ok 222 - initialized notification rechecks revocation and rejects malformed envelopes without a false acknowledgement"
+    ]
+  },
+  "unchangedMcpReproduction": {
+    "tests": 17,
+    "pass": 17,
+    "fail": 0,
+    "exitCode": 0,
+    "diagnosticErrors": 0,
+    "testSourceChanged": false
+  },
+  "fullRegressionAttempts": [
+    {
+      "startedAt": "2026-10-26T06:07:45.204Z",
+      "endedAt": "2026-10-26T06:14:41.354Z",
+      "exitCode": 1,
+      "signal": null,
+      "files": 130,
+      "counts": {
+        "tests": 1088,
+        "suites": 0,
+        "pass": 1087,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "failures": [
+        "not ok 222 - initialized notification rechecks revocation and rejects malformed envelopes without a false acknowledgement"
+      ]
+    },
+    {
+      "startedAt": "2026-10-26T06:15:18.908Z",
+      "endedAt": "2026-10-26T06:22:00.775Z",
+      "exitCode": 0,
+      "signal": null,
+      "files": 130,
+      "counts": {
+        "tests": 1088,
+        "suites": 0,
+        "pass": 1088,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      },
+      "failures": [],
+      "passiveDiagnosticsOnly": true,
+      "diagnosticTransportErrors": 0
+    }
+  ],
+  "smoke": {
+    "exitCode": 0,
+    "output": "PASS: real HTTP + WebSocket, two mock model backends in one channel, SQLite restart persistence, private bind, config preservation.",
+    "logSha256": "2682a8ad10a54d082e60a99229d562b855cb7c1eb9e01c2760f6d470d286e02e"
+  },
+  "residualRisks": [
+    "One unmodified MCP lifecycle test had fetch failed in the first full run. Passing subsequent runs do not establish the cause or prove the intermittent transport issue fixed."
+  ],
+  "synchronization": {
+    "scope": "this verification record only",
+    "fixtureSourcesIncluded": false,
+    "productionPublication": false
+  }
+}
