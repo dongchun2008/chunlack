@@ -1,0 +1,127 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "status": "local-memory-allocation-reproduced-no-repair-or-release",
+  "relatedRecord": "2026-10-28-native-cpu20-rehearsal.json",
+  "hypothesis": "The private native factory repeatedly materializes the complete Caddy executable when checking its SHA-256; transient buffers may exhaust the 192 MiB shared test cgroup.",
+  "sourceEvidence": {
+    "module": "owned-native-processes.cjs",
+    "sourceSha256": "8c86170163a98e830645226dae7de7de9219a9cf96c7d8e5fe98ce82bc2fe61c",
+    "copiedFunctionsSha256": "82fd1c2d551ab875770dd8921619c19e3225469acfdfec565738277d56523fd3",
+    "expression": "digest(regular(file,64*1024*1024))",
+    "actualRuntimeBinarySizeBytes": 51953826,
+    "repeatedByNativeGuard": true,
+    "guardCalledForStateAndRequests": true,
+    "contentRevalidationNotRemoved": true
+  },
+  "experiment": {
+    "environment": "local Windows Node subprocess",
+    "syntheticFileBytes": 51953826,
+    "calls": 6,
+    "forcedGc": false,
+    "elapsedMs": 471,
+    "baseline": {
+      "rss": 42602496,
+      "heapTotal": 6283264,
+      "heapUsed": 5166792,
+      "external": 2008950,
+      "arrayBuffers": 143647
+    },
+    "samples": [
+      {
+        "iteration": 1,
+        "rss": 94621696,
+        "heapTotal": 6283264,
+        "heapUsed": 5191400,
+        "external": 53962816,
+        "arrayBuffers": 52097473
+      },
+      {
+        "iteration": 2,
+        "rss": 146796544,
+        "heapTotal": 6283264,
+        "heapUsed": 5195592,
+        "external": 105916642,
+        "arrayBuffers": 104051299
+      },
+      {
+        "iteration": 3,
+        "rss": 95424512,
+        "heapTotal": 7593984,
+        "heapUsed": 4580104,
+        "external": 157870468,
+        "arrayBuffers": 52097437
+      },
+      {
+        "iteration": 4,
+        "rss": 147390464,
+        "heapTotal": 7593984,
+        "heapUsed": 4591648,
+        "external": 105916606,
+        "arrayBuffers": 104051263
+      },
+      {
+        "iteration": 5,
+        "rss": 199548928,
+        "heapTotal": 7593984,
+        "heapUsed": 4594976,
+        "external": 157870432,
+        "arrayBuffers": 156005089
+      },
+      {
+        "iteration": 6,
+        "rss": 95641600,
+        "heapTotal": 7856128,
+        "heapUsed": 4585992,
+        "external": 209824258,
+        "arrayBuffers": 52097437
+      }
+    ],
+    "maxObservedRssBytes": 199548928,
+    "maxObservedArrayBuffersBytes": 156005089,
+    "exitCode": 0,
+    "receiptSha256": "ae3b613ac7c5a4ea234b395c588794f61a8e0f9302b4c435f031e07419fc69f0",
+    "noApplicationOrCaddyStarted": true,
+    "noNetwork": true,
+    "noRealModelOrExternalAgent": true
+  },
+  "conclusions": {
+    "largeAllocationSourceReproduced": true,
+    "soleNativeOomRootCauseProven": false,
+    "linuxMemoryMeasurementsReplacedByLocalProbe": false,
+    "productionMemoryDemandEstablished": false,
+    "regressionSuiteRerun": false
+  },
+  "proposedNextStep": {
+    "implemented": false,
+    "scope": "Only private factory Caddy executable hashing and its dependent bootstrap hash binding.",
+    "direction": "Bounded-chunk SHA-256 over each checked file; retain per-operation verification, input bounds, file identity and mutation rejection. Do not cache unchecked digests, suppress GC, raise memory, shorten assertions or modify product code.",
+    "verification": "Local failure-first safety/hash/memory regressions, followed by separately authorized native verification; do not use the remaining unit automatically."
+  },
+  "boundaries": {
+    "newLinuxUnits": 0,
+    "currentAllocation": {
+      "consumed": 2,
+      "maximum": 3,
+      "remainingPreserved": 1
+    },
+    "previousAllocations": [
+      {
+        "consumed": 2,
+        "maximum": 3,
+        "remainingPreserved": 1
+      },
+      {
+        "consumed": 2,
+        "maximum": 3,
+        "remainingPreserved": 1
+      }
+    ],
+    "productionPublished": false,
+    "remoteConnectionsThisDiagnostic": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "failedDirectoriesAndLocksUntouched": true
+  }
+}
