@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "clientDate": "2026-10-27",
+  "observedAtUtc": "2026-10-27T13:09:59.165Z",
+  "status": "private-native-proof-producer-and-entry-boundaries-passed-positive-linux-execution-pending",
+  "parentCheckpoint": "aea1fb261b4d267c88a717cacb9d53024ca97180",
+  "tests": {
+    "ranOn": "Windows",
+    "producer": {
+      "tests": 8,
+      "pass": 8,
+      "fail": 0,
+      "skipped": 0,
+      "actualSyntheticLoopbackHttpCases": 3
+    },
+    "phaseEntry": {
+      "tests": 8,
+      "pass": 8,
+      "fail": 0,
+      "skipped": 0
+    },
+    "expectedUnimplementedFailuresObservedBeforeImplementation": true,
+    "priorSuitesRerun": false
+  },
+  "implementation": {
+    "privateOnly": true,
+    "checkedSourceCompilation": true,
+    "copyProofRequiresActualTwoRuntimeBoots": true,
+    "cleanChildExitAndWriterLockReleaseRequired": true,
+    "actualKernelIdentityAndLimitsRequired": true,
+    "acceptedPrepareReceiptRequiredByLaterPhases": true,
+    "nativeInputBytesAndOptionsBound": true,
+    "recoveryTargetsAndOldProofNotOverwritten": true,
+    "productionControllerConstructed": false
+  },
+  "artifactBindings": {
+    "producerSha256": "c99a31c840663efb182832e6a5660122bfe1c5b5784b6b1bc4c0971d28552e15",
+    "producerTestsSha256": "e4044eec19aa4ac3db748124b5477de15eea211e479b5ed07ca06921ff1a93ee",
+    "entrySha256": "c0e284fd2f6a8743ff641fbf373a902f12a9db919f27552f8197fad451432dc0",
+    "entryTestsSha256": "db52d8d3aba62d4167e47267a2abd697ff419244a3abfcd200f0e6f0dfffda5c"
+  },
+  "boundaries": {
+    "productSourceChanged": false,
+    "privateSourcesCommitted": false,
+    "productionPublication": false,
+    "productionServiceStops": 0,
+    "actualLackBoots": 0,
+    "actualCaddyBoots": 0,
+    "genuineNativeCompatibilityProofProduced": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "dnsOrPortsChanged": false,
+    "relayChanged": false,
+    "linuxUnitsConsumed": 0,
+    "originalLinuxUnitMaximum": 3,
+    "linuxLimitsUnchanged": {
+      "seconds": 90,
+      "memoryMiB": 192,
+      "cpuPercent": 10,
+      "tasks": 32,
+      "swapBytes": 0,
+      "privateNetwork": true
+    }
+  },
+  "limitations": [
+    "The Windows helper tests cannot prove a Linux kernel identity, readonly dependency mount behavior, native LACK/TLS boot, or rollback.",
+    "The Linux-positive prepare path and actual production-source compatibility have not run.",
+    "No existing test quota has been reset; no external Agent has been authorized or contacted."
+  ],
+  "remaining": [
+    "Build the immutable native package and bounded unit controller, retaining same owned data root across prepare, success and rollback.",
+    "Run only the originally authorized native units after fresh preflight; stop on failure without expanding resources or quota.",
+    "Inspect actual boot, exit, success-switch, injected rollback and late-write receipts before requesting any next publication gate.",
+    "Complete production delivery and real Muse/dots acceptance requirements; temporary previous pilots are not always-on integration."
+  ],
+  "deliveryComplete": false
+}
