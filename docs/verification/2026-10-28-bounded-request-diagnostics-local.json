@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-27T23:34:35.750Z",
+  "status": "related-local-regression-passed-not-deployed",
+  "scope": "Private rehearsal diagnostics only; this record does not assert a whole-repository regression or Linux/native acceptance.",
+  "change": {
+    "lastCorrection": "Only corrected one newline escape in the private Python request-journal writer.",
+    "stageLog": {
+      "maximumRecords": 256,
+      "maximumRecordBytes": 1024,
+      "unchanged": true
+    },
+    "requestLog": {
+      "separateFile": true,
+      "maximumRecords": 2064,
+      "recordBoundDerivation": "2 * (1024 existing RPC frames + 8 direct REST probes)",
+      "maximumBytes": 2097152,
+      "maximumRecordBytes": 1024,
+      "fields": [
+        "stage",
+        "event",
+        "requestId",
+        "elapsedSeconds",
+        "durationSeconds on completion/failure"
+      ],
+      "exclusiveCreation": true,
+      "secretsHeadersBodiesAndArgumentsNotLogged": true,
+      "failurePolicy": "Continue the underlying operation without retries; preserve original exception identity; mark diagnostics incomplete and reject successful acceptance after cleanup."
+    }
+  },
+  "localRegression": {
+    "python": {
+      "tests": 23,
+      "passed": 23,
+      "failed": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "groups": {
+        "existingRequestProbes": 8,
+        "budgetBoundary": 1,
+        "newJournalBoundaries": 14
+      }
+    },
+    "node": {
+      "tests": 46,
+      "passed": 46,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "groups": {
+        "samplerAndObservation": 25,
+        "unchangedStreamingHashCompatibility": 21
+      }
+    },
+    "total": 69,
+    "execution": "Serial local suites; original per-process 90-second outer limits retained; no automatic retry.",
+    "coverage": [
+      "Original stage limit remains 256",
+      "132 baseline and observed operations both finish; observed stage records 2 and separate request records 264",
+      "Independent request record and byte caps",
+      "Existing owned log is not overwritten",
+      "Open/write/short-write/fdopen/close failures cannot replace business results or original exceptions",
+      "Diagnostic incompleteness prevents successful acceptance",
+      "Original REST route, deadline, body-size, status and no-retry assertions retained",
+      "Request pairing, monotonic duration and redaction",
+      "Sampler NUL-free generation and local quoting round trip",
+      "Streaming-hash correctness, bounded buffers, per-call revalidation and scope isolation"
+    ]
+  },
+  "priorFailuresPreserved": {
+    "stageBudgetReproduction": {
+      "operationsRequested": 132,
+      "operationsCompleted": 128,
+      "stageRecords": 256,
+      "error": "owned_diagnostics_event_budget"
+    },
+    "firstWriterAttempt": {
+      "error": "SyntaxError: unterminated string literal",
+      "testModuleImportFailures": 3,
+      "functionalTestsNotEntered": true,
+      "correctedOnlyAfterExplicitApproval": true
+    }
+  },
+  "boundaries": {
+    "vpsConnections": 0,
+    "linuxUnitsUsed": 0,
+    "remainingUnitsUsed": 0,
+    "resourceBudgetIncreased": false,
+    "productionPublished": false,
+    "productionServicesChanged": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "privateFixtureSourceCommitted": false
+  },
+  "unchangedFutureLinuxBudget": {
+    "secondsPerUnit": 90,
+    "memoryBytes": 201326592,
+    "cpuQuotaPercent": 20,
+    "tasksMax": 32,
+    "memorySwapBytes": 0,
+    "nice": 10,
+    "cpuWeight": 10,
+    "isolatedNetwork": true,
+    "serial": true,
+    "stopOnFailure": true,
+    "noAutomaticRetry": true,
+    "forwardWindowSeconds": 55,
+    "totalRecoveryWindowSeconds": 120
+  },
+  "limitations": [
+    "These are local synthetic/offline tests, not a renewed Linux switch or rollback rehearsal.",
+    "The previously failed Linux success-switch acceptance remains failed; its failure directory, write lock and unused allocation are not touched.",
+    "No claim of corrected remote sampler execution or end-to-end native timing is made.",
+    "Private fixture integration and any further Linux run require their own approved scope; production release is not authorized by this record."
+  ],
+  "evidenceDigests": {
+    "correctedPrivatePython": "a8e04af1a5549f1d7afd9188b7ec65cea0b3c6818e5a0695e77252dcbdde2ec0",
+    "pythonReceipt": "dc82259520dd600b252fc5d5dd8f0567a292fc81e76a7a5f83853569e0261b19",
+    "nodeReceipt": "3304ca520a992f983f37c4913f2e2f4fd549374199816846981d724b3c150cf2",
+    "pythonTests": "d6cc18abfb82ac2e6dda52f9f880f3a4778c3878e53a677b5958e9c6b48cbf5c",
+    "budgetTest": "161d58031852837a50680569e6d132ed3c265070eed98a68304c5a5684024816",
+    "journalTests": "01c85ad6ef331d10fa45d99284ce6a902f1aeb2777d238cf8c16cd70fe6d282b"
+  }
+}
