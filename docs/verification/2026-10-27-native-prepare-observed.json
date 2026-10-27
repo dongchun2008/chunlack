@@ -1,0 +1,131 @@
+{
+  "schema": 1,
+  "clientDate": "2026-10-27",
+  "observedAtUtc": "2026-10-27T13:41:11.020Z",
+  "status": "native-two-boot-prepare-receipt-passed-controller-terminal-evidence-incomplete",
+  "parentCheckpoint": "c370229c242b2c9af21ad64e3aafb86cda15dbf5",
+  "upload": {
+    "files": 148,
+    "hashesVerified": true,
+    "syntheticOnly": true,
+    "productionChanged": false
+  },
+  "nativePreparation": {
+    "runtimeOrder": [
+      "candidate",
+      "previous"
+    ],
+    "applicationBoots": 2,
+    "tlsServiceBoots": 2,
+    "boots": [
+      {
+        "applicationExit": {
+          "code": 0,
+          "forced": false,
+          "lockReleased": true,
+          "signal": null
+        },
+        "cleanClose": true,
+        "privateNodeReadChecked": true,
+        "runtime": "candidate",
+        "tlsHealthChecked": true,
+        "validForwardedNodeDenied": true
+      },
+      {
+        "applicationExit": {
+          "code": 0,
+          "forced": false,
+          "lockReleased": true,
+          "signal": null
+        },
+        "cleanClose": true,
+        "privateNodeReadChecked": true,
+        "runtime": "previous",
+        "tlsHealthChecked": true,
+        "validForwardedNodeDenied": true
+      }
+    ],
+    "applicationAndBridgeReceiptAccepted": true,
+    "elapsedSeconds": 82.298656,
+    "serviceIdentities": {
+      "allBusinessNonRoot": true,
+      "identities": [
+        {
+          "effectiveCapabilities": 0,
+          "gid": 987,
+          "noNewPrivileges": true,
+          "uid": 996
+        },
+        {
+          "effectiveCapabilities": 0,
+          "gid": 987,
+          "noNewPrivileges": true,
+          "uid": 996
+        }
+      ],
+      "mode": "systemd-v1"
+    },
+    "schemaPreserved": true,
+    "databaseCount": 3,
+    "writerLockPresent": false,
+    "transportClosed": true,
+    "primaryFailure": null,
+    "cleanupFailure": null,
+    "validationFailure": null,
+    "proofExpiresAtMs": 1793111859477
+  },
+  "outerEvidence": {
+    "controllerAccepted": false,
+    "unitUnloaded": true,
+    "mainPidZero": true,
+    "ownedCgroupAbsent": true,
+    "originalNumericExitCodeRetained": false,
+    "numericExitCodeInferred": false,
+    "systemdSuccessfulDeactivationObserved": true,
+    "journalInvocationConsistent": true,
+    "journalMonotonicElapsedSeconds": 83.325262,
+    "originalRejectedTerminalReceiptPreserved": true,
+    "correctionRequestedNotExecuted": true
+  },
+  "observedResources": {
+    "liveMemoryPeakBytes": 201326592,
+    "liveSwapPeakBytes": 0,
+    "journalCpuSeconds": 8.334,
+    "limitations": [
+      "Peak observations do not prove sustained coexistence, absence of memory pressure, or performance headroom.",
+      "Transient unit metadata was unloaded, so default show values are not original exit-code evidence."
+    ]
+  },
+  "artifactBindings": {
+    "producerSha256": "c99a31c840663efb182832e6a5660122bfe1c5b5784b6b1bc4c0971d28552e15",
+    "entrySha256": "c0e284fd2f6a8743ff641fbf373a902f12a9db919f27552f8197fad451432dc0",
+    "controllerSha256": "7f7fdec9d8f67870fc015d5b74d90773173d1290841a05e785a101027a418743",
+    "originalTerminalReceiptSha256": "11e3552266ffa07eaaa2cf228f120221f5f4ed8877f6e5da6eb77e89ccabc456",
+    "originalExitEvidenceSha256": "07b1c8503810a67ea966e9e7e170bf3fa48f5b84da2ddea3fc996bc00c83760c"
+  },
+  "boundaries": {
+    "linuxUnitsConsumed": 1,
+    "originalLinuxUnitMaximum": 3,
+    "remainingUnits": 2,
+    "automaticRetry": false,
+    "successUnitStarted": false,
+    "rollbackUnitStarted": false,
+    "originalResourcesChanged": false,
+    "productionPublication": false,
+    "productionServiceStops": 0,
+    "protectedServiceAndFileBaselineUnchanged": true,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "dnsOrPortsChanged": false,
+    "relayChanged": false,
+    "privateSourcesCommitted": false
+  },
+  "next": [
+    "Await approval for terminal-evidence correction; preserve the failed outer interpretation rather than treating it as success.",
+    "Do not repeat the consumed prepare unit; retain remaining quota and stop if fresh proof or full acceptance cannot be established.",
+    "Complete success-switch and injected rollback evidence before any production delivery claim."
+  ],
+  "deliveryComplete": false
+}
