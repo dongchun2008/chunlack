@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "clientDate": "2026-10-27",
+  "observedAtUtc": "2026-10-27T06:18:29.281Z",
+  "status": "readonly-vps-runtime-preflight-and-private-driver-contracts-passed-native-execution-pending",
+  "parentCheckpoint": "b3bbab5462e726a79122493d7462f6c67b79872b",
+  "sshTooling": {
+    "reusedExistingPrivateEnvironment": true,
+    "paramikoVersion": "5.1.0",
+    "newInstallations": false,
+    "hostKeyPinnedAndMatched": true,
+    "credentialsContentRecorded": false
+  },
+  "readonlyVpsPreflight": {
+    "services": {
+      "chunlack.service": {
+        "MainPID": "594652",
+        "NRestarts": "0",
+        "User": "chunlack",
+        "Group": "chunlack",
+        "ActiveState": "active"
+      },
+      "tailscaled.service": {
+        "MainPID": "859",
+        "NRestarts": "0",
+        "User": "",
+        "Group": "",
+        "ActiveState": "active"
+      },
+      "chunlack-public.service": {
+        "MainPID": "791425",
+        "NRestarts": "0",
+        "User": "chunlack-public",
+        "Group": "chunlack-public",
+        "ActiveState": "active"
+      },
+      "chunlack-https.service": {
+        "MainPID": "791543",
+        "NRestarts": "0",
+        "User": "chunlack-https",
+        "Group": "chunlack-https",
+        "ActiveState": "active"
+      }
+    },
+    "nodeVersion": "v24.21.0",
+    "nodePathMatchedServiceExecutable": true,
+    "caddyBinarySha256": "678ade3bfc088749c81a681adc603333ee0bb023b6a6cfe3c0f58bef8ff854e9",
+    "caddyBinaryBytes": 51953826,
+    "existingDependencyRootPresent": true,
+    "targetAccount": {
+      "uid": 996,
+      "gid": 987,
+      "targetGroupGid": 987
+    },
+    "memoryAvailableBytes": 1010040832,
+    "scratchFreeBytes": 28763680768,
+    "legacyHealthStatus": 200,
+    "requiredCgroupControllersPresent": true,
+    "isolatedUnitsStarted": 0,
+    "limitations": [
+      "Service activity is a point-in-time observation, not sustained coexistence or Relay traffic-quality acceptance.",
+      "Root SSH readability does not establish non-root isolated business readability.",
+      "No current public login or real model call was tested."
+    ]
+  },
+  "privateDriver": {
+    "tests": 8,
+    "pass": 8,
+    "fail": 0,
+    "skipped": 0,
+    "ranOn": "Windows",
+    "usesExistingGateTransaction": true,
+    "productionServiceManagerUsed": false,
+    "sourceBindingBeforeLoadTested": true,
+    "nonLinuxExecutionRejected": true,
+    "writerLockPreserved": true,
+    "ownedCodeResetPreservesDataAndConfigurationTested": true,
+    "actualNativeSuccessExecuted": false,
+    "actualNativeRollbackExecuted": false
+  },
+  "artifactBindings": {
+    "driverSha256": "48251badf4290eef1af16a7ee94dd6c9124321f81fac9c17b5f63094d675f408",
+    "testsSha256": "a03d3437cfb3994415a99571f1f21ee55012d66d46a4ed256da141c5cdd9350e",
+    "testReceiptSha256": "d95fedc21cc672883642bfba33bea04b3288b4734da7e2c4432f89f0edf03d90",
+    "readonlyProbeReceiptSha256": "bec5ce526b91f0b18fb03b145fcd3808a8cf688c8d39ce8b062ec0128b9d3c9f"
+  },
+  "boundaries": {
+    "productSourceChanged": false,
+    "privateSourcesCommitted": false,
+    "productionPublication": false,
+    "productionServiceStops": 0,
+    "actualLackBoots": 0,
+    "actualCaddyBoots": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "dnsOrPortsChanged": false,
+    "relayChanged": false,
+    "priorTestsRerun": false,
+    "linuxUnitsConsumed": 0,
+    "originalLinuxUnitMaximum": 3,
+    "linuxLimitsUnchanged": {
+      "seconds": 90,
+      "memoryMiB": 192,
+      "cpuPercent": 10,
+      "tasks": 32,
+      "swapBytes": 0,
+      "privateNetwork": true
+    }
+  },
+  "remaining": [
+    "Prepare native owned paths, readonly dependency bindings, ingress and genuine two-boot compatibility proof generation.",
+    "Only after preparation is complete, consume the original bounded native prepare/success/rollback units without resetting or expanding quotas.",
+    "Validate actual transaction success, injected failure rollback and late-write retention; local driver contracts do not establish these results.",
+    "Finish all production and native Agent acceptance gates before claiming delivery."
+  ],
+  "deliveryComplete": false
+}
