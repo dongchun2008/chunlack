@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-27T23:39:25.726Z",
+  "status": "local-checked-loader-integration-passed-not-native-accepted",
+  "scope": "Fresh exclusive local composition of the already-approved private diagnostic backend and Node observer through the original entry, driver and preparation modules. Not a full production package or whole-repository regression.",
+  "runtimeSources": {
+    "count": 10,
+    "digests": {
+      "harness/native-driver-3a97b1b5/owned_transaction_backend.py": "a8e04af1a5549f1d7afd9188b7ec65cea0b3c6818e5a0695e77252dcbdde2ec0",
+      "harness/native-driver-3a97b1b5/owned_native_transaction.py": "1ee8f35bd2cc68e4a57562576f91c48543b99bba2a5b8616b6e6cb2586d8ee60",
+      "harness/native-driver-3a97b1b5/owned_native_prepare.py": "6466eb30d7184c02cf40660b6126e930ab476549494113d417801f442bd130af",
+      "harness/native-driver-3a97b1b5/owned_native_entry.py": "f98a9b715994291e9c2bd532d7d7f3e5753948072213866e92a8f5d8c37e2d53",
+      "harness/native-driver-3a97b1b5/owned-native-processes.cjs": "3d29007886da0b31d69269b17c3e22434febf61f7d648e5e5fc5d79ede9f4a5f",
+      "harness/native-driver-3a97b1b5/owned-native-stdio.cjs": "b5e7fa21e516036203ee3d87b122307070999b76a8b7fb84f4512b9da64de360",
+      "harness/native-driver-3a97b1b5/owned_unit_control.py": "5848bddc5cd0626f73faef5e8921c07d6317991a3c2bca444eceda11bf66d4fa",
+      "harness/owned-process-bridge.cjs": "327cc537b2368cec3360922d876abfd4be812d15420ab95d6a294563357cbd27",
+      "harness/stdio-transport-c94b6276/owned-stdio-server.cjs": "eef307cf92cbc2b102c29abdfbccd66402388ecc0821a3a044af1ced0ce62fe5",
+      "harness/native-driver-3a97b1b5/build-cgroup-sample.cjs": "5e549daa5460cdce7a620f2e8edd05550199d340965c64b1f6574df16305833e"
+    },
+    "unchanged": [
+      "owned_native_entry.py",
+      "owned_native_transaction.py",
+      "owned_native_prepare.py",
+      "owned_unit_control.py",
+      "owned-process-bridge.cjs",
+      "owned-stdio-server.cjs"
+    ],
+    "diagnosticSources": [
+      "owned_transaction_backend.py",
+      "owned-native-processes.cjs",
+      "owned-native-stdio.cjs",
+      "build-cgroup-sample.cjs"
+    ],
+    "newRuntimeEditsThisStage": 0
+  },
+  "verification": {
+    "total": 99,
+    "passed": 99,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "groups": [
+      {
+        "name": "Original CPU, identity, isolation and immutable-source guards",
+        "tests": 18,
+        "exitCode": 0
+      },
+      {
+        "name": "New local checked-loader integration",
+        "tests": 12,
+        "exitCode": 0
+      },
+      {
+        "name": "Existing request and bounded journal behavior",
+        "tests": 22,
+        "exitCode": 0
+      },
+      {
+        "name": "Original 132-operation stage-budget regression",
+        "tests": 1,
+        "exitCode": 0
+      },
+      {
+        "name": "Original Node observation, sampling and hash compatibility",
+        "tests": 46,
+        "exitCode": 0
+      }
+    ],
+    "execution": "Serial Windows local tests; each subprocess retains its 90-second outer deadline; no automatic retry.",
+    "proved": [
+      "Ten copied runtime sources match their explicit checksums",
+      "Original entry and preparation modules retain driver pins",
+      "Verified Python backend loads through the real immutable loader",
+      "A synthetic 132-request transaction completes with two stage records and 264 separate request records",
+      "Two synthetic candidate checks retain six aggregate stage records and 264 request records",
+      "Changed source, invalid hashes, duplicate JSON keys and unknown phases are rejected",
+      "Linux entry/driver/backend guards remain active and reject native execution on Windows",
+      "Original CPU, memory, zero-swap, task, priority, timeout and isolation checks remain intact",
+      "Original request deadline, REST denial, size, error identity, journal exhaustion and cleanup assertions pass in the composed layout"
+    ],
+    "notProved": [
+      "Linux native startup, timing, success switch or fault rollback",
+      "Remote execution of the corrected sampler",
+      "A complete upload-ready package, fresh copied-database proof, production preflight or publication",
+      "Real model, Muse or dots task execution"
+    ]
+  },
+  "limitsUnchanged": {
+    "stageLogMaximumRecords": 256,
+    "requestLogMaximumRecords": 2064,
+    "requestLogMaximumBytes": 2097152,
+    "futureLinuxSecondsPerUnit": 90,
+    "futureLinuxMemoryBytes": 201326592,
+    "futureLinuxCpuQuotaPercent": 20,
+    "futureLinuxTasksMax": 32,
+    "futureLinuxSwapBytes": 0,
+    "nice": 10,
+    "cpuWeight": 10,
+    "forwardSeconds": 55,
+    "totalRecoverySeconds": 120
+  },
+  "restrictedActions": {
+    "vpsConnections": 0,
+    "linuxUnitsUsed": 0,
+    "remainingUnitsUsed": 0,
+    "budgetExpanded": false,
+    "productionPublished": false,
+    "productionServicesChanged": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "oldFailureDirectoriesOrLocksChanged": false
+  },
+  "evidenceDigests": {
+    "resourceReceipt": "54ce06872c6688aecf7a964bdab4f54034efca461b2077385011ad3dfe5ab03b",
+    "integrationReceipt": "bcd4174d9bfccf7e676b4162a9cf66d55960e31dfd41b16ab49cbdb2f51c1bab",
+    "requestReceipt": "3560a8f7a59faa0091ede2bd209fe12f216e7bc8c3f74ac05d002a554530d12e",
+    "budgetReceipt": "56ed0c7ae966d8e6a118921eeef46ba88b29899f74b62cf99833dab841cdb5b4",
+    "nodeReceipt": "cbb543ff477a39d04413121ebcfa805a92e9d53d2e37d1c43f7a606574f09c33",
+    "newIntegrationTests": "bee5297a49e5a68562108ee23af47b8af64ed08aa3f7a929c1ff58f897735e25"
+  },
+  "deliveryState": {
+    "overallGoal": "active-not-complete",
+    "nativeSuccessSwitch": "previous-failure-not-retested",
+    "nativeRollback": "not-accepted",
+    "publication": "not-authorized-in-this-stage",
+    "nextGate": "Further Linux units and any production release require a separately approved bounded scope; prior unused units remain untouched."
+  },
+  "syncScope": "Sanitized record only; private fixture/runtime/test sources remain uncommitted."
+}
