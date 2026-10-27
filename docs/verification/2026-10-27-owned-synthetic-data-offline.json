@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "clientDate": "2026-10-27",
+  "status": "synthetic-stores-tested-owned-payload-assembled-additional-audit-not-started",
+  "parentCheckpoint": "9f937cb0547f932f3d72eae1f59a59fba562a99d",
+  "verification": {
+    "tests": {
+      "tests": 8,
+      "pass": 8,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "realDatabaseApis": true,
+    "databases": [
+      "identity.db",
+      "lack.db",
+      "agent-gateway.db"
+    ],
+    "sqliteIntegrityAndForeignKeysChecked": true,
+    "externalAuthorityGrantRows": 0,
+    "modelAndExternalLoginDisabled": true,
+    "emptyAgentClientAllowlist": true,
+    "configurationFactoryNotMutated": true,
+    "existingDataNotOverwritten": true,
+    "privateSyntheticCredentialsExcludedFromReceipt": true
+  },
+  "assembledPayload": {
+    "candidateFiles": 66,
+    "previousFiles": 57,
+    "syntheticDatabaseCount": 3,
+    "sourceCopiesCreatedByExistingOwnedCopier": true,
+    "additionalPinnedGateSourceAndColdSchemaAuditPassed": false,
+    "compatibilityProofProduced": false
+  },
+  "artifactBindings": {
+    "seedModuleSha256": "2bfe0062eede555de51bd13ee3b3626274db73489b79194e241e72e4d58b4671",
+    "seedTestsSha256": "32350a19696a865490b841f02e7881d95cfb841e2ecf0a4667f029dc66fd177b",
+    "testReceiptSha256": "2310110570f0f05752a671551461137d427a5b48ae311907de2ad96b08c5ab65",
+    "assemblyReceiptSha256": "164a928f324679943baf091b30461aae176b6d6c3abeb6e90a2090c0c5430156"
+  },
+  "diagnostic": {
+    "stage": "additional-local-readonly-audit-dispatch",
+    "started": false,
+    "failure": "private_dispatch_result_reference_missing",
+    "correctionRequested": true,
+    "testRerunRequiredForThisCorrection": false
+  },
+  "boundaries": {
+    "productSourceChanged": false,
+    "privateSourceCommitted": false,
+    "actualLackBoots": 0,
+    "actualCaddyBoots": 0,
+    "productionAccessed": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productionCredentialsChanged": false,
+    "productionGrantsChanged": false,
+    "syntheticNodeProvisioned": true,
+    "relayChanged": false,
+    "linuxUnitsConsumed": 0,
+    "linuxUnitMaximum": 3,
+    "linuxBudgetsUnchanged": {
+      "seconds": 90,
+      "memoryMiB": 192,
+      "cpuPercent": 10,
+      "tasks": 32,
+      "swapBytes": 0,
+      "privateNetwork": true
+    },
+    "productionPublication": false
+  },
+  "remaining": [
+    "Complete the additional pinned-gate source and cold-schema audit after the private dispatcher correction is approved.",
+    "Prepare native ingress, runtime dependency bindings and the actual transaction driver without fabricating compatibility evidence.",
+    "Use only the originally approved native rehearsal units for compatibility, success and rollback with late-write preservation.",
+    "Complete all applicable production and native Agent delivery requirements; no completion claim is made here."
+  ]
+}
