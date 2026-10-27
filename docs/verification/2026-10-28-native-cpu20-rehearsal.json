@@ -1,0 +1,386 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "status": "isolated-rehearsal-failed-production-not-published",
+  "scope": "Private rehearsal CPU policy and hash bindings only; no product or deployed-controller changes.",
+  "authorization": {
+    "newMaximumUnits": 3,
+    "newConsumedUnits": 2,
+    "remainingUnitNotConsumed": 1,
+    "previousAllocations": [
+      {
+        "consumed": 2,
+        "maximum": 3,
+        "unusedPreserved": 1
+      },
+      {
+        "consumed": 2,
+        "maximum": 3,
+        "unusedPreserved": 1
+      }
+    ],
+    "serial": true,
+    "stopOnFirstFailure": true,
+    "automaticRetry": false
+  },
+  "limits": {
+    "CPUQuota": "20%",
+    "Nice": 10,
+    "CPUWeight": 10,
+    "MemoryMaxBytes": 201326592,
+    "MemorySwapMaxBytes": 0,
+    "TasksMax": 32,
+    "RuntimeMaxSeconds": 90,
+    "PrivateNetwork": true,
+    "PrivateTmp": true,
+    "uid": 996,
+    "gid": 987,
+    "noNewPrivileges": true,
+    "capabilities": 0
+  },
+  "localVerification": {
+    "cpuAndBindingRegression": {
+      "tests": 18,
+      "passed": 18,
+      "failed": 0,
+      "red": {
+        "failed": 11,
+        "passed": 7
+      },
+      "receiptSha256": "9e197dbd74a9a89c00aefac1d51ba6a3f2027f0be37c9a064c31c7c3bc07a34c"
+    },
+    "stagingBoundaryRegression": {
+      "tests": 8,
+      "passed": 8,
+      "failed": 0,
+      "receiptSha256": "f96326f8f3b6eaf93bee3bd417b7c8d8dd04fd87632e3315bb1688d07a22e61f"
+    },
+    "fullRepositorySuiteRerun": false,
+    "observationFailure": {
+      "originalObservationSeconds": 1,
+      "sessionReset": true,
+      "originalResultUnconfirmed": true,
+      "originalReceiptAbsent": true,
+      "matchingLocalTestProcessesAbsentAtAudit": true,
+      "recoveryUsedSavedFiles": true
+    },
+    "sources": {
+      "owned_transaction_backend.py": "b01d01b965b022a17359f0665032ef2b8fd742f485a5774bfaaa4017c65cda9d",
+      "owned_native_prepare.py": "6466eb30d7184c02cf40660b6126e930ab476549494113d417801f442bd130af",
+      "owned_native_entry.py": "f98a9b715994291e9c2bd532d7d7f3e5753948072213866e92a8f5d8c37e2d53",
+      "owned-native-processes.cjs": "8c86170163a98e830645226dae7de7de9219a9cf96c7d8e5fe98ce82bc2fe61c",
+      "owned-native-stdio.cjs": "44b87785885d8d4a6700a119483943406ac5ac6b1f8650f4079b3cd42aeb7638",
+      "owned_unit_control.py": "5848bddc5cd0626f73faef5e8921c07d6317991a3c2bca444eceda11bf66d4fa"
+    }
+  },
+  "package": {
+    "files": 148,
+    "freshOwnedDirectory": true,
+    "pristineSyntheticBaselineCopied": true,
+    "newAccountGenerationClaimed": false,
+    "allInheritedFileHashesMatched": true,
+    "liveCredentialsCopied": false
+  },
+  "native": {
+    "cohortTag": "5cb61dcd2699",
+    "prepare": {
+      "accepted": true,
+      "actualUnitElapsedSeconds": 37.668012,
+      "receiptElapsedSeconds": 37.210582,
+      "exit": {
+        "ExecMainCode": 1,
+        "ExecMainStatus": 0,
+        "Result": "success"
+      },
+      "boots": [
+        {
+          "applicationExit": {
+            "code": 0,
+            "forced": false,
+            "lockReleased": true,
+            "signal": null
+          },
+          "cleanClose": true,
+          "privateNodeReadChecked": true,
+          "runtime": "candidate",
+          "tlsHealthChecked": true,
+          "validForwardedNodeDenied": true
+        },
+        {
+          "applicationExit": {
+            "code": 0,
+            "forced": false,
+            "lockReleased": true,
+            "signal": null
+          },
+          "cleanClose": true,
+          "privateNodeReadChecked": true,
+          "runtime": "previous",
+          "tlsHealthChecked": true,
+          "validForwardedNodeDenied": true
+        }
+      ],
+      "transportClosed": true,
+      "onlyExitedOwnedUnitSettled": true,
+      "actualPolicyProperties": {
+        "Nice": "10",
+        "CPUWeight": "10",
+        "CPUQuotaPerSecUSec": "200ms",
+        "MemoryMax": "201326592",
+        "MemorySwapMax": "0",
+        "TasksMax": "32"
+      }
+    },
+    "successSwitch": {
+      "accepted": false,
+      "completeReceiptPresent": false,
+      "actualUnitElapsedSeconds": 49.391366,
+      "exit": {
+        "Result": "oom-kill",
+        "ExecMainCode": 2,
+        "ExecMainStatus": 15,
+        "signalStatusNotNormalExitCode": true
+      },
+      "MemoryPeakBytes": 201326592,
+      "MemorySwapPeakBytes": 0,
+      "CPUUsageNSec": 9881562000,
+      "kernelEvidence": [
+        {
+          "monotonic": "5728807897404",
+          "mentionsOwnedUnit": true,
+          "task": "MainThread",
+          "pid": null,
+          "constraint": "CONSTRAINT_MEMCG",
+          "memoryCgroupOom": true
+        },
+        {
+          "monotonic": "5728807896443",
+          "mentionsOwnedUnit": true,
+          "task": null,
+          "pid": null,
+          "constraint": null,
+          "memoryCgroupOom": false
+        }
+      ],
+      "stages": [
+        {
+          "elapsedSeconds": 0.000173,
+          "event": "started",
+          "stage": "transaction.execute"
+        },
+        {
+          "elapsedSeconds": 9.797878,
+          "event": "started",
+          "stage": "backend.preflight"
+        },
+        {
+          "elapsedSeconds": 19.102256,
+          "event": "started",
+          "stage": "backend.set_live_modes"
+        },
+        {
+          "elapsedSeconds": 19.102372,
+          "event": "completed",
+          "stage": "backend.set_live_modes"
+        },
+        {
+          "elapsedSeconds": 19.102589,
+          "event": "completed",
+          "stage": "backend.preflight"
+        },
+        {
+          "elapsedSeconds": 28.497594,
+          "event": "started",
+          "stage": "backend.checkpoint"
+        },
+        {
+          "elapsedSeconds": 28.497763,
+          "event": "completed",
+          "stage": "backend.checkpoint"
+        },
+        {
+          "elapsedSeconds": 28.497896,
+          "event": "started",
+          "stage": "backend.stop"
+        },
+        {
+          "elapsedSeconds": 28.502771,
+          "event": "completed",
+          "stage": "backend.stop"
+        },
+        {
+          "elapsedSeconds": 28.504009,
+          "event": "started",
+          "stage": "backend.checkpoint"
+        },
+        {
+          "elapsedSeconds": 28.504068,
+          "event": "completed",
+          "stage": "backend.checkpoint"
+        },
+        {
+          "elapsedSeconds": 28.504102,
+          "event": "started",
+          "stage": "backend.stop"
+        },
+        {
+          "elapsedSeconds": 28.598598,
+          "event": "completed",
+          "stage": "backend.stop"
+        },
+        {
+          "elapsedSeconds": 28.599947,
+          "event": "started",
+          "stage": "backend.checkpoint"
+        },
+        {
+          "elapsedSeconds": 28.600034,
+          "event": "completed",
+          "stage": "backend.checkpoint"
+        },
+        {
+          "elapsedSeconds": 28.600194,
+          "event": "started",
+          "stage": "transaction.backup"
+        },
+        {
+          "elapsedSeconds": 28.701909,
+          "event": "started",
+          "stage": "backend.manifest"
+        },
+        {
+          "elapsedSeconds": 28.702948,
+          "event": "completed",
+          "stage": "backend.manifest"
+        },
+        {
+          "elapsedSeconds": 28.702986,
+          "event": "completed",
+          "stage": "transaction.backup"
+        },
+        {
+          "elapsedSeconds": 28.703984,
+          "event": "started",
+          "stage": "backend.checkpoint"
+        },
+        {
+          "elapsedSeconds": 28.704025,
+          "event": "completed",
+          "stage": "backend.checkpoint"
+        },
+        {
+          "elapsedSeconds": 28.705073,
+          "event": "started",
+          "stage": "backend.checkpoint"
+        },
+        {
+          "elapsedSeconds": 28.705111,
+          "event": "completed",
+          "stage": "backend.checkpoint"
+        },
+        {
+          "elapsedSeconds": 28.706194,
+          "event": "started",
+          "stage": "backend.checkpoint"
+        },
+        {
+          "elapsedSeconds": 28.706256,
+          "event": "completed",
+          "stage": "backend.checkpoint"
+        },
+        {
+          "elapsedSeconds": 28.707605,
+          "event": "started",
+          "stage": "backend.set_live_modes"
+        },
+        {
+          "elapsedSeconds": 28.707711,
+          "event": "completed",
+          "stage": "backend.set_live_modes"
+        },
+        {
+          "elapsedSeconds": 28.708836,
+          "event": "started",
+          "stage": "backend.checkpoint"
+        },
+        {
+          "elapsedSeconds": 28.708882,
+          "event": "completed",
+          "stage": "backend.checkpoint"
+        },
+        {
+          "elapsedSeconds": 28.709023,
+          "event": "started",
+          "stage": "backend.start"
+        },
+        {
+          "elapsedSeconds": 33.385702,
+          "event": "completed",
+          "stage": "backend.start"
+        },
+        {
+          "elapsedSeconds": 33.385757,
+          "event": "started",
+          "stage": "backend.start"
+        },
+        {
+          "elapsedSeconds": 35.394039,
+          "event": "completed",
+          "stage": "backend.start"
+        },
+        {
+          "elapsedSeconds": 35.394088,
+          "event": "started",
+          "stage": "backend.check_candidate"
+        },
+        {
+          "elapsedSeconds": 35.394218,
+          "event": "started",
+          "stage": "backend.assert_listener"
+        },
+        {
+          "elapsedSeconds": 35.396336,
+          "event": "completed",
+          "stage": "backend.assert_listener"
+        }
+      ],
+      "backupManifestPresent": true,
+      "writerLockPreserved": true,
+      "failedDirectoryPreserved": true,
+      "mainPid": 0,
+      "cgroupAbsent": true,
+      "cgroupEmpty": true,
+      "oomVictimComponentNotProven": true
+    },
+    "faultRollback": {
+      "started": false,
+      "accepted": false,
+      "reason": "Stopped after success-switch cgroup OOM; no retry or quota expansion."
+    }
+  },
+  "production": {
+    "published": false,
+    "existingServicesRestarted": false,
+    "protectedServicesAndFileHashesUnchanged": true,
+    "legacyHealthStatus": 200,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "relayTrafficQualityMeasured": false,
+    "existingFailedDirectoriesAndLocksUntouched": true
+  },
+  "external": {
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "conclusion": {
+    "wholeVpsMemoryInsufficiencyNotEstablished": true,
+    "isolated192MiBLimitWasReached": true,
+    "successSwitchNotAccepted": true,
+    "rollbackNotTested": true,
+    "productionDeliveryNotClaimed": true,
+    "nextAction": "Determine the isolated peak-memory contributor before proposing a bounded repair or any separately authorized resource change; do not consume unused units or publish."
+  }
+}
