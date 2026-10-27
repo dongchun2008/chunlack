@@ -1,0 +1,105 @@
+{
+  "schema": 1,
+  "clientDate": "2026-10-27",
+  "observedAtUtc": "2026-10-27T14:12:05.991Z",
+  "status": "terminal-evidence-correction-passed-native-switch-timed-out-not-accepted",
+  "parentCheckpoint": "2ce656091d8df8edfe000c9761ba27a33fcdad16",
+  "localTargetedRegression": {
+    "tests": 16,
+    "passed": 16,
+    "failed": 0,
+    "skipped": 0,
+    "ranOn": "Windows",
+    "priorSuitesRerun": false,
+    "pathDiagnosis": {
+      "originalLength": 271,
+      "ordinaryPathExists": false,
+      "extendedPathExists": true,
+      "shortTestPathLength": 106
+    },
+    "originalCommandFailuresPreserved": true
+  },
+  "prepareEvidenceReconciliation": {
+    "accepted": true,
+    "basis": "systemd-success-event-and-bounded-complete-receipt",
+    "numericExitCode": null,
+    "numericExitCodeInferred": false,
+    "journalMonotonicElapsedSeconds": 83.325262,
+    "originalRejectedReceiptPreserved": true,
+    "prepareUnitRerun": false
+  },
+  "nativeSwitch": {
+    "accepted": false,
+    "result": "timeout",
+    "execMainCode": "2",
+    "execMainStatus": "15",
+    "terminationClassification": "systemd-runtime-timeout-and-signal",
+    "actualElapsedSeconds": 90.348999,
+    "within90SecondAcceptanceBudget": false,
+    "successReceiptPresent": false,
+    "lastRecordedPhases": [
+      {
+        "phase": "preflight_passed",
+        "seconds": 0
+      },
+      {
+        "phase": "https_stopped",
+        "seconds": 0.096
+      },
+      {
+        "phase": "application_stopped",
+        "seconds": 0.298
+      }
+    ],
+    "transactionReportStatus": "running",
+    "backupDirectoryPresent": false,
+    "previousCodeDirectoryPresent": false,
+    "candidateStillStaged": true,
+    "ownedWriterLockPresent": true,
+    "writerLockRemoved": false,
+    "failedDirectoryPreserved": true,
+    "observedMemoryPeakBytes": 185540608,
+    "observedSwapPeakBytes": 0,
+    "observedCpuNanoseconds": 9035470000,
+    "ownedCgroupAbsent": true,
+    "previouslyObservedRemainingChildrenAbsent": true
+  },
+  "diagnosis": {
+    "privateAdapterDoesNotCreateBackupParentConfirmedFromSource": true,
+    "existingBackupFunctionCreatesOnlyChildDirectory": true,
+    "firstExceptionNotPersisted": true,
+    "soleRootCauseNotClaimed": true,
+    "privateAdapterCorrectionRequestedNotExecuted": true
+  },
+  "artifactBindings": {
+    "privateControllerV2Sha256": "341e6a295630f95246438a288a3c42852f92a34e9c855d97135d205f8176e003",
+    "terminalEvidenceTestsSha256": "85e675c64d27dc6171cfd87b7e5f6f4786b83dd43824e65c6f8d626004ae8350",
+    "reconciledPrepareEvidenceSha256": "8e0d64ea93b58cdd172d04abc4c23f6a1a55dc1d08e63de5b8d9b941c690322e",
+    "switchTerminalEvidenceSha256": "e337a739d3e914fc045849e7900ded847ea68d4b8f74307a81089567a2ca442a",
+    "switchReadonlyDiagnosisSha256": "0619314116100b3d68ac75f287b4d35c1ace0956439f51667fc69d422eac6ef6"
+  },
+  "boundaries": {
+    "linuxUnitsConsumed": 2,
+    "originalLinuxUnitMaximum": 3,
+    "remainingUnits": 1,
+    "thirdUnitStarted": false,
+    "automaticRetry": false,
+    "limitsRaised": false,
+    "productionPublication": false,
+    "productionServiceStops": 0,
+    "protectedServiceAndFileBaselineUnchanged": true,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "dnsOrPortsChanged": false,
+    "relayChanged": false,
+    "privateSourcesCommitted": false
+  },
+  "next": [
+    "Await approval for the private adapter backup-parent fix and first-error diagnostics using local synthetic regression only.",
+    "Do not spend the remaining unit, remove the failed writer lock, or repeat the failed switch automatically.",
+    "A new explicit isolated execution plan is required after local corrections; no production readiness is established."
+  ],
+  "deliveryComplete": false
+}
