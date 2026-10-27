@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "clientDate": "2026-10-27",
+  "status": "dispatcher-restored-source-binding-checks-passed-database-audit-pending-correction",
+  "parentCheckpoint": "53320f1e15acec59fb80ea79dd8e369d66b7337d",
+  "authorization": {
+    "directoryReferenceRestorationApproved": true,
+    "pathKeyNormalizationApproved": false
+  },
+  "completed": {
+    "assemblyReceiptRecovered": true,
+    "sharedStateRestored": true,
+    "pinnedGateLoaded": true,
+    "manifestScopeValidated": true,
+    "previousCodeInventoryMatched": true,
+    "candidateCodeInventoryMatched": true
+  },
+  "incomplete": {
+    "configurationHashComparison": true,
+    "coldDatabaseIntegrityAudit": true,
+    "nativeCompatibilityProof": true
+  },
+  "auditAttempt": {
+    "attempts": 1,
+    "exitCode": 1,
+    "failureType": "KeyError",
+    "failureStage": "Windows-relative-path-key-format",
+    "databaseValidationReached": false,
+    "retryStarted": false,
+    "originalFailurePreserved": true
+  },
+  "artifactBindings": {
+    "auditScriptSha256": "fb93effc61f2e449907c39f8e21e3939725f1cbfcc2c5be61ef85d66d10a164c",
+    "auditLogSha256": "d71188801e2ae4340e1fb36a8e219ba6931899eb251e472ed0e333b70883086b"
+  },
+  "boundaries": {
+    "priorTestsRerun": false,
+    "actualLackBoots": 0,
+    "actualCaddyBoots": 0,
+    "linuxUnitsConsumed": 0,
+    "originalLinuxUnitMaximum": 3,
+    "productionAccessed": false,
+    "productionPublication": false,
+    "productSourceChanged": false,
+    "privateSourcesCommitted": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false
+  },
+  "nextAction": "Await approval to normalize only the audit path keys with as_posix and retry the original readonly audit once; do not replay prior tests or expand native quotas.",
+  "deliveryComplete": false
+}
