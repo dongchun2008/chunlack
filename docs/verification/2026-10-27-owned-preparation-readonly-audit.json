@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "clientDate": "2026-10-27",
+  "status": "owned-source-and-cold-synthetic-database-readonly-audit-passed",
+  "parentCheckpoint": "a7733fdc08709dca3a4d61ef04ae86c43602d592",
+  "correction": {
+    "approved": true,
+    "scope": "Two private audit relative-path keys normalized with as_posix; no other script changes.",
+    "changedExpressions": 2,
+    "originalFailurePreserved": true,
+    "originalAuditExitCode": 1,
+    "approvedRetestCount": 1,
+    "actualRetestCount": 1
+  },
+  "verification": {
+    "status": "source-and-cold-synthetic-database-audited",
+    "candidateFiles": 66,
+    "previousFiles": 57,
+    "reviewedChangedFiles": 20,
+    "databaseCount": 3,
+    "coldIntegrityAndForeignKeysChecked": true,
+    "sourceDataConfigurationUnchanged": true,
+    "nativeCompatibilityProved": false
+  },
+  "artifactBindings": {
+    "originalAuditScriptSha256": "fb93effc61f2e449907c39f8e21e3939725f1cbfcc2c5be61ef85d66d10a164c",
+    "correctedAuditScriptSha256": "98eb0eff98b8d7499a7a6f16cb41471f8085b8b783af63e1105b71a561479d1f",
+    "originalFailureLogSha256": "d71188801e2ae4340e1fb36a8e219ba6931899eb251e472ed0e333b70883086b",
+    "passedAuditLogSha256": "2f46049b25334f1232c657a940af4ce764ecfc78fbe0eb19e1174914ed3f40c5"
+  },
+  "boundaries": {
+    "priorTestsRerun": false,
+    "productSourceChanged": false,
+    "privateSourcesCommitted": false,
+    "actualLackBoots": 0,
+    "actualCaddyBoots": 0,
+    "productionAccessed": false,
+    "productionPublication": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "linuxUnitsConsumed": 0,
+    "originalLinuxUnitMaximum": 3,
+    "linuxBudgetsUnchanged": {
+      "seconds": 90,
+      "memoryMiB": 192,
+      "cpuPercent": 10,
+      "tasks": 32,
+      "swapBytes": 0,
+      "privateNetwork": true
+    }
+  },
+  "remaining": [
+    "Prepare native runtime/dependency/ingress bindings and the actual transaction driver.",
+    "Produce genuine native copy compatibility evidence under the original unit limits.",
+    "Exercise actual owned-process success and fault rollback with late-write preservation.",
+    "Pass applicable production and native Agent acceptance gates; this readonly audit is not production delivery."
+  ],
+  "deliveryComplete": false
+}
