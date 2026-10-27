@@ -1,0 +1,266 @@
+{
+  "schema": 1,
+  "clientDate": "2026-10-27",
+  "observedAtUtc": "2026-10-27T14:42:36.445Z",
+  "status": "new-hash-integration-and-native-prepare-passed-switch-runtime-budget-failed",
+  "parentCheckpoint": "e31bda5fe27cc5b9493d2f2821fa8f337c40b692",
+  "localIntegration": {
+    "tests": 12,
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0,
+    "ranOn": "Windows",
+    "newPinsValidated": true,
+    "oldPinsAndTamperedModulesRejected": true,
+    "realPinnedSyntheticBackupAndDiagnosticChainChecked": true,
+    "controllerSettleLogicLocallyMocked": true,
+    "nativeKernelSuccessNotMocked": true,
+    "priorSuitesRerun": false
+  },
+  "nativePrepare": {
+    "accepted": true,
+    "execMainCode": "1",
+    "execMainStatus": "0",
+    "actualElapsedSeconds": 77.24567,
+    "applicationReceiptElapsedSeconds": 76.207723,
+    "boots": [
+      {
+        "applicationExit": {
+          "code": 0,
+          "forced": false,
+          "lockReleased": true,
+          "signal": null
+        },
+        "cleanClose": true,
+        "privateNodeReadChecked": true,
+        "runtime": "candidate",
+        "tlsHealthChecked": true,
+        "validForwardedNodeDenied": true
+      },
+      {
+        "applicationExit": {
+          "code": 0,
+          "forced": false,
+          "lockReleased": true,
+          "signal": null
+        },
+        "cleanClose": true,
+        "privateNodeReadChecked": true,
+        "runtime": "previous",
+        "tlsHealthChecked": true,
+        "validForwardedNodeDenied": true
+      }
+    ],
+    "transportClosed": true,
+    "memoryPeakBytes": 155095040,
+    "swapPeakBytes": 0,
+    "settledOnlyAfterAcceptedExit": true
+  },
+  "nativeSwitch": {
+    "accepted": false,
+    "result": "timeout",
+    "execMainCode": "2",
+    "execMainStatus": "15",
+    "terminationClassification": "systemd-runtime-limit-and-signal",
+    "actualElapsedSeconds": 90.356572,
+    "within90SecondAcceptanceBudget": false,
+    "memoryPeakBytes": 134381568,
+    "swapPeakBytes": 0,
+    "cpuNanoseconds": 9039690000,
+    "successReceiptPresent": false,
+    "records": [
+      {
+        "phase": "preflight_passed",
+        "seconds": 0
+      },
+      {
+        "phase": "https_stopped",
+        "seconds": 0.005
+      },
+      {
+        "phase": "application_stopped",
+        "seconds": 0.202
+      },
+      {
+        "phase": "consistent_backup_verified",
+        "seconds": 0.402
+      },
+      {
+        "phase": "old_code_preserved",
+        "seconds": 0.403
+      },
+      {
+        "phase": "candidate_code_installed",
+        "seconds": 0.404
+      },
+      {
+        "phase": "candidate_configuration_installed",
+        "seconds": 0.406
+      }
+    ],
+    "firstPythonError": null,
+    "completedTimedStages": [
+      {
+        "stage": "backend.set_live_modes",
+        "event": "completed",
+        "seconds": 0.000124
+      },
+      {
+        "stage": "backend.preflight",
+        "event": "completed",
+        "seconds": 19.600131
+      },
+      {
+        "stage": "backend.checkpoint",
+        "event": "completed",
+        "seconds": 0.000165
+      },
+      {
+        "stage": "backend.stop",
+        "event": "completed",
+        "seconds": 0.00493
+      },
+      {
+        "stage": "backend.checkpoint",
+        "event": "completed",
+        "seconds": 0.000054
+      },
+      {
+        "stage": "backend.stop",
+        "event": "completed",
+        "seconds": 0.195263
+      },
+      {
+        "stage": "backend.checkpoint",
+        "event": "completed",
+        "seconds": 0.000074
+      },
+      {
+        "stage": "backend.manifest",
+        "event": "completed",
+        "seconds": 0.001022
+      },
+      {
+        "stage": "transaction.backup",
+        "event": "completed",
+        "seconds": 0.19825
+      },
+      {
+        "stage": "backend.checkpoint",
+        "event": "completed",
+        "seconds": 0.00004
+      },
+      {
+        "stage": "backend.checkpoint",
+        "event": "completed",
+        "seconds": 0.000059
+      },
+      {
+        "stage": "backend.checkpoint",
+        "event": "completed",
+        "seconds": 0.00004
+      },
+      {
+        "stage": "backend.set_live_modes",
+        "event": "completed",
+        "seconds": 0.000089
+      },
+      {
+        "stage": "backend.checkpoint",
+        "event": "completed",
+        "seconds": 0.000041
+      },
+      {
+        "stage": "backend.start",
+        "event": "completed",
+        "seconds": 9.915433
+      }
+    ],
+    "pendingTimedStages": {
+      "transaction.execute": 0.000194,
+      "backend.start": 68.125099
+    },
+    "transactionElapsedBeforeFirstStop": 57.801914,
+    "consistentBackupVerified": true,
+    "candidateCodeInstalled": true,
+    "backupParentOmissionNoLongerBlocking": true,
+    "writerLockPresent": true,
+    "writerLockRemoved": false,
+    "cgroupAbsent": true,
+    "protectedUnchanged": true
+  },
+  "actualResourceObservation": {
+    "logicalCpus": 2,
+    "unitProperties": {
+      "RuntimeMaxUSec": "1min 30s",
+      "CPUQuotaPerSecUSec": "100ms",
+      "CPUQuotaPeriodUSec": "infinity",
+      "MemoryMax": "201326592",
+      "MemorySwapMax": "0",
+      "TasksMax": "32"
+    },
+    "documentation": "https://www.freedesktop.org/software/systemd/man/257/systemd.resource-control.html",
+    "scope": "CPU quota is relative to one CPU; no higher quota was applied."
+  },
+  "artifactBindings": {
+    "backendSha256": "6af568450a0b4bb8b918b5249d9330b388b775ec87f5c020c1f228525c0a5fe6",
+    "driverSha256": "1ee8f35bd2cc68e4a57562576f91c48543b99bba2a5b8616b6e6cb2586d8ee60",
+    "prepareSha256": "1fd00651587c4e61b7451d62659f075ed41515428e3a21de1cb138bff6914766",
+    "entrySha256": "17e19397fe054113b38570dfd35adff1a5ca9acf48ca5d9c01d659c2c362678e",
+    "controllerSha256": "6a914d2c8fead8bcf86c4ecf2858c0958361642d45bcd65aa03939faafb11eff",
+    "testsSha256": "fbc1f990489f7916663cc3159d62906004c1101bed40f8ce9925a1147e9bd326",
+    "prepareTerminalReceiptSha256": "8fc0010d3343a909da3ed0652045c9049fd9e2af40032af87f7d77442127bb42",
+    "switchTerminalReceiptSha256": "a30b93fb87b5ebe2bd3346ab0b243ee65c98f5b1d19affb85ab577f6ef7b6539",
+    "switchDiagnosticsSha256": "4524f295d99810c94a6eeceb674f027854622d8c2d2f8a6f3a875730bd207851"
+  },
+  "allocations": {
+    "previous": {
+      "maximum": 3,
+      "used": 2,
+      "unused": 1,
+      "untouched": true
+    },
+    "current": {
+      "maximum": 3,
+      "used": 2,
+      "unused": 1,
+      "thirdUnitStarted": false
+    },
+    "consumedAcrossTheseTwoAllocations": 4,
+    "automaticallyReset": false,
+    "automaticRetry": false
+  },
+  "boundaries": {
+    "freshOwnedDirectoryUsed": true,
+    "oldFailedDirectoryTouched": false,
+    "failedDirectoriesAndLocksPreserved": true,
+    "limitsRaised": false,
+    "productionPublication": false,
+    "productionServiceStops": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "dnsOrPortsChanged": false,
+    "relayChanged": false,
+    "privateSourcesCommitted": false
+  },
+  "nextProposal": {
+    "requiresExplicitApproval": true,
+    "privatePolicyAndHashBindingIntegrationFirst": true,
+    "newUnitsAtMost": 3,
+    "proposedCpuQuotaPercent": 20,
+    "proposedNice": 10,
+    "proposedCpuWeight": 10,
+    "otherLimitsUnchanged": {
+      "seconds": 90,
+      "memoryMiB": 192,
+      "tasks": 32,
+      "swapBytes": 0,
+      "privateNetwork": true
+    },
+    "stopOnAnyFailure": true,
+    "notYetExecuted": true
+  },
+  "deliveryComplete": false
+}
