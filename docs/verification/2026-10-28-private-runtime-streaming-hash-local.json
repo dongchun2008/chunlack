@@ -1,0 +1,195 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "status": "private-streaming-hash-local-regression-passed-native-pending",
+  "relatedRecords": [
+    "2026-10-28-native-cpu20-rehearsal.json",
+    "2026-10-28-private-runtime-hash-memory-diagnostic.json"
+  ],
+  "scope": {
+    "privateFilesOnly": [
+      "owned-native-processes.cjs",
+      "owned-native-stdio.cjs"
+    ],
+    "productCodeChanged": false,
+    "privateSourcesCommitted": false
+  },
+  "repair": {
+    "fixedChunkBytes": 65536,
+    "wholeRuntimeFileMaterializationRemovedAtBothSites": true,
+    "fullDigestRecomputedEachOperation": true,
+    "digestCache": false,
+    "maximumFileBytes": 67108864,
+    "sha256Preserved": true,
+    "regularSingleLinkFileRequired": true,
+    "openNoFollowWhenSupported": true,
+    "descriptorAndPathMetadataCheckedBeforeAndAfterRead": true,
+    "metadataFields": [
+      "dev",
+      "ino",
+      "mode",
+      "nlink",
+      "uid",
+      "gid",
+      "size",
+      "mtimeNs",
+      "ctimeNs"
+    ],
+    "prematureEofAndGrowthRejected": true,
+    "ownedDescriptorClosedInFinally": true,
+    "bootstrapPinUpdated": true,
+    "factorySha256": "c5bff4743f0f635e9c0a08c87ab13a8756301f93f976e4763eb11b47de6e7a34",
+    "bootstrapSha256": "12894326b132ac15bb83087cc3ac585149d7bf54778d562944f5c84a7f7ce359"
+  },
+  "verification": {
+    "environment": "local Windows Node",
+    "targeted": {
+      "tests": 21,
+      "passed": 21,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "exitCode": 0,
+      "red": {
+        "tests": 21,
+        "passed": 1,
+        "failed": 20
+      },
+      "receiptSha256": "6a944054db986a64426e17d288374e639db31171a1a6e5494ccef49183618a73"
+    },
+    "cases": [
+      "standard SHA-256 across chunk boundaries",
+      "empty file digest",
+      "bounded buffer allocation",
+      "no whole-file read",
+      "content revalidated each call",
+      "size limits and invalid budgets",
+      "directory rejection",
+      "actual hardlink rejection",
+      "simulated symbolic-link metadata rejection",
+      "actual path replacement before open and after reads",
+      "content metadata mutation",
+      "partial read handling",
+      "early EOF and descriptor close",
+      "file growth rejection",
+      "read failure cleanup",
+      "metadata drift rejection",
+      "bootstrap pin binding",
+      "both guard paths use helper",
+      "six-call synthetic large-file memory check"
+    ],
+    "realLinuxSymlinkRegressionPerformed": false,
+    "fullRepositorySuiteRerun": false,
+    "originalFailedReplaceCommand": {
+      "reason": "Expected one whole-file expression but initialization and runtime paths contained two.",
+      "implementationFilesWrittenBeforeFailure": false,
+      "recordPreserved": true,
+      "correction": "Require exactly two replacements; keep both expected-hash comparisons."
+    },
+    "testFixtureCorrection": "Preserve explicitly supplied simulated symbolic-link method override; no assertion removed."
+  },
+  "memoryProbe": {
+    "syntheticBytes": 51953826,
+    "calls": 6,
+    "forcedGc": false,
+    "before": {
+      "rss": 48197632,
+      "heapTotal": 6807552,
+      "heapUsed": 6020424,
+      "external": 2564792,
+      "arrayBuffers": 143903
+    },
+    "samples": [
+      {
+        "rss": 49700864,
+        "heapTotal": 8642560,
+        "heapUsed": 5942664,
+        "external": 2630368,
+        "arrayBuffers": 209439
+      },
+      {
+        "rss": 50356224,
+        "heapTotal": 8642560,
+        "heapUsed": 5809248,
+        "external": 2695904,
+        "arrayBuffers": 209439
+      },
+      {
+        "rss": 50356224,
+        "heapTotal": 8642560,
+        "heapUsed": 6185040,
+        "external": 2695904,
+        "arrayBuffers": 274975
+      },
+      {
+        "rss": 50462720,
+        "heapTotal": 8642560,
+        "heapUsed": 6568024,
+        "external": 2761440,
+        "arrayBuffers": 340511
+      },
+      {
+        "rss": 50614272,
+        "heapTotal": 8642560,
+        "heapUsed": 5930632,
+        "external": 2826976,
+        "arrayBuffers": 209439
+      },
+      {
+        "rss": 50626560,
+        "heapTotal": 8642560,
+        "heapUsed": 6305064,
+        "external": 2695904,
+        "arrayBuffers": 274975
+      }
+    ],
+    "maxObservedRssBytes": 50626560,
+    "rssIncreaseBytes": 2428928,
+    "arrayBufferIncreaseBytes": 196608,
+    "previousWholeFileProbePeakRssBytes": 199548928,
+    "probeImportScaffoldingDiffers": true,
+    "fullWorkloadOrStrictCapacityBenchmark": false,
+    "nativeOomResolutionNotYetProven": true
+  },
+  "candidate": {
+    "files": 148,
+    "allInheritedHashesMatched": true,
+    "freshLocalDirectory": true,
+    "preparedProofsIncluded": false,
+    "uploaded": false,
+    "enabled": false,
+    "linuxApprovalPending": true,
+    "sourceInputsHashBound": true
+  },
+  "boundaries": {
+    "newLinuxUnits": 0,
+    "existingAllocations": [
+      {
+        "consumed": 2,
+        "maximum": 3,
+        "remainingPreserved": 1
+      },
+      {
+        "consumed": 2,
+        "maximum": 3,
+        "remainingPreserved": 1
+      },
+      {
+        "consumed": 2,
+        "maximum": 3,
+        "remainingPreserved": 1
+      }
+    ],
+    "noBudgetReset": true,
+    "noAutomaticRetry": true,
+    "productionPublication": false,
+    "remoteConnections": false,
+    "realModels": 0,
+    "externalAgents": 0,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "failedDirectoriesAndLocksUntouched": true
+  },
+  "nextGate": "Request a fresh bounded preparation/success/rollback allocation; retain 90 seconds, 192 MiB, CPU20%, Nice10, CPUWeight10, Tasks32, swap0 and private network. Stop at first failure; do not consume any preserved previous remainder or publish."
+}
