@@ -1,0 +1,83 @@
+{
+  "schema": 1,
+  "clientDate": "2026-10-27",
+  "observedAtUtc": "2026-10-27T14:23:37.108Z",
+  "status": "private-backup-parent-and-first-error-diagnostics-local-regression-passed-native-integration-pending",
+  "parentCheckpoint": "3783d745dfe749a5ed29491e90243403cd80519d",
+  "scope": {
+    "shortOwnedLocalCopiesOnly": true,
+    "productSourceChanged": false,
+    "pinnedOperationalControllerChanged": false,
+    "deployedControllerChanged": false,
+    "remoteConnectionsThisStep": 0
+  },
+  "localRegression": {
+    "tests": 17,
+    "passed": 17,
+    "failed": 0,
+    "skipped": 0,
+    "ranOn": "Windows",
+    "priorSuitesRerun": false,
+    "realPinnedBackupFunctionUsed": true,
+    "syntheticSqliteDatabases": 3,
+    "missingParentFileNotFoundErrorReproduced": true,
+    "threeDatabaseCopyIntegrityAndSchemaCheckedAfterFix": true,
+    "configurationBytesPreserved": true,
+    "occupiedTargetsPreserved": true,
+    "originalExceptionRetainedBeforeRecovery": true,
+    "inlineCaughtExceptionObservedBeforeControllerRecovery": true,
+    "laterErrorsDoNotOverwriteFirst": true,
+    "unsafeExceptionBodyNotLogged": true,
+    "diagnosticFailureDoesNotReplaceOriginalException": true,
+    "instanceMethodsRestored": true
+  },
+  "privateFix": {
+    "backupParentCreatedOnlyAfterExistingPreflightChecks": true,
+    "backupTargetMustBeExactOwnedRootChild": true,
+    "backupParentExclusiveCreation": true,
+    "diagnosticPhaseExplicitlyPropagatedByVersionedDriver": true,
+    "stagesExcludeArgumentsResultsAndBodies": true,
+    "firstExceptionPersistsOnlyStageSafeTypeErrnoAndFiniteSafeCode": true,
+    "existingDiagnosticAttemptsNotOverwritten": true,
+    "noGlobalControllerPatch": true
+  },
+  "artifactBindings": {
+    "privateBackendSha256": "6af568450a0b4bb8b918b5249d9330b388b775ec87f5c020c1f228525c0a5fe6",
+    "privateDriverSha256": "1ee8f35bd2cc68e4a57562576f91c48543b99bba2a5b8616b6e6cb2586d8ee60",
+    "testsSha256": "781afab4389f608a7e33c875a1ce16e2a7879cd7f76289bf1fcae8fa2b57126a",
+    "testReceiptSha256": "9af19fa84db86c27f223c8839754a5f67a6dbd31b923e485630de0ad0401bcc8",
+    "pinnedGateSha256": "4cb0ee578acc4808664a6625332351bcde6b247523a0df508446220c2270e06a"
+  },
+  "limitations": [
+    "Windows local tests do not exercise the POSIX private-mode branch or actual non-root Linux preflight.",
+    "The new driver/backend copies have not been integrated into a new hash-pinned native entry or proof producer.",
+    "The prior native timeout is still a failed scenario; this fixture correction does not prove it was the sole cause or that a full switch fits the 90-second envelope.",
+    "No native success-switch, rollback, late-write-retention, sustained-coexistence or production acceptance is claimed."
+  ],
+  "boundaries": {
+    "linuxUnitsUsedThisStep": 0,
+    "priorLinuxUnitsConsumed": 2,
+    "priorLinuxUnitMaximum": 3,
+    "priorRemainingUnits": 1,
+    "thirdUnitStarted": false,
+    "failedRemoteDirectoryTouched": false,
+    "writerLockRemoved": false,
+    "automaticRetry": false,
+    "limitsRaised": false,
+    "productionPublication": false,
+    "productionServiceStops": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "dnsOrPortsChanged": false,
+    "relayChanged": false,
+    "privateSourcesCommitted": false
+  },
+  "proposedNext": [
+    "Integrate the new private backend/driver into separately versioned hash-pinned entry and proof-producer copies; verify binding rejection and local synthetic regressions first.",
+    "Request a distinct new native rehearsal allocation only after local integration; do not consume or reset the previous unspent unit.",
+    "Use a fresh owned root and synthetic data; preserve the failed root and writer lock, enforce the original resource envelope, and stop on any failure."
+  ],
+  "deliveryComplete": false
+}
