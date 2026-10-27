@@ -1,0 +1,388 @@
+{
+  "schema": 1,
+  "date": "2026-10-28",
+  "status": "bounded-native-streaming-hash-rehearsal-failed-timeout-no-publication",
+  "relatedRecords": [
+    "2026-10-28-private-runtime-streaming-hash-local.json",
+    "2026-10-28-native-cpu20-rehearsal.json"
+  ],
+  "authorization": {
+    "maximumNewUnits": 3,
+    "consumedNewUnits": 2,
+    "remainingNotConsumed": 1,
+    "attempts": [
+      "prepare-attempt.json",
+      "success-attempt.json"
+    ],
+    "rollbackAttemptPresent": false,
+    "oldAllocations": [
+      {
+        "used": 2,
+        "maximum": 3,
+        "remainingPreserved": 1
+      },
+      {
+        "used": 2,
+        "maximum": 3,
+        "remainingPreserved": 1
+      },
+      {
+        "used": 2,
+        "maximum": 3,
+        "remainingPreserved": 1
+      }
+    ],
+    "automaticRetry": false,
+    "stopOnFailure": true
+  },
+  "limits": {
+    "RuntimeMaxSeconds": 90,
+    "MemoryMaxBytes": 201326592,
+    "MemorySwapMaxBytes": 0,
+    "TasksMax": 32,
+    "CPUQuotaPercent": 20,
+    "Nice": 10,
+    "CPUWeight": 10,
+    "PrivateNetwork": true,
+    "PrivateTmp": true,
+    "NoNewPrivileges": true,
+    "uid": 996,
+    "gid": 987
+  },
+  "candidate": {
+    "files": 148,
+    "manifestVerifiedOnRemote": true,
+    "freshOwnedDirectory": true,
+    "privateFactorySha256": "c5bff4743f0f635e9c0a08c87ab13a8756301f93f976e4763eb11b47de6e7a34",
+    "privateBootstrapSha256": "12894326b132ac15bb83087cc3ac585149d7bf54778d562944f5c84a7f7ce359",
+    "productFilesChangedInThisRepair": false
+  },
+  "prepare": {
+    "accepted": true,
+    "systemdElapsedSeconds": 38.417692,
+    "receiptElapsedSeconds": 37.812972,
+    "exit": {
+      "Result": "success",
+      "ExecMainCode": 1,
+      "ExecMainStatus": 0
+    },
+    "boots": [
+      {
+        "applicationExit": {
+          "code": 0,
+          "forced": false,
+          "lockReleased": true,
+          "signal": null
+        },
+        "cleanClose": true,
+        "privateNodeReadChecked": true,
+        "runtime": "candidate",
+        "tlsHealthChecked": true,
+        "validForwardedNodeDenied": true
+      },
+      {
+        "applicationExit": {
+          "code": 0,
+          "forced": false,
+          "lockReleased": true,
+          "signal": null
+        },
+        "cleanClose": true,
+        "privateNodeReadChecked": true,
+        "runtime": "previous",
+        "tlsHealthChecked": true,
+        "validForwardedNodeDenied": true
+      }
+    ],
+    "transportClosed": true,
+    "onlyExitedOwnedUnitSettled": true,
+    "protectedUnchanged": true
+  },
+  "successSwitch": {
+    "accepted": false,
+    "receiptPresent": false,
+    "systemdElapsedSeconds": 90.156483,
+    "configuredRuntimeMaxStill90Seconds": true,
+    "overrunNotClassifiedAsPassed": true,
+    "state": {
+      "MainPID": "0",
+      "Result": "timeout",
+      "ExecMainStartTimestampMonotonic": "5729953346157",
+      "ExecMainExitTimestampMonotonic": "5730043502640",
+      "ExecMainCode": "2",
+      "ExecMainStatus": "15",
+      "ControlGroup": "",
+      "MemoryPeak": "107335680",
+      "MemorySwapPeak": "0",
+      "CPUUsageNSec": "18027457000",
+      "TasksCurrent": "[not set]",
+      "CPUWeight": "10",
+      "CPUQuotaPerSecUSec": "200ms",
+      "MemoryMax": "201326592",
+      "MemorySwapMax": "0",
+      "TasksMax": "32",
+      "Nice": "10",
+      "LoadState": "loaded",
+      "ActiveState": "failed",
+      "SubState": "failed",
+      "InvocationID": "a84c2b0e09954da493c91465665654d8"
+    },
+    "reportedMemoryPeakBytes": 107335680,
+    "reportedSwapPeakBytes": 0,
+    "reportedCPUUsageNSec": 18027457000,
+    "continuousKernelPeakMeasurementCompleted": false,
+    "terminationWasTimeoutNotOom": true,
+    "transactionStages": [
+      {
+        "elapsedSeconds": 0.000174,
+        "event": "started",
+        "stage": "transaction.execute"
+      },
+      {
+        "elapsedSeconds": 10.501897,
+        "event": "started",
+        "stage": "backend.preflight"
+      },
+      {
+        "elapsedSeconds": 21.389674,
+        "event": "started",
+        "stage": "backend.set_live_modes"
+      },
+      {
+        "elapsedSeconds": 21.390211,
+        "event": "completed",
+        "stage": "backend.set_live_modes"
+      },
+      {
+        "elapsedSeconds": 21.390483,
+        "event": "completed",
+        "stage": "backend.preflight"
+      },
+      {
+        "elapsedSeconds": 32.294892,
+        "event": "started",
+        "stage": "backend.checkpoint"
+      },
+      {
+        "elapsedSeconds": 32.295081,
+        "event": "completed",
+        "stage": "backend.checkpoint"
+      },
+      {
+        "elapsedSeconds": 32.295276,
+        "event": "started",
+        "stage": "backend.stop"
+      },
+      {
+        "elapsedSeconds": 32.301772,
+        "event": "completed",
+        "stage": "backend.stop"
+      },
+      {
+        "elapsedSeconds": 32.303362,
+        "event": "started",
+        "stage": "backend.checkpoint"
+      },
+      {
+        "elapsedSeconds": 32.303414,
+        "event": "completed",
+        "stage": "backend.checkpoint"
+      },
+      {
+        "elapsedSeconds": 32.303436,
+        "event": "started",
+        "stage": "backend.stop"
+      },
+      {
+        "elapsedSeconds": 32.398387,
+        "event": "completed",
+        "stage": "backend.stop"
+      },
+      {
+        "elapsedSeconds": 32.40009,
+        "event": "started",
+        "stage": "backend.checkpoint"
+      },
+      {
+        "elapsedSeconds": 32.400137,
+        "event": "completed",
+        "stage": "backend.checkpoint"
+      },
+      {
+        "elapsedSeconds": 32.400271,
+        "event": "started",
+        "stage": "transaction.backup"
+      },
+      {
+        "elapsedSeconds": 32.499878,
+        "event": "started",
+        "stage": "backend.manifest"
+      },
+      {
+        "elapsedSeconds": 32.500919,
+        "event": "completed",
+        "stage": "backend.manifest"
+      },
+      {
+        "elapsedSeconds": 32.500986,
+        "event": "completed",
+        "stage": "transaction.backup"
+      },
+      {
+        "elapsedSeconds": 32.503851,
+        "event": "started",
+        "stage": "backend.checkpoint"
+      },
+      {
+        "elapsedSeconds": 32.503905,
+        "event": "completed",
+        "stage": "backend.checkpoint"
+      },
+      {
+        "elapsedSeconds": 32.505124,
+        "event": "started",
+        "stage": "backend.checkpoint"
+      },
+      {
+        "elapsedSeconds": 32.505175,
+        "event": "completed",
+        "stage": "backend.checkpoint"
+      },
+      {
+        "elapsedSeconds": 32.506362,
+        "event": "started",
+        "stage": "backend.checkpoint"
+      },
+      {
+        "elapsedSeconds": 32.506418,
+        "event": "completed",
+        "stage": "backend.checkpoint"
+      },
+      {
+        "elapsedSeconds": 32.507869,
+        "event": "started",
+        "stage": "backend.set_live_modes"
+      },
+      {
+        "elapsedSeconds": 32.50798,
+        "event": "completed",
+        "stage": "backend.set_live_modes"
+      },
+      {
+        "elapsedSeconds": 32.509035,
+        "event": "started",
+        "stage": "backend.checkpoint"
+      },
+      {
+        "elapsedSeconds": 32.50908,
+        "event": "completed",
+        "stage": "backend.checkpoint"
+      },
+      {
+        "elapsedSeconds": 32.509244,
+        "event": "started",
+        "stage": "backend.start"
+      },
+      {
+        "elapsedSeconds": 37.411238,
+        "event": "completed",
+        "stage": "backend.start"
+      },
+      {
+        "elapsedSeconds": 37.411293,
+        "event": "started",
+        "stage": "backend.start"
+      },
+      {
+        "elapsedSeconds": 39.411383,
+        "event": "completed",
+        "stage": "backend.start"
+      },
+      {
+        "elapsedSeconds": 39.411436,
+        "event": "started",
+        "stage": "backend.check_candidate"
+      },
+      {
+        "elapsedSeconds": 39.411568,
+        "event": "started",
+        "stage": "backend.assert_listener"
+      },
+      {
+        "elapsedSeconds": 39.487348,
+        "event": "completed",
+        "stage": "backend.assert_listener"
+      }
+    ],
+    "lastIncompleteStage": "backend.check_candidate",
+    "backupManifestPresent": true,
+    "writerLockPreserved": true,
+    "failedDirectoryPreserved": true,
+    "ownCgroupAbsent": true,
+    "ownCgroupEmpty": true,
+    "failedUnitMainPid": 0
+  },
+  "rollback": {
+    "started": false,
+    "accepted": false,
+    "reason": "Success-switch phase exceeded its unchanged unit deadline; stopped without retry."
+  },
+  "samplingDiagnostic": {
+    "attempts": 1,
+    "succeeded": false,
+    "error": "EOFError",
+    "literalNulInCommandSource": 1,
+    "commandEncodingDefectConfirmed": true,
+    "transportFailureSoleCauseNotReproduced": true,
+    "correctedCommandOrRerunPerformed": false,
+    "originalFailureReceiptPreserved": true,
+    "businessUnitObservedSeparatelyUntilTerminal": true
+  },
+  "production": {
+    "published": false,
+    "baselineUnchanged": true,
+    "services": {
+      "chunlack.service": {
+        "MainPID": "594652",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "tailscaled.service": {
+        "MainPID": "859",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "chunlack-public.service": {
+        "MainPID": "791425",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "chunlack-https.service": {
+        "MainPID": "791543",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      }
+    },
+    "legacyHealthStatus": 200,
+    "existingServicesRestarted": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "relayTrafficQualityMeasured": false,
+    "oldFailedDirectoriesAndLocksUntouched": true
+  },
+  "external": {
+    "actualModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "conclusions": {
+    "fullNativeAcceptance": false,
+    "productionDelivery": false,
+    "previousMemoryFailureNotObservedAsTerminationThisRound": true,
+    "onlyMemoryRepairDoesNotEstablishReleaseReadiness": true,
+    "requestLevelDurationAndHashInvocationCountsStillMissing": true
+  },
+  "nextAction": "Keep failed evidence and all unused allocations; request a local-only command-encoding repair and bounded per-request timing/count diagnostic before proposing further Linux runs or any changed budget. Do not publish or weaken content checks."
+}
