@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "clientDate": "2026-10-27",
+  "observedAtUtc": "2026-10-27T13:35:20.018Z",
+  "status": "native-package-and-unit-controller-ready-upload-not-yet-started",
+  "parentCheckpoint": "1dc31bda1564f7c486fe64c31a3c2fd63ae36915",
+  "controllerTests": {
+    "tests": 8,
+    "passed": 8,
+    "failed": 0,
+    "skipped": 0,
+    "ranOn": "Windows",
+    "nativeSystemdUnitLaunched": false,
+    "originalSuitesRerun": false
+  },
+  "package": {
+    "files": 148,
+    "totalBytes": 2586979,
+    "previousCodeFiles": 57,
+    "candidateCodeFiles": 66,
+    "databaseCount": 3,
+    "syntheticOnly": true,
+    "remoteUploaded": false
+  },
+  "readonlyPreflight": {
+    "sshHostKeyPinnedAndMatched": true,
+    "servicesActive": true,
+    "memoryAvailableBytes": 1026985984,
+    "missingUnitProbe": {
+      "code": 0,
+      "properties": {
+        "MainPID": "0",
+        "LoadState": "not-found"
+      }
+    },
+    "opensslPresent": true,
+    "refreshedAfterApproval": false,
+    "limitation": "Retained point-in-time preflight, not native execution or sustained coexistence evidence."
+  },
+  "approvedLocalCorrections": {
+    "savedPreflightBoundToFixedSharedObject": true,
+    "recordConstructionParenthesisCorrected": true,
+    "priorFailuresBeforeUpload": true,
+    "priorTestsRerun": false
+  },
+  "artifactBindings": {
+    "controllerSha256": "7f7fdec9d8f67870fc015d5b74d90773173d1290841a05e785a101027a418743",
+    "controllerTestsSha256": "c551fdcc68eee655d821c75838de1e3559e5ff900f9330d52858d15d10833a65",
+    "freshReadonlyPreflightReceiptSha256": "ef51733de9500b07656e192fb526c5c9366d3c75b0113170cf62209c2d75d3ec"
+  },
+  "boundaries": {
+    "privateSourcesCommitted": false,
+    "productSourceChanged": false,
+    "productionPublication": false,
+    "productionServiceStops": 0,
+    "actualLackBoots": 0,
+    "actualCaddyBoots": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "dnsOrPortsChanged": false,
+    "relayChanged": false,
+    "linuxUnitsConsumed": 0,
+    "originalLinuxUnitMaximum": 3,
+    "linuxLimitsUnchanged": {
+      "seconds": 90,
+      "memoryMiB": 192,
+      "cpuPercent": 10,
+      "tasks": 32,
+      "swapBytes": 0,
+      "privateNetwork": true
+    }
+  },
+  "next": [
+    "Upload the immutable owned package using the approved existing SSH path.",
+    "Use at most the original three native prepare/success/rollback units; stop on any failure without automatic retry or expanded quota.",
+    "Inspect native process, database and rollback receipts before any delivery claim."
+  ],
+  "deliveryComplete": false
+}
