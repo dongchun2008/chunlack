@@ -1,0 +1,64 @@
+{
+  "schema": 1,
+  "clientDate": "2026-10-27",
+  "status": "private-render-only-ingress-planner-passed-main-audit-awaiting-approval",
+  "parentCheckpoint": "7d414337e4d9843b4fe491008a15a04d5bf7e0d0",
+  "verification": {
+    "tests": 12,
+    "pass": 12,
+    "fail": 0,
+    "skipped": 0,
+    "ranOn": "Windows",
+    "actualExistingRendererExecuted": true,
+    "checkedRendererAndTemplateBytesUsed": true,
+    "unchangedGateExactTransitionValidated": true,
+    "existingIngressFileNotOverwritten": true,
+    "unapprovedModelOrAgentAccessRejected": true,
+    "renderOnly": true,
+    "nativeTlsValidated": false
+  },
+  "artifactBindings": {
+    "plannerSha256": "b9f2f44c3ffc442dfd87febaedcd0b3543610f0712aa095e965289651247cfdb",
+    "testsSha256": "33676999abd58b7306372e47fc314aeb6362e376f20df2cd674abd8f4d23eddc",
+    "receiptSha256": "cc4668185976fa07152be18d536600b33e7148e44b1bba42e91f9ff62f278c86",
+    "rendererSha256": "0e11a91e164eb4591b0ce2a93ce42e5a7c3e715c8d16c367a821237c8f3400c9",
+    "templateSha256": "29653768811376aa077c06a6486165af685b36ebfe80289ae627ae1ce03d744a"
+  },
+  "mainline": {
+    "additionalSourceAndColdDatabaseAuditStarted": false,
+    "privateDispatcherCorrectionApproved": false,
+    "pendingRequestStillRequired": true,
+    "missingResultReferenceNotBypassed": true
+  },
+  "boundaries": {
+    "productSourceChanged": false,
+    "privateSourcesCommitted": false,
+    "actualLackBoots": 0,
+    "actualCaddyBoots": 0,
+    "productionAccessed": false,
+    "fullRegressionRerun": false,
+    "priorSeedTestsRerun": false,
+    "linuxUnitsConsumed": 0,
+    "originalLinuxUnitMaximum": 3,
+    "linuxBudgetsUnchanged": {
+      "seconds": 90,
+      "memoryMiB": 192,
+      "cpuPercent": 10,
+      "tasks": 32,
+      "swapBytes": 0,
+      "privateNetwork": true
+    },
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productionPublication": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false
+  },
+  "remaining": [
+    "After approval, correct only the private dispatcher result reference and perform the already planned source/cold-database audit.",
+    "Complete native prepared payload/runtime bindings and actual transaction driver.",
+    "Run genuine compatibility, cutover and rollback under the originally approved Linux unit budgets, retaining all failure evidence and late writes.",
+    "Pass all remaining production and external-Agent delivery requirements; this render-only result does not establish delivery."
+  ]
+}
