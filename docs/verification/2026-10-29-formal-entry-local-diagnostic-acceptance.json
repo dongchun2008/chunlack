@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-29",
+  "scope": "local-formal-release-entry-simulation-and-passive-transport-regression",
+  "status": "local-accepted-not-native-integrated-not-published",
+  "baseCommit": "2a2a880baf4f4de39c4a678d07d3db76c71c8b06",
+  "authorization": {
+    "diagnosticSelftest": "caller-argument-only correction; unchanged exact allowlist and diagnostic source; two synthetic loopback requests within 10 seconds",
+    "targeted": {
+      "used": 1,
+      "limit": 1
+    },
+    "full": {
+      "used": 1,
+      "limit": 1
+    },
+    "automaticRetry": false,
+    "sync": "this sanitized acceptance record only; candidate source and private fixtures remain untracked"
+  },
+  "candidate": {
+    "paths": [
+      "deploy/public/release-control/2026-10-28/i18n-release-entry.py",
+      "deploy/public/release-control/2026-10-28/launch-i18n-release.py",
+      "deploy/public/release-control/2026-10-28/test-i18n-release-entry.py",
+      "tests/i18n-release-entry.test.cjs"
+    ],
+    "sha256": {
+      "entry": "93e7f97783bd49a524188cf92e79e08780f40d87df0230af89f2453f17cbfa93",
+      "launcher": "aa410c225177e23c703aca3b8bb372388feb60aaa70a5de89d54590fed1ca7e5",
+      "pythonTests": "6fd8075e96e5c11f9eaf9b3cb06e088fe0051de27d9a5d64c31cbc902924c8f7",
+      "nodeWrapper": "3fd9a88590b5c5af683743a4705cf936f5d4c6d3375f71bddc26c43053b41816"
+    },
+    "localSimulationCases": 59,
+    "relatedGateCases": 41,
+    "reviewedBoundaries": [
+      "actual systemd cgroup membership before one-time claim consumption or backend creation",
+      "preserve completed transaction result when receipt or cleanup also fails",
+      "one-time markers retained after timeout or failure",
+      "fixed source, file identity, permission, hash and final-receipt checks remain enabled"
+    ],
+    "limitations": [
+      "candidate source remains local and is not included in this commit",
+      "new formal entry has not been exercised in native Linux or packaged into a production release",
+      "fresh real-data compatibility proof, native integration and a separately approved maintenance window remain required"
+    ]
+  },
+  "earlierEvidence": {
+    "initialFull": {
+      "tests": 1106,
+      "pass": 1077,
+      "fail": 3,
+      "skipped": 26,
+      "cancelled": 0,
+      "exitCode": 1
+    },
+    "failures": [
+      "MCP initialization notification followed by scoped discovery/task read: fetch failed",
+      "invalid-token initialization notification: fetch failed",
+      "unsupported protocol-version rejection: fetch failed"
+    ],
+    "coverageOmission": "initial full command omitted CADDY_TEST_BIN; skipped coverage was not counted as passed",
+    "selftestInitial": "HTTP selftest completed but preload emitted no logs because Node -e invocation omitted the script argv; original failed coverage receipt retained"
+  },
+  "selftest": {
+    "accepted": true,
+    "syntheticRequests": 2,
+    "successfulResponse": 1,
+    "intentionalDisconnect": 1,
+    "observedErrorCodes": [
+      "UND_ERR_SOCKET"
+    ],
+    "capped": false,
+    "writeErrors": 0,
+    "privateMarkerUrlHeaderBodyAbsentFromLogs": true
+  },
+  "targeted": {
+    "file": "tests/agent-mcp-lifecycle.test.cjs",
+    "exitCode": 0,
+    "tests": 17,
+    "pass": 17,
+    "fail": 0,
+    "skipped": 0,
+    "durationMs": 4711.6043,
+    "actualWorkerObserved": true,
+    "requests": 103,
+    "transportErrors": 0,
+    "capped": false,
+    "writeErrors": 0
+  },
+  "full": {
+    "tests": 1106,
+    "suites": 0,
+    "pass": 1106,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "duration_ms": 485470.9968,
+    "exitCode": 0,
+    "stderrEmpty": true,
+    "explicitCaddy": true,
+    "caddyVersion": "2.11.7",
+    "caddyExecutableSha256": "5f93a9bd555f3aac9d33af2756ba14b3519d8cca4ffd55256bdaeab444c9db2a",
+    "requestOrAssertionChanges": false,
+    "originalPerTestTimeoutsPreserved": true,
+    "outerPerTestLimitMs": 90000,
+    "testConcurrency": 1,
+    "GOMAXPROCS": 1,
+    "realLocalCoverage": [
+      "verified TLS and HTTP/2",
+      "WSS host, origin and workspace boundaries",
+      "human OIDC login/callback/logout with synthetic identity provider",
+      "Agent OAuth scope and revocation boundaries with synthetic credentials",
+      "independent CLI restart and late-write persistence"
+    ],
+    "passiveMcpWorker": {
+      "requests": 103,
+      "headers": 103,
+      "complete": 103,
+      "transportErrors": 0,
+      "capped": false,
+      "writeErrors": 0
+    },
+    "tapSha256": "8bf5c695ba8e257f1bc8326755a29dc8e885bf86f51fc4d7ceb1a13b76990487",
+    "diagnosticLogSha256": [
+      "093d10f48f316d114733c8cc037411483acdf2015ee76cae90d07dccd4b040fb"
+    ]
+  },
+  "diagnosticPolicy": {
+    "preloadSha256": "e26ecf69d472f715126e1200aca7522712fddcdbdd7bec5623cb9c9c89cc122e",
+    "mode": "passive diagnostics_channel subscriptions only",
+    "exactTestAllowlist": [
+      "agent-mcp-lifecycle.test.cjs",
+      "passive-transport-selftest.cjs"
+    ],
+    "capturedFields": [
+      "event type",
+      "request counter",
+      "elapsed time",
+      "status code",
+      "whitelisted transport error code"
+    ],
+    "excludedFields": [
+      "URLs",
+      "request or response bodies",
+      "headers",
+      "credentials",
+      "tokens",
+      "error messages and stacks"
+    ],
+    "originalIntermittentFailureRootCause": "not established; not reproduced in the approved targeted and full runs; no root-cause fix is claimed"
+  },
+  "productionBoundary": {
+    "vpsConnected": false,
+    "linuxUnitsUsed": 0,
+    "servicesStartedStoppedOrPublished": false,
+    "modelsCalled": false,
+    "externalAgentsCalled": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "DNSOrPublicPortsChanged": false,
+    "productionDeliveryComplete": false
+  },
+  "nextGate": "prepare a concrete native-integration and fresh-compatibility plan; do not consume Linux units, switch production or restore Agent grants without separate approval"
+}
