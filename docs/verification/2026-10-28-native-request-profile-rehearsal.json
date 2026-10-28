@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-28T00:28:18.123Z",
+  "status": "failed-stopped-after-success-switch-timeout",
+  "scope": "Approved fresh Linux allocation: prepare, success switch, fault rollback; stop at first failure; no production publication.",
+  "sourceLocalIntegrationCommit": "a9e2e9bc648c67c689c8263f7a1590f3be4f17c7",
+  "allocation": {
+    "maximum": 3,
+    "used": 2,
+    "remaining": 1,
+    "remainingPreserved": true,
+    "oldAllocationsUnchanged": true,
+    "phases": {
+      "prepare": {
+        "accepted": true,
+        "actualUnitSeconds": 37.900076,
+        "receiptSeconds": 37.407555,
+        "exitCode": 0,
+        "bothApplicationBootsClean": true,
+        "tlsHealthChecks": true,
+        "privateNodeReadAndForwardedDenialChecks": true,
+        "transportClosed": true,
+        "onlyExitedOwnedUnitSettled": true
+      },
+      "success": {
+        "accepted": false,
+        "actualUnitSeconds": 90.136761,
+        "systemdResult": "timeout",
+        "execMainCode": 2,
+        "execMainStatus": 15,
+        "termination": "SIGTERM at configured RuntimeMaxSec=90",
+        "completeBusinessReceipt": false,
+        "processesCleared": true,
+        "cgroupAbsent": true,
+        "stageRecords": 38,
+        "stageLimit": 256,
+        "requestRecords": 119,
+        "requestLimit": 2064,
+        "writerLockAndFailureDirectoryPreserved": true
+      },
+      "rollback": {
+        "started": false,
+        "reason": "Previous success-switch unit failed; no retry or allocation reuse."
+      }
+    }
+  },
+  "effectivePolicy": {
+    "runtimeMaxSeconds": 90,
+    "memoryMaxBytes": 201326592,
+    "memorySwapMaxBytes": 0,
+    "cpuQuotaPercent": 20,
+    "tasksMax": 32,
+    "nice": 10,
+    "cpuWeight": 10,
+    "userId": 996,
+    "groupId": 987,
+    "privateNetwork": true,
+    "privateTmp": true,
+    "noNewPrivileges": true,
+    "forwardLimitSeconds": 55,
+    "totalRecoveryLimitSeconds": 120,
+    "policyChanged": false
+  },
+  "observations": {
+    "systemdReportedMemoryPeakBytes": 106389504,
+    "systemdReportedSwapPeakBytes": 0,
+    "systemdReportedCpuUsageSeconds": 18.048468,
+    "liveResourceSamplesCollected": 2,
+    "liveSamplerCorrectedAndActuallyExecuted": true,
+    "liveSamplesComplete": true,
+    "sampledOomCountersZero": true,
+    "failureWasTimeoutNotSuccessfulAcceptance": true
+  },
+  "performanceEvidence": {
+    "completedHttpProbeRequests": 55,
+    "meanCompletedRequestMs": 840.2400979272727,
+    "completedRequestElapsedMs": 46213.205386,
+    "fullCaddyHashAttemptsInThoseRequests": 55,
+    "fullCaddyHashCompletionsInThoseRequests": 55,
+    "caddyFileBytes": 51953826,
+    "measuredHashInputBytes": 2857460430,
+    "hashElapsedWallMs": 41461.192016,
+    "hashShareOfThoseCompletedRequests": 0.8971719591768548,
+    "everyCompletedProbeRehashedFullCaddy": true,
+    "interpretation": "Repeated full Caddy revalidation is a measured dominant cost within the 55 completed HTTP probes. Timing is wall time under CPU throttling, not isolated CPU time. Input-byte measurements are not physical disk-I/O measurements. This is private rehearsal overhead, not a real-model throughput or general VPS capacity result.",
+    "completedStageNames": [
+      "backend.set_live_modes",
+      "backend.preflight",
+      "backend.checkpoint",
+      "backend.stop",
+      "backend.checkpoint",
+      "backend.stop",
+      "backend.checkpoint",
+      "backend.manifest",
+      "transaction.backup",
+      "backend.checkpoint",
+      "backend.checkpoint",
+      "backend.checkpoint",
+      "backend.set_live_modes",
+      "backend.checkpoint",
+      "backend.start",
+      "backend.start",
+      "backend.assert_listener",
+      "backend.check_backend_rest"
+    ],
+    "lastPendingAggregateStage": "backend.check_candidate",
+    "firstErrorRecordPresent": false,
+    "firstErrorAbsenceExplained": "Forced unit termination did not produce a completed transaction or unwound exception receipt; no error receipt was fabricated."
+  },
+  "protectedState": {
+    "fourExistingServicesActive": true,
+    "servicePidsAndRestartCountsUnchanged": true,
+    "threeProtectedConfigHashesUnchanged": true,
+    "productionSourcesChecked": 57,
+    "legacyHealthHttpStatus": 200,
+    "productionPublication": false,
+    "productionRestarts": 0,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "relayTrafficQualityMeasured": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "evidence": {
+    "retainedLogBytes": 60579,
+    "logs": [
+      {
+        "name": "request-profile-835011.jsonl",
+        "bytes": 8448,
+        "rows": 34,
+        "sha256": "6da9b62aae1139f6fa0c4103b7bfb126ae698215f9261dfb1b473082db1e65ff"
+      },
+      {
+        "name": "request-profile-835270.jsonl",
+        "bytes": 35903,
+        "rows": 131,
+        "sha256": "cf94a2940853462f195a337515adcee2d1510e24a0c54c94b06cbf18ecd5c50a"
+      },
+      {
+        "name": "success-requests.jsonl",
+        "bytes": 13122,
+        "rows": 119,
+        "sha256": "34c3dbcf659ab3dc78000adc95c44f555c69f3a70d69a6517c448a8303a8c848"
+      },
+      {
+        "name": "success-stages.jsonl",
+        "bytes": 3106,
+        "rows": 38,
+        "sha256": "fd083cbef1fb5303bed06866b79da8b639eaaf37ec20029359a51136f3e19753"
+      }
+    ],
+    "sourceInputSha256": "cc5ed78b25f3fcb0b65490728de0a476551ecd9b76cfc803fc6d8af61897fa43",
+    "terminalAuditSha256": "23933e14af383f806523f120f72ef122ac232c839a82d46980de2de36c92798a",
+    "readonlyPreflightSha256": "04bacffc03f6e4d575b31d38d5c07a7e96575f359caf21a40665c1715baa95a8",
+    "readonlyPostflightSha256": "d65c4209dd8cc1fdd8f120c01b316c755b4658e10d3b7ef33a45322a08307cd0"
+  },
+  "nextGate": {
+    "overallDelivery": "not-complete",
+    "automaticFurtherNativeRun": false,
+    "automaticRelease": false,
+    "required": "Review a bounded local design for redundant binary-verification cost before any further Linux allocation. Do not cache away safety checks, reduce HTTP/security assertions, raise resource limits, or reuse the remaining unit without explicit approval."
+  },
+  "syncScope": "Sanitized failure evidence only; no private fixture or credentials."
+}
