@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-28",
+  "scope": "private-rollback-mount-lifecycle-local-only",
+  "localAccepted": true,
+  "productionPublished": false,
+  "patch": {
+    "changedPrivateSource": "owned_unit_control.py",
+    "sourceChanges": 1,
+    "baselineSha256": "5848bddc5cd0626f73faef5e8921c07d6317991a3c2bca444eceda11bf66d4fa",
+    "candidateSha256": "e1d98e6e68d6519b163c2bff376db65b1a501a4fe197899a4e5aa17519cbfc4f",
+    "prepareTargets": [
+      "code/node_modules",
+      "staged/code/node_modules"
+    ],
+    "successTargets": [
+      "code/node_modules",
+      "staged/code/node_modules"
+    ],
+    "rollbackTargets": [
+      "code/node_modules",
+      "previous-code/node_modules"
+    ],
+    "dependencySourceUnchanged": true,
+    "dependencyMountsReadOnly": true,
+    "resetDriverChanged": false,
+    "dependencyFingerprintChanged": false,
+    "productionControllerChanged": false
+  },
+  "tests": {
+    "groups": [
+      {
+        "name": "mountLifecycle",
+        "tests": 20,
+        "passed": 20,
+        "exitCode": 0,
+        "seconds": 0.934
+      },
+      {
+        "name": "resourcePolicy",
+        "tests": 18,
+        "passed": 18,
+        "exitCode": 0,
+        "seconds": 0.697
+      },
+      {
+        "name": "bindingAndAcceptance",
+        "tests": 38,
+        "passed": 38,
+        "exitCode": 0,
+        "seconds": 0.56
+      }
+    ],
+    "total": 76,
+    "passed": 76,
+    "failed": 0,
+    "skipped": 0,
+    "oldLayoutFailureReproduced": true,
+    "realLocalDirectoryRenameChecked": true,
+    "actualNodeDependencyResolutionChecked": true,
+    "nodePathFallbackIndependentlyProven": false,
+    "originalDependencyFingerprintExecuted": true,
+    "dependencyByteTamperingDetected": true,
+    "configurationRawBytesPreserved": true,
+    "dataDirectoryIdentityPreserved": true,
+    "newUserDataPreserved": true,
+    "writerLockAndOccupiedLayoutRejectionsPreserved": true,
+    "entireProductSuiteRerun": false,
+    "linuxScenariosRerun": false
+  },
+  "independentReview": {
+    "blockingFindings": 0,
+    "nativeMountMigrationAndCleanupStillUnverified": true
+  },
+  "limitsPreserved": {
+    "unitSeconds": 90,
+    "memoryBytes": 201326592,
+    "cpuPercent": 20,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasks": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "privateTmp": true,
+    "noAutomaticRetry": true,
+    "serial": true
+  },
+  "externalOperations": {
+    "vpsConnections": 0,
+    "newLinuxUnits": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productionServicesChanged": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false
+  },
+  "priorRound": {
+    "record": "docs/verification/2026-10-28-runtime-binding-linux-ffa6e9d1a297.json",
+    "commit": "e8ca36ed808a032e0efcec4e173adbb2093cc396",
+    "maximum": 3,
+    "used": 3,
+    "prepareAccepted": true,
+    "successAccepted": true,
+    "rollbackAccepted": false,
+    "originalFailedDirectoryAndReceiptsPreserved": true
+  },
+  "nextProposal": {
+    "requiresSeparateApproval": true,
+    "maximumNewLinuxUnits": 3,
+    "phases": [
+      "prepare",
+      "success",
+      "rollback"
+    ],
+    "useNewExclusiveDirectory": true,
+    "reuseOldFailedDirectory": false,
+    "productionPublicationApprovedByThisRecord": false,
+    "productionReleaseStillRequiresAllGates": true
+  }
+}
