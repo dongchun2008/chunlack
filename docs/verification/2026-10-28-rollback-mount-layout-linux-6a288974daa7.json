@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-28",
+  "scope": "private-multifile-release-real-process-rehearsal",
+  "round": "6a288974daa7",
+  "isolatedAcceptance": true,
+  "productionPublished": false,
+  "sourceBindings": {
+    "controllerSha256": "e1d98e6e68d6519b163c2bff376db65b1a501a4fe197899a4e5aa17519cbfc4f",
+    "factorySha256": "0c9984512538b5dec2c7cf27c1c6188dce439b3154d1893b56a7dd249e77abb3",
+    "bootstrapSha256": "a8c6c8dd0fd60a1fc4f1d1e14fe62eefd8d242cb7457fd9992e759ebfc5c0719",
+    "entrySha256": "f98a9b715994291e9c2bd532d7d7f3e5753948072213866e92a8f5d8c37e2d53",
+    "inputSha256": "0240c46162b322dee8824143ec19207cf5b2fc9960340b65cb8038c57abef423",
+    "applicationInventoryCounts": {
+      "previous": 57,
+      "candidate": 66
+    },
+    "localAcceptanceRecord": "docs/verification/2026-10-28-rollback-mount-layout-local-e1d98e6e.json",
+    "localAcceptanceCommit": "c24ab6d3cee7ce4846285f0d011280b23a1a48c0"
+  },
+  "allocation": {
+    "maximum": 3,
+    "used": 3,
+    "phases": [
+      "prepare",
+      "success",
+      "rollback"
+    ],
+    "serial": true,
+    "noAutomaticRetry": true,
+    "oldFailedRoundPreserved": {
+      "round": "ffa6e9d1a297",
+      "maximum": 3,
+      "used": 3,
+      "reused": false
+    }
+  },
+  "resourceLimits": {
+    "unitSeconds": 90,
+    "memoryBytes": 201326592,
+    "cpuPercent": 20,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasks": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "privateTmp": true
+  },
+  "phases": {
+    "prepare": {
+      "accepted": true,
+      "actualSeconds": 52.404364,
+      "receiptSeconds": 51.909081,
+      "exitCode": 0,
+      "systemdResult": "success",
+      "cpuSeconds": 10.485996,
+      "systemdMemoryPeakBytes": 30339072,
+      "memorySwapPeakBytes": 0,
+      "mainPidAfterExit": 0,
+      "onlyOwnedExitedUnitSettled": true
+    },
+    "success": {
+      "accepted": true,
+      "actualSeconds": 75.946351,
+      "receiptSeconds": 75.23,
+      "exitCode": 0,
+      "systemdResult": "success",
+      "cpuSeconds": 15.19564,
+      "systemdMemoryPeakBytes": 99483648,
+      "memorySwapPeakBytes": 0,
+      "mainPidAfterExit": 0,
+      "onlyOwnedExitedUnitSettled": true
+    },
+    "rollback": {
+      "accepted": true,
+      "actualSeconds": 78.938489,
+      "receiptSeconds": 78.384,
+      "exitCode": 0,
+      "systemdResult": "success",
+      "cpuSeconds": 15.807359,
+      "systemdMemoryPeakBytes": 98553856,
+      "memorySwapPeakBytes": 0,
+      "mainPidAfterExit": 0,
+      "onlyOwnedExitedUnitSettled": true
+    }
+  },
+  "transactionAcceptance": {
+    "successSimulatedOutageSeconds": 33.498,
+    "forwardBudgetSeconds": 55,
+    "rollbackTransactionSeconds": 36.105,
+    "totalRecoveryBudgetSeconds": 120,
+    "expectedFault": "owned_injected_after_late_write",
+    "faultInjected": true,
+    "rollbackCompleted": true,
+    "newFileRetained": true,
+    "newDatabaseProjectStateRetained": true,
+    "newConfigurationWriteRetained": true,
+    "dataDirectoryIdentityPreserved": true,
+    "successfulTransactionConfigWritten": false,
+    "all17RecordedOwnedChildExitsZero": true,
+    "ownedUnitsSettled": 3,
+    "actualModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "observedResources": {
+    "completeSamples": 4,
+    "sampledMemoryPeakBytes": 99483648,
+    "observedSwapBytes": 0,
+    "observedOomKills": 0,
+    "observedBusinessUid": 996,
+    "observedNice": 10,
+    "relayThroughputMeasured": false
+  },
+  "protectedState": {
+    "finalReadonlyPreflightPassed": true,
+    "productionSourcesChecked": 57,
+    "servicesActive": 4,
+    "servicePidsAndRestartCountsUnchanged": true,
+    "protectedConfigurationHashesUnchanged": true,
+    "legacyHealthStatus": 200,
+    "productionServicesRestarted": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false
+  },
+  "evidenceLimitations": [
+    "Synthetic accounts, databases and disabled model paths were used.",
+    "Real process/TLS/release/rollback acceptance is not a production deployment or real-provider research acceptance.",
+    "The passive observer identity flag is not used as native identity evidence; kernel policy checks and sampled process identity are separate evidence."
+  ],
+  "nextGate": {
+    "freshProductionPreflightRequired": true,
+    "productionDataCompatibilityEvidenceRequired": true,
+    "productionMaintenanceWindowRequired": true,
+    "noProductionPublicationAuthorizedByThisRecord": true
+  }
+}
