@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "scope": "private-runtime-binding-linux-rehearsal",
+  "date": "2026-10-28",
+  "round": "ffa6e9d1a297",
+  "overallAccepted": false,
+  "productionPublished": false,
+  "source": {
+    "privateFixtureOnly": true,
+    "fixtureSourceCommitted": false,
+    "factorySha256": "0c9984512538b5dec2c7cf27c1c6188dce439b3154d1893b56a7dd249e77abb3",
+    "bootstrapSha256": "a8c6c8dd0fd60a1fc4f1d1e14fe62eefd8d242cb7457fd9992e759ebfc5c0719",
+    "dispatcherSha256": "7bb7729af892425a65cea87e525b5cd55ca6f6088fb94dc7bb4f322381c97abc",
+    "entrySha256": "f98a9b715994291e9c2bd532d7d7f3e5753948072213866e92a8f5d8c37e2d53",
+    "inputSha256": "1d7ef9c9dccdd43788567d4f6c5ef670132287c052f2da4e2f0f9d22b7f69eb7"
+  },
+  "local": {
+    "runtimeRelatedTests": 165,
+    "runtimeRelatedPassed": 165,
+    "dispatcherTests": 18,
+    "dispatcherPassed": 18,
+    "independentReview": "no-remaining-blocking-findings-after-protocol-clarification",
+    "originalFailureRecordsPreserved": true,
+    "entireProductSuiteRerun": false
+  },
+  "allocation": {
+    "maximum": 3,
+    "used": 3,
+    "priorUnusedAllocationsNotReused": true,
+    "noAutomaticRetry": true,
+    "serial": true,
+    "stopOnFailure": true
+  },
+  "resourceLimits": {
+    "unitSeconds": 90,
+    "memoryBytes": 201326592,
+    "cpuPercent": 20,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasks": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "privateTmp": true
+  },
+  "phases": {
+    "prepare": {
+      "accepted": true,
+      "systemdResult": "success",
+      "exitCode": 0,
+      "actualSeconds": 47.095233,
+      "receiptSeconds": 46.609771,
+      "candidateAndPreviousBootsChecked": true,
+      "cleanApplicationExits": true,
+      "writerLocksReleased": true
+    },
+    "success": {
+      "accepted": true,
+      "systemdResult": "success",
+      "exitCode": 0,
+      "actualSeconds": 71.058575,
+      "receiptSeconds": 70.586,
+      "simulatedOutageSeconds": 31.302,
+      "configurationWritten": false,
+      "transportClosed": true,
+      "allOwnedProcessesExited": true
+    },
+    "rollback": {
+      "accepted": false,
+      "systemdResult": "exit-code",
+      "exitCode": 2,
+      "actualSeconds": 0.724003,
+      "businessReceiptPresent": false,
+      "errorCode": "owned_driver_reset_layout_denied",
+      "failedBeforeFaultInjection": true,
+      "expectedStagedCodeAbsent": false,
+      "actualStagedCodeEntries": [
+        "node_modules"
+      ],
+      "stagedCodeOwnerUid": 0,
+      "cgroupAbsent": true,
+      "cgroupEmpty": true,
+      "writerLockExists": false,
+      "failureDirectoryPreserved": true
+    }
+  },
+  "observedResources": {
+    "sampledMemoryPeakBytes": 110596096,
+    "observedOomKills": 0,
+    "observedSwapBytes": 0,
+    "businessUid": 996,
+    "businessGid": 987,
+    "relayThroughputMeasured": false
+  },
+  "protected": {
+    "servicesActive": true,
+    "pidsAndRestartCountsUnchanged": true,
+    "configurationHashesUnchanged": true,
+    "productionSourcesChecked": 57,
+    "legacyHealthStatus": 200,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "remainingGates": [
+    "Correct private rollback fixture mount/layout lifecycle with no weakened rejection rules.",
+    "Pass a separately approved bounded rollback rehearsal.",
+    "Fresh production publication preflight and controlled release acceptance."
+  ],
+  "nextAction": {
+    "localFixtureChangeRequiresUserDecision": true,
+    "additionalLinuxUnitsApproved": false,
+    "noProductionReleaseBeforeAllRequiredGatesPass": true
+  }
+}
