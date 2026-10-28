@@ -1,0 +1,244 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-28",
+  "scope": "Read-only production release readiness audit and maintenance proposal",
+  "status": "not_ready_for_production_release",
+  "productionPublished": false,
+  "productionMutated": false,
+  "newLinuxUnits": 0,
+  "newModelCalls": 0,
+  "credentialsChanged": false,
+  "authorizationsChanged": false,
+  "relayChanged": false,
+  "dnsOrPortsChanged": false,
+  "observations": {
+    "package": {
+      "name": "chunlack",
+      "version": "4.2.2-hybrid.1",
+      "sha256": "d6635cd11cf97ad7cfa2e904a75cb33be28bbb8714098460fd8881bb4151b09f"
+    },
+    "services": {
+      "chunlack.service": {
+        "MainPID": "594652",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "tailscaled.service": {
+        "MainPID": "859",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "chunlack-public.service": {
+        "MainPID": "791425",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      },
+      "chunlack-https.service": {
+        "MainPID": "791543",
+        "NRestarts": "0",
+        "ActiveState": "active"
+      }
+    },
+    "protectedConfigurationHashes": {
+      "/etc/chunlack-public/runtime.env": "d965dca65755172673d4aab1f07cd6e1b9fa57ed091319786a54169be331a8e3",
+      "/etc/chunlack-public/Caddyfile": "14578562730dc9a572b728dedd6573bf94bae479cfa578897508ad7755441642",
+      "/var/lib/chunlack-public/config/lack.config.json": "1ed22c1256793e7c6bb07ff102f285b7b63789aad581f797581755805973cdcf"
+    },
+    "policy": {
+      "httpPort": 13721,
+      "mcpPort": 13723,
+      "gatewayPort": 13722,
+      "nodeRestPublic": false,
+      "agentOAuthEnabled": true,
+      "discoveryOnly": false,
+      "oauthIssuer": "https://pockid.chunclaw.top",
+      "oauthResource": "https://agents.chunclaw.top/mcp",
+      "approvedClientCount": 1,
+      "eventsEnabled": false,
+      "humanOidcEnabled": true
+    },
+    "resources": {
+      "memory": {
+        "MemTotal": 1691451392,
+        "MemAvailable": 1023922176,
+        "SwapTotal": 2147479552,
+        "SwapFree": 2147479552
+      },
+      "logicalCpus": 2,
+      "loadAverage": [
+        0.14599609375,
+        0.1220703125,
+        0.10205078125
+      ],
+      "diskAvailableBytes": 28712321024
+    },
+    "filesystemOwnership": "Inspected application and data directory ownership and private file modes; this does not prove current business-record ownership.",
+    "liveSource": {
+      "expectedFiles": 57,
+      "matchedFiles": 57,
+      "mismatches": []
+    },
+    "sqliteAccess": {
+      "opened": false,
+      "liveWalPresent": true,
+      "businessOwnershipAndCurrentGrantFingerprint": "not established by this read-only metadata audit"
+    },
+    "candidate": {
+      "files": 66,
+      "changedFiles": 20,
+      "changedPaths": [
+        "collaboration/capacity.cjs",
+        "collaboration/model-transport.cjs",
+        "collaboration/task-control.cjs",
+        "deploy/public/Caddyfile.template",
+        "gateway/admin.html",
+        "identity/chat-messages.js",
+        "identity/display.js",
+        "identity/help-assets.cjs",
+        "identity/help.js",
+        "identity/help/en.md",
+        "identity/help/zh-CN.md",
+        "identity/i18n.js",
+        "identity/login.html",
+        "identity/messages.js",
+        "identity/workspace-shell.js",
+        "identity/workspace-ui.js",
+        "package-lock.json",
+        "package.json",
+        "public/index.html",
+        "server.js"
+      ],
+      "productionStagedCandidateFound": false,
+      "isolatedCandidateIsNotProductionStaging": true
+    },
+    "existingCompatibility": {
+      "releaseTag": "0fa2a711aaa9",
+      "status": "previously passed but expired and bound to a different candidate",
+      "ageSecondsAtObservation": 342368.697,
+      "maximumFreshnessSeconds": 3600,
+      "reusableForDesiredCandidate": false
+    },
+    "backups": [
+      {
+        "tag": "0fa2a711aaa9",
+        "entries": [
+          "Caddyfile",
+          "data",
+          "manifest.json"
+        ],
+        "manifestSha256": "451f4c606144c5548ad67709b469fa5d9a1e8f9d13a1d1fb1c93e9be3e5ebad9",
+        "caddySha256": "14578562730dc9a572b728dedd6573bf94bae479cfa578897508ad7755441642",
+        "contentIntegrityVerifiedThisAudit": false,
+        "currentConsistentSnapshot": false
+      },
+      {
+        "tag": "27139edf8fbb",
+        "entries": [
+          "Caddyfile",
+          "data",
+          "manifest.json"
+        ],
+        "manifestSha256": "ef0c7dcd0ad0fda7f0f0d373cc4a79ac6a4164fbce3568d439468abd2fed3774",
+        "caddySha256": "14578562730dc9a572b728dedd6573bf94bae479cfa578897508ad7755441642",
+        "contentIntegrityVerifiedThisAudit": false,
+        "currentConsistentSnapshot": false
+      }
+    ],
+    "backupContract": "Existing controller backs up stopped application data and Caddyfile; runtime.env is not listed as a backup artifact. Absence of an env copy is not itself a contract violation. Preserve its original bytes and hash.",
+    "gate": {
+      "sourceSha256": "4cb0ee578acc4808664a6625332351bcde6b247523a0df508446220c2270e06a",
+      "cliStatus": "local_candidate_only",
+      "cliExitCode": 64,
+      "productionEntryReady": false,
+      "adHocImportOrCliBypassAllowed": false
+    },
+    "legacyAuditLimitation": "One historical release root (5c3786dd3ac6) returned a bounded RuntimeError guard. It was not treated as a usable or fully audited release artifact."
+  },
+  "acceptedIsolatedEvidence": {
+    "commit": "d7a99d1b6d346c3514ac47026f0ffeaefc775619",
+    "record": "docs/verification/2026-10-28-rollback-mount-layout-linux-6a288974daa7.json",
+    "unitsUsed": 3,
+    "unitsAllocated": 3,
+    "phases": [
+      "prepare",
+      "success",
+      "rollback"
+    ],
+    "exitCodes": [
+      0,
+      0,
+      0
+    ],
+    "elapsedSeconds": [
+      52.404364,
+      75.946351,
+      78.938489
+    ],
+    "simulatedForwardOutageSeconds": 33.498,
+    "simulatedRecoveryTransactionSeconds": 36.105,
+    "lateWritesPreserved": true,
+    "productionCompatibilityProof": false,
+    "productionPublication": false
+  },
+  "blockingGates": [
+    "No desired 66-file candidate in an eligible new production staging root.",
+    "No fresh, real-data compatibility proof bound to current configuration, authority, dependencies and desired candidate.",
+    "Current independent multilingual gate deliberately disables its production CLI; a reviewed hash-bound production entry is not prepared.",
+    "Existing backup metadata is not a fresh verified consistent backup of current live data.",
+    "Current business ownership and grant fingerprint must be established safely from consistent data, not inferred from a WAL-bearing main database alone."
+  ],
+  "proposedNextStages": [
+    {
+      "stage": 1,
+      "name": "Local-only production entry preparation",
+      "requiresNewApproval": true,
+      "actions": [
+        "Implement an explicit hash-bound entry around the reviewed multilingual gate without bypassing its disabled CLI.",
+        "Keep exact 20-path change scope and full previous/candidate inventories; preserve all configuration, client allowlist and authority checks.",
+        "Add local synthetic entry, timeout, interruption, rollback and configuration-preservation regressions."
+      ],
+      "productionWrite": false,
+      "linuxUnits": 0,
+      "realModelCalls": 0
+    },
+    {
+      "stage": 2,
+      "name": "Separately approved production staging and fresh data evidence",
+      "requiresNewApproval": true,
+      "actions": [
+        "Use a new exclusive release tag, never reuse a completed or failed release root.",
+        "Stage the accepted 66-file payload with canonical ownership, dependency and controller hashes.",
+        "Preserve live raw config, runtime.env and the existing one-client allowlist; never install synthetic rehearsal configuration.",
+        "Use a reviewed consistent snapshot method for current databases and their WAL state. If a service pause is required, obtain a separate bounded window first.",
+        "Obtain fresh old/candidate database-copy compatibility and authorization/schema bindings within the 3600-second proof lifetime.",
+        "Request any required additional isolated test unit explicitly; do not reuse consumed allocations."
+      ],
+      "serviceStopAuthorizedNow": false
+    },
+    {
+      "stage": 3,
+      "name": "Fresh maintenance approval only after every gate passes",
+      "requiresNewApproval": true,
+      "forwardBudgetSeconds": 55,
+      "totalRecoveryBudgetSeconds": 120,
+      "actions": [
+        "Refresh and verify the consistent backup before switching code.",
+        "Validate candidate, live source, configuration, authority, dependencies, proof freshness, ownership and headroom immediately before release.",
+        "Update only the approved public application and HTTPS assets; no legacy LACK or Relay operations.",
+        "Rollback on failure without overwriting newer user data or configuration; do not delete abandoned writer locks."
+      ],
+      "authorizedNow": false
+    },
+    {
+      "stage": 4,
+      "name": "Production acceptance, separately scoped",
+      "requiresNewApproval": true,
+      "actions": [
+        "Verify human Pocket ID callback, language switching, help assets and TLS access-control rejection boundaries.",
+        "Do not infer external Agent authorization or real-model acceptance from local or isolated test success.",
+        "Propose any real research workload budget separately; do not trigger Muse or dots during interface acceptance."
+      ]
+    }
+  ],
+  "remainingDeliveryBoundary": "This audit and isolated rehearsal do not mean the bilingual candidate is in production, Muse Suhua is connected, or all real research/external-Agent acceptance is complete."
+}
