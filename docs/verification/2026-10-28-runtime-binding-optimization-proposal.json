@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-10-28T00:35:25.026Z",
+  "status": "proposal-awaiting-explicit-security-boundary-approval",
+  "implemented": false,
+  "productionPublication": false,
+  "intent": "Remove measured redundant large-binary verification overhead in the private rehearsal guard without reducing the actual HTTP/security acceptance matrix or raising resource budgets.",
+  "evidence": {
+    "linuxRecord": "docs/verification/2026-10-28-native-request-profile-rehearsal.json",
+    "linuxRecordCommit": "fb9aadefa0055be0debf8dc79c6998efc4546253",
+    "sourceSha256": "3d29007886da0b31d69269b17c3e22434febf61f7d648e5e5fc5d79ede9f4a5f",
+    "backendSha256": "a8e04af1a5549f1d7afd9188b7ec65cea0b3c6818e5a0695e77252dcbdde2ec0",
+    "completedProbes": 55,
+    "meanProbeWallMs": 840.2400979272727,
+    "binaryBytes": 51953826,
+    "fileHashWallShareOfThoseProbes": 0.8971719591768548,
+    "phaseRecordsAtTimeout": 38,
+    "originalPhaseLimit": 256,
+    "diagnosis": "The private native() guard rehashes the same Caddy binary on each probe. The native timeout was not caused by exhausting the stage log; no model was called."
+  },
+  "approaches": [
+    {
+      "id": "A",
+      "description": "Retain a full binary SHA-256 scan on every HTTP probe, with no guard semantic change.",
+      "advantage": "Preserves the current byte-verification boundary exactly.",
+      "disadvantage": "The measured run still exceeds the fixed 90-second/20%-CPU unit budget. Do not simply repeat it, extend limits, or report partial acceptance as complete."
+    },
+    {
+      "id": "B",
+      "description": "Use a descriptor-pinned, root-controlled, non-business-writable runtime under an independently verified read-only unit mount; retain full SHA-256 at critical boundaries and check ownership, permissions, descriptor/path identity and change metadata on every probe.",
+      "advantage": "Keeps the existing separate RPC/HTTP probes and introduces no new service, protocol method, package installation, public port or production change.",
+      "disadvantage": "This changes the invariant from per-probe full-byte hashing to a protected-runtime invariant between full-hash boundaries. It requires explicit approval and is not equivalent against a hostile privileged host writer."
+    }
+  ],
+  "recommendedForReview": "B",
+  "approvalNotYetGiven": true,
+  "nonGoals": [
+    "Do not implement this proposal until the changed verification boundary is explicitly approved.",
+    "Do not change product LACK code, model routing, Agent configuration, credentials, grants, DNS, ports or Relay.",
+    "Do not execute another Linux unit, reuse an unused allocation, restart production or publish.",
+    "Do not batch away HTTP probes, remove negative cases, raise budgets, accept stale proofs or add unsafe fallbacks."
+  ],
+  "preconditionsThatMustBeProvedNotAssumed": [
+    "The exact Caddy input still matches the existing pinned SHA-256 and maximum size.",
+    "The binary and its relevant path ancestry are canonical, non-symlinked and root-controlled; neither UID 996 nor unprivileged groups/other users can write or replace them under the accepted policy.",
+    "The nearest effective mount covering the binary inside the actual business unit is read-only, including protection against a more-specific writable mount.",
+    "The business process remains UID 996/GID 987 with zero effective capabilities, NoNewPrivileges and the existing network/resource isolation.",
+    "A retained descriptor and the current pathname refer to the same regular single-link file, with identical device/inode, size, nanosecond change/modification metadata, owner/group and permissions.",
+    "The trusted-host-administrator assumption is explicitly accepted. This fast path must not be represented as cryptographic protection against an administrator able to defeat the read-only/ownership/metadata assumptions."
+  ],
+  "proposedBoundary": {
+    "scope": "Private HTTP probe guard only; unknown or non-probe operations keep full verification by default.",
+    "perProbe": [
+      "Revalidate the pinned descriptor and current path/ancestry identities and permissions.",
+      "Check the effective read-only mount and unchanged unprivileged/no-capability execution context.",
+      "Keep existing source inventory, source-content hashes, configuration, model-disable, client-empty-list, port and root/data-identity checks.",
+      "Reject any replacement, relink, writable exposure, identity drift or uncertain proof; do not silently re-anchor to a changed file."
+    ],
+    "fullByteVerification": [
+      "Initial binding before any fixture operation.",
+      "Before every actual Caddy executable invocation, including validation and service start.",
+      "At candidate acceptance boundaries after the complete HTTP matrix and before any acceptance receipt.",
+      "At final verification boundaries required to accept cleanup/recovery; a failed check cannot prevent attempts to stop owned children and close owned descriptors."
+    ],
+    "digestHelper": "Keep digestRegularFile itself unchanged: every real invocation reads and verifies the complete bounded input. Do not introduce a cached-digest shortcut inside it.",
+    "unsupportedPreconditions": "Fail the preparation/guard explicitly. Do not change production ownership or mount policy, create a hidden runtime copy, add kernel features or silently fall back to an unverified fast path."
+  },
+  "preservedAcceptance": [
+    "All GET/HEAD main-domain asset checks, expected bytes and exact nosniff header checks.",
+    "All Agent-domain asset denials and POST/PATCH/DELETE asset denials.",
+    "All original REST, OAuth/MCP, listener, workspace/configuration and client-empty-list restrictions.",
+    "Source drift, file replacement, hash mismatch, cleanup, write-lock and late-write protection; do not drop assertions merely to fit the budget.",
+    "Original immutable module/source pins, updated only for explicitly changed private modules.",
+    "Original phase log maximum 256; separate request journal maximum 2064 records and 2097152 bytes."
+  ],
+  "requiredLocalRegressionBeforeAnyNewLinuxProposal": [
+    "Retain existing streaming-hash correctness, complete-read-per-invocation, bounds and descriptor-cleanup regressions.",
+    "Add explicit fast-path rejection cases for wrong owner, writable owner ancestry, group/other write permission, symlink/hardlink, replaced inode, truncated/grown file, content mutation, restored mtime with changed ctime, writable/more-specific mount and missing mount proof.",
+    "Prove full hashes still occur at initial binding, each executable invocation and each acceptance fence; do not rely on static source substrings as semantic proof.",
+    "Preserve all original HTTP/security assertions and verify both acceptance surfaces.",
+    "Prove constructor/close failures release only owned descriptors/children and preserve original error identity and incomplete-evidence rejection.",
+    "Keep original serial/late-callback diagnostic isolation and file/byte caps.",
+    "Do not claim unchanged safety or native acceptance merely because older tests remain green."
+  ],
+  "futureNativeGate": {
+    "notAuthorizedByThisProposal": true,
+    "remainingCurrentAllocation": 1,
+    "remainingUnitWillNotBeUsedAutomatically": true,
+    "eachUnitSeconds": 90,
+    "memoryBytes": 201326592,
+    "cpuQuotaPercent": 20,
+    "tasksMax": 32,
+    "swapBytes": 0,
+    "nice": 10,
+    "cpuWeight": 10,
+    "serial": true,
+    "isolatedNetwork": true,
+    "stopOnFirstFailure": true,
+    "forwardSeconds": 55,
+    "totalRecoverySeconds": 120,
+    "required": "After explicit local implementation approval and passing related regressions, submit a fresh bounded Linux scope and re-prove effective ownership/mount policy, full acceptance, actual timing and rollback. No production publication is implied."
+  },
+  "thisTurnActions": {
+    "readonlyLocalAnalysis": true,
+    "codeModified": false,
+    "testsRun": 0,
+    "remoteConnections": 0,
+    "linuxUnitsUsed": 0,
+    "credentialsRead": false,
+    "productionChanged": false
+  },
+  "decisionRequested": "Approve approach B for bounded private local implementation and regression only, or retain approach A and accept that the current native acceptance remains blocked. The read-only/ownership preconditions and changed threat-model boundary must not be implicit."
+}
