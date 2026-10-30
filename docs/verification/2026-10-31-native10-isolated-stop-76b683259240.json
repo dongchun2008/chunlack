@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "batch": "76b683259240",
+  "result": "stopped_on_first_failure",
+  "publication": false,
+  "scope": "owned-isolated-process-rehearsal-not-operational-production-backend",
+  "loaderRecovery": {
+    "existingNodeChild": true,
+    "originalModuleUnchanged": true,
+    "priorTestsRerun": false
+  },
+  "package": {
+    "fileCount": 158,
+    "approvedSourceReplacements": 5,
+    "derivedMetadataChanges": 2,
+    "bufferManifestCheckPassed": true,
+    "independentBindingReviewPassed": true
+  },
+  "budget": {
+    "maximumNewUnits": 3,
+    "used": 2,
+    "unusedNotReallocated": 1,
+    "automaticRetry": false,
+    "serial": true,
+    "runtimeMaxSeconds": 90,
+    "memoryMaxBytes": 201326592,
+    "memorySwapMaxBytes": 0,
+    "tasksMax": 32,
+    "nice": 10,
+    "cpuWeight": 10,
+    "privateNetwork": true,
+    "cpuPercent": {
+      "prepare": 20,
+      "success": 10,
+      "rollback": 10
+    }
+  },
+  "preflight": {
+    "readOnly": true,
+    "productionSourceFilesVerified": 57,
+    "existingServicesActive": 4,
+    "protectedBaselineUnchanged": true
+  },
+  "prepare": {
+    "accepted": true,
+    "elapsedSeconds": 48.696371,
+    "actualExitStatus": 0,
+    "cpuQuotaPerSecUSec": "200ms",
+    "perDatabaseCopyCompatibility": true,
+    "crossDatabaseApplicationConsistencyClaimed": false,
+    "previousAndCandidateBootChecksPassed": true,
+    "tlsBoundaryChecksPassed": true,
+    "transportClosed": true,
+    "cgroupEmpty": true,
+    "settled": true
+  },
+  "success": {
+    "accepted": false,
+    "result": "timeout",
+    "terminationCode": 2,
+    "terminationStatus": 9,
+    "runtimeMaxSeconds": 90,
+    "observedStartToExitSeconds": 90.246686,
+    "cpuQuotaPerSecUSec": "100ms",
+    "cpuUsageNanoseconds": 9030980000,
+    "observedMemoryPeakBytes": 100569088,
+    "observedSwapPeakBytes": 0,
+    "finalReceiptPresent": false,
+    "mainPidZero": true,
+    "cgroupEmpty": true,
+    "formalAndIsolatedCpuPercent": 10,
+    "productionRequestBindingRecorded": true,
+    "operationalBackendUsed": false
+  },
+  "rollback": {
+    "started": false,
+    "accepted": false
+  },
+  "safety": {
+    "productionServicesAndProtectedConfigUnchanged": true,
+    "productionStartStop": false,
+    "publication": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false,
+    "realModelCalls": false,
+    "externalAgentCalls": false,
+    "failedDirectoriesAndLocksRetained": true
+  },
+  "limits": [
+    "The success unit hit RuntimeMaxSec under the unchanged 10 percent CPU policy; no successful transaction receipt was produced.",
+    "The kernel-observed start-to-exit duration includes termination latency and is not a passing duration.",
+    "CPU quota as the sole root cause is not established by these observations.",
+    "No rollback unit was started after the failure.",
+    "No production backend or production release acceptance is claimed."
+  ]
+}
