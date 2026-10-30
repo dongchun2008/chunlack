@@ -1,0 +1,56 @@
+{
+  "date": "2026-10-31",
+  "scope": "local-formal-entry-and-source-link-regression",
+  "result": "passed",
+  "tests": {
+    "total": 51,
+    "passed": 51,
+    "failed": 0,
+    "errors": 0,
+    "suites": [
+      {
+        "name": "native-link",
+        "total": 23,
+        "passed": 23,
+        "failed": 0,
+        "errors": 0,
+        "exitCode": 0
+      },
+      {
+        "name": "formal-entry",
+        "total": 28,
+        "passed": 28,
+        "failed": 0,
+        "errors": 0,
+        "exitCode": 0
+      }
+    ]
+  },
+  "fixtureOnlyCorrection": "record test paths using POSIX spelling; preserve all assertions",
+  "evidenceRecoveredFromSavedReceipts": true,
+  "testsRerunForThisSync": false,
+  "independentSourceReview": {
+    "completed": true,
+    "additionalConfirmedP1P2": 0,
+    "implementationChangedAfterReview": false
+  },
+  "configuredCpuPercent": {
+    "formalController": 10,
+    "isolatedPreparation": 20,
+    "isolatedFormalPhases": 10
+  },
+  "productionPublication": false,
+  "productionDeliveryComplete": false,
+  "remoteConnectionsForThisWork": 0,
+  "linuxUnitsConsumed": 0,
+  "actualModelCalls": 0,
+  "externalAgentCalls": 0,
+  "credentialsGrantsDnsPortsRelayChanged": false,
+  "limitations": [
+    "local mocked integration, not full application regression",
+    "not native execution acceptance at 10 percent CPU",
+    "owned isolated backend is not operational production backend",
+    "final publication package and fresh backup remain pending",
+    "no production maintenance authorization inferred"
+  ]
+}
