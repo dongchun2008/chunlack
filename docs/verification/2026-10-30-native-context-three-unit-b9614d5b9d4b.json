@@ -1,0 +1,113 @@
+{
+  "schema": "chunlack.isolated_rehearsal.v1",
+  "date": "2026-10-30",
+  "result": "passed",
+  "execution_mode": "real_processes_with_owned_backend",
+  "production_publication": false,
+  "production_delivery_complete": false,
+  "local_regression": {
+    "node_passed": 41,
+    "python_passed": 200,
+    "total_passed": 241,
+    "failed": 0,
+    "skipped": 0
+  },
+  "approved_limits": {
+    "new_units_maximum": 3,
+    "new_units_used": 3,
+    "seconds_per_unit": 90,
+    "memory_mib": 192,
+    "cpu_percent": 20,
+    "nice": 10,
+    "cpu_weight": 10,
+    "tasks_maximum": 32,
+    "swap_bytes": 0,
+    "private_network": true,
+    "serial_execution": true,
+    "automatic_retry": false,
+    "old_remaining_unit_reused": false,
+    "forward_seconds": 55,
+    "total_recovery_seconds": 120
+  },
+  "units": [
+    {
+      "phase": "prepare",
+      "elapsed_seconds": 49.543653,
+      "accepted": true,
+      "exit_status": 0,
+      "main_pid_zero": true,
+      "resource_receipt_verified": true,
+      "cgroup_empty": true,
+      "settled": true,
+      "copy_compatibility_accepted": true
+    },
+    {
+      "phase": "success",
+      "elapsed_seconds": 81.430373,
+      "accepted": true,
+      "exit_status": 0,
+      "main_pid_zero": true,
+      "resource_receipt_verified": true,
+      "cgroup_empty": true,
+      "settled": true,
+      "copy_compatibility_accepted": true
+    },
+    {
+      "phase": "rollback",
+      "elapsed_seconds": 84.22045,
+      "accepted": true,
+      "exit_status": 0,
+      "main_pid_zero": true,
+      "resource_receipt_verified": true,
+      "cgroup_empty": true,
+      "settled": true,
+      "copy_compatibility_accepted": true
+    }
+  ],
+  "preparation": {
+    "per_database_consistent_copy": true,
+    "cross_database_application_consistent_release_backup": false,
+    "candidate_and_previous_tls_boots_passed": true
+  },
+  "success": {
+    "status": "released",
+    "simulated_outage_seconds": 37.789,
+    "configuration_written": false,
+    "credentials_changed": false,
+    "live_data_restored_from_backup": false
+  },
+  "rollback": {
+    "status": "rolled_back",
+    "transaction_elapsed_seconds": 41.205,
+    "late_write_injected": true,
+    "late_writes_retained": true,
+    "original_copy_rows_retained": true,
+    "original_copy_schema_retained": true
+  },
+  "safety": {
+    "cohost_baseline_unchanged": true,
+    "production_services_restarted": false,
+    "credentials_changed": false,
+    "grants_changed": false,
+    "dns_or_ports_changed": false,
+    "relay_changed": false,
+    "actual_model_calls": false,
+    "external_agent_calls": false,
+    "old_failure_evidence_changed": false,
+    "old_write_locks_changed": false,
+    "all_owned_test_processes_stopped": true,
+    "full_machine_state_audit": false
+  },
+  "artifact_integrity": {
+    "adapter": "4e54a0aa20361810d4e8a0d33d61dfe49d6dfc41fa08598be7816bce890f459d",
+    "controller": "5ac6bb209a3df1f976c40c88cfcf37f39f68dea2196b123dab3789881a3f0204",
+    "pipe_bootstrap": "ff9b9c679a7fec0dabf6960d0a16116e9a2a310fe2a1ec04d112a53ee1831698",
+    "pipe_process_guard": "07a3749d8c4b01d460446667dac8d4523947d5cb3eb1fe89bb2e3cb022b215ae",
+    "dispatch_bridge": "22f6db52f85da512e95007332da249e5e34a5d55707568d206d9cc52834242e1",
+    "package_manifest": "d0d9497011334f72887ea09cf62d4361dfd758dea84aa8c944cdb31e74476864"
+  },
+  "evidence_storage": "private_local",
+  "independent_evidence_review": "passed_local_and_native_evidence_review",
+  "integrity_algorithm": "sha256",
+  "manifest_digest_serialization": "compact_json"
+}
