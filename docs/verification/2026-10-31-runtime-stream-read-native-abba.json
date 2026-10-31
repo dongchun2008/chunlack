@@ -9,7 +9,6 @@
     "oldUnusedUnitsReused": 0
   },
   "resources": {
-    "wallSeconds": 7.1820685332641006,
     "memoryPeakBytes": 16175104,
     "memoryLimitBytes": 201326592,
     "cpuQuotaPercent": 10,
@@ -20,7 +19,9 @@
     "privateNetwork": true,
     "uid": 996,
     "gid": 987,
-    "zeroCapabilities": true
+    "zeroCapabilities": true,
+    "controllerDispatchThroughCleanupSeconds": 7.1820685332641006,
+    "systemdMainProcessDurationSeconds": null
   },
   "checks": {
     "hostKeyVerified": true,
@@ -31,7 +32,8 @@
     "kernelGuardsPassed": true,
     "mainPidAtExit": 0,
     "protectedServiceComparisonPassed": true,
-    "cleanupErrors": 0
+    "cleanupErrors": 0,
+    "protectedComparisonScope": "Four services: PID, restart count and active state only; not configuration or database integrity."
   },
   "samples": [
     {
@@ -80,5 +82,11 @@
     "This is not a successful full release or rollback rehearsal.",
     "One ABBA sequence is not a statistical benchmark.",
     "The production-delivery objective remains incomplete."
-  ]
+  ],
+  "independentReview": {
+    "acceptedForReadOnlyDiagnostic": true,
+    "noDeterminateP1P2Found": true,
+    "performanceBenefitNotProven": true,
+    "preciseMainProcessDurationNotCollected": true
+  }
 }
