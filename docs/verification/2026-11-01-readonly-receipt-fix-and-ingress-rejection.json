@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-01",
+  "stage": "readonly-receipt-retention-fix-and-additional-collection",
+  "productionDeliveryComplete": false,
+  "receiptFix": {
+    "finding": "parsed_transport_lost_on_assertion_failure",
+    "status": "closed",
+    "independentReviewPassed": true,
+    "runnerSha256": "c0a0a3f3ad8ca701e8640f0fc09478c5e85f1d79cdfdc3d764b5f0bf7e4c7d68",
+    "collectorAndPayloadUnchanged": true,
+    "oldFailedArtifactsPreserved": true
+  },
+  "simulation": {
+    "runnerBranchesPassed": 7,
+    "covered": [
+      "success",
+      "remote rejection",
+      "host verification flag rejection",
+      "nonzero remote exit",
+      "invalid remote JSON",
+      "helper failure with stdout",
+      "SSH timeout"
+    ],
+    "networkCalls": 0,
+    "filesWritten": 0
+  },
+  "additionalCollection": {
+    "approvedAttempts": 1,
+    "usedAttempts": 1,
+    "automaticRetry": false,
+    "accepted": false,
+    "stage": "verify_remote",
+    "hostKeyVerified": true,
+    "remoteExitCode": 0,
+    "remoteErrorType": "RuntimeError",
+    "remoteErrorCode": "ingress_baseline_not_exact",
+    "parsedTransportRetained": true,
+    "parsedRemoteReceiptRetained": true,
+    "dependencyScanReached": false,
+    "dependencyFingerprintObtained": false,
+    "postCollectionBaselineEvidenceAvailable": false,
+    "unitsStarted": 0,
+    "productionPublication": false
+  },
+  "interpretation": {
+    "confirmed": "Current ingress bytes failed the pinned preparer's exact baseline requirement.",
+    "notEstablished": [
+      "Which ingress fragment differs",
+      "Whether current ingress is already partly or fully updated",
+      "Whether the first attempt failed for the same reason",
+      "Dependency stability or application-account readability"
+    ],
+    "baselineGuardBypassed": false,
+    "currentIngressModified": false
+  },
+  "nextProposedScope": "Separately approved bounded read-only ingress diagnosis returning only a digest, exact known-fragment occurrence counts and redacted structure; do not emit configuration body or mutate ingress.",
+  "furtherCollectionApproved": false,
+  "productionReady": false,
+  "credentialsChanged": false,
+  "authorizationsChanged": false,
+  "relayChanged": false
+}
