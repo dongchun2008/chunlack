@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "status": "local-fixed-profile-reader-safety-review-pending",
+  "purpose": "Read only completed native status profiling counters before choosing an optimization.",
+  "confirmedNativeFinding": {
+    "limitingBudget": "55-second forward window",
+    "listenerStatusOrdinal": 2,
+    "phase": "response",
+    "effectiveTimeoutSeconds": 1.502533806487918
+  },
+  "readerScope": {
+    "fixedFailedUnitAndInvocation": true,
+    "anchoredOwnedReleaseDirectory": true,
+    "fixedProfileFilenamePattern": true,
+    "fileCountMaximum": 8,
+    "bytesPerFileMaximum": 2097152,
+    "maximumRowsPerFile": 4096,
+    "noRawRequestBodiesOrPathsReturned": true
+  },
+  "localSafetyChanges": {
+    "explicitLinuxRootAndPosixFlagGuard": true,
+    "enumerationErrorsFailClosed": true,
+    "symlinkGroupsRejected": true,
+    "primaryAndCleanupErrorsKeptSeparate": true
+  },
+  "tests": {
+    "passed": 9,
+    "failed": 0,
+    "ownershipAndPosixFlagsMocked": true,
+    "nativeReaderExecuted": false
+  },
+  "safety": {
+    "additionalRemoteConnections": 0,
+    "newLinuxUnits": 0,
+    "priorBatchUsed": 2,
+    "priorBatchMaximum": 3,
+    "remainingUnitNotUsed": true,
+    "productionPublished": false,
+    "productionServicesChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false
+  },
+  "next": "Finish independent safety review before a bounded read of the fixed stopped scene; do not launch or retry a native unit.",
+  "deliveryComplete": false
+}
