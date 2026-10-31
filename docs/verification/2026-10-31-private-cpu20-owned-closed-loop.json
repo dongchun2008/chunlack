@@ -1,0 +1,109 @@
+{
+  "date": "2026-10-31",
+  "status": "passed",
+  "scope": "Private owned CPU20 prepare/success/rollback rehearsal; not deployed CPU10 production route",
+  "quota": {
+    "approved": 3,
+    "used": 3,
+    "retries": 0,
+    "oldUnusedUnitsReused": false
+  },
+  "localValidation": {
+    "scopeRegressionCases": 17,
+    "actualRequestBindingChecksPassed": true,
+    "pythonSourcesCompiled": 22,
+    "phaseSpecificOfflineAuditPassed": true,
+    "independentEvidenceReviewPassed": true,
+    "fullProductRegressionRerun": false
+  },
+  "policy": {
+    "productionRequestedCpuPercent": 10,
+    "privateExecutionCpuPercent": 20,
+    "deployedLauncherChanged": false,
+    "productionEntryAndLauncherSourceUnchanged": true,
+    "proofExplicitlyRecordsPolicyDifference": true
+  },
+  "resources": {
+    "memoryLimitBytes": 201326592,
+    "cpuQuotaPercent": 20,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasksMax": 32,
+    "swapLimitBytes": 0,
+    "privateNetwork": true,
+    "businessUid": 996,
+    "businessGid": 987,
+    "businessEffectiveCapabilities": 0,
+    "existingControllerCapabilityBoundaryPreserved": true,
+    "noNewPrivilegesPreserved": true
+  },
+  "windows": {
+    "forwardLimitSeconds": 55,
+    "cumulativeRecoveryLimitSeconds": 120,
+    "prepareUnitLimitSeconds": 90,
+    "successAndRollbackUnitLimitSeconds": 180
+  },
+  "phases": [
+    {
+      "phase": "prepare",
+      "unitElapsedSeconds": 36.317417,
+      "memoryPeakBytes": 97517568,
+      "swapPeakBytes": 0,
+      "perDatabaseCopyCompatibilityPassed": true,
+      "accepted": true,
+      "processesCleared": true,
+      "settled": true
+    },
+    {
+      "phase": "success",
+      "unitElapsedSeconds": 58.816647,
+      "memoryPeakBytes": 114008064,
+      "swapPeakBytes": 0,
+      "transactionStatus": "released",
+      "maintenanceWindowSeconds": 36.197,
+      "fullFingerprintScansCompleted": 6,
+      "validationCallsCompleted": 3,
+      "transportTimeout": false,
+      "originalDatabaseRowsAndSchemasRetained": true,
+      "accepted": true,
+      "processesCleared": true,
+      "settled": true
+    },
+    {
+      "phase": "rollback",
+      "unitElapsedSeconds": 64.585232,
+      "memoryPeakBytes": 110084096,
+      "swapPeakBytes": 0,
+      "transactionStatus": "rolled_back",
+      "transactionElapsedSeconds": 41.89,
+      "expectedFailureInjected": true,
+      "lateWritesVerified": true,
+      "originalDatabaseRowsAndSchemasRetained": true,
+      "fullFingerprintScansCompleted": 6,
+      "validationCallsCompleted": 3,
+      "transportTimeout": false,
+      "accepted": true,
+      "processesCleared": true,
+      "settled": true
+    }
+  ],
+  "evidenceBoundaries": {
+    "unitAndTransactionClocksDistinguished": true,
+    "missingRollbackFieldsNotFabricated": true,
+    "protectedBaselineScope": "Four existing services and three protected configuration baselines",
+    "perDatabaseCopyOnly": true,
+    "applicationConsistentCrossDatabaseSnapshotClaimed": false
+  },
+  "notPerformed": {
+    "productionPublication": true,
+    "existingServiceRestart": true,
+    "credentialChange": true,
+    "grantChange": true,
+    "dnsChange": true,
+    "publicPortChange": true,
+    "relayChange": true,
+    "realModelCall": true,
+    "externalAgentCall": true
+  },
+  "nextGate": "Align and validate a separately frozen production launcher candidate with the proven CPU20 execution policy, then prepare a separately approved production maintenance and recovery plan. This rehearsal does not validate the unchanged deployed CPU10 route."
+}
