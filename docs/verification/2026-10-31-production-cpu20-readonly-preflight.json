@@ -1,0 +1,55 @@
+{
+  "date": "2026-10-31",
+  "stage": "production-cpu20-source-candidate-readonly-preflight",
+  "accepted": true,
+  "productionDeliveryComplete": false,
+  "correction": {
+    "priorNewlineDefectClaim": "display-escaping misinterpretation; withdrawn",
+    "sourceModified": false,
+    "actualRunnerReceiptRoundTripCasesPassed": 2,
+    "successAndFailureCovered": true,
+    "mockedNetworkOnly": true
+  },
+  "candidate": {
+    "sourceOnly": true,
+    "deployable": false,
+    "activated": false,
+    "sourceFiles": 6,
+    "requestedExecutionCpuPercent": 20,
+    "deployedLauncherCpuPercent": 10,
+    "deployedLauncherChanged": false,
+    "legacyInputContractPreserved": true,
+    "independentSourceReviewPassed": true,
+    "nativeProduction20BackendAcceptance": false
+  },
+  "readonlyPreflight": {
+    "completed": true,
+    "deployedCodeFilesVerified": 57,
+    "directoryOwnershipAndModesVerified": true,
+    "backupFreeBytes": 28640026624,
+    "backupPreparationFloorBytes": 536870912,
+    "actualReleaseManifestBackupSizingStillRequired": true,
+    "compatibilityProofFreshAtObservation": true,
+    "compatibilityProofRemainingSecondsAtObservation": 336.864,
+    "proofValidityMustBeRecheckedForMaintenance": true,
+    "perDatabaseCopyOnly": true,
+    "crossDatabaseApplicationConsistentSnapshot": false,
+    "protectedBaselineUnchanged": true,
+    "scope": "four protected service baselines and three protected configuration baselines; not universal integrity",
+    "blocksAtObservation": [],
+    "candidateUploaded": false,
+    "unitsStarted": 0,
+    "productionPublished": false,
+    "automaticRetry": false
+  },
+  "maintenanceRequirements": [
+    "Separate explicit maintenance approval before any production switch",
+    "Freeze a complete deployable candidate and verify exact hashes",
+    "Recheck compatibility proof freshness; expired evidence cannot authorize publication",
+    "Size and verify an application-consistent maintenance backup; per-database rehearsal copies are not equivalent",
+    "Preserve 55-second forward and 120-second total recovery limits, one-shot gate and rollback restrictions",
+    "Do not overwrite new writes or remove pre-existing locks",
+    "No changes to credentials, grants, DNS, ports, legacy LACK or Relay"
+  ],
+  "publicationApproved": false
+}
