@@ -1,0 +1,102 @@
+{
+  "date": "2026-10-31",
+  "scope": "One separately approved read-only CPU20 original-function diagnostic",
+  "status": "passed",
+  "quota": {
+    "approved": 1,
+    "used": 1,
+    "retries": 0,
+    "oldUnusedQuotaReused": false
+  },
+  "resources": {
+    "cpuQuotaPercent": 20,
+    "nice": 10,
+    "cpuWeight": 10,
+    "memoryLimitBytes": 201326592,
+    "memoryPeakBytes": 14483456,
+    "swapPeakBytes": 0,
+    "tasksMax": 32,
+    "privateNetwork": true,
+    "uid": 996,
+    "gid": 987,
+    "zeroCapabilities": true,
+    "controllerDispatchThroughCleanupSeconds": 3.642919926904142,
+    "systemdMainProcessDurationSeconds": null
+  },
+  "checks": {
+    "hostKeyVerified": true,
+    "remoteExitCode": 0,
+    "mainPidAtExit": 0,
+    "allFourFullDigestsMatched": true,
+    "bytesPerDigest": 51953826,
+    "readCallsPerDigest": 794,
+    "originalFunctionOnly": true,
+    "kernelGuardsPassed": true,
+    "protectedServiceStateComparisonPassed": true,
+    "cleanupErrors": 0
+  },
+  "samples": [
+    {
+      "elapsedMs": 708.732051,
+      "cpuUsageUs": 148269,
+      "userUs": 137845,
+      "systemUs": 10425,
+      "periods": 7,
+      "throttledPeriods": 7,
+      "throttledUs": 561919
+    },
+    {
+      "elapsedMs": 782.03493,
+      "cpuUsageUs": 141849,
+      "userUs": 135164,
+      "systemUs": 6685,
+      "periods": 8,
+      "throttledPeriods": 8,
+      "throttledUs": 640656
+    },
+    {
+      "elapsedMs": 707.970508,
+      "cpuUsageUs": 148460,
+      "userUs": 135925,
+      "systemUs": 12535,
+      "periods": 7,
+      "throttledPeriods": 7,
+      "throttledUs": 559865
+    },
+    {
+      "elapsedMs": 802.082662,
+      "cpuUsageUs": 161836,
+      "userUs": 153157,
+      "systemUs": 8678,
+      "periods": 8,
+      "throttledPeriods": 8,
+      "throttledUs": 640658
+    }
+  ],
+  "analysis": {
+    "meanElapsedMs": 750.20503775,
+    "priorCpu10OriginalMeanMs": 1505.9300560000001,
+    "crossRunComparisonNotControlledAB": true,
+    "cpuQuotaIsMaterialLatencyContributorInThisSample": true,
+    "throttleCountersIncludeAdjacentSamplingOverhead": true,
+    "fullReleaseWindowSuccessProven": false,
+    "productionReadinessProven": false
+  },
+  "unchanged": {
+    "deployedFormalLauncherCpuQuotaPercent": 10,
+    "productionServices": true,
+    "credentials": true,
+    "grants": true,
+    "dns": true,
+    "ports": true,
+    "relay": true
+  },
+  "notPerformed": {
+    "productionPublication": true,
+    "lackOrCaddyStart": true,
+    "businessDatabaseRead": true,
+    "modelCall": true,
+    "externalAgentCall": true
+  },
+  "nextGate": "Separately approve a private rehearsal CPU policy change and a fresh full prepare/success/rollback validation before considering a production maintenance window."
+}
