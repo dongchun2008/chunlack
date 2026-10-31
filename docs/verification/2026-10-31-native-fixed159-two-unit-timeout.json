@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "scope": "Isolated native rehearsal only; no production publication",
+  "overallStatus": "failed-and-stopped",
+  "priorStagingFailurePreserved": true,
+  "newExclusiveDirectoryUsed": true,
+  "freshReadOnlyPreflight": {
+    "accepted": true,
+    "productionSourceFilesVerified": 57,
+    "protectedServicesActive": 4
+  },
+  "staging": {
+    "accepted": true,
+    "files": 159,
+    "unitsStarted": 0
+  },
+  "quota": {
+    "maximum": 3,
+    "used": 2,
+    "unused": 1,
+    "unusedNotRepurposed": true,
+    "automaticRetry": false,
+    "stopOnFirstFailure": true
+  },
+  "resources": {
+    "runtimeMaxSecondsPerUnit": 90,
+    "memoryMaxBytes": 201326592,
+    "swapMaxBytes": 0,
+    "tasksMax": 32,
+    "nice": 10,
+    "cpuWeight": 10,
+    "privateNetwork": true,
+    "allChildrenCounted": true,
+    "cpuPercent": {
+      "prepare": 20,
+      "success": 10,
+      "rollback": 10
+    },
+    "formalLauncherCpuPolicyChanged": false
+  },
+  "prepare": {
+    "status": "passed",
+    "actualElapsedSeconds": 36.194625,
+    "actualExitStatus": 0,
+    "peakMemoryBytes": 97886208,
+    "swapPeakBytes": 0,
+    "cpuUsageSeconds": 7.245291,
+    "candidateAndPreviousBootChecksPassed": true,
+    "realTemporaryApplicationAndCaddyUsed": true,
+    "tlsAndPrivateNodeBoundariesChecked": true,
+    "perDatabaseCopyOnly": true,
+    "crossDatabaseApplicationConsistencyClaimed": false,
+    "cgroupEmpty": true,
+    "ownExitedUnitSettled": true,
+    "trustedControllerCopyBindingAccepted": true
+  },
+  "success": {
+    "status": "failed",
+    "systemdResult": "timeout",
+    "mainPid": 0,
+    "cgroupEmpty": true,
+    "successfulReceiptPresent": false,
+    "actualExitStatus": null,
+    "actualElapsedSeconds": null,
+    "missingExitTimestampNotFabricated": true,
+    "peakMemoryBytes": 109932544,
+    "swapPeakBytes": 0,
+    "cpuUsageSeconds": 9.038264,
+    "timing": {
+      "records": 33,
+      "bytes": 4186,
+      "lastRecordedSeconds": 66.40466678,
+      "pendingCalls": 0,
+      "groups": {
+        "start.rpc": {
+          "started": 4,
+          "completed": 4,
+          "durationsSeconds": [
+            15.296575315,
+            8.901636793,
+            11.289663957,
+            8.400653873
+          ]
+        },
+        "gate.load": {
+          "started": 1,
+          "completed": 1,
+          "durationsSeconds": [
+            0.302232248
+          ]
+        },
+        "validate_prepared": {
+          "started": 3,
+          "completed": 3,
+          "durationsSeconds": [
+            5.393586258,
+            5.607108138,
+            5.702124261
+          ]
+        },
+        "dependency_fingerprint": {
+          "started": 6,
+          "completed": 6,
+          "durationsSeconds": [
+            2.405861796,
+            2.50367795,
+            2.603931708,
+            2.793552075,
+            2.604932111,
+            2.701678319
+          ]
+        },
+        "backend.start": {
+          "started": 2,
+          "completed": 2,
+          "durationsSeconds": [
+            11.291954889,
+            8.402818791
+          ]
+        }
+      },
+      "limitation": "Only instrumented calls are covered; absence of later records does not prove the exact timeout root cause."
+    }
+  },
+  "rollback": {
+    "status": "not-run",
+    "reason": "Stopped on failure of success phase"
+  },
+  "protection": {
+    "fourExistingServicesUnchanged": true,
+    "protectedConfigurationHashesUnchanged": true,
+    "existingServicesRestarted": false,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "failedDirectoriesOrLocksDeletedByThisRun": false,
+    "priorFailureDirectoryReused": false,
+    "coverage": "Four protected services: PID, restart count, active state; three protected configuration content SHA values. Not all production files, databases, or permission metadata."
+  },
+  "limitations": [
+    "The successful preparation stage does not prove successful formal switch or rollback.",
+    "Per-database copies are not an application-consistent cross-database snapshot.",
+    "The timeout root cause is not established by the final instrumented record.",
+    "The configured 90-second runtime limit is not substituted for a missing measured exit duration."
+  ],
+  "nextStep": "Offline-only diagnosis of the uncovered post-start and cleanup phases; no remaining unit use or remote retry.",
+  "independentReview": {
+    "status": "passed-limited-read-only-evidence-review",
+    "fullRehearsalAcceptance": false,
+    "copyHashesIndependentlyRecomputedByReviewer": false,
+    "rootCauseEstablished": false
+  }
+}
