@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "scope": "local-only-scandir-fingerprint-prototype",
+  "status": "limited-local-checks-passed-not-production-equivalence",
+  "productionWiring": false,
+  "productionPublication": false,
+  "sshConnectionsThisStage": 0,
+  "newLinuxUnitsUsed": 0,
+  "checks": {
+    "successfulPathAndBudgetChecks": 20,
+    "newDifferentialPinningAndRealLinkChecks": 8,
+    "finalFailures": 0,
+    "skipped": 0,
+    "priorSuitesRerun": false,
+    "initialExceptionTypeMismatchPreservedAndCorrected": true,
+    "sourcePinsVerifiedBeforeBoundaryModuleExecution": true,
+    "realFilesystemLinkCases": 6,
+    "platform": "win32"
+  },
+  "semantics": {
+    "allFileBytesReadEveryCall": true,
+    "cache": false,
+    "sixPrototypeCallsCauseSixFreshReads": true,
+    "canonicalFingerprintMatchesOriginalOnReadableFixtures": true,
+    "enumerationErrorPolicy": {
+      "original": "os.walk-may-skip-failed-subtree",
+      "prototype": "stop-on-enumeration-error",
+      "sameInjectedFaultTested": true,
+      "differenceResolved": false,
+      "fullyEquivalentClaimed": false,
+      "adoptionRequiresSeparateReview": true
+    }
+  },
+  "syntheticComparison": {
+    "files": 800,
+    "bytes": 6969588,
+    "fullFingerprintEqual": true,
+    "originalSeconds": 27.0023897,
+    "prototypeSeconds": 0.235915,
+    "samplesPerImplementation": 1,
+    "originalExecutedFirst": true,
+    "filesystemCacheAndAntivirusEffectsNotControlled": true,
+    "speedupRatioClaimed": false,
+    "linuxPerformanceProven": false
+  },
+  "budgetInterpretation": {
+    "maintenanceStartsAfterPreflight": true,
+    "forwardMaintenanceSeconds": 55,
+    "totalRecoverySeconds": 120,
+    "priorNativeSixScanSeconds": 43.800432387,
+    "preflightScanSecondsAreNotOutageSeconds": true,
+    "overall90SecondIsolatedRehearsalBudgetStillUnproven": true
+  },
+  "review": {
+    "scope": "static-scanner-parity-only",
+    "staticReadonlyReadableTreeSecurityRelaxationFound": false,
+    "enumerationDifferenceRetainedExplicitly": true,
+    "realLinkGapFollowedBySixPassingLocalTraversalChecks": true,
+    "nativeEquivalenceUnproven": true
+  },
+  "bindings": {
+    "prototypeSha256": "3a3cd87c184ed23cbcf24be06b39578991c350795982515bcf025f91eda2852d",
+    "originalReferenceSha256": "5c9cf83f7c763a7e216feb865849c7eba761efa7f9dc40b990f1f67f0e69b18d",
+    "unchangedGateSha256": "4cb0ee578acc4808664a6625332351bcde6b247523a0df508446220c2270e06a"
+  },
+  "next": {
+    "newLinuxComparisonUnitApprovalRequested": true,
+    "proposedMaximumUnits": 1,
+    "proposedFullScans": 4,
+    "productionIntegrationNotAuthorizedByDiagnostic": true
+  },
+  "protection": {
+    "productSourceChanged": false,
+    "deployedControllerChanged": false,
+    "existingServicesChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "businessDatabaseAccessed": false,
+    "credentialContentsRead": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false
+  }
+}
