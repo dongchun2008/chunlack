@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "status": "historical-readonly-comparison-not-production-acceptance",
+  "newLinuxUnits": 0,
+  "testsRerun": false,
+  "newBatchQuota": {
+    "used": 2,
+    "maximum": 3,
+    "unusedNotReallocated": 1
+  },
+  "historicalBatch": {
+    "tag": "b9614d5b9d4b",
+    "previouslyAccepted": true,
+    "cpuPercent": 20,
+    "loggedTransactionToPreStopCheckpointSeconds": 29.71728,
+    "loggedBackendPreflightSeconds": 10.602732,
+    "loggedTransactionCompletedSeconds": 67.508709,
+    "existingStageRecords": 56
+  },
+  "failedBatch": {
+    "tag": "76b683259240",
+    "cpuPercent": 10,
+    "loggedTransactionToPreStopCheckpointSeconds": 58.707282,
+    "loggedBackendPreflightSeconds": 21.09902,
+    "lastRecordedStage": "backend.start",
+    "lastRecordedEvent": "started",
+    "existingStageRecords": 30,
+    "successAccepted": false,
+    "rollbackNotStarted": true
+  },
+  "comparison": {
+    "sharedPrefixStageLabelsAndEventsEqual": true,
+    "sharedGateReferenceAndOwnedBackendBytesEqual": true,
+    "preStopDurationRatio": 1.975527,
+    "backendPreflightDurationRatio": 1.989961,
+    "controlledAB": false,
+    "independentDependencyScanTimingAvailable": false
+  },
+  "limitations": [
+    "Historical and current stages share labels and selected module bytes, but the overall source bundle, run time, and database-copy state are not a controlled A/B.",
+    "Stage-log elapsed values use their own diagnostic start, not the systemd unit start.",
+    "The slower pre-stop validation region remains a measurement target, not a proved sole cause.",
+    "The prior successful owned rehearsal cannot satisfy the current formal 10 percent CPU gate.",
+    "No new runtime, functional, rollback, or production acceptance is claimed."
+  ],
+  "nextScopeStillPending": "Local bounded call timing and new targeted checks only; retain all six scans and security checks. No passed test reruns, Linux quota increase, or publication.",
+  "productionPublication": false,
+  "productionServicesChanged": false,
+  "credentialsChanged": false,
+  "grantsChanged": false,
+  "relayChanged": false
+}
