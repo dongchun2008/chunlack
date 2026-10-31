@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "scope": "Private rehearsal envelope and evidence boundaries; local-only progress",
+  "status": "incomplete-independent-review-pending",
+  "reproducedFindings": {
+    "configurationDelayCouldConsumeRecoveryReserve": true,
+    "foreignControlGroupWasNotRejected": true
+  },
+  "localChanges": {
+    "recheckReserveAtActualWindowBegin": true,
+    "requireActualControlGroupMatchBeforeLogRead": true,
+    "bindDeadlineToHashedPreLaunchMonotonicAnchor": true,
+    "missingFutureOrExpiredAnchorRejected": true
+  },
+  "verification": {
+    "boundaryTests": {
+      "passed": 8,
+      "failed": 0
+    },
+    "launchAnchorTests": {
+      "passed": 8,
+      "failed": 0
+    },
+    "actual159FileStageTests": {
+      "passed": 12,
+      "failed": 0
+    },
+    "fullApiEntryTests": {
+      "passed": 2,
+      "failed": 0
+    },
+    "note": "These selected local checks are not a full regression or native acceptance."
+  },
+  "integration": {
+    "packageFiles": 159,
+    "changedPackageFiles": [
+      "source/harness/formal_owned_adapter.py",
+      "source/harness/formal_integration_control.py"
+    ],
+    "databaseBytesUnchanged": true,
+    "formalEntryAndLauncherUnchanged": true,
+    "rebindAndManifestUpdated": true,
+    "completeBindingRegressionStillRequired": true
+  },
+  "retainedFailures": [
+    "Malformed newline in diagnostic script; no valid test result",
+    "Diagnostic fixture attempted to consume stdin twice; no valid test result",
+    "Two deterministic boundary counterexamples",
+    "Windows long-path fixture failure",
+    "Short-path fixture missing API file"
+  ],
+  "approval": {
+    "maximumLinuxUnits": 3,
+    "usedLinuxUnits": 0,
+    "prepareSeconds": 90,
+    "successAndRollbackSeconds": 180,
+    "memoryMiB": 192,
+    "cpuCeilingPercent": 20,
+    "formalCpuPercent": 10,
+    "tasksMax": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "serial": true,
+    "stopOnFailure": true,
+    "noAutomaticRetry": true,
+    "oldUnusedQuotaNotRepurposed": true
+  },
+  "safety": {
+    "remoteConnections": 0,
+    "productionPublished": false,
+    "productionServicesChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsOrPortsChanged": false,
+    "relayChanged": false,
+    "realModelsOrExternalAgentsCalled": false
+  },
+  "nextGate": "Independent review, complete binding regressions, then fresh read-only preflight before any approved native unit.",
+  "deliveryComplete": false
+}
