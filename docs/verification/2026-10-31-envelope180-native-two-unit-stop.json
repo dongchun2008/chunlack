@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "scope": "New isolated native rehearsal with conservative pre-launch deadline",
+  "status": "stopped-after-second-unit-failure",
+  "quota": {
+    "used": 2,
+    "maximum": 3,
+    "unusedUnitNotRepurposed": true,
+    "automaticRetry": false
+  },
+  "prepare": {
+    "accepted": true,
+    "elapsedSeconds": 36.328286,
+    "peakMemoryBytes": 98349056,
+    "swapPeakBytes": 0,
+    "productionCopyAccepted": true,
+    "protectedUnchanged": true,
+    "receiptPresent": true,
+    "ownExitedUnitSettled": true
+  },
+  "success": {
+    "accepted": false,
+    "elapsedSeconds": 103.87624,
+    "exitStatus": 2,
+    "peakMemoryBytes": 112709632,
+    "swapPeakBytes": 0,
+    "receiptPresent": true,
+    "transportClosed": true,
+    "cgroupEmpty": true,
+    "protectedUnchanged": true,
+    "transactionStatus": "recovery_requires_attention",
+    "error": "owned_transport_timeout",
+    "recoveryError": "owned_transport_outcome_uncertain",
+    "firstErrorStage": "backend.assert_listener",
+    "firstErrorElapsedSeconds": 73.501814,
+    "completedDiagnosticRequests": 70,
+    "failedDiagnosticRequests": 0,
+    "note": "Completed HTTP diagnostic requests do not establish listener or business acceptance."
+  },
+  "rollback": {
+    "started": false
+  },
+  "preservation": {
+    "failedDirectoryAndWriteLocksRetained": true,
+    "productionPublished": false,
+    "existingServicesChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsOrPortsChanged": false,
+    "relayChanged": false,
+    "realModelOrExternalAgentCalls": 0
+  },
+  "next": "Read-only review of fixed failure evidence; no additional native unit or retry.",
+  "deliveryComplete": false
+}
