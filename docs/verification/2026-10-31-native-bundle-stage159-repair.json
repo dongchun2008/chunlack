@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "scope": "Private native rehearsal bundle staging; no production publication",
+  "status": "stopped-before-first-isolated-unit",
+  "initialLocalChecks": {
+    "assembly": 22,
+    "pythonBindings": 10,
+    "passed": 32,
+    "limitation": "These checks did not execute the embedded staging verifier."
+  },
+  "failure": {
+    "phase": "remote-staging-verification",
+    "code": "owned_stage_manifest_count",
+    "localExitCode": 2,
+    "expectedFiles": 158,
+    "actualFiles": 159,
+    "isolatedUnitsStarted": 0,
+    "failedRemoteDirectoryPreserved": true,
+    "automaticRemoteRetry": false
+  },
+  "localRepair": {
+    "newUnuploadedCandidate": true,
+    "changes": [
+      "Replace the single embedded manifest count requirement from 158 to 159.",
+      "Recompute embedded staging source digest and downstream API and bridge digest bindings."
+    ],
+    "digests": {
+      "stage": "9b6ddf17dec65e48d1b9d9015de3737f5044e56b90508afa24be7c36cb37977d",
+      "rebindModule": "1bf4f45f52bb1861b7c198ba0fd43174e411c997eb47723da2f8dd3e6f9a6eec",
+      "api": "f55efeff885abeb132fd442ab13be2c224d4db830c5925d0b03af38cacd56d0e",
+      "bridge": "db8813d1519694ee921af73212db8d58791cccf17394c9b89791c87b13b13ec4"
+    },
+    "regression": {
+      "tests": 12,
+      "passed": 12,
+      "failed": 0,
+      "skipped": 0,
+      "processExitCode": 0,
+      "checks": [
+        "Original count rejects the actual 159-file package",
+        "Actual full-file hash verification accepts all 159 files",
+        "Missing and extra file counts rejected",
+        "Changed bytes rejected",
+        "Traversal paths and invalid digests rejected",
+        "Real symbolic links and hard links rejected",
+        "Directories rejected as files",
+        "Exact count-only source transformation verified",
+        "Candidate API embeds and pins the repaired staging source"
+      ]
+    },
+    "independentReview": {
+      "status": "passed-limited-read-only-review",
+      "limitation": "Not a Linux setup/finalize or full native rehearsal acceptance."
+    }
+  },
+  "postFailureReadOnlyCheck": {
+    "accepted": true,
+    "hostKeyVerified": true,
+    "servicesActive": 4,
+    "servicePidsAndRestartCountsUnchanged": true,
+    "protectedConfigurationHashesUnchanged": true,
+    "isolatedUnitsStarted": 0
+  },
+  "budget": {
+    "maximumUnits": 3,
+    "usedUnits": 0,
+    "secondsPerUnit": 90,
+    "memoryBytes": 201326592,
+    "cpuMaxPercent": 20,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasksMax": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "allChildrenCounted": true,
+    "serial": true,
+    "stopOnFirstFailure": true,
+    "automaticRetry": false,
+    "formalLauncherCpuPercentUnchanged": 10,
+    "oldQuotasNotRepurposed": true
+  },
+  "boundaries": {
+    "published": false,
+    "existingServicesRestarted": false,
+    "deployedControllersChanged": false,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "businessDatabaseQueriesThisStage": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "nextGate": "Explicit approval to resume staging in a new exclusive directory and use the original unused maximum of three units; fresh read-only preflight required."
+}
