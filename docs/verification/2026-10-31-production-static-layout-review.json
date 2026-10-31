@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-31",
+  "stage": "local-production-payload-and-static-layout",
+  "productionDeliveryComplete": false,
+  "archive": {
+    "productFiles": 66,
+    "controlFiles": 8,
+    "productDifferencesFromBaseline": 20,
+    "manifestSha256": "c0ca08d6f03e1e6af3b46259a031239a24c6c89c8f5a4e22102ea8208f9b4c15",
+    "targetedChecksPassed": 12,
+    "independentSourceAssemblyReviewPassed": true,
+    "fixturesIncluded": false,
+    "databasesIncluded": false,
+    "credentialsIncluded": false,
+    "installedDependenciesIncluded": false
+  },
+  "staticLayout": {
+    "files": 6,
+    "payloadFilesHashed": 74,
+    "controllerAndEntryPinsClosedAtCheck": true,
+    "targetedContractChecksPassed": 7,
+    "independentReviewAccepted": false,
+    "openFinding": {
+      "severity": "P2",
+      "code": "verified_bytes_reread_before_copy",
+      "detail": "The main assembly flow rereads six files after validating their earlier bytes. Contract-only tests do not prove the copied bytes equal the verified bytes.",
+      "requiredCorrection": "Reuse verified byte buffers during mapping and cover the main flow with a deterministic source-change regression."
+    }
+  },
+  "requiredPreparedFilesMissing": [
+    "Caddyfile.final",
+    "Caddyfile.loopback",
+    "candidate-config.json",
+    "expected-code.json",
+    "schema-compatibility-report.json"
+  ],
+  "otherGatesPending": [
+    "production-bound settings and preparedHashes",
+    "installed dependency fingerprint and application readability",
+    "fresh compatibility evidence",
+    "application-consistent maintenance backup",
+    "native formal backend acceptance",
+    "separate maintenance approval"
+  ],
+  "productionReady": false,
+  "activated": false,
+  "publicationApproved": false,
+  "linuxUnitsStarted": 0,
+  "vpsConnections": 0,
+  "realModelCalls": 0,
+  "externalAgentCalls": 0
+}
