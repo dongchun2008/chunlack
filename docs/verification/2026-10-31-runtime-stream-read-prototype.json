@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "status": "bounded-stream-read-prototype-native-comparison-not-yet-authorized",
+  "nativeReadOnlyProfiles": {
+    "accepted": true,
+    "profilesRead": 2,
+    "newLinuxUnits": 0,
+    "cgroupEmpty": true,
+    "protectedUnchanged": true,
+    "successfulRoundStatusRows": 8,
+    "statusElapsedMsRange": [
+      1408.303708,
+      1604.145121
+    ],
+    "runtimeBytesHashedPerStatus": 51953826,
+    "runtimeHashElapsedMsRange": [
+      1401.001798,
+      1597.168244
+    ],
+    "note": "Observed fixed-scene profiling counters; does not establish CPU as sole cause or prove an optimized workflow will pass."
+  },
+  "prototype": {
+    "onlyChange": "Stream read buffer from 65536 to 1048576 bytes",
+    "fullByteHashPreserved": true,
+    "metadataChecksPreserved": true,
+    "hashFenceCountUnchanged": true,
+    "noCrossFenceCache": true,
+    "noRequestTimeoutOrRetryChanges": true
+  },
+  "localComparison": {
+    "platform": "Windows",
+    "fixtureBytes": 16777216,
+    "baselineReadCalls": 257,
+    "candidateReadCalls": 17,
+    "baselineElapsedMs": [
+      34.6573,
+      36.0063,
+      34.8271
+    ],
+    "candidateElapsedMs": [
+      32.1528,
+      31.886,
+      32.2664
+    ],
+    "temporaryPayloadDeleted": true,
+    "noNativeSpeedupClaim": true
+  },
+  "localBoundaryChecks": {
+    "passed": 15,
+    "failed": 0,
+    "metadataAndPosixFlagsSimulated": true
+  },
+  "requestedNextGate": {
+    "maximumNewReadOnlyUnits": 1,
+    "authorized": false,
+    "seconds": 90,
+    "memoryMiB": 192,
+    "cpuPercent": 10,
+    "tasksMax": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "noLackOrCaddyStartup": true,
+    "noBusinessDatabaseAccess": true
+  },
+  "safety": {
+    "previousBatchUsed": 2,
+    "previousBatchMaximum": 3,
+    "remainingOldUnitNotUsed": true,
+    "productionPublished": false,
+    "existingServicesChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false
+  },
+  "deliveryComplete": false
+}
