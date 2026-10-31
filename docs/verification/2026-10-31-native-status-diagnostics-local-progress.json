@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "status": "local-diagnostic-integration-review-pending",
+  "nativeBatch": {
+    "used": 2,
+    "maximum": 3,
+    "stopped": true,
+    "remainingUnitNotUsed": true,
+    "automaticRetry": false
+  },
+  "confirmed": {
+    "legacyBackend90SecondDeadlineConflictReproduced": true,
+    "localAbsoluteDeadlineBindingImplemented": true,
+    "nativeFirstStatusTimeoutCauseStillUnknown": true
+  },
+  "localChecks": {
+    "deadlineBinding": {
+      "passed": 10,
+      "failed": 0
+    },
+    "transportTimeoutFacts": {
+      "passed": 8,
+      "failed": 0
+    },
+    "listenerScopeAndWhitelist": {
+      "passed": 9,
+      "failed": 0
+    },
+    "combinedRealMethodsWithMockedQueuesAndPorts": {
+      "passed": 7,
+      "failed": 0
+    }
+  },
+  "coverage": {
+    "threeListenerStatusOrdinals": true,
+    "writeAndResponseTimeoutsDistinguished": true,
+    "firstTimeoutNotOverwritten": true,
+    "bodyFieldsRejected": true,
+    "scopeReleasedAfterFailure": true,
+    "uncertainStartStillRejected": true,
+    "requestTimeoutNotIncreased": true
+  },
+  "limitations": [
+    "Queues and port inspection were mocked in combined tests.",
+    "New diagnostic sources are not yet bound into a complete native package.",
+    "Independent review is pending.",
+    "No original failure cause or production acceptance is claimed."
+  ],
+  "safety": {
+    "additionalRemoteConnections": 0,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "productionServicesChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false,
+    "oldFailureEvidencePreserved": true
+  },
+  "deliveryComplete": false
+}
