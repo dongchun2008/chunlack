@@ -1,0 +1,136 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "scope": "single-bounded-readonly-four-scan-native-comparison",
+  "status": "passed-with-stated-evidence-limits",
+  "productionPublication": false,
+  "productionWiring": false,
+  "approval": {
+    "freshApprovalReceived": true,
+    "newUnitsApproved": 1,
+    "newUnitsUsed": 1,
+    "retries": 0,
+    "previousQuotaReused": false
+  },
+  "limits": {
+    "seconds": 90,
+    "memoryBytes": 201326592,
+    "cpuPercent": 10,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasks": 32,
+    "swapMaxBytes": 0,
+    "privateNetwork": true,
+    "businessUid": 996,
+    "businessGid": 987,
+    "allCapabilitySetsZero": true,
+    "noNewPrivileges": true
+  },
+  "execution": {
+    "elapsedSeconds": 21.618198,
+    "fullScanSecondsIncludingMarkers": 20.101908473,
+    "result": "success",
+    "exitCode": 0,
+    "restarts": 0,
+    "mainPidZero": true,
+    "ownCgroupEmpty": true,
+    "sameInvocationAcrossRunningAndTerminalObservedByDriver": true,
+    "independentReviewFirstObservationIncluded": false,
+    "memoryPeakBytes": 10059776,
+    "swapPeakBytes": 0,
+    "cpuSeconds": 2.176905,
+    "ownExitedDiagnosticUnitStopCommandSucceeded": true,
+    "postStopPidZeroAndOwnCgroupEmptyAsserted": true,
+    "postInactiveSnapshotRecorded": false
+  },
+  "comparison": {
+    "fullScans": 4,
+    "cache": false,
+    "samples": [
+      {
+        "implementation": "original",
+        "tree": "current",
+        "pair": 1,
+        "seconds": 7.602878599
+      },
+      {
+        "implementation": "prototype",
+        "tree": "current",
+        "pair": 1,
+        "seconds": 2.498283439
+      },
+      {
+        "implementation": "prototype",
+        "tree": "candidate",
+        "pair": 2,
+        "seconds": 2.500378761
+      },
+      {
+        "implementation": "original",
+        "tree": "candidate",
+        "pair": 2,
+        "seconds": 7.500367674
+      }
+    ],
+    "completeFingerprintsEqual": true,
+    "filesPerScan": 4462,
+    "bytesPerScan": 38850588,
+    "sourceInventoriesUnchanged": true,
+    "sourceTreeFiles": {
+      "current": 57,
+      "candidate": 66
+    },
+    "causalSpeedupRatioClaimed": false,
+    "performanceGeneralizationClaimed": false,
+    "previousProductionReleaseFingerprintBindingClaimed": false
+  },
+  "timing": {
+    "records": 10,
+    "bytes": 1238,
+    "complete": true,
+    "errors": [],
+    "clockDomain": "linux-monotonic",
+    "allEventsWithinUnitInterval": true
+  },
+  "review": {
+    "status": "passed",
+    "scope": "raw-timing-terminal-resources-and-evidence-limits"
+  },
+  "remainingLimits": {
+    "enumerationErrorPolicyDiffers": true,
+    "fullSemanticEquivalenceUnproven": true,
+    "sixCallReleaseTransactionNotRehearsedWithPrototype": true,
+    "formalMaintenanceBudgetUnproven": true,
+    "productionReady": false
+  },
+  "bindings": {
+    "probeSha256": "f0c754d89eb510403d43e46366c0991daf8e7b793d9f7d30ca4307ef33251303",
+    "controllerSha256": "bb4d68ae64a52e649a640dd4d699ae593e6d0e8ab479882ca42f7c518739115e",
+    "planSha256": "b5e2d237b6da5ff920e0cb372ed573a5d47353a849c3fadc52a979a591f3e11d",
+    "manifestFileSha256": "67f297473db2b78b68a8e2a101e7989312834bac30c06185ddb48fa3f021ceb9",
+    "prototypeSha256": "3a3cd87c184ed23cbcf24be06b39578991c350795982515bcf025f91eda2852d",
+    "referenceSha256": "5c9cf83f7c763a7e216feb865849c7eba761efa7f9dc40b990f1f67f0e69b18d",
+    "helperSha256": "1456b44337263ef88e92b768a6bc5c3b1d8f5ca0e0e7eb8d8f352a3d33d2f3b0",
+    "timingLogSha256": "522460ea2070cf852ddfa1a861f0ad856ca75f72f24114b08b86ed6f91239467"
+  },
+  "protection": {
+    "existingServicesChecked": 4,
+    "allActiveBeforeAndAfter": true,
+    "mainPidsAndRestartCountsUnchanged": true,
+    "protectedConfigurationFiles": 3,
+    "configurationCheck": "metadata-only-no-content-read",
+    "metadataUnchanged": true,
+    "credentialContentsRead": false,
+    "businessDatabaseAccessed": false,
+    "lackOrCaddyProcessesStartedOrStopped": false,
+    "productCodeChanged": false,
+    "deployedControllersChanged": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  }
+}
