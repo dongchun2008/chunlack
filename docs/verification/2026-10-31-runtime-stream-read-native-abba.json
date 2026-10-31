@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-31",
+  "scope": "one approved read-only Linux ABBA runtime-hash unit",
+  "status": "passed-without-proven-performance-benefit",
+  "units": {
+    "approved": 1,
+    "used": 1,
+    "retries": 0,
+    "oldUnusedUnitsReused": 0
+  },
+  "resources": {
+    "wallSeconds": 7.1820685332641006,
+    "memoryPeakBytes": 16175104,
+    "memoryLimitBytes": 201326592,
+    "cpuQuotaPercent": 10,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasksMax": 32,
+    "swapPeakBytes": 0,
+    "privateNetwork": true,
+    "uid": 996,
+    "gid": 987,
+    "zeroCapabilities": true
+  },
+  "checks": {
+    "hostKeyVerified": true,
+    "exitCode": 0,
+    "completeBytesPerHash": 51953826,
+    "allFourDigestsMatched": true,
+    "identityAndMetadataChecksPreserved": true,
+    "kernelGuardsPassed": true,
+    "mainPidAtExit": 0,
+    "protectedServiceComparisonPassed": true,
+    "cleanupErrors": 0
+  },
+  "samples": [
+    {
+      "variant": "baseline",
+      "elapsedMs": 1604.528379,
+      "readCalls": 794
+    },
+    {
+      "variant": "candidate",
+      "elapsedMs": 1505.653909,
+      "readCalls": 51
+    },
+    {
+      "variant": "candidate",
+      "elapsedMs": 1499.991851,
+      "readCalls": 51
+    },
+    {
+      "variant": "baseline",
+      "elapsedMs": 1407.331733,
+      "readCalls": 794
+    }
+  ],
+  "analysis": {
+    "baselineMeanMs": 1505.9300560000001,
+    "candidateMeanMs": 1502.8228800000002,
+    "observedMeanReductionPercent": 0.2063293701868967,
+    "statisticallyProvenBenefit": false,
+    "singleSmallSample": true,
+    "includesSchedulingAndIoWait": true,
+    "formalReleaseWindowProblemResolved": false
+  },
+  "decision": {
+    "integrateLargerBuffer": false,
+    "reason": "No reliable material benefit established; do not equate fewer read calls with useful elapsed-time improvement.",
+    "productionPublished": false,
+    "existingServicesChanged": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "databasesRead": false,
+    "modelsCalled": false,
+    "externalAgentsCalled": false
+  },
+  "limits": [
+    "This is not a successful full release or rollback rehearsal.",
+    "One ABBA sequence is not a statistical benchmark.",
+    "The production-delivery objective remains incomplete."
+  ]
+}
