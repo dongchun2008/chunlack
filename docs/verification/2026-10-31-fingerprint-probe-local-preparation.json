@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "scope": "local-preparation-of-one-proposed-readonly-fingerprint-diagnostic",
+  "status": "local-probe-checks-passed-native-not-authorized-or-run",
+  "frozenPayload": {
+    "files": 127,
+    "currentSourceFiles": 57,
+    "candidateSourceFiles": 66,
+    "bytes": 2056474,
+    "databasesIncluded": false,
+    "configurationOrCredentialFilesIncluded": false,
+    "dependenciesBundled": false,
+    "originalFingerprintReferenceUnchanged": true,
+    "acceptedTimingHelperUnchanged": true,
+    "planAndPayloadHashesRebound": true,
+    "manifestRawFileAndCompactJsonDigestsDistinguished": true
+  },
+  "newDedicatedChecks": {
+    "total": 16,
+    "passed": 16,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "warnings": 0,
+    "exactSixCallRequirementObservedFailThenPass": true,
+    "entryCopyGuardObservedFailThenPass": true,
+    "nestedWritableMountGuardObservedFailThenPass": true
+  },
+  "initialReadOnlyReview": {
+    "p2Findings": 2,
+    "findings": [
+      "Actual executed file was not bound to the fixed checked probe path.",
+      "A writable descendant mount could be missed by top-level readonly flags."
+    ],
+    "localCorrectionsCoveredByNewChecks": true,
+    "postFixIndependentReviewClaimed": false
+  },
+  "measurementContract": {
+    "originalScans": 6,
+    "pairs": 3,
+    "roots": 2,
+    "noMemoization": true,
+    "driftStopsFurtherCalls": true,
+    "originalExceptionNotRetried": true,
+    "boundedNumericLogsOnly": true,
+    "sourceInventoriesCheckedBeforeAndAfter": true,
+    "diagnosticOverheadIncluded": true,
+    "previousReleaseDependencyBindingClaimed": false
+  },
+  "nativeProposal": {
+    "maximumNewUnits": 1,
+    "seconds": 90,
+    "memoryMiB": 192,
+    "cpuPercent": 10,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasks": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "uid": 996,
+    "gid": 987,
+    "zeroCapabilities": true,
+    "packageRootReadonly": true,
+    "dependenciesReadonly": true,
+    "resultsOnlyWritable": true,
+    "productionDatabaseAndCredentialDirectoriesInaccessible": true,
+    "noLackOrCaddyStartup": true,
+    "noBusinessDatabaseAccess": true,
+    "firstFailureStops": true,
+    "noAutomaticRetry": true,
+    "oldAllowanceNotRepurposed": true,
+    "approved": false,
+    "launched": false
+  },
+  "boundaries": {
+    "previousPassed27Rerun": false,
+    "preexistingSuitesRerun": false,
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "productionPublication": false,
+    "realModelsOrExternalAgentsCalled": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false
+  },
+  "limitations": [
+    "The new probe checks are local tests with controlled filesystem and native-policy fixtures, not actual Linux identity or mount evidence.",
+    "The remote operational launcher and native execution remain unperformed and require the next critical approval.",
+    "This diagnostic preparation is not transaction, rollback, release, or production-delivery acceptance.",
+    "The previous 10 percent CPU / 90 second native timeout is unchanged."
+  ]
+}
