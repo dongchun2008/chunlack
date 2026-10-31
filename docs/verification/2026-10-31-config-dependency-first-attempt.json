@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-31",
+  "stage": "config-dependency-collector-first-attempt",
+  "localValidation": {
+    "fixtureChecksPassed": 6,
+    "realFourSourceCombinationChecksPassed": 6,
+    "runnerSimulatedReceiptCasesPassed": 2,
+    "collectorCompilePassed": true,
+    "frozenInstanceIndependentReviewPassed": true
+  },
+  "collectionAttempt": {
+    "used": 1,
+    "automaticRetry": false,
+    "accepted": false,
+    "errorType": "AssertionError",
+    "errorCode": "ERR_ASSERTION",
+    "parsedTransportReceiptRetained": false,
+    "hostKeyVerificationEvidenceAvailable": false,
+    "remoteOutcome": "unknown",
+    "dependencyFingerprintObtained": false,
+    "postCollectionBaselineEvidenceAvailable": false
+  },
+  "diagnosticDefect": {
+    "code": "parsed_transport_lost_on_assertion_failure",
+    "confirmedByControlFlow": true,
+    "correctionPendingConfirmation": true,
+    "proposedFix": "Retain parsed transport and remote response outside the try block; preserve stage and bounded safe error evidence; add remote-rejection receipt regression."
+  },
+  "scope": {
+    "sourceRestrictedToReadOnly": true,
+    "linuxUnitCreationNotInCollector": true,
+    "productionPublicationNotInCollector": true,
+    "configurationBodiesNotEmitted": true,
+    "modelCallsNotInCollector": true
+  },
+  "additionalReadOnlyAttemptApproved": false,
+  "productionReady": false,
+  "productionDeliveryComplete": false
+}
