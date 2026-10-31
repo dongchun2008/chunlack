@@ -1,0 +1,139 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "scope": "local-private-rehearsal-candidate-scanner-integration",
+  "status": "local-synthetic-integration-passed-not-native-ready",
+  "productionPublication": false,
+  "candidateFiles": 9,
+  "originalFrozenOrDeployedControllersOverwritten": false,
+  "changes": {
+    "scannerImplementationFromNativeMeasuredPrototype": true,
+    "fullReadsAndCanonicalFingerprintRetained": true,
+    "cache": false,
+    "enumerationErrorsNowReject": true,
+    "referenceOtherFunctionsUnchanged": true,
+    "gateChangedOnlyReferenceHash": true,
+    "launcherChangedOnlyEntryHash": true,
+    "latestAcceptedTimedAdapterRetainedExceptFourHashLiterals": true,
+    "timingHelperUnchanged": true
+  },
+  "checks": {
+    "finalPassed": 29,
+    "finalFailed": 0,
+    "finalSkipped": 0,
+    "finalTimeout": false,
+    "initialChecks": 22,
+    "transitiveLauncherPinDefect": {
+      "redCases": 3,
+      "originalFailureRetained": true,
+      "newBoundaryCases": 7,
+      "affectedChecksRetested": 3,
+      "allRetestsPassed": true
+    },
+    "independentBaseHashAssertionUsed": true,
+    "scope": "new-and-related-local-synthetic-candidate-checks-only",
+    "repositoryFullSuiteRun": false
+  },
+  "coverage": {
+    "actualGateValidatePreparedUsed": true,
+    "actualTransactionUsed": true,
+    "actualOwnedBackendPreflightUsed": true,
+    "syntheticSQLiteDatabases": 3,
+    "syntheticSourceProfileFiles": 14,
+    "successfulPathValidations": 3,
+    "successfulPathFullDependencyScans": 6,
+    "driftBetweenValidationsDetected": true,
+    "dependencyDriftStopsBeforeProcessBoundary": true,
+    "enumerationErrorHasNoFallbackOrRetry": true,
+    "oldControllerCompatibilityProofRejected": true,
+    "expiredProofRejected": true,
+    "sourceTamperRejectedBeforeCompile": true,
+    "oldLauncherRejectedByBundle": true,
+    "acceptedScannerAstMatchesExceptPrivateNames": true,
+    "rollbackPreservesPostStartDatabaseWrite": true,
+    "rollbackPreservesExternalConfigurationWrite": true,
+    "interruptedInstallRollsBackWithoutRestoringData": true,
+    "schemaDriftRefusesRollback": true,
+    "forwardAndRecoveryBudgetsRemain55And120Seconds": true
+  },
+  "review": {
+    "status": "no-remaining-deterministic-P1-P2-in-reviewed-scope",
+    "scope": "source-and-supplemental-literal-binding-diff",
+    "newSevenTestBodiesNotIndividuallyReReadByReviewer": true,
+    "fullFinal29ChecksExecutedByPrimary": true,
+    "nativeAcceptanceClaimed": false
+  },
+  "bindingGraph": {
+    "reference": {
+      "before": "5c9cf83f7c763a7e216feb865849c7eba761efa7f9dc40b990f1f67f0e69b18d",
+      "after": "b704ceefa1bf917c8ce0c18a439d1b50099f6e723e7fcc3d5f892698088bd1e3"
+    },
+    "gate": {
+      "before": "4cb0ee578acc4808664a6625332351bcde6b247523a0df508446220c2270e06a",
+      "after": "38bac77f1925ef736d15ff3ba5b5387a5c80631f53da4fcaef93e7645d19f64c",
+      "dependsOn": [
+        "reference"
+      ]
+    },
+    "entry": {
+      "before": "7c3421a772c8f1d88258c7d73daf9f60dfe5a1e772127ab75c68b4966837db95",
+      "after": "73521af6d2885af306627fb77f216a7af97e9c3976196ac8cfb3bb9246c002bc",
+      "dependsOn": [
+        "reference",
+        "gate"
+      ]
+    },
+    "launcher": {
+      "before": "ae5c643e575d7f2d1ca54d0572f53b2362b88f753ffe193659e552fd5db1b1b0",
+      "after": "f7675a452cffc8600da791b8cab8f1c9e26cfc8e3fd900593b2d5b0daae59d62",
+      "dependsOn": [
+        "entry"
+      ]
+    },
+    "timedAdapter": {
+      "before": "7c04a424b254522795c0415fa2df2d1d83fcd4eaa8a314a7e7e92fddd1313413",
+      "after": "6bcaae2e5256f50545ea4b023f9bc29b84ea4dc1b79e0a674040e9a7340f936e",
+      "dependsOn": [
+        "reference",
+        "gate",
+        "entry",
+        "launcher"
+      ],
+      "behaviorChangesOutsidePins": false
+    },
+    "timingHelper": {
+      "before": "1456b44337263ef88e92b768a6bc5c3b1d8f5ca0e0e7eb8d8f352a3d33d2f3b0",
+      "after": "1456b44337263ef88e92b768a6bc5c3b1d8f5ca0e0e7eb8d8f352a3d33d2f3b0",
+      "changed": false
+    }
+  },
+  "bindings": {
+    "manifestFileSha256": "5cbb11101a9380691c3bb962e23ef527100cfa31cee19108929a4c0be6aa9cdd",
+    "testSourceSha256": "9666c77fc40adbc6d1466ec5a69d83f5f2dad5400700e9f73d101c65e6ac29ee",
+    "measuredPrototypeSha256": "3a3cd87c184ed23cbcf24be06b39578991c350795982515bcf025f91eda2852d"
+  },
+  "remaining": {
+    "completeNativePackageNotReassembled": true,
+    "productionDatabaseCompatibilityProofNotCreated": true,
+    "syntheticProofsMustNeverBeUsedForPublication": true,
+    "processNetworkAndNativeIdentityBoundariesSimulated": true,
+    "nativePerformanceOfIntegratedCandidateUnverified": true,
+    "formalReleaseBudgetUnproven": true,
+    "productionReady": false
+  },
+  "protection": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "productCodeChanged": false,
+    "productionServicesChanged": false,
+    "productionDatabaseAccessed": false,
+    "credentialContentsRead": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  }
+}
