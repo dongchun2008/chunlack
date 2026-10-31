@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "status": "current-new-local-checks-passed-not-native-or-production-acceptance",
+  "scope": "private-call-timing-helper-and-instrumented-adapter-copy",
+  "changes": [
+    "Explicit binary descriptor mode prevents Windows newline translation.",
+    "Private helper hash binding updated.",
+    "Private nested cleanup finally closes stderr and timing while preserving an unexpected child cleanup exception.",
+    "New test callback normalizes string and Path inputs without widening the target whitelist."
+  ],
+  "newChecks": {
+    "helper": 22,
+    "integration": 5,
+    "total": 27,
+    "passed": 27,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "warnings": 0,
+    "finalExitCodes": [
+      0,
+      0
+    ],
+    "binaryByteRegressionObservedFailThenPass": true,
+    "stderrClosureRegressionObservedFailThenPass": true,
+    "failedAttemptsPreserved": true
+  },
+  "coverage": {
+    "sameValuesExceptionsAndNoRetry": true,
+    "actualLoadedGateInstance": true,
+    "realTransactionAndOwnedPreflightCallCount": true,
+    "threeValidationEntriesAndSixRealScans": true,
+    "noScanMemoizationOrRemoval": true,
+    "healthyInitializationBeforeFaultInjection": true,
+    "businessSuccessWithTimingFailureRejected": true,
+    "originalBusinessErrorAndRestorationErrorRetained": true,
+    "unexpectedCleanupErrorStillClosesStderrAndTiming": true,
+    "originalStageAndRequestLogsUnchanged": true
+  },
+  "bounds": {
+    "originalStageRecordLimit": 256,
+    "separateTimingRecordLimit": 256,
+    "separateTimingByteLimit": 262144,
+    "originalCpuDeadlinesAndSecurityChecksUnchanged": true
+  },
+  "independentReadOnlyReview": {
+    "passed": true,
+    "deterministicP1P2": [],
+    "coverageGapsClosed": 3,
+    "hashesMatched": true,
+    "recordsVerified": {
+      "helper": 22,
+      "integration": 5,
+      "total": 27,
+      "failures": 0,
+      "skips": 0,
+      "warnings": 0
+    },
+    "reviewerExecutedNoProgramsTestsOrNetwork": true,
+    "limitations": [
+      "Full validate_prepared was replaced by a real-fingerprint probe in the transaction call-count check.",
+      "Process, kernel and data-proof boundaries are controlled local substitutes in adapter orchestration checks.",
+      "No complete business, Linux sandbox, native performance or production acceptance is proved.",
+      "The earlier formal 10 percent CPU / 90 second native failure remains unchanged."
+    ]
+  },
+  "boundaries": {
+    "onlyCurrentNewTestsRun": true,
+    "preexistingTestSuitesRerun": false,
+    "originalModulesModified": false,
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productionPublication": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false
+  },
+  "previousNativeFailure": {
+    "unchanged": true,
+    "used": 2,
+    "maximum": 3,
+    "remainingUnitNotRepurposed": true,
+    "formalCpuPercent": 10,
+    "runtimeMaxSeconds": 90,
+    "result": "timeout"
+  },
+  "nextCriticalStage": {
+    "proposedOnly": true,
+    "requestedNewDiagnosticUnits": 1,
+    "seconds": 90,
+    "memoryMiB": 192,
+    "cpuPercent": 10,
+    "tasks": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "noLackOrCaddyStart": true,
+    "noBusinessDatabaseAccess": true,
+    "approved": false
+  }
+}
