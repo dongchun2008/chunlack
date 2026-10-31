@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-01",
+  "stage": "readonly-ingress-in-memory-newline-comparison",
+  "localValidation": {
+    "collectorAndComparisonChecksPassed": 12,
+    "runnerBranchesPassed": 7,
+    "independentFrozenInstanceReviewPassed": true
+  },
+  "nativeObservation": {
+    "approvedAttempts": 1,
+    "usedAttempts": 1,
+    "accepted": true,
+    "hostKeyVerified": true,
+    "remoteExitCode": 0,
+    "originalBytes": 4900,
+    "originalKnownFragmentCounts": {
+      "oldAssets": 0,
+      "newAssets": 0,
+      "oldHeader": 0,
+      "newHeader": 0
+    },
+    "containsCRLF": true,
+    "containsLoneCR": false,
+    "inMemoryNormalizedBytes": 4754,
+    "inMemoryNormalizedKnownFragmentCounts": {
+      "oldAssets": 1,
+      "newAssets": 0,
+      "oldHeader": 1,
+      "newHeader": 0
+    },
+    "inMemoryClassification": "old",
+    "sameIngressDigestAsPreviousObservation": true,
+    "normalizationOnlyInMemory": true,
+    "configurationBodyEmitted": false,
+    "configurationChanged": false,
+    "candidateFilesWritten": false,
+    "protectedBaselineUnchanged": true,
+    "unitsStarted": 0,
+    "productionPublication": false
+  },
+  "interpretation": {
+    "lfSensitiveFragmentPrerequisiteFailureExplainedByCRLF": true,
+    "wholeIngressVerified": false,
+    "validCaddyConfigurationVerified": false,
+    "lineEndingsOnlyDifferenceAgainstAnEntireApprovedFileProven": false,
+    "baselineGuardBypassed": false
+  },
+  "nextProposedScope": "Local-only LF/CRLF-aware exact ingress transition, preserving every unrelated byte; targeted regression, affected source-hash rebinding and independent review before any new native validation or maintenance.",
+  "compatibilityFixApproved": false,
+  "additionalRemoteAttemptApproved": false,
+  "automaticRetry": false,
+  "credentialsChanged": false,
+  "authorizationsChanged": false,
+  "relayChanged": false,
+  "productionReady": false,
+  "productionDeliveryComplete": false
+}
