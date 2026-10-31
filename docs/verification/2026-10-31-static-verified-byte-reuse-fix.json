@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-31",
+  "stage": "local-static-verified-byte-reuse-fix",
+  "finding": {
+    "code": "verified_bytes_reread_before_copy",
+    "previousSeverity": "P2",
+    "status": "closed",
+    "independentReviewPassed": true,
+    "scope": "Local static assembly byte binding only"
+  },
+  "implementation": {
+    "verifiedBytesCachedOnlyAfterDigestMatch": true,
+    "copiedFromVerifiedBuffers": true,
+    "noSecondSourceRead": true,
+    "manifestAndContractGuardsPreserved": true
+  },
+  "tests": {
+    "contractChecksPassed": 7,
+    "actualMainChecksPassed": 2,
+    "totalPassed": 9,
+    "failed": 0,
+    "previousFailingRegressionNowPasses": true,
+    "actualMainCopiesExactVerifiedBytes": true,
+    "sourceReadCountAsserted": 1
+  },
+  "localAssembly": {
+    "newOutputDirectory": true,
+    "oldArtifactsAndFailureEvidencePreserved": true,
+    "payloadFilesVerified": 74,
+    "staticFilesMaterialized": 6,
+    "controllerAndEntryPinsClosed": true
+  },
+  "remainingRequiredPreparedFiles": [
+    "Caddyfile.final",
+    "Caddyfile.loopback",
+    "candidate-config.json",
+    "expected-code.json",
+    "schema-compatibility-report.json"
+  ],
+  "remainingGates": [
+    "production-bound settings and preparedHashes",
+    "installed dependency fingerprint and readability",
+    "fresh compatibility proof",
+    "application-consistent maintenance backup",
+    "native formal backend acceptance",
+    "separate maintenance approval"
+  ],
+  "productionReady": false,
+  "productionDeliveryComplete": false,
+  "activated": false,
+  "vpsConnections": 0,
+  "linuxUnitsStarted": 0,
+  "productionPublication": false,
+  "credentialsChanged": false,
+  "authorizationsChanged": false,
+  "relayChanged": false
+}
