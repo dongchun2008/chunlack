@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "status": "complete-local-package-prepared-independent-package-review-pending",
+  "supersedes": "Earlier local diagnostic drafts without first-timeout latch",
+  "currentSourceChecks": {
+    "sameSourceFocusedChecks": 33,
+    "actualPackageStageChecks": 12,
+    "fullApiEntryChecks": 2,
+    "realMainInputLoaderChecksWithMockedExecution": 7,
+    "finalBindingChecks": 6,
+    "failed": 0,
+    "note": "Selected local checks; not a complete product regression or native acceptance."
+  },
+  "package": {
+    "files": 159,
+    "allThreeDatabaseOriginalBytesPreserved": true,
+    "transportPhaseInputNativePlanManifestApiBridgeBound": true,
+    "firstTimeoutObservationLatched": true,
+    "diagnosticRecordingFailureExplicitlyUnavailable": true,
+    "originalTimeoutCodesAndUncertainProtectionPreserved": true,
+    "singleRequestTimeoutNotIncreased": true,
+    "deadlineUsesPreLaunchAnchorAndOriginalWindowCaps": true
+  },
+  "remainingGates": [
+    "Independent package review",
+    "New bounded native execution authorization",
+    "Fresh read-only preflight",
+    "New isolated native prepare-success-rollback evidence",
+    "Separate production maintenance and end-user acceptance"
+  ],
+  "previousNativeBatch": {
+    "used": 2,
+    "maximum": 3,
+    "stopped": true,
+    "unusedUnitNotRepurposed": true,
+    "failedEvidencePreserved": true,
+    "firstStatusTimeoutCauseNotEstablished": true
+  },
+  "safety": {
+    "additionalRemoteConnections": 0,
+    "newLinuxUnits": 0,
+    "newNativeQuotaAuthorized": false,
+    "productionPublished": false,
+    "productionServicesChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false
+  },
+  "deliveryComplete": false
+}
