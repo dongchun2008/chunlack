@@ -1,0 +1,44 @@
+{
+  "date": "2026-11-01",
+  "stage": "local-ingress-baseline-diagnostic-preparation",
+  "tests": {
+    "passed": 12,
+    "failed": 0,
+    "syntheticInputsOnly": true,
+    "cases": [
+      "old known fragments",
+      "new known fragments",
+      "mixed asset/header versions",
+      "unmatched baseline",
+      "duplicate fragments",
+      "simultaneous old/new fragments",
+      "CRLF without normalization",
+      "body content excluded from output",
+      "gate source hash drift rejection",
+      "empty and oversized input rejection"
+    ]
+  },
+  "diagnosticOutputScope": [
+    "ingress byte count and digest",
+    "four exact known-fragment occurrence counts",
+    "fragment classification",
+    "CRLF and lone-CR flags"
+  ],
+  "limitations": {
+    "notAWholeIngressVerification": true,
+    "notACaddyParserValidation": true,
+    "notAProductionObservation": true,
+    "localReviewedSourceLoaderStillRequired": true,
+    "remoteStandalonePackagingNotCompleted": true
+  },
+  "vpsConnections": 0,
+  "linuxUnitsStarted": 0,
+  "productionPublication": false,
+  "currentIngressChanged": false,
+  "credentialsChanged": false,
+  "authorizationsChanged": false,
+  "relayChanged": false,
+  "productionReady": false,
+  "productionDeliveryComplete": false,
+  "additionalRemoteDiagnosticApproved": false
+}
