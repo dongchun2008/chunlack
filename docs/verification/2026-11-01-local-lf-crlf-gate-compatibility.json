@@ -1,0 +1,56 @@
+{
+  "date": "2026-11-01",
+  "stage": "local-lf-crlf-ingress-gate-compatibility",
+  "finding": {
+    "cause": "LF-sensitive exact target fragments rejected the observed CRLF ingress",
+    "status": "local-source-fix-reviewed"
+  },
+  "implementation": {
+    "targetFragmentsOnly": true,
+    "wholeFileNormalization": false,
+    "unrelatedBytesPreserved": true,
+    "oldVariantsMustTotalExactlyOne": true,
+    "newVariantsMustTotalZero": true,
+    "mixedTargetStylesRejected": true,
+    "duplicateAndPartialUpdatesRejected": true
+  },
+  "tests": {
+    "actualGateChecksPassed": 18,
+    "hashRebindingChecksPassed": 5,
+    "existingPreparerCasesPassedAgainstNewCandidate": 16,
+    "totalTargetedChecksPassed": 39,
+    "fullRepositoryRegressionClaimed": false
+  },
+  "sourceBinding": {
+    "independentReviewPassed": true,
+    "candidateManifestSha256": "188d1abb02e934a7c9c6ad04a0bd6c14391a517316be8363a34f7f8f0f5cd06b",
+    "beforeGateSha256": "38bac77f1925ef736d15ff3ba5b5387a5c80631f53da4fcaef93e7645d19f64c",
+    "afterGateSha256": "95ab206d9f0dcf1bbcb208e600e7c24a94de4218a1025738a1844e67d8cb7af3",
+    "sourceFiles": 10,
+    "entryLauncherAdapterTransientControlAndPreparerRebound": true,
+    "legacyUnchanged": true,
+    "controllerCpuPercent": 20,
+    "forwardSeconds": 55,
+    "totalRecoverySeconds": 120,
+    "productPayloadUnchanged": true,
+    "repositoryWorkingControllerNotOverwritten": true,
+    "oldFrozenCandidatePreserved": true
+  },
+  "patch": {
+    "path": "deploy/public/release-control/2026-11-01/lf-crlf-ingress-transition.patch",
+    "sha256": "4b821830e9fd8a48178195d618b1c8e8c0484fb185ce012437e461010bcda92c",
+    "notAppliedToProduction": true,
+    "offlineReplayMatchesCandidateHash": true
+  },
+  "nativePackageRebindingPending": true,
+  "readonlyCollectorRebindingPending": true,
+  "nativeAcceptancePending": true,
+  "productionReady": false,
+  "productionDeliveryComplete": false,
+  "vpsConnections": 0,
+  "linuxUnitsStarted": 0,
+  "productionPublication": false,
+  "credentialsChanged": false,
+  "authorizationsChanged": false,
+  "relayChanged": false
+}
