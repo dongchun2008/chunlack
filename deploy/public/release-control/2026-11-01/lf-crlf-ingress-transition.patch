@@ -1,0 +1,30 @@
+--- a/deploy/public/release-control/2026-10-25/i18n-release-gate.py
++++ b/deploy/public/release-control/2026-10-25/i18n-release-gate.py
+@@ -159,9 +159,18 @@
+-def expected_ingress(previous):
+-    require(type(previous) is bytes, 'ingress_bytes_required')
+-    result = previous
+-    for before, after in ((OLD_ASSET_MATCH.encode(), NEW_ASSET_MATCH.encode()),
+-                          (OLD_HEADER.encode(), NEW_HEADER.encode())):
+-        require(result.count(before) == 1 and result.count(after) == 0,
+-                'ingress_baseline_not_exact')
+-        result = result.replace(before, after, 1)
+-    return result
++def expected_ingress(previous):
++    require(type(previous) is bytes, 'ingress_bytes_required')
++    result, target_style = previous, None
++    for before, after in ((OLD_ASSET_MATCH.encode(), NEW_ASSET_MATCH.encode()),
++                          (OLD_HEADER.encode(), NEW_HEADER.encode())):
++        variants = ((before, after),
++                    (before.replace(b'\n', b'\r\n'), after.replace(b'\n', b'\r\n')))
++        require(sum(result.count(old) for old, new in variants) == 1 and
++                all(result.count(new) == 0 for old, new in variants),
++                'ingress_baseline_not_exact')
++        selected = next(index for index, (old, new) in enumerate(variants)
++                        if result.count(old) == 1)
++        require(target_style is None or target_style == selected,
++                'ingress_mixed_target_line_endings')
++        target_style = selected
++        old, new = variants[selected]
++        result = result.replace(old, new, 1)
++    return result
