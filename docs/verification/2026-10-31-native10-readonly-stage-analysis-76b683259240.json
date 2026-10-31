@@ -1,0 +1,74 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "batch": "76b683259240",
+  "status": "additional-readonly-failure-forensics-not-acceptance",
+  "source": "existing-failed-unit-stage-log",
+  "newLinuxUnits": 0,
+  "testsRerun": false,
+  "priorQuota": {
+    "used": 2,
+    "maximum": 3,
+    "unusedNotReallocated": 1
+  },
+  "stageEvidence": {
+    "recordCount": 30,
+    "firstTransactionEventSeconds": 0.090274,
+    "preflightStartedSeconds": 18.59367,
+    "preflightCompletedSeconds": 39.69269,
+    "firstCheckpointSeconds": 58.797556,
+    "lastEvent": {
+      "elapsedSeconds": 62.40309,
+      "event": "started",
+      "stage": "backend.start"
+    },
+    "requestLogPresent": false,
+    "firstErrorPresent": false
+  },
+  "derivedDurationsSeconds": {
+    "initialTransactionToPreflight": 18.503396,
+    "backendPreflight": 21.09902,
+    "postPreflightToCheckpoint": 19.104866,
+    "loggedTransactionToFirstCheckpoint": 58.707282
+  },
+  "staticCallPath": {
+    "prepareValidationPasses": 3,
+    "dependencyTreeScansPerValidation": 2,
+    "totalDependencyFingerprintCallsOnReachedPath": 6,
+    "allScansStillRequired": true,
+    "independentScanTimingsAvailable": false,
+    "scope": "private-owned-route-only-not-production-backend"
+  },
+  "conclusions": [
+    "The existing stage log narrows the timeout to the candidate application start after preflight, stopping the owned services, and backup.",
+    "Most logged elapsed time precedes the first checkpoint and service stopping.",
+    "Repeated dependency fingerprinting is a measurement target, not a proven sole cause.",
+    "The final receipt and HTTP acceptance evidence are still absent."
+  ],
+  "proposedNextScope": {
+    "localOnly": true,
+    "measureExistingCallsWithoutSkippingChecks": true,
+    "numericBoundedTimingAndCountsOnly": true,
+    "noNewLinuxUnits": true,
+    "noPriorTestRerun": true,
+    "noCpuOrDeadlineRelaxation": true,
+    "noProductOrDeployedControllerChange": true
+  },
+  "productionPublication": false,
+  "credentialsChanged": false,
+  "grantsChanged": false,
+  "relayChanged": false,
+  "independentEvidenceReviewPassed": true,
+  "clockLimitations": [
+    "Stage elapsedSeconds starts when OwnedDiagnostics is created, not at systemd ExecMainStart.",
+    "Do not subtract a stage-log time from total systemd duration to infer backend.start latency.",
+    "No completed backend.start, HTTP acceptance, or final transaction receipt is proved."
+  ],
+  "nextMeasurementRequirements": [
+    "Wrap the actual loaded gate instance used by the transaction.",
+    "Keep every existing validation and scan, without memoizing, skipping, retrying, or changing CPU/deadline limits.",
+    "Preserve exact return values and original exceptions; record only bounded timing, fixed labels, and call counts.",
+    "Add a monotonic clock anchor and start-RPC-return/post-validation boundaries before attributing the final timeout."
+  ],
+  "implementationStatus": "not-implemented-or-executed"
+}
