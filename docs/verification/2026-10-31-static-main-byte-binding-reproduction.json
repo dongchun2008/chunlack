@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-31",
+  "stage": "local-static-main-byte-binding-reproduction",
+  "implementationModified": false,
+  "productionReady": false,
+  "tests": {
+    "executed": 2,
+    "passed": 1,
+    "failed": 1,
+    "expectedRedRegression": true,
+    "mainWithoutDriftPassed": true,
+    "unverifiedSecondReadCopied": true,
+    "existingTestsRerun": false
+  },
+  "finding": {
+    "severity": "P2",
+    "confirmed": true,
+    "code": "verified_bytes_reread_before_copy",
+    "correctionPendingExplicitConfirmation": true,
+    "proposedScope": "Cache verified bytes and map/copy those exact buffers; keep digest, inventory, layout and publication gates unchanged."
+  },
+  "scope": {
+    "temporaryLocalDirectoryOnly": true,
+    "syntheticMutationOnly": true,
+    "vpsConnections": 0,
+    "linuxUnitsStarted": 0,
+    "productionPublication": false,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "relayChanged": false
+  }
+}
