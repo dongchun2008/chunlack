@@ -1,0 +1,38 @@
+{
+  "date": "2026-10-31",
+  "stage": "local-production-config-preparer-and-collector",
+  "configurationPreparer": {
+    "simulatedChecks": 16,
+    "passed": 16,
+    "independentSourceReviewPassed": true,
+    "exactConfigBytesPreserved": true,
+    "exactPinnedIngressTransition": true,
+    "settingsGenerated": false,
+    "loopbackIngressGenerated": false,
+    "compatibilityProofGenerated": false
+  },
+  "readonlyCollector": {
+    "remoteExecuted": false,
+    "bindingTemplateNotActivated": true,
+    "simulationChecks": 6,
+    "passed": 2,
+    "failed": 3,
+    "errored": 1,
+    "failureCause": "Windows fixture compared str(Path) against a POSIX string, returning ingress bytes for the configuration path; unchanged digest guard correctly rejected them.",
+    "proposedTestOnlyCorrection": "Compare Path objects directly; preserve all digest, path, policy and baseline assertions.",
+    "correctionPendingConfirmation": true,
+    "sourceReviewPending": true,
+    "dependencyStabilityProof": false,
+    "applicationAccountReadabilityProof": false
+  },
+  "productionReady": false,
+  "productionDeliveryComplete": false,
+  "vpsConnections": 0,
+  "linuxUnitsStarted": 0,
+  "productionPublication": false,
+  "realModelCalls": 0,
+  "externalAgentCalls": 0,
+  "credentialsChanged": false,
+  "authorizationsChanged": false,
+  "relayChanged": false
+}
