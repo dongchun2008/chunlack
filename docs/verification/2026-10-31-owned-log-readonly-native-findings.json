@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "scope": "One approved SSH read-only collection from a fixed already failed rehearsal unit",
+  "status": "collection-accepted-rehearsal-still-failed",
+  "attempt": {
+    "approvedMaximum": 1,
+    "used": 1,
+    "automaticRetry": false,
+    "observationLimitSeconds": 35,
+    "hostKeyVerified": true,
+    "localExitCode": 0,
+    "remoteExitCode": 0,
+    "timedOut": false
+  },
+  "collection": {
+    "linuxNativeHappyPathAccepted": true,
+    "linuxAdversarialBoundaryTestsExecuted": false,
+    "matchingFixedFailedInvocation": true,
+    "mainPidAndCgroupEmptyBeforeAndAfter": true,
+    "protectedBaselineMatchedBeforeAndAfter": true,
+    "summaryOnly": true,
+    "rawLogRowsReturned": false,
+    "stages": {
+      "records": 42,
+      "bytes": 3432,
+      "completed": 20,
+      "failedRecords": 0,
+      "pending": [
+        "transaction.execute",
+        "backend.stop"
+      ],
+      "lastElapsedSeconds": 62.993843
+    },
+    "requests": {
+      "records": 140,
+      "bytes": 15459,
+      "started": 70,
+      "completed": 70,
+      "pending": 0,
+      "failedRecords": 0,
+      "durationsSeconds": {
+        "sum": 11.903017,
+        "min": 0.001004,
+        "max": 0.302161
+      },
+      "httpSemanticAcceptanceClaimed": false,
+      "independentPerRowDurationRecalculation": false
+    },
+    "firstError": {
+      "present": false,
+      "absenceDoesNotProveNoError": true
+    }
+  },
+  "sourceBindings": {
+    "collectorSha256": "3d8f03b5cd4205a8e2aa64004dc60b33247c3b29590c2f0ea780dee2465d02ec",
+    "unchangedProducerSha256": "355e023d1e341079674608cc78269b955ad6a8e64f28dbc18ab6c3a62af99424",
+    "stagesLogSha256": "5275b689c3b765df8398ec8e8ff591ea3c8ce3b85e6c2f5bb296ddf18ce5dc64",
+    "requestsLogSha256": "58aa0ff7b4e16aede9b20cd46eb2796b71198042e34741cdb724a3cf4cf89762"
+  },
+  "offlineAnalysis": {
+    "clock": "Linux CLOCK_MONOTONIC",
+    "method": "Conservative ordering interval, not a directly measured stop-entry timestamp",
+    "roundingAllowanceNs": 1000,
+    "diagnosticAnchorOrder": "After completed gate.load and before first validate_prepared started",
+    "lastPendingStopSinceUnitStartSeconds": {
+      "lower": 89.273833452,
+      "upper": 89.276833355
+    },
+    "remainingConfigured90SecondBudgetAtStopSeconds": {
+      "lower": 0.723166645,
+      "upper": 0.726166548
+    },
+    "limitation": "This brackets the last logged stop start; it does not prove why that stop had not completed or that extending the unit would satisfy the separate maintenance budget.",
+    "maintenanceBudgetCoverage": {
+      "windowStartLowerBoundSeconds": 44.679934738,
+      "configuredForwardSeconds": 55,
+      "configuredTotalRecoverySeconds": 120,
+      "outerIsolationSeconds": 90,
+      "maximumWindowTimeAvailableBeforeOuterLimitSeconds": 45.320065262,
+      "earliestFullForwardBudgetEndSeconds": 99.679934738,
+      "earliestFullRecoveryBudgetEndSeconds": 164.679934738,
+      "actualWindowStartMeasured": false,
+      "soleTimeoutCauseEstablished": false
+    },
+    "conclusion": "The 90-second isolated envelope cannot guarantee coverage of the full existing 55-second forward and 120-second total recovery windows.",
+    "originalFrozenFormalLauncher": {
+      "cpuPercent": 10,
+      "runtimeMaxSeconds": 180,
+      "changed": false
+    },
+    "stopTargetOrBlockingReasonEstablished": false,
+    "soleTimeoutCauseEstablished": false,
+    "extensionWouldPassGuaranteed": false,
+    "actualSuccessExitTimestampAvailable": false
+  },
+  "independentReview": {
+    "limitedReadOnlyEvidenceAndOrderingReview": "passed",
+    "intervalArithmeticAndSourceOrderingAccepted": true,
+    "fullRehearsalAcceptance": false
+  },
+  "boundaries": {
+    "newLinuxUnits": 0,
+    "previousQuotaUsed": 2,
+    "previousQuotaMaximum": 3,
+    "remainingUnitUsed": false,
+    "rehearsalRetried": false,
+    "productionPublished": false,
+    "existingServicesRestarted": false,
+    "remoteFileWriteOperations": false,
+    "failedDirectoriesOrLocksDeleted": false,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "actualModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "protectionScope": "Four existing service PID/restart/active values and three configuration content hashes; not all production data or permission metadata.",
+  "nextGate": "Explicit approval required before changing isolated time budgets or scheduling new rehearsal units. Keep original failure records and unused quota; no automatic retry."
+}
