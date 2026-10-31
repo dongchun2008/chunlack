@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "scope": "Fixed evidence and source review of the latest stopped native round",
+  "reviewAccepted": true,
+  "confirmed": {
+    "firstTimedOutAction": "status",
+    "listenerOrdinal": 2,
+    "requestId": 82,
+    "timeoutPhase": "response",
+    "effectiveTimeoutSeconds": 1.502533806487918,
+    "configuredRequestCapSeconds": 2,
+    "limitingBudget": "55-second forward window",
+    "forwardElapsedAtBudgetSampleSeconds": 53.49746619351208,
+    "finalAbsoluteRemainingSeconds": 67.749421,
+    "global170SecondDeadlineNotLimiting": true,
+    "loopbackAcceptanceCheckpointSeconds": 42.497
+  },
+  "reasoning": "The first timeout precedes the final receipt under monotonic time. The final absolute remainder is greater than two seconds, so the smaller effective timeout can only come from Window.remaining. Recovery begins after this first exception, so the active window was forward, not recovery.",
+  "notEstablished": [
+    "CPU as the root cause",
+    "Inspector subprocess timeout",
+    "Port or process identity failure",
+    "That a full two-second timeout would have passed"
+  ],
+  "nextLocalScope": "Profile and optimize repeated read-only status work while preserving all three status checks, full hash fences, identity and listener checks, and existing limits. No cross-fence cache or timeout retry.",
+  "nativeBatch": {
+    "used": 2,
+    "maximum": 3,
+    "remainingNotUsed": true,
+    "automaticRetry": false
+  },
+  "safety": {
+    "additionalLinuxUnits": 0,
+    "productionPublished": false,
+    "productionServicesChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false
+  },
+  "deliveryComplete": false
+}
