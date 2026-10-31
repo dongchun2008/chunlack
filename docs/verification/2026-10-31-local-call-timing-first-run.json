@@ -1,0 +1,59 @@
+{
+  "schema": 1,
+  "date": "2026-10-31",
+  "scope": "local-new-call-timing-and-targeted-checks-only",
+  "status": "incomplete-correction-awaits-approval",
+  "existingTestSuitesRerun": false,
+  "newLinuxUnits": 0,
+  "sshConnections": 0,
+  "productionPublication": false,
+  "implementation": {
+    "newPrivateTimingHelper": true,
+    "newInstrumentedAdapterCopy": true,
+    "originalModulesModified": false,
+    "originalThreeValidationPassesAndSixScansRetained": true,
+    "original256StageLogLimitUnchanged": true,
+    "separateTimingRecordLimit": 256,
+    "separateTimingByteLimit": 262144,
+    "securityChecksOrResourceBudgetsRelaxed": false
+  },
+  "newChecks": {
+    "expectedRed": {
+      "tests": 1,
+      "expectedFailures": 1
+    },
+    "firstImplementationRun": {
+      "tests": 21,
+      "passed": 9,
+      "failures": 4,
+      "errors": 8,
+      "timedOut": false,
+      "passingAcceptance": false
+    }
+  },
+  "diagnosis": {
+    "singleNewBoundedLocalProbe": true,
+    "filesystemIdentityMatched": true,
+    "recordedBytes": 98,
+    "physicalBytes": 99,
+    "tailContainsCRLF": true,
+    "missingWindowsBinaryOpenFlag": true,
+    "allFailuresResolved": false
+  },
+  "proposedCorrection": {
+    "addExplicitBinaryFlagToNewLogDescriptor": true,
+    "rebindOnlyNewPrivateHelperHash": true,
+    "addByteExactNewRegression": true,
+    "retestOnlyCurrentNewChecks": true,
+    "notApplied": true
+  },
+  "productionServicesChanged": false,
+  "credentialsChanged": false,
+  "grantsChanged": false,
+  "relayChanged": false,
+  "priorFailedNativeQuota": {
+    "used": 2,
+    "maximum": 3,
+    "unusedNotReallocated": 1
+  }
+}
