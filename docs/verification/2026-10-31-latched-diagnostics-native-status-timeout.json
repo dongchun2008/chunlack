@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "status": "new-authorized-native-round-stopped-after-second-unit-failure",
+  "quota": {
+    "approvedMaximum": 3,
+    "used": 2,
+    "remainingUnitNotUsed": true,
+    "automaticRetry": false,
+    "olderRoundsNotRepurposed": true
+  },
+  "prepare": {
+    "accepted": true,
+    "elapsedSeconds": 36.218935,
+    "swapPeakBytes": 0,
+    "perDatabaseCopyCompatibilityAccepted": true,
+    "protectedUnchanged": true,
+    "ownExitedUnitSettled": true
+  },
+  "success": {
+    "accepted": false,
+    "elapsedSeconds": 102.382662,
+    "exitStatus": 2,
+    "memoryPeakBytes": 111632384,
+    "swapPeakBytes": 0,
+    "receiptPresent": true,
+    "cgroupEmpty": true,
+    "protectedUnchanged": true,
+    "transportClosed": true,
+    "transactionStatus": "recovery_requires_attention",
+    "error": "owned_transport_timeout",
+    "recoveryError": "owned_transport_outcome_uncertain",
+    "originalRowsPreservationFinalCheckNotAccepted": true,
+    "firstTransportTimeout": {
+      "action": "status",
+      "requestId": 82,
+      "scope": "listener.status.2",
+      "phase": "response",
+      "timeoutSeconds": 1.502533806487918,
+      "elapsedSeconds": 1.5026802383363247
+    },
+    "note": "Observed response-wait timeout, not a request-write timeout. Why the effective timeout was below two seconds requires fixed-source timing review; CPU, inspector and listener failure are not established causes."
+  },
+  "rollback": {
+    "started": false
+  },
+  "safety": {
+    "productionPublished": false,
+    "existingServicesChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsOrPortsChanged": false,
+    "relayChanged": false,
+    "realModelOrExternalAgentCalls": 0,
+    "failedDirectoryAndLocksRetained": true
+  },
+  "deliveryComplete": false
+}
