@@ -1,0 +1,63 @@
+{
+  "date": "2026-10-31",
+  "stage": "local-expected-code-production-binding",
+  "productionReady": false,
+  "productionDeliveryComplete": false,
+  "expectedCodeSha256": "fd198744fef1a94cfa88c319ee61d9bf923166ad394001e07bd49ed7a8f3bb60",
+  "previousCodeFiles": 57,
+  "candidateCodeFiles": 66,
+  "exactFrozenProductHashesVerified": true,
+  "exactPinnedControllerScopeVerified": true,
+  "changedProductFiles": 20,
+  "allowedChangedFiles": [
+    "collaboration/capacity.cjs",
+    "collaboration/model-transport.cjs",
+    "collaboration/task-control.cjs",
+    "deploy/public/Caddyfile.template",
+    "gateway/admin.html",
+    "identity/chat-messages.js",
+    "identity/display.js",
+    "identity/help-assets.cjs",
+    "identity/help.js",
+    "identity/help/en.md",
+    "identity/help/zh-CN.md",
+    "identity/i18n.js",
+    "identity/login.html",
+    "identity/messages.js",
+    "identity/workspace-shell.js",
+    "identity/workspace-ui.js",
+    "package-lock.json",
+    "package.json",
+    "public/index.html",
+    "server.js"
+  ],
+  "formatOnlyFilesVerified": [
+    "gateway/admin.html",
+    "package.json",
+    "package-lock.json"
+  ],
+  "checksWereStatic": true,
+  "controllerSourceExecuted": false,
+  "missingPreparedFiles": [
+    "Caddyfile.final",
+    "Caddyfile.loopback",
+    "candidate-config.json",
+    "schema-compatibility-report.json"
+  ],
+  "additionalGates": [
+    "production-bound settings/preparedHashes",
+    "installed dependency fingerprint and application readability",
+    "fresh compatibility proof",
+    "application-consistent maintenance backup",
+    "native formal backend acceptance",
+    "separate maintenance approval"
+  ],
+  "vpsConnections": 0,
+  "linuxUnitsStarted": 0,
+  "realModelCalls": 0,
+  "externalAgentCalls": 0,
+  "productionPublication": false,
+  "credentialsChanged": false,
+  "authorizationsChanged": false,
+  "relayChanged": false
+}
