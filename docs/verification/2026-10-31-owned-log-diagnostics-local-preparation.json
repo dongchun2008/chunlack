@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "scope": "Local-only preparation of fixed failed-unit read-only log diagnostics",
+  "status": "local-checks-passed-native-unverified",
+  "finding": {
+    "confirmed": "The existing native evidence interface omits three logs already supported by the unchanged diagnostic producer.",
+    "missingLogs": [
+      "success-stages.jsonl",
+      "success-requests.jsonl",
+      "success-first-error.json"
+    ],
+    "actualRemoteLogExistenceVerified": false,
+    "timeoutRootCauseEstablished": false
+  },
+  "implementation": {
+    "privateCollectorOnly": true,
+    "frozenRehearsalBundleChanged": false,
+    "producerOrExecutionBehaviorChanged": false,
+    "fixedFailedUnitAndInvocationBinding": true,
+    "fixedReadOnlyActionOnly": true,
+    "arbitraryPathsAndLaunchActionsRejected": true,
+    "requiresFailedTimeoutAndNoProcesses": true,
+    "protectionBeforeAndAfter": true,
+    "rootOwnedPrivateRegularSingleLinkFilesOnly": true,
+    "boundedFullReads": true,
+    "metadataAndDirectoryIdentityDriftRejected": true,
+    "strictFieldAndErrorWhitelists": true,
+    "requestBodiesOrCredentialsReturned": false,
+    "allOwnedFileDescriptorsAttemptedOnCleanup": true,
+    "rawUnexpectedExceptionsRetained": false,
+    "logLimits": {
+      "stages": {
+        "records": 256,
+        "bytes": 262144
+      },
+      "requests": {
+        "records": 2064,
+        "bytes": 2097152
+      },
+      "firstError": {
+        "records": 1,
+        "bytes": 1024
+      }
+    }
+  },
+  "sourceBindings": {
+    "collectorSha256": "3d8f03b5cd4205a8e2aa64004dc60b33247c3b29590c2f0ea780dee2465d02ec",
+    "unchangedProducerSha256": "355e023d1e341079674608cc78269b955ad6a8e64f28dbc18ab6c3a62af99424",
+    "existingGuardSha256": "5848bddc5cd0626f73faef5e8921c07d6317991a3c2bca444eceda11bf66d4fa",
+    "failedRehearsalApiSha256": "f55efeff885abeb132fd442ab13be2c224d4db830c5925d0b03af38cacd56d0e"
+  },
+  "localTests": {
+    "syntheticParsingAndFileReads": 53,
+    "originalProducerRoundtrip": 4,
+    "collectorFlowSimulation": 8,
+    "directoryAndCgroupSimulation": 15,
+    "total": 80,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "validationLimits": [
+    "Local POSIX metadata, fd, and cgroup dependencies are simulated.",
+    "No Linux native collection, actual failed-log retrieval, or timeout root cause proof.",
+    "Non-DiagnosticsError exceptions are sanitized, not retained as raw original objects."
+  ],
+  "execution": {
+    "remoteConnections": 0,
+    "newLinuxUnits": 0,
+    "previousUsedUnits": 2,
+    "previousMaximumUnits": 3,
+    "remainingUnitUsed": false,
+    "existingTestsRerun": false,
+    "actualModelsCalled": 0,
+    "externalAgentsCalled": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "relayChanged": false,
+    "liveServiceHealthRefreshed": false
+  },
+  "nextGate": "Separately approved one-time read-only collection from the already failed unit; no new unit, application restart, remote file write, or rehearsal retry.",
+  "independentReview": {
+    "limitedStaticAndEvidenceReview": "passed",
+    "confirmedUnfixedP1OrP2": 0,
+    "nativeExecutionAuthorized": false,
+    "nativeEvidenceClaimed": false
+  }
+}
