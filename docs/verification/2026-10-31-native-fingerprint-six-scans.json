@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-10-31",
+  "scope": "single-bounded-readonly-native-fingerprint-diagnostic",
+  "status": "passed",
+  "productionPublication": false,
+  "newLinuxUnits": {
+    "approved": 1,
+    "used": 1,
+    "retries": 0,
+    "oldQuotaRepurposed": false
+  },
+  "localChecks": {
+    "launcher": 28,
+    "terminalCompatibility": 6,
+    "failedAttemptsPreserved": true,
+    "prior27And16ChecksRerun": false,
+    "fullSuiteRerun": false
+  },
+  "limits": {
+    "seconds": 90,
+    "memoryBytes": 201326592,
+    "cpuPercent": 10,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasks": 32,
+    "swapMaxBytes": 0,
+    "privateNetwork": true,
+    "userId": 996,
+    "groupId": 987,
+    "allCapabilitySetsZero": true,
+    "noNewPrivileges": true
+  },
+  "execution": {
+    "elapsedSeconds": 45.240799,
+    "exitCode": 0,
+    "result": "success",
+    "mainPidZero": true,
+    "ownCgroupEmpty": true,
+    "sameInvocationVerified": true,
+    "settledOwnExitedDiagnosticUnitOnly": true,
+    "memoryPeakBytes": 11808768,
+    "swapPeakMeasurement": {
+      "status": "measured",
+      "bytes": 0
+    },
+    "cpuSeconds": 4.533032,
+    "postStopEvidence": {
+      "stopCommandSucceeded": true,
+      "mainPidZeroAndOwnCgroupEmptyAsserted": true,
+      "inactiveStateSnapshotRecorded": false
+    }
+  },
+  "scans": {
+    "count": 6,
+    "cacheUsed": false,
+    "originalReferenceFunctionUnchanged": true,
+    "sourceTrees": {
+      "current": 57,
+      "candidate": 66
+    },
+    "dependenciesPerScan": {
+      "files": 4462,
+      "bytes": 38850588
+    },
+    "samples": [
+      {
+        "tree": "current",
+        "pair": 1,
+        "seconds": 7.69439174,
+        "matchesFirstObservation": true
+      },
+      {
+        "tree": "candidate",
+        "pair": 1,
+        "seconds": 7.009064274,
+        "matchesFirstObservation": true
+      },
+      {
+        "tree": "current",
+        "pair": 2,
+        "seconds": 7.299228152,
+        "matchesFirstObservation": true
+      },
+      {
+        "tree": "candidate",
+        "pair": 2,
+        "seconds": 6.996021064,
+        "matchesFirstObservation": true
+      },
+      {
+        "tree": "current",
+        "pair": 3,
+        "seconds": 7.70085387,
+        "matchesFirstObservation": true
+      },
+      {
+        "tree": "candidate",
+        "pair": 3,
+        "seconds": 7.100873287,
+        "matchesFirstObservation": true
+      }
+    ],
+    "totalSecondsIncludingDiagnosticMarkers": 43.800432387,
+    "averageSecondsIncludingDiagnosticMarkers": 7.3000720645,
+    "sourceInventoriesUnchanged": true,
+    "fingerprintsEqualAcrossAllSixScans": true,
+    "bindingToPreviousProductionReleaseClaimed": false
+  },
+  "timingEvidence": {
+    "clockDomain": "linux-monotonic",
+    "withinSameUnitStartAndExit": true,
+    "records": 14,
+    "bytes": 1774,
+    "callCount": 6,
+    "complete": true,
+    "errors": []
+  },
+  "protection": {
+    "existingServicesChecked": 4,
+    "activeBeforeAndAfter": true,
+    "mainPidsAndRestartCountsUnchanged": true,
+    "protectedConfigurationFiles": 3,
+    "configurationCheck": "metadata-only-no-content-read",
+    "metadataUnchanged": true,
+    "productionCredentialContentsRead": false,
+    "businessDatabaseAccessed": false,
+    "lackOrCaddyStartedOrStopped": false,
+    "productionServicesChanged": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "binding": {
+    "planSha256": "cc8d96c6a9e598ba37ff2bf6647b860f427e751ee19d3819954642082e4b643f",
+    "manifestSha256": "5f3acadb706f33b6fe1c54a55cff8cbe921268b52e6124aa711b52bf28ce7479",
+    "controllerSha256": "9c6b06c74c6cbc1529b487bbeec02204a4689c43d81d55c6eac8f681eb0f833c",
+    "probeSha256": "e54a6592681663efba999f1880c50827f9e6c51cad21d18b17df224a30009531",
+    "helperSha256": "1456b44337263ef88e92b768a6bc5c3b1d8f5ca0e0e7eb8d8f352a3d33d2f3b0",
+    "referenceSha256": "5c9cf83f7c763a7e216feb865849c7eba761efa7f9dc40b990f1f67f0e69b18d"
+  },
+  "interpretation": {
+    "sixScanCostIsMeasuredNotSoleRootCauseProof": true,
+    "cacheOrFingerprintRemovalNotImplemented": true,
+    "formalRelease55SecondForwardBudgetNotValidatedByThisDiagnostic": true,
+    "productionReady": false,
+    "nextStageRequiresSeparatelyScopedPlan": true
+  },
+  "independentEvidenceReview": {
+    "status": "passed",
+    "scope": "raw-timing-invocation-resources-and-evidence-boundaries",
+    "nativeProbeFacts": "reported-and-validated-by-fixed-probe",
+    "productionReadinessClaimed": false
+  }
+}
