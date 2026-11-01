@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-02",
+  "status": "initial_four_field_local_gate_passed_not_remote_verified",
+  "scope": "Private namespace diagnostic runner initial admission check only",
+  "changes": {
+    "initialProperties": [
+      "Id",
+      "LoadState",
+      "MainPID",
+      "InvocationID"
+    ],
+    "expectedValues": {
+      "Id": "exact generated diagnostic unit",
+      "LoadState": "not-found",
+      "MainPID": "0",
+      "InvocationID": ""
+    },
+    "selectedPropertiesOnly": true,
+    "explicitAll": true,
+    "strictMissingDuplicateMalformedUnexpectedRejection": true,
+    "execStartSynthesized": false,
+    "postStartCompleteStateUnchanged": true,
+    "cleanupChecksUnchanged": true,
+    "sharedBudgetUnchanged": true,
+    "initialCommandMaximumSeconds": 2,
+    "initialRemainingReserveSeconds": 85,
+    "launcherUnchanged": true,
+    "oldArtifactsPreserved": true
+  },
+  "localVerification": {
+    "python": "3.13.12",
+    "flags": [
+      "-B",
+      "-W",
+      "error"
+    ],
+    "tests": 116,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsedSeconds": 3.0666921997908503,
+    "failureNames": [],
+    "errorNames": [],
+    "scope": "45 original contract tests plus 71 private native diagnostic tests; not full product regression",
+    "newFocusedTests": 11,
+    "beforeCorrection": {
+      "methods": 11,
+      "failingAssertionsAndSubtests": 25,
+      "reason": "independent helper and initial call not implemented"
+    },
+    "runAstEquivalentAfterOnlyInitialCallNormalization": true
+  },
+  "independentReview": {
+    "newDefiniteP1P2": 0,
+    "codeAndFrozenPacketReviewed": true,
+    "testExecutionIndependent": false,
+    "freezeSha256": "3f1b04c01b555895c1c2fbbcbaf6bd134485f18c9ebe326c4e7ce6298865caf4",
+    "runnerSha256": "5437ed272909aab730c57754a69383666ca8279f02679049290d1b862ebf5cd1",
+    "archiveFiles": 202,
+    "archiveBytes": 2695560,
+    "bindings": 41
+  },
+  "remoteActivityThisPhase": {
+    "sshConnections": 0,
+    "linuxUnitsStarted": 0,
+    "productionPublished": false,
+    "existingServicesStartedStopped": false,
+    "credentialsRead": false,
+    "credentialsModified": false,
+    "authorizationModified": false,
+    "dnsModified": false,
+    "portsModified": false,
+    "relayModified": false,
+    "modelsCalled": false,
+    "externalAgentsCalled": false
+  },
+  "limitations": [
+    "Local-only correction and offline packet preparation; no native success claimed.",
+    "Previous SSH preflight failure and zero-unit receipt remain preserved.",
+    "Historical 226/NAMESPACE cause remains unknown.",
+    "Inherited unloaded-unit full-state compatibility remains unverified and was not modified.",
+    "No current production health or baseline refresh performed.",
+    "A new SSH attempt or Linux unit requires explicit confirmation.",
+    "Private runner, payload and raw evidence are not submitted; only sanitized verification record is synchronized."
+  ]
+}
