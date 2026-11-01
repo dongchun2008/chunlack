@@ -1,0 +1,99 @@
+{
+  "date": "2026-11-01",
+  "scope": "one authorized read-only fixed-failed-unit SSH journal collection",
+  "status": "collection succeeded; mount root cause remains unknown",
+  "attempt": {
+    "maximum": 1,
+    "used": 1,
+    "automaticRetries": 0,
+    "outerCeilingSeconds": 35,
+    "outerElapsedSeconds": 7.4948141999999995,
+    "remoteCeilingSeconds": 20,
+    "remoteElapsedSeconds": 0.32522810343652964,
+    "hostKeyVerified": true,
+    "localExitCode": 0,
+    "remoteExitCode": 0
+  },
+  "sourceBinding": {
+    "collectorSha256": "a824cf46f6e0e85b4e69268fddf615e36309e9885679c864b3adf8afe1527658",
+    "sshHelperSha256": "b9bb55c7c543d6724dd987911b6a50445aeb86722f51df6caaa16e0bc9d127fb",
+    "localFreezeSha256": "9ede361ecffaa2c916c7fef652de1e0609bbe998e5580709932f6872b195028c",
+    "executedVerifiedBytes": true,
+    "evidenceBasis": "Local orchestration tool transcript: exact bytes were SHA-256 verified and passed to Python; these hashes were not embedded in the four private collection receipts."
+  },
+  "evidence": {
+    "receiptMatchedRawTransport": true,
+    "beforeAfterFixedFailedInvocationMatched": true,
+    "returnedJournalRows": 3,
+    "rejectedRows": 0,
+    "allRowsFromPid1": true,
+    "allRowsMatchedFixedInvocation": true,
+    "queryRowsCompleteWithinLimit": true,
+    "detailedSetupMessageReturned": false,
+    "exitStatus": 226,
+    "exitStep": "NAMESPACE",
+    "summaryMessages": [
+      "unit started",
+      "main process exited with status 226/NAMESPACE",
+      "unit failed with exit-code"
+    ]
+  },
+  "receiptArtifacts": [
+    {
+      "name": "receipt.private.json",
+      "bytes": 2828,
+      "sha256": "59a392c5b77175f8fa9827538907a74ff2ba2a1fad255ce40e597412c80ec672"
+    },
+    {
+      "name": "transport.stdout.txt",
+      "bytes": 2254,
+      "sha256": "162a6e5ff62a370492dde7aa6429d5dac480fdab6b47cbd791c8b95ada039db0"
+    },
+    {
+      "name": "summary.json",
+      "bytes": 887,
+      "sha256": "132df2c8697b5ed7b88ea69af748ee39ef2c771b51b981805d9db2f2124e4c28"
+    }
+  ],
+  "limits": {
+    "journalHistoryCompletenessProven": false,
+    "absenceOfHistoricalSetupErrorsProven": false,
+    "namespaceRootCauseConfirmed": false,
+    "previousUnknownMountSourceMetadataCount": 32,
+    "mountSourceMetadataRefreshedThisPhase": false,
+    "currentServiceHealthRevalidated": false,
+    "sourceHashesNotEmbeddedInPrivateCollectionReceipts": true
+  },
+  "boundaries": {
+    "collectorApplicationFileWrites": 0,
+    "newLinuxUnits": 0,
+    "serviceActions": 0,
+    "credentialModifications": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "existingNativeRoundUsed": 1,
+    "existingNativeRoundMaximum": 3,
+    "remainingUnitsUntouched": 2,
+    "productionPublished": false
+  },
+  "productionReady": false,
+  "overallDeliveryComplete": false,
+  "proposedNextPhase": {
+    "requiresNewApproval": true,
+    "operation": "one bounded read-only metadata inventory of frozen mount sources and destinations plus installed systemd version",
+    "noUnits": true,
+    "noServiceActions": true,
+    "noRemoteApplicationWrites": true,
+    "noCredentialContents": true
+  },
+  "independentReview": {
+    "method": "read-only review of four saved private collection artifacts",
+    "receiptConsistencyAccepted": true,
+    "budgetAndFixedIdentityAccepted": true,
+    "confirmedResultContradictions": 0,
+    "independentSourceBindingVerification": false,
+    "noNetworkOrTestsByReviewer": true
+  }
+}
