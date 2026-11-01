@@ -1,0 +1,92 @@
+{
+  "date": "2026-11-01",
+  "scope": "local-only namespace diagnostic bounded-output repair",
+  "status": "implementation-repair-reviewed; test-portability-finding-open",
+  "authorization": {
+    "ssh": false,
+    "newLinuxUnits": false,
+    "productionPublication": false,
+    "realModelCalls": false,
+    "externalAgentCalls": false
+  },
+  "changes": {
+    "stdoutRetainedByteLimit": 262144,
+    "stderrRetainedByteLimit": 8192,
+    "maxReadChunkBytes": 4096,
+    "overflowSentinelBytes": 1,
+    "nonblockingPipes": true,
+    "cleanupWithinOriginalDeadline": true,
+    "cleanupFailureDeniesSuccess": true,
+    "originalAndCleanupErrorsPreserved": true,
+    "fixedUnitAndInvocationChecksUnchanged": true
+  },
+  "localRegression": {
+    "platform": "Windows",
+    "python": "3.13",
+    "command": "python -B -W error -m unittest -v test_bounded_capture test_namespace_diagnostics",
+    "tests": 26,
+    "passed": 26,
+    "failed": 0,
+    "skipped": 0,
+    "elapsedSeconds": 2.597,
+    "exitCode": 0,
+    "newTests": 11,
+    "existingTests": 15,
+    "realLocalChildProcesses": true,
+    "linuxExecution": false
+  },
+  "independentReview": {
+    "method": "static read-only review; no commands or tests run by reviewer",
+    "previousOutputLimitFindingClosed": true,
+    "newFinding": {
+      "severity": "P2",
+      "component": "test_bounded_capture.py",
+      "description": "Global os.read mocking may intercept POSIX Popen startup-error-pipe reads before the child is registered, invalidating target assertions or bypassing fixture cleanup.",
+      "suggestedScope": "Intercept only reads from the registered child stdout/stderr; delegate other reads without injection."
+    },
+    "otherConfirmedImplementationP1P2Findings": 0
+  },
+  "artifacts": [
+    {
+      "name": "fixed_namespace_collector.py",
+      "bytes": 7744,
+      "sha256": "a824cf46f6e0e85b4e69268fddf615e36309e9885679c864b3adf8afe1527658"
+    },
+    {
+      "name": "test_bounded_capture.py",
+      "bytes": 5828,
+      "sha256": "fff23174d40579d09280519ca0074315e56889eec131727953eb34d3e739b0d5"
+    },
+    {
+      "name": "test_namespace_diagnostics.py",
+      "bytes": 7371,
+      "sha256": "0b8a1f46e315ed89c0e66f9e2f571666058c7fef97be38ab030fb59ca6f70325"
+    },
+    {
+      "name": "local-freeze.json",
+      "bytes": 1174,
+      "sha256": "271531c3cc96b0abc60b55389d5af470b6c2cc5101131678cd15b241c75af70d"
+    }
+  ],
+  "historicalFreeze": {
+    "preserved": true,
+    "applicableToNewCollector": false,
+    "sha256": "271531c3cc96b0abc60b55389d5af470b6c2cc5101131678cd15b241c75af70d"
+  },
+  "evidenceLimits": {
+    "posixStartupPipeUntested": true,
+    "nativeSignalAlarmCleanupOverlapUntested": true,
+    "namespaceRootCauseConfirmed": false,
+    "productionReady": false,
+    "linuxUnitsConsumedThisPhase": 0,
+    "existingRoundUsedUnits": 1,
+    "existingRoundMaximumUnits": 3,
+    "remainingUnitsUntouched": 2,
+    "remoteFilesWritten": 0,
+    "existingServicesChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false
+  },
+  "nextStep": "Await human approval for the newly identified local-only test-injection correction and regression; no remote collection authorized."
+}
