@@ -1,0 +1,99 @@
+{
+  "date": "2026-11-01",
+  "status": "read_only_observation_completed_release_blocked",
+  "approvedScope": "One bounded read-only release preflight and local unactivated formal source-package preparation",
+  "localPackage": {
+    "prepared": true,
+    "sourceOnly": true,
+    "deployable": false,
+    "activated": false,
+    "productFiles": 66,
+    "controlFiles": 6,
+    "expectedCodeManifests": 1,
+    "totalFiles": 73,
+    "staticControllerPinsClosed": true,
+    "controllerCpuPercent": 20,
+    "configurationBodiesIncluded": false,
+    "credentialsIncluded": false,
+    "databasesIncluded": false,
+    "installedDependenciesIncluded": false,
+    "remainingPreparedFiles": [
+      "Caddyfile.final",
+      "Caddyfile.loopback",
+      "candidate-config.json",
+      "schema-compatibility-report.json"
+    ],
+    "settingsPrepared": false
+  },
+  "localValidation": {
+    "compositionCompilationPassed": true,
+    "syntheticClassificationChecksPassed": 4,
+    "syntheticClassificationChecksFailed": 0,
+    "independentPackageAndReadOnlyScopeReviewPassed": true,
+    "fullRepositoryRegressionRerun": false,
+    "newNativeUnitsRun": 0
+  },
+  "observation": {
+    "accepted": true,
+    "hostKeyVerified": true,
+    "remoteExitCode": 0,
+    "attemptsUsed": 1,
+    "maximumApprovedAttempts": 1,
+    "automaticRetry": false,
+    "collectorSeconds": 25,
+    "sshObservationSeconds": 35,
+    "localSeconds": 65,
+    "readOnly": true,
+    "unitsStarted": 0,
+    "candidateUploaded": false,
+    "deployedCodeFilesVerified": 57,
+    "directoryOwnershipAndPermissionsPassed": true,
+    "backupFreeBytes": 28635123712,
+    "backupPreparationFloorBytes": 536870912,
+    "backupManifestSizingStillRequired": true,
+    "compatibilityProofFreshAtObservation": true,
+    "compatibilityBindingMatches": {
+      "previousCode": true,
+      "candidateCode": true,
+      "productionConfiguration": false,
+      "currentDependencies": true
+    },
+    "configurationOriginalBytesUnchanged": true,
+    "existingClientCount": 1,
+    "clientListChanged": false,
+    "eventsEnabled": false,
+    "nodeRestPublic": false,
+    "dependencyFiles": 4462,
+    "dependencyBytes": 38850588,
+    "protectedBaselineUnchanged": true
+  },
+  "blockers": [
+    {
+      "code": "compatibility_binding_productionConfiguration_mismatch",
+      "meaning": "The accepted isolated proof binds its fixture configuration, not the current production configuration. It must not be rewritten or reused as production-bound compatibility evidence."
+    },
+    {
+      "code": "backup_manifest_sizing_required",
+      "meaning": "Free space exceeds the preparation floor, but a bounded inventory and actual backup size/reserve calculation remain required before maintenance."
+    }
+  ],
+  "releasePreflightPassed": false,
+  "productionReady": false,
+  "productionPublication": false,
+  "existingServicesStartedOrStopped": false,
+  "credentialsChanged": false,
+  "authorizationChanged": false,
+  "dnsOrPortsChanged": false,
+  "relayChanged": false,
+  "realModelsCalled": false,
+  "externalAgentsCalled": false,
+  "limitations": [
+    "Local source-package preparation is not a complete executable production bundle; prepared configuration/ingress/proof files and settings remain missing.",
+    "Proof freshness is an observation-time snapshot, not a promise that the proof remains fresh later.",
+    "The dependency observation is a single pass, not a cross-observation stability proof.",
+    "No application-consistent cross-database maintenance backup was created.",
+    "No production deployment or new external-Agent acceptance occurred."
+  ],
+  "proposedNextScope": "Prepare an exact-production-configuration compatibility procedure and bounded backup inventory/sizing locally. A new read-only collection, new compatibility unit, any use of existing private runtime environment, and actual maintenance require explicit bounded authorization; do not rerun already passed success/rollback units or reuse old quotas.",
+  "redaction": "No raw configuration, credentials, account/client identifiers, private paths, database contents, transport logs or private harness code included."
+}
