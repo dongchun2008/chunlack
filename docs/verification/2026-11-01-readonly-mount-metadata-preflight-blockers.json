@@ -1,0 +1,74 @@
+{
+  "date": "2026-11-01",
+  "scope": "preflight of one approved read-only frozen-mount metadata collection",
+  "status": "blocked before SSH by two reviewed local collector deadline defects",
+  "authorizedOperation": {
+    "maximumSshAttempts": 1,
+    "outerCeilingSeconds": 35,
+    "metadataOnly": true,
+    "newLinuxUnits": 0,
+    "noServiceActions": true,
+    "noRemoteApplicationWrites": true,
+    "noCredentialOrBusinessContents": true
+  },
+  "actualExecution": {
+    "sshAttempts": 0,
+    "remoteCommands": 0,
+    "newLinuxUnits": 0,
+    "candidateBehaviorTestsRun": 0,
+    "existingRemainingNativeUnitsUntouched": 2
+  },
+  "frozenInputs": {
+    "bindCount": 41,
+    "distinctSourceAndTargetPaths": 43,
+    "fixedPathsIncludingAncestors": 53,
+    "previouslyUnobservedSources": 32,
+    "auditSha256": "442242586b76853ac5f7978f23e46f6b3181ef42673a1cdc0f6a8af7746acde2",
+    "collectorSha256": "be911c84069733811a4499910a948537ed2a2137ff7729125e0e2bfbe68065ea",
+    "requestSha256": "47039d28f66b1f9468fc1178c574a43ac688604b914e505112d059a893f28e33",
+    "bindingSha256": "95a645c888135584dc9961c1caa773087e05af0dd97c86f359a73bc408705314",
+    "librarySha256": "a824cf46f6e0e85b4e69268fddf615e36309e9885679c864b3adf8afe1527658"
+  },
+  "independentReview": {
+    "method": "read-only static review; no execution or network",
+    "candidateRejectedBeforeExecution": true,
+    "findings": [
+      {
+        "severity": "P2",
+        "code": "final_query_not_bound_to_shared_deadline",
+        "description": "Metadata sampling can approach 18 seconds before a new three-second command budget is opened; signal-triggered cleanup can outlive the intended remote twenty-second envelope."
+      },
+      {
+        "severity": "P2",
+        "code": "alarm_timeout_caught_as_metadata_oserror",
+        "description": "TimeoutError inherits OSError, so the metadata error branch can demote an alarm timeout to a path observation and continue after the one-shot alarm has fired."
+      }
+    ],
+    "otherObservations": [
+      "Only metadata, link text and fixed systemctl outputs are requested.",
+      "Leaf lstat is no-follow, but intermediate path components can resolve symbolic links.",
+      "Two observations are not an atomic metadata snapshot.",
+      "Prior library tests do not cover this newly generated wrapper."
+    ]
+  },
+  "proposedCorrection": {
+    "requiresHumanApproval": true,
+    "localOnly": true,
+    "items": [
+      "Use one shared deadline and refuse a final query when insufficient cleanup reserve remains.",
+      "Propagate timeout/cancellation instead of converting it to metadata errors.",
+      "Add local fault-injection regression for near-deadline and alarm-during-metadata branches; update source/request/binding digests."
+    ],
+    "continueOriginalSshAllowanceOnlyAfterRegressionAndReview": true,
+    "sshAllowanceUsed": 0,
+    "sshAllowanceMaximum": 1
+  },
+  "namespaceRootCauseConfirmed": false,
+  "productionReady": false,
+  "overallDeliveryComplete": false,
+  "productionPublished": false,
+  "productionServicesChanged": false,
+  "credentialsChanged": false,
+  "authorizationChanged": false,
+  "relayChanged": false
+}
