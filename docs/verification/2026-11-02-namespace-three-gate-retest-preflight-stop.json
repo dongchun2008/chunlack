@@ -1,0 +1,134 @@
+{
+  "date": "2026-11-02",
+  "stage": "three_gate_local_repair_and_original_single_diagnostic_attempt",
+  "status": "remote_preflight_failed_before_unit_start_no_retry",
+  "localVerification": {
+    "baselineTests": 2,
+    "expectedAssertionFailures": 2,
+    "baselineErrors": 0,
+    "tests": 93,
+    "passed": 93,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "seconds": 2.679939200170338,
+    "realPipeAfterClientExitCovered": true,
+    "completeRelatedPrivateSuite": true,
+    "completeProductSuite": false
+  },
+  "independentReview": {
+    "acceptedBeforeSsh": true,
+    "testsIndependentlyExecuted": 0,
+    "codeAndExactFrozenPacketReviewed": true,
+    "freezeSha256": "56baf575f4b2ef9a3d412dc15086a238e320f887eefaf36ed3e3fd1f8b9f9c8a",
+    "files": 202,
+    "sourceBytes": 2695560,
+    "bindings": 41
+  },
+  "artifacts": {
+    "native_runner.py": {
+      "bytes": 27949,
+      "sha256": "d4854199744106ddc29073b0cc3a560d8b3c594c1b8dd35cefd0cec26351fbe8"
+    },
+    "run_local.py": {
+      "bytes": 5221,
+      "sha256": "6752fd25b5d13225ff81cc2ea738bf34f8d9d60c0304a6fbb679d6eaf0406708"
+    },
+    "test_native_runner.py": {
+      "bytes": 8425,
+      "sha256": "08734d60a72efc786c03536900a598eeadcf25a4ac61992e8437d800f9767c04"
+    },
+    "test_five_repairs.py": {
+      "bytes": 19815,
+      "sha256": "1d4dfb4a55fdc8aef0d18cd43e2f0a50bb95ab113e445b17b07860100234faec"
+    },
+    "test_three_gates.py": {
+      "bytes": 7235,
+      "sha256": "e2846301112b98c4b78dd2338123e0cc7d1f0c98558798a3ae5abe0650285469"
+    },
+    "PLAN.md": {
+      "bytes": 4650,
+      "sha256": "41e0398bb42e39c42fa597ff831f51496c46f0a90c132a31f3545538f3cbf749"
+    },
+    "request.json": {
+      "bytes": 1583034,
+      "sha256": "8d44d94ce238f7779dd1981b6a7808af0b6bb76e625dc516439e714130d92053"
+    },
+    "freeze.json": {
+      "bytes": 698,
+      "sha256": "56baf575f4b2ef9a3d412dc15086a238e320f887eefaf36ed3e3fd1f8b9f9c8a"
+    },
+    "baseline.private.json": {
+      "bytes": 2114,
+      "sha256": "197276c2a6f96efd3d29ed25424b833ff70a03a6b26c982cbb6a8187ea75e7f9"
+    },
+    "full-regression.private.json": {
+      "bytes": 13052,
+      "sha256": "eaeb0e2ca49d9b947bee4bd206a538b4931caa4b4166ee8f3a62c8b5c3d3d398"
+    },
+    "local-package.private.json": {
+      "bytes": 1354,
+      "sha256": "ee09c3582923fcc7ec22e6a74a35ecb4968d72737fb69fe6a48a7975f2fe5a78"
+    }
+  },
+  "actualExecution": {
+    "sshConnections": 1,
+    "hostKeyVerified": true,
+    "sshCredentialUsedPrivatelyAfterHostVerification": true,
+    "localTransportExitCode": 2,
+    "remoteExitCode": 2,
+    "remoteState": "returned",
+    "passed": false,
+    "consumedUnitAttempts": 0,
+    "error": {
+      "type": "ValueError",
+      "code": "show_fields"
+    },
+    "cleanupErrors": [],
+    "remoteElapsedSeconds": 0.23984060995280743,
+    "invocation": null,
+    "stdoutBytes": 0,
+    "stderrBytes": 0,
+    "privateResultBytes": 2466,
+    "privateResultSha256": "2475f8372292caea1a2491a860ead0d69b7f00a11afb8bfd454efbe02de9402d",
+    "protectedBaselineCollected": false,
+    "protectedBaselineUnchanged": null,
+    "stagedPayloadMaterializationReached": false
+  },
+  "diagnosis": {
+    "confirmed": "Strict systemctl show field-shape preflight rejected the response before any systemd-run attempt",
+    "unknown": "Actual missing/extra field names were not retained, so precise field mismatch is unknown",
+    "documentedBehavior": {
+      "fact": "systemctl show suppresses empty properties by default; --all includes them while --property retains selection",
+      "source": "https://www.freedesktop.org/software/systemd/man/255/systemctl.html"
+    },
+    "hypothesis": "Suppressed empty fields may explain the mismatch, but this has not been proven from this VPS response",
+    "original226NamespaceRootCauseConfirmed": false
+  },
+  "quota": {
+    "originalMaximum": 1,
+    "usedLinuxUnits": 0,
+    "remainingLinuxUnits": 1,
+    "firstSshAttemptSealed": true,
+    "automaticRetry": false,
+    "oldBudgetsNotReused": true
+  },
+  "sideEffects": {
+    "productionPublication": false,
+    "existingServicesStartedOrStopped": false,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialsModified": false,
+    "authorizationModified": false,
+    "relayModified": false,
+    "oldFailedDirectoriesOrLocksModified": false,
+    "productionHealthNotReverified": true
+  },
+  "proposedNextGate": "Confirm minimal --all selected-property read adjustment plus bounded missing/extra-name diagnostics, regress and review; then explicitly approve one fresh controlled attempt under original 0/1 quota, preserving failed attempt",
+  "productionDeliveryComplete": false,
+  "synchronization": {
+    "sanitizedRecordOnly": true,
+    "privateCodePayloadsCredentialsAndRawReceiptsNotCommitted": true
+  }
+}
