@@ -1,0 +1,66 @@
+{
+  "date": "2026-11-01",
+  "status": "blocked-before-ssh",
+  "authorization": {
+    "maximumNewUnits": 3,
+    "consumedUnits": 0,
+    "limits": {
+      "secondsIncludingCleanup": 90,
+      "memoryMiB": 192,
+      "cpuPercent": 20,
+      "tasks": 32,
+      "swap": 0,
+      "nice": 10,
+      "cpuWeight": 10
+    },
+    "failFast": true,
+    "automaticRetries": false
+  },
+  "localEvidence": {
+    "contractTests": 8,
+    "passed": 8,
+    "compileChecks": 6,
+    "preparedSourceFiles": 199,
+    "preparedSourceBytes": 2635781,
+    "sshDependencyVersion": "5.1.0",
+    "nativeTestsExecuted": 0
+  },
+  "independentReview": {
+    "accepted": false,
+    "blockingFindings": [
+      {
+        "severity": "P2",
+        "code": "probe_contextmanager_interface",
+        "summary": "The native directory helper returns a context manager, not a bare file descriptor. Both positive and rejection paths must enter the context."
+      },
+      {
+        "severity": "P2",
+        "code": "source_manifest_help_files_missing",
+        "summary": "Suffix filtering omits the English and Chinese Markdown help files required by the source manifest."
+      },
+      {
+        "severity": "P2",
+        "code": "cleanup_shared_deadline_incomplete",
+        "summary": "The final status query can consume a separate timeout after stop, exceeding the shared 90-second envelope."
+      },
+      {
+        "severity": "P2",
+        "code": "transport_timeout_receipt_missing",
+        "summary": "Transport launch and timeout exceptions occur outside failure receipt handling."
+      }
+    ],
+    "additionalLimits": [
+      "Only the parent cgroup process list is inspected; recursive emptiness remains unverified.",
+      "Supplementary groups and host UNIX socket visibility are not verified.",
+      "Archive dependency closure is not independently established."
+    ]
+  },
+  "production": {
+    "published": false,
+    "servicesRestarted": false,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "relayChanged": false
+  },
+  "nextAction": "Obtain one grouped approval for local corrections and targeted regression; preserve existing freeze and request; do not consume remote quota until review gates pass."
+}
