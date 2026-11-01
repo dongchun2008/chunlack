@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-01",
+  "kind": "local-failure-characterization",
+  "checks": 2,
+  "confirmed": 2,
+  "directoryInterface": {
+    "returnsIntegerDescriptor": false,
+    "hasContextEntry": true,
+    "bareDescriptorUseRejected": true
+  },
+  "candidateManifestRequiredButMissing": [
+    "identity/help/en.md",
+    "identity/help/zh-CN.md"
+  ],
+  "sourceCorrectionsApplied": false,
+  "sshConnections": 0,
+  "linuxUnitsConsumed": 0,
+  "linuxUnitsApproved": 3,
+  "nativeTestsExecuted": 0,
+  "productionChanged": false,
+  "credentialsChanged": false,
+  "authorizationsChanged": false,
+  "relayChanged": false,
+  "productionReady": false
+}
