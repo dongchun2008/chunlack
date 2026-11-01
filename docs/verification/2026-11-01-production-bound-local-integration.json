@@ -1,0 +1,136 @@
+{
+  "date": "2026-11-01",
+  "status": "local-synthetic-integration-passed",
+  "scope": "Local synthetic integration only",
+  "productionReady": false,
+  "corrections": [
+    "Original validator exception types/codes asserted without modifying it; proof/settings nested data independent.",
+    "Configuration body read follows owned marker, path-component, link and opened-file identity validation.",
+    "Successful terminal record follows owned-child settlement and final cleanup.",
+    "Bounded 128-entry closed-field diagnostics preserve first failure and actual exit/close/disconnect; no stdout/stderr body or full IPC/token logging.",
+    "Pending startup no longer makes stop await startup indefinitely; original phase/cleanup budgets retained.",
+    "Unverified global model count is null, not a constant zero; local hooks do not claim kernel network isolation."
+  ],
+  "tests": {
+    "python": {
+      "tests": 32,
+      "passed": 32,
+      "failed": 0,
+      "skipped": 0,
+      "warningsAsErrors": true
+    },
+    "nodeBoundariesAndOidc": {
+      "tests": 14,
+      "passed": 14,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "nodeActualLifecycle": {
+      "tests": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "testElapsedMs": 11015.8307
+    },
+    "aggregate": {
+      "tests": 47,
+      "passed": 47,
+      "failed": 0,
+      "skipped": 0
+    },
+    "scope": "All tests in this private component/integration package, not the full repository suite."
+  },
+  "application": {
+    "sourceManifestsVerified": true,
+    "differentCandidateAndPreviousSources": true,
+    "fixtureSeedSeparate": true,
+    "bootOrder": [
+      "candidate",
+      "previous"
+    ],
+    "children": [
+      {
+        "runtime": "seed",
+        "closed": true,
+        "exitObserved": true,
+        "exitCode": 0,
+        "signal": null,
+        "firstFailure": null
+      },
+      {
+        "runtime": "candidate",
+        "closed": true,
+        "exitObserved": true,
+        "exitCode": 0,
+        "signal": null,
+        "firstFailure": null
+      },
+      {
+        "runtime": "previous",
+        "closed": true,
+        "exitObserved": true,
+        "exitCode": 0,
+        "signal": null,
+        "firstFailure": null
+      }
+    ],
+    "threeLoopbackListenersChecked": true,
+    "privateNodeReadChecked": true,
+    "forwardedNodeRestDenied": true,
+    "originalRowsRetained": true,
+    "originalSchemasRetained": true,
+    "authorityUnchanged": true,
+    "configBytesUnchanged": true,
+    "writerLockReleased": true,
+    "finalCleanupCompletedBeforeResult": true,
+    "originalReadyTimeout": "Not reproduced in this single retest; root cause remains unresolved. No repeated stability acceptance.",
+    "phaseLimitMs": 20000,
+    "outerTestLimitMs": 90000,
+    "cleanupReserveMs": 10000,
+    "graceLimitMs": 8000,
+    "forceLimitMs": 2000
+  },
+  "proof": {
+    "fullOriginalHashPinnedValidatorExecuted": true,
+    "inputEvidence": "Explicitly synthetic test records only",
+    "i18nBindingsChecked": true,
+    "productionProofCreated": false,
+    "nativeExecutionVerified": false,
+    "realIdentityLogin": false
+  },
+  "safety": {
+    "vpsConnections": 0,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "existingServicesStopped": false,
+    "productCoreChanged": false,
+    "frozenControllerChanged": false,
+    "globalRealModelCallCount": null,
+    "modelCallCountVerified": false,
+    "kernelNetworkIsolationVerified": false,
+    "privateSourcePublished": false,
+    "privateConfigurationPublished": false,
+    "productionCredentialsRead": false,
+    "productionCredentialsChanged": false,
+    "productionAuthorizationChanged": false,
+    "productionRelayChanged": false
+  },
+  "independentReview": {
+    "status": "passed-with-documented-limits",
+    "newP1": 0,
+    "newP2": 0,
+    "testsRerunByReviewer": false,
+    "scope": "Targeted read-only review of the merged local fixture/path/diagnostic corrections; not native or production acceptance."
+  },
+  "remaining": [
+    "Native descriptor traversal and lifecycle/kernel isolation coverage.",
+    "Fresh separately approved exact-production-config and database-copy compatibility verification.",
+    "Actual metadata-only backup sizing and complete production-bound release package.",
+    "Separate maintenance authorization, production release/rollback and real user-facing acceptance.",
+    "Further cleanup/IPC fault-injection coverage before relying on the adapter for native production-bound evidence."
+  ],
+  "acceptedLocalIntegrationOnly": true,
+  "history": "Prior failed fixtures and the ready-timeout attempt remain preserved, not rewritten as success."
+}
