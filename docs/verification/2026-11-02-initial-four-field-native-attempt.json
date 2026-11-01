@@ -1,0 +1,123 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-02",
+  "status": "native_diagnostic_failed_cleanup_not_proven",
+  "scope": "One explicitly authorized SSH attempt and one /usr/bin/true diagnostic unit; not application acceptance",
+  "candidate": {
+    "freezeSha256": "3f1b04c01b555895c1c2fbbcbaf6bd134485f18c9ebe326c4e7ce6298865caf4",
+    "runnerSha256": "5437ed272909aab730c57754a69383666ca8279f02679049290d1b862ebf5cd1",
+    "launcherSha256": "6752fd25b5d13225ff81cc2ea738bf34f8d9d60c0304a6fbb679d6eaf0406708",
+    "previousLocalTests": 116,
+    "testsRerunThisPhase": 0
+  },
+  "authorization": {
+    "sshAttemptsMaximum": 1,
+    "sshAttemptsUsed": 1,
+    "maximumUnits": 1,
+    "consumedUnitAttempts": 1,
+    "automaticRetry": false,
+    "sharedControllerDeadlineSeconds": 90,
+    "memoryMiB": 192,
+    "cpuPercent": 20,
+    "tasksMax": 32,
+    "swapMaxBytes": 0,
+    "nice": 10,
+    "cpuWeight": 10,
+    "privateNetwork": true,
+    "privateTmp": true,
+    "businessUid": 996,
+    "businessGid": 987
+  },
+  "execution": {
+    "hostKeyVerified": true,
+    "remoteState": "returned",
+    "localTransportExitCode": 2,
+    "remoteExitCode": 2,
+    "shellToolExitCode": 1,
+    "passed": false,
+    "controllerElapsedSeconds": 0.30794096551835537,
+    "initialFourFieldGatePassed": true,
+    "stagingReached": true,
+    "unitStartAttempted": true,
+    "invocationBound": true,
+    "originalError": {
+      "type": "ShowFieldError",
+      "code": "show_fields",
+      "missing": [
+        "ExecStart"
+      ],
+      "missingCount": 1,
+      "unexpectedCount": 0,
+      "duplicateCount": 0,
+      "malformedLineCount": 0,
+      "truncated": false
+    },
+    "cleanupErrors": [
+      {
+        "type": "ShowFieldError",
+        "code": "show_fields",
+        "missing": [
+          "ExecStart"
+        ]
+      }
+    ],
+    "stopRequested": true,
+    "stopIdentityObserved": {
+      "idMatched": true,
+      "invocationMatched": true,
+      "LoadState": "loaded",
+      "ActiveState": "activating",
+      "SubState": "start",
+      "nonzeroMainPidObserved": true,
+      "terminalObserved": false
+    },
+    "clientCleanup": {
+      "clientExited": true,
+      "clientReturnCode": 0,
+      "pipesClosed": true,
+      "errors": []
+    },
+    "captureComplete": false,
+    "stdoutBytes": 0,
+    "stderrBytes": 0,
+    "terminalEvidencePresent": false,
+    "finalEvidencePresent": false,
+    "cgroupEmptyProven": false,
+    "unloadProofPresent": false,
+    "cleanupProven": false,
+    "protectedBaselineUnchanged": true,
+    "receiptSha256": "faabea446398b015ecabc19a79bb632c4f4e89e66cea36917a0d003d7cb3d60f"
+  },
+  "independentEvidenceReview": {
+    "receiptDigestMatched": true,
+    "transportAndReceiptConsistent": true,
+    "stopRequestedConfirmed": true,
+    "cleanupNotProven": true,
+    "noRemoteActivityByReviewer": true
+  },
+  "boundaries": {
+    "productionPublished": false,
+    "existingProductionServicesStartedStopped": false,
+    "credentialValuesExposed": false,
+    "credentialsModified": false,
+    "authorizationModified": false,
+    "dnsModified": false,
+    "portsModified": false,
+    "relayModified": false,
+    "lackOrCaddyStarted": false,
+    "realModelsCalled": false,
+    "externalAgentsCalled": false,
+    "applicationAccepted": false
+  },
+  "limitations": [
+    "Selected before/after protected baselines match; this is not comprehensive production health acceptance.",
+    "Asynchronous stop submission is not proof of completed cleanup.",
+    "Direct client exit zero does not establish diagnostic unit termination or empty cgroup.",
+    "No live claim that the diagnostic unit remains running; its terminal state is unknown.",
+    "Historical 226/NAMESPACE root cause remains unknown.",
+    "The one-unit quota is exhausted; no automatic retry, replacement unit or extra SSH connection was made.",
+    "All failed artifacts and staging directories remain preserved.",
+    "Next proposed operation requires separate bounded recovery approval: fixed unit/Invocation metadata and cgroup check, conditional one own-unit stop only if same identity remains, no new unit or probe rerun.",
+    "Private runner, payload and raw receipts are not synchronized."
+  ]
+}
