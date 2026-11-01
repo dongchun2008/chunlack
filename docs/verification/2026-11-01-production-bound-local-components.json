@@ -1,0 +1,81 @@
+{
+  "date": "2026-11-01",
+  "status": "local-component-regression-passed",
+  "scope": "Private local preparation components only; not a production or native compatibility acceptance.",
+  "productionReady": false,
+  "authorization": "Local implementation, four corrections, and per-table boundary alignment with synthetic regression.",
+  "corrections": [
+    "Preserve complete authority and controller fingerprint structures without lossy substitution or mutable aliases.",
+    "Use existing createdAtMs/expiresAtMs proof fields; retain one-hour TTL and five-minute preparation freshness margin.",
+    "Use raw regular-expression spelling with unchanged matching behavior.",
+    "Correct synthetic logical-byte total to 5923.",
+    "Remove the mistaken cross-table aggregate row restriction; retain the existing 20000-row per-table bound."
+  ],
+  "verification": {
+    "python": {
+      "tests": 27,
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0,
+      "warningsAsErrors": true
+    },
+    "node": {
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0
+    },
+    "total": {
+      "tests": 33,
+      "passed": 33,
+      "failed": 0,
+      "skipped": 0
+    },
+    "coverage": [
+      "All tests in this new local component package; not the full repository regression.",
+      "Full authority/controller structure preservation, input immutability and malformed-input rejection.",
+      "Two tables with 15000 or 20000 rows each accepted; any individual table above 20000 rejected.",
+      "Raw configuration byte bindings and newline-drift refusal.",
+      "Hash-pinned existing prepared_bindings function and extracted proof time guard.",
+      "Metadata-only sizing with WAL/SHM, link/type/drift/overflow/time/space boundary cases.",
+      "Existing OIDC module initialization with synthetic discovery only; at most four allowed initialization GETs per fixture, no real-fetch fallback."
+    ],
+    "limits": [
+      "The pinned authority generator must separately enforce the real 4 MiB encoded-row-content limit. Hash-only preparation cannot verify that size.",
+      "Pure-function integration did not execute the whole production preflight or whole proof validator.",
+      "OIDC initialization is not real login, token exchange, network isolation or full application compatibility."
+    ]
+  },
+  "independentReview": {
+    "status": "passed-with-documented-coverage-limits",
+    "newP1": 0,
+    "newP2": 0,
+    "finding": "The prior aggregate-row-count incompatibility is resolved.",
+    "testsRerunByReviewer": false,
+    "scope": "Read-only targeted review of these local corrections, not native or production acceptance."
+  },
+  "safety": {
+    "vpsConnections": 0,
+    "newLinuxUnits": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productCoreChanged": false,
+    "frozenControllerChanged": false,
+    "productionPublished": false,
+    "productionServicesStopped": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false,
+    "privateSourcePublished": false,
+    "privateConfigurationPublished": false
+  },
+  "remaining": [
+    "Complete candidate-to-previous application lifecycle and whole existing proof-validator integration.",
+    "Native descriptor traversal and path-replacement/close-error coverage.",
+    "Separately approved native kernel, database-copy and exact-production-config compatibility evidence.",
+    "Actual backup sizing and complete production-bound package.",
+    "Separately approved maintenance and real user-facing production acceptance."
+  ],
+  "acceptedLocalComponentsOnly": true
+}
