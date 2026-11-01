@@ -1,0 +1,104 @@
+{
+  "date": "2026-11-01",
+  "scope": "one approved read-only startup output-routing check",
+  "status": "routing verified; no startup error body obtained",
+  "sourceBinding": {
+    "collectorSha256": "4ae2eacd12675ac3bfa1b780136bdc28062724c11afc5501bce73c9477bf77cf",
+    "requestSha256": "e5bccc07153086e549b0ea497dd3e796165be06b5957a19127b9417ca8747228",
+    "bindingSha256": "896266740b35e5658f5efe0faa2d3b68dd5f03f0998a9ef041fe63fbd1d26c6c",
+    "helperSha256": "b9bb55c7c543d6724dd987911b6a50445aeb86722f51df6caaa16e0bc9d127fb",
+    "frozenContractSha256": "00737d75b575310245f4f7ef3171e7116c5bd2523d26d32ea1d3cca50da23d5c",
+    "verifiedBytesExecuted": true,
+    "expectedFileLogPaths": [],
+    "noGuessedPaths": true
+  },
+  "execution": {
+    "maximumSshAttempts": 1,
+    "sshAttemptsUsed": 1,
+    "hostKeyVerified": true,
+    "localExitCode": 0,
+    "remoteExitCode": 0,
+    "outerCeilingSeconds": 35,
+    "outerElapsedSeconds": 2.0838923,
+    "remoteCeilingSeconds": 20,
+    "remoteElapsedSeconds": 0.06838722806423903,
+    "beforeAfterFixedFailedInvocationMatched": true,
+    "routingBeforeAfterMatched": true
+  },
+  "observed": {
+    "standardOutput": "journal",
+    "standardError": "inherit",
+    "logNamespaceConfigured": false,
+    "startupFileRead": false,
+    "startupLogBytesRead": 0,
+    "fileReadSkipReason": "No startup-file path was bound from the checked frozen constructor; no file path was guessed or searched.",
+    "newErrorBodyObtained": false
+  },
+  "independentReview": {
+    "preExecutionStaticReviewAccepted": true,
+    "postCollectionEvidenceReviewAccepted": true,
+    "confirmedEvidenceContradictions": 0,
+    "noCommandsTestsOrNetworkByReviewer": true
+  },
+  "receiptArtifacts": [
+    {
+      "name": "receipt.private.json",
+      "bytes": 1514,
+      "sha256": "03bf8c4b1571af1ebf32bf5c9f8a174cbd2f6756dd8b05d3ba8a9e17e54c6d68"
+    },
+    {
+      "name": "transport.stdout.txt",
+      "bytes": 971,
+      "sha256": "84c3c72dbb31a5ccfc6a501bf4116f316e6d3303353eeefb831106d18ddae57a"
+    },
+    {
+      "name": "binding.json",
+      "bytes": 734,
+      "sha256": "896266740b35e5658f5efe0faa2d3b68dd5f03f0998a9ef041fe63fbd1d26c6c"
+    },
+    {
+      "name": "attempt.json",
+      "bytes": 533,
+      "sha256": "3abd163d7535379c6cc5d096fb46d3ca06a6d9dff38b2ad47420b22f62b47e27"
+    },
+    {
+      "name": "summary.json",
+      "bytes": 662,
+      "sha256": "49066e729ebff4fac64c08f213a2bbf295c8f237dcaf8109ddbda22fb76e6100"
+    }
+  ],
+  "evidenceLimits": [
+    "This operation verified output routing only, not startup log contents.",
+    "Zero bytes read does not mean that logs are empty or that detailed diagnostics never existed.",
+    "No live startup-file path was independently validated.",
+    "Current production service health was not revalidated.",
+    "Previous 48 local regression tests do not cover this new routing wrapper."
+  ],
+  "boundaries": {
+    "newLinuxUnits": 0,
+    "existingOldNativeUnitsUntouched": 2,
+    "remoteApplicationWrites": 0,
+    "serviceActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productionPublished": false
+  },
+  "nextStepProposal": {
+    "requiresHumanConfirmation": true,
+    "scope": "local-only minimal namespace diagnostic-probe design and regression, before proposing any new remote unit",
+    "remoteConnectionsApproved": false,
+    "newRemoteUnitsApproved": false,
+    "doNotRelaxSandbox": true,
+    "noLackOrCaddyLaunch": true,
+    "noRealModelsOrExternalAgents": true
+  },
+  "references": [
+    "https://github.com/systemd/systemd/blob/v255/src/core/dbus-execute.c"
+  ],
+  "namespaceRootCauseConfirmed": false,
+  "productionReady": false,
+  "overallDeliveryComplete": false
+}
