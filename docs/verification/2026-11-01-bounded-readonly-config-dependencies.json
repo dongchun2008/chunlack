@@ -1,0 +1,56 @@
+{
+  "date": "2026-11-01",
+  "scope": "One newly approved bounded read-only configuration and dependency observation",
+  "status": "observation_passed_not_production_acceptance",
+  "transport": {
+    "hostKeyVerified": true,
+    "remoteExitCode": 0,
+    "stage": "complete"
+  },
+  "budget": {
+    "approvedAttempts": 1,
+    "attemptsUsed": 1,
+    "collectorSeconds": 25,
+    "sshObservationSeconds": 35,
+    "localSeconds": 65,
+    "linuxUnitsStarted": 0
+  },
+  "configuration": {
+    "originalBytesUnchanged": true,
+    "existingClientCount": 1,
+    "clientListChanged": false,
+    "clientListCheck": "Preserved the existing list; not an independent authorization approval",
+    "eventsEnabled": false,
+    "nodeRestPublic": false,
+    "candidateFilesWritten": false
+  },
+  "dependencies": {
+    "files": 4462,
+    "bytes": 38850588,
+    "scanSeconds": 0.259041,
+    "observationPasses": 1,
+    "fingerprintComputed": true,
+    "stabilityProof": false,
+    "applicationAccountReadabilityVerified": false
+  },
+  "protectedBaselineUnchanged": true,
+  "effects": {
+    "remoteFilesWritten": false,
+    "serviceStartStop": false,
+    "productionPublication": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false,
+    "modelsCalled": false,
+    "externalAgentsCalled": false
+  },
+  "limitations": [
+    "A single dependency observation does not establish stability across observations.",
+    "Root-run collection does not establish application UID/GID readability.",
+    "Native CRLF ingress success and rollback fixture coverage remains pending.",
+    "No fresh production maintenance or release was performed.",
+    "Production readiness is not established."
+  ],
+  "productionReady": false,
+  "redaction": "No configuration bodies, secrets, client identifiers, configuration hashes, raw transport logs or private harness sources included."
+}
