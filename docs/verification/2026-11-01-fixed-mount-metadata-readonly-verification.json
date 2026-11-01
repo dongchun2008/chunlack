@@ -1,0 +1,135 @@
+{
+  "date": "2026-11-01",
+  "scope": "authorized fixed-mount read-only metadata verification",
+  "status": "single SSH metadata collection completed; namespace root cause remains unknown",
+  "localRegression": {
+    "baseline": {
+      "phase": "baseline-characterization",
+      "tests": 2,
+      "expectedAssertionFailures": 2,
+      "errors": 0,
+      "skipped": 0,
+      "validRedEvidence": true,
+      "elapsedSeconds": 0.17045480001252145
+    },
+    "corrected": {
+      "phase": "corrected-local-regression",
+      "tests": 48,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "passed": 48,
+      "accepted": true,
+      "elapsedSeconds": 6.4572178000817075,
+      "unittestElapsedSeconds": 6.129,
+      "receiptEvidence": "Complete execution output reviewed; RESULT_JSON marker interleaved with progress dots, so the line-start reader failed after successful tests.",
+      "testRerun": false
+    },
+    "independentStaticReviewAccepted": true,
+    "realSignalAlarmOverlapVerified": false
+  },
+  "sourceBinding": {
+    "collectorSha256": "266f543044ade1cf14f631987fc2f953dd49c5ecd356a31b14ea4b37c27c35a1",
+    "requestSha256": "07c51c9ded7e97cc08e2999b30e0302082d70fb2df058bf433dc05213a1ae70e",
+    "bindingSha256": "0067010d07b524aad8cac978ea50ac98811c56d1f0eb4ae93221e4ecf9e11e83",
+    "testSha256": "faa3f86b82bbe9d98852795a86f089aca2b3890aa74232f40eb7732b647c8419",
+    "sshHelperSha256": "b9bb55c7c543d6724dd987911b6a50445aeb86722f51df6caaa16e0bc9d127fb",
+    "verifiedBytesExecuted": true,
+    "oldRejectedCandidatesPreserved": true
+  },
+  "observed": {
+    "systemdVersion": "systemd 255 (255.4-1ubuntu8.8)",
+    "sshAttempts": 1,
+    "maximumSshAttempts": 1,
+    "hostKeyVerified": true,
+    "localExitCode": 0,
+    "remoteExitCode": 0,
+    "outerCeilingSeconds": 35,
+    "outerElapsedSeconds": 2.0717221000000006,
+    "remoteCeilingSeconds": 20,
+    "remoteElapsedSeconds": 0.05155004467815161,
+    "beforeAfterFixedFailedInvocationMatched": true,
+    "rawTransportMatchedReceipt": true,
+    "receiptRequestBindingMatched": true,
+    "fixedPaths": 53,
+    "twoObservationsMatched": true,
+    "allObservedPathsExist": true,
+    "unknownPaths": 0,
+    "observedSymlinks": 0,
+    "bindings": 41,
+    "sourceCount": 41,
+    "targetCount": 41,
+    "missingSources": 0,
+    "missingTargets": 0,
+    "sourceTargetKindMismatches": 0,
+    "previouslyUnknownSources": 32,
+    "previouslyUnknownSourcesNowObserved": 32,
+    "traditionalModeTraversalDenialsForUid996Gid987": 0
+  },
+  "evidenceLimits": [
+    "Observations are current metadata, not proof of the path state at the earlier failure.",
+    "Two matching observations are not an atomic snapshot or content-integrity check.",
+    "Traditional permission-bit simulation does not establish ACL or actual namespace access.",
+    "No namespace mount was attempted; original exit 226/NAMESPACE remains unexplained.",
+    "Current production service health was not revalidated in this phase.",
+    "The test result reader was not changed after its line-start marker error; successful regression was established from complete console output without rerunning tests."
+  ],
+  "independentEvidenceReview": {
+    "accepted": true,
+    "confirmedContradictions": 0,
+    "readOnly": true,
+    "noTestsOrNetworkByReviewer": true
+  },
+  "receiptArtifacts": [
+    {
+      "name": "receipt.private.json",
+      "bytes": 44360,
+      "sha256": "599a95735816a8172ff9b180d97f2792f9240d293c63c56f361c4998ce3f85a9"
+    },
+    {
+      "name": "transport.stdout.txt",
+      "bytes": 34701,
+      "sha256": "7c0acdad5e503d72a559706e5e4fb584cbdb2039531a7ff9777efc91e6cceb71"
+    },
+    {
+      "name": "binding.v2.json",
+      "bytes": 12576,
+      "sha256": "0067010d07b524aad8cac978ea50ac98811c56d1f0eb4ae93221e4ecf9e11e83"
+    },
+    {
+      "name": "summary.json",
+      "bytes": 587,
+      "sha256": "a65e8421436533b6fa78679da05dbdd4f609de203df11a2ac3a88cd3b7173ac1"
+    },
+    {
+      "name": "attempt.json",
+      "bytes": 486,
+      "sha256": "37924afc9bc777fc36ecc049ee8265de687548c03f6ca7e6c50eca42e1181b6d"
+    }
+  ],
+  "boundaries": {
+    "newLinuxUnits": 0,
+    "remoteApplicationFilesWritten": 0,
+    "serviceActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "remainingOldNativeUnitsUntouched": 2,
+    "productionPublished": false
+  },
+  "proposedNextPhase": {
+    "requiresFreshApproval": true,
+    "operation": "one bounded read-only check of fixed failed unit StandardOutput/StandardError routing; read startup error log only if its path is safely bound to that unit inside the existing isolated root",
+    "outerCeilingSeconds": 35,
+    "maximumSshAttempts": 1,
+    "maximumLogBytes": 65536,
+    "newLinuxUnits": 0,
+    "remoteApplicationWrites": false,
+    "noAutomaticRetries": true
+  },
+  "namespaceRootCauseConfirmed": false,
+  "productionReady": false,
+  "overallDeliveryComplete": false
+}
