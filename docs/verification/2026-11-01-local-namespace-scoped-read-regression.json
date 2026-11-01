@@ -1,0 +1,103 @@
+{
+  "date": "2026-11-01",
+  "scope": "local-only scoped read-injection correction and regression",
+  "status": "local correction and static independent review passed; no remote acceptance",
+  "changes": {
+    "fixtureOnly": true,
+    "collectorImplementationUnchanged": true,
+    "onlyRegisteredOpenChildOutputDescriptorsIntercepted": true,
+    "allOtherReadsDelegatedToOriginal": true,
+    "preRegistrationStartupReadSimulationAdded": true,
+    "originalAssertionsPreserved": true,
+    "historicalFreezePreserved": true
+  },
+  "regression": {
+    "command": "python -B -W error -m unittest -v test_bounded_capture test_namespace_diagnostics",
+    "platform": "Windows",
+    "python": "3.13",
+    "tests": 37,
+    "passed": 37,
+    "failed": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "elapsedSeconds": 5.219,
+    "breakdown": {
+      "originalDiagnosticTests": 15,
+      "boundedCaptureTests": 11,
+      "startupPipeSimulationTests": 11
+    },
+    "realLocalChildProcesses": true,
+    "linuxNativeTestsExecuted": 0,
+    "realLinuxSigalarmOverlapVerified": false
+  },
+  "independentReview": {
+    "method": "read-only static review; no commands, tests or network execution",
+    "previousPosixStartupReadMockFindingClosed": true,
+    "newConfirmedP1P2Findings": 0,
+    "remainingLimitations": [
+      "Startup pipe coverage is a simulation, not native Linux proof.",
+      "Namespace mount root cause remains unknown.",
+      "Remote collection has not been authorized or executed in this phase."
+    ]
+  },
+  "artifacts": [
+    {
+      "name": "fixed_namespace_collector.py",
+      "bytes": 7744,
+      "sha256": "a824cf46f6e0e85b4e69268fddf615e36309e9885679c864b3adf8afe1527658"
+    },
+    {
+      "name": "test_bounded_capture.py",
+      "bytes": 7232,
+      "sha256": "9cb6ec36967331756741f29a07d64afd204bead160a73787dd36d0cc268cce1d"
+    },
+    {
+      "name": "test_namespace_diagnostics.py",
+      "bytes": 7371,
+      "sha256": "0b8a1f46e315ed89c0e66f9e2f571666058c7fef97be38ab030fb59ca6f70325"
+    },
+    {
+      "name": "audit_frozen_mounts.py",
+      "bytes": 4616,
+      "sha256": "2fad7ab39c4116cd4972f0e2cb38f4c6f9d752c70d997895074d85abd57a526c"
+    },
+    {
+      "name": "local-freeze.json",
+      "bytes": 1174,
+      "sha256": "271531c3cc96b0abc60b55389d5af470b6c2cc5101131678cd15b241c75af70d"
+    }
+  ],
+  "currentLocalFreeze": {
+    "name": "bounded-capture-freeze.json",
+    "bytes": 1368,
+    "sha256": "9ede361ecffaa2c916c7fef652de1e0609bbe998e5580709932f6872b195028c"
+  },
+  "previousRecord": "docs/verification/2026-11-01-local-namespace-bounded-capture-review.json",
+  "boundaries": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "existingRoundConsumed": 1,
+    "existingRoundMaximum": 3,
+    "remainingUnitsUntouched": 2,
+    "productionPublication": false,
+    "productionServicesChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "namespaceRootCauseConfirmed": false,
+  "productionReady": false,
+  "overallDeliveryComplete": false,
+  "proposedNextStep": {
+    "requiresSeparateHumanApproval": true,
+    "operation": "one fixed-failed-unit read-only SSH journal collection",
+    "collectorDeadlineSeconds": 20,
+    "sshObservationCeilingSeconds": 35,
+    "newLinuxUnits": 0,
+    "remoteWrites": false,
+    "automaticRetries": false,
+    "serviceChanges": false
+  }
+}
