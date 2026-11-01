@@ -1,0 +1,110 @@
+{
+  "date": "2026-11-01",
+  "stage": "local_namespace_probe_exit_and_wait_repair",
+  "status": "local_45_tests_passed_independent_review_pending",
+  "authorization": {
+    "localCorrectionAndRegression": true,
+    "remoteExecution": false,
+    "productionPublication": false
+  },
+  "previousReviewRecord": "docs/verification/2026-11-01-local-minimal-namespace-probe-review.json",
+  "changes": [
+    "Empty, malformed and contradictory exit-result combinations remain unknown",
+    "Consistent Linux exit/signal/core-dump combinations classified without authenticating evidence",
+    "Pure wait-decision plan reserves ten seconds inside fixed 90-second envelope",
+    "Identity-bound stop decision precedes client wait; no stop implementation exists",
+    "Unit stopped, cgroup empty, client exited, closed pipes and terminal evidence remain independent requirements",
+    "All 41 original bind roles and argv properties/environment retained"
+  ],
+  "baseline": {
+    "tests": 2,
+    "expectedAssertionFailures": 2,
+    "errors": 0,
+    "skipped": 0,
+    "observations": [
+      "Empty exit fields incorrectly classified as other_failure",
+      "Bounded-wait planner absent"
+    ],
+    "wrapperExitCode": 0,
+    "underlyingTestsPassed": false
+  },
+  "verification": {
+    "python": "3.13.12",
+    "mode": "python -B -W error -m unittest discover -p test_probe*.py -v",
+    "tests": 45,
+    "passed": 45,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "originalTests": 24,
+    "newTests": 21,
+    "exitCode": 0,
+    "unittestSeconds": 0.049,
+    "outerWallSeconds": 0.6263153,
+    "rawOutputArchivedPrivately": true,
+    "artifactHashes": {
+      "probe_contract.py": {
+        "bytes": 9791,
+        "sha256": "fd19376af36fd183ae2bfe2c81535ef177254df275997c57f3bb468b7069e94c"
+      },
+      "test_probe_contract.py": {
+        "bytes": 11134,
+        "sha256": "d8d2851d0c85c77487dc330cc42f15819c93a133712f5f697217fdeb362924b0"
+      },
+      "test_probe_repair.py": {
+        "bytes": 9855,
+        "sha256": "c75c4310e5caf573536e5bfd8f9aa0420bc975da282ff17bfab5f4224f2e66b9"
+      },
+      "DESIGN.md": {
+        "bytes": 4892,
+        "sha256": "c216df09a1f1c05cbc043cfe5ad2789708e980cecb6c3c8a6ae24ffb7c14ab14"
+      },
+      "repair-regression-output.txt": {
+        "bytes": 5676,
+        "sha256": "81ab560f3092635ba96928f7cd55eb8bbe190309606e79fc67b57e59f5df8702"
+      }
+    },
+    "productRepositoryFullSuiteRun": false,
+    "nativeLinuxTests": 0,
+    "independentReviewCompleted": false
+  },
+  "preservedLimits": {
+    "sharedOuterSeconds": 90,
+    "programObservationUntilSeconds": 80,
+    "plannedMemoryMiB": 192,
+    "plannedCpuPercent": 20,
+    "plannedTasksMax": 32,
+    "plannedSwapBytes": 0,
+    "originalPrivateTmpAndPrivateNetwork": true
+  },
+  "limitations": [
+    "The planner performs no process, SSH, unit creation, stop, wait or pipe I/O",
+    "The future caller must retain the original monotonic start, carry stop-request state and enforce deadlines on actual operations",
+    "No Linux experiment confirms actual --pipe / RemainAfterExit=yes return or cleanup",
+    "Terminal observations are not authenticated by these helpers",
+    "Native namespace failure root cause remains unknown",
+    "Not ready for native execution or production delivery"
+  ],
+  "sideEffects": {
+    "sshConnections": 0,
+    "newRemoteUnits": 0,
+    "lackOrCaddyStarts": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productCodeChanges": false,
+    "productionChanges": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "previousFailedDirectoriesOrLocksChanged": false,
+    "oldRemainingUnitsReused": false,
+    "productionHealthRecollected": false
+  },
+  "references": [
+    "https://github.com/systemd/systemd/blob/v255/src/run/run.c"
+  ],
+  "synchronization": {
+    "privateImplementationAndRawLogsNotCommitted": true,
+    "sanitizedRecordOnly": true
+  }
+}
