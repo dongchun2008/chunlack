@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-01",
+  "scope": "Local descriptor ownership and deterministic inode-drift test injection only",
+  "status": "local-regression-passed",
+  "changes": [
+    {
+      "component": "metadata_sizing.py",
+      "change": "Transfer ownership to the new directory descriptor before closing the old descriptor. On close failure, clean the still-owned new descriptor without retrying the released old descriptor."
+    },
+    {
+      "component": "local_lifecycle_boundaries.test.cjs",
+      "change": "Replace inode + 1 with an explicitly unequal 0/1 sentinel, retain the inequality assertion, exact rejection code, and zero configuration-body reads. No product identity guard changed."
+    }
+  ],
+  "evidence": {
+    "previousFailure": {
+      "test": "opened identity drift refused before configuration body read",
+      "result": "Missing expected exception",
+      "diagnostic": {
+        "syntheticFiles": 16,
+        "unsafeNumericInodes": 6,
+        "ineffectivePlusOneInjections": 4
+      },
+      "preserved": true
+    },
+    "date": "2026-11-01",
+    "phase": "local-only",
+    "nodeBoundaryAndOidc": {
+      "tests": 14,
+      "pass": 14,
+      "fail": 0,
+      "skipped": 0,
+      "durationMs": 2551.9624,
+      "exitCode": 0
+    },
+    "actualApplicationLifecycle": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "skipped": 0,
+      "testDurationMs": 14295.2616,
+      "runnerDurationMs": 15930.3897,
+      "exitCode": 0,
+      "children": [
+        {
+          "runtime": "seed",
+          "closed": true,
+          "exitObserved": true,
+          "exitCode": 0,
+          "signal": null,
+          "lastStage": "lock_check",
+          "firstFailure": null
+        },
+        {
+          "runtime": "candidate",
+          "closed": true,
+          "exitObserved": true,
+          "exitCode": 0,
+          "signal": null,
+          "lastStage": "lock_check",
+          "firstFailure": null
+        },
+        {
+          "runtime": "previous",
+          "closed": true,
+          "exitObserved": true,
+          "exitCode": 0,
+          "signal": null,
+          "lastStage": "lock_check",
+          "firstFailure": null
+        }
+      ]
+    },
+    "priorUnchangedPythonEvidence": {
+      "tests": 42,
+      "pass": 42,
+      "fail": 0,
+      "includesDescriptorTests": 10,
+      "rerunThisContinuation": false
+    },
+    "productionReady": false
+  },
+  "review": {
+    "independent": true,
+    "testsRerunByReviewer": false,
+    "newP1P2Findings": 0,
+    "residuals": [
+      "Descriptor tests use a synthetic OS with release-then-error close semantics, not native Linux fd reuse or kernel fault injection.",
+      "Simultaneous old/new close errors are not covered for error preservation.",
+      "Node identity drift is proxy-injected, not an actual concurrent file-replacement race."
+    ]
+  },
+  "limits": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "productionChanges": false,
+    "publication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCallsInitiated": false,
+    "nativeLinuxExecutionVerified": false,
+    "kernelNetworkIsolationVerified": false,
+    "productionReady": false
+  },
+  "synchronization": {
+    "onlySanitizedVerificationRecord": true,
+    "privateSourcesIncluded": false,
+    "rawLogsIncluded": false,
+    "credentialsIncluded": false
+  }
+}
