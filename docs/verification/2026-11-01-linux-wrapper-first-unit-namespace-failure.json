@@ -1,0 +1,75 @@
+{
+  "date": "2026-11-01",
+  "phase": "linux-isolated-local-regression",
+  "status": "failed-stopped",
+  "localRegression": {
+    "tests": 25,
+    "passed": 25,
+    "failed": 0,
+    "independentSupportGateReviewAccepted": true,
+    "preparedFiles": 202,
+    "sourceBytes": 2695560
+  },
+  "budget": {
+    "approvedUnits": 3,
+    "consumedUnitAttempts": 1,
+    "remainingUnits": 2,
+    "automaticRetry": false,
+    "nextUnitsStarted": false,
+    "limits": {
+      "outerSecondsIncludingCleanup": 90,
+      "internalRuntimeSeconds": 75,
+      "stopSeconds": 5,
+      "memoryMiB": 192,
+      "cpuPercent": 20,
+      "nice": 10,
+      "cpuWeight": 10,
+      "tasks": 32,
+      "swap": 0
+    }
+  },
+  "nativeResult": {
+    "index": 0,
+    "passed": false,
+    "stage": "systemd-namespace-setup",
+    "systemdExitStatus": 226,
+    "systemdExitLabel": "NAMESPACE",
+    "kernelMainExecutionSeconds": 0.350144,
+    "controllerElapsedSeconds": 0.4573244769126177,
+    "businessWorkerStarted": false,
+    "nativeTestCount": 0,
+    "expectedPythonTestsNotRun": 42,
+    "mainPidAfterStop": 0,
+    "cgroupEmptyAfterStop": true,
+    "runtimeIdentityVerified": false,
+    "runtimeLimitsVerifiedWhileBusinessRunning": false
+  },
+  "readOnlyDiagnostics": {
+    "sshHostKeysVerified": true,
+    "unitAndInvocationMatched": true,
+    "journalCollection": true,
+    "fixedPathMetadataCollection": true,
+    "inspectedBasePathsExist": true,
+    "specificNamespaceConflictKnown": false,
+    "productionConfigurationBodiesRead": false
+  },
+  "protection": {
+    "protectedServicePidAndRestartCountsUnchanged": true,
+    "protectedFileMetadataUnchanged": true,
+    "hostTcpAndUdpListenersUnchanged": true,
+    "productionPublished": false,
+    "productionServicesRestarted": false,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "relayChanged": false,
+    "realModelCallsInitiated": 0
+  },
+  "preservation": {
+    "originalV1AndV2Packages": true,
+    "currentFreezeAndFailedDirectory": true,
+    "staleLocksDeleted": false,
+    "remainingQuotaReused": false
+  },
+  "productionReady": false,
+  "nextAction": "Local-only diagnosis of namespace/mount construction and failure observability. Do not use remaining two units or retry until the fail-stop condition is explicitly cleared."
+}
