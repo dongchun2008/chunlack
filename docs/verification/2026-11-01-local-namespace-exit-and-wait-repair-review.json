@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-01",
+  "stage": "local_namespace_exit_and_wait_repair_independent_review",
+  "follows": "docs/verification/2026-11-01-local-namespace-exit-and-wait-repair.json",
+  "followsCommit": "2bd20af568ddb7451cc9b59a2330e8c3ce0c8387",
+  "status": "offline_planner_review_accepted_not_native_ready",
+  "priorExitClassificationFindingClosed": true,
+  "newConfirmedP1OrP2InOfflineScope": 0,
+  "tests": {
+    "primaryExecuted": 45,
+    "passed": 45,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "reviewerExecuted": 0
+  },
+  "review": {
+    "updatedSourceHashesMatched": true,
+    "argvConstructorUnchanged": true,
+    "fullOriginalPropertiesEnvironmentAnd41BindingsRetained": true,
+    "invalidOrContradictoryExitEvidenceRemainsUnknown": true,
+    "shared90SecondPlanAndIndependentCleanupFactsChecked": true,
+    "acceptanceNeverInferredFromObservation": true
+  },
+  "futureExecutionGates": [
+    "When a stop decision has maxWaitSeconds=0, do not execute it or mark stop as issued; no retry",
+    "Persist original monotonic start and verified identity across actual calls",
+    "Implement bounded real capture/stop/reap/pipe-close operations and test actual cancellation",
+    "Validate actual systemd pipe/RemainAfterExit behavior in separately authorized Linux scope",
+    "Fresh explicit remote authorization, quota and source/executable/directory preflight"
+  ],
+  "disposition": {
+    "noCodeChangedAfterReview": true,
+    "remoteReady": false,
+    "productionDeliveryComplete": false,
+    "originalNamespaceRootCauseConfirmed": false,
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "credentialsAuthorizationRelayOrProductionChanges": false,
+    "oldUnusedQuotaAndFailedEvidenceUntouched": true
+  }
+}
