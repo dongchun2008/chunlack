@@ -1,0 +1,101 @@
+{
+  "date": "2026-11-01",
+  "scope": "local repair of metadata collector deadline handling; original SSH allowance retained",
+  "status": "core repairs statically reviewed; regression blocked by Windows-only fixture omission",
+  "coreRepairs": {
+    "sharedDeadlineWithCleanupReserve": true,
+    "lateQueryBudgetClipped": true,
+    "timeoutPropagatesBeforeGenericOsError": true,
+    "staticReviewConfirmed": true,
+    "behaviorRegressionVerified": false
+  },
+  "actualTestAttempts": {
+    "baselineCharacterization": {
+      "tests": 2,
+      "assertionFailures": 0,
+      "errors": 2,
+      "elapsedSeconds": 0.037,
+      "validRedEvidence": false
+    },
+    "correctedWrapper": {
+      "tests": 11,
+      "passed": 0,
+      "errors": 11,
+      "elapsedSeconds": 0.029,
+      "mainWorkflowReached": false
+    },
+    "existing37TestGroup": {
+      "runThisPhase": false,
+      "historicalOnly": true
+    }
+  },
+  "fixtureFinding": {
+    "severity": "P2",
+    "code": "windows_signal_alarm_mock_missing_create",
+    "description": "Windows has no signal.alarm; mock initialization needs explicit creation of that test-only attribute."
+  },
+  "runnerFinding": {
+    "code": "baseline_error_count_not_checked",
+    "description": "Exit code 1 alone cannot distinguish expected assertion failures from fixture errors; require exactly two expected assertion failures and zero errors."
+  },
+  "independentReview": {
+    "coreRepairStaticReviewPassed": true,
+    "otherConfirmedNewP1P2Findings": 0,
+    "noCommandsOrNetworkByReviewer": true,
+    "sshReleaseApproved": false
+  },
+  "stagedArtifacts": [
+    {
+      "name": "collector.py",
+      "bytes": 19018,
+      "sha256": "266f543044ade1cf14f631987fc2f953dd49c5ecd356a31b14ea4b37c27c35a1"
+    },
+    {
+      "name": "test_metadata_deadlines.py",
+      "bytes": 8375,
+      "sha256": "20fc1c15152ed7fdeb808786491578b63c5c0b66841138e62bcc245e2bf3aa3b"
+    },
+    {
+      "name": "request.json",
+      "bytes": 18938,
+      "sha256": "47039d28f66b1f9468fc1178c574a43ac688604b914e505112d059a893f28e33"
+    },
+    {
+      "name": "binding.json",
+      "bytes": 11645,
+      "sha256": "95a645c888135584dc9961c1caa773087e05af0dd97c86f359a73bc408705314"
+    }
+  ],
+  "stagingLimits": {
+    "requestAndBindingNotRegenerated": true,
+    "oldCandidateRetained": true,
+    "candidateActivated": false,
+    "realSignalAndChildCleanupNotCoveredByNewWrapperTests": true
+  },
+  "authorization": {
+    "maximumSshAttempts": 1,
+    "sshAttemptsUsed": 0,
+    "originalAllowanceNotReset": true,
+    "newLinuxUnits": 0,
+    "remainingNativeUnitsUntouched": 2,
+    "outerCeilingSeconds": 35
+  },
+  "nextStep": {
+    "requiresHumanApproval": true,
+    "localOnlyCorrections": [
+      "Explicit Windows-only signal.alarm test mock creation.",
+      "Strict baseline two-assertion-failures/zero-errors classification."
+    ],
+    "then": "Run the baseline characterization, corrected eleven tests and existing thirty-seven tests; regenerate bindings and review before using the original single metadata SSH allowance."
+  },
+  "productionPublished": false,
+  "productionServicesChanged": false,
+  "credentialsChanged": false,
+  "authorizationChanged": false,
+  "relayChanged": false,
+  "realModelCalls": 0,
+  "externalAgentCalls": 0,
+  "namespaceRootCauseConfirmed": false,
+  "productionReady": false,
+  "overallDeliveryComplete": false
+}
