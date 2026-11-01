@@ -1,0 +1,140 @@
+{
+  "date": "2026-11-02",
+  "stage": "five_namespace_runner_corrections_local_regression",
+  "status": "failed_local_gate_remote_not_started",
+  "previousRecord": "docs/verification/2026-11-01-native-namespace-runner-local-review-blockers.json",
+  "originalAuthorization": {
+    "maximumNewLinuxUnits": 1,
+    "consumed": 0,
+    "additionalQuota": 0,
+    "automaticRetry": false
+  },
+  "baseline": {
+    "oldCandidateSha256": "0d7bc6af192901a6d86d748f74cc200472ed78ec5801fca69f42d0fbac06d009",
+    "selectedTests": 5,
+    "expectedAssertionFailures": 5,
+    "errors": 0,
+    "skipped": 0,
+    "characterizationWrapperExitCode": 0,
+    "note": "Five old implementation defects reproduced; these intentional failures are not passing tests"
+  },
+  "regression": {
+    "tests": 84,
+    "passed": 79,
+    "assertionFailures": 4,
+    "errors": 1,
+    "skipped": 0,
+    "exitCode": 1,
+    "elapsedSeconds": 2.656142400112003,
+    "originalExistingTests": 67,
+    "newTests": 17,
+    "completeProductSuiteRun": false,
+    "completePrivateRelatedSuiteRun": true,
+    "noAutomaticRerun": true
+  },
+  "localDiagnostics": {
+    "zeroClock": {
+      "elapsedSeconds": 0,
+      "classificationError": "elapsed_budget",
+      "rootCause": "New synthetic fixture does not advance its clock"
+    },
+    "advancingClock": {
+      "syntheticCases": 4,
+      "allExpectedOutcomes": true,
+      "cases": [
+        "retained state success",
+        "bound unload success",
+        "10000 buffered bytes fully drained",
+        "namespace226 retained as failure"
+      ],
+      "replacesFailedFullRegression": false
+    },
+    "inconsistentPreStop": {
+      "unsafeSyntheticAcceptanceReproduced": true,
+      "latestPreStopMainPID": "123",
+      "earlierTerminalMainPID": "0",
+      "outcome": "bound_unload incorrectly accepted from older terminal evidence",
+      "realRemoteOperations": 0
+    }
+  },
+  "files": {
+    "native_runner.py": {
+      "bytes": 25119,
+      "sha256": "684d2cf5bff433cfa4f763c39691e3b362388d0b875dff1d06159153cd9feaa1"
+    },
+    "run_local.py": {
+      "bytes": 5221,
+      "sha256": "6752fd25b5d13225ff81cc2ea738bf34f8d9d60c0304a6fbb679d6eaf0406708"
+    },
+    "test_native_runner.py": {
+      "bytes": 8425,
+      "sha256": "08734d60a72efc786c03536900a598eeadcf25a4ac61992e8437d800f9767c04"
+    },
+    "test_five_repairs.py": {
+      "bytes": 19704,
+      "sha256": "44c6f15d135af2b6e6d1ee336b2d486ed6ca68f44b8eb109591833587611c7bb"
+    },
+    "PLAN.md": {
+      "bytes": 3771,
+      "sha256": "85acbd58dab3be7eb3b905c41c242e01faecc866d4e371c5f16c7e8e8a9f2010"
+    },
+    "baseline.private.json": {
+      "bytes": 6053,
+      "sha256": "68e1a222a0acbc19b0f94197836fbd78b697896b3faa8c24b91f2d5cbf87ec4e"
+    },
+    "full-regression.private.json": {
+      "bytes": 15161,
+      "sha256": "5a3b3c025191f19f1de9953ce8a684554d54c1f9588b01fed1cc054ac5a490eb"
+    },
+    "clock-diagnostic.private.json": {
+      "bytes": 1311,
+      "sha256": "5be94738346d31ab0aae04543425dc9d3fb2da12e70a0252f1a5475d1c8f1e74"
+    }
+  },
+  "independentReview": {
+    "completed": true,
+    "readOnly": true,
+    "testsExecutedByReviewer": 0,
+    "gate": "Do not launch",
+    "confirmedBlockers": [
+      {
+        "code": "wait_budget_skips_registered_client_kill",
+        "severity": "P2",
+        "description": "Natural-wait budget computation can fail before attempting to terminate the registered direct client"
+      },
+      {
+        "code": "latest_pre_stop_not_required_terminal",
+        "severity": "P2",
+        "description": "Unload branch can reuse older terminal proof while latest pre-stop snapshot is nonterminal or inconsistent"
+      }
+    ],
+    "coverageGap": "An additional real-pipe EOF-after-client-exit test is still needed; current multi-chunk post-exit coverage is primarily synthetic"
+  },
+  "proposedConsolidatedCorrection": [
+    "Separate direct-client termination/reap attempts from natural-wait budget failures while preserving shared deadline",
+    "Require actual latest pre-stop terminal snapshot and consistency with retained evidence before accepting bound unload",
+    "Advance the synthetic fixture clock, keep all assertions, and add real-pipe post-client-exit EOF regression",
+    "Rerun complete related local regression and independent review before original 0/1 diagnostic"
+  ],
+  "disposition": {
+    "noFurtherCodeChangesAfterFailure": true,
+    "noNewFreezeCreated": true,
+    "actualLaunchInvoked": false,
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "modelsOrExternalAgentsCalled": 0,
+    "productionPublication": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false,
+    "existingServicesStartedOrStopped": false,
+    "oldFrozenCandidateAndFailedDirectoriesRetained": true,
+    "productionHealthRecollected": false,
+    "originalNamespaceRootCauseConfirmed": false,
+    "productionDeliveryComplete": false
+  },
+  "synchronization": {
+    "sanitizedRecordOnly": true,
+    "privateCodeAndRawArtifactsNotCommitted": true
+  }
+}
