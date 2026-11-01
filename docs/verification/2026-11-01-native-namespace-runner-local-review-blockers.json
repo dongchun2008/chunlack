@@ -1,0 +1,106 @@
+{
+  "date": "2026-11-01",
+  "stage": "single_native_namespace_runner_local_gate",
+  "status": "independent_review_blocked_before_ssh",
+  "authorization": {
+    "localRunnerAndRegression": true,
+    "maximumNewLinuxUnits": 1,
+    "remoteLaunchConditionalOnReview": true
+  },
+  "localTests": {
+    "tests": 67,
+    "passed": 67,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "existing": 45,
+    "new": 22,
+    "exitCode": 0,
+    "testSeconds": 1.09744290006347,
+    "outerWallSeconds": 1.8467836,
+    "coverageLimit": "Helpers, real owned Python pipe children, and observation loop; full run/finally and launcher failure paths not covered"
+  },
+  "offlinePackage": {
+    "files": 202,
+    "sourceBytes": 2695560,
+    "bindRoles": 41,
+    "requestBytes": 1583034,
+    "freezeSha256": "180d3a59a7fb663559e9386d9c67435e8d46dea41666fd9344426d484e6edc6a",
+    "fileHashes": {
+      "native_runner.py": "0d7bc6af192901a6d86d748f74cc200472ed78ec5801fca69f42d0fbac06d009",
+      "run_local.py": "6752fd25b5d13225ff81cc2ea738bf34f8d9d60c0304a6fbb679d6eaf0406708",
+      "test_native_runner.py": "08734d60a72efc786c03536900a598eeadcf25a4ac61992e8437d800f9767c04",
+      "PLAN.md": "7bbdac328870d8ccdb4f6ff787e931346f3c1093e1cc66a04af4087618c4bd45"
+    },
+    "fullFrozenArchiveParsedAndDigestsChecked": true,
+    "independentFreezeOrPacketVerification": false
+  },
+  "review": {
+    "readOnly": true,
+    "testsIndependentlyRun": false,
+    "remoteOperationsByReviewer": 0,
+    "findings": [
+      {
+        "severity": "P1",
+        "code": "root_write_after_early_directory_handoff",
+        "description": "Business-writable parent directories are handed over before later root writes; final-component O_NOFOLLOW does not constrain parent replacement"
+      },
+      {
+        "severity": "P2",
+        "code": "capture_errors_interrupt_unit_cleanup",
+        "description": "Pipe setup/pump failure may prevent Invocation binding or skip final-state and cgroup verification"
+      },
+      {
+        "severity": "P2",
+        "code": "legitimate_transient_unload_rejected",
+        "description": "Post-stop empty Invocation can represent legitimate unit unloading, requiring proof-bound handling rather than broad acceptance"
+      },
+      {
+        "severity": "P2",
+        "code": "client_exit_truncates_pipe_drain",
+        "description": "Buffered output can remain after client exit; drain must independently reach EOF within shared budget"
+      },
+      {
+        "severity": "P2",
+        "code": "atime_causes_false_executable_drift",
+        "description": "Full stat equality includes read-induced atime changes; content/security identity fields must be compared explicitly"
+      }
+    ],
+    "disposition": "Do not launch; fix and add complete synthetic run/finally, staging and launcher failure regressions first"
+  },
+  "quota": {
+    "authorized": 1,
+    "linuxUnitsStarted": 0,
+    "sshConnections": 0,
+    "attemptMarkerWritten": false,
+    "automaticRetry": false,
+    "oldRemainingQuotasReused": false
+  },
+  "sideEffects": {
+    "productionPublication": false,
+    "existingServicesStartedOrStopped": false,
+    "credentialContentsRead": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "originalFailedDirectoriesOrLocksModified": false,
+    "productionHealthRecollected": false
+  },
+  "limitsUnchanged": {
+    "sharedSeconds": 90,
+    "memoryMiB": 192,
+    "cpuPercent": 20,
+    "tasksMax": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "privateTmp": true
+  },
+  "pending": "Human confirmation for one consolidated local security/lifecycle correction pass and new full-path regression, then independent review before using original 0/1 quota",
+  "synchronization": {
+    "sanitizedRecordOnly": true,
+    "privateRunnerPayloadsAndRawDataNotCommitted": true
+  },
+  "originalNamespaceRootCauseConfirmed": false,
+  "productionDeliveryComplete": false
+}
