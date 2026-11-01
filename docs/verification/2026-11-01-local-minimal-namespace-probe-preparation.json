@@ -1,0 +1,105 @@
+{
+  "date": "2026-11-01",
+  "stage": "local_namespace_probe_preparation_only",
+  "status": "local_regression_passed_independent_review_pending",
+  "authorization": {
+    "localPreparationAndRegression": true,
+    "vpsConnection": false,
+    "newLinuxUnits": false,
+    "productionPublication": false,
+    "oldRemainingUnitsReused": false
+  },
+  "implementation": {
+    "scope": "New private offline diagnostic files only; no product changes",
+    "requestSha256": "796cc8f3c7458617a1668e8fbe29af3d6279fb582bda607de3b6defacd897149",
+    "frozenConstructorSha256": "00737d75b575310245f4f7ef3171e7116c5bd2523d26d32ea1d3cca50da23d5c",
+    "unchangedBindRoles": 41,
+    "unchangedOriginalPropertiesAndEnvironment": true,
+    "plannedDeltas": [
+      "new proposed root and unit identity",
+      "worker argv replaced by /usr/bin/true",
+      "--pipe",
+      "Type=exec"
+    ],
+    "implementedRemoteRunner": false,
+    "actualDirectoryReservation": false,
+    "rawOutputInPublicSummary": false,
+    "classifierAuthenticatesEvidence": false
+  },
+  "files": {
+    "probe_contract.py": {
+      "bytes": 6282,
+      "sha256": "62bfda2d6768e9dd27c1bc5b658c1d31698cea58750e94addfd3916e2d6511c2"
+    },
+    "test_probe_contract.py": {
+      "bytes": 11134,
+      "sha256": "d8d2851d0c85c77487dc330cc42f15819c93a133712f5f697217fdeb362924b0"
+    },
+    "DESIGN.md": {
+      "bytes": 3457,
+      "sha256": "606b9a444cd73ac0907c21477779e852d7c157da8fe641946602bb6d0d3263fa"
+    }
+  },
+  "localVerification": {
+    "pythonVersion": "3.13.12",
+    "mode": "python -B -W error -m unittest discover; synthetic evidence and pinned offline constructor",
+    "tests": 24,
+    "passed": 24,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "unittestSeconds": 0.085,
+    "commandWallSeconds": 9.1942649,
+    "originalRepositorySuiteRerun": false,
+    "nativeLinuxTestsRun": 0,
+    "originalConsoleOutputObserved": true,
+    "rawConsoleOutputSeparatelyArchived": false,
+    "testsCover": [
+      "Exact argv deltas and all original properties/environment unchanged",
+      "41 binds and read/write/inaccessible paths preserved",
+      "Request hash drift and original root reuse rejection",
+      "Invalid tag, network namespace and duplicate JSON key rejection",
+      "Unknown outcome on incomplete capture, live PID or unconfirmed cleanup",
+      "Exact unit/invocation and monotonic kernel-time checks",
+      "Strict booleans, finite elapsed budget, stdout/stderr size caps",
+      "Raw output not disclosed or accepted as authority",
+      "Exit zero not application or native-test acceptance; exit 226 not root cause"
+    ]
+  },
+  "observedSideEffects": {
+    "sshConnections": 0,
+    "newRemoteUnits": 0,
+    "remoteApplicationWrites": 0,
+    "lackOrCaddyStarts": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productionCredentialOrAuthorizationOrRelayChanges": false,
+    "failedDirectoriesAndLocksModified": false,
+    "currentProductionHealthRecollected": false
+  },
+  "preparationDiagnosticFailure": {
+    "description": "Initial local inspection incorrectly treated freeze-manifest hash strings as embedded source; decoding stopped locally before edits or remote operations",
+    "subsequentAction": "Read the distinct request.json payload and pinned its bytes; no tests repeated"
+  },
+  "review": {
+    "independentReviewRequested": true,
+    "completedAtRecordCreation": false,
+    "testsIndependentlyRerunByReviewer": false,
+    "startupPipeAndRemainAfterExitCompatibility": "not experimentally verified; pending review and future native validation"
+  },
+  "limitations": [
+    "No remote execution authorization is conveyed by generated argv",
+    "No filesystem existence, exclusivity or executable identity has been verified remotely",
+    "No bounded remote capture/cleanup driver was implemented",
+    "Pipe mode does not guarantee namespace startup diagnostics are captured",
+    "All evidence-classification inputs in tests are synthetic",
+    "Original 226/NAMESPACE root cause remains unknown",
+    "Old failed first unit and two sealed unused slots are not reused",
+    "Not ready for production publication or claimed native acceptance"
+  ],
+  "references": [
+    "https://www.freedesktop.org/software/systemd/man/255/systemd-run.html",
+    "https://github.com/systemd/systemd/blob/v255/src/core/exec-invoke.c"
+  ]
+}
