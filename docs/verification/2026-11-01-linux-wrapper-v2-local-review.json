@@ -1,0 +1,59 @@
+{
+  "date": "2026-11-01",
+  "phase": "local-wrapper-revision",
+  "status": "blocked-before-ssh",
+  "maximumNewLinuxUnits": 3,
+  "consumedLinuxUnits": 0,
+  "sshConnections": 0,
+  "localChecks": {
+    "tests": 21,
+    "passed": 21,
+    "failed": 0,
+    "compileChecks": 8,
+    "preparedFiles": 202,
+    "sourceBytes": 2695560,
+    "requestBytes": 1169676
+  },
+  "independentReview": {
+    "accepted": false,
+    "originalFourBlockersResolved": true,
+    "additionalProcessAndPermissionChecksReviewed": true,
+    "candidateFiles": 66,
+    "previousFiles": 57,
+    "manifestClosureVerified": true,
+    "remainingFinding": {
+      "severity": "P2",
+      "code": "local_support_loaded_before_frozen_digest_check",
+      "description": "The local revision_support module is imported before launch checks its frozen bytes; its request-embedded remote copy is pinned, but the local import is not checked before loading.",
+      "currentDiskDigestMatchesFreeze": true,
+      "noTamperingObserved": true,
+      "recommendedFix": "Check frozen local dependency bytes before loading and execute those checked bytes; regress drift rejection before attempt creation, then refresh the candidate bindings."
+    },
+    "socketScope": "Fixed host control-socket paths only; not all AF_UNIX endpoints."
+  },
+  "budgets": {
+    "outerSecondsIncludingCleanup": 90,
+    "internalRuntimeSeconds": 75,
+    "stopSeconds": 5,
+    "memoryMiB": 192,
+    "cpuPercent": 20,
+    "tasks": 32,
+    "swap": 0,
+    "nice": 10,
+    "cpuWeight": 10
+  },
+  "production": {
+    "publication": false,
+    "servicesChanged": false,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "relayChanged": false,
+    "ready": false
+  },
+  "preservation": {
+    "originalPackage": true,
+    "originalFailureEvidence": true,
+    "revisedPackage": true,
+    "revisedFreeze": true
+  }
+}
