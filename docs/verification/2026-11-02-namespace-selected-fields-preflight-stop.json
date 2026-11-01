@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-02",
+  "status": "local_tests_passed_native_preflight_rejected",
+  "scope": "Private native namespace diagnostic only; not product regression or production delivery",
+  "authorization": {
+    "maximumLinuxUnits": 1,
+    "actualLinuxUnitsStarted": 0,
+    "sshAttemptsThisCorrection": 1,
+    "automaticRetry": false,
+    "sharedDeadlineSeconds": 90,
+    "memoryMiB": 192,
+    "cpuPercent": 20,
+    "tasksMax": 32,
+    "swapMaxBytes": 0,
+    "privateNetwork": true,
+    "privateTmp": true,
+    "uid": 996,
+    "gid": 987,
+    "payloadExecutable": "/usr/bin/true"
+  },
+  "changes": {
+    "selectedShowReadsUseAll": true,
+    "propertyWhitelistsRetained": true,
+    "missingDuplicateMalformedFieldsStillRejected": true,
+    "diagnosticPropertyValuesRecorded": false,
+    "unexpectedNamesRecordedAsDigests": true,
+    "diagnosticListsBounded": true,
+    "launcherUnchanged": true,
+    "oldCandidatesAndFailureEvidencePreserved": true
+  },
+  "localVerification": {
+    "python": "3.13.12",
+    "flags": [
+      "-B",
+      "-W",
+      "error"
+    ],
+    "tests": 105,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsedSeconds": 2.6582698000129312,
+    "scope": "45 original contract plus 60 private native diagnostic cases",
+    "beforeCorrectionNewCases": {
+      "tests": 12,
+      "passed": 3,
+      "failures": 2,
+      "missingDiagnosticErrors": 7
+    }
+  },
+  "independentReview": {
+    "newDefiniteP1P2": 0,
+    "codeAndFrozenPacketReviewed": true,
+    "testsIndependentlyExecuted": false,
+    "freezeSha256": "d800d43866cde4833e2e3663f3f9906d10a756465106371edbf4c3ad67b4f99a",
+    "runnerSha256": "adbc266520ee2bb27b0f47a861c53288f9958ab626d8ddca10f4127394a374a8",
+    "archiveFiles": 202,
+    "archiveBytes": 2695560,
+    "bindings": 41
+  },
+  "remoteAttempt": {
+    "hostKeyVerified": true,
+    "remoteState": "returned",
+    "localTransportExitCode": 2,
+    "remoteExitCode": 2,
+    "passed": false,
+    "consumedUnitAttempts": 0,
+    "elapsedSeconds": 0.08238295651972294,
+    "error": {
+      "type": "ShowFieldError",
+      "code": "show_fields",
+      "missing": [
+        "ExecStart"
+      ],
+      "missingCount": 1,
+      "unexpectedCount": 0,
+      "duplicateCount": 0,
+      "malformedLineCount": 0,
+      "truncated": false
+    },
+    "cleanupErrors": [],
+    "baselineCompleted": false,
+    "protectedBaselineUnchanged": null,
+    "stagingReached": false,
+    "systemdRunAttempted": false,
+    "receiptSha256": "a6d79b5d271cee41b63317a2bac0a7930197bb7e2417db6e024ce2fa789a0eff"
+  },
+  "boundaries": {
+    "productionPublished": false,
+    "existingServiceStartStopIssued": false,
+    "credentialsModified": false,
+    "credentialsExposed": false,
+    "authorizationModified": false,
+    "dnsModified": false,
+    "portsModified": false,
+    "relayModified": false,
+    "realModelsCalled": false,
+    "externalAgentsCalled": false,
+    "applicationAccepted": false
+  },
+  "limitations": [
+    "Exact field differences of the previous attempt remain unknown.",
+    "Current attempt identifies absent ExecStart during initial not-created-unit state validation; absence is not synthesized.",
+    "Historical 226/NAMESPACE root cause remains unknown.",
+    "No complete live service baseline was obtained; unchanged health is not claimed.",
+    "One SSH attempt was used; do not retry automatically even though zero Linux units started.",
+    "Next initial-gate semantics correction and new controlled SSH attempt require approval.",
+    "Only sanitized evidence is synchronized; private runner, payloads and raw receipts are not committed."
+  ]
+}
