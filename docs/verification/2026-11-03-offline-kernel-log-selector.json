@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-03",
+  "phase": "offline-kernel-log-selection-prerequisite",
+  "previousGoalTurnClassification": "progress",
+  "goalComplete": false,
+  "implementation": {
+    "scope": "Private offline pure query planning and diagnostic-candidate parsing only; no runner, subprocess execution, SSH transport, product integration or public fixture-source publication.",
+    "maximumInputBytes": 262144,
+    "maximumRows": 64,
+    "maximumStderrBytes": 8192
+  },
+  "localVerification": {
+    "testsRun": 20,
+    "passed": 20,
+    "failed": 0,
+    "skipped": 0,
+    "classification": "synthetic local tests only",
+    "previousSuitesNotRerun": true,
+    "independentReview": {
+      "noConfirmedP1P2": true,
+      "reviewerDidNotRunTests": true
+    }
+  },
+  "boundaries": {
+    "bootAndKernelTransportAndParsedPidLabelAndUniqueUnitPrefixRequired": true,
+    "receiptSelectionWindowSeconds": 61,
+    "exactKernelSourceLifetimeRequired": true,
+    "receiptTimestampFallback": false,
+    "parsedPidLabelGrantsAuthentication": false,
+    "automaticRemediationAuthorized": false,
+    "rootCauseConfirmed": false,
+    "rowCapReachedMeansIncomplete": true,
+    "nonzeroQueryErrorsNotTreatedAsSuccessfulProductAcceptance": true
+  },
+  "sourceChecks": [
+    {
+      "url": "https://github.com/systemd/systemd/blob/v255/src/journal/journalctl.c",
+      "observations": [
+        "With JSON output, reference parsing enables quiet mode.",
+        "A completed grep query with no matching shown entries returns a nonzero status; the local parser treats only empty stdout plus empty stderr with the expected status as the no-match case."
+      ]
+    }
+  ],
+  "knownOpenIssues": [
+    {
+      "severity": "nonblocking_local_label",
+      "description": "When all returned rows are excluded by the source lifetime, candidateCount is correctly zero but queryOutcome remains candidate_records.",
+      "fixedThisTurn": false,
+      "publicSummaryMustUseActualCandidateCount": true
+    }
+  ],
+  "remainingIntegrationGates": [
+    "Correct the nonblocking outcome label and add its regression before integration.",
+    "The future bounded command executor must preserve return code and both output streams, not reuse a wrapper that rejects all nonzero statuses before no-match classification.",
+    "Fresh fixed-unit, Invocation, kernel timestamps and boot validation must surround any separately authorized remote query."
+  ],
+  "actualRemoteActions": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "journalQueries": 0,
+    "productionPublished": false,
+    "existingServiceOperations": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "oldFailureEvidenceOrLocksRemoved": false
+  },
+  "nextProposal": {
+    "requiresSeparateAuthorization": true,
+    "scope": "Minimal outcome-label correction and local command-result integration checks; only after those pass, one fixed boot/kernel/PID-label/unique-unit scoped read-only journal query.",
+    "maximumSshConnections": 1,
+    "remoteSeconds": 20,
+    "outerSeconds": 35,
+    "maximumNewLinuxUnits": 0,
+    "automaticRetry": false,
+    "receiptWindowSeconds": 61,
+    "maximumOutputRows": 64,
+    "maximumStdoutBytes": 262144
+  },
+  "productionDelivered": false
+}
