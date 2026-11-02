@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-03",
+  "phase": "implicit-namespace-paths-pid1-root-readonly-observation",
+  "authorization": {
+    "maximumSshConnections": 1,
+    "actualSshConnections": 1,
+    "automaticRetry": false,
+    "remoteSeconds": 20,
+    "outerSeconds": 35,
+    "maximumNewLinuxUnits": 0,
+    "actualNewLinuxUnits": 0,
+    "journalQueries": 0,
+    "quotaUsed": "1/1"
+  },
+  "localPrerequisites": {
+    "syntheticTests": 15,
+    "passed": 15,
+    "failed": 0,
+    "freezeSha256": "df70656c5673a8c32b97bdbe47ccc3cedf356868f4f5f00ae40c89e1afbd0bae",
+    "independentSafetyReviewAccepted": true
+  },
+  "execution": {
+    "hostKeyVerified": true,
+    "localTransportExitCode": 0,
+    "remoteExitCode": 0,
+    "outerElapsedSeconds": 24.243112299824134,
+    "remoteElapsedSeconds": 0.07782381307333708,
+    "collectionPassed": true,
+    "rawPrivateReceiptSha256": "de6afc08a392a972da37c8ef7eb882a274669028ffe099077283657f56a0c1bc"
+  },
+  "evidence": {
+    "viewCounts": {
+      "caller": {
+        "entries": 11,
+        "present": 10,
+        "missing": 1,
+        "symlinks": 0,
+        "errors": 0
+      },
+      "pid1": {
+        "entries": 11,
+        "present": 10,
+        "missing": 1,
+        "symlinks": 0,
+        "errors": 0
+      }
+    },
+    "observationsPerView": 2,
+    "managerIdentityUnchanged": true,
+    "pathMetadataStableAcrossObservations": true,
+    "sameCallerAndPid1MountNamespace": true,
+    "sameRootMetadata": true,
+    "samePathMetadataBetweenViews": true,
+    "temporaryRootDirectoryPresent": true,
+    "temporaryRootDirectoryMode": "0555",
+    "alternateRootDirectoryMissingInBothViews": true,
+    "denyDirectoryPlaceholderPresent": true,
+    "denyRegularPlaceholderPresent": true,
+    "denyPlaceholderModes": "000",
+    "selectedProtectedBaselineUnchanged": true
+  },
+  "interpretation": {
+    "missingAlternatePathProvesRootCause": false,
+    "zeroModeDenyNodesNeedPermissionRepair": false,
+    "currentViewsEqualHistoricalFailedNamespace": false,
+    "doubleObservationIsAtomicRaceProof": false,
+    "specificNamespaceRootCauseConfirmed": false
+  },
+  "independentOutcomeReview": {
+    "receiptConsistent": true,
+    "metadataConclusionsAcceptedWithinScope": true,
+    "rawHostIdentityInodesAndPrivatePathsNotPublished": true,
+    "reviewerDidNotConnectOrRunTests": true
+  },
+  "changes": {
+    "mkdirPerformed": false,
+    "permissionsChanged": false,
+    "productionPublished": false,
+    "productCodeChanged": false,
+    "productionServicesStartedOrStopped": false,
+    "configurationChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "oldFailureEvidenceOrLocksRemoved": false
+  },
+  "nextSafeAction": {
+    "scope": "Local-only analysis of the frozen mount constructor and corresponding upstream/version references; no further SSH, unit, directory creation or permission correction authorized by this result.",
+    "remoteActionRequiresSeparateAuthorization": true
+  },
+  "productNativeTestsExecuted": 0,
+  "productionDelivered": false
+}
