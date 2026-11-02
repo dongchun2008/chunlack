@@ -1,0 +1,137 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-02",
+  "status": "bounded_recovery_check_passed_original_probe_not_accepted",
+  "scope": "One fixed diagnostic unit and Invocation recovery observation; not a new probe or publication",
+  "authorization": {
+    "maximumSshAttempts": 1,
+    "sshAttemptsUsed": 1,
+    "maximumNewUnits": 0,
+    "newUnitsStarted": 0,
+    "remoteMaximumSeconds": 20,
+    "outerMaximumSeconds": 35,
+    "automaticRetry": false,
+    "conditionalStopMaximum": 1
+  },
+  "localVerification": {
+    "tests": 13,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "scope": "Core synthetic recovery logic only; not full launcher or actual kernel filesystem coverage",
+    "fullProductSuiteRerun": false
+  },
+  "reviewedBindings": {
+    "freezeSha256": "e613dc62a107db1736f50972f7a2b1975c91c880db89c9f3117bcfae4c721931",
+    "recoverySha256": "4fdd9fc8074a9fa2a3e2cf573576dd4c014a8fbb16df1eaaca20f08828d89ada",
+    "launcherSha256": "e50e68cf811ef6e6af00c9ffad21348e8c8c47d806c53d447c14129eff9cfb96",
+    "newDefiniteReviewBlockers": 0
+  },
+  "executionEvidence": {
+    "receiptSha256": "0300b22e32a3ae134010f6d450ce4c034f86f01081c46c948e9aeb94c612e658",
+    "local": {
+      "remoteState": "returned",
+      "sshAttempts": 1,
+      "elapsedSeconds": 2.014796500094235,
+      "transportExitCode": 0
+    },
+    "transport": {
+      "hostKeyVerified": true,
+      "remoteExitCode": 0
+    },
+    "remote": {
+      "passed": true,
+      "maximumNewUnits": 0,
+      "newUnitsStarted": 0,
+      "stopAttempted": false,
+      "stopRequested": false,
+      "cleanupProven": true,
+      "evidenceKind": "two_absence_and_empty_observations",
+      "errors": [],
+      "postflightErrors": [],
+      "protectedBaselineUnchanged": true,
+      "elapsedSeconds": 0.1472156997770071,
+      "productionPublished": false,
+      "observations": [
+        {
+          "IdMatched": true,
+          "LoadState": "not-found",
+          "InvocationEmpty": true,
+          "MainPID": "0",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "ControlGroupEmpty": true,
+          "cgroup": {
+            "present": false,
+            "empty": true,
+            "recursivePopulation": null
+          }
+        },
+        {
+          "IdMatched": true,
+          "LoadState": "not-found",
+          "InvocationEmpty": true,
+          "MainPID": "0",
+          "ActiveState": "inactive",
+          "SubState": "dead",
+          "ControlGroupEmpty": true,
+          "cgroup": {
+            "present": false,
+            "empty": true,
+            "recursivePopulation": null
+          }
+        }
+      ]
+    }
+  },
+  "independentOutcomeReview": {
+    "receiptDigestMatched": true,
+    "transportAndRemoteConsistent": true,
+    "twoAbsenceAndMissingCgroupObservationsConfirmed": true,
+    "noStopRequestedConfirmed": true,
+    "noTerminalEvidenceFabricated": true,
+    "noRemoteActivityByReviewer": true
+  },
+  "boundaries": {
+    "productionPublished": false,
+    "existingProductionServicesStartedStopped": false,
+    "credentialsModified": false,
+    "credentialValuesExposed": false,
+    "authorizationModified": false,
+    "dnsModified": false,
+    "portsModified": false,
+    "relayModified": false,
+    "lackOrCaddyStarted": false,
+    "realModelsCalled": false,
+    "externalAgentsCalled": false,
+    "failedArtifactsOrLocksDeleted": false
+  },
+  "interpretation": {
+    "cleanupAtObservationTimeConfirmed": true,
+    "originalDiagnosticPassed": false,
+    "originalDiagnosticQuotaUsed": "1/1",
+    "originalTerminalOrExitCodeProven": false,
+    "priorStopCausationProven": false,
+    "comprehensiveProductionHealthAccepted": false,
+    "applicationAccepted": false,
+    "historicalNamespace226RootCauseConfirmed": false
+  },
+  "nextLocalHypothesis": {
+    "label": "unproven",
+    "description": "Unit-registration or unloading lifecycle windows may explain missing ExecStart. Prior loaded/activating snapshot contained a string ExecStart and passed the strict full parser; the failing snapshots did not retain raw lifecycle fields, so their LoadState cannot be inferred.",
+    "proposedTests": [
+      "Separate small identity/lifecycle observation from full loaded-state validation.",
+      "Loaded state missing ExecStart must still be rejected, never downgraded to not-found.",
+      "Bounded pre-registration waiting and independent post-stop absence/cgroup evidence must not synthesize terminal or exit zero.",
+      "Reject Invocation replacement and handle between-query changes without rebinding or infinite polling."
+    ]
+  },
+  "limitations": [
+    "This follow-up verifies cleanup only; original probe failure is preserved.",
+    "Recovery program exit zero does not prove the original program exited successfully.",
+    "Selected protected before/after baselines match; not complete production health acceptance.",
+    "No new native diagnostic unit or product tests were run.",
+    "Private source, payload, credentials and raw receipts are not synchronized.",
+    "Further code changes or remote attempts are not executed as part of this bounded recovery."
+  ]
+}
