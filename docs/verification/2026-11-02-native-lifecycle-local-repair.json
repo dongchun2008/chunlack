@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-02",
+  "status": "local_lifecycle_parser_corrected_reviewed_not_native_verified",
+  "scope": "Private diagnostic runner only; not product source or production publication",
+  "change": {
+    "loadedRequiresExactFullPropertySet": true,
+    "loadedExecStartOmissionStillRejected": true,
+    "additionalAcceptedVariant": "Only exactly missing ExecStart, with no other missing/extra/duplicate/malformed field, explicitly not-found, matching fixed unit Id, empty Invocation, PID zero, inactive state",
+    "missingFieldsSynthesized": false,
+    "unknownLoadStateCannotDowngrade": true,
+    "originalStrictParserUnchanged": true,
+    "initialFourFieldGateUnchanged": true,
+    "queryCommandsAndBudgetsUnchanged": true,
+    "invocationAnchoringUnchanged": true,
+    "terminalAndCleanupAcceptanceUnchanged": true,
+    "stopLogicUnchanged": true,
+    "launcherUnchanged": true
+  },
+  "localVerification": {
+    "python": "3.13.12",
+    "flags": [
+      "-B",
+      "-W",
+      "error"
+    ],
+    "targetedTests": 19,
+    "targetedFailures": 0,
+    "targetedErrors": 0,
+    "targetedSkipped": 0,
+    "relatedSuite": {
+      "tests": 135,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 4.506880500121042,
+      "failureNames": [],
+      "errorNames": []
+    },
+    "scope": "45 original contract plus 90 private native diagnostic tests; not full product regression",
+    "beforeCorrection": {
+      "testMethods": 19,
+      "failureEntriesIncludingSubtests": 26,
+      "errors": 1,
+      "skipped": 0
+    },
+    "coverage": [
+      "Strict parser and absence identity rejection branches.",
+      "Pre-registration absence without ExecStart followed by loaded terminal and verified unload.",
+      "Loaded missing ExecStart or policy properties remains rejected.",
+      "Unload without genuine terminal cannot produce success.",
+      "Invocation replacement never stopped.",
+      "Waiting exhausts original shared budget without reset.",
+      "AST preservation normalizes only the new lifecycle-parser call with fixed unit argument and the previously allowed initial call."
+    ]
+  },
+  "independentReview": {
+    "newDefiniteP1P2": 0,
+    "codeAndFrozenPacketReviewed": true,
+    "testsIndependentlyExecuted": false,
+    "freezeSha256": "44c72295d29792a2907f67f57883bdcd7abb9bc901fd9c8893b0728f177eb092",
+    "runnerSha256": "ab89c9491d2750f9e7d24fddd6806e2272d8351ca4219056282e9885f9b06bb2",
+    "launcherSha256": "6752fd25b5d13225ff81cc2ea738bf34f8d9d60c0304a6fbb679d6eaf0406708",
+    "archiveFiles": 202,
+    "archiveBytes": 2695560,
+    "bindings": 41
+  },
+  "localOfflinePreparation": {
+    "requestBytes": 1583034,
+    "remoteExecutionGateCreated": false,
+    "attemptCreated": false
+  },
+  "activity": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "existingServicesChanged": false,
+    "credentialsRead": false,
+    "credentialsModified": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "modelsCalled": false,
+    "externalAgentsCalled": false,
+    "oldFailedArtifactsOrLocksDeleted": false
+  },
+  "limitations": [
+    "This local repair does not prove the failed queries were not-found; original raw lifecycle fields were not preserved.",
+    "Historical 226/NAMESPACE root cause remains unknown.",
+    "No native result for this revision; original failed unit remains failed and quota1/1 is preserved.",
+    "Previously confirmed cleanup does not turn original probe failure into acceptance.",
+    "New remote attempt and new Linux-unit allowance require explicit approval; no old quota is reused.",
+    "Only sanitized verification evidence is submitted; private fixtures, runner, payload and raw receipts remain uncommitted.",
+    "Overall production delivery is incomplete."
+  ]
+}
