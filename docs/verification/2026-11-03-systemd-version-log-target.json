@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-03",
+  "phase": "bounded-readonly-systemd-versions-log-target",
+  "authorization": {
+    "maximumSshConnections": 1,
+    "actualSshConnections": 1,
+    "automaticRetry": false,
+    "remoteSeconds": 20,
+    "outerSeconds": 35,
+    "maximumNewLinuxUnits": 0,
+    "actualNewLinuxUnits": 0,
+    "historicalLogQueries": 0
+  },
+  "localPrerequisites": {
+    "syntheticTests": 12,
+    "passed": 12,
+    "failed": 0,
+    "previousSuitesNotRerun": true,
+    "freezeSha256": "6d7352ca6938dbea23daac29b9de2eac0073006cb3d1c34d32eaba4d15d953ab",
+    "independentSafetyReviewAccepted": true
+  },
+  "execution": {
+    "hostKeyVerified": true,
+    "localTransportExitCode": 0,
+    "remoteExitCode": 0,
+    "outerElapsedSeconds": 2.1893905999604613,
+    "remoteElapsedSeconds": 0.09493180178105831,
+    "collectionPassed": true,
+    "rawPrivateReceiptSha256": "c25c32d0b2dc22bacc832fcfaa6b5690121312148156f332a8fbe94538c2c0a3"
+  },
+  "observed": {
+    "systemctlClient": "systemd 255 (255.4-1ubuntu8.8)",
+    "journalctlClient": "systemd 255 (255.4-1ubuntu8.8)",
+    "runningManager": "255.4-1ubuntu8.8",
+    "versionsConsistent": true,
+    "currentLogTarget": "journal-or-kmsg",
+    "protectedBaselineUnchanged": true
+  },
+  "interpretation": {
+    "currentTargetProvesHistoricalRoute": false,
+    "specificNamespaceRootCauseConfirmed": false,
+    "productNativeTestsExecuted": 0,
+    "productionDelivered": false
+  },
+  "upstreamFollowup": {
+    "reference": "https://github.com/systemd/systemd/blob/v255/src/journal/journald-kmsg.c",
+    "symbol": "dev_kmsg_record",
+    "observations": [
+      "Kernel transport records can contain SYSLOG_PID parsed from message identifiers, rather than the same trusted PID metadata used for ordinary process logging.",
+      "The kernel-origin monotonic timestamp is stored as _SOURCE_MONOTONIC_TIMESTAMP; journal receipt time is not automatically the event source time."
+    ],
+    "ubuntuPatchEquivalenceVerified": false,
+    "previousZeroRowsReinterpretedAsRootCause": false,
+    "remoteKernelQueryPerformed": false
+  },
+  "changes": {
+    "productionPublished": false,
+    "productCodeChanged": false,
+    "productionServicesStartedOrStopped": false,
+    "configurationChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "oldFailureEvidenceOrLocksRemoved": false
+  },
+  "nextProposal": {
+    "requiresSeparateAuthorization": true,
+    "newLinuxUnits": 0,
+    "scope": "One bounded read-only kernel-transport journal query tied to fixed boot, unique unit text, captured process label, and kernel source timestamp; no direct kernel-buffer dump, global log scan, or system setting changes."
+  },
+  "independentOutcomeReview": {
+    "accepted": true,
+    "scope": "Versions, current log target, protected baseline and private transport receipt; not historical routing or source-patch equivalence."
+  }
+}
