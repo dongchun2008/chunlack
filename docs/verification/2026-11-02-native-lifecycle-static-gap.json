@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-02",
+  "status": "local_static_lifecycle_gap_identified_not_fixed",
+  "scope": "Read-only local investigation after completed bounded cleanup; no new tests or remote operations",
+  "source": {
+    "path": ".superpowers/sdd/namespace-probe-native-20261102-initial4/native_runner.py",
+    "currentReadRanges": [
+      "414-429",
+      "432-618"
+    ],
+    "referenceFrozenRunnerSha256": "5437ed272909aab730c57754a69383666ca8279f02679049290d1b862ebf5cd1",
+    "referenceDigestRecomputedThisPhase": false
+  },
+  "confirmedControlFlow": [
+    {
+      "lines": "476-477",
+      "fact": "Shared state accessor applies the full property-set parser before returning a lifecycle snapshot."
+    },
+    {
+      "lines": "418-420,497-500",
+      "fact": "The observer intends to handle not-found snapshots, but that branch cannot execute when a returned not-found snapshot lacks a full-only property and the accessor rejects first."
+    },
+    {
+      "lines": "543-547",
+      "fact": "Post-stop unload confirmation has the same ordering: complete parsing happens before the explicit absent-state branch."
+    },
+    {
+      "lines": "529-531",
+      "fact": "The prior retained loaded/activating stop-identity snapshot came from the full parser, so the complete property set was accepted at least once."
+    }
+  ],
+  "uncertainty": [
+    "The failed queries did not retain their LoadState values; this static gap does not prove either failed query was not-found.",
+    "Historical 226/NAMESPACE root cause remains unknown.",
+    "No new native or product acceptance result follows from this read-only analysis."
+  ],
+  "minimalProposedFix": {
+    "status": "pending_approval",
+    "preserveLoadedFullFieldsIncludingExecStart": true,
+    "requireExplicitValidatedNotFoundForAbsencePath": true,
+    "noMissingPropertySynthesis": true,
+    "rejectMalformedDuplicateUnknownFields": true,
+    "keepInvocationBindingAndBoundedWait": true,
+    "preserveBudgetAndCleanupProof": true,
+    "noExitCodeOrTerminalFabrication": true
+  },
+  "activity": {
+    "filesModified": false,
+    "testsRun": 0,
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "existingServicesChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false
+  },
+  "nextGate": "Local deterministic reproduction, minimum lifecycle-parser correction, related regression and independent review; no new SSH or production publication."
+}
