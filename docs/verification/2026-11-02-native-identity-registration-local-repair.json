@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-02",
+  "status": "local_identity_registration_correction_reviewed_not_native_verified",
+  "scope": "Private diagnostic runner only; no product code or production changes",
+  "changes": {
+    "prebindingPendingOnly": true,
+    "pendingRequirements": {
+      "fixedId": true,
+      "LoadState": "loaded",
+      "InvocationID": "empty",
+      "MainPID": "0",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "Result": "success",
+      "ExecMainCode": "0",
+      "ExecMainStatus": "0",
+      "startTimestamp": "0",
+      "exitTimestamp": "0",
+      "ExecStart": "present string"
+    },
+    "observeRequiresLiveOwnedClient": true,
+    "pendingGrantsStopAuthority": false,
+    "nonemptyMalformedInvocationRejected": true,
+    "postbindingEmptyMalformedOrReplacedIdentityRejected": true,
+    "rebindingAllowed": false,
+    "originalDeadlineAndPollingBudgetUnchanged": true,
+    "loadedFullPropertyParserUnchanged": true,
+    "stopTerminalCgroupAndProtectedBaselinePoliciesUnchanged": true,
+    "rawFailureIdentityValuesRecorded": false,
+    "diagnosticValues": "booleans, string length or null only",
+    "firstPendingAndFirstFailureShapesRetained": true,
+    "cleanupCannotOverwritePrimaryShape": true,
+    "launcherUnchanged": true
+  },
+  "localVerification": {
+    "python": "3.13.12",
+    "flags": [
+      "-B",
+      "-W",
+      "error"
+    ],
+    "targetedTests": 17,
+    "targetedFailures": 0,
+    "targetedErrors": 0,
+    "targetedSkipped": 0,
+    "relatedSuite": {
+      "tests": 152,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 6.2148433001711965,
+      "failureNames": [],
+      "errorNames": []
+    },
+    "scope": "45 original contract plus 107 private native diagnostic tests; not full product repository regression",
+    "beforeCorrection": {
+      "methods": 17,
+      "failureEntriesIncludingSubtests": 19,
+      "errors": 5,
+      "skipped": 0
+    },
+    "coverage": [
+      "Every pending cold-state guard and missing ExecStart rejection.",
+      "No raw Id/Invocation values in shape diagnostics, including nonstring input.",
+      "Actual observer cold-to-valid sequence, dead client, wrong unit and postbinding identity failure.",
+      "Whole synthetic controller cold-to-terminal/unload flow.",
+      "Prebinding pending budget exhaustion grants no stop authority or terminal.",
+      "First malformed identity shape retained through distinct cleanup failure.",
+      "Exact AST normalization constrains new anchor blocks and observer condition; all other logic remains compared."
+    ]
+  },
+  "independentReview": {
+    "newDefiniteP1P2": 0,
+    "codeAndFrozenPacketReviewed": true,
+    "testsIndependentlyExecuted": false,
+    "freezeSha256": "b9136c3ac41d9ed1ca5c5952756863a7d42086b451b0a46f279713c1ffc18f2d",
+    "runnerSha256": "d3e93f262aebeced4177262485e188e601860f88f648925d0d84b093698f896d",
+    "launcherSha256": "6752fd25b5d13225ff81cc2ea738bf34f8d9d60c0304a6fbb679d6eaf0406708",
+    "archiveFiles": 202,
+    "archiveBytes": 2695560,
+    "bindings": 41
+  },
+  "offlinePreparation": {
+    "requestBytes": 1583034,
+    "remoteExecutionGateCreated": false,
+    "attemptCreated": false
+  },
+  "activity": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "existingServicesChanged": false,
+    "credentialsRead": false,
+    "credentialsModified": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "modelsCalled": false,
+    "externalAgentsCalled": false,
+    "failedArtifactsOrLocksDeleted": false
+  },
+  "limitations": [
+    "The actual previously rejected Invocation value was not retained; its emptiness and exact startup race remain unproven.",
+    "These synthetic results do not establish native /usr/bin/true success, product native test acceptance or production delivery.",
+    "Historical 226/NAMESPACE cause remains unknown.",
+    "Earlier quota1/1 and confirmed cleanup remain sealed; no quota reuse or automatic retry.",
+    "A new SSH and any new diagnostic unit require separate approval.",
+    "Only sanitized evidence is submitted; private code, payload and raw receipts remain uncommitted."
+  ]
+}
