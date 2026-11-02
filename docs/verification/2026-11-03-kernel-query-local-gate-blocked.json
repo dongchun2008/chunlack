@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-03",
+  "phase": "kernel-query-integration-local-gate-not-passed",
+  "authorization": {
+    "maximumSshConnections": 1,
+    "actualSshConnections": 0,
+    "maximumNewLinuxUnits": 0,
+    "actualNewLinuxUnits": 0,
+    "remoteSeconds": 20,
+    "outerSeconds": 35,
+    "maximumRows": 64,
+    "maximumStdoutBytes": 262144,
+    "automaticRetry": false,
+    "originalRemoteQuotaNotConsumed": true
+  },
+  "approvedSelectorLabelRepair": {
+    "implemented": true,
+    "localTestsRun": 21,
+    "passed": 21,
+    "failed": 0,
+    "selectorSha256": "f2c0ad92f801d21fb32c20993361142d6122ace39fb43bbec44999d78388c555"
+  },
+  "newIntegrationVerification": {
+    "testsRun": 9,
+    "passed": 8,
+    "failed": 1,
+    "completeGatePassed": false,
+    "actualFailure": "Windows synthetic child print emits CRLF while the test expects fixed LF; capture preserves actual bytes."
+  },
+  "independentReview": {
+    "remoteReleaseAccepted": false,
+    "freezeSha256": "9ab1ea36bf31322b95f44620c9685f17ae75bec5211a416c9b01f20f806c8c59",
+    "finding": {
+      "severity": "P2",
+      "basis": "static source review, not fault-injection reproduction",
+      "description": "An exception in owned-child poll can skip the kill attempt because poll and kill share one try block.",
+      "correctedThisTurn": false
+    },
+    "otherScopeFindings": "No additional important query-scope, source-time, selector-label or status-handoff issue identified."
+  },
+  "requestedRepairs": [
+    "Make the synthetic LF writer explicit bytes and add a CRLF byte-preservation case; do not normalize actual capture data.",
+    "Separate status observation from owned-child termination so observation failure cannot skip the bounded kill/reap attempt; add error-injection and exhausted-budget regressions without opening a new deadline."
+  ],
+  "remoteGate": {
+    "sshAttempted": false,
+    "journalQueried": false,
+    "newUnitStarted": false,
+    "reason": "Local integration tests and cleanup review have not both passed; corrections require confirmation."
+  },
+  "changes": {
+    "productCodeChanged": false,
+    "productionPublished": false,
+    "productionServiceOperations": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "oldFailureEvidenceOrLocksRemoved": false
+  },
+  "nextStep": {
+    "requiresLocalRepairConfirmation": true,
+    "continueOnlyOriginalRemoteQuotaAfterAllGatesPass": true,
+    "quotaExpansion": false
+  },
+  "specificNamespaceRootCauseConfirmed": false,
+  "productionDelivered": false
+}
