@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-03",
+  "phase": "bounded-kernel-transport-query-after-authorized-repairs",
+  "localRepairs": {
+    "previousFailurePreserved": true,
+    "explicitLfFixtureAndCrlfPreservation": true,
+    "pollFailureNoLongerSkipsKillAttempt": true,
+    "originalAbsoluteCleanupDeadlineRetained": true,
+    "independentSafetyReviewAccepted": true
+  },
+  "localVerification": {
+    "selectorTests": 21,
+    "selectorPassed": 21,
+    "integrationAndCleanupTests": 16,
+    "integrationAndCleanupPassed": 16,
+    "failed": 0,
+    "faultInjectionIsSynthetic": true,
+    "notFullProductRegression": true,
+    "freezeSha256": "98a60e35c7b9c3812382ac4527da7c6a03fba68942aa69e72571cd68dfed6cb0"
+  },
+  "authorization": {
+    "maximumSshConnections": 1,
+    "actualSshConnections": 1,
+    "maximumJournalQueries": 1,
+    "actualJournalQueries": 1,
+    "maximumNewLinuxUnits": 0,
+    "actualNewLinuxUnits": 0,
+    "automaticRetry": false,
+    "remoteSeconds": 20,
+    "outerSeconds": 35,
+    "maximumRows": 64,
+    "maximumStdoutBytes": 262144,
+    "originalQuotaUsed": "1/1"
+  },
+  "execution": {
+    "hostKeyVerified": true,
+    "localTransportExitCode": 0,
+    "remoteExitCode": 0,
+    "queryExitCode": 0,
+    "outerElapsedSeconds": 2.1381892000790685,
+    "remoteElapsedSeconds": 0.1331134308129549,
+    "queryStdoutBytes": 591,
+    "queryStderrBytes": 0,
+    "rawPrivateReceiptSha256": "4e43701d54063ee99ee8d0747125d778e0a4d443f8b945c375225042257284b9",
+    "collectionPassed": true
+  },
+  "evidence": {
+    "rowsReturned": 1,
+    "candidatesAccepted": 0,
+    "rowsOutsideConfiguredSourceTimeInterval": 1,
+    "queryOutcome": "no_source_lifetime_candidates",
+    "collectionCompleteWithinQuery": true,
+    "fixedStateUnchanged": true,
+    "bootUnchanged": true,
+    "protectedBaselineUnchanged": true
+  },
+  "diagnosticGap": {
+    "rejectedRowBodyRetained": false,
+    "rejectedSourceAndReceiptTimestampValuesRetained": false,
+    "exactOffsetUnknown": true,
+    "originalRawQueryStdoutRecoverableFromReceipt": false
+  },
+  "timeSemanticsCorrection": {
+    "source": "https://github.com/systemd/systemd/blob/v255/src/core/execute.c",
+    "symbols": [
+      "exec_spawn",
+      "exec_status_start",
+      "exec_status_exit"
+    ],
+    "referenceObservation": "The reference records the start timestamp after spawning the executor and records exit time in manager-side status handling.",
+    "inference": "The manager-observed start/exit timestamps must not be described as exact kernel process birth/death ground truth.",
+    "ubuntuPatchEquivalenceVerified": false,
+    "actualReasonForExcludedRowConfirmed": false,
+    "configuredFilterNotChangedAfterExecution": true,
+    "discardedRowNotReclassifiedAsRootCause": true
+  },
+  "independentOutcomeReview": {
+    "receiptConsistent": true,
+    "diagnosticGapConfirmed": true,
+    "reviewerDidNotConnectOrRunTests": true
+  },
+  "changes": {
+    "productionPublished": false,
+    "productCodeChanged": false,
+    "productionServicesStartedOrStopped": false,
+    "configurationChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "oldFailureEvidenceOrLocksRemoved": false
+  },
+  "nextStep": {
+    "requiresSeparateAuthorization": true,
+    "proposal": "Local bounded timestamp diagnostics and corresponding tests, then at most one fresh read-only query of the same fixed boot, unique unit and captured PID-label in the same 61-second receipt window. Preserve at most one bounded error line plus numeric source/receipt timestamps as an unaccepted diagnostic candidate; source-time mismatch must remain explicit, without automatic remediation or root-cause acceptance.",
+    "maximumSshConnections": 1,
+    "maximumNewLinuxUnits": 0,
+    "remoteSeconds": 20,
+    "outerSeconds": 35,
+    "maximumRetainedErrorLines": 1,
+    "maximumRetainedErrorMessageCharacters": 4096,
+    "maximumOutputRows": 64,
+    "maximumStdoutBytes": 262144,
+    "automaticRetry": false
+  },
+  "specificNamespaceRootCauseConfirmed": false,
+  "productNativeTestsExecuted": 0,
+  "productionDelivered": false
+}
