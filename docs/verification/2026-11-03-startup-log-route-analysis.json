@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-03",
+  "phase": "local-upstream-startup-log-route-analysis",
+  "previousGoalTurnClassification": "progress",
+  "previousProgress": "Bounded fixed-boot PID lifetime collection returned zero records and changed the next action from repeating old queries to inspecting the diagnostic log route.",
+  "referenceVersion": "systemd upstream v255 only",
+  "deployedManagerVersionVerifiedThisTurn": false,
+  "deployedLogTargetVerifiedThisTurn": false,
+  "sourceEvidence": [
+    {
+      "url": "https://github.com/systemd/systemd/blob/v255/src/core/execute.c",
+      "symbol": "exec_spawn",
+      "observation": "The manager supplies executor log-level and log-target arguments separately from application standard I/O."
+    },
+    {
+      "url": "https://github.com/systemd/systemd/blob/v255/src/core/executor.c",
+      "symbol": "run",
+      "observation": "IPC is initially prohibited but explicitly re-enabled after argument parsing before opening the final logging target; do not infer permanent IPC prohibition."
+    },
+    {
+      "url": "https://github.com/systemd/systemd/blob/v255/src/core/exec-invoke.c",
+      "symbol": "exec_invoke",
+      "observation": "Standard I/O setup precedes mount namespace application; namespace failures are reported through systemd executor logging, not guaranteed application stderr."
+    },
+    {
+      "url": "https://github.com/systemd/systemd/blob/v255/src/core/manager.c",
+      "symbol": "manager_get_executor_log_target",
+      "observation": "Executor target selection accounts for the manager logging target and journal availability."
+    },
+    {
+      "url": "https://github.com/systemd/systemd/blob/v255/src/basic/log.c",
+      "symbol": "write_to_kmsg",
+      "observation": "Kernel-log formatting includes a process label in message text, which is not equivalent to the trusted journal PID field."
+    }
+  ],
+  "hypothesis": "An unverified executor logging route may explain why pipe capture and trusted journal PID filtering did not expose the detailed setup failure.",
+  "hypothesisConfirmedOnVps": false,
+  "specificNamespaceRootCauseConfirmed": false,
+  "implementation": "Design documentation only; no SSH launcher or probe implementation added.",
+  "nextProposal": {
+    "requiresSeparateAuthorization": true,
+    "maximumSshConnections": 1,
+    "remoteSeconds": 20,
+    "outerSeconds": 35,
+    "automaticRetry": false,
+    "newLinuxUnits": 0,
+    "scope": "Read-only running-manager version, client versions, current logging target and existing protection baselines only; no additional historical journal collection."
+  },
+  "thisTurnActions": {
+    "vpsConnections": 0,
+    "newLinuxUnits": 0,
+    "testsRun": 0,
+    "productCodeChanged": false,
+    "productionPublished": false,
+    "existingServiceOperations": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "oldFailureEvidenceOrLocksRemoved": false
+  },
+  "productionDelivered": false
+}
