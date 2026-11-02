@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-03",
+  "phase": "bounded-private-kernel-error-time-evidence",
+  "authorization": {
+    "maximumSshConnections": 1,
+    "actualSshConnections": 1,
+    "maximumJournalQueries": 1,
+    "actualJournalQueries": 1,
+    "remoteSeconds": 20,
+    "outerSeconds": 35,
+    "maximumOutputRows": 64,
+    "maximumStdoutBytes": 262144,
+    "maximumRetainedErrorLines": 1,
+    "maximumNewLinuxUnits": 0,
+    "actualNewLinuxUnits": 0,
+    "automaticRetry": false,
+    "newRoundQuotaUsed": "1/1",
+    "priorCompletedRoundNotReset": true
+  },
+  "localVerification": {
+    "selectorTests": 21,
+    "timeEvidenceTests": 14,
+    "integrationCleanupTests": 18,
+    "totalPassed": 53,
+    "failed": 0,
+    "classification": "local synthetic and owned local subprocess checks, not full product native regression",
+    "freezeSha256": "828a1750e79fa09d0822d091405995d31c198feedb4677d4510c1a50c8420d57",
+    "independentPreflightReviewAccepted": true
+  },
+  "execution": {
+    "hostKeyVerified": true,
+    "localTransportExitCode": 0,
+    "remoteExitCode": 0,
+    "queryExitCode": 0,
+    "outerElapsedSeconds": 2.619293199852109,
+    "remoteElapsedSeconds": 0.1060426663607359,
+    "queryStdoutBytes": 591,
+    "queryStderrBytes": 0,
+    "collectionPassed": true,
+    "rawPrivateReceiptSha256": "140586e77efb5dd449dcb88429611d3777bd6fee8d1aa0a562b7268d94ebf6fe"
+  },
+  "evidence": {
+    "rowsReturned": 1,
+    "acceptedByOriginalSourceInterval": 0,
+    "rowsOutsideOriginalSourceInterval": 1,
+    "privateErrorLinesRetained": 1,
+    "additionalErrorLinesNotRetained": 0,
+    "errorMessageClass": "Missing file or directory while setting up mount namespace; ENOENT-style textual candidate, no explicit numeric errno field.",
+    "exactMissingPathPresent": false,
+    "errorLinePublished": false,
+    "sourceMinusManagerStartMicroseconds": -223187306,
+    "sourceMinusManagerEndMicroseconds": -223620521,
+    "receiptMinusSourceMicroseconds": 223619254,
+    "receiptFallsWithinManagerObservedInterval": true,
+    "crossClockEquivalenceVerified": false,
+    "delayOrClockOffsetCauseProven": false,
+    "retainedAsUnacceptedDiagnostic": true,
+    "authenticatedProcessIdentity": false,
+    "namespaceRootCauseConfirmed": false
+  },
+  "protection": {
+    "fixedStateUnchanged": true,
+    "bootUnchanged": true,
+    "selectedProtectedBaselineUnchanged": true,
+    "productionPublished": false,
+    "productCodeChanged": false,
+    "productionServiceOperations": false,
+    "configurationChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "oldFailureEvidenceOrLocksRemoved": false
+  },
+  "independentOutcomeReview": {
+    "receiptConsistent": true,
+    "retentionScopeAccepted": true,
+    "rawErrorAndPrivateIdentifiersExcludedFromPublicRecord": true,
+    "reviewerDidNotConnectOrRunTests": true
+  },
+  "localReferenceAnalysis": {
+    "source": "https://github.com/systemd/systemd/blob/v255/src/core/namespace.c",
+    "symbols": [
+      "setup_namespace",
+      "apply_mounts",
+      "mount_entry_path_debug_string"
+    ],
+    "observation": "Reference namespace construction uses an implicit temporary root under /run/systemd; not all early failure returns attach a mount-entry error path.",
+    "inference": "A pathless missing-file error warrants checking implicit setup paths as well as the already checked explicit bind paths; this does not locate the failing call.",
+    "ubuntuPatchEquivalenceVerified": false,
+    "missingImplicitPathConfirmed": false
+  },
+  "nextProposal": {
+    "requiresSeparateAuthorization": true,
+    "maximumSshConnections": 1,
+    "remoteSeconds": 20,
+    "outerSeconds": 35,
+    "maximumNewLinuxUnits": 0,
+    "journalQueries": 0,
+    "automaticRetry": false,
+    "scope": "Read-only metadata for fixed implicit namespace paths in the SSH and PID1 root views, plus mount-namespace identity links and existing protection baselines. No recursive listing, contents, mkdir, permission change, unit rerun or service action.",
+    "fixedPaths": [
+      "/run",
+      "/run/systemd",
+      "/run/systemd/mount-rootfs",
+      "/run/systemd/unit-root",
+      "/run/systemd/inaccessible",
+      "/run/systemd/inaccessible/dir",
+      "/run/systemd/inaccessible/reg",
+      "/tmp",
+      "/var/tmp"
+    ]
+  },
+  "productNativeTestsExecuted": 0,
+  "productionDelivered": false
+}
