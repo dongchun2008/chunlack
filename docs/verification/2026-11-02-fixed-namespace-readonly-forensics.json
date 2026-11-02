@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-02",
+  "phase": "bounded-read-only-namespace-forensics",
+  "productionDelivered": false,
+  "authorization": {
+    "maximumSshConnections": 1,
+    "actualSshConnections": 1,
+    "automaticRetry": false,
+    "maximumNewLinuxUnits": 0,
+    "actualNewLinuxUnits": 0,
+    "remoteSeconds": 20,
+    "localOuterSeconds": 35
+  },
+  "localPrerequisites": {
+    "syntheticTests": 12,
+    "passed": 12,
+    "failed": 0,
+    "priorSuitesNotRerun": true,
+    "independentPreflightReviewAccepted": true,
+    "freezeSha256": "b7be82fdb6920f1a760910401d6c2d2347ba79a2201a7fd5e61a30991c4b5fc4"
+  },
+  "execution": {
+    "outerElapsedSeconds": 3.0258066998794675,
+    "remoteElapsedSeconds": 0.32904235925525427,
+    "hostKeyVerified": true,
+    "localTransportExitCode": 0,
+    "remoteExitCode": 0,
+    "collectionPassed": true,
+    "rawPrivateReceiptSha256": "16dfdcf25f099a5265ede412b9ddb9f415b8ed4a386f4d2ac8148620ec08e246"
+  },
+  "evidence": {
+    "fixedUnitAndInvocationMatched": true,
+    "fixedUnitStateUnchanged": true,
+    "terminal": {
+      "result": "exit-code",
+      "execMainCode": 1,
+      "execMainStatus": 226,
+      "namespaceFailure": true,
+      "mainPid": 0,
+      "execMainPidCaptured": true
+    },
+    "journal": {
+      "rowsReturned": 4,
+      "rowsAccepted": 4,
+      "rowsRejected": 0,
+      "collectionComplete": true,
+      "setupDetailObtained": false,
+      "managerSummaryRows": 4,
+      "queryScope": "fixed unit/Invocation; accepted rows additionally filtered by pinned monotonic interval; no PID-only or global query"
+    },
+    "frozenBindings": 41,
+    "pathAndParentMetadata": {
+      "entries": 53,
+      "present": 53,
+      "missing": 0,
+      "symlinkEntries": 0,
+      "hostMountEntries": 53,
+      "filesystems": [
+        "ext4"
+      ],
+      "scope": "explicit frozen source/target paths and derived parent allowlist; no recursive enumeration or file contents"
+    },
+    "protectedBaselineUnchanged": true
+  },
+  "limits": {
+    "specificNamespaceRootCauseConfirmed": false,
+    "metadataDescribesHostNamespaceOnly": true,
+    "doesNotProveFailedNamespaceMountSuccess": true,
+    "businessProcessKernelIdentityNotEstablished": true,
+    "nativeProductTestsExecuted": 0,
+    "notProductionAcceptance": true
+  },
+  "changes": {
+    "productionPublished": false,
+    "productionServicesRestarted": false,
+    "configurationChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "failedDirectoriesOrLocksRemoved": false,
+    "linuxProbeRerun": false
+  },
+  "nextStep": {
+    "requiresSeparateAuthorization": true,
+    "proposal": "One bounded read-only journal query tied to current boot, captured ExecMainPID and exact kernel process lifetime; retain fixed unit/Invocation verification to avoid blind PID-only attribution."
+  },
+  "independentOutcomeReview": {
+    "accepted": true,
+    "scope": "Selected private receipt and fixed-path correspondence; collection success only, no root-cause or production acceptance."
+  }
+}
