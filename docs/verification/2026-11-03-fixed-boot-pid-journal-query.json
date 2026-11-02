@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-03",
+  "phase": "fixed-boot-pid-lifetime-readonly-journal",
+  "productionDelivered": false,
+  "authorization": {
+    "maximumSshConnections": 1,
+    "actualSshConnections": 1,
+    "automaticRetry": false,
+    "maximumNewLinuxUnits": 0,
+    "actualNewLinuxUnits": 0,
+    "remoteSeconds": 20,
+    "outerSeconds": 35
+  },
+  "localPrerequisites": {
+    "syntheticTests": 14,
+    "passed": 14,
+    "failed": 0,
+    "priorSuitesNotRerun": true,
+    "independentPreflightReviewAccepted": true,
+    "freezeSha256": "b6b464ecd072eb3a1e8d150e1b2d3186887b20ae65871ecca884c8254e69f080"
+  },
+  "execution": {
+    "hostKeyVerified": true,
+    "localTransportExitCode": 0,
+    "remoteExitCode": 0,
+    "outerElapsedSeconds": 3.4502739999443293,
+    "remoteElapsedSeconds": 0.38965959660708904,
+    "collectionPassed": true,
+    "rawPrivateReceiptSha256": "f1b5db277ef89a0f3c95fc1eab037c1be22d5e1726fd5caf6f30f216b7128c00"
+  },
+  "evidence": {
+    "fixedUnitInvocationAndExecMainPidMatched": true,
+    "fixedStateUnchanged": true,
+    "bootUnchanged": true,
+    "protectedBaselineUnchanged": true,
+    "failedTerminalStatus": 226,
+    "queryScope": "Trusted journal boot ID AND captured kernel ExecMainPID AND fixed UTC query window; accepted records additionally require exact kernel monotonic process lifetime.",
+    "counts": {
+      "rowsReturned": 0,
+      "rowsAccepted": 0,
+      "rowsOutsideKernelLifetime": 0,
+      "collectionCompleteWithinQuery": true
+    },
+    "setupDetailsObtained": false
+  },
+  "interpretation": {
+    "specificNamespaceRootCauseConfirmed": false,
+    "noRecordsReturnedByThisQuery": true,
+    "doesNotProveRecordsNeverExisted": true,
+    "strictTimeBoundsMayExcludeDelayedJournalIngestion": true,
+    "productNativeTestsExecuted": 0,
+    "productionReady": false
+  },
+  "changes": {
+    "productionPublished": false,
+    "linuxUnitRerun": false,
+    "productionServicesStartedOrStopped": false,
+    "configurationChanged": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "failedDirectoriesOrLocksRemoved": false
+  },
+  "nextStep": {
+    "furtherRemoteQueriesNotPerformed": true,
+    "recommendation": "Stop repeating queries against this old incident. Design and review a local minimal startup-error capture probe before requesting any new Linux diagnostic unit. Preserve existing isolation and failure evidence."
+  },
+  "independentOutcomeReview": {
+    "accepted": true,
+    "scope": "Private transport and remote receipt verified; no product or root-cause acceptance."
+  }
+}
