@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-02",
+  "status": "native_lifecycle_attempt_failed_identity_check_cleanup_confirmed",
+  "scope": "One authorized SSH and one new /usr/bin/true diagnostic unit; no production publication",
+  "candidate": {
+    "freezeSha256": "44c72295d29792a2907f67f57883bdcd7abb9bc901fd9c8893b0728f177eb092",
+    "runnerSha256": "ab89c9491d2750f9e7d24fddd6806e2272d8351ca4219056282e9885f9b06bb2",
+    "previousLocalRelatedTests": 135,
+    "testsRerunThisPhase": 0
+  },
+  "authorization": {
+    "maximumSshAttempts": 1,
+    "sshAttemptsUsed": 1,
+    "maximumNewUnits": 1,
+    "unitAttemptsUsed": 1,
+    "automaticRetry": false,
+    "sharedDeadlineSeconds": 90,
+    "requestedMemoryMiB": 192,
+    "requestedCpuPercent": 20,
+    "requestedTasksMax": 32,
+    "requestedSwapMaxBytes": 0,
+    "requestedPrivateNetwork": true,
+    "requestedPrivateTmp": true
+  },
+  "execution": {
+    "hostKeyVerified": true,
+    "remoteState": "returned",
+    "localTransportExitCode": 2,
+    "remoteExitCode": 2,
+    "shellToolExitCode": 1,
+    "passed": false,
+    "controllerElapsedSeconds": 0.2939624171704054,
+    "originalError": {
+      "type": "ValueError",
+      "code": "unit_identity"
+    },
+    "invocationEventuallyBound": true,
+    "stopRequested": true,
+    "stopIdentityObserved": {
+      "idMatched": true,
+      "invocationMatched": true,
+      "LoadState": "loaded",
+      "ActiveState": "activating",
+      "SubState": "start",
+      "nonzeroMainPid": true
+    },
+    "finalEvidence": {
+      "sameIdAndInvocation": true,
+      "LoadState": "loaded",
+      "ActiveState": "inactive",
+      "SubState": "dead",
+      "MainPID": "0",
+      "Result": "success",
+      "ExecMainCode": "2",
+      "ExecMainStatus": "15",
+      "cgroupEmpty": true,
+      "evidenceKind": "retained_state"
+    },
+    "clientCleanup": {
+      "clientExited": true,
+      "clientReturnCode": 0,
+      "pipesClosed": true,
+      "errors": []
+    },
+    "captureComplete": true,
+    "stdoutBytes": 0,
+    "stderrBytes": 0,
+    "cleanupErrors": [],
+    "captureErrors": [],
+    "protectedBaselineUnchanged": true,
+    "originalTerminalRecorded": false,
+    "classificationRecorded": false,
+    "journalRecorded": false,
+    "finalPolicyAssertionReached": false,
+    "receiptSha256": "0a1da64bf4794f28d362994d72fd384111242d0dfdd07c7d8f24cb1471ddf04e"
+  },
+  "independentOutcomeReview": {
+    "receiptDigestMatched": true,
+    "transportConsistent": true,
+    "existingCleanupProofConditionsMet": true,
+    "signal15NotNaturalExitZero": true,
+    "noAdditionalSsh": true
+  },
+  "interpretation": {
+    "cleanupConfirmed": true,
+    "originalDiagnosticPassed": false,
+    "applicationAccepted": false,
+    "productNativeTestsAccepted": false,
+    "comprehensiveProductionHealthAccepted": false,
+    "historicalNamespace226RootCauseConfirmed": false,
+    "failingInvocationShapeKnownOnlyAsRejected": true,
+    "failingInvocationEmptyProven": false
+  },
+  "boundaries": {
+    "productionPublished": false,
+    "existingProductionServicesStartedStopped": false,
+    "credentialsModified": false,
+    "credentialValuesExposed": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "lackOrCaddyStarted": false,
+    "realModelsCalled": false,
+    "externalAgentsCalled": false,
+    "failedArtifactsOrLocksDeleted": false
+  },
+  "nextLocalPhasePendingApproval": {
+    "safeIdentityShapeDiagnostics": [
+      "Id match boolean",
+      "Invocation length",
+      "Invocation hex32 validity"
+    ],
+    "deterministicSequence": "loaded/sameId/emptyInvocation -> validInvocation",
+    "constraints": [
+      "Only bounded pre-binding waiting for a narrowly validated pending-registration state.",
+      "Nonempty malformed Invocation must remain rejected.",
+      "After binding, empty/malformed/changed Invocation still fails immediately; no rebinding.",
+      "Waiting uses original deadline, grants no stop authority and fabricates no terminal.",
+      "No new SSH, native unit or publication in local phase."
+    ]
+  },
+  "limitations": [
+    "The failed snapshot was not retained; empty Invocation and exact startup race are not proven.",
+    "Post-stop CLD_KILLED/SIGTERM is not natural program exit zero and does not establish /usr/bin/true completed execution.",
+    "Direct client exit zero and unchanged selected baselines do not make the probe pass.",
+    "Current new-unit quota1/1 is sealed; no automatic retry or reuse.",
+    "Only sanitized evidence is synchronized; private payloads and raw receipts are not committed.",
+    "Overall production delivery remains incomplete."
+  ]
+}
