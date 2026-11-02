@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-03",
+  "kind": "local-source-analysis",
+  "status": "upstream-configuration-conflict-identified-deployed-failure-attribution-unproven",
+  "scope": {
+    "localSourceAnalysisOnly": true,
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "testsRun": 0,
+    "productChanges": 0,
+    "productionChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentTasks": 0
+  },
+  "frozenInput": {
+    "constructorSha256": "00737d75b575310245f4f7ef3171e7116c5bd2523d26d32ea1d3cca50da23d5c",
+    "relevantConfiguration": {
+      "inaccessibleRunSubtree": true,
+      "privateTemporaryDirectories": true,
+      "strictSystemProtection": true,
+      "privateNetwork": true,
+      "noNewPrivileges": true,
+      "emptyCapabilitySets": true
+    }
+  },
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/systemd/systemd-stable/v255.4/src/core/exec-invoke.c",
+      "locations": [
+        "2835-2842",
+        "2912-2913"
+      ],
+      "observation": "System-scope execution configures propagation and incoming paths and passes both to namespace setup."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/systemd/systemd-stable/v255.4/src/core/namespace.c",
+      "locations": [
+        "655-745",
+        "1927",
+        "1971-1986",
+        "2222-2232",
+        "2337-2358"
+      ],
+      "observation": "Inaccessible parent paths remove nested mount entries. The propagation-enabled flag remains set and the final incoming-path remount is still attempted after switching root. This error branch does not populate the mount-entry error path."
+    },
+    {
+      "url": "https://github.com/systemd/systemd/issues/27997",
+      "observation": "An upstream report reproduces status 226 with InaccessiblePaths=/run and an incoming-path remount failure. A maintainer recommends TemporaryFileSystem=/run. Its reported EPERM is not this deployment's errno evidence."
+    },
+    {
+      "url": "https://www.freedesktop.org/software/systemd/man/255/systemd.exec.html",
+      "observation": "The manual warns that /run must support namespace and propagation setup, documents private temporary filesystems, and distinguishes host-side bind sources from unit-side destinations."
+    }
+  ],
+  "analysis": {
+    "confirmedForInspectedUpstreamCode": [
+      "The frozen whole-run inaccessible mask conflicts with the inspected upstream namespace propagation sequence.",
+      "The default namespace staging path is mount-rootfs; unit-root occurs in an older explanatory example, not as the inspected default.",
+      "PrivateTmp does not by itself remove host-side bind sources.",
+      "Argument-list order is not the actual mount application order."
+    ],
+    "attributionLimits": [
+      "Exact Ubuntu 255.4-1ubuntu8.8 patched source equivalence was not verified; the source hosting page was inaccessible to the browser tool.",
+      "No newly accepted historical failure operation or failing path was obtained.",
+      "The previously retained private ENOENT-style line remains an unaccepted diagnostic clue; its original strict time-boundary result was not changed.",
+      "Current PID1 and SSH metadata observations do not reconstruct the failed executor's historical namespace.",
+      "The mechanism does not establish the exact errno returned by the deployed system."
+    ],
+    "independentReview": {
+      "completed": true,
+      "result": "Configuration-conflict mechanism supported; deployed-failure attribution remains unproven."
+    }
+  },
+  "nextStageProposalNotExecuted": {
+    "scope": "New private local candidate and bounded synthetic regression only, subject to approval.",
+    "direction": "Replace whole-subtree inaccessibility with a bounded private temporary run filesystem while preserving host control-channel denial and all other isolation goals.",
+    "requiredSafetyProofs": [
+      "No host run-tree bind and no host directory or permission changes.",
+      "Inventory systemd-created internal propagation mounts; do not claim the final private tree is completely empty.",
+      "Preserve host control-socket denial, including relevant aliases and inherited control channels.",
+      "Bound private filesystem memory and inodes within the existing total resource budget.",
+      "Preserve business UID/GID, zero capabilities, no-new-privileges, network isolation, source read-only protection and existing deadlines.",
+      "Replace representation-specific assertions only with explicit equivalent security assertions; do not simply delete checks.",
+      "Do not overwrite frozen or deployed controllers or reuse old failed directories, locks or quotas."
+    ],
+    "remoteValidationAuthorizedByThisRecord": false,
+    "publicationAuthorizedByThisRecord": false
+  },
+  "completion": {
+    "namespaceFailureFixed": false,
+    "nativeProductAcceptanceComplete": false,
+    "productionDeliveryComplete": false
+  }
+}
