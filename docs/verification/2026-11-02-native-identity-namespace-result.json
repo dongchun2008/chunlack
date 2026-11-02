@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-02",
+  "status": "native_namespace_failure_observed_controller_and_cleanup_completed",
+  "scope": "One authorized /usr/bin/true diagnostic unit; not product native tests or application acceptance",
+  "candidate": {
+    "freezeSha256": "b9136c3ac41d9ed1ca5c5952756863a7d42086b451b0a46f279713c1ffc18f2d",
+    "runnerSha256": "d3e93f262aebeced4177262485e188e601860f88f648925d0d84b093698f896d",
+    "priorLocalRelatedTests": 152,
+    "testsRerunThisPhase": 0
+  },
+  "authorization": {
+    "sshAttemptsMaximum": 1,
+    "sshAttemptsUsed": 1,
+    "maximumNewUnits": 1,
+    "consumedUnitAttempts": 1,
+    "sharedDeadlineSeconds": 90,
+    "automaticRetry": false,
+    "requestedMemoryMiB": 192,
+    "requestedCpuPercent": 20,
+    "requestedTasksMax": 32,
+    "requestedSwapBytes": 0,
+    "requestedPrivateNetwork": true,
+    "requestedPrivateTmp": true
+  },
+  "execution": {
+    "hostKeyVerified": true,
+    "remoteState": "returned",
+    "localTransportExitCode": 2,
+    "remoteExitCode": 2,
+    "shellToolExitCode": 1,
+    "passed": false,
+    "controllerElapsedSeconds": 1.74385791644454,
+    "pendingIdentityShape": {
+      "IdMatched": true,
+      "InvocationIsString": true,
+      "InvocationEmpty": true,
+      "InvocationLength": 0,
+      "InvocationHex32": false,
+      "BoundAlready": false,
+      "InvocationMatchesBound": null,
+      "Loaded": true,
+      "Inactive": true,
+      "Dead": true,
+      "MainPidZero": true,
+      "StartTimeZero": true,
+      "ExitTimeZero": true,
+      "PendingRegistration": true
+    },
+    "originalErrorRecorded": false,
+    "identityFailureRecorded": false,
+    "validInvocationBound": true,
+    "terminalBeforeStop": {
+      "LoadState": "loaded",
+      "ActiveState": "failed",
+      "SubState": "failed",
+      "MainPID": "0",
+      "Result": "exit-code",
+      "ExecMainCode": "1",
+      "ExecMainStatus": "226",
+      "ExecMainStartTimestampMonotonic": "6216328082089",
+      "ExecMainExitTimestampMonotonic": "6216328515304"
+    },
+    "kernelTerminalSpanSeconds": 0.433215,
+    "configuredPolicy": {
+      "MemoryMax": "201326592",
+      "MemorySwapMax": "0",
+      "CPUQuotaPerSecUSec": "200ms",
+      "CPUWeight": "10",
+      "Nice": "10",
+      "TasksMax": "32",
+      "PrivateNetwork": "yes",
+      "NoNewPrivileges": "yes",
+      "User": "996",
+      "Group": "987",
+      "CapabilityBoundingSet": "",
+      "AmbientCapabilities": ""
+    },
+    "configuredPolicyAssertionCompleted": true,
+    "effectiveKernelUidCapabilitiesAndNetnsValidated": false,
+    "stopRequested": true,
+    "finalSameIdAndInvocation": true,
+    "finalState": {
+      "ActiveState": "failed",
+      "SubState": "failed",
+      "MainPID": "0",
+      "ExecMainCode": "1",
+      "ExecMainStatus": "226"
+    },
+    "cgroupEmpty": true,
+    "finalEvidenceKind": "retained_state",
+    "clientCleanup": {
+      "clientExited": true,
+      "clientReturnCode": 226,
+      "pipesClosed": true,
+      "errors": []
+    },
+    "captureComplete": true,
+    "cleanupErrors": [],
+    "captureErrors": [],
+    "protectedBaselineUnchanged": true,
+    "stdoutBytes": 0,
+    "stderrBytes": 0,
+    "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "journalCounts": {
+      "rowsReturned": 4,
+      "rowsAccepted": 4,
+      "rowsRejected": 0,
+      "collectionComplete": true
+    },
+    "detailedSetupErrorObserved": false,
+    "receiptSha256": "abf12a0b4a338d00653667cd2d4cd2a0ca5bcdab71d65c9f482d9438bb2efa61"
+  },
+  "independentReview": {
+    "receiptDigestMatched": true,
+    "transportConsistent": true,
+    "currentPendingStateAndRealTerminalConfirmed": true,
+    "cleanupProofConfirmed": true,
+    "noAdditionalRemoteActions": true
+  },
+  "interpretation": {
+    "currentRegistrationHandlingObserved": true,
+    "namespaceFailureConfirmed": true,
+    "specificNamespaceRootCauseConfirmed": false,
+    "priorFailureInvocationEmptinessProven": false,
+    "diagnosticPassed": false,
+    "productNativeTestsAccepted": false,
+    "applicationAccepted": false,
+    "comprehensiveProductionHealthAccepted": false
+  },
+  "boundaries": {
+    "productionPublished": false,
+    "existingServicesStartedStopped": false,
+    "credentialsModified": false,
+    "credentialValuesExposed": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "lackOrCaddyStarted": false,
+    "realModelsCalled": false,
+    "externalAgentsCalled": false,
+    "failedArtifactsOrLocksDeleted": false
+  },
+  "nextEvidenceProposal": {
+    "status": "separate_approval_required",
+    "newDiagnosticUnits": 0,
+    "newProbeRuns": 0,
+    "scope": [
+      "Fixed current failed unit and Invocation metadata including ExecMainPID/start/end identity if still available.",
+      "Existing exact unit/Invocation journal scope only; no global or blind PID-only log search.",
+      "Path type/link/mount metadata for the frozen 41 bindings and explicit parent allowlist only; no recursive search or business contents."
+    ],
+    "isolationWeakeningAllowed": false,
+    "serviceActionsAllowed": false
+  },
+  "limitations": [
+    "Configured unit properties are not proof that the failed business process reached the requested kernel UID, capabilities or network namespace.",
+    "Journal scope returned four accepted manager summaries, not a detailed setup/mount cause; query completeness is not evidence that no detailed log ever existed elsewhere.",
+    "Current exact pending observation must not be retroactively attributed to older failures.",
+    "Quota1/1 is sealed and no retry or additional cleanup connection occurred.",
+    "Private source, payload and raw receipts remain uncommitted; only sanitized evidence is synchronized.",
+    "Overall production delivery remains incomplete."
+  ]
+}
