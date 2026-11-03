@@ -1,0 +1,268 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-04",
+  "phase": "bounded-private-run-native-validation",
+  "accepted": true,
+  "evidenceLevel": "native-isolation-tests-and-cleanup-only",
+  "localRegression": {
+    "tests": 45,
+    "passed": 45,
+    "failures": 0,
+    "seconds": 0.272,
+    "logSha256": "4953e429a79e0d62ce9cbd5a0afb913bfe2edc942553fcddb48344b6e35858a6",
+    "previous88TestsRerun": false
+  },
+  "bindings": {
+    "approvalSha256": "130414cadfee9ea91b4549a2a5ed5d22c3cf01bca8533d391656ce6119e95f38",
+    "sourceFileCount": 6,
+    "bindingSha256": "70bf2eb6649b90e5ad2f2a1e980e7ad087448450aef832ff00349992f0e8bd07",
+    "freezeSha256": "9f26d1ec778370666a0619505d0c0e128cd445a29e9f1225577d0c75368ab48a"
+  },
+  "quota": {
+    "approvedNewUnits": 3,
+    "consumedNewUnits": 3,
+    "remainingNewUnits": 0,
+    "sealed": true,
+    "sshSessions": 1,
+    "retries": 0,
+    "oldBudgetsReset": false
+  },
+  "nativeRegression": {
+    "tests": 57,
+    "passed": 57,
+    "failures": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "totalSeconds": 35.25509650004096,
+    "units": [
+      {
+        "index": 0,
+        "passed": true,
+        "counts": {
+          "tests": 42,
+          "pass": 42,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "receiptCountsMatch": true,
+        "exitCode": 0,
+        "workerCleanupComplete": true,
+        "elapsedSeconds": 7.660173244774342,
+        "sourceReadOnly": true,
+        "kernelMountEvidenceIndependent": true,
+        "kernelUidGidZeroCaps": true,
+        "unitLimits": {
+          "memory": "201326592",
+          "swap": "0",
+          "cpu": "200ms",
+          "tasks": "32",
+          "privateNetwork": "yes"
+        },
+        "finalMainPidZero": true,
+        "finalState": "inactive",
+        "cgroupEmptyBeforeStop": true,
+        "cgroupEmptyAfterStop": true
+      },
+      {
+        "index": 1,
+        "passed": true,
+        "counts": {
+          "tests": 14,
+          "pass": 14,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "receiptCountsMatch": true,
+        "exitCode": 0,
+        "workerCleanupComplete": true,
+        "elapsedSeconds": 5.895632143132389,
+        "sourceReadOnly": true,
+        "kernelMountEvidenceIndependent": true,
+        "kernelUidGidZeroCaps": true,
+        "unitLimits": {
+          "memory": "201326592",
+          "swap": "0",
+          "cpu": "200ms",
+          "tasks": "32",
+          "privateNetwork": "yes"
+        },
+        "finalMainPidZero": true,
+        "finalState": "inactive",
+        "cgroupEmptyBeforeStop": true,
+        "cgroupEmptyAfterStop": true
+      },
+      {
+        "index": 2,
+        "passed": true,
+        "counts": {
+          "tests": 1,
+          "pass": 1,
+          "fail": 0,
+          "cancelled": 0,
+          "skipped": 0,
+          "todo": 0
+        },
+        "receiptCountsMatch": true,
+        "exitCode": 0,
+        "workerCleanupComplete": true,
+        "elapsedSeconds": 17.43057710584253,
+        "sourceReadOnly": true,
+        "kernelMountEvidenceIndependent": true,
+        "kernelUidGidZeroCaps": true,
+        "unitLimits": {
+          "memory": "201326592",
+          "swap": "0",
+          "cpu": "200ms",
+          "tasks": "32",
+          "privateNetwork": "yes"
+        },
+        "finalMainPidZero": true,
+        "finalState": "inactive",
+        "cgroupEmptyBeforeStop": true,
+        "cgroupEmptyAfterStop": true
+      }
+    ]
+  },
+  "preservedLimits": {
+    "unitSeconds": 90,
+    "memoryMiB": 192,
+    "cpuPercent": 20,
+    "cpuWeight": 10,
+    "nice": 10,
+    "tasksMax": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "businessUid": 996,
+    "businessGid": 987,
+    "businessCapabilitiesZero": true,
+    "readyUtf8Bytes": 65536,
+    "readySeconds": 30
+  },
+  "protectedBaseline": {
+    "preflightMatchesNativeBefore": true,
+    "beforeMatchesAfter": true,
+    "services": [
+      {
+        "name": "chunlack.service",
+        "activeBefore": "active",
+        "activeAfter": "active",
+        "samePid": true,
+        "sameRestarts": true
+      },
+      {
+        "name": "tailscaled.service",
+        "activeBefore": "active",
+        "activeAfter": "active",
+        "samePid": true,
+        "sameRestarts": true
+      },
+      {
+        "name": "chunlack-public.service",
+        "activeBefore": "active",
+        "activeAfter": "active",
+        "samePid": true,
+        "sameRestarts": true
+      },
+      {
+        "name": "chunlack-https.service",
+        "activeBefore": "active",
+        "activeAfter": "active",
+        "samePid": true,
+        "sameRestarts": true
+      }
+    ],
+    "protectedFileMetadataUnchanged": true,
+    "listenersUnchanged": true,
+    "runtimeFingerprintUnchanged": true,
+    "relayDataplaneTrafficTested": false
+  },
+  "localCleanup": {
+    "confirmed": true,
+    "deadlineExhausted": false,
+    "timedOut": false,
+    "errors": [],
+    "pendingHandles": [],
+    "subDeadlineExceeded": false,
+    "lateHandles": [],
+    "completions": [
+      {
+        "handle": "socket",
+        "elapsedSeconds": 0.005160400178283453,
+        "wallElapsedSeconds": 0.005162000190466642,
+        "withinBudget": true
+      },
+      {
+        "handle": "transport",
+        "elapsedSeconds": 0.005382800009101629,
+        "wallElapsedSeconds": 0.005382300121709704,
+        "withinBudget": true
+      },
+      {
+        "handle": "channel-0",
+        "elapsedSeconds": 0.006947900168597698,
+        "wallElapsedSeconds": 0.006948000052943826,
+        "withinBudget": true
+      },
+      {
+        "handle": "channel-1",
+        "elapsedSeconds": 0.007759100059047341,
+        "wallElapsedSeconds": 0.007758700056001544,
+        "withinBudget": true
+      }
+    ]
+  },
+  "receiptHashes": {
+    "attemptSha256": "f628b48bb74ffe694b18819c6ee033f85e8854273c7e7113cc656b98131e7210",
+    "outcomeSha256": "aa044a669d7a37e2df7f5d5b67ca9e0e82be715cbfd73f9ef8dc0c98dcf07583",
+    "preflightTransportSha256": "c2919d7cf2ec0288c7b09b9f2d1112b7cc222f55b65367807d7b0e8d06b77ed3",
+    "nativeTransportSha256": "b1976d21f97794749a17019a379029e7ddaa379efbaa1df0e0481d6483a1bcd2"
+  },
+  "localDiagnostic": {
+    "socketError10038Observed": true,
+    "location": "local SSH wrapper log",
+    "bothRemoteStderrEmpty": true,
+    "fullReceiptsAndNativeCleanupAccepted": true,
+    "exactCauseConfirmed": false,
+    "nativeRetried": false
+  },
+  "independentReview": {
+    "sourceAccepted": true,
+    "packageAccepted": true,
+    "nativeEvidenceAccepted": true,
+    "newDeterminateP1P2": 0,
+    "reviewerExecutedTests": false
+  },
+  "activity": {
+    "productionPublished": false,
+    "existingServicesStopped": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "realModelCallsInitiated": false,
+    "externalAgentCalls": 0,
+    "softwareInstalled": false
+  },
+  "publication": {
+    "sanitizedRecordOnly": true,
+    "privateHarnessSourcesPublished": false,
+    "rawReceiptsPublished": false
+  },
+  "completion": {
+    "nativeStageComplete": true,
+    "applicationProductionDeliveryComplete": false,
+    "longTermStabilityProven": false,
+    "historicalNamespaceRootCauseConfirmed": false
+  },
+  "remaining": [
+    "Integrate the proven private-run policy into the release rehearsal path.",
+    "Obtain fresh database-copy compatibility and release/rollback evidence before a separately approved production maintenance window.",
+    "Complete application-level production acceptance and handover; this native-only result does not substitute for it."
+  ]
+}
