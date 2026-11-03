@@ -1,0 +1,96 @@
+{
+  "date": "2026-11-04",
+  "stage": "local-release-bridge-corrections",
+  "status": "targeted-local-tests-passed",
+  "nativeExecutable": false,
+  "productionReady": false,
+  "productionPublication": false,
+  "priorFailureRetained": {
+    "initialSetupErrors": 1,
+    "initialTestsExecuted": 0,
+    "record": "docs/verification/2026-11-04-release-bridge-initial-review.json"
+  },
+  "diagnosis": {
+    "operation": "local-read-only-metadata-comparison",
+    "differentFields": [
+      "st_ctime_ns"
+    ],
+    "otherIdentityFieldsMatched": true,
+    "sourceSha256": "f8f2623b61fc4a69031dede6781bcb718c3ea7baf6e9166f7ad7ed6f314e8112",
+    "scope": "Observed Windows path-versus-handle ctime discrepancy; not a general Linux claim"
+  },
+  "corrections": [
+    "Windows test-only POSIX metadata fixture for the exact source identity; Linux reader unchanged",
+    "Validate every identity sample and compare normalized identity rather than volatile process statistics",
+    "Supply bound spec/values at both controller-check call sites",
+    "Reach the worker descriptor policy with a valid worker shape and assert the specific log-FD rejection"
+  ],
+  "tests": {
+    "scope": "All tests in the new local bridge file; not the historical full repository suite",
+    "executed": 34,
+    "passed": 34,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsedSeconds": 0.476,
+    "exitCode": 0,
+    "automaticRetries": 0,
+    "evidenceLimits": [
+      "Callback body extracted from generated source and executed with a mocked checker; proves argument delivery and rejection propagation only",
+      "Synthetic mount, capability and descriptor samples do not prove native kernel enforcement",
+      "No additional Linux test unit was used"
+    ]
+  },
+  "independentReview": {
+    "performed": true,
+    "result": "No newly confirmed P1/P2 within the reviewed corrections; accepted only as a local partial bridge",
+    "reviewerRanTests": false
+  },
+  "materializedArtifact": {
+    "kind": "new unactivated local fork",
+    "sourceFiles": 5,
+    "before": {
+      "harness/formal_integration_control.py": "d013808aaad6d06229ce3a49ed9d28a2d3e365fb976941a5e69a138eeefc083a",
+      "harness/formal_owned_adapter.py": "c776e2a1b90ac7655d6380feac7675fdb39423ac304c3a554cc0640077a09fd5",
+      "harness/formal_transient_launch.py": "d87bfc3fa83186591fbe87c1c72a1b9e0bdbddb82f57dd3ff60a2b7662183d34"
+    },
+    "after": {
+      "harness/formal_integration_control.py": "b26e13710da8fefe2c95cbfcbdd32276d151fcce794e1a1ea9144fc5c427fcb7",
+      "harness/formal_owned_adapter.py": "450d34347383532cfca2451feca572f3a0ffe3594467c2d31cebb10e7abcc372",
+      "harness/formal_private_run.py": "50e7a1dfa2707007c91a8dde99df113c57c466b42d7494c335325203c6883cec",
+      "harness/formal_transient_launch.py": "9f1842bfa2d9009126f067c8da2b6dde0422f382b2d43f077c4d278da6c33b69",
+      "harness/private_run_base.py": "f8f2623b61fc4a69031dede6781bcb718c3ea7baf6e9166f7ad7ed6f314e8112"
+    }
+  },
+  "backendFinding": {
+    "sourceLocated": true,
+    "sourceSha256": "355e023d1e341079674608cc78269b955ad6a8e64f28dbc18ab6c3a62af99424",
+    "controllerFlockPresent": false,
+    "writerExitLockValidationPresent": true,
+    "productionGlobalLockEquivalent": false,
+    "implementationBoundIntoNewFork": false
+  },
+  "remainingGates": [
+    "Post-spawn owned IPC/file-descriptor contract",
+    "Root-controlled rehearsal-only mutual exclusion with bounded lifecycle",
+    "Complete source and dependency closure",
+    "Independent native controller evidence and fresh database compatibility",
+    "Fresh authorization before additional remote units or production maintenance"
+  ],
+  "safety": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "oldQuotaReused": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productionServiceOperations": 0,
+    "frozenSourcesModified": false,
+    "deployedSourcesModified": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "synchronization": "Only this sanitized record; no private harness source, raw metadata, configuration, credentials or raw logs."
+}
