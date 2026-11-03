@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-03",
+  "phase": "private-run-runner-local-integration",
+  "accepted": true,
+  "evidenceLevel": "local-synthetic-regression-and-offline-package-only",
+  "scope": {
+    "localOnly": true,
+    "privateCandidate": true,
+    "sshLaunchRoute": false
+  },
+  "repairs": [
+    {
+      "id": "staging-handoff",
+      "change": "Complete all privileged staging writes before handing over fixed business directories; validate root-owned directory kinds and modes; expose scratch last.",
+      "regression": "Virtual-filesystem model reproduces old ordering risk and rejects it with the adapted ordering."
+    },
+    {
+      "id": "owned-proc-fd",
+      "change": "Detach and close the owned descriptor once on construction failure; preserve original exception and bounded cleanup note; do not retry a detached descriptor.",
+      "regression": "Open/fstat/close failures and idempotent context cleanup."
+    },
+    {
+      "id": "synthetic-clock",
+      "change": "Explicitly inject the synthetic clock into the existing Deadline class.",
+      "regression": "At elapsed 78 seconds the 15-second reserve prevents a gate; shared 90-second deadline is unchanged."
+    }
+  ],
+  "initialRegression": {
+    "tests": 79,
+    "passed": 78,
+    "failures": 1,
+    "exitCode": 1,
+    "recordRetained": true
+  },
+  "regression": {
+    "tests": 88,
+    "passed": 88,
+    "failures": 0,
+    "exitCode": 0,
+    "seconds": 1.442,
+    "logSha256": "a5aa721427baa05c79d2bd2420a6f5f2c9c73c91981972e36b03fcdfdd244edd"
+  },
+  "binding": {
+    "fileCount": 11,
+    "runtimeScriptCount": 6,
+    "bindingSha256": "70bf2eb6649b90e5ad2f2a1e980e7ad087448450aef832ff00349992f0e8bd07"
+  },
+  "offlinePackage": {
+    "freezeSha256": "9f26d1ec778370666a0619505d0c0e128cd445a29e9f1225577d0c75368ab48a",
+    "prepareExitCode": 0,
+    "validateExitCode": 0,
+    "validated": true,
+    "offlineOnly": true,
+    "remoteAuthorized": false,
+    "potentialMaximumUnits": 3,
+    "newUnitsAuthorized": 0
+  },
+  "review": {
+    "independentSourceAccepted": true,
+    "independentPackageAccepted": true,
+    "newDeterminateP1P2": 0,
+    "independentReviewerExecutedRegression": false,
+    "packageCheckedBy": "Local hashes and generated-controller AST only; no runtime execution."
+  },
+  "preservedLimits": {
+    "unitSeconds": 90,
+    "readySeconds": 30,
+    "readyUtf8Bytes": 65536,
+    "memoryMiB": 192,
+    "cpuPercent": 20,
+    "tasksMax": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "cleanupReservesUnchanged": true
+  },
+  "activity": {
+    "sshConnections": 0,
+    "linuxUnitsConsumed": 0,
+    "productionPublished": false,
+    "existingServicesStopped": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "oldCandidatesEdited": false,
+    "oldQuotasReset": false
+  },
+  "publication": {
+    "sanitizedRecordOnly": true,
+    "privateHarnessSourcePublished": false,
+    "rawPacketsPublished": false
+  },
+  "remainingUnverified": [
+    "Native Linux proc/root visibility and private-run mount isolation under the existing capability boundary.",
+    "Real native test completion and production deployment acceptance."
+  ]
+}
