@@ -1,0 +1,101 @@
+{
+  "date": "2026-11-04",
+  "stage": "rehearsal-resource-component-corrections",
+  "status": "accepted-for-local-component-scope",
+  "nativeExecutable": false,
+  "productionReady": false,
+  "integratedIntoFormalAdapter": false,
+  "productionPublication": false,
+  "priorReviewRecord": "docs/verification/2026-11-04-release-resources-initial-review.json",
+  "correctedFindings": [
+    {
+      "id": "acquisition-fd-ownership",
+      "correction": "Candidates are validated before adoption; cleanup uses an authoritative, deduplicated ownership ledger and detaches before close."
+    },
+    {
+      "id": "release-cause-loss",
+      "correction": "Sanitized release primary and cleanup details remain separate from transaction-body errors."
+    },
+    {
+      "id": "lazy-request-path-drift",
+      "correction": "Diagnostics paths are derived once from scope; every proof rechecks them and lazy registration uses the frozen path."
+    }
+  ],
+  "tests": {
+    "scope": "Both local synthetic component files only",
+    "leaseCases": 24,
+    "descriptorCases": 26,
+    "totalExecuted": 50,
+    "passed": 50,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsedSeconds": 0.028,
+    "exitCode": 0,
+    "automaticRetries": 0,
+    "previousRepositorySuitesRerun": false,
+    "addedRegressions": [
+      "Duplicate actual open return closes the owned parent once",
+      "Malformed parent/lock returns never close unconfirmed descriptors",
+      "Mutable FD attributes do not redefine cleanup ownership",
+      "Body error, release identity drift and cleanup error are all preserved",
+      "Lazy foreign requests path is rejected before descriptor inspection",
+      "Diagnostics root/events/requests paths remain bound before and after lazy registration"
+    ],
+    "limits": "Fake-I/O algorithms and pure metadata checks; not native Linux flock, independent FD observation or complete adapter acceptance"
+  },
+  "independentReview": {
+    "priorP2Closed": 3,
+    "newConfirmedP1P2": 0,
+    "acceptedScope": "The three local corrections only",
+    "reviewerRanTests": false
+  },
+  "frozenLocalArtifact": {
+    "kind": "accepted-local-resource-components",
+    "manifestSha256": "fb85d27622f3b4d82341182a52024414ac21f75f738ac471f36a0af977f3c6ca",
+    "sources": {
+      "rehearsal_lease.py": {
+        "bytes": 12763,
+        "sha256": "a3d2724bc9fa3488ee893ba618594927562b22fa7ae0c836a816eb0e95318d97"
+      },
+      "owned_fd_contract.py": {
+        "bytes": 12293,
+        "sha256": "e3e57dca5e02e5337afe666227db3641270af5899ef8fb74586b238dcfd8100c"
+      },
+      "test_rehearsal_lease.py": {
+        "bytes": 15779,
+        "sha256": "6e6dbcfaae11a88f5b08b476e00d819cf298b4f66bc8d6598db00ce5e36b047d"
+      },
+      "test_owned_fd_contract.py": {
+        "bytes": 12741,
+        "sha256": "65c9d00f2b638faf4d08958aa916eb84edcf241207e34447a4c10088b11315e6"
+      }
+    },
+    "activated": false
+  },
+  "nextIntegrationGates": [
+    "Bind the frozen resource modules into a new private adapter fork without changing frozen/deployed originals.",
+    "Hold the rehearsal-only lease over the complete owned transaction and release outcome.",
+    "Observe all extra live descriptors and require exact equality with role-bound resources at startup and active preflight.",
+    "Bind timing, Popen pipes/stderr and diagnostics including lazy requests at their actual lifecycle points.",
+    "Preserve bounded original process/thread cleanup and fail closed if cleanup or release cannot be proven.",
+    "Rebind the complete helper/adapter/controller digest closure and require combined local regression and review before seeking any remote quota."
+  ],
+  "safety": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "oldQuotaReused": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productionServiceOperations": 0,
+    "frozenSourcesModified": false,
+    "deployedSourcesModified": false,
+    "productionLockTouched": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "synchronization": "This sanitized verification record only; private component source, raw logs and raw metadata are not submitted."
+}
