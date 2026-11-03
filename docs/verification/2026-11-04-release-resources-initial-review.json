@@ -1,0 +1,121 @@
+{
+  "date": "2026-11-04",
+  "stage": "rehearsal-resource-contract-initial-implementation",
+  "status": "not-accepted",
+  "nativeExecutable": false,
+  "productionReady": false,
+  "productionPublication": false,
+  "implementation": {
+    "scope": "Two new local private components only; not connected to the formal adapter",
+    "components": [
+      "rehearsal-only lock lease",
+      "closed registry of owned persistent descriptors"
+    ],
+    "frozenSourcesModified": false,
+    "deployedSourcesModified": false,
+    "previousAssembledForkModified": false
+  },
+  "sourceDiscovery": {
+    "backend": {
+      "sha256": "355e023d1e341079674608cc78269b955ad6a8e64f28dbc18ab6c3a62af99424",
+      "controllerFlockPresent": false,
+      "writerExitChecksPresent": true
+    },
+    "transport": {
+      "sha256": "596cfbdfa11d3b79ec338d7aa5a024802698ea1fffac12318f1e158ec00c95af",
+      "twoDaemonThreads": true,
+      "wrapsExistingPipes": true,
+      "selectorOrAdditionalSocketPresent": false
+    },
+    "timing": {
+      "sha256": "1456b44337263ef88e92b768a6bc5c3b1d8f5ca0e0e7eb8d8f352a3d33d2f3b0",
+      "persistentDescriptors": 2,
+      "regularFileUsesAppend": false
+    },
+    "descriptorInventory": {
+      "lease": 2,
+      "timing": 2,
+      "bridgeIPCAndStderr": 3,
+      "diagnosticStages": 1,
+      "optionalDiagnosticRequests": 1,
+      "maximumExtraPersistentDescriptors": 9,
+      "standardDescriptorsExcluded": true,
+      "firstErrorFileTemporary": true
+    },
+    "limits": "Source lifecycle inspection only; not a new remote observation or native enforcement result"
+  },
+  "tests": {
+    "lease": {
+      "executed": 19,
+      "passed": 19,
+      "failed": 0,
+      "errors": 0,
+      "elapsedSeconds": 0.007,
+      "exitCode": 0
+    },
+    "descriptorRegistry": {
+      "executed": 22,
+      "passed": 22,
+      "failed": 0,
+      "errors": 0,
+      "elapsedSeconds": 0.012,
+      "exitCode": 0
+    },
+    "totalExecuted": 41,
+    "kind": "local synthetic I/O and pure metadata tests",
+    "skipped": 0,
+    "automaticRetries": 0,
+    "priorSuitesRerun": false,
+    "nativeFlockVerified": false,
+    "nativeDescriptorAttestationVerified": false
+  },
+  "independentReview": {
+    "accepted": false,
+    "confirmedFindings": [
+      {
+        "severity": "P2",
+        "id": "acquisition-fd-ownership",
+        "description": "Open-return candidates enter owned state before validation; malformed or duplicated descriptor returns can reach cleanup and cause duplicate or unintended close."
+      },
+      {
+        "severity": "P2",
+        "id": "release-cause-loss",
+        "description": "When transaction body and release identity checks both fail, the outer error loses the sanitized original release cause."
+      },
+      {
+        "severity": "P2",
+        "id": "lazy-request-path-drift",
+        "description": "The first lazy requests-stream binding uses a mutable diagnostics path rather than the frozen scope-derived path."
+      }
+    ],
+    "reviewerRanTests": false
+  },
+  "proposedGroupedCorrection": [
+    "Validate candidate descriptor type and distinct ownership before committing cleanup state; deduplicate release and never retry uncertain descriptor closes.",
+    "Preserve sanitized release-phase original cause separately from body and cleanup failures.",
+    "Freeze the scope-derived requests path and revalidate diagnostics context before lazy registration.",
+    "Add direct regressions for malformed/duplicate open returns, combined body-and-release identity failure, and pre-registration path drift."
+  ],
+  "remainingGates": [
+    "Acceptance of these local components",
+    "Adapter and full observation-set integration",
+    "Bounded lifecycle cleanup and lock-release acceptance",
+    "Complete source/dependency closure",
+    "Freshly authorized Linux native tests and database compatibility",
+    "Separately authorized production maintenance and actual-use acceptance"
+  ],
+  "safety": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "oldQuotaReused": false,
+    "productionServiceOperations": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "synchronization": "This sanitized record only; unaccepted private source, raw logs and raw descriptor/metadata evidence are not submitted."
+}
