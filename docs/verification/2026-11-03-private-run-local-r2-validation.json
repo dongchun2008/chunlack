@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-03",
+  "scope": "local-private-candidate-only",
+  "candidate": "private-run-local-r2",
+  "binding": {
+    "bindingSha256": "9b284f0b1508e08b2c4be289ea3210893a9a682a5ad94964d6e895e3970bf497",
+    "priorCandidateHashesMatch": true,
+    "allowedExistingFileChanges": [
+      "private_run_guard.py",
+      "test_descriptor_repairs.py"
+    ],
+    "newDocument": "FD_BINDING.md",
+    "files": {
+      "PLAN.md": {
+        "bytes": 2922,
+        "sha256": "ac76ab4f0b22765797a272d97c301a5c65d3b7e6903e47bedba39e8a8e180113"
+      },
+      "base_native_contract.py": {
+        "bytes": 7101,
+        "sha256": "00737d75b575310245f4f7ef3171e7116c5bd2523d26d32ea1d3cca50da23d5c"
+      },
+      "native_contract.py": {
+        "bytes": 5350,
+        "sha256": "340ef519b26388a365e5a321131206b93a6c29bec3d9ff320372c0a0e6083e73"
+      },
+      "private_run_guard.py": {
+        "bytes": 15198,
+        "sha256": "41e0bf0ff993fce56b0e8010f05e349e1c4471cae2eeb6e658523f97f471ed13"
+      },
+      "worker.py": {
+        "bytes": 5993,
+        "sha256": "550c7f8dbec0c13f5b61f7e6d947f6eff3db82745d454440eba095e91845ab68"
+      },
+      "test_private_run.py": {
+        "bytes": 16743,
+        "sha256": "97214358862a48ed15d0e09f24c7269c9f19a1b0794f6af0dd45ab38545838e3"
+      },
+      "test_descriptor_repairs.py": {
+        "bytes": 10560,
+        "sha256": "5948e9147602da49626bcf43b74579ee8e256732d28c81fbfd78e0bfe36d4498"
+      },
+      "FIXES.md": {
+        "bytes": 1478,
+        "sha256": "989b268422a7dd91866e98b533efb45d4a6b599d8a870ee8f2f5f1399bc37492"
+      },
+      "FD_BINDING.md": {
+        "bytes": 935,
+        "sha256": "f027383ed7cdcaaed067bb516e2dc1d27ac6b1eee91883de8bc2086a6a743806"
+      }
+    }
+  },
+  "changes": [
+    "Private bounded run tmpfs instead of the whole-run inaccessible mask.",
+    "Business PID greater than one is required.",
+    "FIFO descriptors require the kernel anonymous-pipe target and matching inode.",
+    "Journal evidence requires UNIX stream type, exact journal stdout address, and kernel root peer credentials.",
+    "Journal peer checks are anchored to an owned duplicate with identity and access checks against the original descriptor.",
+    "The held duplicate is rechecked before closure; the original-slot checks remain."
+  ],
+  "tests": {
+    "currentCandidate": {
+      "run": 44,
+      "passed": 44,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.161
+    },
+    "unchangedBaseConstructor": {
+      "run": 8,
+      "passed": 8,
+      "failed": 0,
+      "errors": 0,
+      "skipped": 0,
+      "seconds": 0.004
+    },
+    "fullProductSuiteRun": false,
+    "priorCandidateReviewFindingsRetained": true,
+    "priorWindowsFixtureFailureRetained": true,
+    "priorRedReproductionsRetained": true
+  },
+  "safeguards": {
+    "privateTmpfsBytes": 1048576,
+    "privateTmpfsInodes": 256,
+    "totalMemoryMiB": 192,
+    "totalCpuQuotaPercent": 20,
+    "tasksMax": 32,
+    "swapMax": 0,
+    "uid": 996,
+    "gid": 987,
+    "zeroBusinessCapabilities": true,
+    "noNewPrivileges": true,
+    "privateNetwork": true,
+    "otherMasksAndBindingsPreserved": true,
+    "priorCandidateBytesAndHashesUnchanged": true
+  },
+  "operations": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "workersStarted": 0,
+    "systemdOrCaddyStarted": 0,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentTasks": 0
+  },
+  "evidenceLimits": [
+    "The direct OS/socket branches were exercised with scoped synthetic metadata, not real Linux descriptors.",
+    "Kernel root peer credentials are not attestation of a current journald executable.",
+    "Repeated descriptor checks are not atomic protection against arbitrary future same-process or privileged-host changes.",
+    "The historical deployed namespace failure's exact operation and path remain unproven.",
+    "No existing remote controller was adapted or activated. Its new host-run context and evidence checks remain an integration gate.",
+    "Local private-candidate regression does not replace native product, production login/UI, research, multi-user, or external-Agent acceptance."
+  ],
+  "completion": {
+    "nativeNamespaceAcceptance": false,
+    "nativeProductAcceptance": false,
+    "productionDelivery": false
+  },
+  "status": "bounded-local-repair-verified-not-native-or-production-accepted",
+  "independentReview": {
+    "completed": true,
+    "previousNamedFifoAndPidFindingsClosed": true,
+    "conditionalDuplicateBindingFindingClosedWithinFixedPreReadyWorkerScope": true,
+    "newDeterminateP1OrP2Found": false,
+    "nativeVerificationPerformed": false
+  },
+  "sources": [
+    "https://man7.org/linux/man-pages/man5/proc_pid_fd.5.html",
+    "https://man7.org/linux/man-pages/man7/unix.7.html"
+  ]
+}
