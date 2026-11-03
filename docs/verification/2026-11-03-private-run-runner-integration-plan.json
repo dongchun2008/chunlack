@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-03",
+  "kind": "local-offline-runner-integration-proposal",
+  "status": "prepared-and-reviewed-not-implemented",
+  "acceptedInput": {
+    "bindingSha256": "9b284f0b1508e08b2c4be289ea3210893a9a682a5ad94964d6e895e3970bf497",
+    "localCandidateTests": 44,
+    "unchangedBaseTests": 8,
+    "nativeAccepted": false
+  },
+  "observations": [
+    "The inspected old packager and controller use an exact four-script closure.",
+    "The repaired candidate also requires the pinned base contract and private-run guard: six scripts total.",
+    "The old controller does not pass the newly required independent host-run device context.",
+    "The old ready receiver permits 65536 bytes; two raw mountinfo observations with separate 262144-byte allowances are not guaranteed to fit."
+  ],
+  "proposal": {
+    "stage": "new-private-local-candidate-only",
+    "offlineEntryPoint": "prepare-and-validate-only-no-launch-route",
+    "scriptClosure": 6,
+    "allSourcesVerifiedBeforeExecution": true,
+    "moduleCacheNotAcceptanceEvidence": true,
+    "completeBoundedParseBeforeCompaction": true,
+    "preserveCompleteActiveRunSubtreeAndRequiredParentAndCoveredRelationships": true,
+    "unexpectedLiveMountsRejectedNotFiltered": true,
+    "bothObservationSamplesPreserved": true,
+    "finalUtf8SerializedReadyLimitBytes": 65536,
+    "overflowRefusedWithoutTruncationOrBudgetIncrease": true,
+    "controllerIndependentlyRecomputesFromBoundPidKernelView": true,
+    "workerDigestAndCountAloneInsufficient": true,
+    "identityFence": [
+      "unit",
+      "Invocation",
+      "PID",
+      "startTicks",
+      "namespace"
+    ],
+    "hostDeviceFromIndependentControllerObservation": true,
+    "unavailableOrDriftingRequiredEvidencePreventsGate": true
+  },
+  "unchangedConstraints": {
+    "memoryMiB": 192,
+    "cpuQuotaPercent": 20,
+    "tasksMax": 32,
+    "swapMax": 0,
+    "perUnitSeconds": 90,
+    "privateNetwork": true,
+    "businessUid": 996,
+    "businessGid": 987,
+    "zeroBusinessCapabilities": true,
+    "noNewPrivileges": true,
+    "existingReadinessAndCleanupBudgetsPreserved": true
+  },
+  "independentReview": {
+    "completed": true,
+    "scope": "design-only",
+    "conditionsIncorporated": true,
+    "implementationOrRemotePermissionGranted": false
+  },
+  "currentTurnOperations": {
+    "localSourceInspectionOnly": true,
+    "newProposalDocument": true,
+    "productChanges": 0,
+    "newTestsRun": 0,
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "workersStarted": 0,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentTasks": 0
+  },
+  "completion": {
+    "runnerIntegrationImplemented": false,
+    "nativeNamespaceAccepted": false,
+    "nativeProductAccepted": false,
+    "productionDelivery": false
+  }
+}
