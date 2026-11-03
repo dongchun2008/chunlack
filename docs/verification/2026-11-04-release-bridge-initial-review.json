@@ -1,0 +1,75 @@
+{
+  "date": "2026-11-04",
+  "stage": "local-formal-release-bridge-initial-implementation",
+  "status": "not-accepted",
+  "productionReady": false,
+  "productionPublication": false,
+  "changes": {
+    "privateForkOnly": true,
+    "frozenSourcesModified": false,
+    "deployedSourcesModified": false,
+    "newSources": [
+      "formal_private_run.py",
+      "build_bridge.py",
+      "test_bridge.py"
+    ],
+    "implementation": "Partial controller guard and typed private-run request bridge; not a complete native package"
+  },
+  "testExecution": {
+    "runs": 1,
+    "testsExecuted": 0,
+    "setupErrors": 1,
+    "exitCode": 1,
+    "failureStage": "setUpClass -> controller guard pinned source loader",
+    "errorCode": "owned_formal_run_source_changed",
+    "causeConfirmed": false,
+    "note": "lstat/fstat identity comparison failed; no field-level evidence yet. No tests passed or failed individually because setup did not finish."
+  },
+  "independentReview": {
+    "performed": true,
+    "execution": "read-only source review, no tests or network",
+    "findings": [
+      {
+        "severity": "P2",
+        "id": "dynamic-status-drift",
+        "description": "Full process status text participates in snapshot equality, so changing statistics can reject valid identity."
+      },
+      {
+        "severity": "P2",
+        "id": "missed-preflight-call-site",
+        "description": "New required spec/values parameters were not supplied at the adapter native_preflight callback."
+      },
+      {
+        "severity": "P2",
+        "id": "worker-fd-test-reachability",
+        "description": "The worker regression supplies a controller-shaped snapshot and fails at shape validation rather than the intended log FD rejection."
+      }
+    ]
+  },
+  "pendingGroupedCorrection": [
+    "Record bounded field-level metadata differences before choosing a Windows test-only adaptation; preserve Linux identity and race checks.",
+    "Validate each identity sample and compare explicitly stable fields while retaining all capability, NNP, context and mount checks.",
+    "Update every affected call site and exercise the actual preflight callback.",
+    "Use a valid worker evidence shape and assert the intended descriptor rejection code."
+  ],
+  "nativeBlockers": [
+    "owned backend lock contract not bound",
+    "complete source package closure not assembled",
+    "independent native controller evidence missing",
+    "no fresh remote unit authorization"
+  ],
+  "safety": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "existingNativeQuotaReset": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productionServiceOperations": 0,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "publicationScope": "Only this sanitized progress record; private unaccepted bridge source and raw logs are not submitted."
+}
