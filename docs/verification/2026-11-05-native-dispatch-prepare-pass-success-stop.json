@@ -1,0 +1,107 @@
+{
+  "date": "2026-11-05",
+  "stage": "refreshed-preflight-and-original-native-sequence",
+  "status": "prepare-accepted-success-failed-stopped",
+  "parentRecord": "docs/verification/2026-11-05-native-runner-corrections-and-preflight-expiry.json",
+  "authorization": {
+    "preflightRefreshApproved": true,
+    "newLocalEvidenceDirectory": true,
+    "originalQuotaUsedBefore": 0,
+    "maximumUnits": 3,
+    "automaticRetries": false,
+    "productionPublication": false
+  },
+  "freshPreflight": {
+    "accepted": true,
+    "elapsedSeconds": 21.962717299815267,
+    "localBudgetSeconds": 35,
+    "remoteBudgetSeconds": 20,
+    "productionCodeFilesVerified": 57,
+    "memAvailableBytes": 1009872896,
+    "cleanupConfirmed": true,
+    "unitsStarted": 0
+  },
+  "nativeSequence": {
+    "exitCode": 2,
+    "accepted": false,
+    "reservedUnitAttempts": 2,
+    "maximumUnits": 3,
+    "remainingUnitsNotUsed": 1,
+    "automaticRetries": 0,
+    "rpcCalls": 32,
+    "elapsedSeconds": 43.863824100000784,
+    "failedPhase": "success",
+    "errorType": "RuntimeError",
+    "errorCode": "terminal_not_accepted",
+    "ownedCleanupConfirmed": true,
+    "sessionCleanupConfirmed": true,
+    "persistenceErrors": [],
+    "cleanupErrors": [],
+    "outcomePersisted": true
+  },
+  "prepare": {
+    "accepted": true,
+    "productionCopyAccepted": true,
+    "kernelElapsedSeconds": 38.129907,
+    "workflowElapsedSeconds": 40.115775800077245,
+    "maximumSeconds": 90,
+    "cpuUsageNSec": 7637944000,
+    "memoryPeakBytes": 151646208,
+    "memorySwapPeakBytes": 0,
+    "execMainCode": 1,
+    "execMainStatus": 0,
+    "mainPid": 0,
+    "cgroupEmpty": true,
+    "protectedUnchanged": true,
+    "settled": true,
+    "resourceLimits": {
+      "memoryBytes": 201326592,
+      "swapBytes": 0,
+      "cpuQuotaPerSecond": "200ms",
+      "nice": 10,
+      "cpuWeight": 10,
+      "tasks": 32
+    },
+    "limits": "Per-database copy compatibility evidence only; no claim of cross-database application-consistent backup or formal-controller FD lifecycle acceptance."
+  },
+  "success": {
+    "accepted": false,
+    "terminal": true,
+    "activeState": "failed",
+    "result": "exit-code",
+    "execMainCode": 1,
+    "execMainStatus": 2,
+    "mainPid": 0,
+    "kernelElapsedSeconds": 0.488979,
+    "cpuUsageNSec": 106982000,
+    "memoryPeakBytes": 4198400,
+    "memorySwapPeakBytes": 0,
+    "receiptPresent": false,
+    "protectedUnchangedAtTerminal": true,
+    "cgroupEmptyAfterOwnedCleanup": true,
+    "rootCause": "UNKNOWN; fixed remote failure logs have not been collected.",
+    "nativeStdioRootResults": "Prepare completed, but full formal success/rollback and controller lifecycle compatibility are not accepted."
+  },
+  "rollback": {
+    "started": false,
+    "reason": "Stop-on-failure; unused original quota is not repurposed."
+  },
+  "safety": {
+    "productionPublication": false,
+    "existingProductionServiceOperations": 0,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false,
+    "candidateModified": false,
+    "realModelCallsInitiated": 0,
+    "externalAgentCalls": 0,
+    "oldFailuresAndLocksPreserved": true
+  },
+  "warnings": [
+    "Paramiko Socket exception 10038 retained on session shutdown; cleanup receipts confirmed, exact warning cause unknown."
+  ],
+  "nextGate": "One separately approved bounded read-only collection of this failed success phase's fixed logs, bound to its recorded Invocation ID and terminal/cgroup evidence. No restart, new units, cleanup deletion, product changes or publishing.",
+  "synchronization": "Sanitized native results only. Raw receipts/logs, private unit identifiers, candidate payloads, database contents and credentials are not submitted."
+}
