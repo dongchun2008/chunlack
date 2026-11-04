@@ -1,0 +1,75 @@
+{
+  "date": "2026-11-04",
+  "stage": "private-resource-adapter-integration-initial-review",
+  "status": "not-accepted",
+  "nativeExecutable": false,
+  "productionReady": false,
+  "productionPublication": false,
+  "implementationScope": "New local integration source only; no generated integrated fork or remote execution",
+  "intendedIntegration": [
+    "Rehearsal lease around the inner transaction",
+    "Exact owned-descriptor observation at locked startup and active preflight",
+    "Timing, Popen and diagnostics lifecycle binding",
+    "Positive resource receipt after cleanup, factory restoration and lease release",
+    "Terminal controller gate bound to phase input and original body-receipt digests"
+  ],
+  "testAttempt": {
+    "runs": 1,
+    "testsExecuted": 0,
+    "setupErrors": 1,
+    "exitCode": 1,
+    "failedStage": "setUpClass -> assemble -> integrate_guard",
+    "errorCode": "integration_exact_fragment",
+    "cause": "Assembler expected an independent descriptor-count condition, but the frozen source combines it with shape checks.",
+    "generatedIntegratedForks": 0,
+    "automaticRetries": 0,
+    "priorComponentSuitesRerun": false
+  },
+  "independentReview": {
+    "accepted": false,
+    "reviewerRanTests": false,
+    "findings": [
+      {
+        "severity": "P2",
+        "id": "exact-guard-fragment",
+        "description": "Guard transformation does not match the pinned combined condition; preserve original digest and exact occurrence checks when correcting it."
+      },
+      {
+        "severity": "P2",
+        "id": "combined-lifecycle-error-loss",
+        "description": "Body/restore details can disappear when the subsequent lease release also fails; independent error slots are required."
+      },
+      {
+        "severity": "P2",
+        "id": "diagnostics-suppressed-close-error",
+        "description": "The real diagnostics exit method can swallow close exceptions and set a failure flag; binding cleanup must inspect flags and handle states without retrying uncertain closes."
+      }
+    ],
+    "coverageGap": "Actual writer/write/fsync/close fault paths have not been executed. A parseable positive file alone is not acceptance; real successful terminal gating remains mandatory.",
+    "enumerationReview": "No whitelist-only filtering bypass was found in the reviewed full-descriptor enumeration source.",
+    "limits": "No real composed path, Linux flock or native kernel cleanup has been verified by this stage."
+  },
+  "proposedGroupedNextWork": [
+    "Correct only the exact combined source fragment and retain source/occurrence pins",
+    "Preserve body, restoration and lease-release error slots independently",
+    "Observe diagnostics cleanup flags and handle states after its exit method",
+    "Add direct positive publisher and write/fsync/close failure regressions, then rerun the new local integration tests and review"
+  ],
+  "safety": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "oldQuotaReused": false,
+    "productionServiceOperations": 0,
+    "frozenSourcesModified": false,
+    "acceptedComponentsModified": false,
+    "deployedSourcesModified": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "synchronization": "Only this sanitized record; unaccepted integration source, raw logs and raw state are not submitted."
+}
