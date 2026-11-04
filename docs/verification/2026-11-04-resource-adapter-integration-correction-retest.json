@@ -1,0 +1,76 @@
+{
+  "date": "2026-11-04",
+  "stage": "resource-adapter-integration-correction-retest",
+  "status": "not-accepted",
+  "nativeExecutable": false,
+  "productionReady": false,
+  "productionPublication": false,
+  "priorRecord": "docs/verification/2026-11-04-resource-adapter-integration-initial-review.json",
+  "sourceCorrections": {
+    "priorP2Closed": 3,
+    "newConfirmedSourceP1P2": 0,
+    "changes": [
+      "Exact combined guard-condition prefix with unchanged digest/count gates",
+      "Independent body, restoration and lease acquisition/release error slots",
+      "Diagnostics failure flags and stream states checked after potentially suppressed exit errors; no close retry"
+    ]
+  },
+  "tests": {
+    "runsThisCorrection": 1,
+    "executedMethods": 32,
+    "assertionFailures": 0,
+    "errorReports": 5,
+    "methodsBlocked": 4,
+    "exitCode": 1,
+    "elapsedSeconds": 0.289,
+    "automaticRetries": 0,
+    "blockedMethodNames": [
+      "test_actual_failed_unit_gate_rejects_even_parseable_positive_bytes",
+      "test_actual_terminal_gate_accepts_only_positive_resource_result",
+      "test_actual_terminal_gate_refuses_missing_resource_receipt",
+      "test_prepare_compatibility_does_not_require_formal_resource_receipt"
+    ],
+    "limits": "Error reports include a subtest error plus a secondary UnboundLocalError; do not subtract five from 32 to infer passed methods."
+  },
+  "independentReview": {
+    "sourceFixesAcceptedWithinScope": true,
+    "integrationAccepted": false,
+    "reviewerRanTests": false,
+    "pendingFixtureFindings": [
+      {
+        "severity": "P2",
+        "id": "missing-synthetic-attempt-marker",
+        "description": "The fixture omits the phase-attempt record required by the real status gate; four methods stop before their intended terminal/resource branches."
+      },
+      {
+        "severity": "P2",
+        "id": "subtest-result-scope",
+        "description": "Assertions after the subtest reference an unassigned result and add a secondary error."
+      }
+    ],
+    "publisherCoverage": "Function-level simulated reader/publisher positive, partial-write, open/write/zero-write/fsync/close and invalid/duplicate-descriptor cases passed. These are not native filesystem or kernel acceptance.",
+    "unverifiedCoverage": "Positive JSON with real failed-unit rejection and the other terminal-resource branches have not reached their intended assertions."
+  },
+  "nextNarrowWork": [
+    "Add only the fixture phase-attempt existence record; keep the real gate intact",
+    "Move the result call and assertions into the same subtest scope",
+    "Retain failure logs and rerun the new integration tests; no prior remote quota or production change"
+  ],
+  "safety": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "oldQuotaReused": false,
+    "productionServiceOperations": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "frozenSourcesModified": false,
+    "acceptedComponentSourcesModified": false,
+    "deployedSourcesModified": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "synchronization": "Sanitized progress record only; unaccepted private integration source, raw logs and raw state are not submitted."
+}
