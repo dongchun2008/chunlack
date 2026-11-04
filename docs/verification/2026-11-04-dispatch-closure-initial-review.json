@@ -1,0 +1,70 @@
+{
+  "date": "2026-11-04",
+  "stage": "fresh-label-dispatch-closure-initial-review",
+  "status": "not-accepted",
+  "nativeExecutable": false,
+  "dispatchAuthorized": false,
+  "productionReady": false,
+  "productionPublication": false,
+  "parentRecord": "docs/verification/2026-11-04-v2-source-rebase-local-acceptance.json",
+  "intendedChanges": [
+    "Fresh scenario/success/rollback labels with no prior quota reuse",
+    "Rebind only ten scoped phase paths plus tag; recompute input and plan digests",
+    "Rename fixture keys without rewriting unrelated source content",
+    "Rebind seven API constants and bridge EXPECTED while preserving other AST",
+    "Keep exact 164-entry stage count; make results root-owned while scratch/prepare retain UID996/GID987"
+  ],
+  "sourceAnalysis": {
+    "prepareWritesOuterResultsDirectly": false,
+    "prepareWritesFixturePaths": true,
+    "prepareIdentityChangeRequired": false,
+    "stdioUsesSystemdProvidedFileDescriptors": true,
+    "limits": "Source inspection only. Root-only results and actual systemd append/stdio compatibility are not native-verified."
+  },
+  "testAttempt": {
+    "testModuleLoaded": false,
+    "testsExecuted": 0,
+    "syntaxErrors": 1,
+    "exitCode": 1,
+    "automaticRetries": 0,
+    "errorType": "SyntaxError",
+    "stage": "UTF8 byte-offset test string",
+    "cause": "Over-escaped quotes in the added test fixture prevent parsing.",
+    "freshLabelsGenerated": 0,
+    "dispatchPackagesGenerated": 0
+  },
+  "independentReview": {
+    "accepted": false,
+    "reviewerRanTests": false,
+    "confirmedP2": [
+      {
+        "id": "utf8-fixture-syntax",
+        "description": "The added UTF8 fixture cannot parse; replace it with an unambiguous multiline string using ASCII Unicode escapes."
+      }
+    ],
+    "newConfirmedBuilderP1P2": 0,
+    "coverageRequired": "Add a non-ASCII character before the replaced constant on the same source line to cover AST UTF8 byte-column offsets.",
+    "limits": "Static builder review is not proof of successful retagging, 129-key remapping or generated closure validity."
+  },
+  "nextNarrowWork": [
+    "Correct the single UTF8 fixture without changing product or runtime policy",
+    "Add the same-line non-ASCII byte-offset case",
+    "Run the new local dispatch tests and inspect generated bindings before any native request"
+  ],
+  "safety": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "oldQuotaReused": false,
+    "productionServiceOperations": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "frozenInputsModified": false,
+    "acceptedCapsuleModified": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "synchronization": "This sanitized failure/review record only; unaccepted private dispatch sources, plans, payloads and raw logs are not submitted."
+}
