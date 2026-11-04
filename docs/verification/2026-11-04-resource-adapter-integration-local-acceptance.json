@@ -1,0 +1,94 @@
+{
+  "date": "2026-11-04",
+  "stage": "resource-adapter-local-integration-acceptance",
+  "status": "targeted-local-integration-passed-with-package-version-blocker",
+  "productionReady": false,
+  "nativeExecutable": false,
+  "productionPublication": false,
+  "priorFailuresRetained": [
+    "docs/verification/2026-11-04-resource-adapter-integration-initial-review.json",
+    "docs/verification/2026-11-04-resource-adapter-integration-correction-retest.json"
+  ],
+  "fixtureCorrections": [
+    "Synthetic attempt record supplied without changing the real attempt gate",
+    "Status call and assertions remain in one subtest scope",
+    "New missing-attempt counterexample rejects before resource validation and writes no terminal record"
+  ],
+  "tests": {
+    "scope": "New local integrated bridge test file only",
+    "executed": 33,
+    "passed": 33,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsedSeconds": 0.267,
+    "exitCode": 0,
+    "automaticRetries": 0,
+    "coverage": [
+      "Actual generated descriptor enumeration with synthetic syscall observations",
+      "Missing/unknown/inheritable descriptors refused",
+      "Actual publisher/read/write/partial-write/fsync/close functions with simulated I/O failures",
+      "Independent body/restoration/lease error retention",
+      "Real terminal function rejects exit-code failure even when resource helper could accept",
+      "Positive/negative resource result branches and prepare compatibility",
+      "Missing attempt still refused"
+    ],
+    "limits": "Mocks and synthetic kernel/process observations; no Linux flock, real process switch, live database compatibility or independent native attestation proved"
+  },
+  "independentReview": {
+    "fixtureP2Closed": 2,
+    "newConfirmedP1P2": 0,
+    "reviewerRanTests": false,
+    "acceptedScope": "The local fixture corrections and source-level target reachability"
+  },
+  "materializedLocalFork": {
+    "files": 8,
+    "activated": false,
+    "nativeExecutable": false,
+    "productionReady": false,
+    "purpose": "Pinned source contract only; not approved for overlay onto a different complete package"
+  },
+  "packageVersionAudit": {
+    "performed": "local read-only source inspection",
+    "overlayAllowed": false,
+    "oldAdapterSha256": "c776e2a1b90ac7655d6380feac7675fdb39423ac304c3a554cc0640077a09fd5",
+    "v2AdapterSha256": "b8bd2eb067e34970e24f17726ab9fa97ebdd350b9fecba1e06d6909bc432925f",
+    "v2AdapterBytes": 48389,
+    "oldAdapterBytes": 47300,
+    "v2NormalizedLfSha256": "b8bd2eb067e34970e24f17726ab9fa97ebdd350b9fecba1e06d6909bc432925f",
+    "newlineOnlyDifference": false,
+    "v2Pins": {
+      "entry": "90b4e09c06eaa757f93a7edc5fb6d5031b0ddff2dd1b98890adedf3b53dc8226",
+      "launcher": "755a8e97bdb486025e06ae8a96cd1b36c54fb34741c057b461a167263ddb7fbd",
+      "i18nGate": "95ab206d9f0dcf1bbcb208e600e7c24a94de4218a1025738a1844e67d8cb7af3",
+      "transient": "4ed975a42e5e77327edb7d19e530a428859e59976cfac1ae5f7c18c26c9d0580",
+      "prepare": "2de592fac62486d2edb260a9c9fb35d2471abc305be09380665bb89b3395327b"
+    },
+    "behaviorToPreserve": "Prepared-node proof requires CRLF, verified UID996/GID987, strict types, bounded dependency fingerprint and dependencySha256 compatibility binding.",
+    "auditLimits": "Archived API/bridge and embedded-manifest relationships were checked; all 159 actual package files have not been fully reconciled.",
+    "requiredNextStep": "Rebase the resource integration onto the v2 source family and rebuild the adapter/control/API/manifest/bridge hash closure; do not overwrite with the older eight-file fork."
+  },
+  "remainingGates": [
+    "Preserve v2 compatibility/configuration protection during rebase",
+    "Reconcile the full local source/dependency closure and run changed-path local regression",
+    "Separately authorized Linux native lifecycle/switch/rollback tests with fresh database compatibility",
+    "Separately authorized production maintenance and real-use acceptance"
+  ],
+  "safety": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "oldQuotaReused": false,
+    "productionServiceOperations": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "frozenSourcesModified": false,
+    "acceptedComponentsModified": false,
+    "deployedSourcesModified": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "synchronization": "Sanitized record only; private runtime source, raw state/configuration, credentials and raw logs are not submitted."
+}
