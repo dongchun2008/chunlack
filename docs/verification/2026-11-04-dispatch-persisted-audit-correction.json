@@ -1,0 +1,85 @@
+{
+  "date": "2026-11-04",
+  "stage": "persisted-offline-dispatch-audit-correction",
+  "status": "local-persisted-byte-audit-passed",
+  "parentRecord": "docs/verification/2026-11-04-dispatch-persisted-audit-initial.json",
+  "nativeExecutable": false,
+  "dispatchAuthorized": false,
+  "productionReady": false,
+  "productionPublication": false,
+  "correction": {
+    "scope": "New private auditor and synthetic tests only",
+    "enumerationMetadata": "os.lstat instead of DirEntry.stat",
+    "candidateModified": false,
+    "originalFailurePreserved": true,
+    "regularFileSingleLinkReparsePathHashAndRaceChecksRetained": true,
+    "crossApiCtimeDifferenceNotTreatedAsDrift": true,
+    "lstatBeforeAfterCtimeDriftStillRejected": true
+  },
+  "syntheticRegression": {
+    "tests": 18,
+    "passed": 18,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "elapsedSeconds": 0.024,
+    "runs": 1,
+    "existingTestsRerun": false
+  },
+  "persistedAudit": {
+    "exitCode": 0,
+    "result": "PASS",
+    "runs": 1,
+    "elapsedSeconds": 2.386,
+    "diagnosticAssertions": 6642,
+    "assertionCountIsNotTestCaseCount": true,
+    "uniqueFilesReadAndCached": 170,
+    "packageFiles": 164,
+    "packageHashMatches": 164,
+    "base64ByteMatches": 164,
+    "extraFiles": 0,
+    "missingFiles": 0,
+    "decodedBytes": 2874329,
+    "stageInputBytes": 3881583,
+    "anchoredArtifacts": 4,
+    "strictJson": true,
+    "pathAndCasefoldChecks": true,
+    "staticApiBridgeStageFormalPhasePlanClosure": true,
+    "distinctFreshLabels": 3,
+    "unapprovedFreezeFlagsPreserved": true,
+    "generatedCodeExecuted": false,
+    "renameCount129": "Freeze accounting only in this audit; retag was not re-executed."
+  },
+  "sourceSha256": {
+    "audit_persisted_dispatch.py": "954ba33c4d2b4e0b8619371dd7c617bc5f021a756bd593b89a06bff557436f4e",
+    "test_persisted_audit.py": "dd606e111e48e466b4296671cbd271ea5ad1290ba8d86fd7b9e5cbe9a128b0e4"
+  },
+  "review": {
+    "implementerPerformedTests": true,
+    "mainAgentReadBothSources": true,
+    "confirmedScopeBlockingP1P2": 0,
+    "scope": "Local read-only fixed-candidate integrity evidence, not a production publication gate."
+  },
+  "safety": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "oldQuotaReused": false,
+    "productionServiceOperations": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "candidateModified": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "remainingGates": [
+    "Fresh bounded SSH preflight and explicit new Linux-unit authorization",
+    "Native systemd stdio under root-owned results and controller lease/FD lifecycle validation",
+    "Fresh database-copy compatibility, real temporary success switch and fault rollback",
+    "Separate production maintenance and application acceptance"
+  ],
+  "synchronization": "This sanitized verification record only. Private auditor, tests, generated payloads, labels and raw logs are not submitted."
+}
