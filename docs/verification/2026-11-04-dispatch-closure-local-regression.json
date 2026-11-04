@@ -1,0 +1,83 @@
+{
+  "date": "2026-11-04",
+  "stage": "fresh-label-dispatch-closure-local-regression",
+  "status": "local-tests-passed-offline-candidate-materialized",
+  "parentRecord": "docs/verification/2026-11-04-dispatch-closure-initial-review.json",
+  "nativeExecutable": false,
+  "dispatchAuthorized": false,
+  "productionReady": false,
+  "productionPublication": false,
+  "correction": {
+    "scope": "test fixture only",
+    "parseFailurePreserved": true,
+    "utf8MultilineFixtureCorrected": true,
+    "sameLineUnicodeByteOffsetCaseAdded": true,
+    "builderModified": false
+  },
+  "testRun": {
+    "tests": 16,
+    "passed": 16,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "elapsedSeconds": 2.778,
+    "fullRepositorySuiteRerun": false
+  },
+  "independentReview": {
+    "confirmedRemainingP1P2": 0,
+    "reviewerRanTests": false,
+    "offlineMaterializationSupported": true,
+    "nativeAcceptance": false
+  },
+  "materialization": {
+    "exitCode": 0,
+    "newExclusiveDirectory": true,
+    "fileCount": 164,
+    "renamedFixturePaths": 129,
+    "changedSourceContents": [
+      "source/native-plan.json",
+      "source/phase-input.json"
+    ],
+    "phasePathsChanged": 10,
+    "tagChanged": true,
+    "resultsUid": 0,
+    "scratchUid": 996,
+    "prepareIdentityChanged": false,
+    "decodedBytes": 2874329,
+    "stageInputBytes": 3881583,
+    "hashEvidence": "Builder-computed digest closure; post-write persisted-byte reread was not performed.",
+    "parentCapsuleManifestSha256": "bd12da3d587c295f7e298ef393d93caa131f0c585312c2680701b67d0a6cc1db",
+    "manifestSha256": "36a23705749cf5d23e6715a01f6ea7000a0e08f38465ba5cd18841425bad30a1",
+    "formalSha256": "2bc8ac43971f03398574b697f6803b553add81fac4dfb6aea71cfc14fadb02be",
+    "stageSha256": "582ef868791dbd441f8fc51c02edfc4078957ab913fe7042ced753849446c67f",
+    "hashes": {
+      "candidate-api.py": "fe52a68e57e311d845c37bcffd237a63829777e576362df7593d7584cd971282",
+      "candidate-bridge.py": "7f79fec9250ee3a0fa686abfaf454045e0a66e646a186b653910f608a41d49c9",
+      "plan.json": "668bea8c307bb1a12bf560218941d5bdc6bb3ce1adad0d61c481979a78f02c70",
+      "stage-input.json": "797da1b304a0b303d75242d1844600764c1c68b6bf6968ef8028ad3ee1dc2b5d"
+    }
+  },
+  "safety": {
+    "sshConnections": 0,
+    "linuxUnitsStarted": 0,
+    "oldQuotaReused": false,
+    "productionServiceOperations": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "frozenInputsModified": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "remainingGates": [
+    "Persisted artifact byte closure verification within an approved verification scope",
+    "Fresh bounded SSH preflight and separately authorized Linux units",
+    "Native systemd stdio under root-owned results, lease and FD lifecycle validation",
+    "Fresh database-copy compatibility and success/rollback evidence",
+    "Separate production maintenance approval and acceptance"
+  ],
+  "synchronization": "Sanitized local regression record only. No private harness, labels, package payloads, raw logs or credentials submitted."
+}
