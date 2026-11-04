@@ -1,0 +1,100 @@
+{
+  "date": "2026-11-05",
+  "stage": "approved-native-dispatch-preflight-and-runner-review",
+  "status": "preflight-passed-native-not-started-runner-rejected",
+  "approval": {
+    "maximumNewUnits": 3,
+    "phaseSeconds": {
+      "prepare": 90,
+      "success": 180,
+      "rollback": 180
+    },
+    "memoryBytes": 201326592,
+    "cpuPercent": 20,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasks": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "serial": true,
+    "stopOnFailure": true,
+    "automaticRetries": false,
+    "productionPublication": false
+  },
+  "preflight": {
+    "accepted": true,
+    "sshSessions": 1,
+    "hostFingerprintVerifiedBeforePassword": true,
+    "elapsedSeconds": 2.4953241997864097,
+    "localBudgetSeconds": 35,
+    "remoteBudgetSeconds": 20,
+    "productionCodeFilesVerified": 57,
+    "memAvailableBytes": 1001066496,
+    "unitsStarted": 0,
+    "cleanupConfirmed": true,
+    "warning": "Paramiko Socket exception 10038 was retained. Its cause was not established; successful cleanup receipt does not explain the warning."
+  },
+  "localRunnerTests": {
+    "tests": 8,
+    "passed": 8,
+    "failed": 0,
+    "errors": 0,
+    "exitCode": 0,
+    "elapsedSeconds": 0.063,
+    "runs": 1,
+    "limits": "Synthetic policy checks do not cover the three newly identified whole-run failure boundaries."
+  },
+  "independentReview": {
+    "nativeStartAccepted": false,
+    "confirmedP2": 3,
+    "reviewerExecutedTests": false,
+    "findings": [
+      {
+        "id": "phase-deadline-coverage",
+        "description": "Evidence and settle use only the global deadline, so their completion can exceed the original phase budget.",
+        "minimumFix": "Use the unchanged phase absolute deadline for evidence, settle and failure cleanup; reserve cleanup time."
+      },
+      {
+        "id": "evidence-failure-skips-cleanup",
+        "description": "An unguarded partial-evidence persistence exception can bypass owned-unit cleanup; final outcome persistence is not separately represented.",
+        "minimumFix": "Separate primary, persistence, owned-cleanup and session-cleanup outcomes; evidence failure must not suppress cleanup."
+      },
+      {
+        "id": "cleanup-invocation-closure",
+        "description": "Missing expected Invocation permits an unbound cleanup; post-stop checks do not verify the same Invocation.",
+        "minimumFix": "Without a reliable Invocation binding do not stop; require same-Invocation postcondition or a separately defined restrictive unload proof."
+      }
+    ],
+    "fieldCompatibilityConfirmed": [
+      "Stage response shape matches actual candidate implementation",
+      "CPU 200ms, memory and formal terminal/resource receipt units match"
+    ]
+  },
+  "execution": {
+    "nativeRunnerExecuted": false,
+    "stageUploaded": false,
+    "newLinuxUnitsStarted": 0,
+    "newUnitQuotaUsed": 0,
+    "newUnitQuotaMaximum": 3,
+    "oldQuotaReused": false,
+    "automaticRetries": 0
+  },
+  "candidate": {
+    "apiSha256": "fe52a68e57e311d845c37bcffd237a63829777e576362df7593d7584cd971282",
+    "bridgeSha256": "7f79fec9250ee3a0fa686abfaf454045e0a66e646a186b653910f608a41d49c9",
+    "candidateModified": false,
+    "nativeStdioRootResults": "UNKNOWN"
+  },
+  "safety": {
+    "productionServiceOperations": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "nextNarrowWork": "Correct only the three new private-runner boundaries, add deterministic whole-run regressions and review before any original-quota native start. No unit has been consumed.",
+  "synchronization": "Sanitized preflight and rejected-runner review record only; no private harness, payloads, baseline contents, credentials or raw SSH logs."
+}
