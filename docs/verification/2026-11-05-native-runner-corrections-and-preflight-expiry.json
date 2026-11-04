@@ -1,0 +1,77 @@
+{
+  "date": "2026-11-05",
+  "stage": "native-runner-three-boundary-corrections",
+  "status": "local-corrections-passed-native-gated-by-expired-preflight",
+  "parentRecord": "docs/verification/2026-11-05-native-dispatch-preflight-and-runner-review.json",
+  "corrections": {
+    "sharedAbsolutePhaseDeadline": true,
+    "evidenceAndSettleIncluded": true,
+    "cleanupReserveSeconds": 8,
+    "partialPersistenceCannotSkipOwnedCleanup": true,
+    "primaryPersistenceOwnedAndSessionErrorsSeparated": true,
+    "exclusiveOutcomeRecovery": true,
+    "expectedInvocationRequiredBeforeContext": true,
+    "postCleanupSameInvocationAndGroupRequired": true,
+    "unknownBindingDoesNotPermitStop": true,
+    "candidateModified": false
+  },
+  "regression": {
+    "tests": 15,
+    "passed": 15,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "elapsedSeconds": 0.753,
+    "runs": 1,
+    "wholeRunFailureCases": [
+      "Near-deadline evidence/settle cannot extend phase",
+      "Partial evidence write failure still attempts owned cleanup",
+      "No reliable Invocation means no stop authority",
+      "Final outcome write failure has separate recovery",
+      "Session evidence failure preserves actual cleanup confirmation"
+    ]
+  },
+  "independentReview": {
+    "originalConfirmedP2Closed": 3,
+    "newConfirmedBlockers": 0,
+    "reviewerRanTests": false,
+    "startConditionalOnPinsAndValidPreflight": true,
+    "nativeAcceptance": false
+  },
+  "nativeInvocation": {
+    "scriptInvoked": true,
+    "exitCode": 1,
+    "errorCode": "preflight_expired",
+    "failedAt": "Local preflight age gate before native-attempt reservation and SSH connect",
+    "newSshConnections": 0,
+    "stageUploaded": false,
+    "newLinuxUnitsStarted": 0,
+    "originalUnitQuotaUsed": 0,
+    "originalUnitQuotaMaximum": 3,
+    "automaticRetries": 0
+  },
+  "metadataDiagnosis": {
+    "observedAgeSeconds": 1982.3960163574218,
+    "maximumAgeSeconds": 1800,
+    "regularFile": true,
+    "singleLink": true,
+    "futureTimestamp": false,
+    "scope": "Local timestamp metadata only; no file contents reread"
+  },
+  "safety": {
+    "productionPublication": false,
+    "productionServiceOperations": 0,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "originalFailuresPreserved": true,
+    "preflightTimeoutNotRelaxed": true
+  },
+  "nextGate": "Authorize one fresh same-limit read-only preflight in a new exclusive local evidence directory, followed immediately by the unchanged reviewed runner under original 0/3 unit quota; do not rerun passed tests, enlarge quotas or publish.",
+  "synchronization": "Sanitized correction, review and local expiry evidence only. Private runner sources, baseline contents and credentials are not submitted."
+}
