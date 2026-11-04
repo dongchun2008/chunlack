@@ -1,0 +1,122 @@
+{
+  "date": "2026-11-04",
+  "stage": "v2-source-family-rebase-local-acceptance",
+  "status": "accepted-for-local-unactivated-source-capsule",
+  "nativeExecutable": false,
+  "productionReady": false,
+  "productionPublication": false,
+  "priorRecord": "docs/verification/2026-11-04-resource-adapter-integration-local-acceptance.json",
+  "rebase": {
+    "baseline": "Pinned historical v2 source family, not the older CPU20 fork",
+    "preserved": [
+      "v2 entry and launcher pins",
+      "i18n gate and preparation pins",
+      "CRLF/node identity/dependency proof",
+      "Exact copy_binding and require_prepared_node_proof function bodies",
+      "Eight historical v2 source changes outside the intentional resource overlay"
+    ],
+    "originalSourceCount": 159,
+    "finalSourceCount": 164,
+    "changedSource": [
+      "source/harness/formal_integration_control.py",
+      "source/harness/formal_owned_adapter.py",
+      "source/harness/formal_transient_launch.py"
+    ],
+    "addedSource": [
+      "source/harness/formal_private_run.py",
+      "source/harness/integrated_resources.py",
+      "source/harness/owned_fd_contract.py",
+      "source/harness/private_run_base.py",
+      "source/harness/rehearsal_lease.py"
+    ],
+    "unchangedSourceCount": 156,
+    "preservedFunctionSha256": {
+      "copy_binding": "d66cacdec725642954640ecf9d8e0e560d78a37a21d86a6dcfb9c90011bee5ef",
+      "require_prepared_node_proof": "9a08b0e2f141934f43398a3822c8ee3f26b9fbefbf1b4452833081e9acbfa0a3"
+    }
+  },
+  "archiveAudit": {
+    "apiAndBridgeExcludedFromCapsule": true,
+    "archiveOnlyEntries": 130,
+    "decodedBytes": 2796374,
+    "entries": 159,
+    "localCounterpartsVerified": 29,
+    "manifestSha256": "589ce41d526f3becbc6f68eb18f9f8e0e029b807c1307136e32cd2fd7f6db328"
+  },
+  "artifact": {
+    "manifestSha256": "bd12da3d587c295f7e298ef393d93caa131f0c585312c2680701b67d0a6cc1db",
+    "sourceManifestSha256": "4dafbed46ebcb43ff0134cdf4196a55ee144de8530c05a8e18b95939980e23a7",
+    "integrationSourceSha256": {
+      "harness/formal_integration_control.py": "2bc8ac43971f03398574b697f6803b553add81fac4dfb6aea71cfc14fadb02be",
+      "harness/formal_owned_adapter.py": "022128fb76619957dc73aca84f4b351ba2169e6f85c0ae0d40fbdf749dbc7be3",
+      "harness/formal_private_run.py": "673eeeaf6bcdde7231f24c34e2c1bfb219c8d85650a4828d6e4d8a04f14d84dc",
+      "harness/formal_transient_launch.py": "157f0b01f297b4929fdbd24c1bcea206feeede66c4e626e84d20e93df6c27fee",
+      "harness/integrated_resources.py": "61617b1f2225be4f2605aec987f53fb684b44f450228a3484bfe30fcc9886564",
+      "harness/owned_fd_contract.py": "e3e57dca5e02e5337afe666227db3641270af5899ef8fb74586b238dcfd8100c",
+      "harness/private_run_base.py": "f8f2623b61fc4a69031dede6781bcb718c3ea7baf6e9166f7ad7ed6f314e8112",
+      "harness/rehearsal_lease.py": "a3d2724bc9fa3488ee893ba618594927562b22fa7ae0c836a816eb0e95318d97"
+    },
+    "dispatchApiIncluded": false,
+    "retagged": false,
+    "activated": false,
+    "note": "130 entries were authenticated archive payloads without historical local counterparts; all entries were newly materialized into the local capsule. This is not a remote staging request."
+  },
+  "tests": {
+    "scope": "Inherited 33 integration cases rerun on v2-generated modules plus new archive and compatibility cases",
+    "executed": 47,
+    "passed": 47,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsedSeconds": 1.285,
+    "exitCode": 0,
+    "automaticRetries": 0,
+    "actualModelCalls": 0,
+    "limits": "Local source checks and synthetic process/kernel/I/O observations; not Linux flock, native switch/rollback or production acceptance"
+  },
+  "independentReview": {
+    "acceptedWithinLocalScope": true,
+    "newConfirmedP1P2": 0,
+    "reviewerExecutedTests": false,
+    "limits": "Source review did not independently execute the assembler or verify all materialized files."
+  },
+  "materialization": {
+    "attempts": 2,
+    "first": {
+      "exitCode": 1,
+      "errorType": "FileNotFoundError",
+      "errno": 2,
+      "stage": "Deep workspace capsule path",
+      "partialDirectoryRetained": true
+    },
+    "second": {
+      "exitCode": 0,
+      "stage": "New shorter workspace-owned directory",
+      "sourceCodeChanged": false,
+      "testsRerun": false
+    },
+    "diagnosis": "Long-path limitation suspected; the same assembler succeeded at a shorter destination. No registry/system setting was changed."
+  },
+  "remainingGates": [
+    "Generate a fresh private plan/tag and rebuild the stage/API/manifest/bridge dispatch closure",
+    "Run changed-path local regression and review of the new dispatch package",
+    "Obtain fresh explicit Linux unit authorization before native testing",
+    "Fresh database compatibility, production preflight, maintenance approval and actual-use acceptance"
+  ],
+  "safety": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "oldQuotaReused": false,
+    "productionServiceOperations": 0,
+    "frozenInputsModified": false,
+    "deployedSourcesModified": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "synchronization": "This sanitized record only; source capsules, private plans, raw payload/configuration and raw logs are not submitted."
+}
