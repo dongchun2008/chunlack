@@ -1,0 +1,74 @@
+{
+  "date": "2026-11-05",
+  "stage": "lease-parent-paired-error-local-correction",
+  "status": "local-diagnostic-component-accepted-native-cause-still-unknown",
+  "parentRecord": "docs/verification/2026-11-05-lease-parent-local-diagnostic-review.json",
+  "changes": {
+    "independentBoundedParentCleanupSummary": true,
+    "maximumCleanupEntries": 2,
+    "allowedCleanupStages": [
+      "root_close",
+      "parent_close"
+    ],
+    "errno": "Exact integer 1..4095 or null; boolean/string/negative/overflow rejected",
+    "noRawExceptionMessageOrPath": true,
+    "primaryAndCleanupRemainSeparate": true,
+    "summarySurvivesOuterLeaseFailureAndUnchangedIntegratedFormatter": true,
+    "copyIsolation": true,
+    "securityGuardsUnchanged": true,
+    "closeOrderAndNoRetryUnchanged": true
+  },
+  "regression": {
+    "tests": 40,
+    "passed": 40,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "elapsedSeconds": 0.098,
+    "runs": 1,
+    "originalLeaseTests": 24,
+    "diagnosticTests": 16,
+    "newCases": [
+      "Parent ENOENT and root-close EIO both survive formatter",
+      "Identity drift and root/parent close failures retained with exactly one close per FD",
+      "Malformed, excessive and mutable cleanup summaries rejected or isolated",
+      "Standalone close failure remains separate"
+    ]
+  },
+  "independentReview": {
+    "originalP2Closed": true,
+    "newConfirmedP1P2": 0,
+    "reviewerRanTests": false,
+    "scope": "Private local diagnostic component only"
+  },
+  "sourceSha256": {
+    "rehearsal_lease.py": "cdbccc03fb24b13742005d0c8a200a2ae5f33a59808b80180c79e8662c96915e",
+    "test_parent_diagnostics.py": "c4a4bc0f9a7963314d2768820dacd7740e2d0b98b73978f5faeffffaa68bf072",
+    "unchanged_test_rehearsal_lease.py": "6e6dbcfaae11a88f5b08b476e00d819cf298b4f66bc8d6598db00ce5e36b047d"
+  },
+  "safety": {
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "originalQuotaUsed": 2,
+    "originalQuotaMaximum": 3,
+    "remainingOriginalUnitUntouched": true,
+    "frozenCandidateModified": false,
+    "existingFailureDirectoryOrLockModified": false,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "limits": [
+    "Synthetic tests prove diagnostic distinction and cause retention, not actual VPS metadata or namespace behavior.",
+    "No namespace, mount or directory permission fix was made.",
+    "Frozen dispatch package still contains its original source and digest bindings; this local diagnostic component has not been integrated or deployed."
+  ],
+  "nextProposal": "Separately approve local preparation plus at most one new short read-only namespace/parent-directory diagnostic unit, with fresh label and explicit original capability/resource boundaries; do not use the sealed original remaining unit.",
+  "synchronization": "This sanitized acceptance record only; private diagnostic source, tests, payloads and raw paths are not submitted."
+}
