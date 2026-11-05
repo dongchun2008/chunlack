@@ -1,0 +1,110 @@
+{
+  "date": "2026-11-05",
+  "stage": "readonly-parent-namespace-probe-local-initial-review",
+  "status": "native-not-started-local-probe-rejected",
+  "parentRecord": "docs/verification/2026-11-05-lease-parent-paired-error-local-acceptance.json",
+  "authorization": {
+    "localPreparationApproved": true,
+    "newDiagnosticUnitsMaximum": 1,
+    "newDiagnosticUnitSeconds": 10,
+    "memoryBytes": 201326592,
+    "cpuPercent": 20,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasks": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "capabilityBoundaryHex": "0xeb",
+    "noNewPrivileges": true,
+    "originalQuotaUsed": 2,
+    "originalQuotaMaximum": 3,
+    "originalRemainderSealed": true,
+    "productionPublication": false
+  },
+  "design": {
+    "mountTopologyDerivedFromPinnedOriginalTransientSource": true,
+    "scopeIsReadOnlyDirectoryOpenAndMetadata": true,
+    "lockAcquisitionNotCalled": true,
+    "businessEntryNotCalled": true,
+    "requestedKernelRuntimeSeconds": 7,
+    "totalUnitEnvelopeSeconds": 10,
+    "newLabelAndOutputRequired": true,
+    "frozenCandidateModified": false
+  },
+  "testRun": {
+    "tests": 8,
+    "passed": 6,
+    "failed": 2,
+    "errors": 0,
+    "exitCode": 1,
+    "elapsedSeconds": 0.045,
+    "runs": 1,
+    "failures": [
+      "Missing-unit nonzero/minimal status response rejected",
+      "Atime-only read effect incorrectly classified as log drift"
+    ],
+    "limits": "These are local synthetic tests, not native execution evidence."
+  },
+  "independentReview": {
+    "accepted": false,
+    "confirmedP2": 6,
+    "reviewerRanTests": false,
+    "findings": [
+      {
+        "id": "not-found-contract",
+        "knownFromTests": true,
+        "description": "Initial not-found status requires a strict separate minimal-field/exit-status contract; loaded-unit checks must remain complete."
+      },
+      {
+        "id": "atime-not-content-drift",
+        "knownFromTests": true,
+        "description": "Whole-stat equality rejects normal read-induced atime changes; retain explicit identity and content-metadata drift checks."
+      },
+      {
+        "id": "nested-fd-cleanup-false-positive",
+        "description": "Runtime must propagate nested parent-close errors rather than claim fdCleanup.confirmed=true."
+      },
+      {
+        "id": "cold-registration-not-terminal",
+        "description": "Loaded/inactive PID0 with no Invocation or execution timestamps is registration, not an accepted terminal execution."
+      },
+      {
+        "id": "phase-global-budget-binding",
+        "description": "Check complete remaining global budget before creating the unit; phase deadline may not exceed the global deadline."
+      },
+      {
+        "id": "local-result-and-cleanup-preservation",
+        "description": "Parse and retain actual remote receipt before evidence writes; independently preserve primary, persistence, partial, session-close and final-outcome errors."
+      }
+    ],
+    "capabilityExpansionFound": false,
+    "payloadLockOrBusinessCallFound": false
+  },
+  "sourceSha256": {
+    "probe_control.py": "38e2a47c259ee097cbb39e9c5cc4b2da0150835910eee169759471b597fa2f74",
+    "probe_runtime.py": "5cd6f6eff0f5f7b12b3e7fcef1fc4ba707a16c3336aad42dc04086b81476cf47",
+    "test_probe.py": "1fd30ffdae204b5d4e172a33cdd766558c47ada647dd1fbfc66667091b299dcf"
+  },
+  "execution": {
+    "sshConnections": 0,
+    "newDiagnosticUnitsStarted": 0,
+    "newDiagnosticQuotaUsed": 0,
+    "newDiagnosticQuotaMaximum": 1,
+    "originalRemainingUnitUsed": false,
+    "automaticRetries": 0
+  },
+  "safety": {
+    "productionServiceOperations": 0,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false,
+    "existingFailureDirectoriesOrLocksModified": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productionPublication": false
+  },
+  "nextGate": "One grouped local correction and targeted whole-run regressions for the six findings; only after local acceptance and review may the original approved 0/1 diagnostic unit be attempted. No additional quota or relaxed limits.",
+  "synchronization": "Sanitized rejected-probe review only; private probe sources, payloads and raw paths are not submitted."
+}
