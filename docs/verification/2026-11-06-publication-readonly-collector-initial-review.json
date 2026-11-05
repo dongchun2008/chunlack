@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-06",
+  "status": "local-collector-review-blocked-before-ssh",
+  "authorizedScope": {
+    "maximumNewSshCollections": 1,
+    "used": 0,
+    "remaining": 1,
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "maximumNewLinuxUnits": 0,
+    "productionPublication": false
+  },
+  "reasonForSeparateCollector": "The completed rehearsal's preflight requires unused rehearsal roots/units and cannot be rerun against preserved completed scenes. The fixed historical publication preflight also has a three-file scope and prepared-input/authority requirements unsuitable for this metadata-only collection. Neither gate was relaxed.",
+  "localRegression": {
+    "tests": 8,
+    "passed": 5,
+    "failed": 3,
+    "elapsedSeconds": 0.047,
+    "exitCode": 1,
+    "automaticReruns": 0,
+    "syntheticOnly": true
+  },
+  "sourceSha256": {
+    "remote_collect.py": "5c466261d0b0a1c25e651a9f00df458a1fb0495898eb2d5076c20d8393164574",
+    "local_run.py": "ea94b9c3af9700285d722774c8bf4ee17f889baf11ce7ce34919154be3e37c41",
+    "test_collection_boundaries.py": "8946e17ceb4b06cc69a96aa5a57bcb363aae4d32a4478112ef15d620e2d15d98",
+    "prepare_formal.cjs": "d9654ed0b9b633e00969bcd8924ebe662ac1fe00cdf3ca4ee4b80b84b218d70c"
+  },
+  "independentReview": {
+    "blockingGroups": 7,
+    "testsRunByReviewer": false,
+    "networkUsedByReviewer": false
+  },
+  "findings": [
+    {
+      "category": "shared-deadline",
+      "reproducedByLocalRegression": true,
+      "description": "Remote timing starts after packet read/validation and stops before serialization/output; local final acceptance excludes persistence elapsed time."
+    },
+    {
+      "category": "runtime-binary-memory",
+      "reproducedByLocalRegression": true,
+      "description": "Binary hashing materializes up to 128 MiB per runtime input instead of a bounded streaming digest."
+    },
+    {
+      "category": "local-false-acceptance",
+      "reproducedByLocalRegression": true,
+      "description": "A missing transport field after remote acceptance records a primary error but can leave local acceptance true."
+    },
+    {
+      "category": "windows-output-root",
+      "reproducedByAssembly": true,
+      "description": "Separator-format comparison rejects a valid exact parent path before mkdir. Normalize absolute parents without weakening containment."
+    },
+    {
+      "category": "directory-nofollow-race",
+      "reproducedByLocalRegression": false,
+      "description": "Path-based directory traversal and leaf-only nofollow do not anchor service-user-controlled parents. Use directory descriptors, component nofollow and identity checks with owned-FD cleanup."
+    },
+    {
+      "category": "dependency-fingerprint-root",
+      "reproducedByLocalRegression": false,
+      "description": "The fixed helper expects the code root, not its node_modules subdirectory. Optional failure must be explicit and must not bypass final protected-baseline checks or erase collected evidence."
+    },
+    {
+      "category": "bounded-command-output-cleanup",
+      "reproducedByLocalRegression": false,
+      "description": "capture_output limits are checked only after accumulation, and timeout cleanup lacks a shared deadline. Bound both pipes while reading and bind kill/reap/close to the same deadline."
+    }
+  ],
+  "formalPreparation": {
+    "completed": false,
+    "failureCode": "output_scope",
+    "failedBeforeTargetDirectoryCreation": true,
+    "sourceInputsLocated": true,
+    "expectedCandidateProductFiles": 66,
+    "expectedPreviousProductFiles": 57,
+    "plannedSourceFiles": 73,
+    "actualFormalSourcePackageGenerated": false,
+    "fixtureConfigurationUsed": false,
+    "credentialsIncluded": false
+  },
+  "protectedScope": {
+    "newSshSessions": 0,
+    "newLinuxUnits": 0,
+    "remoteFilesWritten": 0,
+    "productionServicesStartedOrStopped": false,
+    "credentialsReadOrChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false,
+    "modelsOrExternalAgentsCalled": false,
+    "frozenCandidatesChanged": false,
+    "oldFailureScenesChanged": false
+  },
+  "nextGate": "One combined approval for the seven local repair groups, focused complete-path regressions and review, then continuation of the original unused 0/1 read-only collection under the unchanged 20s/35s limit. No extra quota or publication.",
+  "synchronization": {
+    "sanitizedRecordOnly": true,
+    "privateHarnessSourceCommitted": false,
+    "originalFailureLogsPreserved": true,
+    "checksumClassification": "All hexadecimal digests are source SHA-256 checksums, not credentials."
+  }
+}
