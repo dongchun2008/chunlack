@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-05",
+  "status": "local-runner-bound-one-test-assertion-awaiting-correction",
+  "scope": "Inactive local preflight and native-runner copies for the owned-parent read-only candidate.",
+  "changes": {
+    "preflightBindings": [
+      "CANDIDATE",
+      "API_SHA",
+      "BRIDGE_SHA"
+    ],
+    "nativeBindings": [
+      "PINS.stage-input.json",
+      "PINS.plan.json"
+    ],
+    "allFunctionBodiesUnchanged": true,
+    "lineEndingsPreserved": true,
+    "legacyTransportLocationUnchanged": true,
+    "oldRunnerFilesModified": false
+  },
+  "sha256": {
+    "preflight": "c3a1300dfeca0628bd6528b894ce3b47aa78cfafe16cd05648af642e77c854fa",
+    "nativeRunner": "23662bb4bb0282f61a40c4b42b0611c00878f3abd5041da3c5b6cadd333d4d88",
+    "runnerBinding": "192df2adb593f1afb51b5f990b2074079d7c62f46e7efe58be940be5ab6c6c24",
+    "candidateApi": "c7dc8cfff1d73db6d18857389401f5e2759894f855e0ab70104c9c4792d2ca6a",
+    "candidateBridge": "31124675f9d0e2786bed108c99f4099a43bbb1db7a5e63cb7d9e27f1f4377161",
+    "stageInput": "54c1f815e8eaaf7e31c82b5c2ea89c1619d5df92b8925b64362840abdbb070f4",
+    "plan": "26d96ca895649b9ce20b47efb91a624c383da19c14c54499e89ae25535267a5d",
+    "candidateFreeze": "81ab0f61a9f28bbef0d57879ccfd1cb354b1836a8673271d87d1e4a0a3ce7506"
+  },
+  "regression": {
+    "tests": 18,
+    "passed": 17,
+    "failed": 1,
+    "elapsedSeconds": 0.419,
+    "processElapsedMilliseconds": 788,
+    "processLimitSeconds": 90,
+    "exitCode": 1,
+    "automaticReruns": 0,
+    "previousSuitesRerun": false,
+    "sessionImplementation": "synthetic injected Session and loader only"
+  },
+  "failure": {
+    "test": "test_preflight_uses_exact_new_source_and_readonly_action",
+    "category": "test-assertion-representation-mismatch",
+    "cause": "The assertion compares raw multiline bridge source directly with a wrapper containing its repr-escaped string literal.",
+    "productFailureEstablished": false,
+    "corrected": false,
+    "originalFailureLogPreserved": true,
+    "proposedFix": "Parse the wrapper AST; require a unique expected compile call with a string Constant first argument, then compare that value exactly with the bridge source. Preserve every other assertion."
+  },
+  "independentReview": {
+    "additionalDeterministicP1P2Findings": 0,
+    "knownTestFindingConfirmed": true,
+    "sourceBindingsMatched": true,
+    "noTestsOrNetworkExecutedByReviewer": true
+  },
+  "unchangedProposedLimits": {
+    "memoryBytes": 201326592,
+    "cpuPercent": 20,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasks": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "phaseSeconds": {
+      "prepare": 90,
+      "success": 180,
+      "rollback": 180
+    },
+    "preflightRemoteSeconds": 20,
+    "preflightLocalSeconds": 35,
+    "noAutomaticRetry": true
+  },
+  "actualActions": {
+    "sshSessions": 0,
+    "linuxUnits": 0,
+    "approvalOrAttemptFilesCreated": false,
+    "productionPublication": false,
+    "existingServicesStartedOrStopped": false,
+    "credentialsReadOrChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false,
+    "realModelsOrExternalAgentsCalled": false,
+    "oldRemainingQuotaUsed": false
+  },
+  "nextGate": "Obtain one combined confirmation for the test-only assertion correction and its 18-test retest, and conditionally a fresh read-only preflight plus at most three new Linux units after all local gates pass. No native budget is granted by this record.",
+  "synchronization": {
+    "sanitizedEvidenceOnly": true,
+    "privateHarnessSourceCommitted": false,
+    "rawLogsOrCredentialsCommitted": false,
+    "checksumClassification": "The hexadecimal digests are fixed source/artifact SHA-256 values, not credentials."
+  }
+}
