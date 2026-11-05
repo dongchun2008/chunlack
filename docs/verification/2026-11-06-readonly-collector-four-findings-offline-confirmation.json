@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-06",
+  "stage": "offline-confirmation-before-followup-approval",
+  "previousGoalTurnClassification": "progress",
+  "diagnosticExecution": {
+    "exitCode": 0,
+    "assertionsConfirmed": true,
+    "kind": "offline-only",
+    "implementationAccepted": false,
+    "existingRelatedRegressionsRerun": false
+  },
+  "confirmedFindings": [
+    {
+      "code": "process_creation_budget",
+      "evidence": {
+        "simulatedCommandSeconds": 3,
+        "commandBudgetSeconds": 2,
+        "killAttempts": 1,
+        "reapAttempts": 0,
+        "ownedPipeCloseAttempts": [
+          1,
+          1
+        ],
+        "failedClosed": true
+      },
+      "limitation": "Simulated creation delay and fake child; no actual OS process created."
+    },
+    {
+      "code": "backup_capacity_path_identity",
+      "evidence": {
+        "metadataReportedSymlink": true,
+        "statvfsCalledWithPath": true,
+        "finalProtectedComparisonReached": true
+      },
+      "limitation": "Injected metadata and capacity values; no actual filesystem queried."
+    },
+    {
+      "code": "nested_cleanup_error_preservation",
+      "evidence": {
+        "innerOriginalErrno": 5,
+        "innerFileCloseErrorPresent": true,
+        "outerOriginalBecameResourceFailureSummary": true,
+        "innerFileCloseErrorMissingFromOuter": true
+      }
+    },
+    {
+      "code": "receipt_contract_units_field",
+      "evidence": {
+        "remoteMainExecutedWithFakes": true,
+        "remoteExitCode": 0,
+        "remoteAccepted": true,
+        "remoteEmitsUnitsUsed": 0,
+        "remoteEmitsUnitsStarted": false,
+        "localRequiredFieldFromIndependentReview": "unitsStarted",
+        "localRunExecutedInThisDiagnostic": false
+      }
+    }
+  ],
+  "priorRelatedRegression": {
+    "total": 40,
+    "passed": 39,
+    "errors": 1,
+    "unchanged": true,
+    "remainingFixtureError": "Mocked sys object lacks stdout."
+  },
+  "authorization": {
+    "sshAttemptsUsed": 0,
+    "maximumSshAttempts": 1,
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "newLinuxUnitsAllowed": 0,
+    "productionPublicationAllowed": false,
+    "followupImplementationFixApprovalReceived": false
+  },
+  "scope": {
+    "implementationFilesModified": false,
+    "newPrivateOfflineDiagnosticOnly": true,
+    "sshConnected": false,
+    "linuxUnitsCreated": 0,
+    "realCommandsInvokedByCollector": 0,
+    "existingServiceStartStop": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "relayChanged": false,
+    "productionPublished": false
+  },
+  "nextGate": "Await consolidated approval for the four implementation findings, mocked stdout fixture, and missing regression cases. Do not consume the unused read-only collection allowance before regression and independent review pass.",
+  "privacy": {
+    "rawSourcePublished": false,
+    "credentialsIncluded": false,
+    "tokensIncluded": false,
+    "businessDataIncluded": false
+  }
+}
