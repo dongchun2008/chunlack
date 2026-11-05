@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-06",
+  "stage": "seven-local-readonly-collector-repairs",
+  "status": "local-regression-and-independent-review-blocked",
+  "productionReady": false,
+  "authorization": {
+    "maximumSshAttempts": 1,
+    "sshAttemptsUsed": 0,
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "newLinuxUnitsAllowed": 0,
+    "productionPublicationAllowed": false
+  },
+  "changes": {
+    "scope": "Private local collection and inactive package preparation only",
+    "remoteStreamingDigest": true,
+    "parentDirectoryFdTraversal": true,
+    "commandStreamingOutputLimitsBytes": {
+      "stdout": 65536,
+      "stderr": 4096
+    },
+    "dependencyFingerprintUsesCodeRoot": true,
+    "partialReportPreserved": true,
+    "localPrimaryErrorRejectsAcceptance": true,
+    "sshCleanupBeforePersistence": true,
+    "provisionalDiskOutcome": true,
+    "postPersistenceTimeChecked": true,
+    "formalExactOutputParentNormalized": true
+  },
+  "execution": [
+    {
+      "kind": "offline-remote-targeted-regression",
+      "total": 21,
+      "passed": 21,
+      "errors": 0,
+      "elapsedSeconds": 0.055,
+      "realNetwork": false
+    },
+    {
+      "kind": "complete-related-local-regression",
+      "total": 40,
+      "passed": 39,
+      "errors": 1,
+      "elapsedSeconds": 1.001,
+      "realNetwork": false,
+      "error": {
+        "test": "test_shared_deadline_armed_before_any_packet_read",
+        "type": "AttributeError",
+        "cause": "The test's mocked sys object lacks stdout, now explicitly used by the collector."
+      }
+    }
+  ],
+  "independentRemoteReview": {
+    "passed": false,
+    "confirmedP2": [
+      {
+        "code": "process_creation_budget",
+        "finding": "The command deadline does not bound blocking Popen creation. If creation returns after the deadline, reaping may remain unconfirmed."
+      },
+      {
+        "code": "backup_capacity_path_identity",
+        "finding": "The statvfs backup capacity query is path based instead of bound to the verified directory descriptor."
+      },
+      {
+        "code": "nested_cleanup_error_preservation",
+        "finding": "Nested ResourceFailure wrapping loses the earliest read error and inner cleanup details."
+      }
+    ]
+  },
+  "remainingAction": "Await one consolidated follow-up decision covering four confirmed implementation P2 findings, the mocked stdout field, and missing regressions. Do not consume the existing unused SSH collection allowance until related regression and independent review pass.",
+  "scopeEvidence": {
+    "sshConnectionsAttempted": 0,
+    "linuxUnitsCreated": 0,
+    "formalPackageGenerated": false,
+    "productCodeChanged": false,
+    "productionPublicationPerformed": false,
+    "productionServiceStartStopPerformed": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "relayChanged": false
+  },
+  "evidenceLimits": [
+    "All new regressions used offline fakes or mocks.",
+    "Passing selected local tests is not native Linux or production acceptance.",
+    "No current VPS health claim is made because no connection was attempted."
+  ],
+  "sanitization": {
+    "containsCredentials": false,
+    "containsTokens": false,
+    "containsRawTransportLogs": false,
+    "containsBusinessDatabaseContents": false,
+    "privateHarnessSourcePublished": false
+  },
+  "independentLocalReview": {
+    "passed": false,
+    "confirmedP2": [
+      {
+        "code": "receipt_contract_units_field",
+        "finding": "Remote emits unitsUsed:0 while the local acceptance predicate requires unitsStarted:0. The synthetic success fixture masks this mismatch."
+      }
+    ],
+    "otherReviewedBoundaries": [
+      "Owned SSH session is closed once before evidence persistence.",
+      "Primary, cleanup and persistence failures are separately recorded.",
+      "The disk outcome is explicitly provisional; final acceptance remeasures elapsed time after persistence.",
+      "The formal output path uses normalized exact-parent and strict-basename guards."
+    ]
+  },
+  "additionalCoverageRequired": [
+    "data_size scandir failure and cleanup paths",
+    "Opened directory FD identity mismatch",
+    "Optional dependency fingerprint failure followed by final protected-baseline comparisons",
+    "Actual remote receipt passed to the local acceptance predicate"
+  ]
+}
