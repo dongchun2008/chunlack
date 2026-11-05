@@ -1,0 +1,70 @@
+{
+  "date": "2026-11-05",
+  "stage": "lease-parent-diagnostics-local-initial-review",
+  "status": "local-regressions-passed-diagnostic-completeness-not-accepted",
+  "parentRecord": "docs/verification/2026-11-05-native-failed-unit-readonly-log-evidence.json",
+  "scope": {
+    "newPrivateCopyOnly": true,
+    "frozenCandidateModified": false,
+    "productionPublication": false,
+    "sshConnections": 0,
+    "newLinuxUnits": 0,
+    "remainingOriginalUnitUsed": false,
+    "originalQuotaUsed": 2,
+    "originalQuotaMaximum": 3,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "changes": {
+    "fixedStageEnumeration": true,
+    "errnoRange": "Exact integer 1..4095 or null; booleans rejected",
+    "guardCodeBounded": true,
+    "noRawExceptionMessageOrPath": true,
+    "outerPrimaryDiagnosticPropagation": true,
+    "directoryIdentityPermissionAndSymlinkGuardsUnchanged": true,
+    "fdFlagsAndCleanupOperationOrderUnchanged": true,
+    "existingIntegratedFormatterUnmodified": true
+  },
+  "regression": {
+    "tests": 36,
+    "passed": 36,
+    "failed": 0,
+    "errors": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "elapsedSeconds": 0.052,
+    "runs": 1,
+    "originalLeaseTests": 24,
+    "newDiagnosticTests": 12,
+    "originalFlatteningReproduced": true,
+    "rootMissingVersusInvalidMetadataDistinguishedInSyntheticTests": true,
+    "windowsSyntheticOnly": true,
+    "nativeNamespaceVerified": false
+  },
+  "independentReview": {
+    "accepted": false,
+    "newConfirmedP2": 1,
+    "reviewerRanTests": false,
+    "finding": {
+      "id": "simultaneous-primary-and-close-failure",
+      "description": "When parent_stat fails with ENOENT and root-FD close fails with EIO, the primary stage/errno survives but the nested cleanup stage/errno is not propagated through the outer acquisition wrapper.",
+      "evidence": "Static review; the current tests cover standalone root-close failure but not this simultaneous-failure combination.",
+      "minimumRemediation": "Preserve an independently bounded cleanup stage/errno summary through outer wrapping and add the paired-failure regression without changing close attempts or security guards."
+    },
+    "otherScopeBlockingFindings": 0
+  },
+  "sourceSha256": {
+    "rehearsal_lease.py": "43ae8eb68e5d9d23415db76647c0451832214374c2ced1f39fc6c284c5e470d2",
+    "test_parent_diagnostics.py": "313c053932630f3a888015e40d93f5d9fff60186b94fa089a1aefc4ea72bd144",
+    "test_rehearsal_lease.py": "6e6dbcfaae11a88f5b08b476e00d819cf298b4f66bc8d6598db00ce5e36b047d"
+  },
+  "limits": [
+    "The real VPS parent-open cause remains unproven.",
+    "No namespace/mount/permission fix was made.",
+    "Passed synthetic regressions do not establish diagnostic completeness, native correctness or production readiness."
+  ],
+  "synchronization": "Sanitized local regression and rejected-review record only; private diagnostic module, tests, raw paths and payloads not submitted."
+}
