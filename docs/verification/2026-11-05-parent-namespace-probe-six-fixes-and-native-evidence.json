@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-05",
+  "scope": "single-readonly-parent-namespace-diagnostic",
+  "status": "diagnostic-completed-underlying-lease-open-rejected",
+  "localRegression": {
+    "tests": 16,
+    "passed": 16,
+    "failed": 0,
+    "exitCode": 0,
+    "elapsedSeconds": 0.272,
+    "automaticReruns": 0
+  },
+  "targetedReview": {
+    "originalFindings": 6,
+    "closed": 6,
+    "sourceHashesMatched": true,
+    "nativeEvidenceReviewed": true,
+    "testsRunByReviewer": 0
+  },
+  "sourceSha256": {
+    "control": "a9ea93566f676f58ba283e71deceeeaa98e0ee2271492e707dd9deb14002001f",
+    "runtime": "4f6c36a7341db33d78c0eace8382e30eabf687763127c0ecd52bc759465c2211",
+    "tests": "031d8334f187211ba5e7fc06fce0b01a889bd7efe8d6347c393dcbc5fde149bf",
+    "lease": "cdbccc03fb24b13742005d0c8a200a2ae5f33a59808b80180c79e8662c96915e",
+    "transient": "157f0b01f297b4929fdbd24c1bcea206feeede66c4e626e84d20e93df6c27fee"
+  },
+  "quota": {
+    "approvedNewUnits": 1,
+    "attemptedNewUnits": 1,
+    "remainingNewUnits": 0,
+    "retries": 0,
+    "oldSequenceUsed": 2,
+    "oldSequenceApproved": 3,
+    "oldRemainingUnitSealed": true
+  },
+  "native": {
+    "acceptedAsDiagnostic": true,
+    "leaseOpened": false,
+    "exitCode": 0,
+    "localElapsedSeconds": 3.769968500128016,
+    "localLimitSeconds": 35,
+    "unitEnvelopeElapsedSeconds": 0.49032565392553806,
+    "unitEnvelopeLimitSeconds": 10,
+    "kernelRuntimeLimitSeconds": 7,
+    "resources": {
+      "memoryMaxBytes": 201326592,
+      "cpuQuotaPercent": 20,
+      "nice": 10,
+      "cpuWeight": 10,
+      "tasksMax": 32,
+      "memorySwapMaxBytes": 0
+    },
+    "identity": {
+      "uid": 0,
+      "gid": 0,
+      "noNewPrivileges": true,
+      "permittedCapabilitiesHex": "0xeb",
+      "effectiveCapabilitiesHex": "0xeb",
+      "boundingCapabilitiesHex": "0xeb",
+      "inheritableCapabilitiesHex": "0x0",
+      "ambientCapabilitiesHex": "0x0",
+      "invocationMatched": true,
+      "cgroupMatched": true
+    },
+    "directoryObservation": {
+      "hostOwnedRoot": {
+        "uid": 0,
+        "gid": 987,
+        "modeOctal": "0750"
+      },
+      "unitOwnedRoot": {
+        "uid": 0,
+        "gid": 0,
+        "modeOctal": "0755"
+      },
+      "rootIdentityMatched": false,
+      "resultsIdentityMatched": true,
+      "results": {
+        "uid": 0,
+        "gid": 987,
+        "modeOctal": "0700"
+      },
+      "metadataStableBeforeAfter": true
+    },
+    "rejection": {
+      "type": "LeaseFailure",
+      "code": "owned_rehearsal_lease_open_parent_failed",
+      "stage": "root_metadata",
+      "guardCode": "owned_rehearsal_lease_directory_identity",
+      "errno": null
+    },
+    "cleanup": {
+      "fileDescriptorsConfirmed": true,
+      "unitConfirmed": true,
+      "cgroupEmpty": true,
+      "sshOwnedHandlesConfirmed": true,
+      "persistenceErrors": [],
+      "sessionCloseError": null
+    },
+    "warning": {
+      "observed": true,
+      "category": "socket-shutdown",
+      "code": 10038,
+      "remoteResultImpact": "not-established",
+      "warningRetainedInPrivateLog": true
+    }
+  },
+  "evidenceLimits": [
+    "Acceptance means the diagnostic completed, not that lease opening or production acceptance passed.",
+    "The replacement root's creation step was not directly observed.",
+    "The complete mount tree and per-item kernel PrivateNetwork isolation were not collected by this receipt.",
+    "This result does not explain earlier unrelated systemd startup failures.",
+    "No production service health revalidation was performed in this diagnostic."
+  ],
+  "protectedScope": {
+    "lockCreated": false,
+    "permissionsChanged": false,
+    "businessDatabaseRead": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "existingServicesStartedOrStopped": false,
+    "lackOrCaddyStarted": false,
+    "realModelsOrExternalAgentsCalled": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false,
+    "productionPublication": false,
+    "frozenCandidateChanged": false,
+    "oldFailureScenePreserved": true
+  },
+  "proposedNextStep": {
+    "implemented": false,
+    "description": "In a new private local candidate, add an exact read-only self-bind of the owned top-level directory, retaining existing writable child binds and all original lease checks. Validate the combination separately before any new native execution."
+  },
+  "synchronization": {
+    "privateHarnessSourceIncluded": false,
+    "rawReceiptsIncluded": false,
+    "credentialsIncluded": false,
+    "sanitizedRecordOnly": true
+  }
+}
