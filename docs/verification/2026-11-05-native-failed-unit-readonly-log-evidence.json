@@ -1,0 +1,76 @@
+{
+  "date": "2026-11-05",
+  "stage": "single-fixed-failed-unit-readonly-log-collection",
+  "status": "collection-passed-failure-boundary-confirmed-underlying-cause-unproven",
+  "parentRecord": "docs/verification/2026-11-05-native-dispatch-prepare-pass-success-stop.json",
+  "collection": {
+    "accepted": true,
+    "sshSessions": 1,
+    "elapsedSeconds": 1.9801978999748826,
+    "remoteBudgetSeconds": 20,
+    "localBudgetSeconds": 35,
+    "maximumOutputBytes": 262144,
+    "invocationMatched": true,
+    "recordedMonotonicStartAndExitMatched": true,
+    "mainPid": 0,
+    "cgroupEmpty": true,
+    "beforeAfterStateUnchanged": true,
+    "cleanupConfirmed": true,
+    "unitsStarted": 0,
+    "automaticRetries": 0
+  },
+  "logs": {
+    "unitSuccess": {
+      "present": false
+    },
+    "formalSuccess": {
+      "present": true,
+      "bytes": 683,
+      "sha256": "5cd4559437b9a8c6919f15059426da2976865454402e6169c8e2f87d5122e295"
+    }
+  },
+  "failureEvidence": {
+    "accepted": false,
+    "stage": "spec",
+    "errorType": "IntegrationFailure",
+    "outerResourceError": "owned_rehearsal_lease_acquire_failed",
+    "innerLeaseError": "owned_rehearsal_lease_open_parent_failed",
+    "bodyStarted": false,
+    "cleanupErrorsReported": [],
+    "underlyingErrno": "NOT_EXPOSED",
+    "preciseUnderlyingCause": "UNKNOWN"
+  },
+  "localSourceAnalysis": {
+    "leaseOpenParentChecks": [
+      "Root directory metadata and descriptor identity",
+      "Results directory metadata and descriptor identity",
+      "Root path and parent alias checks"
+    ],
+    "formalSpecAlreadyBindsScratchAndResults": true,
+    "privateTmpEnabled": true,
+    "limits": "The log identifies the parent-directory acquisition boundary, not whether metadata, path visibility, permissions or an OS open failed. Existing binds do not prove the namespace's observed directory metadata. Do not infer a missing results bind or weaken directory checks."
+  },
+  "scope": {
+    "originalNativeUnitsUsed": 2,
+    "originalNativeUnitsMaximum": 3,
+    "remainingUnitUntouched": true,
+    "oldFailureDirectoriesAndLocksPreserved": true,
+    "noServicesStartedOrStopped": true,
+    "noRemoteWrites": true,
+    "noCandidateChanges": true,
+    "noAutomaticRepair": true,
+    "noCredentialChanges": true,
+    "noAuthorizationChanges": true,
+    "noDnsChanges": true,
+    "noPortChanges": true,
+    "noRelayChanges": true,
+    "noRealModelCalls": true,
+    "noExternalAgentCalls": true,
+    "productionPublication": false
+  },
+  "warnings": [
+    "Socket exception 10038 retained on SSH shutdown; cleanup confirmed, warning cause not established."
+  ],
+  "nextProposal": "Local-only reproduction of the lease directory chain and namespace path assumptions, with bounded stage/errno diagnostics and regression coverage while preserving every directory/identity/permission check. No further SSH, native unit, frozen-candidate mutation or production action without approval.",
+  "synchronization": "Sanitized failure-boundary evidence only; raw log body, unit identifiers, private paths and credentials are not submitted."
+}
