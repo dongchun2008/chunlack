@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-06",
+  "status": "accepted-owned-isolated-three-unit-rehearsal-not-production",
+  "approvedScope": {
+    "maximumNewUnits": 3,
+    "usedNewUnits": 3,
+    "remainingNewUnits": 0,
+    "automaticRetries": 0,
+    "oldRemainingQuotaUsed": false,
+    "productionPublication": false
+  },
+  "localRetest": {
+    "tests": 18,
+    "passed": 18,
+    "failed": 0,
+    "elapsedSeconds": 0.812,
+    "processElapsedMilliseconds": 1598,
+    "processLimitSeconds": 90,
+    "testSourceSha256": "b6986f06bad9df9d60916d2ad2d5eab7f692cf594e1eab052a97676a3de5a7ae",
+    "onlyRepresentationAssertionCorrected": true,
+    "originalFailureLogPreserved": true,
+    "independentReviewAccepted": true
+  },
+  "preflight": {
+    "accepted": true,
+    "readOnly": true,
+    "elapsedSeconds": 2.5454132999293506,
+    "localLimitSeconds": 35,
+    "remoteLimitSeconds": 20,
+    "productionCodeFilesVerified": 57,
+    "memAvailableBytes": 1019568128,
+    "unitsStarted": 0,
+    "sshCleanupConfirmed": true,
+    "ownedHandlesClosed": 3
+  },
+  "native": {
+    "accepted": true,
+    "elapsedSeconds": 172.4230305000674,
+    "rpcCalls": 114,
+    "rpcReceiptsCompleteAndBound": true,
+    "allRpcExitCodesZero": true,
+    "phases": [
+      {
+        "phase": "prepare",
+        "kernelElapsedSeconds": 39.237294,
+        "workflowElapsedSeconds": 40.72710460005328,
+        "enclosureLimitSeconds": 90,
+        "memoryPeakMiBRounded": 144.777,
+        "cpuUsageSeconds": 7.869234,
+        "swapPeakBytes": 0,
+        "exitCode": 0,
+        "cgroupEmpty": true,
+        "settled": true,
+        "formalResourceLifecycleGate": null,
+        "runnerSummaryLifecycleValue": true
+      },
+      {
+        "phase": "success",
+        "kernelElapsedSeconds": 60.465902,
+        "workflowElapsedSeconds": 62.711008300073445,
+        "enclosureLimitSeconds": 180,
+        "memoryPeakMiBRounded": 110.863,
+        "cpuUsageSeconds": 12.086604,
+        "swapPeakBytes": 0,
+        "exitCode": 0,
+        "cgroupEmpty": true,
+        "settled": true,
+        "formalResourceLifecycleGate": true
+      },
+      {
+        "phase": "rollback",
+        "kernelElapsedSeconds": 66.209735,
+        "workflowElapsedSeconds": 67.23069830005988,
+        "enclosureLimitSeconds": 180,
+        "memoryPeakMiBRounded": 110.621,
+        "cpuUsageSeconds": 13.234422,
+        "swapPeakBytes": 0,
+        "exitCode": 0,
+        "cgroupEmpty": true,
+        "settled": true,
+        "formalResourceLifecycleGate": true
+      }
+    ],
+    "observedLimits": {
+      "memoryMaxBytes": 201326592,
+      "cpuQuotaPerSecUSec": 200000,
+      "nice": 10,
+      "cpuWeight": 10,
+      "tasksMax": 32,
+      "memorySwapMaxBytes": 0
+    },
+    "tasksPeak": null,
+    "tasksCurrentRaw": "[not set]",
+    "forward": {
+      "receiptElapsedSeconds": 37.592,
+      "limitSeconds": 55
+    },
+    "rollback": {
+      "transactionElapsedSeconds": 41.899,
+      "limitSeconds": 120,
+      "status": "rolled_back",
+      "standalonePostFaultRecoveryElapsedSeconds": null,
+      "expectedInjectedError": "owned_injected_after_late_write",
+      "expectedFailedStageCount": 1,
+      "lateWriteInjected": true,
+      "lateWritePreserved": true
+    },
+    "cleanup": {
+      "allThreeCgroupsEmpty": true,
+      "allThreeSettled": true,
+      "sshSessionConfirmed": true,
+      "ownedHandlesClosed": 116,
+      "pending": 0,
+      "late": 0,
+      "errors": [],
+      "persistenceErrors": []
+    },
+    "outcomeSha256": "3ac210d8859bb91b15882a549f86a61cd488527f4a30b3d1bf8c29921efe8bbe"
+  },
+  "leaseEvidence": {
+    "exactParentReadonlySelfBindRequest": true,
+    "rootNotAddedToWritableSet": true,
+    "originalParentMetadataGuardPassed": true,
+    "lockedSamples": 2,
+    "lockModeOctal": "0600",
+    "lockSingleLink": true,
+    "lockDirectoryModeOctal": "0700",
+    "closeOnExecObserved": true,
+    "originalChecksNotRelaxed": true,
+    "directParentWriteEROFSTestPerformed": false,
+    "fullMountTreeCollected": false,
+    "rawActiveAndFinalResourceReceiptsDownloaded": false
+  },
+  "databaseEvidence": {
+    "bothFormalPhasesReportOriginalRowsAndSchemaPreserved": true,
+    "reportedDatabaseCount": 3,
+    "productionWritesPerformed": false,
+    "lateWritePreserved": true,
+    "databaseNames": null,
+    "perTableCounts": null,
+    "independentRowAndSchemaDetails": null,
+    "applicationConsistentCrossDatabaseBackupClaimed": false
+  },
+  "protectedBaseline": {
+    "serviceStatePidRestartChecksPassed": 4,
+    "configurationHashChecksPassed": 3,
+    "postRunListenerSnapshotCollected": false,
+    "relaySpecificConfigurationOrAuthorizationSnapshotCollected": false,
+    "comprehensiveProductionHealthClaimed": false
+  },
+  "warnings": {
+    "preflightSocket10038Count": 1,
+    "nativeSocket10038Count": 1,
+    "privateRawLogsRetained": true,
+    "evidenceOfRemoteResultImpact": false,
+    "warningRootCauseConfirmed": false
+  },
+  "productScope": {
+    "baselineFiles": 57,
+    "candidateFiles": 66,
+    "addedFiles": 9,
+    "modifiedFiles": 11,
+    "removedFiles": 0,
+    "unchangedHashes": 46,
+    "added": [
+      "deploy/public/Caddyfile.template",
+      "identity/chat-messages.js",
+      "identity/display.js",
+      "identity/help-assets.cjs",
+      "identity/help.js",
+      "identity/help/en.md",
+      "identity/help/zh-CN.md",
+      "identity/i18n.js",
+      "identity/messages.js"
+    ],
+    "modified": [
+      "collaboration/capacity.cjs",
+      "collaboration/model-transport.cjs",
+      "collaboration/task-control.cjs",
+      "gateway/admin.html",
+      "identity/login.html",
+      "identity/workspace-shell.js",
+      "identity/workspace-ui.js",
+      "package-lock.json",
+      "package.json",
+      "public/index.html",
+      "server.js"
+    ],
+    "distinctFromThreeHarnessChanges": true
+  },
+  "cpuBoundary": {
+    "fixedCandidateTypedOperationalRequestUSecPerSec": 200000,
+    "actualDeployedEntryTypedPolicy": null,
+    "legacyTemplatePercent": 10,
+    "legacyTemplateNotEvidenceOfLiveDeployedPolicy": true,
+    "productionEntryInvoked": false
+  },
+  "scopePreserved": {
+    "productionPublication": false,
+    "existingServicesStartedOrStopped": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "realModelsCalled": false,
+    "externalAgentsCalled": false,
+    "oldFailureScenesOrLocksModified": false
+  },
+  "remainingGates": [
+    "Fresh explicit authorization for any additional SSH, units, maintenance, or production publication.",
+    "Read-only verification of final expected-code/config/dependency bindings, the 20 product differences, live entry policy, backup space and restoration constraints.",
+    "Verify compatibility-proof freshness; obtain an explicitly bounded refresh if required, without rerunning already accepted success/rollback units.",
+    "Prepare an inactive formal package and explicit maintenance/recovery plan before seeking production publication approval.",
+    "Actual production UI, identity, provider, research and handover acceptance remain incomplete."
+  ],
+  "synchronization": {
+    "sanitizedRecordOnly": true,
+    "privateHarnessSourceCommitted": false,
+    "rawLogsOrCredentialsCommitted": false,
+    "sha256ValuesAreSourceOrArtifactChecksums": true
+  }
+}
