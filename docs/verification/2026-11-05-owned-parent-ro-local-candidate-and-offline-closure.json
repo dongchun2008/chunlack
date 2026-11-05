@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-05",
+  "status": "accepted-local-inactive-candidate-only",
+  "purpose": "Preserve the real owned-parent identity through an exact read-only self-bind without relaxing lease checks.",
+  "changes": {
+    "formalSourceFiles": [
+      "formal_owned_adapter.py",
+      "formal_transient_launch.py",
+      "formal_integration_control.py"
+    ],
+    "exactParentReadonlyBindAdded": true,
+    "existingWritableChildBindsPreserved": true,
+    "strictRequestEqualityPreserved": true,
+    "leaseChecksUnchanged": true,
+    "productionCommandUnchanged": true,
+    "onlyControllerSourcePinsUpdated": true,
+    "allOtherCapsuleSourceFilesByteIdentical": 161
+  },
+  "regression": {
+    "baseline": {
+      "tests": 1,
+      "expectedAssertionFailures": 1,
+      "unexpectedErrors": 0,
+      "reason": "Original producer lacks the exact owned-parent read-only bind."
+    },
+    "candidate": {
+      "tests": 21,
+      "passed": 21,
+      "failed": 0,
+      "elapsedSeconds": 0.836,
+      "exitCode": 0
+    },
+    "offlineClosure": {
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "elapsedSeconds": 49.179,
+      "processElapsedMilliseconds": 50403,
+      "processLimitSeconds": 90,
+      "exitCode": 0
+    },
+    "newLocalTestsTotal": 34,
+    "previousPassedTestsRerun": false,
+    "fullProductRegressionRun": false
+  },
+  "independentReview": {
+    "formalDeltaReviewed": true,
+    "offlineClosureReviewed": true,
+    "deterministicP1P2Findings": 0,
+    "staticClosureAuditAccepted": true,
+    "testsRerunByReviewer": false
+  },
+  "sourceSha256": {
+    "formal_owned_adapter": "0f595eaa761244ab3f34d0b479ae03deed151a0929fd98463ffa725e3601aa2e",
+    "formal_transient_launch": "1ebc64bf2ae3ee61c646a13fe0ae85145e46c34e3d43a828aaad9505a8b89404",
+    "formal_integration_control": "eac0662cd5e278f6eaff43700eeabab74c47ab1f3ceea08a23bf00a75583a91e"
+  },
+  "closure": {
+    "files": 164,
+    "retaggedFixturePaths": 129,
+    "retaggedPhasePointers": 11,
+    "decodedBytes": 2874370,
+    "stageInputBytes": 3881635,
+    "builderChangedBindings": [
+      "ROOT",
+      "CAPSULE",
+      "CAPSULE_MANIFEST_SHA",
+      "SOURCE_MANIFEST_SHA"
+    ],
+    "builderBehaviorSkeletonUnchanged": true,
+    "oldPlanInputEqualityUnchanged": true,
+    "generatedCandidateApiExecuted": false,
+    "sha256": {
+      "assemblyReceipt": "f543f13b6c5dac21dfba92040fc375ea7d066d8edb093d7d56c31fb70dc3a5ae",
+      "capsuleManifest": "8cb05bea6d7db160a4236df96613b77a3c65a7366bc78bee10fd2599531cb2f1",
+      "capsuleSourceManifestCanonical": "83f7a58a08161c5701854c931205ab7c9b02a23441f39fd1b7f82aa3b8e3423b",
+      "dispatchFreeze": "81ab0f61a9f28bbef0d57879ccfd1cb354b1836a8673271d87d1e4a0a3ce7506",
+      "dispatchManifestCanonical": "ea26f5d9bef9225c5d2c4bf03912dad4c73f9dbd1082b6b7828504e0705ee4d5",
+      "candidateApi": "c7dc8cfff1d73db6d18857389401f5e2759894f855e0ab70104c9c4792d2ca6a",
+      "candidateBridge": "31124675f9d0e2786bed108c99f4099a43bbb1db7a5e63cb7d9e27f1f4377161",
+      "stageInput": "54c1f815e8eaaf7e31c82b5c2ea89c1619d5df92b8925b64362840abdbb070f4",
+      "plan": "26d96ca895649b9ce20b47efb91a624c383da19c14c54499e89ae25535267a5d"
+    }
+  },
+  "scope": {
+    "localOnly": true,
+    "newSshSessions": 0,
+    "newLinuxUnits": 0,
+    "productionPublication": false,
+    "productionServiceStartStop": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false,
+    "realModelsOrExternalAgentsCalled": false,
+    "frozenCandidateModified": false,
+    "oldFailureScenesModified": false,
+    "oldRemainingQuotasUsed": false,
+    "dispatchAuthorized": false,
+    "productionReady": false
+  },
+  "remainingGates": [
+    "Bind the new inactive package to a new local runner and fresh read-only preflight without changing their safety or timing contracts.",
+    "Obtain a fresh bounded Linux quota; no previous remaining unit may be reused.",
+    "Verify real parent-readonly/child-writable mounts and lease behavior, followed by prepare/success/rollback evidence.",
+    "Obtain fresh compatibility and maintenance evidence before any production change.",
+    "Complete actual production acceptance and user handover; local tests are not production delivery."
+  ],
+  "synchronization": {
+    "sanitizedEvidenceOnly": true,
+    "privateHarnessSourceCommitted": false,
+    "rawReceiptsOrCredentialsCommitted": false,
+    "hashClassification": "All 64-character hexadecimal values are fixed source or artifact SHA-256 checksums, not credentials."
+  }
+}
