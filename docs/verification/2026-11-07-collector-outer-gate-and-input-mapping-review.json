@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-07",
+  "stage": "collector-fixture-fixes-and-outer-35s-gate",
+  "status": "blocked-before-network-by-local-input-schema-mapping",
+  "regressions": {
+    "python": {
+      "total": 69,
+      "passed": 69,
+      "failed": 0,
+      "elapsedSeconds": 0.816
+    },
+    "node": {
+      "total": 7,
+      "passed": 7,
+      "failed": 0,
+      "elapsedMilliseconds": 314.7042
+    },
+    "uniqueTotal": 76,
+    "scope": "Related local collector, entry, lifecycle, real-local-file and outer watchdog tests only",
+    "realNetwork": false,
+    "realLinuxGroupKill": false
+  },
+  "independentReview": {
+    "outerGateAdditionalConfirmedP1P2": 0,
+    "inputPreparationConfirmedP2": 1,
+    "collectionGatePassed": false
+  },
+  "sourcePackage": {
+    "createdLocally": true,
+    "enabled": false,
+    "sourceFiles": 73,
+    "productFiles": 66,
+    "sourcePreparationSha256": "1e08f066826c6bc51c12458542568b9124edaca72268a02e8e42542490d73e99",
+    "generatedDate": "2026-11-07",
+    "frozenFormatDateLabel": "2026-11-06",
+    "configurationPending": true,
+    "compatibilityProofPending": true,
+    "productionReady": false
+  },
+  "inputPreparationFailure": {
+    "type": "TypeError",
+    "stage": "manifest source lookup before packet/binding writes",
+    "confirmedMappings": [
+      {
+        "current": "manifest.files",
+        "required": "manifest.fileSha256"
+      },
+      {
+        "current": "release/expected-code.json",
+        "required": "expected-code.json"
+      },
+      {
+        "current": "release/controllers/2026-10-23/readonly-code-preflight.py",
+        "required": "controllers/2026-10-23/readonly-code-preflight.py"
+      }
+    ],
+    "fixedSourceHashesMustRemainUnchanged": true,
+    "packetCreated": false,
+    "bindingCreated": false,
+    "sshAttemptMarkerCreated": false
+  },
+  "scope": {
+    "sshAttemptsUsed": 0,
+    "maximumSshAttempts": 1,
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "productionServiceStartStop": false,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "relayChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "nextGate": "Await approval to correct the three input-contract mappings and add focused assembly regressions. Do not rerun the already passed 76 tests or consume the unused SSH allowance until focused validation and independent review pass.",
+  "sanitization": {
+    "secretsIncluded": false,
+    "tokensIncluded": false,
+    "businessDataIncluded": false,
+    "privateSourcePublished": false
+  }
+}
