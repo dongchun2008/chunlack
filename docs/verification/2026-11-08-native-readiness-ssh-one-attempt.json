@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "One bounded SSH native-context readiness attempt; not publication or capacity acceptance",
+  "localRegression": {
+    "original": {
+      "tests": 16,
+      "passed": 16,
+      "failed": 0,
+      "seconds": 0.059
+    },
+    "newBoundaryTests": {
+      "tests": 13,
+      "passed": 13,
+      "failed": 0,
+      "seconds": 3.226
+    },
+    "total": 29,
+    "independentReview": {
+      "findings": 3,
+      "severity": "P2",
+      "correctionPass": "verified-byte worker execution, exclusive worker claim, post-output deadline check",
+      "repeatReview": false
+    }
+  },
+  "authorization": {
+    "sshAttemptsAllowed": 1,
+    "sshAttemptsUsed": 1,
+    "automaticRetry": false,
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "linuxUnitsCreated": 0
+  },
+  "package": {
+    "collectorSha256": "9d48c4040cdb38cc3b89c1ebbbe845289e18b5b513db1ce20d5af39dba8b4fb7",
+    "bootstrapSha256": "ff6dce2292dc0503a49d2f7ae8e43f95605ccfae4c034b039dd302d97bec173f",
+    "payloadSha256": "36c35d780d1307529f97e206d6d39b8e699acaa280a551ce7f4c2fcff6b17097"
+  },
+  "terminal": {
+    "outerExitCode": 2,
+    "overallStatus": "failed",
+    "error": "local_supervision_or_receipt_failed",
+    "provisionalReceipt": true,
+    "recordedElapsedSeconds": 4.238345,
+    "workerExitCode": 0,
+    "workerExitObserved": true,
+    "workerForceTerminated": false
+  },
+  "nativeSubresult": {
+    "status": "passed",
+    "kernelContextChecks": 2,
+    "readOnly": true,
+    "businessChildren": 0,
+    "signalsSent": 0,
+    "linuxUnitsCreated": 0,
+    "correctSourceAndNonce": true,
+    "remoteExitCode": 0,
+    "exitObserved": true,
+    "inputBytes": 29742,
+    "sentBytes": 29742,
+    "eofSent": true,
+    "completed": true,
+    "remoteStdoutBytes": 374,
+    "remoteStderrBytes": 0,
+    "cleanupConfirmed": true,
+    "sshChannelClosedAtExitObservation": false
+  },
+  "preservedEvidence": {
+    "workerStdoutBytes": 1377,
+    "workerStdoutSha256": "0a8503e35a40269754b0bb85dd48b4cd2d18c1479cb1d6ebde2d36b3db0c9b35",
+    "workerStderrBytes": 60,
+    "workerStderrSha256": "cd55d46c7ba7a33e9673e068a3239ef52760ab180931e2d393893950fe2b1e89",
+    "localStderrClassification": "Socket exception",
+    "rootCauseConfirmed": false,
+    "rawLogs": "Retained privately; not uploaded"
+  },
+  "interpretation": {
+    "nativeContextVerified": true,
+    "fullSshEnvelopeAccepted": false,
+    "nativeCollectorCapacityAccepted": false,
+    "productionReady": false,
+    "productionPublished": false,
+    "limitations": [
+      "The parent rejected nonempty local worker stderr before accepting its receipt.",
+      "Later offline inspection confirms the worker/native subresult, but does not change the original failed terminal result.",
+      "Readiness does not execute the collector query workflow, establish production capacity or prove Relay forwarding performance."
+    ]
+  },
+  "unchangedScope": {
+    "productionServiceControl": false,
+    "remoteFileWrites": false,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "next": "Bounded local diagnosis/reproduction of worker stderr and receipt preservation; no second SSH attempt without a new explicit bounded approval."
+}
