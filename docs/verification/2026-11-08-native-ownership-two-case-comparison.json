@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-08",
+  "status": "two_case_old_vs_corrected_comparison_complete",
+  "scope": "Only the fake killpg signature correction and the same two targeted comparisons",
+  "previousRecord": "docs/verification/2026-11-08-native-ownership-local-44-pass.json",
+  "change": {
+    "fixtureOnly": true,
+    "description": "Adapt the fake killpg callback to accept pid and signal, forwarding the pid to the existing fake kernel.",
+    "runtimeImplementationChanged": false
+  },
+  "evidence": {
+    "cases": [
+      "Unknown ownership must reject numeric process-group signalling",
+      "Unavailable kernel child status must not be accepted as exit zero"
+    ],
+    "oldCandidate": {
+      "total": 2,
+      "failures": 2,
+      "errors": 0,
+      "exitCode": 1,
+      "elapsedSeconds": 0.03,
+      "result": "Expected defect reproduction: both cases fail with ValueError not raised."
+    },
+    "correctedCandidate": {
+      "total": 2,
+      "passed": 2,
+      "failed": 0,
+      "errors": 0,
+      "exitCode": 0,
+      "elapsedSeconds": 0.134,
+      "result": "Both targeted rejection cases pass."
+    },
+    "previous44CaseSuite": {
+      "rerun": false,
+      "previousPassEvidenceRetained": true,
+      "scope": "Historical local evidence, not a fresh full regression result."
+    }
+  },
+  "limitations": [
+    "All children, kernel waits and signals in these comparisons were simulated; no native Linux acceptance is claimed.",
+    "The original one-failure/one-fixture-error log remains preserved; this record adds, rather than rewrites, the corrected comparison.",
+    "Native host preflight, real transport/ownership behavior, external deadline and whole-cgroup termination remain separate gates.",
+    "Only this sanitized record is synchronized; private fixture and runtime source remain local."
+  ],
+  "actions": {
+    "actualChildren": 0,
+    "actualSignals": 0,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "fullSuiteReruns": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "serviceControl": false,
+    "productionPublish": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "acceptance": {
+    "localComparisonComplete": true,
+    "oldComparisonFixturePending": false,
+    "nativeExecutionAllowed": false,
+    "nativeCapacityAccepted": false,
+    "productionReady": false,
+    "overallDeliveryComplete": false
+  }
+}
