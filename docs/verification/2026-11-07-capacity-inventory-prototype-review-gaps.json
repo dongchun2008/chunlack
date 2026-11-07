@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "date": "2026-11-07",
+  "phase": "separate-capacity-inventory-local-prototype",
+  "status": "review_findings_confirmed_offline_not_approved_for_live_use",
+  "prototypePolicy": {
+    "rootScope": "fixed production data root",
+    "maximumDepth": 64,
+    "maximumEntries": 32768,
+    "maximumPathBytes": 4096,
+    "existingDepth8CollectorUnchanged": true,
+    "livePolicyApproved": false
+  },
+  "localUnitTests": {
+    "total": 19,
+    "passed": 19,
+    "failed": 0,
+    "elapsedSeconds": 0.813,
+    "nativeLinuxAcceptance": false
+  },
+  "independentReview": {
+    "p1": 0,
+    "p2": 2,
+    "findings": [
+      "Device-number comparison does not distinguish a same-filesystem bind mount.",
+      "No remaining-deadline check after the root context completes cleanup."
+    ]
+  },
+  "offlineDiagnosis": {
+    "performed": true,
+    "oldTestsRerun": false,
+    "evidenceClass": "synthetic_not_native",
+    "sameDeviceMountModel": {
+      "differentDeclaredMountIds": true,
+      "mountMetadataConsulted": false,
+      "coverageCompleteReturned": true,
+      "nativeBindMountTestPerformed": false
+    },
+    "lateRootCleanupModel": {
+      "deadlineSeconds": 10,
+      "clockAfterCleanupSeconds": 11,
+      "coverageCompleteReturned": true
+    }
+  },
+  "sha256": {
+    "inventory": "4c5cdba9420de285a59ebaafcc47ff4513c8880b88ab1c43f279dbae04e52a34",
+    "tests": "7c0dd3ecf0a1bd504fb8a7376300720f7825b7cf86df5609d7e68f81174147e8"
+  },
+  "limitations": [
+    "Prototype uses fake filesystem/root-context tests; actual Linux FD, mount and resource behavior is not verified.",
+    "Complete metadata coverage is not a consistent backup or sufficient-capacity proof.",
+    "Symlink metadata is counted without following the target; hard links are counted per entry."
+  ],
+  "activity": {
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "productionPublication": false,
+    "serviceControl": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "nextStep": "Disclosed new prototype defects; proposed local-only correction: bind traversal to the actual mount instance, check deadline after root cleanup, and add root-cleanup/metadata-drift/deadline regressions. No remote execution or change to the old collector is implied."
+}
