@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-07",
+  "stage": "approved-collector-four-finding-local-followup",
+  "status": "local-regression-blocked-on-two-fixture-interfaces",
+  "authorization": {
+    "maximumSshAttempts": 1,
+    "sshAttemptsUsed": 0,
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "newLinuxUnitsAllowed": 0,
+    "productionPublicationAllowed": false
+  },
+  "implementedBoundaries": [
+    "Backup capacity now uses fstatvfs on a verified directory descriptor.",
+    "Nested resource failures retain the earliest original error and inner cleanup details, with a bounded list and explicit omitted count.",
+    "Directory iteration preserves read and close failures separately.",
+    "The local acceptance predicate requires typed integer unitsUsed=0; legacy-only and boolean fields are rejected.",
+    "The mocked main stdout object is now supplied.",
+    "Commands exceeding the two-second detection budget fail while cleanup still attempts reap inside the unchanged global budget.",
+    "A new pinned local entry wraps the exact existing SSH command with GNU timeout 20s, without foreground mode.",
+    "Unconfirmed command cleanup latches failure and keeps the monitored parent alive for outer-envelope termination, including output failure paths."
+  ],
+  "testExecutions": [
+    {
+      "scope": "new remote-boundary regressions before implementation fixes",
+      "total": 9,
+      "passed": 2,
+      "failed": 7,
+      "elapsedSeconds": 0.914,
+      "interpretation": "Expected failures reproduced the pre-fix behavior."
+    },
+    {
+      "scope": "complete related local follow-up",
+      "total": 67,
+      "passed": 65,
+      "errors": 2,
+      "elapsedSeconds": 2.343,
+      "realNetwork": false,
+      "realRemoteCommands": false
+    }
+  ],
+  "remainingFixtureErrors": [
+    {
+      "test": "test_runtime_binaries_are_not_materialized_by_checked",
+      "cause": "The legacy test mocks path-based statvfs but not the new verified-directory context and fstatvfs; real Linux-path handling is reached on Windows."
+    },
+    {
+      "test": "test_actual_session_execute_uses_the_wrapped_command",
+      "cause": "The fake SSH channel lacks recv and recv_stderr attributes accessed by the actual transport loop."
+    }
+  ],
+  "proofLimits": [
+    "Passing simulated signal and lifecycle tests is not real Linux group-kill acceptance.",
+    "GNU timeout availability on the VPS remains unverified.",
+    "The new entry's integrated binding and whole-operation acceptance remain subject to independent review.",
+    "The collection gate remains closed; none of the local results proves production readiness."
+  ],
+  "independentReview": {
+    "designReviewed": true,
+    "finalImplementationReview": "No additional confirmed implementation P1/P2 findings; collection gate remains closed.",
+    "gatePassed": false,
+    "remainingItems": [
+      "Two failed test-fixture interfaces",
+      "The pending whole-entry Node 35-second boundary and its regression evidence"
+    ]
+  },
+  "scopeEvidence": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "formalPackageGenerated": false,
+    "productCodeModified": false,
+    "productionPublished": false,
+    "productionServiceStartStop": false,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "relayChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "nextAction": "Await confirmation for the two fixture-interface repairs. Then finish the already scoped outer Node 35-second boundary, run complete related regression and independent review, and only if all gates pass use the existing single 20s/35s read-only collection allowance.",
+  "privacy": {
+    "credentialsIncluded": false,
+    "tokensIncluded": false,
+    "businessDataIncluded": false,
+    "privateHarnessSourcePublished": false
+  },
+  "primarySources": [
+    {
+      "title": "Python subprocess initial creation timeout limitation",
+      "url": "https://docs.python.org/3/library/subprocess.html#subprocess.run"
+    },
+    {
+      "title": "GNU timeout invocation and process-group behavior",
+      "url": "https://www.gnu.org/software/coreutils/manual/html_node/timeout-invocation.html"
+    }
+  ]
+}
