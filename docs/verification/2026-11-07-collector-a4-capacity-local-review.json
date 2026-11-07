@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "date": "2026-11-07",
+  "phase": "collector-a4-local-capacity-coverage",
+  "status": "local_test_fixture_error_no_remote_execution",
+  "scope": {
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "productionPublication": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "changes": {
+    "newPrivateCandidate": true,
+    "oldCandidatesUnchanged": true,
+    "maximumDepth": 8,
+    "maximumEntries": 4096,
+    "cutoffReportsIncompleteCoverage": true,
+    "partialCapacityCannotProveBackupSpace": true,
+    "strictBooleanAcceptance": true,
+    "finalBaselineStartsUnknown": true,
+    "productionReady": false
+  },
+  "localTests": {
+    "total": 16,
+    "passed": 15,
+    "errors": 1,
+    "failures": 0,
+    "elapsedSeconds": 0.345,
+    "knownError": {
+      "type": "AttributeError",
+      "stage": "test_assertion_after_mock_scope",
+      "detail": "Windows mock O_NOFOLLOW constant was removed before the assertion used it"
+    },
+    "passedTestsAreNotFullAcceptance": true,
+    "olderSuitesRerun": false
+  },
+  "independentReview": {
+    "completed": true,
+    "newConfirmedBlockingFindings": 0,
+    "existingLimitation": "Metadata enumeration is not a consistent snapshot; complete coverage is not backup or restore proof.",
+    "coverageGaps": [
+      "final configuration snapshot failure",
+      "collect failure serialized by main with unknown baseline",
+      "depth cutoff through collect and main in one combined test"
+    ]
+  },
+  "restrictions": {
+    "noPublication": true,
+    "noServiceControl": true,
+    "noCredentialChanges": true,
+    "noAuthorizationChanges": true,
+    "noRelayChanges": true,
+    "noRemoteRetry": true
+  },
+  "nextStep": "Known new fixture bug disclosed; await user decision before correction. Proposed batch: fix only assertion mock scope and add the three missing combinations, then run related local regressions. No production or remote operation covered by this record."
+}
