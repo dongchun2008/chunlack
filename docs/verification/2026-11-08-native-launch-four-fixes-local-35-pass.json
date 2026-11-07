@@ -1,0 +1,71 @@
+{
+  "date": "2026-11-08",
+  "scope": "Combined local-only correction of three native-launch command proof findings and the Windows POSIX interface fixture",
+  "status": "local_correction_passed_native_integration_pending",
+  "supersedesLocalReview": "docs/verification/2026-11-08-native-launch-local-review-gaps.json",
+  "preservesProducerInvestigation": "docs/verification/2026-11-08-native-command-producer-schema.json",
+  "evidence": {
+    "rejectingRegressions": {
+      "total": 4,
+      "failedAgainstOldCandidate": 4,
+      "elapsedSeconds": 0.028,
+      "exitCode": 1,
+      "expectedFailure": "ValueError not raised"
+    },
+    "correctedCandidate": {
+      "total": 35,
+      "passed": 35,
+      "failed": 0,
+      "elapsedSeconds": 0.13,
+      "exitCode": 0,
+      "command": "Python 3.13 isolated no-bytecode unittest discovery of this private candidate",
+      "scope": "29 contract cases, 3 frozen-worker interface cases, 3 introspection-header cases; not a full product regression"
+    },
+    "frozenWorker": {
+      "sha256": "96e135456c413b15f54b7346100935f8fa7571a45f7d0e02546c7b33223dcb04",
+      "actualBytesCheckedBeforeInterfaceImport": true,
+      "implementationChanged": false
+    }
+  },
+  "corrections": [
+    "Use typed extended command records with an explicit flags array; reject all unrequested modifiers.",
+    "Compare executable and argv elements exactly, validate complete record arity and scalar ranges, and reject missing structured evidence.",
+    "Derive the supported seven-stage command schema from complete supplied Service introspection; require both members of the optional known reload-post pair and real empty auxiliary lists, rejecting unknown or missing fields.",
+    "Use a test-scoped PurePosixPath binding for the frozen helper; demonstrate restoration after both normal completion and a synthetic exception."
+  ],
+  "additionalSafetyCoverage": [
+    "Duplicate JSON keys, malformed or oversized JSON, mismatched signatures and unknown value fields reject.",
+    "Unexpected Exec properties, changed types, duplicate interface/property records, entity declarations and oversized introspection reject.",
+    "The exact standard v255 introspection DOCTYPE is accepted and stripped without fetching its external DTD; changed or duplicate declarations reject.",
+    "The fixed source binding, request reconstruction, invocation identity, override refusal, resource arguments and private output paths remain covered."
+  ],
+  "producerSource": "https://raw.githubusercontent.com/systemd/systemd/v255/src/libsystemd/sd-bus/bus-introspect.c",
+  "limitations": [
+    "The pure contract checks supplied structured evidence; a trusted bounded host collector must establish its actual PID1 origin and completeness.",
+    "The target VPS systemd API, resource enforcement, native lifecycle and terminal cleanup were not exercised.",
+    "No admission-before-execution, complete capacity census, application-consistent backup or production readiness is claimed.",
+    "Prior local failures, old candidates and logs remain preserved; no older test or unit budget was reset.",
+    "Private candidate source and raw logs were not committed; this commit contains only this sanitized verification record."
+  ],
+  "actions": {
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "serviceControl": false,
+    "productionPublish": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "acceptance": {
+    "localFourItemCorrectionComplete": true,
+    "nativeExecutionAllowed": false,
+    "nativeCapacityAccepted": false,
+    "productionReady": false,
+    "overallDeliveryComplete": false
+  },
+  "nextGate": "Integrate bounded trusted PID1 evidence collection and lifecycle cleanup locally before proposing any separately scoped Linux execution."
+}
