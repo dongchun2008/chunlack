@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-08",
+  "status": "local_readonly_collector_review_gap",
+  "scope": "Fixed native read-query transport and integration with the corrected structured command contract",
+  "tests": {
+    "total": 23,
+    "passed": 23,
+    "failed": 0,
+    "elapsedSeconds": 0.144,
+    "exitCode": 0,
+    "redRunObserved": true,
+    "coverage": "Injected transport/lifecycle tests and real local contract decoding; no native Linux execution"
+  },
+  "implemented": [
+    "Allow only fixed identity, introspection and selected extended-command reads; no GetAll, unit mutation or SSH.",
+    "Use shared 18-second and per-query 2-second budgets, a 64 KiB output cap and reserved cleanup time.",
+    "Retain the owned process/selector handles before later setup and attempt all ordinary closes.",
+    "Preserve original and cleanup exceptions separately without returning raw error messages.",
+    "Check the caller-latched invocation and equal before/after identity records; do not retry failures."
+  ],
+  "independentReview": {
+    "P1": 0,
+    "P2": 1,
+    "finding": "Unenforced exclusive-reaping assumption: Popen.returncode alone does not prove an unreaped child or a genuine kernel exit status.",
+    "disposition": "Keep candidate inactive. Do not enable numeric group signalling or acceptance until ownership and status evidence are strengthened."
+  },
+  "offlineWitness": {
+    "mode": "Injected lost ownership and synthetic ECHILD fallback, not a real kernel experiment",
+    "unverifiedNumericSignalWouldBeAttempted": true,
+    "syntheticZeroWithoutKernelStatusAccepted": true,
+    "bothResourceClosesAttempted": true,
+    "actualChildren": 0,
+    "actualSignals": 0,
+    "exitCode": 0
+  },
+  "primarySources": [
+    "https://raw.githubusercontent.com/python/cpython/3.13/Lib/subprocess.py",
+    "https://www.man7.org/linux/man-pages/man2/waitpid.2.html"
+  ],
+  "proposedCorrection": [
+    "Establish an isolated exclusive-reaping context before spawning; reject unsupported ownership conditions.",
+    "Obtain real kernel exit status and treat missing ownership/status as failure, not zero.",
+    "Do not signal a numeric group if ownership cannot be established; still attempt all remaining resource closes.",
+    "Add exact-limit EOF, cleanup-only failure and ownership/status-loss cleanup regression coverage."
+  ],
+  "limitations": [
+    "Python spawn and descriptor close still require an external hard-deadline envelope before native use.",
+    "Direct-child reaping does not establish whole-unit cgroup clearance.",
+    "Actual target introspection size, CLI option compatibility, typed JSON and native resource behavior remain unverified.",
+    "The prior four-item contract correction remains a separate completed local result; these new integration findings do not rewrite it.",
+    "Only this sanitized record is committed; private source, test fixtures and raw logs remain local."
+  ],
+  "actions": {
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "serviceControl": false,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "productionPublish": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "acceptance": {
+    "nativeExecutionAllowed": false,
+    "nativeCapacityAccepted": false,
+    "productionReady": false,
+    "overallDeliveryComplete": false
+  }
+}
