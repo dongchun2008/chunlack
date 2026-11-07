@@ -1,0 +1,63 @@
+{
+  "date": "2026-11-08",
+  "scope": "Local-only fixed native launch request and loaded-unit command identity contract",
+  "status": "local_contract_and_interface_review_gaps",
+  "tests": {
+    "contract": {
+      "total": 18,
+      "passed": 18,
+      "failed": 0,
+      "elapsedSeconds": 0.01,
+      "exitCode": 0,
+      "redRunObserved": true
+    },
+    "frozenWorkerInterface": {
+      "total": 2,
+      "passed": 1,
+      "failed": 1,
+      "elapsedSeconds": 0.034,
+      "exitCode": 1,
+      "failure": "The frozen helper uses the host Path implementation. On Windows its rendered command has backslashes, while the launch request deliberately uses POSIX paths.",
+      "frozenLinuxImplementationChanged": false
+    }
+  },
+  "review": {
+    "independent": true,
+    "severity": {
+      "P1": 0,
+      "P2": 3
+    },
+    "findings": [
+      "Legacy ExecStart text cannot establish absence of credential-changing execution modifiers.",
+      "Human-readable space-joined command text cannot prove exact argv boundaries or a complete producer record.",
+      "The auxiliary-command proof set is incomplete for producers exposing additional command properties."
+    ],
+    "disposition": "Keep the candidate inactive; fix in one bounded local pass with structured producer evidence and explicit unsupported-schema rejection."
+  },
+  "limitations": [
+    "The new module builds deterministic arguments and checks supplied metadata only; it does not launch or stop services.",
+    "The 18 passing tests do not prove the three independently identified command-evidence boundaries.",
+    "The two interface checks are separate from the prior 35 local native-worker tests; no full-product regression or Linux acceptance is claimed.",
+    "No new unit budget or SSH attempt has been consumed, and old failure artifacts are preserved."
+  ],
+  "nextStep": "Subject to confirmation, fix the three contract gaps and the POSIX test fixture together, add reproducing tests, and rerun only this local integration scope before defining any native execution.",
+  "actions": {
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "serviceControl": false,
+    "productionPublish": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "acceptance": {
+    "nativeExecutionAllowed": false,
+    "nativeCapacityAccepted": false,
+    "productionReady": false,
+    "overallDeliveryComplete": false
+  }
+}
