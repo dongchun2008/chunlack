@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local-only diagnosis after the exhausted single readiness SSH attempt; no further external connection",
+  "previousAttempt": {
+    "record": "2026-11-08-native-readiness-ssh-one-attempt.json",
+    "overallStatus": "failed",
+    "nativeSubresult": "passed",
+    "sshAllowanceUsed": 1,
+    "sshAllowanceRemaining": 0
+  },
+  "diagnosis": {
+    "savedWorkerStderr": {
+      "bytes": 60,
+      "sha256": "cd55d46c7ba7a33e9673e068a3239ef52760ab180931e2d393893950fe2b1e89",
+      "category": "Socket exception",
+      "windowsSocketError": 10038
+    },
+    "paramiko": {
+      "version": "5.0.0",
+      "transportSourceSha256": "ef8b178b71d4bbd6f93373b334e040cfdab21404d1cbce621c71ae57cf567136",
+      "observation": "close() does not invariably wait for the transport receive thread to terminate"
+    },
+    "causalLimit": "The local fixture reproduces the socket-first interleaving possible in concurrent owned-handle cleanup, not the exact scheduling of the past live attempt."
+  },
+  "candidate": {
+    "status": "not_accepted",
+    "oldFilesModified": false,
+    "logFilteringAdded": false,
+    "stderrRejectionRetained": true
+  },
+  "localTests": {
+    "synthetic": {
+      "tests": 12,
+      "passed": 12,
+      "failed": 0,
+      "seconds": 0.009
+    },
+    "realLoopbackSsh": {
+      "tests": 2,
+      "passed": 1,
+      "failed": 1,
+      "seconds": 0.318,
+      "baseline": "Socket-first ordering reproduced real socket error 10038",
+      "candidate": "Ordered full shutdown still produced one error event"
+    },
+    "boundedDiagnostic": {
+      "tests": 1,
+      "passed": 0,
+      "failed": 1,
+      "seconds": 0.41,
+      "remainingErrorCategory": "Socket exception",
+      "remainingErrorCode": 10053
+    },
+    "tcpComparison": {
+      "fullShutdown": {
+        "peerEof": true,
+        "receiveErrno": 10058,
+        "threadsStopped": true
+      },
+      "writeHalfClose": {
+        "peerEof": true,
+        "receivedBytes": 0,
+        "threadsStopped": true
+      },
+      "interpretation": "Write-half-close is a next hypothesis, not a verified SSH fix"
+    }
+  },
+  "independentReview": {
+    "p1": 0,
+    "p2": 2,
+    "findings": [
+      "A shutdown exception skips the bounded join before delegated handle cleanup.",
+      "Thread termination alone does not prove error-free shutdown; capture bounded terminal exception evidence."
+    ],
+    "additionalCoverage": [
+      "shutdown and join failures retained separately",
+      "pre-existing versus cleanup-induced terminal errors",
+      "Windows winerror alongside errno",
+      "enforce pinned Paramiko version and transport source digest"
+    ]
+  },
+  "nextProposal": {
+    "localOnly": true,
+    "actions": [
+      "Test write-half-close with real loopback SSH without suppressing error logs.",
+      "Independently attempt bounded join even after shutdown failure.",
+      "Retain safe terminal exception and errno/winerror evidence, preserve original and cleanup failures.",
+      "Pin the tested Paramiko identity and run all related local regressions."
+    ],
+    "liveSshAuthorized": false
+  },
+  "safety": {
+    "newExternalSshAttempts": 0,
+    "newLinuxUnits": 0,
+    "remoteWrites": false,
+    "serviceControl": false,
+    "publication": false,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "productionReady": false
+}
