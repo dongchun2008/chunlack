@@ -1,0 +1,44 @@
+{
+  "date": "2026-11-08",
+  "status": "primary_source_command_schema_confirmed_not_implemented",
+  "scope": "Resolve producer schema before the pending local native-launch corrections",
+  "verifiedFromPrimarySource": [
+    {
+      "source": "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/dbus-execute.c",
+      "finding": "Extended command signature a(sasasttttuii) preserves path, argv and flags arrays; legacy ignore-failure boolean does not encode every modifier."
+    },
+    {
+      "source": "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/dbus-service.c",
+      "finding": "Seven command stages have extended properties in the inspected v255 service table."
+    },
+    {
+      "source": "https://raw.githubusercontent.com/systemd/systemd/v255/src/busctl/busctl.c",
+      "finding": "Explicit Properties.Get JSON preserves type/data and nested array structure; avoid GetAll and human-readable command splitting."
+    },
+    {
+      "source": "https://raw.githubusercontent.com/systemd/systemd/main/src/core/dbus-service.c",
+      "finding": "The inspected upstream service table has an additional reload-post command stage, demonstrating the need for a supported introspection schema."
+    }
+  ],
+  "plannedChanges": [
+    "Exact structured argv and execution-flag comparisons",
+    "Reject unknown, missing or changed command-property schemas",
+    "Require real empty structured auxiliary lists",
+    "Test-scoped POSIX path binding without changing the Linux worker"
+  ],
+  "implementationChanged": false,
+  "testsRerun": false,
+  "sshAttempts": 0,
+  "linuxUnits": 0,
+  "serviceControl": false,
+  "modelCalls": 0,
+  "externalAgentCalls": 0,
+  "credentialChanges": false,
+  "authorizationChanges": false,
+  "relayChanges": false,
+  "productionPublish": false,
+  "targetSystemdVersionVerified": false,
+  "nativeAcceptance": false,
+  "productionReady": false,
+  "nextGate": "Pending user confirmation of the previously reported combined local correction; no execution budget consumed."
+}
