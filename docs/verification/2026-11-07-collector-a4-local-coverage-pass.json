@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "date": "2026-11-07",
+  "phase": "collector-a4-local-coverage-followup",
+  "status": "scoped_local_tests_passed_not_production_ready",
+  "localTests": {
+    "total": 20,
+    "passed": 20,
+    "failed": 0,
+    "errors": 0,
+    "elapsedSeconds": 0.262,
+    "initialFailurePreserved": true,
+    "testOnlyCorrection": "Capture the mocked O_NOFOLLOW value before the Windows mock context exits.",
+    "addedCases": [
+      "final configuration failure keeps baseline unknown",
+      "final configuration exception serializes no private body",
+      "final service exception serializes unknown baseline",
+      "actual depth cutoff through collect and main remains rejected"
+    ]
+  },
+  "review": {
+    "implementationPreviouslyReviewed": true,
+    "newBlockingP1P2": 0,
+    "implementationUnchangedDuringFollowup": true,
+    "identifiedCoverageGapsAddressed": true
+  },
+  "localInputs": {
+    "strictPacketValidationPassed": true,
+    "candidateFileCount": 66,
+    "dependencyManifestCount": 257,
+    "sourceDigestsVerified": 4,
+    "bindingSha256": "964389f54ca1936f8525b7b74f8f94e2f74849efb7f85754fc538485e244a6c5",
+    "packetSha256": "fe4439c455cf05b696398fa6cf57d4768d855f693199f3023f471fd5b82b1b12",
+    "collectorSha256": "b71cdcb41294d8fc5e5e6fe093b8d9f0d3423d5fce127333db20a8d212fc11db",
+    "testSha256": "b854de2b6a3d8fd091b4c11ddab349512d213116ba23e1b2e271a795defbc01e"
+  },
+  "invariants": {
+    "maximumDepth": 8,
+    "maximumEntries": 4096,
+    "incompleteCapacityRejected": true,
+    "incompleteBackupSpaceUnknown": true,
+    "strictBooleanGates": true,
+    "unknownBaselineRejected": true,
+    "consistentSnapshotProven": false,
+    "productionReady": false
+  },
+  "activity": {
+    "a4OuterInvocations": 0,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "productionPublication": false,
+    "serviceControl": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false
+  },
+  "evidenceLimits": [
+    "Only the 20 scoped local cases passed; this is not a full product regression or live verification.",
+    "The inactive package is locally bound, not installed or enabled.",
+    "Complete live data coverage, backup capacity, fresh compatibility and maintenance gates remain unproven."
+  ],
+  "nextStep": "Prepare a separately scoped bounded live read-only verification; keep incomplete data coverage rejected. No remote invocation or production readiness is asserted by this record."
+}
