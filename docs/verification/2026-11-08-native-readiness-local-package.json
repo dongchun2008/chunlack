@@ -1,0 +1,93 @@
+{
+  "date": "2026-11-08",
+  "status": "inactive_native_readiness_package_locally_verified",
+  "scope": "Prepare a one-use in-memory native exclusive-reaping readiness probe, not a census or release",
+  "evidence": {
+    "probeUnitCases": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0,
+      "elapsedSeconds": 0.006,
+      "redRunObserved": true
+    },
+    "bootstrapCases": {
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "elapsedSeconds": 1.728,
+      "localPythonChildren": 4,
+      "covered": [
+        "Correct bound real source refuses Windows",
+        "Changed source rejected before compilation",
+        "Duplicate keys rejected",
+        "Oversized input rejected"
+      ]
+    },
+    "independentReview": {
+      "actionableP1": 0,
+      "actionableP2": 0,
+      "testsRerunByReviewer": false
+    },
+    "earlier44CaseSuiteRerun": false,
+    "earlierTwoCaseComparisonRerun": false
+  },
+  "package": {
+    "collectorSha256": "9d48c4040cdb38cc3b89c1ebbbe845289e18b5b513db1ce20d5af39dba8b4fb7",
+    "probeSha256": "8901486e9cfcd240b59fae661c2ef7dd9240d1febc1075725656ba0d096c5cad",
+    "bootstrapSha256": "ff6dce2292dc0503a49d2f7ae8e43f95605ccfae4c034b039dd302d97bec173f",
+    "payloadSha256": "36c35d780d1307529f97e206d6d39b8e699acaa280a551ce7f4c2fcff6b17097",
+    "payloadBytes": 29742,
+    "collectorBytes": 18711,
+    "probeBytes": 3533,
+    "sourceBodiesCheckedBeforeEitherCompilation": true,
+    "requiredPythonFlags": [
+      "-I",
+      "-S",
+      "-B"
+    ],
+    "inputLimitBytes": 65536,
+    "outputLimitBytes": 4096,
+    "internalElapsedLimitSeconds": 18,
+    "sourceTempFiles": false,
+    "bytecodeWrites": false,
+    "containsSshOrCredentials": false,
+    "nativeExecutionAllowed": false
+  },
+  "intendedProbe": {
+    "exclusiveContextChecks": 2,
+    "onlyNativeOperations": "Read self task/signal context through the frozen backend; no query transport, child launch, signal send or service control",
+    "reports": "Correlation nonce, source digest, owner PID, filtered readiness/error metadata"
+  },
+  "limitations": [
+    "Local Windows negative execution is not Linux readiness, kernel ABI validation or target-host proof.",
+    "The pinned backend's constructors are trusted source dependencies; their internals were not re-reviewed in this readiness-only review.",
+    "A passed JSON status must be paired with genuine exit code zero and the client's expected nonce/source binding.",
+    "The nonce is a correlation tag, not replay authorization; the inactive manifest is informational, not an execution permission mechanism.",
+    "The SSH runner and external hard-deadline envelope must be integrated and tested before any separately scoped live attempt.",
+    "Actual producer introspection, worker execution, whole-cgroup clearance, capacity and production delivery remain separate gates.",
+    "Only this sanitized record is committed; private package sources, raw logs and packet contents remain local."
+  ],
+  "actions": {
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "businessChildren": 0,
+    "localBootstrapChildren": 4,
+    "actualSignals": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "serviceControl": false,
+    "productionPublish": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "acceptance": {
+    "nativeReadinessAccepted": false,
+    "nativeCapacityAccepted": false,
+    "productionReady": false,
+    "overallDeliveryComplete": false
+  },
+  "proposedNextScope": "Local integration of the existing fingerprint-pinned SSH transport and external deadline; after targeted tests, at most one read-only VPS readiness attempt, remote20s/local35s, no new Linux unit or service/file changes."
+}
