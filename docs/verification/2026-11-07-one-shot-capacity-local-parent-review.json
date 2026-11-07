@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "date": "2026-11-07",
+  "phase": "one-shot-capacity-local-parent-simulation",
+  "status": "simulation_tests_passed_local_followups_pending_no_native_execution",
+  "inventoryRegression": {
+    "total": 40,
+    "passed": 39,
+    "errors": 1,
+    "failures": 0,
+    "elapsedSeconds": 0.628,
+    "remainingError": "Cross-device legacy expectation is RuntimeError but protected open now raises OSError(EXDEV).",
+    "implementationSourceUnchangedFromA3": true,
+    "originalFailuresPreserved": true
+  },
+  "parentSimulation": {
+    "total": 21,
+    "passed": 21,
+    "failed": 0,
+    "elapsedSeconds": 3.412,
+    "realLocalDirectChildFixturesUsed": true,
+    "covered": [
+      "normal terminal exit",
+      "allocation-failure exit with an intentionally unclosed null-device handle",
+      "invalid receipt",
+      "timeout termination and reap",
+      "same-path exclusive marker reuse rejection",
+      "launch failure preserves marker",
+      "validation failure after child termination"
+    ],
+    "nativeAccepted": false,
+    "productionReady": false
+  },
+  "independentReview": {
+    "p1": 0,
+    "p2": 1,
+    "remainingFinding": "A nonzero worker exit or cleanup failure prevents retaining the already-sanitized worker failure cause.",
+    "misreportedSuccessFound": false,
+    "additionalLocalEdges": [
+      "impossible census combinations",
+      "marker write/close failure after creation",
+      "independent and combined poll/kill/wait/pipe failures",
+      "late startup and exhausted cleanup budget"
+    ]
+  },
+  "artifactSha256": {
+    "parent": "70d45b44eb8665eefdbeb4246f050c0c256aeb2d2fddcbbe2064eeb8f3470a17",
+    "parentTests": "d21e73f90f5dde7ef20c769b87b807ef53786bcd003f69732baeb0b2c2a6ab88"
+  },
+  "evidenceBoundaries": {
+    "inventoryNotExecutedBySimulator": true,
+    "inventorySourcesNotLoadedOrHashVerifiedBySimulator": true,
+    "noNativeBackend": true,
+    "noSystemdInvocationOrCgroupProof": true,
+    "noCpuMemorySwapContainmentProof": true,
+    "markerReplayScope": "same marker path only",
+    "popenCreationHardBoundProven": false,
+    "knownReusableLibraryExceptionGapsNotClaimedFixed": true
+  },
+  "nextStep": "Batch the single inventory expectation correction, bound worker failure diagnostics, and marker/schema/cleanup failure regressions locally. Native isolated worker and parent-side authoritative terminal/resource/baseline integration remain future gates.",
+  "activity": {
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "productionPublication": false,
+    "serviceControl": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "modelCalls": 0,
+    "externalAgentCalls": 0
+  }
+}
