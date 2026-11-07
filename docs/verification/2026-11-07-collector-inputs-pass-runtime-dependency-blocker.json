@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-07",
+  "stage": "readonly-input-contract-fix-and-runtime-preflight",
+  "mappingFixes": {
+    "field": "fileSha256",
+    "expectedCodePath": "expected-code.json",
+    "controllerPath": "controllers/2026-10-23/readonly-code-preflight.py",
+    "independentReviewAccepted": true
+  },
+  "tests": {
+    "prior76Rerun": false,
+    "newAssemblyTests": 6,
+    "newAssemblyPassed": 6,
+    "newAssemblyFailed": 0,
+    "newAssemblyDurationMilliseconds": 549.4421,
+    "actualPacketStrictValidationPassed": true,
+    "candidateCodeEntries": 66,
+    "dependencyVersionEntries": 257
+  },
+  "frozenInputs": {
+    "packetSha256": "fe4439c455cf05b696398fa6cf57d4768d855f693199f3023f471fd5b82b1b12",
+    "packetBytes": 42130,
+    "bindingSha256": "72db5ad825ce94e78a08a8ad9bfda1ea843a16073c85e7bdf392582a56299e43",
+    "sourcePreparationSha256": "1e08f066826c6bc51c12458542568b9124edaca72268a02e8e42542490d73e99",
+    "enabled": false,
+    "productionReady": false
+  },
+  "runtimePreflight": {
+    "pythonIsolatedImport": {
+      "parameters": [
+        "-I",
+        "-B"
+      ],
+      "passed": false,
+      "errorType": "ModuleNotFoundError",
+      "missingModule": "paramiko"
+    },
+    "existingDependency": {
+      "name": "paramiko",
+      "version": "5.0.0",
+      "locationClass": "existing user-site",
+      "installedThisRun": false
+    },
+    "candidateReadOnlyImport": {
+      "parameters": [
+        "-E",
+        "-P",
+        "-B"
+      ],
+      "passed": true,
+      "safePath": true,
+      "ignoreEnvironment": true,
+      "userSiteEnabled": true
+    },
+    "parametersModified": false
+  },
+  "independentReview": {
+    "confirmedP2": "The local isolated Python invocation cannot import the existing user-site Paramiko dependency.",
+    "sshGatePassed": false,
+    "userSiteTrustBoundaryChangeNeedsConfirmation": true
+  },
+  "scope": {
+    "sshAttemptsUsed": 0,
+    "maximumSshAttempts": 1,
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "newLinuxUnits": 0,
+    "sshAttemptMarkerCreated": false,
+    "credentialsReadByActualAuthentication": false,
+    "productionPublished": false,
+    "existingServiceStartStop": false,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "relayChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "nextGate": "Await approval for the local -E/-P/-B compatibility candidate, focused argv/import-injection tests, and a fresh exclusive hash binding preserving the old frozen input. Do not rerun the passed 76+6 tests, install software, or consume/expand the unused SSH allowance before review passes.",
+  "sanitization": {
+    "credentialsIncluded": false,
+    "tokensIncluded": false,
+    "userDependencyAbsolutePathIncluded": false,
+    "businessDataIncluded": false,
+    "privateSourcePublished": false
+  }
+}
