@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "date": "2026-11-07",
+  "phase": "collector-a4-single-live-readonly-verification",
+  "status": "protected_snapshots_equal_capacity_incomplete_publication_rejected",
+  "limits": {
+    "maximumSshAttempts": 1,
+    "sshAttemptsUsed": 1,
+    "maximumLinuxUnits": 0,
+    "linuxUnitsUsed": 0,
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "automaticRetry": false
+  },
+  "execution": {
+    "outerExitCode": 2,
+    "innerExitCode": 2,
+    "outerElapsedMilliseconds": 9527.0846,
+    "innerElapsedSeconds": 7.503855599999952,
+    "signal": null,
+    "accepted": false,
+    "remoteAccepted": false,
+    "errorType": "RuntimeError",
+    "errorCode": "data_coverage_incomplete",
+    "persistenceErrors": 0
+  },
+  "protectedEvidence": {
+    "finalBaselineComplete": true,
+    "servicesCompared": 4,
+    "fieldsPerService": 8,
+    "configurationHashesCompared": 3,
+    "snapshotsEqual": true,
+    "continuousAbsenceOfChangesProven": false,
+    "priorConfigurationHashesMatch": true,
+    "runtimeHashesMatch": true
+  },
+  "dataCoverage": {
+    "complete": false,
+    "consistentSnapshot": false,
+    "observedFiles": 80,
+    "observedEntries": 302,
+    "observedBytes": 7738245,
+    "truncatedDirectories": 146,
+    "maximumDepth": 8,
+    "maximumEntries": 4096,
+    "reason": "data_depth_limit",
+    "truncatedCountIsNotTotalDirectoryCount": true
+  },
+  "backup": {
+    "availableFilesystemBytes": 28564262912,
+    "estimatedRequiredBytes": null,
+    "spaceAboveEstimate": null,
+    "capacitySufficientProven": false,
+    "created": false,
+    "restoreTested": false
+  },
+  "sourceAndDependencies": {
+    "previousCodeFiles": 57,
+    "previousCodeMatches": true,
+    "versionsChecked": 257,
+    "versionsMatch": true,
+    "fingerprintComplete": true,
+    "fingerprintFiles": 4462,
+    "fingerprintBytes": 38850588,
+    "fingerprintSha256": "5d1e5e56e0ce865a41e881262d72ee711225fb3940b9556416a30cf6dcc639a0",
+    "archiveIntegrityVerified": false
+  },
+  "cleanup": {
+    "confirmed": true,
+    "errors": 0,
+    "pendingHandles": 0,
+    "lateHandles": 0,
+    "deadlineExhausted": false
+  },
+  "independentEvidenceAudit": {
+    "completed": true,
+    "baselineComparisonIndependentlyConfirmed": true,
+    "partialCapacityNotAccepted": true
+  },
+  "unchangedScope": {
+    "productionPublished": false,
+    "productionReady": false,
+    "serviceControl": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false,
+    "modelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "nextStep": "Prepare a local-only separate full-capacity proof design with explicit finite resource and traversal bounds. Preserve the existing depth-8 collector and its refusal of partial coverage; do not infer backup sufficiency or publication readiness. No automatic remote retry."
+}
