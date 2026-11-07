@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "date": "2026-11-07",
+  "phase": "capacity-inventory-a2-local-native-backend",
+  "status": "local_tests_passed_two_remaining_security_review_findings",
+  "localTests": {
+    "total": 32,
+    "passed": 32,
+    "failed": 0,
+    "errors": 0,
+    "elapsedSeconds": 1.345,
+    "nativeKernelExecution": false
+  },
+  "completedCorrections": {
+    "deadlineCheckedAfterRootCleanup": true,
+    "directoryOpensUseOpenat2": true,
+    "noOpenFallbackOrRetry": true,
+    "oldCandidatePreserved": true
+  },
+  "nativeContract": {
+    "platform": "Linux x86-64, 64-bit ABI only",
+    "syscall": 437,
+    "openHowBytes": 24,
+    "mode": 0,
+    "resolveMask": 15,
+    "verifiedAgainstPrimaryDocumentation": true,
+    "vpsSupportProven": false
+  },
+  "independentReview": {
+    "p1": 0,
+    "p2": 2,
+    "findings": [
+      "Regular-file bind mounts and directory metadata stat before protected open are not covered by NO_XDEV.",
+      "Successful bare descriptor acquisition can be interrupted before cleanup ownership is reliably registered."
+    ]
+  },
+  "diagnosis": {
+    "evidenceClass": "offline_synthetic_no_native_descriptors_or_mounts",
+    "oldTestsRerun": false,
+    "regularFileBindModel": {
+      "coverageCompleteReturned": true,
+      "filesCounted": 1,
+      "protectedOpens": 0
+    },
+    "directoryBindModel": {
+      "eventuallyRejected": true,
+      "metadataReadsBeforeReject": 1
+    },
+    "successfulDescriptorSignalModel": {
+      "interrupted": true,
+      "syntheticUnclosedDescriptors": [
+        1
+      ]
+    }
+  },
+  "sha256": {
+    "inventory": "5017ccc56e452b0180af204051642ba2757448f5eac21b9ccedcf6a329d116b3",
+    "tests": "05033867b1333e9d54c565ee53dcad9d1b953dbf9d18d3d6e9077e8e0f6986fb"
+  },
+  "activity": {
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "productionPublication": false,
+    "serviceControl": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "limitations": {
+    "livePolicyApproved": false,
+    "productionReady": false,
+    "consistentSnapshot": false,
+    "backupCapacityProven": false,
+    "backupCreated": false,
+    "restoreTested": false
+  },
+  "nextStep": "Disclose the two remaining local prototype defects before further correction. Proposed local batch: protected descriptor-first access for every entry and signal-safe resource ownership, followed by targeted and complete related local regressions. No remote invocation or deployment implied.",
+  "primarySources": [
+    "https://man7.org/linux/man-pages/man2/openat2.2.html",
+    "https://raw.githubusercontent.com/torvalds/linux/master/include/uapi/linux/openat2.h",
+    "https://raw.githubusercontent.com/torvalds/linux/master/arch/x86/entry/syscalls/syscall_64.tbl"
+  ]
+}
