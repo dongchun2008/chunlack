@@ -1,0 +1,74 @@
+{
+  "date": "2026-11-08",
+  "scope": "single-use native capacity worker and read-only terminal observer, local only",
+  "status": "local_tests_passed_native_execution_pending",
+  "evidence": {
+    "localTests": {
+      "total": 35,
+      "passed": 35,
+      "failed": 0,
+      "elapsedSeconds": 0.112,
+      "exitCode": 0,
+      "execution": "previous completed local run; not rerun for this record"
+    },
+    "packageBuild": {
+      "completed": true,
+      "receiptRecovered": true,
+      "rebuiltAfterObservationLoss": false,
+      "sourceFiles": 3,
+      "bindingBytes": 474,
+      "bindingSha256": "7c2b97751cdc2f0d5590c69e374aa89759c09efedc2ef9371e84f0643507cff0",
+      "linuxPathsArePosix": true,
+      "nativeExecutionAllowed": false
+    },
+    "sources": {
+      "native": {
+        "bytes": 27500,
+        "sha256": "96e135456c413b15f54b7346100935f8fa7571a45f7d0e02546c7b33223dcb04"
+      },
+      "inventory": {
+        "bytes": 11795,
+        "sha256": "264becc1c4b99ef6d3b12b0d12827841ac0c24bc42302536e12277072b1aea71"
+      },
+      "support": {
+        "bytes": 28644,
+        "sha256": "b71cdcb41294d8fc5e5e6fe093b8d9f0d3423d5fce127333db20a8d212fc11db"
+      }
+    }
+  },
+  "coveredCorrections": [
+    "Preserve bounded original and cleanup diagnostics from the pinned support module.",
+    "Filter failure diagnostics independently and bind them to the retained main PID and invocation.",
+    "Open the source directory through anchored no-follow directory descriptors; reject writable ancestors and alias replacement.",
+    "Require canonical input, caller-latched invocation and exact main-command binding.",
+    "Reject whitespace-bearing durations and zero stop budget.",
+    "Return failure when output flush crosses the worker deadline."
+  ],
+  "limitations": [
+    "All 35 checks were local with injected or simulated native interfaces; this is not a Linux acceptance or full product regression.",
+    "Actual systemd property formatting, mount isolation, cgroup enforcement and native source ownership remain unverified.",
+    "The trusted launch/admission path must still reject auxiliary commands and unexpected unit overrides, capture the invocation and prove bounded termination.",
+    "Protected production baselines are not included in this local packet.",
+    "The inventory library's previously identified in-process allocation and signal-mask gaps are not claimed fixed; only a one-use process boundary is proposed.",
+    "A complete capacity census does not replace application-consistent backup or the existing release-controller admission limits."
+  ],
+  "actions": {
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productionPublish": false,
+    "serviceControl": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "acceptance": {
+    "nativeCapacityAccepted": false,
+    "productionReady": false,
+    "overallDeliveryComplete": false
+  },
+  "nextGate": "Finish a bounded trusted native admission/termination path before any separately scoped Linux execution; do not reuse exhausted historical budgets."
+}
