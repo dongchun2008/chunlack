@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "date": "2026-11-07",
+  "phase": "one-shot-capacity-local-followup",
+  "status": "72_scoped_local_tests_passed_native_integration_pending",
+  "tests": {
+    "inventory": {
+      "total": 40,
+      "passed": 40,
+      "failed": 0,
+      "errors": 0,
+      "elapsedSeconds": 0.79
+    },
+    "parentSimulation": {
+      "total": 32,
+      "passed": 32,
+      "failed": 0,
+      "errors": 0,
+      "elapsedSeconds": 3.429
+    },
+    "fullProductRegressionClaimed": false
+  },
+  "correctedBoundaries": {
+    "staleExdevExpectationFixed": true,
+    "bindingMatchedBoundedWorkerFailureRetained": true,
+    "parentWorkerAndCleanupErrorsSeparate": true,
+    "cleanupFailureCannotPromoteSuccess": true,
+    "markerCreationWriteCloseFailuresDoNotRestoreAttempt": true,
+    "impossibleCensusRelationsRejected": true
+  },
+  "addedCoverage": [
+    "independent and combined poll/kill/wait/pipe errors",
+    "worker failure and cleanup error together",
+    "late startup with cleanup reserve",
+    "exhausted total cleanup budget",
+    "late cleanup after valid receipt",
+    "marker write and close errors with subsequent reuse denial",
+    "unbound or hostile worker diagnostics",
+    "impossible empty-tree bytes and depth"
+  ],
+  "sha256": {
+    "capacity-inventory-20261107-a5/inventory.py": "264becc1c4b99ef6d3b12b0d12827841ac0c24bc42302536e12277072b1aea71",
+    "capacity-inventory-20261107-a5/test_inventory.py": "a7857986a7ea06bc1c22cafb847c423ba479e71237409d8d996ad7c69a1eb1a1",
+    "capacity-one-shot-20261107-a2/oneshot.py": "9762d91247de4c460135305a7a63ff15b1a2279527b525dc8fd6cf80815063f3",
+    "capacity-one-shot-20261107-a2/test_oneshot.py": "43dae7268f7ca8240ed2685ac88dbfb2a8ec6cedf5afc8d5b9d044fc8d3b79da"
+  },
+  "scope": {
+    "simulationOnly": true,
+    "actualLocalDirectChildFixtures": true,
+    "inventoryNotExecutedByParentSimulator": true,
+    "inventoryReusableLibraryGapsNotClaimedFixed": true,
+    "nativeAccepted": false,
+    "productionReady": false
+  },
+  "futureGates": [
+    "Implement and bind the actual single-use Linux worker, not just the simulator.",
+    "Parent must independently observe the exact native invocation, termination, empty cgroup, resource limits and protected baselines.",
+    "Full live census, formal backup limits and actual consistent backup/restore/compatibility/maintenance acceptance remain unproven."
+  ],
+  "activity": {
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "productionPublication": false,
+    "serviceControl": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  }
+}
