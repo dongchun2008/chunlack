@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "date": "2026-11-07",
+  "phase": "readonly-collector-a3",
+  "status": "failed_closed_no_retry",
+  "productionReady": false,
+  "productionPublication": false,
+  "scope": {
+    "maximumSshAttempts": 1,
+    "sshAttemptsUsed": 1,
+    "maximumLinuxUnits": 0,
+    "linuxUnitsStarted": 0,
+    "remoteDeadlineSeconds": 20,
+    "localDeadlineSeconds": 35,
+    "automaticRetry": false
+  },
+  "localValidation": {
+    "windowsPinTests": {
+      "passed": 8,
+      "failed": 0
+    },
+    "safeFailureTests": {
+      "passed": 5,
+      "failed": 0
+    },
+    "actualInputValidation": {
+      "candidateFiles": 66,
+      "dependencyVersions": 257,
+      "pinnedFiles": 3,
+      "passed": true
+    },
+    "olderTestsRerun": false
+  },
+  "binding": {
+    "sha256": "1645c22bd4979260330bd0891c9008f89dd63fdd2ccfa6e7684d9d38f2b1b86e",
+    "packetSha256": "fe4439c455cf05b696398fa6cf57d4768d855f693199f3023f471fd5b82b1b12",
+    "entrySha256": "90cbd7544c7ca92c013b4038f3cf8bc88003f746fa0e4c1f1350a358f4385f99",
+    "outerSha256": "0c57f7aa189793f049f27f91aee1ea54e7c0bd4532cac9fb156e429ef74fca44"
+  },
+  "invocation": {
+    "exitCode": 2,
+    "outerElapsedMilliseconds": 8699.4492,
+    "innerElapsedSeconds": 6.966508199999225,
+    "outerErrorCode": "inner_process_failed",
+    "remoteCompleted": true,
+    "remoteExitCode": 2,
+    "packetBytesSent": 42130,
+    "outputLimitExceeded": false
+  },
+  "failure": {
+    "type": "RuntimeError",
+    "code": "data_depth_limit",
+    "stage": "read_only_data_directory_metadata_traversal",
+    "configuredMaximumDepth": 8,
+    "offendingDirectoryNotIdentified": true,
+    "deadlineFailure": false
+  },
+  "completedChecks": {
+    "previousCodeFiles": 57,
+    "previousCodeMatches": true,
+    "dependencyVersionsChecked": 257,
+    "dependencyVersionsPresent": 257,
+    "dependencyVersionsMatch": true,
+    "dependencyArchiveIntegrityVerified": false,
+    "runtimeHashesMatch": true,
+    "priorConfigurationHashesMatch": true,
+    "servicesBeforeCollected": true
+  },
+  "evidenceLimits": {
+    "finalServiceBaselineCollected": false,
+    "serviceBaselineUnchangedProven": false,
+    "completeDataSizeCollected": false,
+    "backupCapacityVerified": false,
+    "productionReadinessProven": false,
+    "versionChecksAreNotPackageIntegrityProof": true
+  },
+  "cleanup": {
+    "sshConfirmed": true,
+    "errors": 0,
+    "pendingHandles": 0,
+    "lateHandles": 0,
+    "deadlineExhausted": false
+  },
+  "restrictions": {
+    "noRetry": true,
+    "noNewUnits": true,
+    "noPublication": true,
+    "noServiceControl": true,
+    "noCredentialChanges": true,
+    "noAuthorizationChanges": true,
+    "noRelayChanges": true,
+    "noModelOrExternalAgentCalls": true
+  },
+  "nextStep": "Local-only proposal pending user confirmation: retain depth and entry limits, report incomplete coverage explicitly, complete final protected-baseline collection where safe, and keep incomplete scans rejected for publication. No remote invocation is authorized by this record."
+}
