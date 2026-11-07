@@ -1,0 +1,97 @@
+{
+  "date": "2026-11-08",
+  "status": "local_kernel_ownership_correction_passed_old_comparison_fixture_pending",
+  "scope": "Local correction of native read-query child ownership and real exit-status evidence",
+  "supersedesLocalFinding": "docs/verification/2026-11-08-native-readonly-collector-ownership-gap.json",
+  "evidence": {
+    "priorWitness": {
+      "mode": "Previously saved a1 injected ownership-loss witness",
+      "unverifiedNumericSignalWouldBeAttempted": true,
+      "syntheticZeroWithoutKernelStatusAccepted": true,
+      "actualChildren": 0,
+      "actualSignals": 0
+    },
+    "targetedOldComparison": {
+      "total": 2,
+      "failures": 1,
+      "errors": 1,
+      "exitCode": 1,
+      "elapsedSeconds": 0.045,
+      "missingStatusCase": "Correct expected failure: ValueError not raised",
+      "numericGroupCase": "Fixture TypeError: fake kill_group accepted only pid but patched killpg supplies pid and signal. This is not credited as a valid new RED result.",
+      "originalLogPreserved": true,
+      "fixtureCorrected": false
+    },
+    "correctedLocalRegression": {
+      "total": 44,
+      "passed": 44,
+      "failed": 0,
+      "elapsedSeconds": 0.147,
+      "exitCode": 0,
+      "breakdown": {
+        "inheritedCollectorCases": 23,
+        "ownershipStatusAndCleanupCases": 21
+      },
+      "mode": "Injected kernel/process/syscall interfaces; native unsupported-host rejection exercised on Windows",
+      "fullProductRegression": false
+    }
+  },
+  "corrections": [
+    "Require isolated Python, its main/only kernel thread, default Python/kernel SIGCHLD and no SA_NOCLDWAIT before spawning.",
+    "Inspect the Linux x86-64 signal action through a read-only rt_sigaction request; refuse other ABI/hosts and visible unexpected signal handlers.",
+    "Serialize owned child lifetimes and keep distinct kernel-reaped and ownership-lost records.",
+    "Before numeric group signalling, require kernel WNOWAIT child evidence and matching session/group under the unchanged exclusive-reaping context.",
+    "Use direct kernel waitpid status rather than Popen's unavailable-status fallback. ECHILD fails without manufacturing a zero exit code.",
+    "Ownership/status loss refuses signalling while remaining reader and pipe closes are still attempted."
+  ],
+  "additionalCoverage": [
+    "Default and auto-reap context rejection, changed context, wrong parent, foreign child and wrong group/session",
+    "True zero, nonzero and signalled statuses, untracked Popen returncode, stopped/unexpected status and wait timeout",
+    "Ownership loss during capture, exact-limit EOF, cleanup-only failure, spawn-gate release and lifetime serialization",
+    "Injected raw-syscall argument layout and failure handling without invoking a native syscall"
+  ],
+  "unchanged": {
+    "readQueries": true,
+    "sharedDeadlineSeconds": 18,
+    "perQueryDeadlineSeconds": 2,
+    "outputLimitBytes": 65536,
+    "credentialAndModelBoundaries": true
+  },
+  "limitations": [
+    "No actual Linux syscall, process group or kernel status was exercised; compatibility and enforcement remain unproven.",
+    "The host must remain a dedicated trusted isolated supervisor, not a general multithreaded application.",
+    "External hard deadlines for spawn/close, target introspection compatibility, complete cgroup clearance and protected production baselines are still required.",
+    "The outstanding fixture correction only affects reproducing the old signal case; it must not cause the 44 passing tests to be rerun or be mistaken for a product fix.",
+    "The independent a1 review was followed by this local correction pass; no second independent review is claimed.",
+    "Private source and raw logs are not part of this documentation-only commit."
+  ],
+  "primarySources": [
+    "https://raw.githubusercontent.com/torvalds/linux/v6.6/arch/x86/include/uapi/asm/signal.h",
+    "https://raw.githubusercontent.com/torvalds/linux/v6.6/arch/x86/entry/syscalls/syscall_64.tbl",
+    "https://raw.githubusercontent.com/torvalds/linux/v6.6/include/uapi/asm-generic/signal-defs.h"
+  ],
+  "actions": {
+    "actualChildren": 0,
+    "actualSignals": 0,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "serviceControl": false,
+    "productionPublish": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false
+  },
+  "acceptance": {
+    "localRegressionPassed": true,
+    "oldComparisonComplete": false,
+    "nativeExecutionAllowed": false,
+    "nativeCapacityAccepted": false,
+    "productionReady": false,
+    "overallDeliveryComplete": false
+  },
+  "nextGate": "Correct only the fake killpg adapter signature and rerun the two old comparison cases, then prepare bounded native preflight separately."
+}
