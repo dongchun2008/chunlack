@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "date": "2026-11-07",
+  "phase": "capacity-inventory-a3-local-ownership",
+  "status": "local_regression_incomplete_two_remaining_exception_handoff_gaps",
+  "localTests": {
+    "total": 40,
+    "passed": 32,
+    "failures": 6,
+    "errors": 2,
+    "elapsedSeconds": 1.264,
+    "allPassed": false,
+    "remainingFixtureIssues": [
+      "Legacy descriptor cleanup assertions assume acquisition-order close.",
+      "Cross-device fixture does not model mount identity consistently.",
+      "Old inode-change fixture changes both observations identically.",
+      "Root cleanup now retains cleanup provenance via ResourceFailure.",
+      "One loaded.assert_not_called assertion was accidentally displaced outside its scope."
+    ]
+  },
+  "completedBoundaries": {
+    "allEntryMetadataBehindProtectedOpen": true,
+    "unprotectedTraversalPathStatRemoved": true,
+    "regularBindGapCorrectedInCurrentPath": true,
+    "descriptorLedgerAdded": true,
+    "finalDeadlineAfterCleanup": true
+  },
+  "independentReview": {
+    "p1": 0,
+    "p2": 2,
+    "findings": [
+      "Successful descriptor acquisition can precede a failing registry insertion.",
+      "Signal-mask change and previous-mask handoff can fail before restoration responsibility is established."
+    ]
+  },
+  "offlineDiagnosis": {
+    "evidenceClass": "synthetic_no_native_fd_or_signal_mask_changes",
+    "registrationFailureModel": {
+      "originalMemoryErrorPreserved": true,
+      "syntheticUnclosedDescriptors": [
+        1
+      ]
+    },
+    "maskEntryFailureModel": {
+      "failurePropagated": true,
+      "restoreAttempted": false,
+      "syntheticMaskStillBlocked": true
+    },
+    "oldTestsRerun": false
+  },
+  "sha256": {
+    "inventory": "264becc1c4b99ef6d3b12b0d12827841ac0c24bc42302536e12277072b1aea71",
+    "tests": "6e1b13b9669df68276e881e3975ca8bfdbe07a480f1601a1c68f233927aa6d79"
+  },
+  "inactiveFormalPackageInspection": {
+    "productionStateNotVerified": true,
+    "maximumDataBytes": 67108864,
+    "maximumFileCount": 1000,
+    "minimumFreeDiskBytes": 1073741824,
+    "minimumAvailableMemoryKiB": 393216,
+    "formalBackupStillRequiresStoppedApplicationAndContentSchemaComparison": true,
+    "sourceScope": "local inactive package only"
+  },
+  "activity": {
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "productionPublication": false,
+    "serviceControl": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "nextDecision": {
+    "recommended": "Use a single-use resource-isolated worker with parent-side proof of termination and an empty process group/cgroup; retain protected traversal and fail-closed result handling. Do not promise a generally reusable Python library immune to all asynchronous or allocation failures.",
+    "firstScope": "local design, driver and simulations only",
+    "liveExecutionApprovedByThisRecord": false
+  },
+  "productionReady": false
+}
