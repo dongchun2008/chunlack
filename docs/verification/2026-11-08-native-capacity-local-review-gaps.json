@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "phase": "native-capacity-worker-and-readonly-observer-local",
+  "status": "local_candidate_blocked_by_review_findings_not_enabled",
+  "tests": {
+    "total": 23,
+    "passed": 22,
+    "failures": 1,
+    "errors": 0,
+    "elapsedSeconds": 0.081,
+    "knownFailure": "Leading whitespace in a duration is accepted despite the strict-format test.",
+    "earlier72TestsRerun": false
+  },
+  "independentReview": {
+    "p1": 0,
+    "p2": 3,
+    "findings": [
+      "Pinned cross-module ResourceFailure is flattened and loses its original/cleanup records.",
+      "Observer returns worker error contents without an independent bounded diagnostic allowlist or complete failed-worker correspondence checks.",
+      "Only the final source directory and file are checked; trusted nonce-bundle ancestor anchoring is missing."
+    ]
+  },
+  "offlineDiagnosis": {
+    "evidenceClass": "synthetic_no_native_io_or_units",
+    "foreignResourceFailure": {
+      "supportOriginalExists": true,
+      "supportCleanupCount": 1,
+      "nativeOriginalRetained": false,
+      "nativeCleanupRetained": false
+    },
+    "workerDiagnostic": {
+      "unknownMessageEchoed": true,
+      "pidMismatchDidNotPreventDiagnosticEcho": true
+    },
+    "sourceAncestorModel": {
+      "checkedDirectoryCount": 1,
+      "bundleAncestorChecked": false,
+      "matchingSourcesLoaded": true,
+      "realSymlinkCreated": false
+    },
+    "timePolicyModel": {
+      "zeroStopAccepted": true,
+      "lateFlushClockSeconds": 25,
+      "lateFlushExitCode": 0,
+      "nativeTimeoutBypassProven": false
+    }
+  },
+  "artifactSha256": {
+    "native": "3b31830af00d1ca721bdc28f365583429d14c496a01e3497099d6dd8e97bb6d8",
+    "tests": "4886951b295862e442cba151295281eafa3011983327141e002a6dcb359e129a",
+    "inventory": "264becc1c4b99ef6d3b12b0d12827841ac0c24bc42302536e12277072b1aea71",
+    "support": "b71cdcb41294d8fc5e5e6fe093b8d9f0d3423d5fce127333db20a8d212fc11db"
+  },
+  "nativeBoundary": {
+    "realWorkerCliImplemented": true,
+    "noSimulationPacketMode": true,
+    "actualLinuxExecution": false,
+    "newUnitCreationCode": false,
+    "readonlyObserverImplemented": true,
+    "protectedBaselinePairIncluded": false,
+    "sourceExecutionAndAdmissionBindingComplete": false,
+    "cgroupRetirementInferenceNeedsTrustedViewAndLifecycle": true,
+    "nativeCapacityAccepted": false,
+    "productionReady": false
+  },
+  "primaryDocumentation": {
+    "source": "https://raw.githubusercontent.com/systemd/systemd/main/man/systemd.service.xml",
+    "oneshotRequiresExplicitStartupTimeout": true,
+    "runtimeMaxDoesNotBoundOneshot": true,
+    "currentVpsSupportProven": false
+  },
+  "nextStep": "Merge the three local security/diagnostic corrections plus strict duration/positive stop/output-stage deadlines and source/cgroup/runtime rejection regressions. Do not enable, upload or execute the native candidate until local acceptance and authoritative launcher integration pass.",
+  "activity": {
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "productionPublication": false,
+    "serviceControl": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  }
+}
