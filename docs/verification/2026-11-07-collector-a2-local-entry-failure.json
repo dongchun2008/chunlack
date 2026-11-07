@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-07",
+  "stage": "a2-compatibility-candidate-single-outer-invocation",
+  "compatibilityTests": {
+    "newTests": 5,
+    "passed": 5,
+    "failed": 0,
+    "durationMilliseconds": 5352.2544,
+    "prior76Plus6Rerun": false,
+    "realUserSiteParamikoVersion": "5.0.0",
+    "cwdAndPythonpathCanariesBlocked": true
+  },
+  "frozenInput": {
+    "bindingSha256": "e2a5ddc183d4a0f562bd6ec9a6373de489697c1fc5864a80066f7236db47f522",
+    "packetSha256": "fe4439c455cf05b696398fa6cf57d4768d855f693199f3023f471fd5b82b1b12",
+    "outerSha256": "0136f55944ee370dc71ea2a53c301c826514b44e7780304d3f7901b18655fd63",
+    "independentPreExecutionReviewPassed": true
+  },
+  "actualInvocation": {
+    "outerInvocations": 1,
+    "outerExitCode": 2,
+    "accepted": false,
+    "elapsedMilliseconds": 634.2795,
+    "innerExitCode": 2,
+    "signal": null,
+    "outerErrorCode": "inner_process_failed",
+    "innerStdoutBytes": 91,
+    "innerStderrBytes": 0,
+    "rawInnerFailureNotPreserved": true,
+    "automaticRetry": false
+  },
+  "localEvidence": {
+    "sshAttemptMarkerPresent": false,
+    "outcomePresent": false,
+    "receiptPresent": false,
+    "cleanupPresent": false,
+    "runnerOrAuthenticationNotReached": true,
+    "actualSshConnections": 0,
+    "remoteStateCollected": false
+  },
+  "offlineDiagnostics": {
+    "runnerInvoked": false,
+    "credentialsReadByAuthentication": false,
+    "bindingPinPassed": true,
+    "copiedFiles": [
+      {
+        "file": "bounded_entry.py",
+        "pinPassed": false,
+        "errorCode": "entry_file_drift",
+        "shaMatchesBinding": true,
+        "statVsFstatDifferences": [
+          "st_ctime_ns"
+        ],
+        "statLaneChanged": [],
+        "fdLaneChanged": []
+      },
+      {
+        "file": "local_run.py",
+        "pinPassed": false,
+        "errorCode": "entry_file_drift",
+        "shaMatchesBinding": true,
+        "statVsFstatDifferences": [
+          "st_ctime_ns"
+        ],
+        "statLaneChanged": [],
+        "fdLaneChanged": []
+      }
+    ],
+    "limitation": "These offline observations deterministically reproduce the pin rejection but do not recover or prove the exact original 91-byte child error."
+  },
+  "independentFollowupReview": {
+    "requiredChanges": [
+      "Windows-only ctime comparison must use separate lstat and fstat stability lanes; retain cross-interface dev/ino/mode/nlink/size/mtime, shape, length and SHA; leave non-Windows behavior unchanged.",
+      "Preserve only allowlisted structured child failure fields before rejecting a nonzero child exit; never expose raw stdout or change acceptance."
+    ],
+    "additionalConfirmedScopeNeeded": false,
+    "implementationChangedAfterFailure": false
+  },
+  "scope": {
+    "actualSshConnections": 0,
+    "actualSshMaximum": 1,
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "linuxUnitsCreated": 0,
+    "productionPublished": false,
+    "existingServiceStartStop": false,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "relayChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "nextGate": "Await explicit approval for the two local fixes in a fresh a3 candidate, focused regressions and hash rebinding review, plus at most one new outer invocation if separately approved. Preserve a2 evidence and all old quotas; do not retry automatically.",
+  "privacy": {
+    "secretsIncluded": false,
+    "tokensIncluded": false,
+    "rawChildStdoutIncluded": false,
+    "businessDataIncluded": false,
+    "privateSourcePublished": false
+  }
+}
