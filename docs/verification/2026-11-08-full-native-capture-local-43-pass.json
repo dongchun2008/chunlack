@@ -1,0 +1,107 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local full native-capture correction pass and focused regression only",
+  "candidate": "full-native-capture-20261108-a1",
+  "bridge": {
+    "sha256": "d829cc53bebfdc60189f112df03bf6c0d23f45177e4c439e2948421d217171c3",
+    "bytes": 12679
+  },
+  "sources": {
+    "native": "96e135456c413b15f54b7346100935f8fa7571a45f7d0e02546c7b33223dcb04",
+    "inventory": "264becc1c4b99ef6d3b12b0d12827841ac0c24bc42302536e12277072b1aea71",
+    "support": "b71cdcb41294d8fc5e5e6fe093b8d9f0d3423d5fce127333db20a8d212fc11db",
+    "launch": "59f2d1ee86d10db2d1f9fcd924e6155bd0a2440454705755d0aca32f217e7e67",
+    "collector": "9d48c4040cdb38cc3b89c1ebbbe845289e18b5b513db1ce20d5af39dba8b4fb7"
+  },
+  "corrections": [
+    {
+      "id": "source_lifetime",
+      "change": "Take one private built-in-dict snapshot of immutable source byte references; hash, parse and compile exclusively that snapshot.",
+      "reproduction": "caller dictionary replacement no longer changes executed collector bytes",
+      "status": "red_to_green"
+    },
+    {
+      "id": "terminal_elapsed",
+      "change": "Final sampled time governs elapsed metadata and verdict; expired, invalid, nonfinite, boolean, regressed or exceptional final clock rejects success.",
+      "status": "red_to_green"
+    },
+    {
+      "id": "final_report_size",
+      "change": "Finalize metadata before checking complete report; output failure cannot promote reduced proof or overwrite an existing original error.",
+      "status": "red_to_green"
+    }
+  ],
+  "localRegression": {
+    "total": 43,
+    "passed": 43,
+    "failed": 0,
+    "skipped": 0,
+    "suites": [
+      {
+        "name": "bridge",
+        "tests": 31,
+        "seconds": 12.067
+      },
+      {
+        "name": "pid-code-status-binding",
+        "tests": 3,
+        "seconds": 0.595
+      },
+      {
+        "name": "terminal-boundary",
+        "tests": 2,
+        "seconds": 0.464
+      },
+      {
+        "name": "source-lifetime",
+        "tests": 1,
+        "seconds": 0.199
+      },
+      {
+        "name": "additional-finalization-failures",
+        "tests": 6,
+        "seconds": 1.288
+      }
+    ],
+    "priorRedReproductions": 9,
+    "fullProductSuite": false,
+    "nativeLinuxTests": false
+  },
+  "review": {
+    "initialP2": 3,
+    "correctionsCoveredByRegressions": true,
+    "duplicateReviewOfCorrectionPass": false
+  },
+  "acceptance": {
+    "localIntegrationVerified": true,
+    "nativeLaunchAndTerminalAccepted": false,
+    "protectedBaselinePairIncluded": false,
+    "resourceUsageMetrics": null,
+    "nativeCapacityAccepted": false,
+    "productionReady": false,
+    "goalComplete": false
+  },
+  "safety": {
+    "externalSshAttempts": 0,
+    "newLinuxUnits": 0,
+    "remoteWrites": false,
+    "frozenModulesModified": false,
+    "productionServiceControl": false,
+    "publication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "previousFailureRecordsPreserved": true
+  },
+  "remainingWork": [
+    "Prepare exact protected-baseline and resource-evidence collection contracts and the inactive native orchestration package.",
+    "Obtain explicit new native allowance only after local assembly and review; no spent SSH/unit budget is reused.",
+    "Perform actual complete census/capacity verification, fresh compatibility/backup/recovery gates and separately approved production maintenance.",
+    "Keep full platform/provider/bilingual/workspace/external-Agent delivery acceptance open."
+  ]
+}
