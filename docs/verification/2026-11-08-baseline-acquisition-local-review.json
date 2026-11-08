@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local protected-baseline and headroom producer; not accepted for native use",
+  "implementation": {
+    "fourFixedServices": true,
+    "threeFixedConfigurationHashes": true,
+    "explicitRuntimePathMap": true,
+    "explicitBackupDirectory": true,
+    "streamedHashes": true,
+    "maximumRuntimeReadBlockBytes": 262144,
+    "configurationBodiesReturned": false,
+    "serviceMutationInterface": false,
+    "automaticRetry": false
+  },
+  "validation": {
+    "baselineAndBackendRun": {
+      "tests": 26,
+      "passed": 26,
+      "failures": 0,
+      "errors": 0,
+      "elapsedSeconds": 0.03
+    },
+    "captureChainRun": {
+      "tests": 4,
+      "passed": 4,
+      "failures": 0,
+      "errors": 0,
+      "elapsedSeconds": 0.023
+    },
+    "independentReviewRegressionRun": {
+      "tests": 2,
+      "passed": 0,
+      "failures": 2,
+      "errors": 0,
+      "elapsedSeconds": 0.011
+    },
+    "fullProductRegressionRun": false,
+    "actualLinuxRun": false
+  },
+  "independentReview": {
+    "completed": true,
+    "p1": 0,
+    "p2": 2,
+    "findings": [
+      "An after snapshot completion timestamp does not prove all component reads occurred after worker final capture; overlapping reads can be mislabeled by a later timestamp.",
+      "The caller-owned runtime path mapping can change after validation but before it is privately copied, adopting an unvalidated path."
+    ],
+    "bothFindingsDeterministicallyReproduced": true,
+    "reviewerRanTests": false
+  },
+  "requiredCorrectionBatch": [
+    "Record whole sampling intervals; require before observations to finish before worker start and after observations to begin after final worker capture.",
+    "Evaluate freshness from the earliest applicable observation, not merely the latest completed timestamp.",
+    "Take a private runtime path snapshot before validation and retain that exact validated snapshot through owner initialization.",
+    "Add overlap, stale-earliest-observation, alias-mutation and positive compatibility regressions, then run affected local suites."
+  ],
+  "interpretation": {
+    "candidateAccepted": false,
+    "nativeEvidenceVerified": false,
+    "combinedBudgetVerified": false,
+    "capacitySufficient": null,
+    "backupAdequacyVerified": false,
+    "productionReady": false,
+    "goalComplete": false
+  },
+  "safety": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "remoteWrites": false,
+    "serviceControl": false,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "privateSourcesSubmitted": false,
+    "oldFrozenModulesModified": false
+  }
+}
