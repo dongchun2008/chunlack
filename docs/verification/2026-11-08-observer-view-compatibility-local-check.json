@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local observer-host-view compatibility check and next read-only preflight specification",
+  "candidateManifestSha256": "4318c18b0c6d7ed82b9936232bdef15d86425706875b31a38b90c28fa06240cb",
+  "nativeSourceSha256": "40de9e373c0eace404fb7cc9f1994ab239f2e3225ebb98fa803c5f705fc11cf3",
+  "confirmed": {
+    "existingContractRequiresPid1MatchingMountNamespace": true,
+    "existingContractRequiresPid1MatchingCgroupNamespace": true,
+    "nonCgroup2FilesystemRejected": true,
+    "doNotRelaxExistingViewChecks": true
+  },
+  "validation": {
+    "tests": 4,
+    "passed": 4,
+    "failures": 0,
+    "errors": 0,
+    "elapsedSeconds": 0.003,
+    "sourceDigestCheckedBeforeCompilation": true,
+    "ioMetadataInjected": true,
+    "actualLinuxRun": false,
+    "previous173CasesNotRerun": true
+  },
+  "primarySources": {
+    "managerOpenedFiles": "https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html#OpenFile=",
+    "mountNamespaceOptions": "https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html"
+  },
+  "designStatus": {
+    "managerOpenedReadOnlyDescriptorsAreOnlyAnOption": true,
+    "openFileDocumentedSinceSystemdVersion": 253,
+    "currentVpsFeatureSupportVerified": false,
+    "descriptorProvenanceAndProjectionProofImplemented": false,
+    "observerIsolationChoiceFinalized": false
+  },
+  "proposedFreshPreflight": {
+    "requiresNewScopedApproval": true,
+    "newSshAttemptsMaximum": 1,
+    "remoteSeconds": 20,
+    "localTotalSeconds": 35,
+    "automaticRetry": false,
+    "linuxUnitsCreated": 0,
+    "readScope": [
+      "Actual running systemd manager version and relevant existing service property/schema support",
+      "Current and PID1 mount/cgroup namespace identities and capability masks, without modifying them",
+      "Already enabled cgroup controllers",
+      "Four fixed protected service states/PIDs/restart counts and protected runtime executable-path metadata"
+    ],
+    "forbidden": [
+      "Remote file writes or installation",
+      "Reading environment/configuration contents for diagnostics",
+      "Credential output or modification",
+      "Service control or production publication",
+      "Creating units, slices, listeners or port/DNS changes",
+      "Model or external-agent calls"
+    ],
+    "oldAllowancesReused": false
+  },
+  "safety": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "remoteWrites": false,
+    "serviceControl": false,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "privateSourcesSubmitted": false,
+    "oldCandidatesModified": false
+  },
+  "interpretation": {
+    "localCompatibilityBehaviorConfirmed": true,
+    "nativeEvidenceVerified": false,
+    "combinedBudgetVerified": false,
+    "productionReady": false,
+    "goalComplete": false
+  }
+}
