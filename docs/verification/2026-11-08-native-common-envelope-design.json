@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local source inspection and common resource-envelope design; no implementation or native action",
+  "basis": {
+    "sealedCandidateManifestSha256": "fba86473e067826ce9c27236dcd8ebe6f9898f6cadaf02f2a32d0b9d38d92364",
+    "frozenLaunchSha256": "59f2d1ee86d10db2d1f9fcd924e6155bd0a2440454705755d0aca32f217e7e67",
+    "confirmedWorkerSliceArgument": "--slice=system.slice",
+    "existingReportsAlreadyDenyCombinedBudgetAcceptance": true
+  },
+  "finding": "The current worker-specific resource cap and metrics do not enforce or prove a common budget for the observer and worker.",
+  "recommendation": {
+    "stage": "Proposed local-only private candidate amendment",
+    "mechanism": "A nonce-derived parent slice containing both observer and worker units",
+    "parentNamePattern": "system-chunlackcap<32-lowercase-hex>.slice",
+    "parentPathPattern": "/system.slice/system-chunlackcap<32-lowercase-hex>.slice",
+    "memoryMaxBytes": 201326592,
+    "swapMaxBytes": 0,
+    "cpuQuotaPercentOfOneCpu": 20,
+    "tasksMax": 32,
+    "cpuWeight": 10,
+    "processNice": 10,
+    "workerUid": 996,
+    "workerGid": 987,
+    "workerZeroCapabilities": true,
+    "workerNoNewPrivileges": true,
+    "preserveControllerCapabilityBoundary": true,
+    "noArbitraryUnitOrCgroupPrefix": true,
+    "doNotMoveExistingServices": true,
+    "doNotModifySystemSliceProperties": true,
+    "requireExistingControllersBeforeNativeCreation": true,
+    "admissionAndCleanupCostsMustBeDeclared": true,
+    "phaseAndOuterDeadlinesMustNotBeReset": true
+  },
+  "alternativesRejected": [
+    "Worker-only proof would narrow the requested all-process budget.",
+    "Sum of independently measured resources does not substitute for an enforced common cap."
+  ],
+  "primarySources": [
+    "https://www.freedesktop.org/software/systemd/man/latest/systemd.slice.html",
+    "https://www.freedesktop.org/software/systemd/man/latest/systemd.resource-control.html"
+  ],
+  "validation": {
+    "testsRun": 0,
+    "oldPassedTestsNotRerun": true,
+    "sourceInspectionOnly": true,
+    "actualVpsSupportVerified": false
+  },
+  "safety": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "remoteWrites": false,
+    "serviceControl": false,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "privateSourcesSubmitted": false,
+    "oldFrozenModulesModified": false
+  },
+  "interpretation": {
+    "designOnly": true,
+    "localAmendmentImplemented": false,
+    "nativeEvidenceVerified": false,
+    "combinedBudgetVerified": false,
+    "productionReady": false,
+    "goalComplete": false
+  }
+}
