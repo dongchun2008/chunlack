@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local full native-capture integration candidate; not native execution or publication",
+  "candidate": "full-native-capture-20261108-a1",
+  "implementation": {
+    "frozenModulesModified": false,
+    "allFiveSourceBodiesCheckedBeforeInitialCompilation": true,
+    "fullStructuredLaunchCaptureBeforeAndAfterTerminalObservation": true,
+    "exPidCodeStatusCorrelated": true,
+    "expectedInvocationProvidedIndependently": true,
+    "injectedEvidenceNeverNative": true,
+    "legacyObserverQueryPathExplicit": true,
+    "capacityAndProductionFlagsRemainFalse": true,
+    "protectionBaselineStillMissing": true,
+    "resourceUsageMetrics": null
+  },
+  "localTests": {
+    "bridge": {
+      "tests": 31,
+      "passed": 31,
+      "failed": 0,
+      "seconds": 7.006
+    },
+    "pidCodeStatusBinding": {
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "seconds": 0.635
+    },
+    "terminalBoundaryReproductions": {
+      "tests": 2,
+      "passed": 0,
+      "failed": 2,
+      "seconds": 0.604
+    },
+    "sourceLifetimeReproduction": {
+      "tests": 1,
+      "passed": 0,
+      "failed": 1,
+      "seconds": 0.082
+    },
+    "total": 37,
+    "passed": 34,
+    "failed": 3,
+    "skipped": 0,
+    "fullProductSuite": false
+  },
+  "independentReview": {
+    "p1": 0,
+    "p2": 3,
+    "findings": [
+      {
+        "id": "source_lifetime",
+        "confirmedLocally": true,
+        "issue": "Caller dictionary replacement after verification changes the source bytes subsequently compiled.",
+        "reproduction": "A harmless in-memory sentinel replaces the collector source; the candidate executes that unverified replacement.",
+        "proposedFix": "Snapshot all five immutable byte references once, then verify, parse and compile only the private snapshot."
+      },
+      {
+        "id": "terminal_elapsed",
+        "confirmedLocally": true,
+        "issue": "The final elapsed timer can observe20s yet leave successful consistency flags unchanged.",
+        "proposedFix": "Make the terminal time sample govern both elapsed metadata and successful verdict; reject expired, invalid or regressed time."
+      },
+      {
+        "id": "final_report_size",
+        "confirmedLocally": true,
+        "issue": "Elapsed metadata is added after the report size check.",
+        "proposedFix": "Finalize all metadata before checking the complete returned report, including failure paths."
+      }
+    ]
+  },
+  "limits": {
+    "observerPhaseSecondsMaximum": 18,
+    "querySecondsMaximum": 2,
+    "queryOutputBytesMaximum": 65536,
+    "combinedReportBytesMaximum": 131072,
+    "censusDepth": 64,
+    "censusEntries": 32768
+  },
+  "acceptance": {
+    "status": "failed_pending_corrections",
+    "nativeLaunchAndTerminalAccepted": false,
+    "nativeCapacityAccepted": false,
+    "productionReady": false,
+    "goalComplete": false
+  },
+  "safety": {
+    "externalSshAttempts": 0,
+    "newLinuxUnits": 0,
+    "remoteWrites": false,
+    "productionServiceControl": false,
+    "publication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "olderFailuresPreserved": true
+  },
+  "next": "One combined local correction pass plus the existing37 cases and necessary focused finalization checks. No repeat independent review of the same correction pass. Fresh native authorization remains separate."
+}
