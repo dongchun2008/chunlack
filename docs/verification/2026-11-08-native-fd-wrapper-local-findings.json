@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "same-pid-native-wrapper-local-preparation",
+  "status": "not_accepted_two_diagnostic_boundaries_reproduced",
+  "sourceSha256": {
+    "plan.json": "219dbe8f2657df06e0534aa050caf600bf4788da7ef496df1ed6985c678515ec",
+    "wrapper.py": "0c431b9114117f6c9f50bd590df9345c9db78b9bd4af74e6b322c9f81dccbcdd",
+    "test_wrapper.py": "2e3dc577bdca5593c42883686f388ecb45a4f487c8583837798ec1396fcea630",
+    "test_deadline_cap.py": "a29e362acc3094372ca049a9e72b4e69ac52d37af7f89b100c5b6bf6fcca3afe",
+    "probe.py": "7d8fb6d588df3b281d12ca5012e9470e76fbfa97761ddc10c604fb14140fc024",
+    "reader.py": "8bb5c9bf7cda997631ac9bdd648dd6ab66a9de034d3f90f46ed3f8bb4b54d012"
+  },
+  "tests": {
+    "initialRelatedLocalSuite": {
+      "testsRun": 71,
+      "passed": 71,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 0.74,
+      "exitCode": 0
+    },
+    "subsequentBoundaryReproduction": {
+      "testsRun": 2,
+      "passed": 0,
+      "failures": 2,
+      "errors": 0,
+      "elapsedSeconds": 0.057,
+      "exitCode": 1
+    },
+    "wholeProductSuiteRerun": false,
+    "actualNativeProcessTransitionsPerformed": false
+  },
+  "findings": [
+    {
+      "id": "successful_probe_facts_lost_on_later_wrapper_failure",
+      "severity": "P2",
+      "independentlyReviewed": true,
+      "locallyReproduced": true,
+      "corrected": false,
+      "observed": "After a simulated probe completed and closed its two owned descriptors, a subsequent outer deadline failure retained ownership but discarded the successful probe diagnostics."
+    },
+    {
+      "id": "inner_reader_clock_error_class_mismatch",
+      "severity": "P2",
+      "independentlyReviewed": true,
+      "locallyReproduced": true,
+      "corrected": false,
+      "observed": "A simulated backwards clock during the inner read was reported as unexpected_error rather than clock_backwards because separately compiled modules use distinct exception classes."
+    }
+  ],
+  "review": {
+    "sourceReviewOnly": true,
+    "independentlyReranTests": false,
+    "definiteP2Findings": 2
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "newDependencies": 0,
+    "privateSourceCommitted": false,
+    "priorRemoteQuotasNotReset": true
+  },
+  "acceptance": {
+    "allCurrentPrivateTestsPassed": false,
+    "nativeWrapperAccepted": false,
+    "nativeFdReceptionVerified": false,
+    "combinedResourceBudgetVerified": false,
+    "productionReady": false
+  },
+  "next": "Preserve this candidate and both failing reproductions. In a subsequent local step, retain completed probe facts before fallible outer checks and preserve clock error identity across the simulation boundary without weakening deadlines. No remote execution or publication follows from these results."
+}
