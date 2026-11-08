@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "schema-only-256k-offline-package-integration",
+  "status": "offline_integration_and_targeted_review_passed",
+  "bindings": {
+    "manifestSha256": "5523dc9557a4597d86d285d1e6a73df21dde1b1ad4301b0c3184823cdd820ff9",
+    "payloadSha256": "eaa655794d340f0d56ba92b79857a5ba4f56102de8e717fd585ba8dad2431a52",
+    "payloadBytes": 72130,
+    "bootstrapSha256": "1072af2bfd8e04a556579f10d7151f91c83fbba6e91de6f0fc18b5423d2fc7c0",
+    "runnerSha256": "f83ab2fe536f7e0a2479540a57f7d26b3c130219be57925051a0262599eaf161",
+    "sourceSha256": {
+      "native": "40de9e373c0eace404fb7cc9f1994ab239f2e3225ebb98fa803c5f705fc11cf3",
+      "collector": "200c59ce6cc6f97393b0d10b1376675dc05eee4b837b40b373d37594fc0d2189",
+      "bridge": "ae924fd5a0986529bca1970fce0c9234a571e42b7923b3d4d81110a4e7752931",
+      "probe": "dc71ff5e118f9452a3163b1bba36c4ee7c0c74c9d05126af7a233985fda76c0a"
+    },
+    "localFiles": [
+      {
+        "file": "build.ps1",
+        "sha256": "03b3daa49392350f6fb1de06f22b1ff86ad2ebd17fb1fb8206e5d0952a0178d8"
+      },
+      {
+        "file": "replay.log",
+        "sha256": "42a33705fc20b12819ff1da1e41f95a39d5cd0e94bf9b8ae03bd8e9c21750fe6"
+      },
+      {
+        "file": "runner.log",
+        "sha256": "eb27e3be3ee6ef8550c37ef2b2e3e7864961fb02a22134520cf15129dac05623"
+      },
+      {
+        "file": "test_bootstrap_chain.py",
+        "sha256": "a15f9d96dd064e3fcce1fa5af697cf217658bbf9828febbf79de8e32e70ad0d5"
+      }
+    ]
+  },
+  "tests": [
+    {
+      "group": "sealed_probe_and_schema_replay",
+      "total": 39,
+      "passed": 39,
+      "failures": 0,
+      "errors": 0,
+      "elapsedSeconds": 0.031
+    },
+    {
+      "group": "runner_and_bootstrap_parent_receipt_chain",
+      "total": 31,
+      "passed": 31,
+      "failures": 0,
+      "errors": 0,
+      "elapsedSeconds": 10.713
+    }
+  ],
+  "actualCombinedTestCommandExitCode": 0,
+  "coverage": {
+    "complete262144ByteXmlProcessedBySealedCollector": true,
+    "262145ByteXmlRejectedBySealedCollector": true,
+    "realBootstrapExecutedLocally": true,
+    "backendAndProcessOpsSimulated": true,
+    "onlyMetadataReturnedToParent": true,
+    "parentStrictFailureValidationPreserved": true,
+    "unknownCodesRejected": true,
+    "packetTamperRejected": true,
+    "callerArgvSnapshotRegressionPreserved": true,
+    "allEarlierReplayCasesRetainedWithExplicitScopeAdaptations": true
+  },
+  "limits": {
+    "regularCaptureBytes": 65536,
+    "schemaOnlyCaptureBytes": 262144,
+    "remoteOutputBytes": 16384,
+    "localWorkerReceiptBytes": 32768,
+    "windowsCommandCharacters": 30000,
+    "sourceBytes": 65536,
+    "remoteSeconds": 20,
+    "localTotalSeconds": 35
+  },
+  "review": {
+    "definiteP1": 0,
+    "definiteP2": 0,
+    "actualPackageHashesAndMemberHashesMatched": true,
+    "sourceOverridesMatchExactlyThreeChangedRoles": true,
+    "bridgeChangeLimitedToCollectorPin": true,
+    "runnerChangeLimitedToPackageBindings": true,
+    "baseDependencyManifestNotMisrepresentedAsFullCandidate": true,
+    "testExecutionByReviewer": false
+  },
+  "authorization": {
+    "newSshAllowanceGranted": false,
+    "previousAllowancesNotReset": true,
+    "newLinuxUnitAllowanceGranted": false,
+    "publicationAllowed": false
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "limitations": {
+    "actualRemoteXmlSize": "unknown",
+    "realSchemaCaptureAccepted": false,
+    "realSshEndToEndForNewPackageAccepted": false,
+    "combinedNativeBudgetAccepted": false,
+    "fullRepositoryRegressionClaimed": false,
+    "productionReady": false
+  },
+  "next": "Request exactly one fresh remote-20-second/local-35-second read-only verification using this package. No retry, new Linux unit, remote file write, service action or publication."
+}
