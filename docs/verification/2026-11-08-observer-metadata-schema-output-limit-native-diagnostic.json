@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "observedAt": "2026-11-08T03:28:27.7537858Z",
+  "stage": "observer-metadata-readonly-query-phase-diagnostic",
+  "status": "schema_capture_output_limit_confirmed",
+  "bindings": {
+    "runnerSha256": "3529d7ce7ad0be20b5e5de9921629ec2e01b29f08e43cf13a1f8549b324057a9",
+    "privateReceiptSha256": "58a552b513f8270a14d2295d01b58e686dee7d5a0006f93d54679d29a9b4e2ca",
+    "payloadSha256": "452b4a2fcb35bbc090a815c6885ed05d1e239df1c06ca2726b33ca02a6c76064",
+    "manifestSha256": "0e5204dfc3b7604d8cbda99765677ac2c0d71a079fbce5116ebb6f2962241832"
+  },
+  "authorization": {
+    "scope": "One new read-only attempt explicitly approved by the user.",
+    "maximumAttempts": 1,
+    "attemptsUsed": 1,
+    "remainingAttempts": 0,
+    "remoteSeconds": 20,
+    "localTotalSeconds": 35,
+    "automaticRetry": false
+  },
+  "execution": {
+    "elapsedSeconds": 2.009373,
+    "withinDeadline": true,
+    "actualLauncherExitCode": 2,
+    "workerExitCode": 2,
+    "workerExitObserved": true,
+    "workerTerminated": false,
+    "remoteExitCode": 2,
+    "remoteExitObserved": true,
+    "completed": true,
+    "stdinBytes": 71111,
+    "sentBytes": 71111,
+    "eofSent": true,
+    "stdoutBytes": 666,
+    "stdoutSha256": "282cb91c5f17c9614d3e5b26efb4eb683bb610036aecebff748495aba34b330a",
+    "stderrBytes": 0,
+    "transportOutputLimitExceeded": false,
+    "cleanupConfirmed": true,
+    "cleanupErrors": [],
+    "transportThreadStoppedBeforeHandleClose": true
+  },
+  "diagnosis": {
+    "phaseCode": "metadata_schema_failed",
+    "primaryCode": "output_limit",
+    "captureLimitBytes": 65536,
+    "exactXmlBytes": "unknown; query capture stopped at its existing limit",
+    "sshOutputTruncation": false,
+    "timeout": false,
+    "systemdVersionVerified": false,
+    "openFileSupportVerified": false,
+    "priorAttemptPhaseRetrospectivelyProven": false,
+    "cohostBeforeAfterComparisonCompleted": false
+  },
+  "effects": {
+    "linuxUnitsCreated": 0,
+    "serviceActions": 0,
+    "remoteWritesRequested": 0,
+    "publication": false,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "nativeEvidenceVerified": false,
+  "combinedBudgetVerified": false,
+  "productionReady": false,
+  "next": "Propose an independently bounded schema-only capture in a new private local candidate. Keep the general collector and SSH/receipt limits unchanged; require complete XML and reject overflow rather than truncate. Any increased schema bound and any further remote attempt require explicit scoped approval."
+}
