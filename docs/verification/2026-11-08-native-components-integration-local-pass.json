@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "pinned-components-local-integration-regression",
+  "status": "related_local_integration_checks_passed",
+  "sourceSha256": {
+    "integration.py": "f4a07ee1029ed5919779ae03bd19eaa3e4879446c5115b2b434e25cca871da6f",
+    "test_integration.py": "d6710b5fb55d616e603725eafafd62627ece2dcf567ff08dbc8d578bed724778",
+    "plan.json": "f49ccf97d965cc5dc40c200d6cdca9905b4aaa25f3f739528320febe1a26524f"
+  },
+  "implementationUnchanged": true,
+  "predecessorAndFailedAssertionPreserved": true,
+  "tests": {
+    "priorRun": {
+      "testsRun": 14,
+      "passed": 13,
+      "failures": 1,
+      "elapsedSeconds": 1.024,
+      "exitCode": 1
+    },
+    "finalRelatedDiscovery": {
+      "testsRun": 14,
+      "passed": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 0.987,
+      "exitCode": 0
+    },
+    "actualProducerMode": "simulated",
+    "specificNativeModeRejectionConfirmed": true,
+    "actualReaderFailureSchema": {
+      "primaryErrno": 5,
+      "cleanupErrno9ExplicitlyConfirmed": true,
+      "cleanupErrorsSpellingConfirmed": true,
+      "privateExceptionBodiesAbsent": true,
+      "payloadCloseCalls": [
+        3,
+        4
+      ]
+    },
+    "actualWrapperProbeReaderAndEntryFormatterUsedWithExplicitFakeProviders": true,
+    "nativeOperationsPerformed": false,
+    "wholeProductSuiteRerun": false
+  },
+  "independentReview": {
+    "implementationPreviouslyReviewed": true,
+    "exactTestOnlyDiffReviewed": true,
+    "assertionsRetainedAndStrengthened": true,
+    "newDefiniteP1P2Findings": 0,
+    "independentlyReranTests": false
+  },
+  "composition": {
+    "pinnedDependencyCount": 6,
+    "allDigestsCheckedBeforeDependencyCompile": true,
+    "contractCanonicalDigestBindsPlan": true,
+    "originalDeadlineAndErrorChannelsRetained": true,
+    "selfHashCycleAvoided": true,
+    "maximumBundleBytes": 262144,
+    "transportOrManagerLauncherImplemented": false
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "newDependencies": 0,
+    "privateSourceCommitted": false,
+    "priorRemoteAllowancesNotReset": true
+  },
+  "acceptance": {
+    "relatedLocalIntegrationChecksPassed": true,
+    "nativeEvidenceVerified": false,
+    "clockDomainVerified": false,
+    "receiptSourceVerified": false,
+    "processCensusSourceVerified": false,
+    "nativeUnitAppliedVerified": false,
+    "externalHardDeadlineVerified": false,
+    "combinedResourceBudgetVerified": false,
+    "productionReady": false
+  },
+  "next": {
+    "local": "Prepare and review a fixed-scope read-only host preflight before any new connection; continue bounded local integration work without native or production actions.",
+    "requestedKeyAuthorization": "One fresh SSH read-only preflight, remote 20 seconds/local 35 seconds, no automatic retry: protected four-service baseline, systemd/Python support, preselected existing nonbusiness identity, and two fixed parent cgroup file metadata records. No units, service actions, business databases or model credentials.",
+    "authorizationGranted": false,
+    "remoteAllowanceRenewed": false,
+    "overallDelivery": "Incomplete; native supervision, resource/identity evidence and production acceptance remain pending."
+  }
+}
