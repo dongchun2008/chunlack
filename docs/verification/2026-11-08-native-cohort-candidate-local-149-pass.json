@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local-only common-parent cohort candidate adaptation and review",
+  "previousCandidateManifestSha256": "fba86473e067826ce9c27236dcd8ebe6f9898f6cadaf02f2a32d0b9d38d92364",
+  "candidate": {
+    "tag": "native-cohort-candidate-20261108-a1",
+    "manifestSha256": "4ecb274ee4c1993ff374e7f0bfc17b41f627c6fdb57fd38e56ab8301b1cabce0",
+    "sourceFiles": 10,
+    "fixtureFiles": 13,
+    "copiedBytes": 225314,
+    "oldPackageModified": false,
+    "hashesVerifiedBeforeEachGroupAndAfterAllGroups": true,
+    "sourceHashes": {
+      "baseline": "7f9376bdf3711794ace2e297ebadaae8f65f51d3241dfc94a7aeb61d9305e934",
+      "bridge": "b1ba8f134699cc93258af2fffe107d61e68dd05d9d270658b2e85bc49079ff70",
+      "collector": "9d48c4040cdb38cc3b89c1ebbbe845289e18b5b513db1ce20d5af39dba8b4fb7",
+      "evidence": "b53561f5d112acd6f1dc5ecf22a0bc30c6ae88139dd7821c443ddd6cbb50be67",
+      "inventory": "264becc1c4b99ef6d3b12b0d12827841ac0c24bc42302536e12277072b1aea71",
+      "launch": "2446499652d5a3f17ab7783dc277b73e2ccef480a199b8aaeea0d5432edb718c",
+      "metrics": "9893b9cda81b4d2c3252a9b744224a12cbec18ca4bc8534994d96b2ec5c8f1c7",
+      "native": "40de9e373c0eace404fb7cc9f1994ab239f2e3225ebb98fa803c5f705fc11cf3",
+      "support": "b71cdcb41294d8fc5e5e6fe093b8d9f0d3423d5fce127333db20a8d212fc11db",
+      "cohort": "52bb1b7dd12e3efa8819f2d32bf1d68e3857b276d87302b008fdfa4c9462997b"
+    }
+  },
+  "implementation": {
+    "nonceDerivedParentSlice": true,
+    "workerRuntimeAndTerminalPathAligned": true,
+    "launchSliceAssignmentAligned": true,
+    "metricsAndEvidencePathsAligned": true,
+    "memberInvocationsIndependentlyBound": true,
+    "arbitraryCgroupPrefixAccepted": false,
+    "workerUid": 996,
+    "workerGid": 987,
+    "workerZeroCapabilities": true,
+    "workerNoNewPrivileges": true,
+    "sourceClosureUpdated": true,
+    "actualParentSliceCreationImplemented": false,
+    "observerLauncherImplemented": false,
+    "unifiedOuterDeadlineImplemented": false
+  },
+  "validation": {
+    "preAdaptationCohortRegression": {
+      "tests": 18,
+      "passed": 15,
+      "failures": 3,
+      "errors": 0,
+      "elapsedSeconds": 0.008
+    },
+    "sealedCandidateGroups": {
+      "contract": {
+        "tests": 52,
+        "exitCode": 0,
+        "elapsedSeconds": 0.394344
+      },
+      "worker": {
+        "tests": 33,
+        "exitCode": 0,
+        "elapsedSeconds": 0.420786
+      },
+      "baseline": {
+        "tests": 46,
+        "exitCode": 0,
+        "elapsedSeconds": 0.653056
+      },
+      "cohort": {
+        "tests": 18,
+        "exitCode": 0,
+        "elapsedSeconds": 0.244054
+      }
+    },
+    "totalTests": 149,
+    "passed": 149,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "aggregateExitCode": 0,
+    "eachGroupTimeoutSeconds": 90,
+    "automaticRetries": 0,
+    "actualLinuxRun": false,
+    "fullProductRegressionRun": false
+  },
+  "independentReview": {
+    "completed": true,
+    "definiteP1": 0,
+    "definiteP2": 0,
+    "manifestAndMemberHashesVerified": true,
+    "changedSourceScopeConsistent": true,
+    "oldServiceAllowlistNotExpanded": true,
+    "metadataChecksNotMistakenForNativeProof": true,
+    "reviewerRanTests": false
+  },
+  "safety": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "parentSlicesCreated": 0,
+    "remoteWrites": false,
+    "serviceControl": false,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "privateSourcesSubmitted": false
+  },
+  "interpretation": {
+    "localCandidateReviewed": true,
+    "nativeExecutionEnabled": false,
+    "nativeEvidenceVerified": false,
+    "combinedBudgetVerified": false,
+    "allDescendantsEnumerated": false,
+    "productionReady": false,
+    "goalComplete": false
+  },
+  "remaining": [
+    "Implement a unified monotonic outer deadline, reserved cleanup budget and an explicitly bounded admission/finalization boundary.",
+    "Implement and bind actual observer execution and complete parent-subtree resource acquisition; configuration metadata alone is insufficient.",
+    "Verify fresh host support and actual runtime/backup locations before separately scoped native validation.",
+    "Complete compatibility, backup/recovery, protected-service baseline, maintenance and real-use production delivery gates."
+  ]
+}
