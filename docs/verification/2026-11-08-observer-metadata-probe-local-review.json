@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local preparation of a bounded read-only observer metadata probe; no SSH execution",
+  "preparedQueries": [
+    "Four fixed protected services: Id/state/PID/restart counters before and after",
+    "Running systemd Manager.Version scalar",
+    "Existing protected service OpenFile property schema only",
+    "Self/PID1 namespace and capability metadata",
+    "Available/enabled cgroup controllers",
+    "Two protected runtime executable links and kernel start times"
+  ],
+  "implementation": {
+    "fixedQueryKinds": true,
+    "readAllowlist": true,
+    "processIdsBoundToProtectedServiceSnapshot": true,
+    "pidReuseRejected": true,
+    "businessConfigurationRead": false,
+    "environmentRead": false,
+    "serviceControl": false,
+    "remoteHardTimeoutStillRequired": true,
+    "transportNotConnected": true
+  },
+  "validation": {
+    "initialLocalGroup": {
+      "tests": 10,
+      "passed": 10,
+      "failures": 0,
+      "errors": 0,
+      "elapsedSeconds": 0.005
+    },
+    "reviewRegression": {
+      "tests": 1,
+      "passed": 0,
+      "failures": 1,
+      "errors": 0,
+      "elapsedSeconds": 0.003,
+      "case": "test_late_query_cannot_be_accepted_by_a_transient_clock_regression"
+    },
+    "previous173CasesNotRerun": true,
+    "actualLinuxRun": false
+  },
+  "independentReview": {
+    "completed": true,
+    "definiteP1": 0,
+    "definiteP2": 1,
+    "finding": "One post-query clock read bypasses the shared finite/type/non-regression guard, so a transient injected regression can mask an already observed per-query timeout.",
+    "deterministicallyReproduced": true,
+    "notAnObservedVpsFailure": true,
+    "scopeAndNestedCleanupPreservationNoFurtherDefiniteFinding": true
+  },
+  "nextLocalCorrection": "Use a uniformly guarded clock sample for the query-end deadline check, add clock-boundary regressions, then rerun the affected local probe suite.",
+  "authorization": {
+    "newSshAllowanceExplicitlyConfirmed": false,
+    "newSshAttemptsUsed": 0,
+    "proposedMaximumAttempts": 1,
+    "proposedRemoteSeconds": 20,
+    "proposedLocalTotalSeconds": 35,
+    "automaticRetry": false,
+    "oldAllowancesReused": false
+  },
+  "safety": {
+    "linuxUnitsCreated": 0,
+    "remoteWrites": false,
+    "serviceControl": false,
+    "productionPublication": false,
+    "credentialOutput": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "privateSourcesSubmitted": false
+  },
+  "interpretation": {
+    "localProbeReady": false,
+    "nativeEvidenceVerified": false,
+    "combinedBudgetVerified": false,
+    "productionReady": false,
+    "goalComplete": false
+  }
+}
