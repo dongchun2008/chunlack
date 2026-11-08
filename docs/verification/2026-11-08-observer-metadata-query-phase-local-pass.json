@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "observer-metadata-query-phase-local-diagnostics",
+  "status": "local_tests_and_targeted_review_passed",
+  "candidate": {
+    "scope": "New private probe copy only; the sealed remote package and live runner remain unchanged.",
+    "probeSha256": "d3c886d1e5690f74fdd7ff20cd0a179a5db569e1f042ed4098b6c7c86ee5075a",
+    "newTestSha256": "650c0702e5c5dc98b7db56649ecac62fd467b05ca8a8c487eb110a8d6c46874f"
+  },
+  "reproduction": {
+    "targetedTestMethods": 2,
+    "expectedFailingSubtestsOnOriginal": 8,
+    "elapsedSeconds": 0.008,
+    "logSha256": "ac2912ade68ae41bc9445a790c9e3a4819da4d86f605a26c1f8abe230f60fa99"
+  },
+  "regression": {
+    "total": 25,
+    "passed": 25,
+    "failures": 0,
+    "errors": 0,
+    "elapsedSeconds": 0.017,
+    "processExitCode": 0,
+    "existingProbeTests": 17,
+    "newTestMethods": 8,
+    "logSha256": "d639569fd8c04e10e7efc7cc251812e5ff212d286bec9c2870b2591fdb6b235c"
+  },
+  "changes": {
+    "fixedQueryFailureCodes": [
+      "metadata_services_before_failed",
+      "metadata_version_failed",
+      "metadata_schema_failed",
+      "metadata_services_after_failed"
+    ],
+    "originalExceptionIdentityPreserved": true,
+    "cleanupErrorsPreserved": true,
+    "nonQueryErrorsDoNotInheritLastQueryCode": true,
+    "noNewOuterReceiptFields": true,
+    "captureLimitBytes": 65536,
+    "captureLimitRaised": false,
+    "queryCommandsUnchanged": true,
+    "xmlOnlySchemaQueryRetained": true,
+    "noPropertyValueQueriesAdded": true
+  },
+  "review": {
+    "definiteP1": 0,
+    "definiteP2": 0,
+    "scope": "Read-only review of the new private probe and new test file; tests were executed independently by the main agent.",
+    "remainingGate": "Full offline source/payload/bootstrap/manifest/runner hash closure and end-to-end failure-receipt validation; unknown diagnostic codes must remain rejected."
+  },
+  "research": {
+    "source": "https://github.com/systemd/systemd/blob/v249/src/busctl/busctl.c#L916-L924",
+    "confirmedForReferencedImplementation": "XML mode prints the received XML before the normal interface-filtered output path.",
+    "currentVpsVersionKnown": false
+  },
+  "limitations": {
+    "actualPreviousRemoteFailurePhase": "unknown",
+    "outputLimitRootCauseFixed": false,
+    "packageIntegrationVerified": false,
+    "nativeEvidenceVerified": false,
+    "combinedBudgetVerified": false,
+    "productionReady": false
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "next": "Complete offline hash-bound packaging and receipt-chain tests before requesting any further bounded remote diagnostic. Do not retry the exhausted prior authorization."
+}
