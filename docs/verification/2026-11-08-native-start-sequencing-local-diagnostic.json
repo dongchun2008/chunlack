@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local generated-command sequencing check before unified native orchestration",
+  "candidateManifestSha256": "4ecb274ee4c1993ff374e7f0bfc17b41f627c6fdb57fd38e56ab8301b1cabce0",
+  "launchSourceSha256": "2446499652d5a3f17ab7783dc277b73e2ccef480a199b8aaeea0d5432edb718c",
+  "finding": {
+    "missingOption": "--no-block",
+    "generatedOccurrences": 0,
+    "requiredOccurrences": 1,
+    "reason": "The observer needs an activating/start oneshot sample. Without nonblocking submission, the launcher waits for unit startup completion, conflicting with that lifecycle window.",
+    "nativeBehaviorObserved": false,
+    "productionFailureObserved": false
+  },
+  "primarySource": {
+    "url": "https://www.freedesktop.org/software/systemd/man/latest/systemd-run.html#--no-block",
+    "interpretation": "Protocol/lifecycle inference from primary documentation, not a measurement of the VPS systemd version."
+  },
+  "validation": {
+    "tests": 4,
+    "passed": 3,
+    "failures": 1,
+    "errors": 0,
+    "elapsedSeconds": 0.002,
+    "failedCase": "test_oneshot_submission_does_not_wait_for_worker_completion",
+    "preservedPassingBoundaries": [
+      "Exact nonce-derived slice",
+      "UID/GID, zero capability and sandbox/resource properties",
+      "Native execution remains disabled"
+    ],
+    "previous149CasesNotRerun": true,
+    "previousCoverageDidNotVerifyNonblockingSubmission": true
+  },
+  "nextLocalCorrection": [
+    "Create a new candidate copy, never overwrite the sealed 149-case candidate.",
+    "Require exactly one nonblocking flag, no conflicting wait/pipe/pty/scope flags, and update dependent source hashes.",
+    "Do not treat successful submission as startup or completion proof; independently bind invocation/PID/state, then retain actual terminal proof.",
+    "Integrate one monotonic outer deadline and reserved cleanup budget without retries or resetting phase allowances."
+  ],
+  "safety": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "remoteWrites": false,
+    "serviceControl": false,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "privateSourcesSubmitted": false,
+    "oldCandidatesModified": false
+  },
+  "interpretation": {
+    "sequencingGatePassed": false,
+    "nativeEvidenceVerified": false,
+    "combinedBudgetVerified": false,
+    "productionReady": false,
+    "goalComplete": false
+  }
+}
