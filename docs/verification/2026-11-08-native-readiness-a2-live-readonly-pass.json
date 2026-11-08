@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "One newly approved bounded read-only SSH native-context readiness check",
+  "authorization": {
+    "newSshAllowance": 1,
+    "newSshAttemptsUsed": 1,
+    "automaticRetry": false,
+    "previousAllowance": {
+      "allowed": 1,
+      "used": 1,
+      "result": "failed_outer_result_preserved"
+    },
+    "linuxUnitsCreated": 0,
+    "remoteSeconds": 20,
+    "localSeconds": 35
+  },
+  "candidate": {
+    "runnerSha256": "b09250a5e0495f90b9635f0c4196a7fc06203322532cc6e2f7e8ed7919ea4e98",
+    "adapterSha256": "98e99a47b5e481fc0326c9bc81b5b273445c7d4c102bb7e8b89b60dae1aeeb83",
+    "transportSha256": "9285484e9b86c50ff1eebffcf47a6db95bf232c50cf19088bc77e53e6ac5c11a",
+    "bootstrapSha256": "ff6dce2292dc0503a49d2f7ae8e43f95605ccfae4c034b039dd302d97bec173f",
+    "payloadSha256": "36c35d780d1307529f97e206d6d39b8e699acaa280a551ce7f4c2fcff6b17097",
+    "allFivePinsCheckedBeforeLaunch": true,
+    "localTestsRerun": false
+  },
+  "terminal": {
+    "outerExitCode": 0,
+    "workerExitCode": 0,
+    "workerExitObserved": true,
+    "workerForceTerminated": false,
+    "status": "passed",
+    "recordedElapsedSeconds": 7.96051,
+    "within35SecondAcceptanceDeadline": true,
+    "provisionalReceipt": true,
+    "successfulTerminalExitObserved": true
+  },
+  "remote": {
+    "probe": "native_exclusive_reaping_readiness",
+    "status": "passed",
+    "sourceSha256": "9d48c4040cdb38cc3b89c1ebbbe845289e18b5b513db1ce20d5af39dba8b4fb7",
+    "sourceAndNonceMatched": true,
+    "kernelContextChecks": 2,
+    "readOnly": true,
+    "businessChildren": 0,
+    "signalsSent": 0,
+    "linuxUnitsCreated": 0
+  },
+  "transport": {
+    "exitCode": 0,
+    "inputBytes": 29742,
+    "sentBytes": 29742,
+    "eofSent": true,
+    "exitObserved": true,
+    "completed": true,
+    "outputLimitExceeded": false,
+    "stdoutBytes": 374,
+    "stdoutSha256": "dd863261ee5e533339c27d1fe7c717d236252d950ff6560255d29f5417026117",
+    "stderrBytes": 0,
+    "channelClosedAtExitObservation": false,
+    "localWorkerStderrEmpty": true
+  },
+  "cleanup": {
+    "confirmed": true,
+    "deadlineExhausted": false,
+    "timedOut": false,
+    "errors": [],
+    "pendingHandles": [],
+    "lateHandles": [],
+    "shutdownAttempted": true,
+    "joinAttempted": true,
+    "threadStoppedBeforeHandleClose": true,
+    "transportThreadStopped": true,
+    "terminalBefore": null,
+    "terminalAfterType": "EOFError",
+    "terminalDisposition": "expected_eof_after_write_shutdown",
+    "elapsedSeconds": 0.025241,
+    "allOwnedHandleCompletionsWithinBudget": true
+  },
+  "interpretation": {
+    "readinessAccepted": true,
+    "fullCollectorQueryWorkflowExecuted": false,
+    "hardwareCapacityAccepted": false,
+    "productionReady": false,
+    "goalComplete": false,
+    "relayForwardingPerformanceMeasured": false
+  },
+  "safety": {
+    "remoteFileWrites": false,
+    "serviceControl": false,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "remainingGates": [
+    "Execute and accept the full bounded native collector/census workflow under a separately authorized scope.",
+    "Complete fresh capacity, source/configuration, compatibility, backup/rollback and maintenance gates before publication.",
+    "Keep real production and external-Agent acceptance separate from this process-context probe."
+  ]
+}
