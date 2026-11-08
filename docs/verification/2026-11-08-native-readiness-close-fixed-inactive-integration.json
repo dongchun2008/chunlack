@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local ordered-close correction and inactive readiness-runner integration only",
+  "previousSsh": {
+    "used": 1,
+    "allowed": 1,
+    "additionalAttempts": 0,
+    "originalOuterResult": "failed_and_preserved",
+    "originalNativeContextSubresult": "passed"
+  },
+  "closeCorrection": {
+    "status": "local_tests_passed",
+    "adapterSha256": "98e99a47b5e481fc0326c9bc81b5b273445c7d4c102bb7e8b89b60dae1aeeb83",
+    "changes": [
+      "Use exact-owned socket write-half-close rather than disabling both directions.",
+      "Attempt bounded thread join independently after shutdown failure.",
+      "Retain pre-existing and final transport exceptions plus errno/winerror without raw text.",
+      "Reject unclassified terminal errors, surviving threads, late cleanup or unconfirmed original closer.",
+      "Verify Paramiko version and transport source identity before use."
+    ],
+    "logFiltering": false,
+    "outerStderrRejectionRetained": true,
+    "tests": {
+      "originalSynthetic": {
+        "tests": 12,
+        "passed": 12,
+        "failed": 0,
+        "seconds": 0.004
+      },
+      "newFailureCases": {
+        "tests": 11,
+        "passed": 11,
+        "failed": 0,
+        "seconds": 0.037
+      },
+      "realLoopbackSsh": {
+        "tests": 2,
+        "passed": 2,
+        "failed": 0,
+        "seconds": 0.201,
+        "baselineSocketFirst": "10038_reproduced",
+        "orderedClose": "no_error_logs_and_transport_thread_stopped"
+      }
+    },
+    "reviewedFindings": {
+      "originalP2": 2,
+      "status": "corrected_with_red_to_green_tests",
+      "secondReviewOfSameFix": false
+    }
+  },
+  "inactiveIntegration": {
+    "status": "not_accepted_pending_one_fix",
+    "candidate": "native-readiness-ssh-20261108-a2",
+    "oldRunnerAndAttemptModified": false,
+    "adapterExecution": "compile_exact_hash_verified_bytes",
+    "parentReceipt": "requires_adapter_and_dependency_bindings",
+    "paramiko": {
+      "version": "5.0.0",
+      "transportSourceSha256": "ef8b178b71d4bbd6f93373b334e040cfdab21404d1cbce621c71ae57cf567136"
+    },
+    "originalRunnerTests": {
+      "tests": 16,
+      "passed": 16,
+      "failed": 0,
+      "seconds": 0.007
+    },
+    "newIntegrationTests": {
+      "tests": 8,
+      "passed": 8,
+      "failed": 0,
+      "seconds": 0.51
+    },
+    "independentReview": {
+      "p1": 0,
+      "p2": 1,
+      "newWiringFindings": 0,
+      "remainingFinding": "Default buffered stdout emission can flush only after the final deadline check."
+    },
+    "addedReproduction": {
+      "tests": 2,
+      "passed": 1,
+      "failed": 1,
+      "seconds": 0.898,
+      "failedCase": "Default emitter returns zero before a simulated late flush.",
+      "passingCase": "Returned dependency-binding mismatch is rejected before Session wrapping."
+    }
+  },
+  "counts": {
+    "totalRelatedCases": 51,
+    "passed": 50,
+    "failed": 1,
+    "meaning": "Separate local suites, not a full product or production regression."
+  },
+  "remainingAction": "Explicitly flush default output before the final clock check, retain the failing reproduction, and rerun related local tests. A further SSH attempt requires a new explicit bounded approval.",
+  "safety": {
+    "newLinuxUnits": 0,
+    "newVpsConnections": 0,
+    "productionServiceControl": false,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "modelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "productionReady": false,
+  "goalComplete": false
+}
