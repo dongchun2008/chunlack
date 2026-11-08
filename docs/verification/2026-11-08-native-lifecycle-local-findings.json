@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "local-deadline-and-terminal-evidence-protocol",
+  "status": "not_accepted_boundary_reproductions_fail",
+  "sourceSha256": {
+    "lifecycle.py": "a8c04ba67dbd53caa2d99175f6dfa85e05668e129c891e47c49526814a0a9244",
+    "test_lifecycle.py": "3497e671999e103dc01f14170063a3ed4b3677fb523c5d8876dcf0bf5df2dea7",
+    "test_lifecycle_edges.py": "d07b29ff93ea876443b86a76a0e04f6081fb90315413b2294e7b5db6de3ccba4",
+    "plan.json": "5c8935d4ffd5de4f018f65686b72192ac5f3c546868bc5e3eb8409b64639797c"
+  },
+  "tests": {
+    "missingModuleRed": {
+      "testsRun": 1,
+      "failures": 1,
+      "elapsedSeconds": 0.001,
+      "exitCode": 1
+    },
+    "initialRelatedLocalDiscovery": {
+      "testsRun": 20,
+      "passed": 20,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 0.137,
+      "exitCode": 0
+    },
+    "additionalBoundaryReproductions": {
+      "testsRun": 3,
+      "passed": 0,
+      "failures": 3,
+      "errors": 0,
+      "elapsedSeconds": 0.027,
+      "exitCode": 1
+    },
+    "wholeProductSuiteRerun": false,
+    "nativeOrManagerOperationsPerformed": false,
+    "fixturesSynthetic": true,
+    "additionalFailedStateReproduction": {
+      "testsRun": 1,
+      "passed": 0,
+      "failures": 1,
+      "errors": 0,
+      "elapsedSeconds": 0.011,
+      "exitCode": 1
+    }
+  },
+  "policy": {
+    "singleTotalSeconds": 10,
+    "stageCutoffsSeconds": {
+      "start": 1,
+      "observe": 8,
+      "stop": 9,
+      "terminal": 10
+    },
+    "oneInflightTicket": true,
+    "startAndStopReservedAtMostOnce": true,
+    "originalAndCleanupErrorsSeparate": true,
+    "completeReceiptAndRealExitFieldsRequired": true,
+    "cgroupAbsenceDoesNotCreateCensus": true,
+    "reportedCompletionFactsRetainedBeforeFinalClockCheck": true,
+    "managerStartTimestampNotClaimedAsProcStarttime": true,
+    "callbacksNotInterruptedByThisModule": true,
+    "externalWatchdogImplemented": false
+  },
+  "findings": [
+    {
+      "id": "terminal_numeric_identity_type_gap",
+      "severity": "P2",
+      "locallyReproduced": true,
+      "corrected": false,
+      "evidence": "A terminal ExecMainPID float and manager start timestamp float numerically equal to the start identity both passed supplied-evidence consistency.",
+      "independentlyReviewed": true
+    },
+    {
+      "id": "terminal_state_blocks_necessary_cleanup_intent",
+      "severity": "P2",
+      "locallyReproduced": true,
+      "corrected": false,
+      "evidence": "After terminal completion, a previously unused overdue stop-intent reservation was rejected as call_limit instead of recording necessary cleanup without renewing its timeout.",
+      "independentlyReviewed": true
+    },
+    {
+      "id": "failed_unit_state_promoted_to_success_policy",
+      "severity": "P2",
+      "independentlyReviewed": true,
+      "locallyReproduced": true,
+      "corrected": false,
+      "evidence": "With failed/failed unit state and main exit code/status 1/0, supplied-evidence consistency still returned true. Cleanup facts and successful policy must be separate."
+    }
+  ],
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "newDependencies": 0,
+    "privateSourceCommitted": false,
+    "priorRemoteAllowancesNotReset": true
+  },
+  "acceptance": {
+    "allCurrentPrivateTestsPassed": false,
+    "lifecycleProtocolAccepted": false,
+    "nativeEvidenceVerified": false,
+    "clockDomainVerified": false,
+    "receiptSourceVerified": false,
+    "processCensusSourceVerified": false,
+    "externalHardDeadlineVerified": false,
+    "combinedResourceBudgetVerified": false,
+    "productionReady": false
+  },
+  "bindings": {
+    "initialEdgeReproductionSha256": "0327546e210fb51e2c5a5e0f10c1cc9b28363d004a0eec39b2bda4bdae8706c6",
+    "finalEdgeReproductionSha256": "d07b29ff93ea876443b86a76a0e04f6081fb90315413b2294e7b5db6de3ccba4"
+  },
+  "independentReview": {
+    "filesReadOnce": [
+      "lifecycle.py",
+      "test_lifecycle.py"
+    ],
+    "outputComplete": true,
+    "definiteP2Findings": 3,
+    "independentlyReranTests": false,
+    "coverageLimitation": "Early validation failures can exit before later component facts are parsed; final-clock fact preservation is not proof that every failure path retains all facts."
+  },
+  "scopeLimitations": [
+    "This module validates supplied temporal/correlation evidence only. It does not perform source authentication, complete identity semantics, native census or manager operations.",
+    "Manager ExecMainStartTimestampMonotonic is not /proc process starttime.",
+    "The contract digest is a correlation input, not a live property or provenance verification.",
+    "Budget tickets do not interrupt blocking operations, confer identity authority, or implement an external watchdog."
+  ],
+  "next": "Preserve this candidate and all four failing cases. In a new local candidate, enforce exact terminal numeric identity types, permit only previously unused necessary post-terminal cleanup intent without renewed timeout or success promotion, and require inactive/dead state for successful policy while retaining stopped/failed cleanup facts. Run the related local regressions and review before any native integration. No remote quota or publication is authorized here."
+}
