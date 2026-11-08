@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "same-pid-wrapper-local-diagnostic-boundary-correction",
+  "status": "implementation_regressions_passed_extended_fixture_errors_remain",
+  "sourceSha256": {
+    "plan.json": "2e74440fdd060f13cb36868cf5a6a1ae3d18d215cff6a0ea7ee98468d2bbc1b4",
+    "wrapper.py": "41ed2464c5e0167968bf67bb67c2396b5b9efa9a4ba51b166402cd93230ea4e5",
+    "probe.py": "7d8fb6d588df3b281d12ca5012e9470e76fbfa97761ddc10c604fb14140fc024",
+    "reader.py": "8bb5c9bf7cda997631ac9bdd648dd6ab66a9de034d3f90f46ed3f8bb4b54d012",
+    "test_wrapper.py": "2e3dc577bdca5593c42883686f388ecb45a4f487c8583837798ec1396fcea630",
+    "test_wrapper_boundaries.py": "8fa1378b3f36a21bb7cc6c4cb0dda9af0316e533baa999e58a89303e3c477771",
+    "test_clock_handoff.py": "05ea79ee5c3ac293fcec760c532df605da4f769196b617fd38770481096c4660",
+    "test_deadline_cap.py": "a29e362acc3094372ca049a9e72b4e69ac52d37af7f89b100c5b6bf6fcca3afe"
+  },
+  "changes": {
+    "completedProbeFactsRetainedBeforeOuterChecks": true,
+    "innerClockUsesItsOwnReaderFaultClass": true,
+    "successfulProbeClockCheckpointCarriedBack": true,
+    "probeAndReaderBytesUnchanged": true,
+    "originalCandidatePreserved": true
+  },
+  "tests": {
+    "firstRelatedRegression": {
+      "testsRun": 73,
+      "passed": 73,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 0.801,
+      "exitCode": 0
+    },
+    "extendedRegression": {
+      "testsRun": 76,
+      "passed": 74,
+      "failures": 0,
+      "errors": 2,
+      "skipped": 0,
+      "elapsedSeconds": 0.849,
+      "exitCode": 1
+    },
+    "originalTwoFailureReproductionsNowPass": true,
+    "remainingErrors": [
+      {
+        "test": "test_first_probe_sample_cannot_precede_outer_checkpoint",
+        "kind": "AttributeError",
+        "cause": "New fixture calls closed() on ProbeTests rather than the existing descriptor fixture."
+      },
+      {
+        "test": "test_outer_checkpoint_includes_last_successful_probe_sample",
+        "kind": "AttributeError",
+        "cause": "Same new fixture ownership-level mistake."
+      }
+    ],
+    "remainingFixtureErrorsCorrected": false,
+    "wholeProductSuiteRerun": false,
+    "nativeModeExecuted": false
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "newDependencies": 0,
+    "privateSourceCommitted": false,
+    "priorRemoteQuotasNotReset": true
+  },
+  "acceptance": {
+    "allCurrentPrivateTestsPassed": false,
+    "nativeWrapperAccepted": false,
+    "nativeFdReceptionVerified": false,
+    "combinedResourceBudgetVerified": false,
+    "productionReady": false
+  },
+  "next": "Preserve the extended failure report. In a subsequent local step, correct only the two test fixture descriptor-evidence references, retaining every assertion and original budget, then rerun related local checks and review. No remote operation or publication is authorized by this record.",
+  "independentReview": {
+    "filesReadOnce": [
+      "wrapper.py",
+      "test_clock_handoff.py"
+    ],
+    "outputComplete": true,
+    "originalTwoP2ImplementationFindingsResolved": true,
+    "newDefiniteP1P2ImplementationFindings": 0,
+    "fixtureErrorReference": "case.case.reader_case.closed()",
+    "independentlyReranTests": false,
+    "coverageLimitation": "The new invalid-scalar test injects at the reader's first clock check before descriptor ownership; it does not prove post-ownership invalid-clock cleanup."
+  }
+}
