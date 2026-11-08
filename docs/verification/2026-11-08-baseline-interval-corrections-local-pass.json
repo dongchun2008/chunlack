@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local correction pass for baseline acquisition timing and runtime-map ownership",
+  "priorEvidence": {
+    "record": "2026-11-08-baseline-acquisition-local-review.json",
+    "reviewP1": 0,
+    "reviewP2": 2,
+    "deterministicFailingBoundaryCases": 2,
+    "oldFailureRecordPreserved": true
+  },
+  "corrections": [
+    "Protection and headroom samples now require an explicit start/end interval and captured time equal to the interval end.",
+    "Before evidence must finish before worker start; after evidence must begin after final worker confirmation.",
+    "Preflight and bundle freshness use the earliest observation of before evidence, preventing late completion from hiding stale reads.",
+    "Runtime mapping is privately copied before validation and owner initialization; only literal keys are accepted and the validated mapping is retained read-only."
+  ],
+  "validation": {
+    "executionMode": "Three sequential unittest discovery invocations; combined command explicitly failed if any saved exit code was nonzero.",
+    "baselineAcquisitionGroup": {
+      "exitCode": 0,
+      "reportedTests": null,
+      "expectedCasesFromLocalSuite": 46,
+      "countNotClaimedAsObserved": true,
+      "summaryOutputTruncated": true
+    },
+    "evidenceContractGroup": {
+      "exitCode": 0,
+      "tests": 52,
+      "failures": 0,
+      "errors": 0,
+      "elapsedSeconds": 0.102
+    },
+    "workerAcquisitionGroup": {
+      "exitCode": 0,
+      "tests": 33,
+      "failures": 0,
+      "errors": 0,
+      "elapsedSeconds": 0.058
+    },
+    "aggregateExitCode": 0,
+    "fullProductRegressionRun": false,
+    "actualLinuxRun": false,
+    "repeatIndependentReview": false,
+    "addedBoundaries": [
+      "Overlapping after sampling across worker completion",
+      "Earliest-read freshness in preflight and bundle",
+      "Missing, inverted, mismatched or boolean interval fields",
+      "Before completion and both after starts enclosing worker execution",
+      "Caller-owned mapping changes during and after initialization",
+      "Read-only validated mapping and rejection before owner initialization"
+    ]
+  },
+  "safety": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "remoteWrites": false,
+    "serviceControl": false,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "privateSourcesSubmitted": false,
+    "oldFrozenModulesModified": false
+  },
+  "interpretation": {
+    "localCorrectionGroupsPassed": true,
+    "nativeEvidenceVerified": false,
+    "combinedObserverWorkerBudgetVerified": false,
+    "hardwareCapacityAccepted": false,
+    "backupAdequacyVerified": false,
+    "productionReady": false,
+    "goalComplete": false
+  },
+  "remaining": [
+    "Bind all corrected local producer/contract sources and frozen dependencies into a new isolated native candidate, preserving old packages.",
+    "Bind actual runtime and backup paths using fresh deployment evidence before native acquisition.",
+    "Integrate bounded whole-chain native collection and validate real resource accounting before capacity acceptance.",
+    "Retain compatibility, consistent backup, recovery, co-host baseline and maintenance gates before production delivery."
+  ]
+}
