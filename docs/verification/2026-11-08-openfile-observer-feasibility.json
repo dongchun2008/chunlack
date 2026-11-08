@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "openfile-observer-feasibility-design",
+  "status": "conditional_local_design_reviewed",
+  "nativeEvidenceReference": "docs/verification/2026-11-08-schema-capture-native-readonly-pass.json",
+  "verifiedHostFacts": {
+    "systemdMajor": 255,
+    "openFileSignature": "a(sst)",
+    "openFileDescriptorHandoffVerified": false
+  },
+  "currentImplementation": {
+    "nativeSourceSha256": "40de9e373c0eace404fb7cc9f1994ab239f2e3225ebb98fa803c5f705fc11cf3",
+    "nativeReaderRequiresLinuxRoot": true,
+    "trustedHostViewRequiresSelfAndPid1MountAndCgroupNamespacesToMatch": true,
+    "existingReaderAndNativeGradingMustRemainUnchanged": true
+  },
+  "primarySources": [
+    {
+      "url": "https://www.freedesktop.org/software/systemd/man/255/systemd.service.html#OpenFile=",
+      "supports": "OpenFile passes manager-opened descriptors; read-only must be explicit. Missing files must not use graceful suppression."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v255/src/shared/open-file.h",
+      "supports": "The reference READ_ONLY flag is 1; append/truncate/graceful are separate flags."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/exec-invoke.c",
+      "supports": "Reference implementation opens the path and reopens non-socket descriptors using access flags. This is not a VPS descriptor-transfer test."
+    },
+    {
+      "url": "https://www.freedesktop.org/software/systemd/man/255/sd_listen_fds.html",
+      "supports": "Named descriptors use LISTEN_PID/LISTEN_FDS/LISTEN_FDNAMES and start at descriptor 3. These environment fields alone are not authentication."
+    },
+    {
+      "url": "https://man7.org/linux/man-pages/man2/open.2.html",
+      "supports": "An O_RDONLY directory can be a dirfd for openat; read-only directory descriptors do not by themselves confine relative-path access or child writes."
+    },
+    {
+      "url": "https://docs.kernel.org/admin-guide/cgroup-v2.html",
+      "supports": "Controllers are hierarchical, memory.current includes descendants, and cgroup.events populated is recursive. These facts are not proof that every descendant was enumerated or that all final counters were collected."
+    }
+  ],
+  "approaches": [
+    {
+      "id": "finite_regular_fd_adapter",
+      "recommendation": "Preferred bounded local feasibility path, not yet an approved or complete observer implementation.",
+      "advantages": "No broad host-directory or control-socket handoff; existing root reader stays intact.",
+      "limitations": "Needs independent descriptor provenance, separate observer identity, and a remaining subtree/finalization proof."
+    },
+    {
+      "id": "host_view_privileged_observer",
+      "recommendation": "Do not choose as a shortcut.",
+      "advantages": "Could preserve the existing host-view reader assumptions.",
+      "limitations": "Requires a separately verified write/network sandbox and truthful shared-budget accounting; root read-only behavior alone is insufficient."
+    },
+    {
+      "id": "disable_existing_host_view_checks",
+      "recommendation": "Rejected.",
+      "limitations": "Would weaken existing guarantees and incorrectly promote a different reader to native evidence."
+    }
+  ],
+  "recommendedLocalPilot": {
+    "newPrivateContractOnly": true,
+    "productAndExistingReaderUnchanged": true,
+    "descriptorScope": "Finite exact-named regular-file descriptors only; no directory, socket, device or FIFO descriptors.",
+    "openFileFlags": 1,
+    "otherOpenFileFlagsRejected": true,
+    "provenance": "Bind nonce, source digest, unit/cgroup identity and an independent host-side metadata catalog. Validate descriptor names/count, LISTEN_PID, access flags, file type, ownership and device/inode identity before reading; environment labels and matching bytes alone are insufficient.",
+    "aliasBoundary": "Manager opening follows a pathname; independent no-follow host resolution and before/after alias checks are still required. A detached FD alone cannot prove that the current pathname remains the same.",
+    "observerIdentity": "Must not silently reuse the untrusted business identity. Prefer an already-existing separately verified low-privilege identity; no user creation, credential changes or automatic UID fallback.",
+    "businessIdentityUnchanged": "UID996/GID987 and zero capabilities remain the business-process policy.",
+    "observerCapabilities": "Effective/permitted/inheritable/ambient capabilities zero, NoNewPrivileges enabled, no added SYS_PTRACE or SYS_ADMIN.",
+    "fdHandling": "Set close-on-exec, do not hand descriptors to models or business processes, bound reads, reject drift/overflow/missing FD/unsupported seek behavior, preserve primary and cleanup errors.",
+    "mockResultsNeverNative": true,
+    "noNativeTypeCheckBypass": true,
+    "guaranteeScope": "The first pilot verifies only a finite delivered-FD contract. O_RDONLY, capability removal and NNP do not by themselves prohibit all filesystem writes or networking.",
+    "identityPrerequisites": "Verify supplementary groups and same-UID process trust as well as the primary UID. Distinct numeric UIDs alone are not a complete process-isolation proof.",
+    "catalogAuthority": "Use an independently source-pinned supervisor and a receiver-bound one-shot channel; bind the independently expected InvocationID, process birth identity, nonce, source digests and bounded alias-check window. Caller JSON, FD names and LISTEN_* are not a trusted issuer. Do not introduce or repurpose credential secrets as a shortcut.",
+    "inheritedDescriptorInventory": "Check the actual inherited set, not only LISTEN_* counts. Define stdio and other necessary IO separately; regular-file-only applies to the delivered data payload, not an assumption that stdout or stdin are regular files. Do not close unowned descriptors as cleanup.",
+    "flagDistinction": "OpenFile READ_ONLY=1 is the manager property flag, not the OS access-mode value. Check the received descriptor access mode against O_RDONLY, reject O_PATH, and set FD_CLOEXEC after taking ownership rather than assuming it is already set on an inherited descriptor.",
+    "noBlockingDeadlineClaim": "Bounded byte counts alone do not interrupt a blocking syscall. Native use still needs the independently enforced shared hard deadline and owned-process cleanup."
+  },
+  "unresolvedProductionGates": [
+    "A complete source-bound descriptor transfer under actual systemd and intended low-privilege identity has not been tested.",
+    "Cgroup files must exist before OpenFile activation; launch ordering cannot ignore missing files or omit worker startup costs.",
+    "Kernel hierarchy accounting cannot silently replace a required full descendant census; keep any missing census requirement unverified.",
+    "Observer and workload must be under the same applied aggregate limits. Any admission/finalization outside that boundary must be explicit and cannot be passed off as measured aggregate cost.",
+    "The finalizer cannot prove its own whole-parent emptiness while still running inside it; terminal ownership, retained cgroup counters and finalizer accounting need a separate design and test.",
+    "Open FDs may become unreadable after cgroup removal; missing or retired counters must fail, not become zero.",
+    "Service-snapshot stability is not an application, Relay traffic, real-model or publication acceptance result.",
+    "Aggregate hard limits do not reserve observer headroom. Before combined execution, establish a measured admission/headroom policy without silently changing worker limits or treating an OOM-killed observer as successful."
+  ],
+  "budgetPolicy": {
+    "memoryBytes": 201326592,
+    "cpuPercent": 20,
+    "tasks": 32,
+    "swapBytes": 0,
+    "nice": 10,
+    "cpuWeight": 10,
+    "noNewCapabilityGrant": true,
+    "noAutomaticNativeExecution": true
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "implementationEnabled": false,
+  "nativeEvidenceVerified": false,
+  "combinedBudgetVerified": false,
+  "productionReady": false,
+  "next": "Prepare only a private local finite regular-FD reception contract and synthetic regressions. Preserve the existing root/host-view reader, process sandbox, allocator, evidence grading and production runtime. Native descriptor handoff, combined resource trials and publication require fresh scoped authorization.",
+  "subsystemScope": "Short-lived VPS verification observer only; not an Agent connector, model provider, or always-on production monitor.",
+  "noAlwaysOnServicePlanned": true,
+  "designReview": {
+    "definiteContradictionsFound": 0,
+    "scope": "Conceptual review of the supplied conditional proposal only; no links, fresh host facts, tests or implementation were independently re-executed.",
+    "criticalPrerequisitesAdded": [
+      "FD-only guarantee versus whole-process sandbox",
+      "trusted catalog provenance, process birth and alias-check time window; real inherited FD inventory",
+      "observer headroom within aggregate resource limits"
+    ],
+    "implementationAccepted": false,
+    "nativeAcceptance": false
+  }
+}
