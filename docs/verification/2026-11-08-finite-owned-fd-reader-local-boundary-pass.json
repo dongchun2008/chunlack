@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "finite-owned-fd-reader-local-boundary-fix",
+  "status": "related_local_regressions_passed",
+  "priorFindingsReference": "docs/verification/2026-11-08-finite-owned-fd-reader-local-findings.json",
+  "previousFailingCandidatePreserved": true,
+  "sourceSha256": {
+    "plan.json": "f1219dab8865765852996cd19c3926f31bde61ae293f5d3060994eb5804429a6",
+    "reader.py": "5f6a3147700cc6f2470cfddcc370d369c2ecc2a4347ff3e653cc7f07937d508f",
+    "test_reader.py": "2b2b5c8b270cf42a314057b7f670008d1397d48cc907dd6fce217d8e12ccdc62",
+    "test_native_boundaries.py": "f138e0370f9a30adc9d6f87d057368c4b97e8f28afc04e4df3bd843dc08964ee",
+    "test_deadline_operations.py": "02fd9e85d54b2e90f6c0859e25e6db74d17e3801972f014e24cfefabbd7de7e5"
+  },
+  "changes": [
+    "Pass the same cooperative deadline check into each native metadata operation.",
+    "Record a newly opened auxiliary descriptor before checking its completion deadline.",
+    "Accept newly owned auxiliary FD0/1/2 without assuming standard streams are open.",
+    "Keep payload descriptors 3/4 separate from owned metadata descriptors.",
+    "Retain read errno, auxiliary cleanup, payload cleanup and final deadline errors separately."
+  ],
+  "tests": {
+    "addedRegressionsRed": {
+      "testsRun": 9,
+      "failureIncidents": 5,
+      "errorIncidents": 4,
+      "countsIncludeSubtests": true,
+      "elapsedSeconds": 0.085,
+      "exitCode": 1
+    },
+    "readerSuite": {
+      "testsRun": 41,
+      "passed": 41,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 0.266,
+      "exitCode": 0
+    },
+    "combinedContractAndReaderSuite": {
+      "testsRun": 79,
+      "passed": 79,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 0.46,
+      "exitCode": 0
+    },
+    "composition": {
+      "existingContractAndFixtureTests": 38,
+      "existingReaderTests": 30,
+      "previousFailingBoundaryTests": 2,
+      "newOperationBoundaryTests": 9
+    },
+    "coverage": "Actual metadata adapter control flow with fake syscalls, plus finite contract validation and unsupported-platform rejection.",
+    "linuxKernelBackendExecuted": false,
+    "wholeProductSuiteRerun": false,
+    "automaticFailureRetries": false
+  },
+  "independentReview": {
+    "filesReadOnce": [
+      "reader.py",
+      "test_deadline_operations.py"
+    ],
+    "originalTwoP2ResolvedInSource": true,
+    "newDefiniteP1P2Findings": 0,
+    "independentlyReranTests": false,
+    "nativeAcceptance": false
+  },
+  "preservedLimits": {
+    "bytesPerPayload": 8192,
+    "readCallsPerPayload": 64,
+    "metadataBytes": 4096,
+    "metadataReadCalls": 8,
+    "maximumCooperativeWindowNs": 5000000000,
+    "payloadFdSet": [
+      3,
+      4
+    ],
+    "closeRetry": false,
+    "hardWatchdogImplemented": false
+  },
+  "unchanged": {
+    "productRuntime": true,
+    "existingRootReader": true,
+    "existingPureHandoffContract": true,
+    "productionServices": true,
+    "previousFailureEvidence": true
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "newDependencies": 0,
+    "previousRemoteQuotasNotReset": true
+  },
+  "acceptance": {
+    "localControlFlowRegressionsPassed": true,
+    "nativeFdReceptionVerified": false,
+    "libcAbiVerifiedOnVps": false,
+    "catalogAuthorityVerified": false,
+    "receiverIdentityAndInventoryVerified": false,
+    "wholeProcessSandboxVerified": false,
+    "hardDeadlineEnforced": false,
+    "completeSubtreeCensusVerified": false,
+    "combinedResourceBudgetVerified": false,
+    "productionReady": false
+  },
+  "next": "Integrate the finite reader and handoff contract locally while preserving independent source/catalog bindings and explicit unverified native grades. Any future native handoff, aggregate resource trial or publication remains a separate scoped gate; this local pass grants no remote attempt."
+}
