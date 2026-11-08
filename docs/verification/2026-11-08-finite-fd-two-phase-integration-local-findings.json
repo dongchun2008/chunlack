@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "finite-fd-two-phase-local-integration",
+  "status": "not_accepted_two_consistency_boundaries_reproduced",
+  "design": {
+    "initialCatalog": "Read plan binds the pre-read raw catalog digest.",
+    "finalCatalog": "Final contract binds a separate raw catalog digest; only aliasAfterNs may be added.",
+    "observationFields": "Actual reader status flags and received/post-CLOEXEC flags are kept separately.",
+    "dependencyBinding": "Both dependency byte digests checked before either source executes; exact checked bytes compiled.",
+    "resultPolicy": "Payload held privately until final contract success; no automatic reread.",
+    "nativeOrIssuerAuthorityClaimed": false
+  },
+  "bindings": {
+    "dependencies": {
+      "contract": "c02c9d2c981dd2b7d39b53628725c2bb89404f7217634890682cf277f16d5dac",
+      "reader": "8bb5c9bf7cda997631ac9bdd648dd6ab66a9de034d3f90f46ed3f8bb4b54d012"
+    },
+    "files": {
+      "plan.json": "04192f11386d36a8145e78dd60994466f7f4c37465a78fc41de1e70829576fee",
+      "integration.py": "71417312f0ae1a5c7b7066a1326e59844c9dd7b39723001580ac75a6fb95442e",
+      "test_integration.py": "d208e57c04ff48c8384ee966984b8bb579fc69c13404d3272aba6f0f13ed21f1",
+      "test_report.py": "5ab0ee336e8fd244472ad0fdf9ab97b2b6e5e11360fa9cef1b14e0f7f47382f1",
+      "test_stage_clock_boundary.py": "759a342cfabdbe95347ae72794d0514763d9179b274b9407daf50666c2d93e49",
+      "test_ownership_history.py": "5b519ef12a56c1c1dd837eece87f85bdf30f0dce7587fd6fcee584cdc1a34689"
+    }
+  },
+  "tests": {
+    "reportRed": {
+      "testsRun": 3,
+      "failures": 3,
+      "errors": 0,
+      "elapsedSeconds": 0.049,
+      "exitCode": 1
+    },
+    "reportRegression": {
+      "testsRun": 82,
+      "passed": 82,
+      "failures": 0,
+      "errors": 0,
+      "elapsedSeconds": 0.552,
+      "exitCode": 0
+    },
+    "integrationRed": {
+      "testsRun": 1,
+      "failures": 1,
+      "elapsedSeconds": 0.003,
+      "exitCode": 1,
+      "reason": "integration missing"
+    },
+    "initialCombinedRegression": {
+      "testsRun": 102,
+      "passed": 102,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 0.919,
+      "exitCode": 0
+    },
+    "combinedComposition": {
+      "previousContractAndReaderChecks": 79,
+      "newReportChecks": 3,
+      "newIntegrationChecks": 20
+    },
+    "subsequentClockReproduction": {
+      "testsRun": 1,
+      "failures": 1,
+      "errors": 0,
+      "elapsedSeconds": 0.03,
+      "exitCode": 1,
+      "prepareTimeNs": 1900,
+      "readClockNs": 100,
+      "expectedRejectionBeforeFdIo": true,
+      "actuallyRejected": false
+    },
+    "subsequentOwnershipReproduction": {
+      "testsRun": 1,
+      "failures": 1,
+      "errors": 0,
+      "elapsedSeconds": 0.034,
+      "exitCode": 1
+    },
+    "allCurrentPrivateTestsPassed": false,
+    "wholeProductSuiteRerun": false,
+    "nativeLinuxBackendExecuted": false
+  },
+  "findings": [
+    {
+      "id": "cross_stage_clock_regression",
+      "severity": "P2",
+      "independentlyReviewed": true,
+      "locallyReproduced": true,
+      "corrected": false,
+      "evidence": "prepare at 1900 followed by read clock 100 returned instead of rejecting before descriptor IO.",
+      "next": "Retain the prepare checkpoint and reject backwards or expired time before handoff; carry the same monotonic sequence through reading and finalization."
+    },
+    {
+      "id": "ownership_history_missing_on_state_rejection",
+      "severity": "P2",
+      "independentlyReviewed": true,
+      "locallyReproduced": true,
+      "corrected": false,
+      "evidence": "After a successful read, a repeated read produced state error with ownership_accepted=false and no prior-session ownership/close history.",
+      "next": "Represent current-attempt transfer separately from prior-session FD responsibility; preserve in-flight uncertainty and do not suggest retrying close on already handled descriptors."
+    }
+  ],
+  "review": {
+    "scope": "Source derivation and supplied result review only.",
+    "definiteP2Findings": 2,
+    "independentlyReranTests": false,
+    "testFileCoverageLimitation": "The tool truncated the middle of the reviewed test file; no second read was performed and no full independent coverage claim is made."
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "newDependencies": 0,
+    "priorRemoteQuotasNotReset": true,
+    "privateSourceCommitted": false
+  },
+  "acceptance": {
+    "twoPhaseIntegrationAccepted": false,
+    "nativeFdReceptionVerified": false,
+    "catalogAuthorityVerified": false,
+    "clockDomainVerified": false,
+    "fullLauncherVerified": false,
+    "completeSubtreeCensusVerified": false,
+    "combinedResourceBudgetVerified": false,
+    "productionReady": false
+  },
+  "next": "Preserve this candidate and both failing reproductions. Correct only the disclosed cross-stage time and ownership-history boundaries in a new private candidate, then run related local regressions and bounded review. Do not begin native execution or publication from these results."
+}
