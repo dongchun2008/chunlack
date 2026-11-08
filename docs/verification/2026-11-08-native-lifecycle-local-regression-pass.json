@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "local-lifecycle-boundary-correction",
+  "status": "related_local_checks_passed",
+  "sourceSha256": {
+    "lifecycle.py": "be2f2e19e5d176b3640a0deb7d263f5fcf140853288c54a5af7f22510f014e7a",
+    "test_lifecycle.py": "3497e671999e103dc01f14170063a3ed4b3677fb523c5d8876dcf0bf5df2dea7",
+    "test_lifecycle_edges.py": "d07b29ff93ea876443b86a76a0e04f6081fb90315413b2294e7b5db6de3ccba4",
+    "test_correction_boundaries.py": "616722694c451da628026e8b300c9c436f21ac23c8c50f68af7e8544a23c9efa",
+    "plan.json": "a57fd427be1c75206c4e76bc24cf664f72cdcd817f057a956b2771adcd699b74"
+  },
+  "predecessor": {
+    "sourceSha256": "a8c04ba67dbd53caa2d99175f6dfa85e05668e129c891e47c49526814a0a9244",
+    "preserved": true
+  },
+  "corrections": {
+    "terminalPidAndManagerStartRequireExactIntegers": true,
+    "previouslyUnusedPostTerminalStopIntentAllowed": true,
+    "postTerminalCleanupReceivesNoTimeoutAndCannotResumeForwardWork": true,
+    "reservationOutsidePlanFactRetained": true,
+    "successfulPolicyRequiresInactiveDead": true,
+    "failedCleanupAndReceiptFactsRemainSeparate": true
+  },
+  "tests": {
+    "priorInitialRun": {
+      "testsRun": 20,
+      "passed": 20,
+      "elapsedSeconds": 0.137,
+      "exitCode": 0
+    },
+    "priorBoundaryReproductions": {
+      "firstRun": {
+        "testsRun": 3,
+        "failures": 3,
+        "elapsedSeconds": 0.027,
+        "exitCode": 1
+      },
+      "additionalFailedState": {
+        "testsRun": 1,
+        "failures": 1,
+        "elapsedSeconds": 0.011,
+        "exitCode": 1
+      }
+    },
+    "finalRelatedDiscovery": {
+      "testsRun": 31,
+      "passed": 31,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 0.215,
+      "exitCode": 0
+    },
+    "composition": {
+      "originalChecks": 20,
+      "unchangedFormerFailures": 4,
+      "newBoundaryChecks": 7
+    },
+    "wholeProductSuiteRerun": false,
+    "nativeOperationsPerformed": false
+  },
+  "formatNote": "Unaccepted private a2 call records require withinPlanAtReservation. Missing a1 fields are rejected rather than silently treated as true; no deployed protocol was changed.",
+  "limits": {
+    "totalSeconds": 10,
+    "stageCutoffsSeconds": {
+      "start": 1,
+      "observe": 8,
+      "stop": 9,
+      "terminal": 10
+    },
+    "maximumObserveCalls": 16,
+    "maximumTotalCalls": 20,
+    "maximumPlanBytes": 4096,
+    "maximumTraceBytes": 32768,
+    "maximumReceiptBytes": 65536,
+    "externalWatchdogImplemented": false
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "newDependencies": 0,
+    "privateSourceCommitted": false,
+    "priorRemoteAllowancesNotReset": true
+  },
+  "acceptance": {
+    "relatedLocalConsistencyChecksPassed": true,
+    "nativeEvidenceVerified": false,
+    "clockDomainVerified": false,
+    "receiptSourceVerified": false,
+    "processCensusSourceVerified": false,
+    "externalHardDeadlineVerified": false,
+    "combinedResourceBudgetVerified": false,
+    "productionReady": false
+  },
+  "independentReview": {
+    "baselineSourcePreviouslyReviewed": true,
+    "implementationReviewedAsExactDiffAgainstPinnedBaseline": true,
+    "newTestFileReadOnce": "test_correction_boundaries.py",
+    "outputComplete": true,
+    "originalThreeP2FindingsResolved": true,
+    "newDefiniteP1P2Findings": 0,
+    "independentlyReranTests": false
+  },
+  "scopeLimitations": [
+    "Supplied-evidence consistency is not native execution, source authentication, kernel process census or live identity proof.",
+    "The ledger reserves intent and records completion; it does not call or interrupt a backend.",
+    "Manager execution-start timestamps are not /proc process starttime.",
+    "Early validation failures may precede parsing of later component facts; preserved input bytes remain necessary."
+  ],
+  "next": "Integrate the already prepared pinned reader/probe/wrapper, entry generator, unit proposal and lifecycle protocol locally with simulated transport and producer-schema checks. Preserve false native/authority flags and all existing limits. A new native preflight, Linux unit or production action still requires fresh scoped authorization; no prior remote allowance is renewed."
+}
