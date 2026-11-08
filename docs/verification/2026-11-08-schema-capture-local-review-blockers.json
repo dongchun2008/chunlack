@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "schema-only-256k-local-correction",
+  "status": "not_accepted_local_test_and_review_blockers",
+  "scope": {
+    "newPrivateCandidateOnly": true,
+    "normalCaptureLimitBytes": 65536,
+    "schemaCaptureLimitBytes": 262144,
+    "exactFixedXmlQueryRequired": true,
+    "noPropertyValueQueriesAdded": true,
+    "completeXmlRequired": true,
+    "noTruncationFallback": true
+  },
+  "sourceAndLogHashes": [
+    {
+      "file": "probe.py",
+      "sha256": "dc71ff5e118f9452a3163b1bba36c4ee7c0c74c9d05126af7a233985fda76c0a"
+    },
+    {
+      "file": "collector.py",
+      "sha256": "e26242c36bf222df612be37e1d29c8d0b783111a8bd482b210dd4df0111a2537"
+    },
+    {
+      "file": "test_schema_capture.py",
+      "sha256": "d951f7ade5f12fdcef4d020e672f59150b33e5128bee8a31d0ce598df89c1a2a"
+    },
+    {
+      "file": "red.log",
+      "sha256": "46141b74eae53012c48891c9cf2670867cf1bbe8ab3bfc16a4696745a9c2f065"
+    },
+    {
+      "file": "candidate.log",
+      "sha256": "a82d52fab0fce831499eff5d58cff01803b329d8018aa77e70fa68ffac6bd01f"
+    }
+  ],
+  "redBaseline": {
+    "testMethods": 2,
+    "expectedFailures": 2,
+    "errors": 0,
+    "elapsedSeconds": 0.008
+  },
+  "candidateRegression": {
+    "total": 29,
+    "passed": 27,
+    "assertionFailures": 0,
+    "errors": 2,
+    "elapsedSeconds": 0.117,
+    "processExitCode": 1,
+    "errorsExplained": "Two new tests expected ValueError for truncated XML; the parser actually rejected it with xml.etree.ElementTree.ParseError.",
+    "allTestsPassed": false
+  },
+  "review": {
+    "definiteP1": 0,
+    "definiteP2": 1,
+    "finding": "The schema allowlist checks the caller-owned mutable argv, then passes that same mutable list through a clock callback to spawn. A post-check mutation can reach FakeOps spawn under the larger bound.",
+    "classification": "Local private-candidate binding defect; not evidence of a real remote command change."
+  },
+  "reproduction": {
+    "version": 1,
+    "kind": "local_schema_argv_snapshot_reproduction",
+    "changedCommandReachedFakeSpawn": true,
+    "largerCaptureStillAccepted": true,
+    "capturedBytes": 65537,
+    "simulatedOnly": true,
+    "realProcessesCreated": 0,
+    "sshAttempts": 0,
+    "linuxUnits": 0
+  },
+  "priorNativeEvidence": {
+    "reference": "docs/verification/2026-11-08-observer-metadata-schema-output-limit-native-diagnostic.json",
+    "latestObservedPhase": "metadata_schema_failed",
+    "latestObservedPrimaryCode": "output_limit",
+    "latestAttemptWasReadOnly": true,
+    "actualXmlLengthUnknown": true,
+    "new256kBoundNotRemotelyVerified": true
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "productionReady": false,
+  "next": "Await approval to preserve this candidate and correct the private argv snapshot binding plus the two exact exception-type test expectations; add focused regression coverage and rerun related local tests only. Do not change parser behavior to satisfy incorrect tests. No remote retry or publication."
+}
