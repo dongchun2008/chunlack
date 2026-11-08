@@ -1,0 +1,143 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "observedAtUtc": "2026-11-08T03:55:59.3782233Z",
+  "stage": "schema-only-256k-native-readonly-verification",
+  "status": "read_only_metadata_passed",
+  "bindings": {
+    "runnerSha256": "f83ab2fe536f7e0a2479540a57f7d26b3c130219be57925051a0262599eaf161",
+    "privateReceiptSha256": "a8b1bb65e570d34e44698341641b1e00d5dea075cd11940414340c2701bed08c",
+    "manifestSha256": "5523dc9557a4597d86d285d1e6a73df21dde1b1ad4301b0c3184823cdd820ff9",
+    "payloadSha256": "eaa655794d340f0d56ba92b79857a5ba4f56102de8e717fd585ba8dad2431a52",
+    "bootstrapSha256": "1072af2bfd8e04a556579f10d7151f91c83fbba6e91de6f0fc18b5423d2fc7c0"
+  },
+  "authorization": {
+    "maximumAttempts": 1,
+    "attemptsUsed": 1,
+    "remainingAttempts": 0,
+    "remoteSeconds": 20,
+    "localTotalSeconds": 35,
+    "automaticRetry": false,
+    "previousQuotasNotReset": true
+  },
+  "execution": {
+    "elapsedSeconds": 2.493865,
+    "execToolWallSeconds": 3.3146757,
+    "withinDeadline": true,
+    "actualLauncherExitCode": 0,
+    "worker": {
+      "normalExit": true,
+      "exitCode": 0,
+      "terminated": false,
+      "exitObserved": true
+    },
+    "transport": {
+      "exitCode": 0,
+      "sentBytes": 72130,
+      "stdinBytes": 72130,
+      "eofSent": true,
+      "exitObserved": true,
+      "channelClosedObserved": false,
+      "outputLimitExceeded": false,
+      "completed": true,
+      "stdoutBytes": 2379,
+      "stdoutSha256": "2fcbcbe99e20c8d46d31fd300fa2dd648246cba660fb1cea941a7cac2aa2e565",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cleanupConfirmed": true,
+    "transportThreadStoppedBeforeHandleClose": true,
+    "cleanupErrors": [],
+    "provisionalReceiptNotUsedWithoutActualTerminalExit": true
+  },
+  "findings": {
+    "queryCount": 4,
+    "managerVersionMajor": 255,
+    "openFileSchema": {
+      "present": true,
+      "signature": "a(sst)"
+    },
+    "controllers": {
+      "available_controllers": [
+        "cpu",
+        "cpuset",
+        "hugetlb",
+        "io",
+        "memory",
+        "misc",
+        "pids",
+        "rdma"
+      ],
+      "enabled_controllers": [
+        "cpu",
+        "io",
+        "memory",
+        "pids"
+      ]
+    },
+    "protectedServices": {
+      "chunlack-public.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "NRestarts": "0",
+        "pidUnchanged": true,
+        "fieldsUnchanged": true
+      },
+      "chunlack-https.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "NRestarts": "0",
+        "pidUnchanged": true,
+        "fieldsUnchanged": true
+      },
+      "chunlack.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "NRestarts": "0",
+        "pidUnchanged": true,
+        "fieldsUnchanged": true
+      },
+      "tailscaled.service": {
+        "ActiveState": "active",
+        "SubState": "running",
+        "NRestarts": "0",
+        "pidUnchanged": true,
+        "fieldsUnchanged": true
+      }
+    },
+    "completeSchemaXmlParsedWithin262144ByteLimit": true,
+    "exactSchemaXmlByteLength": "not emitted by this bounded probe",
+    "protectedRuntimeExecutableLinksAndProcessStartTimesCollected": true,
+    "hostViewAndCapabilityMetadataCollected": true
+  },
+  "effects": {
+    "linuxUnitsCreated": 0,
+    "serviceActions": 0,
+    "remoteWritesRequested": 0,
+    "productionPublication": false,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "acceptance": {
+    "readOnlyMetadataVerified": true,
+    "schemaCaptureRemediationVerifiedForThisSnapshot": true,
+    "newUnitLaunchAndTerminalVerified": false,
+    "openFileDescriptorHandoffVerified": false,
+    "combinedNativeResourceBudgetVerified": false,
+    "applicationHealthEndpointProbed": false,
+    "relayTrafficVerified": false,
+    "fullProductionDeliveryAccepted": false,
+    "productionReady": false
+  },
+  "limitations": [
+    "OpenFile property presence and signature do not prove descriptor handoff under the intended unprivileged observer policy.",
+    "Unchanged service state/PID/restart snapshots are not an application or Relay traffic functional test.",
+    "This successful metadata probe is not production publication, capacity acceptance, or authority for further remote operations."
+  ],
+  "next": "Use the verified systemd/OpenFile facts for local-only observer design and bounded simulation. Any new remote unit, resource trial, service action or publication needs its own scoped authorization."
+}
