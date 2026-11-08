@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "finite-fd-contract-local-fixture-correction",
+  "status": "new_private_suite_passed",
+  "priorFailureReference": "docs/verification/2026-11-08-finite-fd-contract-local-fixture-failure.json",
+  "changes": {
+    "scope": "Only private test fixtures and their regression tests",
+    "moduleInstance": "Reuse one contract module within each test instance",
+    "omittedArgument": "Use a distinct sentinel; explicit None reaches the validator for all four arguments",
+    "originalFixturePreserved": true,
+    "assertionsRemovedOrRelaxed": false,
+    "contractImplementationEdited": false,
+    "productRuntimeEdited": false,
+    "existingRootReaderEdited": false
+  },
+  "sourceSha256": {
+    "contract.py": "c02c9d2c981dd2b7d39b53628725c2bb89404f7217634890682cf277f16d5dac",
+    "test_contract.py": "34d8dd8d7170f95308f3755452c6982d4e29c0e7485208f23cc3ba0b7b84f583",
+    "test_fixture_boundaries.py": "4e181ab4e29b4e2ba7fd419157585d1621c215e9aace895fbbe0095d649da8b0",
+    "original_test_contract.py": "7234eb017f5497f666290bf68df6f8149a88a4ceee3273810b0366e7f505f674"
+  },
+  "red": {
+    "testsRun": 4,
+    "passingMethods": 1,
+    "failureIncidents": 5,
+    "errorIncidents": 1,
+    "countsIncludeSubtestIncidents": true,
+    "elapsedSeconds": 0.069,
+    "exitCode": 1,
+    "defectsObserved": [
+      "different exception class identities",
+      "explicit None replaced with valid defaults"
+    ]
+  },
+  "green": {
+    "originalContractTests": 34,
+    "fixtureRegressionTests": 4,
+    "testsRun": 38,
+    "passed": 38,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "elapsedSeconds": 0.233,
+    "exitCode": 0,
+    "runsAfterCorrection": 1,
+    "scope": "complete_new_private_contract_and_fixture_suite_only",
+    "existingProductSuiteRerun": false
+  },
+  "review": {
+    "scope": "Supplied fixture patch and regression description only; previous contract-source review remains separate",
+    "previousTwoFixtureFindingsResolved": true,
+    "newDefiniteP1P2Findings": 0,
+    "filesReread": false,
+    "testsIndependentlyRerun": false
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "oldRemoteQuotasNotReset": true
+  },
+  "acceptance": {
+    "localSyntheticConsistencyContractPassed": true,
+    "realFdReceptionImplemented": false,
+    "catalogAuthorityVerified": false,
+    "kernelFdVerified": false,
+    "wholeProcessReadOnlyVerified": false,
+    "replayPreventionVerified": false,
+    "deadlineEnforced": false,
+    "combinedBudgetVerified": false,
+    "productionReady": false
+  },
+  "next": "Develop and test the real-FD adapter locally without changing the existing root/host-view reader or promoting caller metadata to trusted evidence. Native handoff, aggregate budget acceptance and production publication remain separate gated work."
+}
