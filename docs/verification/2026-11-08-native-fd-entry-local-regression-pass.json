@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "unlaunched-native-entry-local-correction",
+  "status": "related_local_discovery_checks_passed",
+  "sourceSha256": {
+    "entry.py": "4d8a521bbbe22637627322b125886d69b56df520e7243b4af7443e060f6e7e25",
+    "test_entry.py": "f207a64cd29388c4c14d8f2912e84f0cb69888830e1d318f3ed98e1c4f2038da",
+    "test_policy_alignment.py": "081b0115136736941eabc5b9de98afafd8e0d9e1dc80ed49b3017f828a23fcc3",
+    "test_failure_receipt.py": "a104ca6ac16a351b0f1edf331d29c6ea8be190ccb5a1f8c2363ba3d2c4845c37",
+    "plan.json": "4b31cff740f040878053b65c9729aa35c4442ccea1145dd68fad1f7ddad6401b"
+  },
+  "dependencyPins": {
+    "wrapper": "41ed2464c5e0167968bf67bb67c2396b5b9efa9a4ba51b166402cd93230ea4e5",
+    "probe": "7d8fb6d588df3b281d12ca5012e9470e76fbfa97761ddc10c604fb14140fc024",
+    "reader": "8bb5c9bf7cda997631ac9bdd648dd6ab66a9de034d3f90f46ed3f8bb4b54d012"
+  },
+  "corrections": {
+    "nonceAndCatalogMustBeNonzero": true,
+    "regularModes": [
+      33060,
+      33188
+    ],
+    "distinctDeviceInodePairs": true,
+    "sharedGenerationAndBootstrapValidator": true,
+    "writerReplacementUsesContextManager": true,
+    "directMainInitializationDependencyRemoved": true,
+    "additionalMetricsCommandCorrected": true,
+    "allPriorLimitsAndPinsRetained": true,
+    "predecessorAndFailureEvidencePreserved": true
+  },
+  "tests": {
+    "priorPolicyReproduction": {
+      "testsRun": 4,
+      "failures": 4,
+      "elapsedSeconds": 0.088,
+      "exitCode": 1
+    },
+    "newFailureFormattingChecksBeforeCorrections": {
+      "testsRun": 4,
+      "passed": 4,
+      "elapsedSeconds": 0.136,
+      "exitCode": 0
+    },
+    "finalRelatedDiscoveryRun": {
+      "testsRun": 23,
+      "passed": 23,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 0.525,
+      "exitCode": 0
+    },
+    "originalFourPolicyReproductionsNowPass": true,
+    "wholeProductSuiteRerun": false,
+    "nativeInvocationsMocked": true,
+    "generatedNativeCommandExecuted": false
+  },
+  "syntheticCommandMetrics": {
+    "argvBytesIncludingTerminators": 73042,
+    "argvCount": 8,
+    "bootstrapSha256": "3156d6b39bfbe847a51488362925f050eb3b4c6d18da2177500598cee3c8314f",
+    "generatedCommandExecuted": false,
+    "packetBytes": 754,
+    "packetIsSyntheticFixture": true,
+    "singleArgumentMaximumBytes": 71989
+  },
+  "independentReview": {
+    "filesReadOnce": [
+      "entry.py",
+      "test_entry.py",
+      "test_failure_receipt.py"
+    ],
+    "outputComplete": true,
+    "originalP2Resolved": true,
+    "newDefiniteP1P2Findings": 0,
+    "independentlyReranTests": false,
+    "limitations": [
+      "Reviewer did not read the unchanged four-case policy reproduction file; its execution result was confirmed by the main runner.",
+      "Failure-format fixtures use cleanup rather than the actual producer cleanupErrors key. They demonstrate dictionary preservation, not end-to-end failure-schema wiring.",
+      "Unknown-field exclusion covers additional exception attributes only.",
+      "Native wrapper invocation remains mocked."
+    ]
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "newDependencies": 0,
+    "privateSourceCommitted": false,
+    "priorRemoteAllowancesNotReset": true
+  },
+  "acceptance": {
+    "relatedLocalEntryChecksPassed": true,
+    "nativeBackendExecuted": false,
+    "nativeEntryAccepted": false,
+    "managerProvenanceVerified": false,
+    "externalHardDeadlineVerified": false,
+    "completeInheritedInventoryVerified": false,
+    "combinedResourceBudgetVerified": false,
+    "productionReady": false
+  },
+  "next": "Prepare an unlaunched native unit/resource contract and fresh preflight requirements locally, preserving all source pins and resource/identity gates. Any new SSH, native unit or production operation requires its own scoped authorization. Do not treat synthetic packet identities or local formatting checks as host authority or production acceptance."
+}
