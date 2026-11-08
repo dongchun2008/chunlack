@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "native-fd-diagnostic-local-preparation",
+  "status": "local_simulation_and_parser_checks_passed",
+  "sourceSha256": {
+    "plan.json": "9e1a4bf158f124ed3a38f5580db90389f842317c3227b26541d2afd2208a4c3d",
+    "probe.py": "465273c9bad0ea7da8bbe616a97b7f162ca7033750f0a54fd34706897cac1e3b",
+    "test_probe.py": "96faca6c04e76b37bbf808b99db4569ea04617fa6363aa6cf7ce11acce269f0f",
+    "reader.py": "8bb5c9bf7cda997631ac9bdd648dd6ab66a9de034d3f90f46ed3f8bb4b54d012"
+  },
+  "implementation": {
+    "libraryOnly": true,
+    "cliImplemented": false,
+    "sshLauncherImplemented": false,
+    "strictNativeFlag": true,
+    "nativeRejectsInjectedProviders": true,
+    "simulationRequiresAllProviders": true,
+    "deadlineStartsBeforeParsingAndCompilation": true,
+    "cooperativeSeconds": 5,
+    "absoluteDeadlineReusedByReader": true,
+    "selectedProcPaths": [
+      "/proc/self/status",
+      "/proc/self/cgroup"
+    ],
+    "identityAndCapabilityChangesPerformed": false,
+    "payloadOriginalContentExposed": false,
+    "preserveReaderOwnershipAfterPostSnapshotFailure": true
+  },
+  "identityPolicy": {
+    "uidAndGid": "Explicitly supplied, nonroot, not business UID996/GID987; no automatic identity selection.",
+    "supplementaryGroups": "Must be empty.",
+    "effectivePermittedInheritableAmbientCaps": 0,
+    "boundingMask": "Explicit packet value: 0 or 235; not a capability grant.",
+    "noNewPrivileges": 1,
+    "dumpable": 0,
+    "tracerPid": 0,
+    "threads": 1,
+    "listen": "PID/count/names checked for consistency, not treated as manager authentication."
+  },
+  "tests": {
+    "red": {
+      "testsRun": 1,
+      "failures": 1,
+      "errors": 0,
+      "elapsedSeconds": 0.001,
+      "exitCode": 1,
+      "reason": "diagnostic implementation missing"
+    },
+    "relatedLocalSuite": {
+      "testsRun": 50,
+      "passed": 50,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 0.508,
+      "exitCode": 0
+    },
+    "composition": {
+      "newProbeChecks": 20,
+      "unchangedReaderChecks": 30
+    },
+    "actualNativeModeExecuted": false,
+    "prior114ItemIntegrationSuiteUnchangedAndNotRerun": true,
+    "wholeProductSuiteRerun": false
+  },
+  "independentReview": {
+    "filesReadOnce": [
+      "probe.py",
+      "test_probe.py"
+    ],
+    "reviewOutputComplete": true,
+    "definiteP1P2Findings": 0,
+    "independentlyReranTests": false,
+    "limitation": "No full NativeRuntime.snapshot native wiring, prctl ABI or real proc permissions were exercised."
+  },
+  "references": [
+    {
+      "url": "https://man7.org/linux/man-pages/man2/PR_GET_DUMPABLE.2const.html",
+      "supports": "PR_GET_DUMPABLE queries the current process dumpability state."
+    },
+    {
+      "url": "https://man7.org/linux/man-pages/man2/prctl.2.html",
+      "supports": "prctl uses variadic arguments with operation-specific widths; native binding remains untested."
+    },
+    {
+      "url": "https://man7.org/linux/man-pages/man5/proc_pid_status.5.html",
+      "supports": "UID/GID columns include real, effective, saved and filesystem IDs; groups, capabilities and NNP are separately reported."
+    }
+  ],
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "newDependencies": 0,
+    "previousRemoteQuotasNotReset": true,
+    "privateSourceCommitted": false
+  },
+  "acceptance": {
+    "localProbeControlFlowPassed": true,
+    "nativeBackendExecuted": false,
+    "nativeEvidenceVerified": false,
+    "managerProvenanceVerified": false,
+    "fullInheritedInventoryVerified": false,
+    "trustedObserverIdentityVerified": false,
+    "fullRuntimeAndLauncherVerified": false,
+    "hardDeadlineEnforced": false,
+    "combinedResourceBudgetVerified": false,
+    "productionReady": false
+  },
+  "next": {
+    "action": "Prepare and review an unlaunched native execution wrapper locally.",
+    "constraints": "Choose a verified identity/launch mechanism; never rewrite LISTEN_PID merely to hide a process mismatch. Preserve actual process/delegation facts and FD responsibility.",
+    "futureDiagnosticLimitsProposal": {
+      "runtimeSeconds": 10,
+      "memoryMiB": 192,
+      "cpuPercent": 20,
+      "nice": 10,
+      "cpuWeight": 10,
+      "tasks": 32,
+      "swapBytes": 0,
+      "network": "isolated"
+    },
+    "proposedLimitsAuthorized": false,
+    "actualNativeAttempt": "Requires a fresh scoped grant after local wrapper checks and a fresh read-only preflight; this record grants no SSH or Linux unit allowance."
+  }
+}
