@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local metadata-probe clock correction and offline payload sealing",
+  "priorEvidence": {
+    "record": "2026-11-08-observer-metadata-probe-local-review.json",
+    "reviewP1": 0,
+    "reviewP2": 1,
+    "deterministicFailurePreserved": true,
+    "failedSourceCopyPreserved": true
+  },
+  "correction": "The per-query completion check now uses the same finite/type/non-regression guard as the shared work deadline.",
+  "validation": {
+    "workingProbeSuite": {
+      "tests": 17,
+      "passed": 17,
+      "failures": 0,
+      "errors": 0,
+      "elapsedSeconds": 0.013
+    },
+    "sealedReplaySuite": {
+      "tests": 17,
+      "passed": 17,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "stderrBytes": 0,
+      "elapsedSeconds": 0.240618
+    },
+    "newClockCases": [
+      "Boolean",
+      "NaN",
+      "Positive infinity",
+      "Negative infinity",
+      "Negative regression",
+      "Valid monotonic sample without native grade"
+    ],
+    "old173CasesNotRerun": true,
+    "repeatProbeReview": false,
+    "bootstrapCompiledOnly": true,
+    "bootstrapExecuted": false,
+    "actualLinuxRun": false
+  },
+  "package": {
+    "tag": "observer-metadata-package-20261108-a1",
+    "manifestSha256": "83f719dd1270c0f23fa918507bbfdfe5ec0ed4cd25b8d2f0ce79d639fd4cf74f",
+    "payloadSha256": "f8382c682904178877140b3c711a4a4f99db4a5d0e14e1029efd7c0e0e5be70d",
+    "payloadBytes": 70494,
+    "bootstrapSha256": "b183248ff0973b7cd8f7949cc5d7883abdcc04f7d7512dc1e622f85011042d7e",
+    "bootstrapBytes": 3140,
+    "sourceHashes": {
+      "native": "40de9e373c0eace404fb7cc9f1994ab239f2e3225ebb98fa803c5f705fc11cf3",
+      "collector": "9d48c4040cdb38cc3b89c1ebbbe845289e18b5b513db1ce20d5af39dba8b4fb7",
+      "bridge": "28f7075b4d04598a61be9b1a1fd66cca8f88e3670c9a6f5fc688faeeafecd7d1",
+      "probe": "23379fcf370afa51d315675ffae39dad3e3eae8480994e4da077fb641492ed19"
+    },
+    "copiedBytesVerifiedBeforeAndAfterReplay": true,
+    "oldCandidatesModified": false,
+    "transportWiringAndOuterFinalizationStillPending": true,
+    "bootstrapNotYetReviewedAsPartOfLiveRunner": true
+  },
+  "authorization": {
+    "freshSshApprovalExplicitlyConfirmed": false,
+    "sshAttemptsUsed": 0,
+    "proposedMaximumAttempts": 1,
+    "proposedRemoteSeconds": 20,
+    "proposedLocalTotalSeconds": 35,
+    "oldAllowancesReused": false,
+    "automaticRetry": false
+  },
+  "safety": {
+    "linuxUnitsCreated": 0,
+    "remoteWrites": false,
+    "serviceControl": false,
+    "productionPublication": false,
+    "credentialReadForDiagnostics": false,
+    "credentialOutput": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "privateSourcesSubmitted": false
+  },
+  "interpretation": {
+    "localProbeCorrectionPassed": true,
+    "remoteExecutionEnabled": false,
+    "nativeEvidenceVerified": false,
+    "combinedBudgetVerified": false,
+    "productionReady": false,
+    "goalComplete": false
+  }
+}
