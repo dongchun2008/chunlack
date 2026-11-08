@@ -1,0 +1,54 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "observer-metadata-readonly-preflight",
+  "status": "blocked_before_ssh",
+  "authorization": {
+    "additionalSshAttempts": 1,
+    "remoteSeconds": 20,
+    "localTotalSeconds": 35,
+    "usedSshAttempts": 0,
+    "automaticRetry": false
+  },
+  "review": {
+    "definiteP1": 0,
+    "definiteP2": 2,
+    "findings": [
+      {
+        "id": "contradictory_worker_remote_status",
+        "reproducedLocally": true,
+        "observed": "Parent validator accepted a passed worker wrapping a failed remote receipt with exit code 2.",
+        "required": "Require remote passed and genuine exit code 0 for successful parent acceptance; preserve failure evidence separately."
+      },
+      {
+        "id": "capability_extra_text",
+        "reproducedLocally": true,
+        "observed": "Capability parser accepted an injected additional status line and returned the original unsanitized scalar.",
+        "required": "Strictly validate capability scalars or compare the parsed complete mapping with the original mapping."
+      }
+    ]
+  },
+  "localReproduction": {
+    "cases": 2,
+    "defectsReproduced": 2,
+    "commandObservedExitCode": 1,
+    "rawMessagesOrCredentialsIncluded": false
+  },
+  "historicalTests": {
+    "tests": 22,
+    "passed": 22,
+    "note": "Previous local regression; does not cover or invalidate the newly reproduced findings."
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "credentialReads": 0,
+    "productionWrites": 0,
+    "serviceActions": 0,
+    "modelCalls": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0
+  },
+  "productionReady": false,
+  "next": "Await approval to minimally correct both local validator defects and add focused regressions before using the still-unused authorized SSH attempt."
+}
