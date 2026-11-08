@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "schema-only-256k-local-snapshot-correction",
+  "status": "local_regression_and_targeted_correction_review_passed",
+  "bindings": [
+    {
+      "file": "probe.py",
+      "sha256": "dc71ff5e118f9452a3163b1bba36c4ee7c0c74c9d05126af7a233985fda76c0a"
+    },
+    {
+      "file": "collector.py",
+      "sha256": "200c59ce6cc6f97393b0d10b1376675dc05eee4b837b40b373d37594fc0d2189"
+    },
+    {
+      "file": "test_schema_capture.py",
+      "sha256": "7a22fea4b8e2a06eb7479c01d24df68b25ee54f05ee6a48c78edb2bbd97aaa5f"
+    },
+    {
+      "file": "red.log",
+      "sha256": "1aed6c483d9434b5c4cc09ab60b63d8854071673127dcd9b626e5c6f9bd12f5e"
+    },
+    {
+      "file": "candidate.log",
+      "sha256": "6465ba56f40226712a0f9a6d96662af47546de87816ec9bb509fc6136ef09362"
+    }
+  ],
+  "changes": {
+    "schemaArgvCopiedBeforeBudgetCallbacks": true,
+    "samePrivateSnapshotValidatedAndSpawned": true,
+    "regularCaptureBranchUnchanged": true,
+    "truncatedXmlTestsExpectExactParseError": true,
+    "overflowDtdAndDuplicatePropertyTestsStillExpectValueError": true,
+    "parserAcceptanceRulesNotChangedToSatisfyTests": true,
+    "failedPriorCandidatePreserved": true
+  },
+  "regression": {
+    "total": 31,
+    "passed": 31,
+    "failures": 0,
+    "errors": 0,
+    "elapsedSeconds": 0.061,
+    "processExitCode": 0,
+    "includesTwoNewSnapshotTests": true
+  },
+  "redBaseline": {
+    "testMethods": 2,
+    "expectedFailures": 2,
+    "errors": 0,
+    "elapsedSeconds": 0.006,
+    "source": "Preserved prior private candidate, not modified or reverted."
+  },
+  "review": {
+    "originalSnapshotP2Resolved": true,
+    "scope": "Reviewer assessed the supplied exact correction to the original P2 and exact test-exception changes.",
+    "sourceRereadByReviewer": false,
+    "testsExecutedByReviewer": false,
+    "newFullNativeAcceptanceClaim": false
+  },
+  "limits": {
+    "regularQueryCaptureBytes": 65536,
+    "schemaOnlyCaptureBytes": 262144,
+    "bootstrapOutputBytes": 16384,
+    "localWorkerReceiptBytes": 32768,
+    "remoteSeconds": 20,
+    "localTotalSeconds": 35,
+    "noAutomaticRetry": true,
+    "noTruncationFallback": true
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "remainingGates": {
+    "newCollectorSourceBindingRequired": true,
+    "newPayloadBootstrapManifestRunnerClosureRequired": true,
+    "completeOfflineBootstrapAndParentReceiptChainRequired": true,
+    "newRemoteApprovalRequiredBeforeAnyFurtherSsh": true,
+    "actualRemoteXmlSizeStillUnknown": true,
+    "real256kCaptureNotAccepted": true,
+    "productionReady": false
+  },
+  "next": "Continue local-only hash-bound packaging and complete offline receipt-chain integration. No SSH allowance or publication is implied by this local pass."
+}
