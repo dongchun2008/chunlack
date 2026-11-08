@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "unlaunched-native-entry-local-preparation",
+  "status": "not_accepted_generator_policy_mismatch_reproduced",
+  "sourceSha256": {
+    "entry.py": "7a6d66bf5abd0e2f0d1e236969da5e126288d0637bc2fc8f7b070b61db837cf0",
+    "test_entry.py": "a4ee9ca744ccd1f5cda0eafd3fcaa0b272b0668f828101c799b117ec18547f7a",
+    "plan.json": "9139ee654f852904d06124cba1fc52ec1a6181ad3becf29d32711459cfb06836",
+    "test_policy_alignment.py": "081b0115136736941eabc5b9de98afafd8e0d9e1dc80ed49b3017f828a23fcc3"
+  },
+  "dependencyPins": {
+    "wrapper": "41ed2464c5e0167968bf67bb67c2396b5b9efa9a4ba51b166402cd93230ea4e5",
+    "probe": "7d8fb6d588df3b281d12ca5012e9470e76fbfa97761ddc10c604fb14140fc024",
+    "reader": "8bb5c9bf7cda997631ac9bdd648dd6ab66a9de034d3f90f46ed3f8bb4b54d012"
+  },
+  "design": {
+    "argvOnly": true,
+    "interpreterFlags": [
+      "-I",
+      "-S",
+      "-B",
+      "-c"
+    ],
+    "allDependencyPinsCheckedBeforeCompilation": true,
+    "packetClosedAndBounded": true,
+    "doesNotRewriteActivationEnvironment": true,
+    "rootFilesystemLoaderAdded": false,
+    "containsSshOrSystemdLauncher": false,
+    "externalTenSecondWatchdogStillRequired": true
+  },
+  "limits": {
+    "sourceBytesEach": 32768,
+    "packetBytes": 16384,
+    "argumentBytesEach": 98304,
+    "argvBytesIncludingTerminators": 131072,
+    "receiptBytesIncludingNewline": 65536,
+    "maximumPartialOutputCalls": 128
+  },
+  "tests": {
+    "missingEntryRed": {
+      "testsRun": 1,
+      "failures": 1,
+      "elapsedSeconds": 0.001,
+      "exitCode": 1
+    },
+    "relatedLocalChecks": {
+      "testsRun": 15,
+      "passed": 15,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 0.351,
+      "exitCode": 0
+    },
+    "additionalSizeDiagnostic": {
+      "exitCode": 1,
+      "reason": "Local diagnostic command has an unmatched closing parenthesis; no statistics or generated command execution occurred.",
+      "corrected": false
+    },
+    "unifiedDiscoveryRun": false,
+    "wholeProductSuiteRerun": false,
+    "successInvocationAndOutputBoundariesUseMocks": true,
+    "generatedCommandExecuted": false,
+    "actualLinuxNativeProcessTransitionsPerformed": false,
+    "policyAlignmentReproduction": {
+      "testsRun": 4,
+      "passed": 0,
+      "failures": 4,
+      "errors": 0,
+      "elapsedSeconds": 0.088,
+      "exitCode": 1,
+      "generatedCommandsExecuted": false
+    }
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "newDependencies": 0,
+    "privateSourceCommitted": false,
+    "previousRemoteAllowancesNotReset": true
+  },
+  "acceptance": {
+    "nativeEntryAccepted": false,
+    "managerProvenanceVerified": false,
+    "hardDeadlineEnforced": false,
+    "fullInheritedInventoryVerified": false,
+    "combinedResourceBudgetVerified": false,
+    "productionReady": false
+  },
+  "independentReview": {
+    "filesReadOnce": [
+      "entry.py",
+      "test_entry.py"
+    ],
+    "outputComplete": true,
+    "independentlyReranTests": false,
+    "definiteP2PolicyFinding": true,
+    "sourceDerivedFinding": "Generator policy is less restrictive than the fixed reader plan policy. Native guard bypass was not demonstrated.",
+    "coverageLimitations": [
+      "Three output tests depend on original_write being initialized by the direct-file main block; unified discovery may fail while registering cleanup and leave a replaced global writer.",
+      "No dedicated completed-reader WrapperFailure formatting test exists.",
+      "Successful bootstrap invocation is mocked, not native execution evidence."
+    ]
+  },
+  "findings": [
+    {
+      "id": "generator_reader_policy_mismatch",
+      "severity": "P2",
+      "independentlyReviewed": true,
+      "locallyReproduced": true,
+      "corrected": false,
+      "cases": [
+        "Executable regular mode accepted by generation",
+        "All-zero nonce accepted by generation",
+        "All-zero catalog digest accepted by generation",
+        "Aliased descriptor identities accepted by generation"
+      ],
+      "nativeGuardBypassDemonstrated": false
+    },
+    {
+      "id": "discovery_cleanup_fixture_lifecycle",
+      "sourceReviewConfirmed": true,
+      "locallyReproduced": false,
+      "corrected": false
+    },
+    {
+      "id": "additional_metrics_command_parenthesis",
+      "actualLocalSyntaxErrorObserved": true,
+      "corrected": false
+    }
+  ],
+  "next": "In a new local step align the four generator rejection conditions with the frozen reader, scope output replacement cleanup before mutation, add known WrapperFailure completion-fact formatting coverage, and correct only the additional metrics command. Preserve this candidate and failures. No SSH, native unit or production publication follows from these checks."
+}
