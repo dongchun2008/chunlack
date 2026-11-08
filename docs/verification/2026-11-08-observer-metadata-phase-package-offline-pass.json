@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "observer-metadata-query-phase-offline-package",
+  "status": "offline_integration_and_targeted_review_passed",
+  "bindings": {
+    "manifestSha256": "0e5204dfc3b7604d8cbda99765677ac2c0d71a079fbce5116ebb6f2962241832",
+    "payloadSha256": "452b4a2fcb35bbc090a815c6885ed05d1e239df1c06ca2726b33ca02a6c76064",
+    "payloadBytes": 71111,
+    "bootstrapSha256": "418d70d3ed5184829fdc56d33dde193de4a75fd52ddcf093bb37ce772a9ca2f8",
+    "runnerSha256": "3529d7ce7ad0be20b5e5de9921629ec2e01b29f08e43cf13a1f8549b324057a9",
+    "probeSha256": "d3c886d1e5690f74fdd7ff20cd0a179a5db569e1f042ed4098b6c7c86ee5075a",
+    "localFiles": [
+      {
+        "file": "build.ps1",
+        "sha256": "2fdeefa0411ca370541f42468280216acc96951ccd4a88713384e06149150539"
+      },
+      {
+        "file": "test_bootstrap_chain.py",
+        "sha256": "5cddd4fc7bd50dccc5539de2dd572abf3903360d159e383fc61458e7cf91a6db"
+      },
+      {
+        "file": "replay.log",
+        "sha256": "49aada74b4299fd77ead278a32ebf204dc21ba900e53c9853e9358cbb4084705"
+      },
+      {
+        "file": "runner.log",
+        "sha256": "65d59d31656a039cb4a0ad78c5a129bcbce0fb0a8bd3dd990f0a82bde497e996"
+      }
+    ]
+  },
+  "tests": [
+    {
+      "group": "sealed_probe_replay",
+      "total": 25,
+      "passed": 25,
+      "failures": 0,
+      "errors": 0,
+      "elapsedSeconds": 0.018,
+      "processExitCode": 0
+    },
+    {
+      "group": "runner_and_bootstrap_receipt_chain",
+      "total": 29,
+      "passed": 29,
+      "failures": 0,
+      "errors": 0,
+      "elapsedSeconds": 4.981,
+      "processExitCode": 0
+    }
+  ],
+  "coverage": {
+    "realIsolatedLocalBootstrapWithSimulatedBackend": true,
+    "compiledSourceDigestChecksRetained": true,
+    "fourQueryFailureCodesSurviveBootstrapAndParent": true,
+    "originalErrorAndCleanupPreserved": true,
+    "tamperedPacketRejectedBeforeBackendConstruction": true,
+    "unknownCodesStrippedByBootstrapAndRejectedWhenInjectedAtParent": true,
+    "contradictorySuccessfulWorkerRejected": true,
+    "capabilityExtraTextRejected": true,
+    "unchangedCaptureLimitBytes": 65536,
+    "unchangedBootstrapOutputLimitBytes": 16384,
+    "unchangedLocalWorkerReceiptLimitBytes": 32768,
+    "unchangedWindowsCommandLimitCharacters": 30000,
+    "unchangedSourceLimitBytes": 65536,
+    "remoteSeconds": 20,
+    "localTotalSeconds": 35
+  },
+  "review": {
+    "definiteP1": 0,
+    "definiteP2": 0,
+    "inspected": "New local builder, bootstrap-chain tests, generated manifest and runner bindings.",
+    "testExecutionByReviewer": false,
+    "independentManifestAndRunnerHashComparisonPassed": true
+  },
+  "authorization": {
+    "priorRemoteAttemptUsed": 1,
+    "priorRemoteAttemptMaximum": 1,
+    "priorQuotaReset": false,
+    "newRemoteAllowanceGranted": false,
+    "newRemoteAttemptsUsed": 0,
+    "linuxUnitAllowanceCreated": false,
+    "publicationAllowed": false
+  },
+  "effects": {
+    "sshConnections": 0,
+    "linuxUnits": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "limitations": {
+    "historicalFailureQueryPhase": "unknown",
+    "outputLimitFixed": false,
+    "nativeMetadataAccepted": false,
+    "combinedNativeBudgetAccepted": false,
+    "fullRepositoryRegressionClaimed": false,
+    "productionReady": false
+  },
+  "next": "Requires an explicit new single-attempt remote 20-second/local 35-second read-only diagnostic approval. No retry, new unit, publication or service action is implied by this package."
+}
