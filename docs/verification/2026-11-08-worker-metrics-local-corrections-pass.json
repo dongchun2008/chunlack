@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "One local correction pass after worker metrics adapter independent review",
+  "priorEvidence": {
+    "record": "2026-11-08-worker-metrics-acquisition-local-review.json",
+    "reviewP1": 0,
+    "reviewP2": 2,
+    "deterministicFailingBoundaryCases": 2,
+    "oldFailureRecordPreserved": true
+  },
+  "corrections": [
+    "The deadline wrapper retains ownership of successful open results until the post-call check completes; timeout attempts exactly one owned close.",
+    "A failed owned close preserves the original deadline error and cleanup error separately, without putting their content in the public exception message.",
+    "The initial sampler now accepts only the fixed oneshot activating/start state, retaining expected MainPID, invocation, exact cgroup and start/exit timestamp binding.",
+    "Local fake producer state now models the fixed oneshot worker; running/exited/other states remain rejected."
+  ],
+  "validation": {
+    "acquisitionDirectory": {
+      "command": "python -E -P -B -m unittest discover -s worker-metrics-acquisition-20261108-a1 -p test_*.py -v",
+      "tests": 33,
+      "passed": 33,
+      "failures": 0,
+      "errors": 0,
+      "elapsedSeconds": 0.069
+    },
+    "evidenceContractDirectory": {
+      "command": "python -E -P -B -m unittest discover -s native-protection-resource-20261108-a1 -p test_*.py -v",
+      "tests": 52,
+      "passed": 52,
+      "failures": 0,
+      "errors": 0,
+      "elapsedSeconds": 0.062
+    },
+    "totalRelatedTests": 85,
+    "fullProductRegressionRun": false,
+    "actualLinuxRun": false,
+    "repeatIndependentReview": false,
+    "additionalCoverage": [
+      "Successful directory and regular-file descriptor cleanup",
+      "Mid-traversal failure",
+      "Post-open timeout and regular-file handoff timeout",
+      "Post-open timeout plus close failure",
+      "Original failure plus multiple cleanup errors",
+      "Link and writable ancestor refusal",
+      "Directory alias replacement refusal",
+      "Exact cgroup file allowlist",
+      "Underlying unsuccessful open is not treated as owned",
+      "Oneshot lifecycle, independent PID and completed-worker rejection"
+    ]
+  },
+  "safety": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "remoteWrites": false,
+    "serviceControl": false,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "privateSourcesSubmitted": false,
+    "oldFrozenModulesModified": false
+  },
+  "interpretation": {
+    "localCorrectionsAccepted": true,
+    "nativeEvidenceVerified": false,
+    "combinedControllerWorkerBudgetVerified": false,
+    "hardwareCapacityAccepted": false,
+    "productionReady": false,
+    "goalComplete": false
+  },
+  "remainingGates": [
+    "Implement and bind actual protected-service/config/runtime baseline and host-headroom acquisition around the worker interval.",
+    "Bind adapter and corrected evidence-contract source hashes into a new isolated candidate without modifying frozen modules.",
+    "Integrate actual native acquisition with the accepted launch/terminal/census observer and a shared outer deadline.",
+    "Obtain scoped native validation evidence and complete capacity, compatibility, backup/recovery and production maintenance gates; local cases are not native or deployment acceptance."
+  ]
+}
