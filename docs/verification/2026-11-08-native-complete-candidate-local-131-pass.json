@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Independent local native capture candidate assembly and sealed-copy regression",
+  "package": {
+    "tag": "native-complete-package-20261108-a1",
+    "manifestSha256": "fba86473e067826ce9c27236dcd8ebe6f9898f6cadaf02f2a32d0b9d38d92364",
+    "sourceFiles": 9,
+    "fixtureFiles": 12,
+    "copiedFiles": 21,
+    "copiedBytes": 213512,
+    "oldFrozenPinsVerified": 6,
+    "sourceAndFixtureHashesCheckedBeforeEachGroupAndAfterAllGroups": true,
+    "newDirectoryOnly": true,
+    "oldPackagesOverwritten": false,
+    "osLevelImmutabilityClaimed": false,
+    "sources": {
+      "native": "96e135456c413b15f54b7346100935f8fa7571a45f7d0e02546c7b33223dcb04",
+      "inventory": "264becc1c4b99ef6d3b12b0d12827841ac0c24bc42302536e12277072b1aea71",
+      "support": "b71cdcb41294d8fc5e5e6fe093b8d9f0d3423d5fce127333db20a8d212fc11db",
+      "launch": "59f2d1ee86d10db2d1f9fcd924e6155bd0a2440454705755d0aca32f217e7e67",
+      "collector": "9d48c4040cdb38cc3b89c1ebbbe845289e18b5b513db1ce20d5af39dba8b4fb7",
+      "bridge": "d829cc53bebfdc60189f112df03bf6c0d23f45177e4c439e2948421d217171c3",
+      "evidence": "7545f8ed6197282ff681ec4ee19af190498a03bfab77282d828962e258e46c70",
+      "metrics": "1687bef6997d4019ef6cd9e9e6da255fce5d7b91bf0fc109d0da97e69fab7a48",
+      "baseline": "7f9376bdf3711794ace2e297ebadaae8f65f51d3241dfc94a7aeb61d9305e934"
+    }
+  },
+  "validation": {
+    "location": "New sealed replay tree, not the working source files",
+    "groups": {
+      "contract": {
+        "tests": 52,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expectedFailures": 0,
+        "unexpectedSuccesses": 0,
+        "exitCode": 0,
+        "stderrBytes": 0,
+        "elapsedSeconds": 7.965353
+      },
+      "worker": {
+        "tests": 33,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expectedFailures": 0,
+        "unexpectedSuccesses": 0,
+        "exitCode": 0,
+        "stderrBytes": 0,
+        "elapsedSeconds": 8.216009
+      },
+      "baseline": {
+        "tests": 46,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "expectedFailures": 0,
+        "unexpectedSuccesses": 0,
+        "exitCode": 0,
+        "stderrBytes": 0,
+        "elapsedSeconds": 11.644883
+      }
+    },
+    "totalTests": 131,
+    "passed": 131,
+    "aggregateExitCode": 0,
+    "eachGroupTimeoutSeconds": 90,
+    "automaticRetries": 0,
+    "parentOperationRestarted": false,
+    "machineReadableReceiptsPreserved": true,
+    "fullProductRegressionRun": false,
+    "actualLinuxRun": false
+  },
+  "disabledGates": {
+    "nativeExecutionEnabled": false,
+    "runtimePathsBound": false,
+    "backupDirectoryBound": false,
+    "nativeEvidenceVerified": false,
+    "combinedBudgetVerified": false,
+    "productionReady": false,
+    "goalComplete": false
+  },
+  "safety": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "remoteWrites": false,
+    "serviceControl": false,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "privateSourcesSubmitted": false
+  },
+  "remaining": [
+    "Integrate the sealed producer/contract modules with the launch/terminal/census observer under a shared outer deadline.",
+    "Bind actual runtime and backup locations using fresh authorized deployment evidence before native execution.",
+    "Prove actual Linux whole-chain collection and total observer/worker resource accounting, keeping missing counters unavailable.",
+    "Complete compatibility, backup/recovery, protected-service baseline, maintenance and real-use delivery gates before production publication."
+  ]
+}
