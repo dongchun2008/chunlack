@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "finite-fd-contract-local-synthetic-regression",
+  "status": "failed_test_fixture_correction_pending",
+  "previousRemoteResult": {
+    "reference": "docs/verification/2026-11-08-schema-capture-native-readonly-pass.json",
+    "previouslyCompleted": true,
+    "repeatedInThisStage": false
+  },
+  "scope": {
+    "privateOnly": true,
+    "files": [
+      "plan.json",
+      "contract.py",
+      "test_contract.py"
+    ],
+    "payloadRoles": [
+      "cpu_stat",
+      "cgroup_events"
+    ],
+    "pureClaimedDataConsistencyOnly": true,
+    "actualFdReceptionImplemented": false,
+    "existingRootReaderUnchanged": true,
+    "productRuntimeUnchanged": true
+  },
+  "tests": {
+    "red": {
+      "testsRun": 1,
+      "failures": 1,
+      "errors": 0,
+      "exitCode": 1,
+      "seconds": 0.009,
+      "expectedReason": "implementation absent"
+    },
+    "firstImplementationRun": {
+      "testsRun": 34,
+      "failureIncidents": 1,
+      "errorIncidents": 19,
+      "countsIncludeSubtestIncidents": true,
+      "seconds": 0.625,
+      "exitCode": 1,
+      "allPassed": false
+    },
+    "additionalRuns": 0,
+    "existingProjectSuiteRerun": false
+  },
+  "findings": [
+    {
+      "id": "fixture_module_identity",
+      "severity": "P2",
+      "explanation": "The test API loader creates separate module instances; an exception class captured before invoke differs from the class raised after invoke reloads the module.",
+      "correctionProposed": "Reuse exactly one loaded contract module within the test scope; retain all exception assertions.",
+      "corrected": false
+    },
+    {
+      "id": "fixture_none_default",
+      "severity": "P2",
+      "explanation": "The invocation helper treats explicit None as an omitted argument, replacing the rejection case with valid default input.",
+      "correctionProposed": "Use a dedicated omitted-argument sentinel so explicit None reaches the validator; retain the None rejection case.",
+      "corrected": false
+    }
+  ],
+  "review": {
+    "type": "independent_static_targeted_review",
+    "filesReadOnce": true,
+    "additionalDefiniteImplementationP1P2Findings": 0,
+    "disclosedFixtureFindingsConfirmed": 2,
+    "testsRerunByReviewer": false,
+    "implementationOrNativeAcceptance": false
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "acceptance": {
+    "localSuitePassed": false,
+    "realDescriptorOrIssuerVerified": false,
+    "independentExpectationVerified": false,
+    "deadlineEnforced": false,
+    "cleanupVerified": false,
+    "replayPreventionVerified": false,
+    "combinedBudgetVerified": false,
+    "productionReady": false
+  },
+  "next": "Await the user's decision on the two disclosed test-fixture corrections. Preserve the failing sources and original results; no retry, remote operation, publication, or acceptance promotion."
+}
