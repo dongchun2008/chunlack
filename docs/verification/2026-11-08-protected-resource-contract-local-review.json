@@ -1,0 +1,92 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local supplied-metadata protection/resource contracts; no native acquisition",
+  "candidate": "native-protection-resource-20261108-a1",
+  "failedSourceSha256": "afe287c09fdd6c4753c672d60f7b95e839e707b1a178fad7b049087f1b57110e",
+  "failedSourcePrivatelyPreserved": true,
+  "scopeDiscovery": {
+    "source": "2026-11-07 saved receipt, not current VPS state",
+    "receiptSha256": "96bf1537b5c8cc329f52f65f54a9ff8693d5524751b04c6c403b969a790af85b",
+    "services": [
+      "chunlack-public.service",
+      "chunlack-https.service",
+      "chunlack.service",
+      "tailscaled.service"
+    ],
+    "configurationHashPaths": [
+      "/etc/chunlack-public/Caddyfile",
+      "/etc/chunlack-public/runtime.env",
+      "/var/lib/chunlack-public/config/lack.config.json"
+    ],
+    "runtimeHashKeys": [
+      "node",
+      "caddy"
+    ],
+    "configurationContentsReadThisPhase": false
+  },
+  "localTests": {
+    "main": {
+      "tests": 32,
+      "passed": 32,
+      "failed": 0,
+      "seconds": 0.058
+    },
+    "reviewReproductions": {
+      "tests": 2,
+      "passed": 0,
+      "failed": 2,
+      "seconds": 0.008
+    },
+    "total": 34,
+    "passed": 32,
+    "failed": 2,
+    "skipped": 0
+  },
+  "independentReview": {
+    "p1": 0,
+    "p2": 2,
+    "findings": [
+      {
+        "id": "cpu_accounting_contradiction",
+        "confirmedLocally": true,
+        "issue": "One second of user CPU can coexist with two microseconds of total CPU and pass the present verifier.",
+        "proposedCorrection": "Reject contradictory terminal component accounting using explicit producer-appropriate rounding bounds, without claiming a measured20percent average."
+      },
+      {
+        "id": "whole_cgroup_lifetime_missing",
+        "confirmedLocally": true,
+        "issue": "The whole-lifetime label and terminated main PID do not prove descendant closure or final metric capture after closure.",
+        "proposedCorrection": "Require independently bound cgroup closure and final-sampling metadata, reject surviving descendants and premature samples, and enclose those samples in the protection windows."
+      }
+    ]
+  },
+  "intendedBoundaries": {
+    "contractOnly": true,
+    "nativeEvidenceVerified": false,
+    "combinedBudgetVerified": false,
+    "capacitySufficient": null,
+    "productionReady": false,
+    "optionalMetricsUnknownNotZero": true,
+    "hostSafetyFloorNotBackupProof": true,
+    "preexistingUnhealthyServiceNotRepaired": true
+  },
+  "safety": {
+    "vpsConnections": 0,
+    "newLinuxUnits": 0,
+    "remoteWrites": false,
+    "serviceControl": false,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "existingFrozenModulesModified": false
+  },
+  "acceptance": {
+    "status": "failed_pending_two_corrections",
+    "goalComplete": false
+  },
+  "next": "One combined local correction pass, complete related regression and sanitized synchronization. Actual native acquisition, overall resource accounting and a new native allowance remain separate and unapproved."
+}
