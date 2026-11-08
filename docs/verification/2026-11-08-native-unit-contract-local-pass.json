@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "unlaunched-native-unit-resource-contract-local-preparation",
+  "status": "local_proposal_checks_passed",
+  "sourceSha256": {
+    "contract.py": "5e7e303a5e86a9ad807349885e8adf8db6b144abc1149ed9b1f2589b9b603ee4",
+    "test_contract.py": "a75ca0813543059f8511d4505fe11b6a9443896d1387d52e31d2c1faffa1c965",
+    "plan.json": "0db096608be7d75dc059518072d8c154f7a5d11b7bb79a4cd9e8446c5b27e15d"
+  },
+  "syntheticContractMetrics": {
+    "contractBytes": 79101,
+    "contractSha256": "8484a2e3fe29b97de74ef7f8a78e66937f442dd1d98c67e2cbe68bfbc6875e5b",
+    "launchReady": false,
+    "packetIsSyntheticFixture": true,
+    "propertyCount": 51,
+    "proposedUnitExecuted": false
+  },
+  "entryPin": "4d8a521bbbe22637627322b125886d69b56df520e7243b4af7443e060f6e7e25",
+  "tests": {
+    "red": {
+      "testsRun": 1,
+      "failures": 1,
+      "elapsedSeconds": 0.001,
+      "exitCode": 1
+    },
+    "relatedLocalDiscovery": {
+      "testsRun": 14,
+      "passed": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 0.413,
+      "exitCode": 0
+    },
+    "wholeProductSuiteRerun": false,
+    "systemdUnitExecuted": false
+  },
+  "proposal": {
+    "memoryBytes": 201326592,
+    "swapBytes": 0,
+    "cpuPercentOfOneCore": 20,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasks": 32,
+    "entryBoundingMask": 235,
+    "noNewPrivileges": true,
+    "packetSelectedTargetMustBeNonrootNonbusiness": true,
+    "network": "private",
+    "temporaryFilesystems": {
+      "paths": [
+        "/run",
+        "/tmp",
+        "/var/tmp"
+      ],
+      "bytesEach": 1048576,
+      "inodesEach": 128,
+      "completeWritableMountInventoryVerified": false
+    },
+    "fdSource": "Two existing system.slice aggregate files, not the new unit's own resource files.",
+    "runtimeLimitUSec": 10000000,
+    "separateStartAndStopLimitsUSec": 1000000,
+    "externalWholeTrialDeadlineImplemented": false,
+    "launchReady": false,
+    "transportOrLauncherImplemented": false
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "newDependencies": 0,
+    "privateSourceCommitted": false,
+    "priorRemoteAllowancesNotReset": true
+  },
+  "acceptance": {
+    "localProposalConstructionChecked": true,
+    "nativePropertyApplicationVerified": false,
+    "nativeFdReceptionVerified": false,
+    "catalogAuthorityVerified": false,
+    "hostIdentityVerified": false,
+    "externalTotalDeadlineVerified": false,
+    "completeSubtreeCensusVerified": false,
+    "combinedResourceBudgetVerified": false,
+    "productionReady": false
+  },
+  "references": [
+    {
+      "url": "https://www.freedesktop.org/software/systemd/man/255/systemd.resource-control.html",
+      "supports": "CPU quota is relative to one CPU; memory and swap maxima are distinct cgroup controls."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v255/man/systemd.service.xml",
+      "supports": "Type=exec activation, active-runtime versus startup/stop timing, and explicit OpenFile read-only option."
+    },
+    {
+      "url": "https://www.freedesktop.org/software/systemd/man/255/systemd.exec.html",
+      "supports": "Temporary filesystem mounts and control-group/kernel filesystem protections; these have documented limitations."
+    },
+    {
+      "url": "https://docs.kernel.org/filesystems/tmpfs.html",
+      "supports": "size and nr_inodes bound individual tmpfs instances; this does not prove complete trial accounting."
+    }
+  ],
+  "independentReview": {
+    "filesReadOnce": [
+      "contract.py",
+      "test_contract.py"
+    ],
+    "outputComplete": true,
+    "newDefiniteP1P2Findings": 0,
+    "independentlyReranTests": false,
+    "scope": "Pure proposal construction and byte-exact binding; actual manager property support and enforcement remain unverified."
+  },
+  "next": "Prepare only the local outer deadline/receipt/terminal-evidence integration without launching this proposal. Before any native execution, obtain fresh scoped authorization and verify host identity/catalog, native property support, pre-existing parent controllers, headroom, protected service baselines, complete receipt transport, cleanup and process census. RuntimeMax alone is not proof of the full trial deadline. Overall production delivery remains incomplete."
+}
