@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-08",
+  "kind": "native-controller-transport-design",
+  "status": "reviewed-design-not-implemented",
+  "currentState": {
+    "localInputPreparationComplete": true,
+    "nativeRunnerIntegrated": false,
+    "nativeUnitStarted": false,
+    "readonlySshAllowanceUsed": 1,
+    "readonlySshAllowanceMaximum": 1
+  },
+  "finding": {
+    "description": "A short-lived busctl client cannot retain an owning bus reference after it disconnects. A fast transient unit may be garbage-collected before authoritative terminal fields are collected.",
+    "classification": "design-gap-not-production-incident",
+    "nativeReproductionPerformed": false
+  },
+  "primaryEvidence": [
+    {
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/dbus-unit.c",
+      "sections": "AddRef handling and bus-track disconnect handler",
+      "supports": "Transient AddRef is Boolean and tracks the bus sender; disconnect schedules unit garbage collection."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v255/src/run/run.c",
+      "sections": "transient_unit_set_properties",
+      "supports": "The official runner requests AddRef when using a bus-client connection."
+    },
+    {
+      "url": "https://www.freedesktop.org/software/systemd/man/255/sd_bus_new.html",
+      "supports": "Documented bus allocation, connection and reference/close lifecycle APIs."
+    }
+  ],
+  "recommendedLocalScope": {
+    "transport": "One persistent connection using explicitly bound host libsystemd APIs; no new daemon or Python package planned.",
+    "contract": "New private candidate requests source-bound AddRef only for its own nonce-named diagnostic unit.",
+    "evidence": "Retain connection through authoritative terminal, receipt and process-census collection; release owned reference and connection with bounded cleanup.",
+    "frozenSources": "Preserve all existing frozen modules and candidates; update affected hashes only in new copies.",
+    "localRegression": [
+      "single connection and exact unit/nonce binding",
+      "fast-exit retention simulation",
+      "early disconnect rejects evidence continuity",
+      "unknown or unsupported property rejects without fallback",
+      "original shared budget covers connection through cleanup",
+      "ABI guards and exact typed API signatures",
+      "message/reference close ownership and no double release",
+      "original versus cleanup errors remain separate",
+      "old/new contract separation and exact source/hash closure"
+    ]
+  },
+  "designReview": {
+    "confirmedBlockingIssues": 0,
+    "basis": "provided official v255 evidence and planned design",
+    "nativeOrIndependentExecution": false,
+    "conditions": [
+      "AddRef prevents unit-object GC only; it does not retain processes, cgroup directories or counters.",
+      "Disconnect invalidates evidence continuity; no reconnect or rerun may be presented as the original continuous observation.",
+      "Per-call timeouts are not proof of an external hard deadline.",
+      "All existing identity, exit, census, resource and total-budget requirements remain."
+    ]
+  },
+  "unknowns": [
+    "VPS libsystemd path, file identity, required symbols and ABI",
+    "actual native AddRef and release behavior",
+    "native received-FD handoff",
+    "native shared hard deadline and complete cleanup"
+  ],
+  "changesPerformed": {
+    "sourceCodeModified": false,
+    "softwareInstalled": false,
+    "newSshAttempts": 0,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "externalAgentCalls": 0
+  },
+  "nextAuthorization": "Local implementation and mock regressions in new private copies only; no SSH, native IPC, Linux units, installs or publication.",
+  "acceptance": {
+    "implementationComplete": false,
+    "nativeEvidenceVerified": false,
+    "productionReady": false,
+    "wholeProjectDelivered": false
+  }
+}
