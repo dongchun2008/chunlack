@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local correction of supplied-metadata protection/resource evidence contracts; no native acquisition or publication",
+  "before": {
+    "reviewedDefects": 2,
+    "baselineTestsPreviouslyPassed": 32,
+    "reviewBoundaryReproduction": {
+      "command": "python -E -P -B test_review_boundaries.py",
+      "tests": 2,
+      "failures": 2,
+      "errors": 0,
+      "elapsedSeconds": 0.004
+    },
+    "originalFailedSourcePreserved": true
+  },
+  "changes": [
+    "Reject terminal user/system CPU components inconsistent with total usage beyond an explicit 2-microsecond local-contract tolerance; no measured CPU-rate claim.",
+    "Require fixed unit/invocation/path binding and stable cgroup directory identity across final capture.",
+    "Require direct process list empty plus recursive populated=0 before and after final metrics.",
+    "Enclose final metric capture between empty-subtree observations and include final confirmation in both protection and host windows.",
+    "Reject absent or unavailable closure evidence instead of manufacturing zero counters."
+  ],
+  "validation": {
+    "command": "python -E -P -B -m unittest discover -s native-protection-resource-20261108-a1 -p test_*.py -v",
+    "tests": 52,
+    "passed": 52,
+    "failures": 0,
+    "errors": 0,
+    "elapsedSeconds": 0.062,
+    "existingContractCases": 32,
+    "reviewRegressions": 2,
+    "additionalFinalCaptureCases": 18,
+    "scope": "All tests in the affected private contract directory, not full product regression",
+    "patchApplicationConflict": "Initial application rejected before edits; exact source context obtained and corrected application succeeded."
+  },
+  "sourceBasis": {
+    "recursivePopulated": "https://docs.kernel.org/admin-guide/cgroup-v2.html#un-populated-notification",
+    "cpuTolerance": "Conservative local acceptance policy; not a verified property of the VPS kernel or universal accounting ABI."
+  },
+  "safety": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "remoteWrites": false,
+    "productionPublication": false,
+    "serviceControl": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "privateSourcesSubmitted": false
+  },
+  "interpretation": {
+    "metadataContractPassed": true,
+    "nativeEvidenceVerified": false,
+    "combinedObserverWorkerBudgetVerified": false,
+    "hardwareCapacityAccepted": false,
+    "productionReady": false,
+    "goalComplete": false
+  },
+  "remaining": [
+    "Integrate actual bounded read-only acquisition with the frozen native observer; preserve unavailable evidence as unavailable.",
+    "Bind actual source hashes, execution identities, terminal proof, complete census and final resource capture before claiming native acceptance.",
+    "Native operations and maintenance require their own scoped authorization; no old SSH or Linux allowances are reused.",
+    "Retain backup, compatibility, protected-service baseline, bounded recovery and full delivery acceptance gates."
+  ]
+}
