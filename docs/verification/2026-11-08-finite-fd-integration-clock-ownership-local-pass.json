@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "finite-fd-integration-clock-and-ownership-fix",
+  "status": "related_local_regressions_passed",
+  "priorFindingsReference": "docs/verification/2026-11-08-finite-fd-two-phase-integration-local-findings.json",
+  "previousFailingCandidatePreserved": true,
+  "sourceSha256": {
+    "plan.json": "7fd6167a26955e3d66e3f8f4c3f6e3d672ada3b128662eb5c3423282a60d5959",
+    "integration.py": "8626c165f0a05730700fe63e66f6402702d3a9ca54cd279d89478ae972bb147b",
+    "test_session_boundaries.py": "6a6e8c3ed3cda3867defe288b14de45c482edf1181f9fa9905dc811c403358b0",
+    "test_post_reader_clock.py": "9ef7ec661f03c7487a2ec91c40f5f8976b4938c3f3da9a070b09c0921f674041"
+  },
+  "unchangedDependencyPins": {
+    "contract": "c02c9d2c981dd2b7d39b53628725c2bb89404f7217634890682cf277f16d5dac",
+    "reader": "8bb5c9bf7cda997631ac9bdd648dd6ab66a9de034d3f90f46ed3f8bb4b54d012"
+  },
+  "fixes": {
+    "stageClock": "Prepare checkpoint is retained; the same monotonic sequence is checked before handoff, inside the reader, after report processing and during finalization.",
+    "sessionOwnership": "Errors distinguish the current attempted transfer from prior session responsibility.",
+    "dispositions": {
+      "not_transferred": false,
+      "in_flight": null,
+      "closed": true,
+      "uncertain": true,
+      "unknown": null
+    },
+    "closePolicy": "Neither falsey unknown state nor a rejected second attempt is permission to close a prior descriptor again.",
+    "diagnosticCopies": "Reader primary/cleanup/final diagnostics are retained in a private immutable snapshot and decoded into separate error objects."
+  },
+  "tests": {
+    "addedSessionChecksRed": {
+      "testsRun": 8,
+      "passingMethods": 2,
+      "failureIncidents": 4,
+      "errorIncidents": 2,
+      "elapsedSeconds": 0.268,
+      "exitCode": 1
+    },
+    "postReaderChecksAgainstPreviousCandidateRed": {
+      "testsRun": 2,
+      "failures": 2,
+      "errors": 0,
+      "elapsedSeconds": 0.047,
+      "exitCode": 1
+    },
+    "intermediateRegression": {
+      "testsRun": 112,
+      "passed": 112,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 0.963,
+      "exitCode": 0
+    },
+    "finalRelatedRegression": {
+      "testsRun": 114,
+      "passed": 114,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 1.058,
+      "exitCode": 0
+    },
+    "composition": {
+      "previousChecks": 102,
+      "previousFailingReproductions": 2,
+      "newSessionChecks": 8,
+      "newPostReaderChecks": 2
+    },
+    "sourceOfEvidence": "Actual local Python test process receipts.",
+    "platformScope": "Windows, synthetic catalogs and explicitly injected operation/component boundaries.",
+    "linuxKernelBackendExecuted": false,
+    "wholeProductSuiteRerun": false
+  },
+  "independentReview": {
+    "originalTwoP2Resolved": true,
+    "newDefiniteP1P2Findings": 0,
+    "scope": "Targeted review of the changed integration module and session regression file; post-reader test results supplied separately.",
+    "independentlyReranTests": false,
+    "nativeOrProductionAcceptance": false
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "newDependencies": 0,
+    "existingReaderAndProductUnchanged": true,
+    "previousRemoteQuotasNotReset": true,
+    "privateSourceCommitted": false
+  },
+  "acceptance": {
+    "localIntegrationControlFlowPassed": true,
+    "nativeFdReceptionVerified": false,
+    "trustedCatalogAndReceiverVerified": false,
+    "clockDomainVerified": false,
+    "wholeRuntimeAndLauncherVerified": false,
+    "hardWatchdogVerified": false,
+    "completeSubtreeCensusVerified": false,
+    "combinedResourceBudgetVerified": false,
+    "productionReady": false
+  },
+  "next": "Prepare a bounded native FD handoff/ABI diagnostic locally with pinned sources and failure cleanup tests. Do not connect or launch a Linux unit from this local pass; native execution needs fresh scoped authorization and must not be presented as complete observer/resource or production acceptance."
+}
