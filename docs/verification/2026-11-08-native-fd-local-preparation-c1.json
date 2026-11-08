@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-08",
+  "kind": "native-fd-local-preparation",
+  "status": "passed-local-only-not-launchable",
+  "changeScope": "Corrected caller source-map keys to reader.py, probe.py and wrapper.py; fixed modules unchanged.",
+  "previousFailure": {
+    "reason": "caller source-map keys omitted .py suffix",
+    "fixedGateCorrectlyRejected": true,
+    "candidateArtifactsWrittenByFailedInvocation": false,
+    "remoteOperations": 0
+  },
+  "offlineChecks": {
+    "total": 2,
+    "passed": 2,
+    "failed": 0,
+    "exitCode": 0,
+    "wrongKeysRejected": true,
+    "correctKeysBuiltAndRoundtripValidated": true,
+    "validatorSha256MatchesContract": true
+  },
+  "independentReview": {
+    "basis": "supplied exact local command and returned process evidence",
+    "confirmedBlockingFindings": 0,
+    "independentRerun": false
+  },
+  "artifacts": {
+    "catalog.json": {
+      "bytes": 670,
+      "sha256": "9cf56efb58670d9bce205d01d499432ada503e0d4e2b4b22bcd1606aa9e45195"
+    },
+    "packet.json": {
+      "bytes": 758,
+      "sha256": "a0dfb44be120cae62149d6692e74da77972b0a92a0be6e810516bb14444659fc"
+    },
+    "unit-contract.json": {
+      "bytes": 79109,
+      "sha256": "650dbad7f0328e1f41b93c9d58f719f717a3d8555ece5d44a5df032736747c61"
+    }
+  },
+  "manifestSha256": "4922c346b7b76105beea2ae355bb78d5f16e1fb108ddb3c4801174e34e64e4a0",
+  "sourcePins": {
+    "contract": "5e7e303a5e86a9ad807349885e8adf8db6b144abc1149ed9b1f2589b9b603ee4",
+    "entry": "4d8a521bbbe22637627322b125886d69b56df520e7243b4af7443e060f6e7e25",
+    "probe": "7d8fb6d588df3b281d12ca5012e9470e76fbfa97761ddc10c604fb14140fc024",
+    "reader": "8bb5c9bf7cda997631ac9bdd648dd6ab66a9de034d3f90f46ed3f8bb4b54d012",
+    "wrapper": "41ed2464c5e0167968bf67bb67c2396b5b9efa9a4ba51b166402cd93230ea4e5"
+  },
+  "prerequisiteReadonlyRecordCommit": "f53be26c500e128c2c871c0d85b4c9383416a02b",
+  "preparation": {
+    "privateFilesGenerated": 4,
+    "launchReady": false,
+    "emittedArgvExecuted": false,
+    "lifecyclePlanIncluded": false,
+    "lifecycleClockBound": false,
+    "sourceFilesModified": 0,
+    "privateArtifactsPublished": false
+  },
+  "protections": {
+    "newSshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "serviceActions": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "priorReadonlyAllowanceNotReused": true
+  },
+  "remainingGates": {
+    "nativeInheritedFdHandoffVerified": false,
+    "nativeStartAndExitVerified": false,
+    "resourceSettingsAppliedOrEnforced": false,
+    "externalTotalDeadlineAndCleanupVerified": false,
+    "metadataFreshnessForFutureNativeRunVerified": false,
+    "productionReady": false,
+    "wholeProjectDelivered": false
+  },
+  "nextScope": "Prepare the bounded native diagnostic runner locally; any new SSH or Linux diagnostic unit requires a separately specified authorization."
+}
