@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local read-only worker metric acquisition adapter; candidate not accepted",
+  "implementation": {
+    "privateOnly": true,
+    "serviceMutationInterface": false,
+    "automaticRetry": false,
+    "usesExistingPinnedReaderAndCapture": true,
+    "wholeLifetimeMetricsRequireRecursiveCgroupClosure": true
+  },
+  "validation": {
+    "flowTests": {
+      "tests": 17,
+      "passed": 17,
+      "failures": 0,
+      "elapsedSeconds": 0.015,
+      "evidenceClass": "injected IO local tests; not native acquisition"
+    },
+    "postOpenDeadlineBoundary": {
+      "tests": 1,
+      "passed": 0,
+      "failures": 1,
+      "errors": 0,
+      "elapsedSeconds": 0.003,
+      "result": "Successful synthetic open was not closed when the immediate post-open deadline check raised."
+    },
+    "oneshotBoundary": {
+      "tests": 1,
+      "passed": 0,
+      "failures": 1,
+      "errors": 0,
+      "elapsedSeconds": 0.003,
+      "result": "The fixed oneshot worker starting state was rejected by the initial active/running-only condition."
+    },
+    "initialBootstrapAttempt": "Stopped at missing implementation module before behavioral assertions; not counted as a behavioral RED test.",
+    "fullProductRegressionRun": false
+  },
+  "independentReview": {
+    "completed": true,
+    "p1": 0,
+    "p2": 2,
+    "scope": "Read-only source review; no tests or native operations by reviewer",
+    "findings": [
+      "FD ownership may be lost between a successful open and a failing post-call deadline check, affecting directory and regular-file reads.",
+      "Initial active/running-only state is incompatible with the frozen Type=oneshot worker; fixture masks the mismatch."
+    ],
+    "otherNativeCoverageMissing": [
+      "NativeMetricIO directory traversal and combined cleanup failure paths",
+      "Actual Linux producer, cgroup file semantics and native query/resource accounting"
+    ]
+  },
+  "candidateStatus": {
+    "accepted": false,
+    "correctionApplied": false,
+    "nativeEvidenceVerified": false,
+    "combinedBudgetVerified": false,
+    "hardwareCapacityAccepted": false,
+    "productionReady": false,
+    "goalComplete": false
+  },
+  "nextCorrectionBatch": [
+    "Retain newly opened FD ownership until successful deadline validation; on validation failure attempt one owned close and preserve both primary and cleanup errors.",
+    "Use the actual frozen oneshot start-state/PID semantics; retain invocation, PID, start-time, scope and terminal checks.",
+    "Add local traversal/cleanup and real oneshot-state regressions, then execute all affected local tests; do not repeat native runs."
+  ],
+  "sourceBasis": {
+    "oneshotLifecycle": "https://www.freedesktop.org/software/systemd/man/latest/systemd.service.html"
+  },
+  "safety": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "remoteWrites": false,
+    "serviceControl": false,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "privateAdapterSourceSubmitted": false,
+    "actualVpsLeakObserved": false
+  }
+}
