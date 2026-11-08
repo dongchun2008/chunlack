@@ -1,0 +1,136 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "finite-owned-fd-reader-local",
+  "status": "not_accepted_two_review_findings_reproduced",
+  "scope": {
+    "privateUnwiredLibrary": true,
+    "existingContractAndRootReaderUnchanged": true,
+    "payloadRoles": [
+      "cpu_stat",
+      "cgroup_events"
+    ],
+    "explicitPayloadOwnershipRequired": true,
+    "nativeBackendCodePresent": true,
+    "nativeLinuxBackendExecuted": false,
+    "windowsValidation": "operation doubles and unsupported-platform guard only",
+    "privateSourceCommitted": false
+  },
+  "bindings": {
+    "plan.json": "734f97fed26f80724d1aab2fd1776be1d26bee7a1362e69ed94a4a7ce8ec3d77",
+    "reader.py": "e7d6e4118115dd484d941583ead6600062ba4305ac6d73887a358ffc100142e7",
+    "test_reader.py": "8ec366155af0210c52bed86de0504eaec54a9f00f088773caee0bdcbc5d15bc7",
+    "test_native_boundaries.py": "f138e0370f9a30adc9d6f87d057368c4b97e8f28afc04e4df3bd843dc08964ee"
+  },
+  "tests": {
+    "missingImplementationRed": {
+      "testsRun": 1,
+      "failures": 1,
+      "errors": 0,
+      "elapsedSeconds": 0.002,
+      "exitCode": 1,
+      "reason": "implementation missing"
+    },
+    "initialReaderSuite": {
+      "testsRun": 30,
+      "passed": 30,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 0.225,
+      "exitCode": 0
+    },
+    "earlierCombinedContractAndReaderSuite": {
+      "testsRun": 68,
+      "passed": 68,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 0.389,
+      "exitCode": 0
+    },
+    "subsequentBoundaryReproduction": {
+      "testsRun": 2,
+      "failures": 2,
+      "errors": 0,
+      "elapsedSeconds": 0.031,
+      "exitCode": 1
+    },
+    "allCurrentPrivateTestsPassed": false,
+    "noWholeProductRegressionClaim": true
+  },
+  "findings": [
+    {
+      "id": "internal_metadata_deadline",
+      "severity": "P2",
+      "independentlyReviewed": true,
+      "locallyReproduced": true,
+      "result": "After the internal auxiliary read returned past deadline, another read, fstatfs and fstat still started.",
+      "observedClockNs": 10001,
+      "deadlineNs": 10000,
+      "correctionProposed": "Pass the same cooperative budget into each native metadata operation, register newly opened handles before post-operation checks, and never gate cleanup on remaining time.",
+      "corrected": false
+    },
+    {
+      "id": "auxiliary_descriptor_zero",
+      "severity": "P2",
+      "independentlyReviewed": true,
+      "locallyReproduced": true,
+      "result": "The helper rejected its own newly opened descriptor 0 when standard input was initially absent.",
+      "correctionProposed": "Recognize newly opened owned auxiliary descriptors independently from the transferred payload pair, without assuming all standard descriptors are open.",
+      "corrected": false
+    }
+  ],
+  "retainedBehavior": {
+    "byteCapacityPerPayload": 8192,
+    "readCallsPerPayload": 64,
+    "shortNonemptyReadsAccumulated": true,
+    "eofProbeAtCapacityBytes": 1,
+    "unsupportedPreadDoesNotFallback": true,
+    "payloadClosesAttemptedIndependently": true,
+    "closeNotRetried": true,
+    "primaryCleanupFinalErrorsSeparate": true,
+    "hardWatchdogImplemented": false
+  },
+  "references": [
+    {
+      "url": "https://man7.org/linux/man-pages/man2/pread.2.html",
+      "supports": "pread uses an explicit offset and may return a short read; it requires a seekable descriptor."
+    },
+    {
+      "url": "https://man7.org/linux/man-pages/man2/close.2.html",
+      "supports": "On Linux, retrying a failed close can close a reused descriptor."
+    },
+    {
+      "url": "https://raw.githubusercontent.com/torvalds/linux/v6.8/include/uapi/asm-generic/statfs.h",
+      "supports": "Reference statfs structure used for guarded Linux x86_64 LP64 layout."
+    },
+    {
+      "url": "https://man7.org/linux/man-pages/man5/proc_pid_fdinfo.5.html",
+      "supports": "fdinfo exposes the descriptor's mount ID and inode."
+    }
+  ],
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "oldQuotasNotReset": true
+  },
+  "acceptance": {
+    "finiteReaderAccepted": false,
+    "realDescriptorHandoffVerified": false,
+    "catalogAuthorityVerified": false,
+    "kernelFdVerified": false,
+    "deadlineEnforced": false,
+    "combinedBudgetVerified": false,
+    "productionReady": false
+  },
+  "next": "Preserve this failing candidate. Apply only the two disclosed local fixes in a new private candidate, add operation-level deadline and owned-auxiliary cleanup regressions, and rerun related local tests before proposing any native execution."
+}
