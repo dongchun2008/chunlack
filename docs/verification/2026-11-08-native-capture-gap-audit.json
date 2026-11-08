@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local source/interface audit and next-phase planning only",
+  "authoritativeInputs": {
+    "pins": {
+      "native": {
+        "sha256": "96e135456c413b15f54b7346100935f8fa7571a45f7d0e02546c7b33223dcb04",
+        "bytes": 27500
+      },
+      "inventory": {
+        "sha256": "264becc1c4b99ef6d3b12b0d12827841ac0c24bc42302536e12277072b1aea71",
+        "bytes": 11795
+      },
+      "support": {
+        "sha256": "b71cdcb41294d8fc5e5e6fe093b8d9f0d3423d5fce127333db20a8d212fc11db",
+        "bytes": 28644
+      },
+      "binding": {
+        "sha256": "7c2b97751cdc2f0d5590c69e374aa89759c09efedc2ef9371e84f0643507cff0",
+        "bytes": 474
+      },
+      "launch": {
+        "sha256": "59f2d1ee86d10db2d1f9fcd924e6155bd0a2440454705755d0aca32f217e7e67",
+        "bytes": 10340
+      },
+      "collector": {
+        "sha256": "9d48c4040cdb38cc3b89c1ebbbe845289e18b5b513db1ce20d5af39dba8b4fb7",
+        "bytes": 18711
+      }
+    },
+    "sourceBodiesInspected": [
+      "native worker and observer",
+      "inventory",
+      "launch contract",
+      "readonly collector"
+    ],
+    "supportBodyInspectedThisPhase": false,
+    "bindingFileInspected": true,
+    "liveReadinessRecord": "2026-11-08-native-readiness-a2-live-readonly-pass.json"
+  },
+  "findings": [
+    {
+      "id": "separate_launch_and_capture",
+      "evidence": "launch_contract.build_request and verify_loaded_unit implement exact packet/structured ExecStartEx and auxiliary-stage checks; collector.collect obtains identity, full Service introspection and each accepted Ex property.",
+      "gap": "The frozen worker/observer package does not itself integrate this strong collector proof."
+    },
+    {
+      "id": "legacy_observer_queries",
+      "evidence": "NativeReader.snapshot uses its own subprocess.run and PROPERTIES; verify_policy uses a textual ExecStart prefix.",
+      "gap": "A standalone legacy observer result cannot substitute for the separate exact structured command evidence or owner-tracked collection."
+    },
+    {
+      "id": "native_child_execution_not_accepted",
+      "evidence": "The successful live readiness probe constructs NativeKernel/NativeOps and checks context twice without spawning query children.",
+      "gap": "Actual native query capture, genuine wait/reaping, bounded cleanup and full output/schema sizes still need native acceptance."
+    },
+    {
+      "id": "complete_census_not_executed",
+      "evidence": "Worker has a fixed metadata-only directory walk with depth64, entries32768, pathBytes4096, managedDescriptors132 and deadline18s.",
+      "gap": "A constructor/context probe does not prove successful full census. Preserve all entry, identity, alias, mount, link and drift checks."
+    },
+    {
+      "id": "capacity_claim_intentionally_closed",
+      "evidence": "Observer sets nativeCapacityAccepted=false, protectedBaselinePairIncluded=false and resourceUsageMetrics=null; inventory capacitySufficient remains null and consistentSnapshot=false.",
+      "gap": "Neither successful metadata counts nor native terminal proof establishes spare capacity, consistent backups or safe publication."
+    },
+    {
+      "id": "native_worker_policy",
+      "evidence": "Frozen worker verifies UID996/GID987, NNP, zero capabilities, expected invocation/cgroup and kernel CPU20percent/memory192MiB/swap0/tasks32.",
+      "gap": "Actual applied native properties, exit status, retained invocation and empty cgroup must still be captured after one explicitly authorized new worker."
+    }
+  ],
+  "nextLocalWork": [
+    "Integrate the pinned strong collector and existing worker/observer through a new private adapter, leaving frozen modules unchanged.",
+    "Use typed and hash-bound sources, an independently latched invocation, one shared deadline and clear injected/native evidence classes.",
+    "Add complete-command, invocation drift, nonzero exit, schema/output overflow, incomplete census and combined original/cleanup failure regressions.",
+    "Prepare before/after protected baseline and resource-evidence contracts; missing evidence is failure, not an invented zero.",
+    "Freeze the package and obtain one independent boundary review before proposing a scoped native run."
+  ],
+  "existingBounds": {
+    "workerInternalSeconds": 18,
+    "workerUnitStartSeconds": 20,
+    "workerStopSecondsMaximum": 2,
+    "collectorTotalSecondsMaximum": 18,
+    "querySecondsMaximum": 2,
+    "queryOutputBytesMaximum": 65536,
+    "workerMemoryBytes": 201326592,
+    "workerCpuPercent": 20,
+    "workerTasks": 32,
+    "workerSwapBytes": 0
+  },
+  "authorization": {
+    "externalSshThisPhase": 0,
+    "newLinuxUnitsThisPhase": 0,
+    "unitCreationAuthorized": false,
+    "remainingSshAllowance": 0,
+    "freshNativeRunRequiresExplicitScopeAndBudget": true
+  },
+  "safety": {
+    "testsRerun": false,
+    "productCodeChanged": false,
+    "frozenCandidatesChanged": false,
+    "remoteWrites": false,
+    "serviceControl": false,
+    "publication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "modelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "productionReady": false,
+  "goalComplete": false
+}
