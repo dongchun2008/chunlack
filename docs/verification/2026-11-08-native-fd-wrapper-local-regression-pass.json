@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "same-pid-wrapper-local-boundary-regression-complete",
+  "status": "related_local_simulations_passed",
+  "sourceSha256": {
+    "plan.json": "2e74440fdd060f13cb36868cf5a6a1ae3d18d215cff6a0ea7ee98468d2bbc1b4",
+    "wrapper.py": "41ed2464c5e0167968bf67bb67c2396b5b9efa9a4ba51b166402cd93230ea4e5",
+    "probe.py": "7d8fb6d588df3b281d12ca5012e9470e76fbfa97761ddc10c604fb14140fc024",
+    "reader.py": "8bb5c9bf7cda997631ac9bdd648dd6ab66a9de034d3f90f46ed3f8bb4b54d012",
+    "test_wrapper.py": "2e3dc577bdca5593c42883686f388ecb45a4f487c8583837798ec1396fcea630",
+    "test_wrapper_boundaries.py": "8fa1378b3f36a21bb7cc6c4cb0dda9af0316e533baa999e58a89303e3c477771",
+    "test_clock_handoff.py": "92a56fb5e59f92b293a7dae718617742d4a2277fe005a49784483c4e313e047a",
+    "test_deadline_cap.py": "a29e362acc3094372ca049a9e72b4e69ac52d37af7f89b100c5b6bf6fcca3afe"
+  },
+  "corrections": {
+    "implementation": "Retain completed probe facts before outer checks; preserve inner clock error identity and carry the successful probe clock checkpoint back.",
+    "fixture": "Only two references changed from case.case.closed() to case.case.reader_case.closed(); expected empty and [3,4] lists are unchanged.",
+    "probeAndReaderUnchanged": true,
+    "outerSeconds": 10,
+    "probeSeconds": 5,
+    "receiptReserveSeconds": 1,
+    "nativeRejectsInjectedProviders": true
+  },
+  "tests": {
+    "finalRelatedRun": {
+      "testsRun": 76,
+      "passed": 76,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 0.938,
+      "exitCode": 0
+    },
+    "priorExtendedFailurePreserved": {
+      "testsRun": 76,
+      "passed": 74,
+      "failures": 0,
+      "errors": 2,
+      "exitCode": 1
+    },
+    "originalTwoP2ReproductionsNowPass": true,
+    "wholeProductSuiteRerun": false,
+    "actualNativeProcessTransitionsPerformed": false
+  },
+  "independentReview": {
+    "implementationReviewedBeforeFixtureOnlyCorrection": true,
+    "originalTwoP2FindingsResolved": true,
+    "exactTwoLineFixtureDiffReviewed": true,
+    "newDefiniteP1P2Findings": 0,
+    "independentlyReranTests": false,
+    "coverageLimitation": "The additional invalid scalar handoff test injects before descriptor ownership; no new post-ownership invalid-scalar cleanup coverage is claimed."
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "newDependencies": 0,
+    "privateSourceCommitted": false,
+    "previousRemoteAllowancesNotReset": true
+  },
+  "acceptance": {
+    "relatedLocalWrapperSimulationPassed": true,
+    "nativeWrapperAccepted": false,
+    "nativeFdReceptionVerified": false,
+    "managerProvenanceVerified": false,
+    "fullInheritedInventoryVerified": false,
+    "completeSubtreeCensusVerified": false,
+    "combinedResourceBudgetVerified": false,
+    "productionReady": false
+  },
+  "next": {
+    "local": "Prepare an unlaunched diagnostic entry point and explicit unit/resource contract without changing the accepted wrapper sources.",
+    "remote": "Any SSH, native unit or publication requires its own fresh scoped authorization; prior single metadata attempt is exhausted.",
+    "remainingNativeGates": [
+      "Fresh account/identity and fixed path verification",
+      "Actual same-PID transition and inherited FD metadata",
+      "Hard deadline and complete trial process accounting",
+      "Protected co-host baseline and terminal cleanup evidence"
+    ],
+    "overallDelivery": "Still incomplete; no production-ready claim."
+  }
+}
