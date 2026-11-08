@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Focused local readiness/transport verification; inactive candidate only",
+  "correction": {
+    "defaultOutputFlushedBeforeFinalClockCheck": true,
+    "lateFlushReproduction": "failed_before_fix_passed_after_fix",
+    "logFiltering": false,
+    "stderrRejectionRetained": true
+  },
+  "regression": {
+    "total": 51,
+    "passed": 51,
+    "failed": 0,
+    "skipped": 0,
+    "suites": [
+      {
+        "name": "ordered-close-original",
+        "tests": 12,
+        "seconds": 0.004
+      },
+      {
+        "name": "ordered-close-failures",
+        "tests": 11,
+        "seconds": 0.015
+      },
+      {
+        "name": "real-loopback-ssh",
+        "tests": 2,
+        "seconds": 0.087
+      },
+      {
+        "name": "copied-runner-regression",
+        "tests": 16,
+        "seconds": 0.012
+      },
+      {
+        "name": "inactive-integration",
+        "tests": 8,
+        "seconds": 0.788
+      },
+      {
+        "name": "final-flush-and-dependency-rejection",
+        "tests": 2,
+        "seconds": 0.728
+      }
+    ],
+    "fullProductSuite": false,
+    "realProviderAcceptance": false
+  },
+  "review": {
+    "closeBoundaryP2": 2,
+    "integrationBoundaryP2": 1,
+    "remainingActionableFindings": 0,
+    "correctionsVerified": "regressions including new failure reproductions; no duplicate review of correction pass"
+  },
+  "fingerprints": {
+    "runner": {
+      "sha256": "b09250a5e0495f90b9635f0c4196a7fc06203322532cc6e2f7e8ed7919ea4e98",
+      "bytes": 15946
+    },
+    "adapter": {
+      "sha256": "98e99a47b5e481fc0326c9bc81b5b273445c7d4c102bb7e8b89b60dae1aeeb83",
+      "bytes": 6972
+    },
+    "transport": {
+      "sha256": "9285484e9b86c50ff1eebffcf47a6db95bf232c50cf19088bc77e53e6ac5c11a",
+      "bytes": 10845
+    },
+    "bootstrap": {
+      "sha256": "ff6dce2292dc0503a49d2f7ae8e43f95605ccfae4c034b039dd302d97bec173f",
+      "bytes": 1785
+    },
+    "payload": {
+      "sha256": "36c35d780d1307529f97e206d6d39b8e699acaa280a551ce7f4c2fcff6b17097",
+      "bytes": 29742
+    }
+  },
+  "libraryPinScope": "Paramiko 5.0.0 and transport.py source digest; not a claim that all installed dependencies are pinned",
+  "authorization": {
+    "oldSshAllowanceUsed": 1,
+    "oldSshAllowanceAllowed": 1,
+    "newSshAttempts": 0,
+    "newLinuxUnits": 0,
+    "candidateLiveRunAuthorized": false,
+    "automaticRetry": false
+  },
+  "oldEvidence": {
+    "originalOuterAttempt": "failed_and_preserved",
+    "originalNativeContextSubresult": "passed",
+    "previousFailureRecordsRetained": true
+  },
+  "acceptance": {
+    "candidate": "locally_verified_inactive",
+    "receiptAlwaysProvisional": true,
+    "callerMustObserveSuccessfulTimelyTerminalExit": true,
+    "nativeCapacityAccepted": false,
+    "productionReady": false,
+    "goalComplete": false
+  },
+  "safety": {
+    "vpsConnectionsThisPhase": 0,
+    "remoteWrites": false,
+    "serviceControl": false,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "dnsChanges": false,
+    "portChanges": false,
+    "relayChanges": false,
+    "modelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "nextKeyDecision": "Authorize at most one new read-only SSH readiness attempt using this exact candidate, remote20/local35 seconds, no Linux unit and no automatic retry. No extra allowance has been assumed."
+}
