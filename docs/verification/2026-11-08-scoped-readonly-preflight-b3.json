@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-08",
+  "kind": "scoped-vps-readonly-preflight",
+  "status": "passed",
+  "scope": "One SSH read-only preflight; no Linux unit or release",
+  "authorization": {
+    "sshAttemptsUsed": 1,
+    "sshAttemptsMaximum": 1,
+    "remoteLimitSeconds": 20,
+    "localLimitSeconds": 35,
+    "retryPerformed": false
+  },
+  "localRegression": {
+    "candidate": "readonly-preflight-20261108-b3",
+    "testsPassed": 23,
+    "testsFailed": 0,
+    "exitCode": 0,
+    "earlierFailedCandidatesPreserved": true,
+    "independentPreflightBlockingFindings": 0,
+    "covered": [
+      "real five-query sequence",
+      "bounded stdout and stderr accumulation",
+      "primary and cleanup failures retained separately",
+      "final service baseline attempted after ordinary failure",
+      "ordinary-stage deadline and final-window rearming",
+      "fixed-source ReaderFault class diagnostics and rejection of untrusted fields",
+      "Windows-only fixture imports without altering Linux producer"
+    ],
+    "independentReturnedEvidenceReviewPassed": true
+  },
+  "execution": {
+    "outerProcessExitCode": 0,
+    "outerToolWallSeconds": 4.7195655,
+    "localElapsedSeconds": 3.799527,
+    "remoteElapsedSeconds": 0.051433,
+    "workerNormalExit": true,
+    "workerExitCode": 0,
+    "remoteExitObserved": true,
+    "remoteExitCode": 0,
+    "inputBytes": 31702,
+    "sentBytes": 31702,
+    "eofSent": true,
+    "stderrBytes": 0,
+    "outputLimitExceeded": false,
+    "provisionalReceiptCorroboratedByActualProcessExit": true,
+    "queryCount": 5
+  },
+  "transport": {
+    "hostKeyPinnedBeforeAuthentication": true,
+    "existingClientVersion": "5.0.0",
+    "cleanupConfirmed": true,
+    "transportThreadStoppedBeforeHandleClose": true,
+    "terminalDisposition": "expected_eof_after_write_shutdown",
+    "pendingHandles": 0,
+    "cleanupErrors": 0
+  },
+  "observations": {
+    "services": [
+      {
+        "name": "chunlack-public.service",
+        "active": true,
+        "mainPidUnchanged": true,
+        "restartsBefore": 0,
+        "restartsAfter": 0
+      },
+      {
+        "name": "chunlack-https.service",
+        "active": true,
+        "mainPidUnchanged": true,
+        "restartsBefore": 0,
+        "restartsAfter": 0
+      },
+      {
+        "name": "chunlack.service",
+        "active": true,
+        "mainPidUnchanged": true,
+        "restartsBefore": 0,
+        "restartsAfter": 0
+      },
+      {
+        "name": "tailscaled.service",
+        "active": true,
+        "mainPidUnchanged": true,
+        "restartsBefore": 0,
+        "restartsAfter": 0
+      }
+    ],
+    "pythonVersion": [
+      3,
+      12,
+      3
+    ],
+    "pythonIsolated": true,
+    "pythonNoSite": true,
+    "systemdVersionMajor": 255,
+    "propertySchemas": {
+      "CPUQuotaPerSecUSec": "t",
+      "CapabilityBoundingSet": "t",
+      "ExecStartEx": "a(sasasttttuii)",
+      "Group": "s",
+      "MemoryMax": "t",
+      "MemorySwapMax": "t",
+      "NoNewPrivileges": "b",
+      "OpenFile": "a(sst)",
+      "PrivateNetwork": "b",
+      "TasksMax": "t",
+      "TemporaryFileSystem": "a(ss)",
+      "User": "s"
+    },
+    "startTransientUnitIn": "ssa(sv)a(sa(sv))",
+    "startTransientUnitOut": "o",
+    "existingCandidateAccount": {
+      "user": "nobody",
+      "group": "nogroup",
+      "uid": 65534,
+      "gid": 65534,
+      "primaryGidMatches": true,
+      "accountCreated": false
+    },
+    "cgroupMetadata": [
+      {
+        "path": "/sys/fs/cgroup/system.slice/cpu.stat",
+        "fileSystem": "cgroup2",
+        "rootOwned": true,
+        "mode": "0444",
+        "metadataStableAcrossTwoSnapshots": true,
+        "payloadRead": false
+      },
+      {
+        "path": "/sys/fs/cgroup/system.slice/cgroup.events",
+        "fileSystem": "cgroup2",
+        "rootOwned": true,
+        "mode": "0444",
+        "metadataStableAcrossTwoSnapshots": true,
+        "payloadRead": false
+      }
+    ],
+    "cgroupFileIdentitiesDistinct": true
+  },
+  "protections": {
+    "linuxUnitsCreated": 0,
+    "serviceActions": 0,
+    "applicationFilesWrittenOnVps": false,
+    "businessDatabaseRead": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false
+  },
+  "boundaries": {
+    "nativeInheritedFdHandoffVerified": false,
+    "transientSettingsAppliedOrEnforced": false,
+    "cohostTrafficOrSustainedLoadValidated": false,
+    "productionPublished": false,
+    "productionReady": false,
+    "wholeProjectDelivered": false,
+    "privateRunnerSourcesPublished": false
+  },
+  "nextGate": "A separately authorized native inherited-FD diagnostic is still required; this record authorizes no additional remote operation."
+}
