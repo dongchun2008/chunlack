@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "Local-only nonblocking launch correction and shared execution-budget skeleton",
+  "previousCandidateManifestSha256": "4ecb274ee4c1993ff374e7f0bfc17b41f627c6fdb57fd38e56ab8301b1cabce0",
+  "candidate": {
+    "tag": "native-deadline-candidate-20261108-a1",
+    "manifestSha256": "4318c18b0c6d7ed82b9936232bdef15d86425706875b31a38b90c28fa06240cb",
+    "sourceFiles": 11,
+    "fixtureFiles": 15,
+    "copiedBytes": 240227,
+    "oldCandidatesModified": false,
+    "hashesVerifiedBeforeEachGroupAndAfterAllGroups": true,
+    "changedSourceHashes": {
+      "launch": "9fb7e22b913609abf0e17bfa7b731e50a99af0422234700ca48cbfd3e6dc247f",
+      "bridge": "28f7075b4d04598a61be9b1a1fd66cca8f88e3670c9a6f5fc688faeeafecd7d1",
+      "budget": "8950dc617e89b2f654f9c7fbcee515d93d5d3b918acad4499e6d108a7dc2f159"
+    }
+  },
+  "implementation": {
+    "launchNoBlockExactlyOnce": true,
+    "launchNativeExecutionAllowed": false,
+    "submissionNotTreatedAsStartupProof": true,
+    "localPolicyOuterMaximumSeconds": 90,
+    "localPolicyCleanupReserveSeconds": 10,
+    "phaseCeilingsSeconds": {
+      "baseline_before": 18,
+      "worker": 22,
+      "terminal": 18,
+      "baseline_after": 18
+    },
+    "fixedPhaseOrder": true,
+    "phaseTokenIdentityChecked": true,
+    "cleanupAdmittedOnce": true,
+    "actionMappingPrivatelySnapshotted": true,
+    "originalAndCleanupErrorsPreservedSeparately": true,
+    "callbackPayloadNotReturnedInSummary": true,
+    "lateReturnDetectionOnly": true,
+    "externalHardWatchdogRequired": true,
+    "actualExternalWatchdogImplemented": false,
+    "nativeEnvelopeAuthorizedByThisRecord": false
+  },
+  "validation": {
+    "groups": {
+      "contract": {
+        "tests": 52,
+        "exitCode": 0,
+        "elapsedSeconds": 0.365527
+      },
+      "worker": {
+        "tests": 33,
+        "exitCode": 0,
+        "elapsedSeconds": 0.409386
+      },
+      "baseline": {
+        "tests": 46,
+        "exitCode": 0,
+        "elapsedSeconds": 0.661718
+      },
+      "cohort": {
+        "tests": 18,
+        "exitCode": 0,
+        "elapsedSeconds": 0.217887
+      },
+      "sequencing": {
+        "tests": 4,
+        "exitCode": 0,
+        "elapsedSeconds": 0.228568
+      },
+      "budget": {
+        "tests": 20,
+        "exitCode": 0,
+        "elapsedSeconds": 0.170968
+      }
+    },
+    "totalTests": 173,
+    "passed": 173,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "aggregateExitCode": 0,
+    "eachGroupTimeoutSeconds": 90,
+    "automaticRetries": 0,
+    "actualLinuxRun": false,
+    "fullProductRegressionRun": false
+  },
+  "independentReview": {
+    "completed": true,
+    "definiteP1": 0,
+    "definiteP2": 0,
+    "manifestAndMemberHashesVerified": true,
+    "changedSourceScopeConsistent": true,
+    "softDeadlineNotMistakenForHardInterruption": true,
+    "reviewerRanTests": false
+  },
+  "safety": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "parentSlicesCreated": 0,
+    "remoteWrites": false,
+    "serviceControl": false,
+    "productionPublication": false,
+    "credentialChanges": false,
+    "authorizationChanges": false,
+    "relayChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "privateSourcesSubmitted": false
+  },
+  "interpretation": {
+    "localPolicyCandidateReviewed": true,
+    "nativeExecutionEnabled": false,
+    "nativeEvidenceVerified": false,
+    "combinedBudgetVerified": false,
+    "productionReady": false,
+    "goalComplete": false
+  },
+  "remaining": [
+    "Wire actual bounded producer/observer callbacks without treating submission acknowledgment as startup or terminal evidence.",
+    "Implement independently bounded hard-watchdog admission and finalization; cooperative checks alone cannot interrupt blocked syscalls.",
+    "Resolve observer unit isolation against NativeReader's verified host namespace/view requirements, without silently weakening that contract.",
+    "Bind fresh actual runtime/backup paths and host support before separately scoped native execution.",
+    "Complete full parent-subtree accounting, compatibility, backup/recovery, protected-service and production-maintenance acceptance."
+  ]
+}
