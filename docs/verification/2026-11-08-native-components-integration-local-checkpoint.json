@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "stage": "pinned-components-local-integration",
+  "status": "not_accepted_new_mode_assertion_mismatch",
+  "sourceSha256": {
+    "integration.py": "f4a07ee1029ed5919779ae03bd19eaa3e4879446c5115b2b434e25cca871da6f",
+    "test_integration.py": "0582c36d728dad10241c5e3f41295077efb6136462a7c9f30b61f7744db4db42",
+    "plan.json": "4a56bb7c8ddd58c60ede6c42183b48c6208a4d50103281a43538b889b6bdd2b4"
+  },
+  "syntheticBundleMetrics": {
+    "bundleBytes": 194700,
+    "bundleSha256": "8f1df816b2793fea3e7f28c01381e93dfb3b3ebd2a0a392823bb038a065aa71a",
+    "contractSha256": "8484a2e3fe29b97de74ef7f8a78e66937f442dd1d98c67e2cbe68bfbc6875e5b",
+    "generatedCommandExecuted": false,
+    "packetIsSyntheticFixture": true,
+    "planSha256": "39c861cb574e12b4e97a6ad9491f8d5a4fd4b597e7b486581913e66bd029b29b",
+    "sourceCount": 6
+  },
+  "composition": {
+    "sourceCount": 6,
+    "allSourcePinsCheckedBeforeDependencyCompile": true,
+    "contractDigestBindsCanonicalBytes": true,
+    "lifecyclePlanBindsSameContractAndUnit": true,
+    "integrationSourceHashRecordedExternallyNotInsideBundle": true,
+    "maximumBundleBytes": 262144,
+    "transportOrLauncherImplemented": false
+  },
+  "tests": {
+    "missingModuleRed": {
+      "testsRun": 1,
+      "failures": 1,
+      "elapsedSeconds": 0.001,
+      "exitCode": 1
+    },
+    "relatedLocalDiscovery": {
+      "testsRun": 14,
+      "passed": 13,
+      "failures": 1,
+      "errors": 0,
+      "skipped": 0,
+      "elapsedSeconds": 1.024,
+      "exitCode": 1
+    },
+    "modeAssertion": {
+      "expected": "simulation",
+      "actual": "simulated",
+      "corrected": false,
+      "specificNativeModeRejectionNotYetReachedByThatTest": true
+    },
+    "actualProducerFailureCheck": {
+      "passed": true,
+      "usesActualEntryFormatterAndSameWrapperModule": true,
+      "wrapperActuallyInvokedWithNativeFalseAndExplicitFakeProviders": true,
+      "cleanupErrorsSpellingConfirmed": true,
+      "readErrno": 5,
+      "privateExceptionBodiesAbsent": true,
+      "payloadCloseCalls": [
+        3,
+        4
+      ],
+      "injectedCloseErrno": 9,
+      "observedCloseErrnoVerified": false
+    },
+    "nativeShapedConsistencyFixtureIsSynthetic": true,
+    "wholeProductSuiteRerun": false,
+    "nativeOperationsPerformed": false
+  },
+  "effects": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "productionActions": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "newDependencies": 0,
+    "privateSourceCommitted": false,
+    "priorRemoteAllowancesNotReset": true
+  },
+  "acceptance": {
+    "allCurrentIntegrationTestsPassed": false,
+    "nativeEvidenceVerified": false,
+    "clockDomainVerified": false,
+    "receiptSourceVerified": false,
+    "processCensusSourceVerified": false,
+    "nativeUnitAppliedVerified": false,
+    "externalHardDeadlineVerified": false,
+    "combinedResourceBudgetVerified": false,
+    "productionReady": false
+  },
+  "independentReview": {
+    "filesReadOnce": [
+      "integration.py",
+      "test_integration.py"
+    ],
+    "outputComplete": true,
+    "newDefiniteP1P2Findings": 0,
+    "modeMismatchConfirmedAsNewFixtureError": true,
+    "independentlyReranTests": false,
+    "limitations": [
+      "The actual producer success test stops at the incorrect mode assertion; its later native_mode and close assertions were not reached.",
+      "The producer failure test confirms nonempty cleanupErrors, not the specific injected close errno 9."
+    ]
+  },
+  "scopeLimitations": [
+    "All manager, census and native-shaped consistency evidence remains synthetic.",
+    "The generated command and proposed unit have not been executed.",
+    "Local package validation does not establish host identity, clock-domain authority, hard supervision or full combined resource accounting.",
+    "The integration source digest is an external binding; it is deliberately not included recursively in its own bundle."
+  ],
+  "next": "Preserve this candidate and failed assertion. In the next local step correct only the new expected simulated mode literal, tighten the actual producer cleanup errno assertion, and rerun related integration checks. Do not modify producer mode or receipt fields to force native acceptance; no SSH, native quota or production publication follows."
+}
