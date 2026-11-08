@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "scope": "local-persistent-bus-input-receipt-correction",
+  "status": "local-component-accepted-not-native-or-production",
+  "change": "Digest and byte length are captured from the same fully validated input bytes; no later input read or stat.",
+  "compatibility": "Existing load_input callers retain their default two-item return value.",
+  "preserved": [
+    "old-private-candidate",
+    "pre-fix-source-backup",
+    "original-failure-evidence",
+    "source-pins-and-security-checks"
+  ],
+  "verification": {
+    "beforeFix": {
+      "newRegressionTests": 3,
+      "failedAsExpected": 3,
+      "observedInputReads": 2,
+      "observedLength": 123875,
+      "expectedLength": 123874
+    },
+    "afterFix": {
+      "componentTests": 43,
+      "passed": 43,
+      "failed": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "testElapsedSeconds": 1.14,
+      "includesOriginalReceiptRace": true,
+      "includesThreeSnapshotRegressions": true
+    },
+    "independentReview": {
+      "completed": true,
+      "newConfirmedP1": 0,
+      "newConfirmedP2": 0,
+      "scope": "local source review; reviewer did not rerun tests"
+    },
+    "sourceHashes": [
+      {
+        "path": "assemble.py",
+        "bytes": 9873,
+        "sha256": "f611eb2f5c7ed0a1dd8a08461fd312f360d5fd9239d9ff7fa604c0b5177f3999"
+      },
+      {
+        "path": "run_all.py",
+        "bytes": 967,
+        "sha256": "74e4f2f787bff3047fc9aa3393bf7dba65a3cf323d1dc5a7cfba36635db80a96"
+      },
+      {
+        "path": "test_input_snapshot.py",
+        "bytes": 2199,
+        "sha256": "2ca4356df3351fab0e0e0f51189ecf385a74bea5f842fbb8d2044657a80c093d"
+      },
+      {
+        "path": "test_input_receipt_race.py",
+        "bytes": 1606,
+        "sha256": "7aa803d20584096efe3243495e8d3d5dd0fc27a4351059f5b1e3186a0ff5cd54"
+      }
+    ]
+  },
+  "boundaries": {
+    "fullProductSuiteRun": false,
+    "realHostLibraryVerified": false,
+    "nativeBusVerified": false,
+    "externalHardDeadlineVerified": false,
+    "productionReady": false,
+    "sshAttempts": 0,
+    "newLinuxUnits": 0,
+    "realModelCalls": 0,
+    "installedSoftware": false,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "authorizationsChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false
+  },
+  "remainingGates": [
+    "fresh authorized host/library preflight",
+    "native ABI and AddRef behavior validation",
+    "authoritative receipt and process census integration",
+    "production release preparation and separately approved maintenance"
+  ]
+}
