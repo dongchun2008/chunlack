@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "date": "2026-11-08",
+  "observedAt": "2026-11-08T03:09:53.8728911Z",
+  "stage": "observer-metadata-readonly-preflight",
+  "status": "failed_with_confirmed_terminal_and_cleanup",
+  "localCorrection": {
+    "findingsCorrected": [
+      "reject_contradictory_worker_remote_success",
+      "reject_capability_extra_status_text"
+    ],
+    "priorDeterministicReproductionPreserved": true,
+    "tests": {
+      "total": 24,
+      "passed": 24,
+      "failures": 0,
+      "errors": 0,
+      "elapsedSeconds": 7.071,
+      "processExitCode": 0
+    },
+    "review": {
+      "scope": "The same reviewer assessed the supplied minimal correction to the two previously reported P2 findings.",
+      "originalTwoFindingsResolved": true,
+      "fullNativeAcceptance": false
+    }
+  },
+  "bindings": {
+    "runnerSha256": "d7ee128a021d2f9a5185e50a2b4d2967759367dcb3cb4e677e36dc0dab64a646",
+    "privateReceiptSha256": "653762b38a652b64c1d91479553c47253d55c749a7b6e1d400004c1236ccd612",
+    "payloadSha256": "f8382c682904178877140b3c711a4a4f99db4a5d0e14e1029efd7c0e0e5be70d",
+    "localAdapterSha256": "98e99a47b5e481fc0326c9bc81b5b273445c7d4c102bb7e8b89b60dae1aeeb83"
+  },
+  "authorization": {
+    "maximumAttempts": 1,
+    "usedAttempts": 1,
+    "remainingAttempts": 0,
+    "remoteSeconds": 20,
+    "localTotalSeconds": 35,
+    "automaticRetry": false
+  },
+  "execution": {
+    "elapsedSeconds": 4.121812,
+    "withinDeadline": true,
+    "actualLauncherExitCode": 2,
+    "worker": {
+      "normalExit": false,
+      "exitCode": 2,
+      "terminated": false,
+      "exitObserved": true
+    },
+    "transport": {
+      "exitCode": 2,
+      "sentBytes": 70494,
+      "stdinBytes": 70494,
+      "eofSent": true,
+      "exitObserved": true,
+      "channelClosedObserved": false,
+      "outputLimitExceeded": false,
+      "completed": true,
+      "stdoutBytes": 667,
+      "stdoutSha256": "f50e4ae221a7c751293cf19f166071ae9b04e2666a13831d98fff2ea5e7d9ae3",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "cleanupConfirmed": true,
+    "transportThreadStoppedBeforeHandleClose": true,
+    "cleanupErrors": [],
+    "remoteError": {
+      "cleanup": [],
+      "cleanupOmitted": 0,
+      "code": "metadata_probe_rejected",
+      "errno": null,
+      "primary": {
+        "cleanup": [],
+        "cleanupOmitted": 0,
+        "code": "output_limit",
+        "errno": null,
+        "primary": {
+          "cleanup": [],
+          "cleanupOmitted": 0,
+          "code": "output_limit",
+          "errno": null,
+          "primary": null,
+          "type": "CaptureFailure"
+        },
+        "type": "CaptureFailure"
+      },
+      "type": "Exception"
+    }
+  },
+  "interpretation": {
+    "internalQueryOutputLimitReached": true,
+    "sshTransportOutputTruncated": false,
+    "failedQueryPhase": "unknown",
+    "systemdVersionVerified": false,
+    "openFileSupportVerified": false,
+    "cohostBeforeAfterHealthComparisonCompleted": false,
+    "provisionalReceiptAloneNotAccepted": true,
+    "actualTerminalExitAlsoObserved": true
+  },
+  "effects": {
+    "linuxUnitsCreated": 0,
+    "serviceActions": 0,
+    "remoteWritesRequested": 0,
+    "productionPublication": false,
+    "credentialsModified": false,
+    "authorizationModified": false,
+    "dnsModified": false,
+    "portsModified": false,
+    "relayModified": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "productionReady": false,
+  "next": "Preserve this failed attempt. Local-only diagnosis should identify the bounded query phase without increasing output limits. No automatic SSH retry or additional Linux unit is authorized by this record."
+}
