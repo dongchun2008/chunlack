@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "checkpointDate": "2026-11-10",
+  "timezone": "Asia/Shanghai",
+  "status": "fixed-unit-readonly-local-gate-blocked-before-ssh",
+  "approvedScope": {
+    "maximumNewSshAttempts": 1,
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "maximumNewLinuxUnits": 0,
+    "readOnly": true,
+    "automaticRetry": false
+  },
+  "scopeBinding": "One exact previously attempted diagnostic unit; no systemd-run or service start/stop.",
+  "localChecks": {
+    "tests": 23,
+    "passed": 23,
+    "failed": 0,
+    "errors": 0,
+    "elapsedSeconds": 0.112,
+    "exitCode": 0,
+    "mockOnly": true,
+    "memoryAssemblyAndBootstrapCompileOnly": true
+  },
+  "independentReview": {
+    "status": "blocked",
+    "deterministicP2": 1,
+    "noExecutionByReviewer": true,
+    "finding": "UTF-8 bounded private error text can expand beyond the 16384-byte total receipt limit during ASCII JSON serialization; final report_size rejection can lose the complete observation receipt."
+  },
+  "deterministicLocalReproduction": {
+    "privateMessageUtf8Bytes": 4096,
+    "journalOnlyReceiptBytes": 24976,
+    "totalReceiptLimit": 16384,
+    "limitExceeded": true,
+    "messagePreservedBeforeFix": true,
+    "noNativeOrNetworkExecution": true
+  },
+  "pendingRepair": "Use final encoded receipt size to explicitly omit an oversized private message while preserving state/baseline/error metadata; controlled failure receipt if non-message metadata alone exceeds the limit; add regression and review before the original single query.",
+  "newSshAttemptsUsed": 0,
+  "newSshAttemptsMaximum": 1,
+  "newLinuxUnits": 0,
+  "previousNativeDiagnosticQuotaSealed": true,
+  "previousNativeDiagnosticRootCauseEstablished": false,
+  "productionPublished": false,
+  "credentialsChanged": false,
+  "authorizationChanged": false,
+  "dnsChanged": false,
+  "portsChanged": false,
+  "relayChanged": false,
+  "nativeEvidenceVerified": false,
+  "productionReady": false
+}
