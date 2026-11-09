@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "date": "2026-11-10",
+  "stage": "fixed-unit-readonly-receipt-size-local-gate",
+  "status": "blocked_by_local_test",
+  "productionReady": false,
+  "implementation": {
+    "finalFrameLimitBytes": 16384,
+    "newlineIncluded": true,
+    "oversizePrivateBody": "explicitly omitted with reason; metadata retained",
+    "oversizeMetadata": "bound failed receipt; nonzero main exit",
+    "limitIncreased": false
+  },
+  "localTests": {
+    "total": 32,
+    "passed": 31,
+    "failed": 1,
+    "exitCode": 1,
+    "seconds": 0.064,
+    "failure": {
+      "test": "test_chinese_body_and_maximum_baseline_keep_complete_baseline",
+      "phase": "fixture precondition before remaining assertions",
+      "observedEncodedFrameBytes": 14117,
+      "incorrectExpectation": "greater than 16384",
+      "remainingAssertionsExecuted": false
+    },
+    "suitePassed": false
+  },
+  "independentStaticReview": {
+    "currentPatchReviewed": true,
+    "newP1P2Findings": 0,
+    "doesNotReplaceTests": true,
+    "fixtureIssueConfirmed": true
+  },
+  "nextGate": {
+    "pending": "user decision on changing the new fixture to assert preservation for a fitting frame",
+    "fixtureCorrectionApplied": false,
+    "runtimeRunnerGenerated": false
+  },
+  "remote": {
+    "maximumSshAttempts": 1,
+    "sshAttemptsUsed": 0,
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "maximumNewLinuxUnits": 0,
+    "automaticRetry": false,
+    "executed": false
+  },
+  "changes": {
+    "production": false,
+    "credentials": false,
+    "authorization": false,
+    "relay": false,
+    "serviceStartStop": false
+  },
+  "evidenceBoundary": "Local mock results and static review only; no native collection, production acceptance, or full delivery claim. Prior failed evidence retained."
+}
