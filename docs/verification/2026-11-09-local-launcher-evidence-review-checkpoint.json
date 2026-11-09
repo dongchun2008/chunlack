@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "checkpointDate": "2026-11-09",
+  "timezone": "Asia/Shanghai",
+  "status": "local-tests-passed-independent-review-blocked",
+  "scope": "Local-only observability changes in a new private candidate; no new SSH/native/unit execution",
+  "changes": [
+    "Record real launcher exit and wait completion even after EPIPE; keep poll/kill/wait cleanup errors separate",
+    "Collect only owned stderr after observed launcher exit, under the existing 4096-byte and phase-deadline limits; expose closed prefix categories, byte count and EOF only"
+  ],
+  "tests": {
+    "newEvidence": 22,
+    "existingWiring": 41,
+    "existingCleanup": 6,
+    "total": 69,
+    "passed": 69,
+    "failed": 0,
+    "errors": 0
+  },
+  "requestedBudgetsChanged": false,
+  "previousFailedAttemptPreserved": true,
+  "previousSshQuotaUsed": 1,
+  "previousSshQuotaMaximum": 1,
+  "previousUnitCreationAttempts": 1,
+  "previousActualUnitCreation": "unknown",
+  "newSshAttempts": 0,
+  "newLinuxUnits": 0,
+  "nativeCalls": 0,
+  "productionPublished": false,
+  "credentialsChanged": false,
+  "authorizationChanged": false,
+  "relayChanged": false,
+  "independentReview": {
+    "status": "blocked",
+    "newDeterministicP2": 2,
+    "findingsSourceDerivedNotExecuted": true,
+    "findings": [
+      {
+        "id": "stderr-nonblocking-after-partial-initialization",
+        "file": "remote.py",
+        "line": 360,
+        "detail": "Stderr may remain blocking when selector or earlier set_blocking initialization fails; no safe drain without re-establishing nonblocking mode."
+      },
+      {
+        "id": "final-unprotected-poll",
+        "file": "remote.py",
+        "line": 383,
+        "detail": "A final unprotected proc.poll can discard collected primary, wait and cleanup evidence in the confirmed owner branch."
+      }
+    ]
+  },
+  "memoryPackaging": {
+    "status": "passed",
+    "runnerBytes": 41274,
+    "bundleBytes": 72285,
+    "outerPayloadBytes": 98244,
+    "outerPayloadLimit": 98304,
+    "remainingOuterPayloadBytes": 60,
+    "workerFrameBytes": 72442,
+    "bootstrapsCompiledOnly": true,
+    "generatedFilesWritten": false,
+    "sourceHashes": {
+      "bridge": "c5569d318c6b45f1340b049b986635d1ecaf167062355f916f9e09807bfba191",
+      "bus": "366ec142f979195d35170a3c76eca23a3bb48e4fd2fcb3c8cc980aa0b422de52",
+      "diagnostics": "27a2bb7219aa16008eefb4bbc068f8c0dde72cf5847d9778b08b52f0c77cceec",
+      "preflight": "0d84f8c1019e0266d329b386920e9460096cc7e9465ab0e45e917f2ddb6591b0",
+      "remote": "74101e2104ffd6f7f89a528f34ce04ac63362b03e183aca8549a6eb8d8d07148",
+      "worker": "0c5415d43de0abd50557653db644e7bbfda3635acec25673cf6245ee5e35af90"
+    }
+  },
+  "prefixClassificationReference": "https://raw.githubusercontent.com/systemd/systemd/v255/src/run/run.c",
+  "nativeAcceptance": false,
+  "productionReady": false,
+  "previousActualFailureRootCause": "Unknown; previous 159 stderr bytes were not preserved and synthetic prefix tests do not supply that missing evidence.",
+  "nextDecision": "Authorize only local nonblocking-drain and final-poll evidence-boundary corrections plus regression; no SSH, new units or publication."
+}
