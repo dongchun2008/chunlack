@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "checkpointDate": "2026-11-09",
+  "timezone": "Asia/Shanghai",
+  "status": "local-five-repair-gates-passed-native-diagnostic-failed",
+  "scope": "Five approved local corrections, mock regression, independent review, memory packaging and one original-budget native connection diagnostic; not production acceptance",
+  "corrected": [
+    "Preserve absent primary error as null without consuming diagnostic node budget",
+    "Retain all complete valid frames before ownership verification and GO decision",
+    "Attempt held-descriptor termination after confirmed ownership even when events reads fail; preserve distinct errors",
+    "Bind fixture exceptions to the exact injected module types",
+    "Supply __file__ in the memory-only generated-runner diagnostic"
+  ],
+  "localRegression": {
+    "wiring": {
+      "tests": 41,
+      "passed": 41,
+      "seconds": 0.175,
+      "exitCode": 0
+    },
+    "cleanupControlPaths": {
+      "tests": 6,
+      "passed": 6,
+      "seconds": 0.158,
+      "exitCode": 0
+    },
+    "totalTests": 47,
+    "passed": 47,
+    "failed": 0,
+    "errors": 0,
+    "scope": "Mock OS/process/adapter only; actual acquisition and exchange control logic exercised, no native ABI or bus proof"
+  },
+  "independentReview": {
+    "files": 5,
+    "status": "passed",
+    "newDeterministicP1P2": 0,
+    "reviewerExecutedTests": false
+  },
+  "memoryPackaging": {
+    "status": "passed",
+    "runnerBytes": 38455,
+    "bundleBytes": 72285,
+    "outerPayloadBytes": 95501,
+    "workerFrameBytes": 72442,
+    "sourceCount": 6,
+    "bootstrapsCompiledOnly": true,
+    "generatedFilesWrittenDuringCheck": false
+  },
+  "candidateBinding": {
+    "runnerSha256": "bb628a4345a14f2de81370b47999258db9ddeb7b7da4039b3d844b7419f65c1c",
+    "bundleSha256": "9c020aa62a64e77f3db83f69fe7febedb0a1e8d5c59437293d43338689c2cae5",
+    "sourceHashes": {
+      "bridge": "c5569d318c6b45f1340b049b986635d1ecaf167062355f916f9e09807bfba191",
+      "bus": "366ec142f979195d35170a3c76eca23a3bb48e4fd2fcb3c8cc980aa0b422de52",
+      "diagnostics": "27a2bb7219aa16008eefb4bbc068f8c0dde72cf5847d9778b08b52f0c77cceec",
+      "preflight": "0d84f8c1019e0266d329b386920e9460096cc7e9465ab0e45e917f2ddb6591b0",
+      "remote": "6f533c8f9302a1284a42632273ddeb7bab931e10b19ce071376e9cb55e8872c9",
+      "worker": "0c5415d43de0abd50557653db644e7bbfda3635acec25673cf6245ee5e35af90"
+    },
+    "publicationAllowed": false
+  },
+  "requestedLimits": {
+    "maximumSshAttempts": 1,
+    "maximumLinuxDiagnosticUnits": 1,
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "unitSecondsIncludingCleanup": 10,
+    "memoryBytes": 201326592,
+    "cpuQuotaPercent": 20,
+    "tasksMax": 32,
+    "swapBytes": 0,
+    "privateNetwork": true
+  },
+  "actualAttempt": {
+    "actualLocalProcessExitCode": 1,
+    "reportedLocalElapsedSeconds": 9.990798,
+    "reportedWithinDeadline": true,
+    "receiptProvisional": true,
+    "sshStarted": true,
+    "sshAttemptsUsed": 1,
+    "unitCreationAttempts": 1,
+    "unitCreationOutcome": "unknown",
+    "linuxUnitsCreated": null,
+    "appliedUnitLimitsVerified": false,
+    "workerReadyReceived": false,
+    "goSent": false,
+    "nativeConnectionVerified": false,
+    "remoteElapsedSeconds": 0.052132,
+    "unitPhaseSeconds": 0.006217,
+    "launcher": {
+      "inputBytes": 72458,
+      "sentBytes": 65536,
+      "inputErrno": 32,
+      "stderrBytes": 159,
+      "stderrContentPreserved": false,
+      "exitCode": null
+    },
+    "transport": {
+      "inputBytes": 95501,
+      "sentBytes": 95501,
+      "eofSent": true,
+      "remoteExitCode": 2,
+      "stdoutBytes": 3093,
+      "stderrBytes": 0,
+      "completed": true
+    },
+    "cleanup": {
+      "sshTransportConfirmed": true,
+      "diagnosticUnitConfirmed": false,
+      "diagnosticCgroupEmpty": false
+    },
+    "staticChecks": {
+      "symbolsPresent": 25,
+      "symbolsRequired": 25,
+      "libraryDigestMatched": true,
+      "nativeAbiVerified": false
+    },
+    "existingServices": {
+      "count": 4,
+      "kernelPidStartTicksCgroupUnchanged": true,
+      "healthAndRestartCountersVerified": false,
+      "relayForwardingQualityVerified": false
+    },
+    "rootCause": "Unknown: input pipe closed before complete packet transfer; 159 stderr bytes were counted but not retained. No specific systemd cause is established."
+  },
+  "previousFailuresPreserved": true,
+  "automaticRetryPerformed": false,
+  "originalQuotaSealed": true,
+  "newSshAuthorized": false,
+  "productionPublished": false,
+  "nativeEvidenceVerified": false,
+  "productionReady": false,
+  "credentialChanges": false,
+  "authorizationChanges": false,
+  "dnsChanges": false,
+  "portChanges": false,
+  "relayChanges": false,
+  "nextGate": "Separately approve bounded read-only evidence for this exact attempted diagnostic unit and local launch-error observability fixes; do not rerun or expand the consumed quota."
+}
