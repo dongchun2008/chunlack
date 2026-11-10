@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "date": "2026-11-10",
+  "stage": "native-controller-formatting-only",
+  "status": "local_formatting_verified_packet_gate_failed",
+  "formatting": {
+    "sourceSha256": "099ef0946194f5c070cd4590fc6187f0f033f4584bf2ca9aad549997bf5de6f3",
+    "formattedSha256": "cbffdb0edf77069cdd378b2c27ad29afb432e4063a12b4ccb1d18e700d844b6e",
+    "sourceBytes": 27620,
+    "formattedBytes": 26290,
+    "sourceBytesSaved": 1330,
+    "astSha256": "4df3594cb333fbbf0e780151b36c4bc860de7fb28a54b35bc836c5a75290c4e6",
+    "astEqualIgnoringLocations": true,
+    "typeCommentsIncluded": true,
+    "docstringsPreserved": true,
+    "stringConstantsPreserved": true,
+    "pythonGrammar": "3.12",
+    "diagnosticLineNumbersMayChange": true,
+    "codeExecuted": false,
+    "previousCandidatePreserved": true
+  },
+  "regression": {
+    "total": 102,
+    "passed": 102,
+    "failed": 0,
+    "files": [
+      {
+        "count": 11,
+        "seconds": 0.076
+      },
+      {
+        "count": 12,
+        "seconds": 0.007
+      },
+      {
+        "count": 32,
+        "seconds": 0.031
+      },
+      {
+        "count": 41,
+        "seconds": 0.041
+      },
+      {
+        "count": 6,
+        "seconds": 0.027
+      }
+    ],
+    "allExitCodes": 0
+  },
+  "independentStaticReview": {
+    "passed": true,
+    "newP1P2": 0,
+    "sourceAndFormattedHashRecomputed": true,
+    "nativeAcceptanceClaimed": false
+  },
+  "packaging": {
+    "status": "failed",
+    "errorCode": "packet_size",
+    "exitCode": 1,
+    "previousOuterPayloadBytes": 100575,
+    "outerPayloadBytes": 99110,
+    "outerPayloadLimit": 98304,
+    "bytesSaved": 1465,
+    "bytesOverLimit": 806,
+    "sourceHashes": {
+      "bridge": "c5569d318c6b45f1340b049b986635d1ecaf167062355f916f9e09807bfba191",
+      "bus": "366ec142f979195d35170a3c76eca23a3bb48e4fd2fcb3c8cc980aa0b422de52",
+      "diagnostics": "27a2bb7219aa16008eefb4bbc068f8c0dde72cf5847d9778b08b52f0c77cceec",
+      "preflight": "0d84f8c1019e0266d329b386920e9460096cc7e9465ab0e45e917f2ddb6591b0",
+      "remote": "cbffdb0edf77069cdd378b2c27ad29afb432e4063a12b4ccb1d18e700d844b6e",
+      "worker": "0c5415d43de0abd50557653db644e7bbfda3635acec25673cf6245ee5e35af90"
+    },
+    "limitChanged": false,
+    "protocolChanged": false,
+    "liveRunnerGenerated": false
+  },
+  "newActivity": {
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "nativeCalls": 0,
+    "realModelCalls": 0,
+    "productionPublished": false,
+    "existingServiceActions": 0,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false
+  },
+  "nativeConnectionVerified": false,
+  "nativeEvidenceVerified": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "nextStep": "A further formatting-only candidate can reduce indentation outside string tokens, guarded by the same fixed-source hash, Python 3.12 AST equality and full local tests; do not increase limits or reuse an exhausted remote quota."
+}
