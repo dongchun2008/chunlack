@@ -1,0 +1,145 @@
+{
+  "version": 1,
+  "date": "2026-11-10",
+  "stage": "single_native_connection_validation",
+  "status": "failed",
+  "candidate": {
+    "runnerSha256": "817c284d03680b59b80d1a3edf6c8c849602ee5126c119fe2b1a4a406f13b70e",
+    "profileSha256": "8ee062c688b39e626808533a4ae68210075ccb779b51f935f43e1082b91bd554",
+    "bundleSha256": "9c020aa62a64e77f3db83f69fe7febedb0a1e8d5c59437293d43338689c2cae5",
+    "sourceHashes": {
+      "bridge": "c5569d318c6b45f1340b049b986635d1ecaf167062355f916f9e09807bfba191",
+      "bus": "366ec142f979195d35170a3c76eca23a3bb48e4fd2fcb3c8cc980aa0b422de52",
+      "diagnostics": "27a2bb7219aa16008eefb4bbc068f8c0dde72cf5847d9778b08b52f0c77cceec",
+      "preflight": "0d84f8c1019e0266d329b386920e9460096cc7e9465ab0e45e917f2ddb6591b0",
+      "remote": "e6743778f6754cdb300b7b01c3f89cd053ea7f81ec4c96fb714c810a5af70b4b",
+      "worker": "0c5415d43de0abd50557653db644e7bbfda3635acec25673cf6245ee5e35af90"
+    },
+    "previousLocalTestsPassed": 110,
+    "previousMemoryPackagingBytes": 97160,
+    "outerPayloadLimit": 98304,
+    "nonceAndUnitBindingConfirmed": true
+  },
+  "quota": {
+    "maximumSshAttempts": 1,
+    "sshAttemptsUsed": 1,
+    "remainingSshAttempts": 0,
+    "maximumDiagnosticUnits": 1,
+    "unitCreationAttempts": 1,
+    "actualLinuxUnitsCreated": null,
+    "creationOutcome": "unknown",
+    "automaticRetry": false,
+    "retryPerformed": false
+  },
+  "actualExecution": {
+    "outerExitCode": 2,
+    "outerExitSource": "exec_command chunk 35b57d: NATIVE_OUTER_EXIT=2",
+    "outerProcessWallSeconds": 4.0910028,
+    "parentReportedSeconds": 3.281945,
+    "localLimitSeconds": 35,
+    "withinDeadline": true,
+    "workerExitObserved": true,
+    "workerExitCode": 2,
+    "workerTerminated": false,
+    "remoteReportedSeconds": 0.064951,
+    "remoteLimitSeconds": 20,
+    "remoteExitCode": 2
+  },
+  "transport": {
+    "sentBytes": 97160,
+    "stdinBytes": 97160,
+    "eofSent": true,
+    "completed": true,
+    "exitObserved": true,
+    "stdoutBytes": 3647,
+    "stderrBytes": 0,
+    "outputLimitExceeded": false,
+    "sshCleanupConfirmed": true,
+    "allThreeCloseCompletionsWithinBudget": true,
+    "transportThreadStopped": true,
+    "threadStoppedBeforeClose": true
+  },
+  "launcher": {
+    "inputBytes": 72458,
+    "sentBytes": 65536,
+    "primaryErrno": 32,
+    "exitCode": 1,
+    "waitCompleted": true,
+    "exitObserved": true,
+    "killAttempts": 0,
+    "stderrBytes": 159,
+    "stderrEofObserved": true,
+    "stderrTextPrivatelyRetained": true,
+    "stderrTextOmitted": false,
+    "publicCategory": "transient_start_error",
+    "goSent": false,
+    "ownershipConfirmed": false,
+    "cleanupConfirmed": false
+  },
+  "errorEvidence": {
+    "currentFailureIncludesUnsupportedExpandEnvironment": true,
+    "specificPropertyNameConfirmed": false,
+    "cliUnknownOptionProven": false,
+    "exactCompatibilityAlternativeValidated": false,
+    "privateTextPublished": false,
+    "oldHistorical159BytesRecovered": false,
+    "historicalFailureRootCauseBackfilled": false
+  },
+  "diagnosticUnit": {
+    "creationOutcome": "unknown",
+    "linuxUnitsCreated": null,
+    "phaseSeconds": 0.007056,
+    "workerReadyPresent": false,
+    "workerResultPresent": false,
+    "cgroupEmptyConfirmed": false,
+    "cleanupConfirmed": false,
+    "cleanupErrorCode": "cleanup_unconfirmed",
+    "appliedWorkerResourceAndIdentityLimitsVerified": false
+  },
+  "requestedLimits": {
+    "diagnosticSecondsIncludingCleanup": 10,
+    "memoryBytes": 201326592,
+    "cpuPercent": 20,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasks": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "workerUid": 996,
+    "workerGid": 987,
+    "noNewPrivileges": true,
+    "workerCapabilities": 0
+  },
+  "cohosts": {
+    "names": [
+      "chunlack-https.service",
+      "chunlack-public.service",
+      "chunlack.service",
+      "tailscaled.service"
+    ],
+    "kernelPidStartTicksCgroupUnchanged": true,
+    "rowsPerService": 1,
+    "applicationHealthChecked": false,
+    "relayForwardingChecked": false
+  },
+  "review": {
+    "independentReceiptReviewCompleted": true,
+    "privateStderrPropertyInterpretationKeptUnconfirmed": true,
+    "actualOuterExitFromMainThreadToolResult": true
+  },
+  "changes": {
+    "productionPublished": false,
+    "existingServiceActions": 0,
+    "payloadFilesWrittenOnVps": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false
+  },
+  "nativeConnectionVerified": false,
+  "nativeEvidenceVerified": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "nextStep": "Local-only compatibility analysis/correction must retain parameter expansion protection, existing limits, hashes and refusal behavior; no further remote attempt authorized by this record."
+}
