@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "date": "2026-11-10",
+  "stage": "fixed-unit-readonly-a2-acceptance",
+  "status": "readonly_collection_passed",
+  "fullDeliveryComplete": false,
+  "local": {
+    "tests": 32,
+    "passed": 32,
+    "failed": 0,
+    "exitCode": 0,
+    "testSeconds": 0.115,
+    "fixtureCorrection": "A fitting Chinese frame preserves its body and complete baseline; original oversize rejection tests retained.",
+    "independentPatchReviewPassed": true,
+    "finalFrameLimitBytes": 16384,
+    "runnerSha256": "86491bf1cd52efb9e0c3d0d5d9cb938a5d38cd9e0640f107162892bfb9634a3e",
+    "remoteSourceSha256": "39ff57ee7182d4185e3f00d1e2341fe3d3f9e1932ef9726e6f9ee991fc6b46c2",
+    "frozenSupervisionSha256": "38c32f8f0140b9aeb78ccaf870884e1d00d407920c3fd6a008739934d0266c7c"
+  },
+  "execution": {
+    "attemptsReserved": 1,
+    "maximumAttempts": 1,
+    "remainingAttempts": 0,
+    "newLinuxUnits": 0,
+    "serviceActions": 0,
+    "automaticRetry": false,
+    "externalProcessExit": {
+      "code": 0,
+      "source": "exec_command result chunk e27867; LIVE_OUTER_EXIT=0",
+      "processWallSeconds": 5.3253037
+    },
+    "parent": {
+      "status": "passed",
+      "reportedElapsedSeconds": 4.513551,
+      "limitSeconds": 35,
+      "withinDeadline": true,
+      "provisionalReceipt": true,
+      "finalExitCorroboratedByToolResult": true
+    },
+    "worker": {
+      "normalExit": true,
+      "exitObserved": true,
+      "exitCode": 0,
+      "terminated": false
+    },
+    "remote": {
+      "status": "passed",
+      "elapsedSeconds": 1.208989,
+      "limitSeconds": 20,
+      "queryCount": 2
+    },
+    "transport": {
+      "completed": true,
+      "exitObserved": true,
+      "exitCode": 0,
+      "eofSent": true,
+      "sentBytes": 33267,
+      "stdinBytes": 33267,
+      "stdoutBytes": 2038,
+      "stderrBytes": 0,
+      "outputLimitExceeded": false
+    },
+    "cleanup": {
+      "confirmed": true,
+      "closeCompletions": 3,
+      "allWithinBudget": true,
+      "transportThreadStopped": true,
+      "threadStoppedBeforeClose": true
+    },
+    "candidateBindingMatched": true,
+    "independentReceiptReviewPassed": true
+  },
+  "observation": {
+    "unitLoadState": "not-found",
+    "unitActiveState": "inactive",
+    "unitSubState": "dead",
+    "unitMainPidObserved": 0,
+    "cgroupState": "absent",
+    "journalRecords": 0,
+    "privateErrorPresent": false,
+    "originalStderrRecovered": false,
+    "rootCauseEstablished": false,
+    "historicCreationProven": false,
+    "historicCleanupProven": false
+  },
+  "cohosts": {
+    "names": [
+      "chunlack-https.service",
+      "chunlack-public.service",
+      "chunlack.service",
+      "tailscaled.service"
+    ],
+    "rowsPerService": 1,
+    "kernelPidStartTicksCgroupUnchanged": true,
+    "applicationHealthChecked": false,
+    "relayForwardingChecked": false
+  },
+  "preserved": {
+    "productionCodeAndServices": true,
+    "credentials": true,
+    "authorization": true,
+    "dnsAndPorts": true,
+    "oldFailureEvidence": true
+  },
+  "remaining": {
+    "nativeConnectionVerified": false,
+    "productionReady": false,
+    "historicalFailureCause": "unknown",
+    "nextRequiredEvidence": "Explain or revalidate native execution in a separately approved bounded stage; this read-only collection is not permission for a new unit or production publication."
+  }
+}
