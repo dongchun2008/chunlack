@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-11",
+  "stage": "native_job_timeout_local_fragment_design",
+  "status": "two_review_findings_fixed_local_regression_passed",
+  "baselineRecord": "docs/verification/2026-11-11-native-jobtimeout-prototype-review-red.json",
+  "changes": [
+    {
+      "scope": "private_local_prototype",
+      "fix": "Render exact StandardInput, StandardOutput and StandardError directives through explicit channel mapping."
+    },
+    {
+      "scope": "private_local_prototype",
+      "fix": "Render CollectMode=inactive-or-failed in Unit section to retain the original --collect policy."
+    }
+  ],
+  "verification": {
+    "command": "python -I -B -m unittest discover -s <private-prototype-directory> -p test*.py -v",
+    "testsRun": 21,
+    "passed": 21,
+    "failures": 0,
+    "errors": 0,
+    "exitCode": 0,
+    "testReportedSeconds": 0.135,
+    "includesPreviousReviewRegressions": true,
+    "previousRedRegressions": {
+      "testsRun": 2,
+      "failures": 2,
+      "errors": 0
+    },
+    "independentReview": {
+      "mode": "read_only_source_review",
+      "newDeterminateFindings": 0,
+      "scope": "local_generated_text_contract",
+      "reviewerReranTests": false
+    }
+  },
+  "preserved": [
+    "JobTimeoutSec=1s in Unit section",
+    "ExecStart=: environment expansion suppression",
+    "Pinned reference source digest",
+    "Resource and security property extraction",
+    "Fragment size bound"
+  ],
+  "boundaries": {
+    "sshAttempts": 0,
+    "linuxUnitsStarted": 0,
+    "nativeLibraryLoads": 0,
+    "serviceChanges": 0,
+    "productionPublications": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0
+  },
+  "limitations": {
+    "actualManagerParserValidated": false,
+    "fifoAndReadyOwnershipGoImplemented": false,
+    "nativeCleanupVerified": false,
+    "productRuntimeIntegrated": false,
+    "nativeCompatibilityProven": false,
+    "productionReady": false,
+    "fullDeliveryComplete": false
+  },
+  "priorNativeAttempt": {
+    "quota": "sealed_1_of_1",
+    "creationOutcome": "unknown",
+    "cleanupOutcome": "unconfirmed",
+    "rewrittenOrRetried": false
+  },
+  "synchronization": "Sanitized verification record only; private experimental source is not a released product patch."
+}
