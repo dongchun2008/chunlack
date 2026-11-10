@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-11",
+  "stage": "native_job_timeout_local_fragment_design",
+  "status": "regression_red_implementation_fix_pending_user_confirmation",
+  "priorLocalPrototypeTests": {
+    "testsRun": 19,
+    "passed": 19,
+    "completeGate": false,
+    "coverageGapsFound": true
+  },
+  "targetedReviewRegressions": {
+    "testsRun": 2,
+    "passed": 0,
+    "failures": 2,
+    "errors": 0,
+    "exitCode": 1,
+    "findings": [
+      {
+        "test": "test_rendered_channels_use_exact_systemd_stdio_directives",
+        "issue": "Generated StandardStdin/StandardStdout/StandardStderr instead of StandardInput/StandardOutput/StandardError."
+      },
+      {
+        "test": "test_rendered_unit_preserves_failed_unit_collection",
+        "issue": "Missing Unit.CollectMode=inactive-or-failed equivalent to the original --collect policy."
+      }
+    ],
+    "nativeSystemdParserValidated": false
+  },
+  "evidenceScope": "Actual local generation and independent literal contract assertions; no native systemd execution.",
+  "changes": {
+    "testOnly": true,
+    "prototypeImplementationChanged": false,
+    "productCodeChanged": false
+  },
+  "operations": {
+    "sshAttempts": 0,
+    "linuxUnitsStarted": 0,
+    "serviceChanges": 0,
+    "productionPublications": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0
+  },
+  "previousNativeAttempt": {
+    "quota": "sealed_1_of_1",
+    "unitCreationOutcome": "unknown",
+    "cleanupOutcome": "unconfirmed",
+    "reinterpretedAsSuccess": false
+  },
+  "remainingGates": [
+    "User confirmation for the two prototype fixes",
+    "Targeted and related local regression",
+    "Native parser and IPC validation under separately approved scope",
+    "Production readiness and complete delivery acceptance"
+  ],
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false
+}
