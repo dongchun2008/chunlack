@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-11",
+  "stage": "local_unit_channel_session_prototype",
+  "status": "review_findings_reproduced_fix_pending_confirmation",
+  "implementationScope": {
+    "controller": "deadline-aware injected local session backend",
+    "fragment": "pinned existing local fragment generator",
+    "transportTest": "real owned Python subprocess and anonymous pipes",
+    "identityAndManager": "synthetic",
+    "nativeBackendImplemented": false,
+    "actualLinuxFifoVerified": false
+  },
+  "existingRegression": {
+    "testsRun": 17,
+    "passed": 17,
+    "exitCode": 0,
+    "reportedSeconds": 0.418,
+    "completeAcceptance": false
+  },
+  "supplementalDiagnostics": [
+    {
+      "exitCode": 1,
+      "findings": [
+        "Integer cleanup flags incorrectly permit artifact removal and success.",
+        "Fault.code is not revalidated at report output."
+      ]
+    },
+    {
+      "exitCode": 1,
+      "findings": [
+        "GO send completes before cancellation but report still states goSent=false.",
+        "SystemExit during quiesce escapes and skips owned-handle close."
+      ]
+    }
+  ],
+  "independentReview": {
+    "determinateFindings": 4,
+    "additionalUnprovenRisk": "Synchronous buffered-stream close in the test fixture may block behind an outstanding I/O thread; bounded failure-path closure is not proven.",
+    "coverageLimitation": "Current error records separate stages and safe codes, but do not preserve complete original exception, errno or private stderr evidence.",
+    "reviewerModifiedOrExecutedCode": false
+  },
+  "proposedCombinedRepair": [
+    "Strict boolean and exact-field validation for quiescence receipts.",
+    "Revalidate safe error codes at primary and cleanup output boundaries.",
+    "Represent GO attempt, confirmed completion and unknown outcome separately.",
+    "Attempt bounded remaining cleanup after interruption without losing interruption semantics or primary evidence.",
+    "Make local pipe fixture failure-path cleanup bounded and add targeted cancellation and pending-I/O regressions."
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "linuxUnitsStarted": 0,
+    "nativeLibraryLoads": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0
+  },
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized checkpoint only; no private experimental source or raw diagnostic output released."
+}
