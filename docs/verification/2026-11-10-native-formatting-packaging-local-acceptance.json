@@ -1,0 +1,147 @@
+{
+  "version": 1,
+  "date": "2026-11-10",
+  "stage": "native-controller-equivalent-formatting-accepted-local",
+  "status": "local_regression_and_memory_packaging_passed",
+  "scope": "Completes approved equivalent formatting reduction only; no native or production execution authorized.",
+  "formatting": {
+    "astEqualIgnoringLocations": true,
+    "astSha256": "4df3594cb333fbbf0e780151b36c4bc860de7fb28a54b35bc836c5a75290c4e6",
+    "blockIndentSpaces": 2,
+    "codeExecuted": false,
+    "diagnosticLineNumbersMayChange": true,
+    "docstringsPreserved": true,
+    "formattedBytes": 24340,
+    "formattedSha256": "e6743778f6754cdb300b7b01c3f89cd053ea7f81ec4c96fb714c810a5af70b4b",
+    "linuxUnits": 0,
+    "pythonGrammar": "3.12",
+    "sourceBytes": 27620,
+    "sourceBytesSaved": 3280,
+    "sourceSha256": "099ef0946194f5c070cd4590fc6187f0f033f4584bf2ca9aad549997bf5de6f3",
+    "sshAttempts": 0,
+    "stringConstantsPreserved": true,
+    "stringTokenContentsPreserved": true,
+    "typeCommentsIncluded": true,
+    "version": 1
+  },
+  "regression": {
+    "total": 110,
+    "passed": 110,
+    "failed": 0,
+    "allExitCodes": 0,
+    "files": [
+      {
+        "name": "test_compact_indent.py",
+        "count": 8,
+        "seconds": 0.064
+      },
+      {
+        "name": "test_format_source.py",
+        "count": 11,
+        "seconds": 0.072
+      },
+      {
+        "name": "test_receipt.py",
+        "count": 12,
+        "seconds": 0.012
+      },
+      {
+        "name": "test_launch_evidence.py",
+        "count": 32,
+        "seconds": 0.031
+      },
+      {
+        "name": "test_native.py",
+        "count": 41,
+        "seconds": 0.058
+      },
+      {
+        "name": "test_cleanup_paths.py",
+        "count": 6,
+        "seconds": 0.027
+      }
+    ]
+  },
+  "independentReview": {
+    "staticReviewPassed": true,
+    "newP1P2": 0,
+    "reviewerExecutedCode": false,
+    "reviewerRecomputedNewFileHash": false,
+    "scope": "formatter, added tests and proof; main-thread packaging validates actual source hashes"
+  },
+  "packaging": {
+    "bootstrapsCompiledOnly": true,
+    "bundleBytes": 72285,
+    "generatedFilesWritten": false,
+    "linuxUnits": 0,
+    "nativeCalls": 0,
+    "outerPayloadBytes": 97160,
+    "runnerBytes": 40302,
+    "runnerLaunchExecuted": false,
+    "sourceCount": 6,
+    "sourceHashes": {
+      "bridge": "c5569d318c6b45f1340b049b986635d1ecaf167062355f916f9e09807bfba191",
+      "bus": "366ec142f979195d35170a3c76eca23a3bb48e4fd2fcb3c8cc980aa0b422de52",
+      "diagnostics": "27a2bb7219aa16008eefb4bbc068f8c0dde72cf5847d9778b08b52f0c77cceec",
+      "preflight": "0d84f8c1019e0266d329b386920e9460096cc7e9465ab0e45e917f2ddb6591b0",
+      "remote": "e6743778f6754cdb300b7b01c3f89cd053ea7f81ec4c96fb714c810a5af70b4b",
+      "worker": "0c5415d43de0abd50557653db644e7bbfda3635acec25673cf6245ee5e35af90"
+    },
+    "sshAttempts": 0,
+    "status": "passed",
+    "workerFrameBytes": 72442,
+    "outerPayloadLimit": 98304,
+    "outerPayloadBytesRemaining": 1144,
+    "workerFrameLimit": 98312,
+    "runnerLimit": 65536,
+    "limitsChanged": false,
+    "transportProtocolChanged": false
+  },
+  "preserved": {
+    "previousCandidates": true,
+    "previousFailureEvidence": true,
+    "workerAndDependencies": true,
+    "resourcesAndTiming": true,
+    "identityAndOwnershipChecks": true,
+    "originalErrorSeparation": true,
+    "privateStderrScope": true,
+    "receiptFailureBoundaries": true
+  },
+  "newActivity": {
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "nativeCalls": 0,
+    "realModelCalls": 0,
+    "productionPublication": false,
+    "existingServiceActions": 0,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false
+  },
+  "nativeConnectionVerified": false,
+  "nativeEvidenceVerified": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "nextStage": {
+    "requiresFreshExplicitAuthorization": true,
+    "maximumSshAttempts": 1,
+    "maximumDiagnosticUnits": 1,
+    "diagnosticUnitSecondsIncludingCleanup": 10,
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "memoryBytes": 201326592,
+    "cpuPercent": 20,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasks": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "workerUid": 996,
+    "workerGid": 987,
+    "workerCapabilities": 0,
+    "noNewPrivileges": true,
+    "automaticRetry": false,
+    "existingServicesMustRemainUnchanged": true,
+    "productionPublicationAuthorized": false
+  }
+}
