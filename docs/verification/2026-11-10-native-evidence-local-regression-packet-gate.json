@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "date": "2026-11-10",
+  "stage": "native-evidence-local-corrections",
+  "status": "local_regression_passed_packet_gate_failed",
+  "scope": "User-approved local corrections and regression only; frozen prior candidate preserved.",
+  "corrections": [
+    "Unconfirmed cleanup records cleanup_unconfirmed without asserting populated cgroup.",
+    "Valid UTF-8 stderr is retained only in launcher.privateStderr; invalid UTF-8 is explicitly omitted, not replaced. Public classifications remain body-free.",
+    "The complete final ASCII frame includes newline in its 16384-byte bound. Oversized private text is explicitly omitted first; oversized metadata emits a bound failed receipt with original error-presence flags and unknown creation facts. Main exits 2."
+  ],
+  "regression": {
+    "total": 91,
+    "passed": 91,
+    "failed": 0,
+    "files": [
+      {
+        "file": "test_receipt.py",
+        "count": 12,
+        "seconds": 0.007
+      },
+      {
+        "file": "test_launch_evidence.py",
+        "count": 32,
+        "seconds": 0.03
+      },
+      {
+        "file": "test_native.py",
+        "count": 41,
+        "seconds": 0.036
+      },
+      {
+        "file": "test_cleanup_paths.py",
+        "count": 6,
+        "seconds": 0.027
+      }
+    ],
+    "allExitCodes": 0
+  },
+  "independentStaticReview": {
+    "passed": true,
+    "newP1P2": 0,
+    "doesNotProveTestsOrNativeExecution": true
+  },
+  "packaging": {
+    "status": "failed",
+    "exitCode": 1,
+    "errorCode": "packet_size",
+    "outerPayloadBytes": 100575,
+    "outerPayloadLimit": 98304,
+    "bytesOverLimit": 2271,
+    "sourceHashes": {
+      "bridge": "c5569d318c6b45f1340b049b986635d1ecaf167062355f916f9e09807bfba191",
+      "bus": "366ec142f979195d35170a3c76eca23a3bb48e4fd2fcb3c8cc980aa0b422de52",
+      "diagnostics": "27a2bb7219aa16008eefb4bbc068f8c0dde72cf5847d9778b08b52f0c77cceec",
+      "preflight": "0d84f8c1019e0266d329b386920e9460096cc7e9465ab0e45e917f2ddb6591b0",
+      "remote": "099ef0946194f5c070cd4590fc6187f0f033f4584bf2ca9aad549997bf5de6f3",
+      "worker": "0c5415d43de0abd50557653db644e7bbfda3635acec25673cf6245ee5e35af90"
+    },
+    "limitChanged": false,
+    "protocolChanged": false,
+    "scopeStoppedAtLocalGate": true,
+    "generatedRuntimeFilesWritten": false,
+    "runnerLaunchExecuted": false
+  },
+  "privacy": {
+    "completeRuntimeReceiptMustRemainPrivate": true,
+    "privateStderrIncludedInPublicRecord": false,
+    "onlySyntheticBodiesUsed": true
+  },
+  "newActivity": {
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "nativeCalls": 0,
+    "realModelCalls": 0,
+    "productionPublished": false,
+    "existingServiceActions": 0,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false
+  },
+  "nativeConnectionVerified": false,
+  "nativeEvidenceVerified": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "nextDecision": "Consider a separately approved equivalent formatting-only reduction with AST equivalence, renewed hash binding and unchanged input/receipt/resource limits; do not silently increase the limit or execute the candidate."
+}
