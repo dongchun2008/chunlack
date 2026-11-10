@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-11",
+  "stage": "local_unit_channel_five_repairs",
+  "status": "related_regressions_passed_but_two_review_gaps_reproduced",
+  "priorRecord": "docs/verification/2026-11-11-local-unit-channel-session-review.json",
+  "implementedChanges": [
+    "Exact quiescence fields and strict booleans before artifact removal.",
+    "Type, length and allowlist revalidation for existing error-code values.",
+    "GO attempt/unknown/confirmed outcome tracking before post-write cancellation checks.",
+    "Controller-level interrupted cleanup preserves first interruption and later close attempts.",
+    "Unbuffered local pipe fixture, deadline-bounded IO helpers and owned-child cleanup fallback."
+  ],
+  "relatedRegressions": {
+    "session": {
+      "testsRun": 29,
+      "passed": 29,
+      "exitCode": 0,
+      "reportedSeconds": 1.002
+    },
+    "fragment": {
+      "testsRun": 21,
+      "passed": 21,
+      "exitCode": 0,
+      "reportedSeconds": 0.143
+    },
+    "total": 50,
+    "allPassed": true,
+    "completeAcceptance": false
+  },
+  "independentReview": {
+    "scope": "read-only local prototype",
+    "newDeterminateGaps": 2,
+    "reviewerReranTests": false
+  },
+  "additionalDiagnostic": {
+    "exitCode": 1,
+    "confirmedFindings": [
+      "The fixture IO thread discards the original SystemExit object and reclassifies it as backend_error.",
+      "A Fault with a deleted code field makes safe_error raise AttributeError during quiesce error handling, skipping the remaining close."
+    ],
+    "ownedDiagnosticThreadsStopped": true,
+    "sourceModified": false
+  },
+  "nextRepairScope": [
+    "Carry original IO/close exceptions through the local fixture and preserve interruption identity after bounded cleanup.",
+    "Make error formatting tolerate missing code fields without interrupting later cleanup, with focused regressions."
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "linuxUnitsStarted": 0,
+    "nativeLibraryLoads": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0
+  },
+  "nativeBackendImplemented": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized checkpoint only; no private prototype source or raw exceptions released."
+}
