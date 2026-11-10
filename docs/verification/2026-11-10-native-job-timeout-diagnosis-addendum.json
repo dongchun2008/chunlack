@@ -1,0 +1,71 @@
+{
+  "version": 1,
+  "date": "2026-11-10",
+  "stage": "native-start-failure-diagnosis-addendum",
+  "status": "diagnosis_refined_no_code_change",
+  "corrects": "The earlier interpretation of the generic --expand-environment hint as the proven cause is withdrawn.",
+  "privateEvidenceExtraction": {
+    "source": "already retained local stderr from the sealed single attempt",
+    "retainedBytes": 159,
+    "unknownPropertyPhraseCaseInsensitive": true,
+    "knownPropertyNamesMatched": [
+      "JobTimeoutUSec"
+    ],
+    "rawTextPublished": false,
+    "newRemoteQueries": 0,
+    "exactErrorAttributionIndependentlyConfirmed": false
+  },
+  "upstreamFindings": [
+    {
+      "source": "https://raw.githubusercontent.com/systemd/systemd/v255/src/run/run.c",
+      "symbol": "bus_call_with_hint",
+      "finding": "With expansion disabled, the compatibility hint is emitted for any UnknownProperty or PropertyReadOnly error; it does not identify the refused property."
+    },
+    {
+      "source": "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/dbus-unit.c",
+      "symbol": "bus_unit_set_transient_property",
+      "finding": "The v255 JobTimeoutUSec branch lacks return r and may fall through to return 0, unlike the adjacent JobRunningTimeoutUSec branch.",
+      "remoteInstalledBinaryContainsThisDefectProven": false
+    },
+    {
+      "source": "https://raw.githubusercontent.com/systemd/systemd/v255/man/systemd.unit.xml",
+      "finding": "JobTimeoutSec measures from job enqueue; JobRunningTimeoutSec excludes queued time. They must not be substituted as equivalent."
+    }
+  ],
+  "independentStaticReview": {
+    "diagnosisCorrectionSupported": true,
+    "upstreamReturnPathIndependentlyReviewed": true,
+    "privateBodyRereadByReviewer": false,
+    "remoteBinaryExamined": false
+  },
+  "repairConstraints": {
+    "keepExpandEnvironmentDisabled": true,
+    "retainEnqueueBasedOneSecondProtection": true,
+    "retainBoundedJobCancellationSemantics": true,
+    "doNotSubstituteRunningOnlyTimeout": true,
+    "doNotSilentlyIncreaseBudget": true,
+    "noSystemdUpgradeOrDaemonReexec": true,
+    "noProductionActions": true
+  },
+  "evidenceBoundary": "A relevant upstream defect matches the observed property identifier, but the installed manager binary and a working compatibility implementation remain unverified.",
+  "newActivity": {
+    "productCodeChanges": 0,
+    "testsRun": 0,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "nativeCalls": 0,
+    "productionPublication": false,
+    "credentialsChanged": false,
+    "authorizationChanged": false,
+    "relayChanged": false
+  },
+  "originalAttemptSealed": true,
+  "originalAttemptSshUsed": 1,
+  "originalAttemptSshMaximum": 1,
+  "originalUnitCreationOutcome": "unknown",
+  "originalUnitCleanupConfirmed": false,
+  "nativeConnectionVerified": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "nextKeyDecision": "Authorize local-only compatibility design and regression that preserve the one-second enqueue protection and environment-expansion guard. No new remote attempt or production action is included."
+}
