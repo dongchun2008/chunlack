@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-11",
+  "stage": "local_session_error_preservation_repairs",
+  "status": "implementation_regressions_passed_new_fixture_constructor_error_blocks_complete_gate",
+  "baselineRecord": "docs/verification/2026-11-11-local-session-five-repairs-review-gaps.json",
+  "implementedChanges": [
+    "Missing or faulting Fault.code retrieval falls back to a safe allowlisted report code.",
+    "Local IO threads propagate original exception objects without generic reclassification.",
+    "Local fixture close retains original per-stage errors privately, attempts later owned cleanup, and rethrows the first interruption or first original error.",
+    "Direct close tests retain budget and remaining-stream assertions while expecting original exception propagation."
+  ],
+  "actualResults": {
+    "session": {
+      "testsRun": 37,
+      "passed": 36,
+      "errors": 1,
+      "failures": 0,
+      "exitCode": 1,
+      "reportedSeconds": 1.12
+    },
+    "fragment": {
+      "testsRun": 21,
+      "passed": 21,
+      "errors": 0,
+      "failures": 0,
+      "exitCode": 0,
+      "reportedSeconds": 0.139
+    },
+    "totalTests": 58,
+    "totalPassed": 57,
+    "totalErrors": 1,
+    "completeAcceptance": false,
+    "originalMissingCodeRegressionPassed": true,
+    "originalThreadInterruptionRegressionPassed": true
+  },
+  "blockingFixture": {
+    "test": "test_code_descriptor_failure_cannot_escape_safe_formatter",
+    "observed": "Synthetic Broken exception invokes inherited Fault constructor, which reads its deliberately failing code getter before safe_error is called.",
+    "category": "new_test_fixture_construction_error",
+    "corrected": false,
+    "proposedMinimalChange": "Override only the synthetic exception constructor using Exception.__init__, retaining the faulting getter and all assertions."
+  },
+  "independentReview": {
+    "mode": "read_only",
+    "newConfirmedImplementationFindings": 0,
+    "fixtureCorrectionDirectionReviewed": true,
+    "reviewerReranTests": false
+  },
+  "operations": {
+    "sshAttempts": 0,
+    "linuxUnitsStarted": 0,
+    "nativeLibraryLoads": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0
+  },
+  "nativeBackendImplemented": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized checkpoint only; no private prototype source, raw exception messages or runtime credentials released."
+}
