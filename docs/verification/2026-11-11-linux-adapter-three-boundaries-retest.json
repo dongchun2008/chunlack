@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-11",
+  "stage": "linux_unit_adapter_three_boundary_repairs",
+  "status": "related_local_regressions_and_targeted_review_passed",
+  "baselineRecord": "docs/verification/2026-11-11-linux-adapter-local-boundary-diagnostics.json",
+  "repairedGroups": [
+    "Deadline guards before and after relevant calls, including canonical verification, content reads and final completion; returned owned FDs are registered before post-call deadline checks.",
+    "Artifact lifecycle and exact four-entry completeness validation; partial removal seals the store, preserves the original error and refuses verification or removal retry.",
+    "FD and exclusive-connection close outcomes remain sticky after failure; repeated calls retain the original failure rather than reporting success or retrying unknown handles."
+  ],
+  "actualTests": {
+    "linuxAdapter": {
+      "testsRun": 36,
+      "passed": 36,
+      "failures": 0,
+      "errors": 0,
+      "exitCode": 0,
+      "reportedSeconds": 0.674
+    },
+    "session": {
+      "testsRun": 37,
+      "passed": 37,
+      "failures": 0,
+      "errors": 0,
+      "exitCode": 0,
+      "reportedSeconds": 1.111
+    },
+    "fragment": {
+      "testsRun": 21,
+      "passed": 21,
+      "failures": 0,
+      "errors": 0,
+      "exitCode": 0,
+      "reportedSeconds": 0.151
+    },
+    "total": 94,
+    "passed": 94
+  },
+  "independentReview": {
+    "status": "completed",
+    "scope": "three approved boundary repair groups and their regression tests",
+    "confirmedP1P2Omissions": 0,
+    "mode": "read_only",
+    "reviewerReranTests": false
+  },
+  "sourceBinding": {
+    "candidateSha256": "2bf2856d58c01f35389b15305b56418fdaaa898a79164824e269f41f13cafa48",
+    "newBoundaryTestsSha256": "a81908eabe12fa76a5532beb0a343300c8cab129609d9638259450223fe73b07",
+    "originalAdapterTestsSha256": "31ba23baaf174f6a285e5ac909fdd791d6c62cd4f258284af095b552608bb2a5",
+    "planSha256": "35fc26988fd5d9011d2b0528484cbdb36f8cd583c9c74bc42d4bf9d4cbb9acc1",
+    "sessionSha256": "69d49c8d67a6a22922215eedafaadaa0cb5540699dfd8a7390c42efc2b6ce5ff",
+    "fragmentSha256": "473b16496a7dfcda1d5e5f9fb5130b491c3a286369787968aaffcc451cbf8d72",
+    "frozenReferenceSha256": "e6743778f6754cdb300b7b01c3f89cd053ea7f81ec4c96fb714c810a5af70b4b",
+    "unchangedDependenciesMatched": true,
+    "manifestEntries": 7,
+    "previousManifestPreserved": true,
+    "nativePacketBindingComplete": false
+  },
+  "limitations": [
+    "Before/after deadline checks cannot preempt an in-progress operating-system call.",
+    "Linux filesystem and D-Bus tests use local test doubles, not actual native services.",
+    "FIFO stream pump, verified native parent-fd acquisition, native connector, kernel/resource attestation and session/original-worker integration remain pending."
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "actualLinuxSyscalls": 0,
+    "actualSystemBusCalls": 0,
+    "linuxUnitsStarted": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0
+  },
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized verification record only; no private experimental source, credentials or raw errors published."
+}
