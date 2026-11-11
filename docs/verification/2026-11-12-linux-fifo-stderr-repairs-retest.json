@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "stage": "linux_fifo_stderr_boundary_repairs",
+  "status": "related_local_regressions_and_targeted_review_passed",
+  "baselineRecord": "docs/verification/2026-11-11-linux-fifo-local-stderr-review.json",
+  "repairedFindings": [
+    "Valid bytes returned by stdout/stderr reads are captured within existing bounds before post-read cancellation/deadline rejection; rejected reads remain failed protocol steps.",
+    "stderr empty reads are observations rather than permanent seals; read/write/close perform later bounded nonblocking probes, while EOF descriptors are excluded from readiness polling to avoid empty-read spinning."
+  ],
+  "additionalAtomicity": "Buffered stdout frames are removed only after the final rejection gate, retaining data if cancellation/deadline occurs after copying.",
+  "actualTests": {
+    "fifo": {
+      "testsRun": 32,
+      "passed": 32,
+      "failures": 0,
+      "errors": 0,
+      "exitCode": 0,
+      "reportedSeconds": 1.154
+    },
+    "linuxScope": {
+      "testsRun": 36,
+      "passed": 36,
+      "failures": 0,
+      "errors": 0,
+      "exitCode": 0,
+      "reportedSeconds": 0.804
+    },
+    "session": {
+      "testsRun": 37,
+      "passed": 37,
+      "failures": 0,
+      "errors": 0,
+      "exitCode": 0,
+      "reportedSeconds": 1.255
+    },
+    "fragment": {
+      "testsRun": 21,
+      "passed": 21,
+      "failures": 0,
+      "errors": 0,
+      "exitCode": 0,
+      "reportedSeconds": 0.132
+    },
+    "total": 126,
+    "passed": 126,
+    "newTargetedTests": 10
+  },
+  "criticalAssertions": [
+    "Late private bytes survive but no identity attestation, GO send or receipt promotion occurs.",
+    "Private stderr cap and overflow evidence remain intact on late reads.",
+    "Initial and previously observed stderr EOF do not hide later bytes in read, write or close.",
+    "Repeated readable EOF remains bounded under the fake-clock poll budget.",
+    "Existing owned-fd cleanup and sticky failure checks remain passing."
+  ],
+  "independentReview": {
+    "status": "completed",
+    "scope": "three changed FIFO files and two approved fixes",
+    "confirmedP1P2Omissions": 0,
+    "originalP2FindingsClosed": 2,
+    "mode": "read_only",
+    "reviewerReranTests": false
+  },
+  "sourceBinding": {
+    "fifoSha256": "2346a55c97f48fdbe0efec70c2ac53f2f1da1f67752216f409f5702874e7ae4c",
+    "targetedTestsSha256": "398977f67aa063fbac0dbe746e0801246343a45c8b52dafd3c0ef728c1e22364",
+    "planSha256": "c30eb6fe21a15603aa76b6960ef650f4049e2246d71d17142c0a45a902a2ef1c",
+    "unchangedFifoTestsSha256": "be8dfd61cf29e92d0d452c931b74ddb3173039dd453cbb927bbc8233dba3c615",
+    "linuxScopeSha256": "2bf2856d58c01f35389b15305b56418fdaaa898a79164824e269f41f13cafa48",
+    "manifestEntries": 11,
+    "unchangedDependenciesMatched": true,
+    "previousManifestsPreserved": true,
+    "nativePacketBindingComplete": false
+  },
+  "operations": {
+    "sshAttempts": 0,
+    "actualLinuxSyscalls": 0,
+    "actualSystemBusCalls": 0,
+    "linuxUnitsStarted": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0
+  },
+  "limitations": [
+    "FIFO and systemd scenarios are local doubles, not actual native acceptance.",
+    "Controller fixture uses preprepared mock artifacts and does not prove full preparation-budget integration.",
+    "Native parent-fd/manager-view proof, persistent bus connector, kernel/resource attestation and original diagnostic-worker bootstrap integration remain pending."
+  ],
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized verification evidence only; no private experimental source, raw stderr, exception bodies or credentials published."
+}
