@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "stage": "linux_session_backend_quiesce_boundary_repair",
+  "status": "related_local_regressions_and_independent_review_passed",
+  "baselineRecord": "docs/verification/2026-11-12-linux-session-backend-local-review.json",
+  "repairedFindings": [
+    "Retain the same BaseException object for any quiesce failure, including operation entry and final deadline gates.",
+    "Commit whole-operation success only after the final gate; a later empty proof does not erase earlier cancel or stop failure.",
+    "Failed repetitions rethrow the original failure without another manager request or proof attempt; even successful repetitions remain deadline bounded.",
+    "Artifact removal remains rejected after a failed quiesce operation."
+  ],
+  "redGreenEvidence": {
+    "newBoundaryTests": 8,
+    "beforeRepair": {
+      "passed": 2,
+      "failed": 6,
+      "exitCode": 1
+    },
+    "afterRepair": {
+      "passed": 8,
+      "failed": 0,
+      "exitCode": 0
+    },
+    "firstRelatedRun": {
+      "tests": 25,
+      "passed": 24,
+      "failed": 1,
+      "reason": "One old assertion expected the success flag after a CancelJob failure followed by an empty proof."
+    },
+    "oldAssertionAlignment": "The flag now denotes whole-operation success; the old assertion was aligned to false, retaining StopUnit, overall failure and site-preservation checks and adding stored-failure and no-removal assertions."
+  },
+  "actualTests": {
+    "backend": {
+      "testsRun": 25,
+      "passed": 25,
+      "exitCode": 0,
+      "reportedSeconds": 1.912,
+      "logSha256": "09df2c9c645940ec6e3c13f07d9b835bcbec50433638daa3ed87843cbb9c9f64"
+    },
+    "fifo": {
+      "testsRun": 32,
+      "passed": 32,
+      "exitCode": 0,
+      "reportedSeconds": 2.276,
+      "logSha256": "53ac8d6b1450ff975077617c2447bc08e213635235529897c703c23d4f134bcb"
+    },
+    "linuxScope": {
+      "testsRun": 36,
+      "passed": 36,
+      "exitCode": 0,
+      "reportedSeconds": 1.957,
+      "logSha256": "648abf278cadaeb3393f70e06ae5512e1dd0952124357901624162f427a634c4"
+    },
+    "session": {
+      "testsRun": 37,
+      "passed": 37,
+      "exitCode": 0,
+      "reportedSeconds": 1.733,
+      "logSha256": "a9f2732cb31e0c3f32f3fde5445c87c44abc5babafcd0919167cec67f3e9ef58"
+    },
+    "fragment": {
+      "testsRun": 21,
+      "passed": 21,
+      "exitCode": 0,
+      "reportedSeconds": 0.209,
+      "logSha256": "c28b658e8aa7d8e10a775028ed6e4f119851e9eb58cb86102b9ff89978d133a9"
+    },
+    "total": 151,
+    "passed": 151,
+    "failures": 0,
+    "errors": 0,
+    "scope": "Five related private local adapter suites; not the full product suite or native acceptance."
+  },
+  "independentReview": {
+    "status": "completed",
+    "originalP2Closed": true,
+    "newConfirmedP1P2": 0,
+    "mode": "read_only",
+    "reviewerReranTests": false,
+    "clarification": "The success flag no longer represents a separately retained historical empty-proof observation; no independent proof snapshot is claimed."
+  },
+  "sourceBinding": {
+    "backendSha256": "1cda9662eda63ab238d324f9ec6ed6e559d292aed175663994af160f40399706",
+    "originalBackendSha256": "3096a330eb92540b0792db66a4d416ec88aa61e335991f6dfbdc7e520ebe8903",
+    "testsSha256": "77a4bd82a689521a13c940678447d12dc312d885ba2c0bef6c3897fe091cc364",
+    "boundaryTestsSha256": "6703d6dcc6bfe73c8816fb6967f7684a2309178eecbae763b6f1f61eca4cb4de",
+    "planSha256": "f4168726faf5c7322536a2d3cd43349f9541d3b0967b74da8791b2b13d89e281",
+    "manifestEntries": 15,
+    "previousManifestAndBaselinePreserved": true,
+    "frozenDependenciesMatched": true,
+    "packetBindingComplete": false
+  },
+  "operations": {
+    "sshAttempts": 0,
+    "actualLinuxSyscalls": 0,
+    "actualSystemBusCalls": 0,
+    "linuxUnitsStarted": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "remainingGates": [
+    "Native parent-fd and exclusive connection acquisition within the outer budget.",
+    "Real manager-root view and complete kernel/resource verifier.",
+    "Original diagnostic worker bootstrap and protocol binding, rather than the pinned placeholder.",
+    "Complete native source/runtime packet binding and separately authorized native integration.",
+    "Production readiness, maintenance and end-to-end acceptance."
+  ],
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized verification checkpoint only; private experimental code, raw diagnostics and credentials are not released."
+}
