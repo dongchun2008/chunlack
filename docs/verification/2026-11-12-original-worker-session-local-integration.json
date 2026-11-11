@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "stage": "original_worker_controller_artifact_transport_integration",
+  "status": "local_end_to_end_integration_and_related_regressions_passed",
+  "scope": "New versioned private candidate adapting the existing four layers; no older frozen candidate or product/deployed controller modified.",
+  "implemented": [
+    "An explicit two-value protocol selection keeps receipt compatibility as default and enables original_worker without accepting an arbitrary bootstrap/renderer.",
+    "Validate the original source-bound packet and deadline before any artifact preparation or unit request.",
+    "Bind artifact canonicalization to the controller protocol, preserving the legacy one-argument fragment call in receipt mode.",
+    "Generate bootstrap function definitions from the same verified source bytes via a namespace-local source provider; do not reread function source through global inspect.",
+    "Retain the full worker report and validate it against the captured PID, kernel startTicks and InvocationID before receipt success.",
+    "Preserve original cleanup, cancellation, source checks and scoped manager/transport boundaries."
+  ],
+  "localIntegrationEvidence": {
+    "method": "Decode and compile the bootstrap actually written into the candidate unit text; run its generated protocol entry in a bounded local thread with in-memory FIFOs and explicit manager/kernel/native/signal doubles.",
+    "originalWorkerControlFlowExecuted": true,
+    "defaultNativeMainInvoked": false,
+    "identityPrecedesActualGoWrites": true,
+    "fullPayloadBytesCompared": true,
+    "failedProbeAndHashOnlyReceiptRejected": true,
+    "wrongPidTicksInvocationRejected": true,
+    "cancelAfterReadySendsNoGo": true,
+    "waitingOwnedThreadStoppedBeforeEmptyProof": true,
+    "realSystemdParserOrKernelBehaviorProven": false
+  },
+  "developmentEvidence": {
+    "initialIntegration": {
+      "testsRun": 8,
+      "errors": 11,
+      "reason": "Protocol parameter and worker-mode integration were absent before implementation."
+    },
+    "firstIntegration": {
+      "testsRun": 8,
+      "passed": 8
+    },
+    "firstCandidate": {
+      "testsRun": 36,
+      "passed": 36
+    },
+    "compatibilityFinding": {
+      "testsRun": 16,
+      "passed": 15,
+      "errors": 1,
+      "reason": "A legacy one-argument fragment override received a new second argument."
+    },
+    "compatibilityRepair": "Keep the original one-argument call for receipt mode in both controller and artifact canonicalizer; only explicit worker mode passes a second argument. Existing test bytes and assertions retained.",
+    "afterCompatibility": {
+      "testsRun": 141,
+      "passed": 141
+    }
+  },
+  "actualTests": {
+    "candidate": {
+      "testsRun": 142,
+      "passed": 142,
+      "exitCode": 0,
+      "reportedSeconds": 11.265,
+      "logSha256": "888773c03b313dac9e23cf665ce855cf9b8ab9a91b9c05b87801a80ba8a49453"
+    },
+    "protocol": {
+      "testsRun": 20,
+      "passed": 20,
+      "exitCode": 0,
+      "reportedSeconds": 0.567,
+      "logSha256": "1c2ec093da34b8cb11aa83d4ced75945f02b6d4badcd9d5bc3dd2b67adeab551"
+    },
+    "binding": {
+      "testsRun": 13,
+      "passed": 13,
+      "exitCode": 0,
+      "reportedSeconds": 0.06,
+      "logSha256": "27754c4427924b93ccc801bcc47841006de76b362ab1b355858eee0648c56946"
+    },
+    "fragment": {
+      "testsRun": 21,
+      "passed": 21,
+      "exitCode": 0,
+      "reportedSeconds": 0.193,
+      "logSha256": "d4d2487d194d9d07dd6f9534e169e31e9d0c1ef89f909abf0ef75d549bb0e514"
+    },
+    "originalWorker": {
+      "testsRun": 41,
+      "passed": 41,
+      "exitCode": 0,
+      "reportedSeconds": 0.045,
+      "logSha256": "3283d2ffffe0a4a53d8b0ec54b8a431833494573c8ab21dcd2c7703de9fe7e11"
+    },
+    "total": 237,
+    "passed": 237,
+    "failures": 0,
+    "errors": 0,
+    "scope": "142 tests target this new candidate, including unchanged scope/FIFO/session compatibility tests; 95 dependency tests. Not a full product regression or real Linux acceptance."
+  },
+  "independentReview": {
+    "status": "completed",
+    "confirmedP1P2": 0,
+    "unclosedFindings": 0,
+    "reviewerReranTests": false,
+    "scope": "Four-layer changes, lineage/source binding, local worker thread evidence and cancellation/cleanup boundaries."
+  },
+  "sourceBinding": {
+    "sessionSha256": "7fd047c0d968f393b500489b8923537059edf9ad74c12d1b979eb94dd213d1e1",
+    "scopeSha256": "44b063dc333b6e30aea618f75232817a74f7c6ff9e17012c547d7880ce8f6077",
+    "transportSha256": "56f1f31375d8a38a35159390fa2c1ef1e98f6bd5613a9456ad2aea00b7d35c98",
+    "backendSha256": "282932c2cd6cece60d6de4ff295ad27c6c4fa3b1ea77ccad3d93e67b6417ecaa",
+    "integrationTestsSha256": "cc0c7be6ea3348ed5a62bf55658907eff88bf4d8ce7088e054588f856e926967",
+    "sourceTestsSha256": "28dc86dde5ef068b1c1b0b6d20302a8ee9f992e27fceab23430294d6ee895423",
+    "manifestEntries": 23,
+    "candidateLoaderHashesMatched": true,
+    "oldSourcesPreserved": true,
+    "sevenCompatibilityTestFilesUnchanged": true
+  },
+  "remainingGates": [
+    "Real fixed parent-fd acquisition and host/manager root-view proof are not implemented by these doubles.",
+    "Native persistent system bus connector and full manager/kernel/resource verifier remain pending.",
+    "Actual Linux FIFO open/EOF/backpressure/signal/cleanup and native worker acceptance remain unverified.",
+    "Complete native activation/runtime closure, production preflight, controlled maintenance and end-to-end production delivery remain pending."
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "actualLinuxSyscalls": 0,
+    "actualSystemBusCalls": 0,
+    "linuxUnitsStarted": 0,
+    "nativeLibraryLoads": 0,
+    "actualSignalTimerChanges": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "controllerArtifactProtocolIntegratedLocally": true,
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "nativePacketRuntimeClosureComplete": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized evidence only; private experimental source, generated code, full reports, raw logs and credentials not released."
+}
