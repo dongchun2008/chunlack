@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "stage": "linux_session_backend_local_orchestration",
+  "status": "related_regressions_passed_quiesce_final_gate_failure_reproduced",
+  "implementedScope": [
+    "Compose the pinned artifact store, FIFO transport and nonce-bound exclusive systemd scope through the existing CORE.run interface.",
+    "Reject preprepared objects and execute artifact mutation, FIFO opens and unit requests within the absolute session work deadline.",
+    "Bind normalized InvocationID, PID, kernel startTicks and identity vector around READY; reject mismatches before GO.",
+    "Separate cancel, StopUnit and typed owned/empty/jobsEmpty proof; require a fresh proof before artifact removal.",
+    "Attempt owned component closure within remaining budget and retain primary versus cleanup failures separately."
+  ],
+  "actualTests": {
+    "backend": {
+      "testsRun": 17,
+      "passed": 17,
+      "exitCode": 0,
+      "reportedSeconds": 0.491
+    },
+    "fifo": {
+      "testsRun": 32,
+      "passed": 32,
+      "exitCode": 0,
+      "reportedSeconds": 0.97
+    },
+    "linuxScope": {
+      "testsRun": 36,
+      "passed": 36,
+      "exitCode": 0,
+      "reportedSeconds": 0.688
+    },
+    "session": {
+      "testsRun": 37,
+      "passed": 37,
+      "exitCode": 0,
+      "reportedSeconds": 0.966
+    },
+    "fragment": {
+      "testsRun": 21,
+      "passed": 21,
+      "exitCode": 0,
+      "reportedSeconds": 0.141
+    },
+    "total": 143,
+    "passed": 143,
+    "completeAcceptance": false
+  },
+  "supplementaryDiagnostic": {
+    "exitCode": 1,
+    "sourceModified": false,
+    "scenario": "Quiescence proof sets the observed-success flag, then the operation's final deadline check fails.",
+    "observed": [
+      "First quiesce call raises deadline.",
+      "quiesce_failure is still unset.",
+      "A repeated call using the same expired deadline returns owned/empty success."
+    ],
+    "diagnosticCleanup": "Fake resources only, using a separate explicitly bounded local cleanup deadline; no remote quota or real unit used."
+  },
+  "independentReview": {
+    "status": "completed",
+    "scope": "three new backend candidate files",
+    "confirmedP1": 0,
+    "confirmedP2": 1,
+    "reviewerReranTests": false
+  },
+  "nextRepair": "Retain any quiesce operation failure across entry, proof and final checks; repeated calls must not reinterpret the failed operation as success or silently retry.",
+  "sourceBinding": {
+    "backendSha256": "3096a330eb92540b0792db66a4d416ec88aa61e335991f6dfbdc7e520ebe8903",
+    "testsSha256": "c1d62fae6becef26a1b436f268a199a2581fed44275b787464bbdd0ec343f514",
+    "planSha256": "d17b2110d80073a00477f0a1ae960a600828f7d1df97cc7ec256874035233802",
+    "manifestEntries": 14,
+    "frozenDependenciesMatched": true,
+    "nativePacketBindingComplete": false
+  },
+  "limitations": [
+    "Verifier callbacks and manager/kernel observations are explicit test doubles, not real native proof.",
+    "Root-fd and connection acquisition require outer-budget native gates.",
+    "The pinned placeholder is not the original diagnostic worker bootstrap.",
+    "Native connector, manager-view/kernel/resource proof implementation and actual native integration acceptance remain pending."
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "actualLinuxSyscalls": 0,
+    "actualSystemBusCalls": 0,
+    "linuxUnitsStarted": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0
+  },
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized checkpoint only; private candidate source, raw diagnostics and credentials are not released."
+}
