@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "scope": "two_stderr_repairs_local_confirmation",
+  "sourceManifestSha256": "a8a3c991ce7c00de9710efeab492bb250ca9252f8232df798bd47ffa61173769",
+  "sourceFilesMatched": 11,
+  "groups": [
+    {
+      "group": "fifo",
+      "tests": 32,
+      "expected": 32,
+      "exitCode": 0,
+      "passed": true,
+      "logSha256": "ffdde8f29933681f11d19a8178b03d21d16af3f316cf02dfae28f2aa7130edff"
+    },
+    {
+      "group": "linuxScope",
+      "tests": 36,
+      "expected": 36,
+      "exitCode": 0,
+      "passed": true,
+      "logSha256": "b712d823461a2ff54b599408a0a1a607fe72c9360a89d574080fd5dea784a2d0"
+    },
+    {
+      "group": "session",
+      "tests": 37,
+      "expected": 37,
+      "exitCode": 0,
+      "passed": true,
+      "logSha256": "4b943bc194992e3331157c6c4edf3e6a121db83de40a6e0820d2c809ed346e17"
+    },
+    {
+      "group": "fragment",
+      "tests": 21,
+      "expected": 21,
+      "exitCode": 0,
+      "passed": true,
+      "logSha256": "c7c1a814c2565c91e3148b2d1e5ac0962175b1015cb7917835139d382b524af2"
+    }
+  ],
+  "total": 126,
+  "allPassed": true,
+  "nativeExecution": false,
+  "ssh": false,
+  "linuxUnits": 0,
+  "productionPublication": false,
+  "credentialChanges": false,
+  "authorizationChanges": false,
+  "relayChanges": false,
+  "repairedBoundaries": [
+    "Retain bounded completed reads before rejecting late or cancelled operations; do not promote rejected protocol steps.",
+    "Treat stderr EOF as an observation and continue bounded later probes without EOF polling spin."
+  ],
+  "existingVerification": "docs/verification/2026-11-12-linux-fifo-stderr-repairs-retest.json",
+  "limitations": [
+    "Local simulation only; not native Linux or production acceptance.",
+    "This confirmation covers the four specified related suites, not the entire project.",
+    "Historical AddRef contract failure remains separately recorded, not rerun or resolved here."
+  ],
+  "synchronization": "Sanitized verification record only; no private candidate source or raw stderr."
+}
