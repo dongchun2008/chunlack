@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-11",
+  "stage": "linux_unit_adapter_local_candidate_part_one",
+  "status": "initial_simulation_passed_additional_boundary_diagnostics_failed_review_incomplete",
+  "implementationScope": {
+    "components": [
+      "preopened-fixed-parent Linux FIFO and unit artifact operations",
+      "atomic non-overwriting complete-file publication",
+      "owned artifact validation and cleanup",
+      "nonce-bound requests on an exclusive persistent D-Bus connection"
+    ],
+    "nativeOperationsDisabledByDefault": true,
+    "actualNativeConnectorImplemented": false,
+    "fifoStreamPumpIntegrated": false,
+    "kernelResourceAttestationBound": false,
+    "originalWorkerBootstrapIntegrated": false
+  },
+  "initialRegression": {
+    "testsRun": 20,
+    "passed": 20,
+    "failures": 0,
+    "errors": 0,
+    "exitCode": 0,
+    "reportedSeconds": 0.319
+  },
+  "supplementaryDiagnostics": [
+    {
+      "exitCode": 1,
+      "confirmed": "Canonical source verification advances beyond the deadline; directory creation still occurs before the next deadline check."
+    },
+    {
+      "exitCode": 1,
+      "confirmed": [
+        "An incomplete artifact set after partial removal still passes verify.",
+        "After an FD close failure, a repeated close call reports success although the fake FD remains open.",
+        "After a bus close failure, a repeated close call reports success although the fake connection remains unclosed.",
+        "Final content verification may return success after the deadline."
+      ]
+    }
+  ],
+  "consolidatedRepairGroups": [
+    "Enforce mutation and completion deadline boundaries, including time spent validating sources or reading final content.",
+    "Seal partial artifact removal and reject verification of incomplete publication sets.",
+    "Preserve unknown or failed close terminal state across repeated calls for both owned FDs and the exclusive bus connection."
+  ],
+  "independentReview": {
+    "status": "interrupted_without_final_conclusion",
+    "firstAgentLiveHandleMissing": true,
+    "replacementAgentLiveHandleMissing": true,
+    "replacementSavedThreadRead": true,
+    "savedThreadStatus": "interrupted",
+    "preliminaryCommentsNotTreatedAsAcceptance": true,
+    "additionalAgentsRestartedAfterSavedStateCheck": false
+  },
+  "localSourceBindings": {
+    "candidateSha256": "76ab72277a7e8a3a71699c57c54a01d205891ab09f95a6182166432b52fdab3c",
+    "testSha256": "31ba23baaf174f6a285e5ac909fdd791d6c62cd4f258284af095b552608bb2a5",
+    "planSha256": "35fc26988fd5d9011d2b0528484cbdb36f8cd583c9c74bc42d4bf9d4cbb9acc1",
+    "sessionSha256": "69d49c8d67a6a22922215eedafaadaa0cb5540699dfd8a7390c42efc2b6ce5ff",
+    "fragmentSha256": "473b16496a7dfcda1d5e5f9fb5130b491c3a286369787968aaffcc451cbf8d72",
+    "frozenReferenceSha256": "e6743778f6754cdb300b7b01c3f89cd053ea7f81ec4c96fb714c810a5af70b4b",
+    "frozenDependencyHashesMatched": true,
+    "manifestEntries": 6,
+    "nativePacketBindingComplete": false
+  },
+  "operations": {
+    "sshAttempts": 0,
+    "actualLinuxSyscalls": 0,
+    "actualSystemBusCalls": 0,
+    "linuxUnitsStarted": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0
+  },
+  "reference": "https://raw.githubusercontent.com/systemd/systemd/v255/man/org.freedesktop.systemd1.xml",
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized evidence only; no private prototype source or raw errors published."
+}
