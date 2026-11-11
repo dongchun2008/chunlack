@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "stage": "original_worker_fifo_protocol_bootstrap",
+  "status": "related_local_regressions_and_independent_review_passed",
+  "scope": "New private protocol candidate and local doubles only; no old candidate, product code or deployed controller changed.",
+  "implemented": [
+    "Generate a bounded inline bootstrap with a size-limited, digest-checked compressed runtime and the pinned worker binding definitions.",
+    "Emit minimal outer ready before input; accept exactly one bounded GO frame followed by EOF; verify nonce, payload digest and all fixed source hashes.",
+    "Invoke the unchanged original worker main/run path, adapting output and consuming the verified outer GO through the original worker gate exactly once.",
+    "Keep the complete original diagnostic report in an extended result envelope; reject hash-only receipts as diagnostic reports.",
+    "Validate both before/after identity field types, keep every later phase within the shorter packet deadline, and restore only the remaining watchdog budget after original main clears its timer."
+  ],
+  "redGreenEvidence": {
+    "initialDiscovery": {
+      "exitCode": 1,
+      "errors": 1,
+      "reason": "Implementation module absent; not claimed as a behavioral red test."
+    },
+    "identityTypes": {
+      "testsRun": 17,
+      "failingSubcasesBeforeRepair": 7,
+      "reason": "identityAfter integer one compared equal to identityBefore true; both records now undergo strict type checks."
+    },
+    "shorterDeadline": {
+      "testsRun": 18,
+      "failingSubcasesBeforeRepair": 2,
+      "reason": "Inner gate/result used outer deadline; the closure now adopts packet notAfterNs before loading."
+    },
+    "watchdog": {
+      "testsRun": 20,
+      "failingTestsBeforeRepair": 3,
+      "reason": "Original main cleared ITIMER_REAL; the default path now rearms the remaining packet budget before final write/flush."
+    }
+  },
+  "actualTests": {
+    "protocol": {
+      "testsRun": 20,
+      "passed": 20,
+      "exitCode": 0,
+      "reportedSeconds": 0.455,
+      "logSha256": "a7157b9223faedefe52d7924ada96c1cbd13fb1603e8fd3116b98f242d0e9a7f"
+    },
+    "binding": {
+      "testsRun": 13,
+      "passed": 13,
+      "exitCode": 0,
+      "reportedSeconds": 0.058,
+      "logSha256": "1c4ae6fd75dd3d7419cdce46440da3c9a07fdc56022e0e90fec72f0b9f12c039"
+    },
+    "backend": {
+      "testsRun": 25,
+      "passed": 25,
+      "exitCode": 0,
+      "reportedSeconds": 0.968,
+      "logSha256": "0013b3b59547aa199eed56995234bf61a71c0d34cdd7e8faef339c9db2ada71d"
+    },
+    "fifo": {
+      "testsRun": 32,
+      "passed": 32,
+      "exitCode": 0,
+      "reportedSeconds": 1.428,
+      "logSha256": "f873420317fa23da3433bbf1f26b5943fc114c73ad26ec566fc6410bbdd039a9"
+    },
+    "linuxScope": {
+      "testsRun": 36,
+      "passed": 36,
+      "exitCode": 0,
+      "reportedSeconds": 1.404,
+      "logSha256": "49573663088f5008e22e7b8fd79a72e13221221fe9bfd63ff0667c2e35146b4f"
+    },
+    "session": {
+      "testsRun": 37,
+      "passed": 37,
+      "exitCode": 0,
+      "reportedSeconds": 1.497,
+      "logSha256": "06c66bb46193cecdf122f7865ee612bc74cc51b78d0d272bcf2fed6c0d957adc"
+    },
+    "fragment": {
+      "testsRun": 21,
+      "passed": 21,
+      "exitCode": 0,
+      "reportedSeconds": 0.276,
+      "logSha256": "ede111085f9707d50f57a7698f075a14bd7d0fe90d662c3b0df8478ef52d4254"
+    },
+    "originalWorker": {
+      "testsRun": 41,
+      "passed": 41,
+      "exitCode": 0,
+      "reportedSeconds": 0.071,
+      "logSha256": "a3cb884425315d1c84a98006901a24ef1ad8d5d7c5f708585f640042a66e7288"
+    },
+    "total": 225,
+    "passed": 225,
+    "failures": 0,
+    "errors": 0,
+    "scope": "Eight related private local suites, not a full product regression or native acceptance."
+  },
+  "independentReview": {
+    "status": "completed",
+    "watchdogP2Closed": true,
+    "newConfirmedP1P2": 0,
+    "reviewerReranTests": false,
+    "caveat": "Backpressure exceptions, identity/probe operations and timers are explicit local doubles; real kernel alarm/FIFO/native behavior is not proved."
+  },
+  "sourceBinding": {
+    "moduleSha256": "698b9fa5eb34667117c42c8b781ff69bfb1394a9d363fb8bac648e3e1e949bec",
+    "testsSha256": "f068278052b704f3d47fda3c51aa799f3e8e9e9722b5aa5f0e055e77560fcef6",
+    "planSha256": "356afa79aca8d05f945e8561e4e7e5095dce6baae62dc0d165f3b283962dae61",
+    "bindingModuleSha256": "96815ab70eafe32c491e7a4ab2db9dd706609f672a76efe2c10a73d3ff9b49d4",
+    "originalWorkerSha256": "0c5415d43de0abd50557653db644e7bbfda3635acec25673cf6245ee5e35af90",
+    "originalWorkerAndReferenceSourcesUnchanged": true,
+    "manifestEntries": 7
+  },
+  "sampleOnlyArtifacts": {
+    "bootstrapBytes": 5298,
+    "bootstrapLimitBytes": 8192,
+    "bootstrapSha256": "d7a0f88d5f3c04876aadb1e95e98d9d0e489a2cf1c6512f7e36c3c8da8aacd37",
+    "renderedFragmentBytes": 6846,
+    "renderedFragmentSha256": "5fd9b60649e988f0651740f72dcd6441a5a47dacda19b171bf4ec37083f457f5",
+    "actualManagerParserValidated": false,
+    "generatedNativeMainInvoked": false
+  },
+  "remainingGates": [
+    "CORE and artifact canonicalizer still select the placeholder and do not accept the extended result; a separately pinned end-to-end session candidate is required.",
+    "Native parent-fd, manager/kernel/resource proof and exclusive bus connector implementation remain pending.",
+    "Complete source/runtime packet closure, real FIFO/backpressure/alarm/native integration and controlled production acceptance remain unverified."
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "actualLinuxSyscalls": 0,
+    "actualSystemBusCalls": 0,
+    "linuxUnitsStarted": 0,
+    "nativeLibraryLoads": 0,
+    "actualSignalTimerChanges": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "controllerAndArtifactIntegration": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized checkpoint only; no private candidate source, generated code, raw logs, probe output or credentials released."
+}
