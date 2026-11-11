@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "stage": "scoped_manager_connection_local_development",
+  "status": "new_adapter_passed_historical_baseline_failure_preserved",
+  "implemented": [
+    "Reuse the pinned 25-symbol LibSystemd ABI without a library loader or automatic connection.",
+    "One sender and nonce-bound unit; exact destination/path/interface/signature/argument selection, single-shot unit mutations and no reconnect.",
+    "Only known jobs may be queried, and cancellation additionally requires an independently read matching owner tuple.",
+    "Decode strict booleans, actual empty/nonzero InvocationID arrays and owner structs; selected property snapshots bracket InvocationID and read ControlGroup from Service.",
+    "Enforce an absolute opening ceiling, final deadline checks for named absence, sticky disconnect and one-shot close with separate returned-close fact.",
+    "Retain primary, resource-cleanup and raised errors separately across later requests; bound private failure history to 16 entries with count and explicit overflow."
+  ],
+  "developmentEvidence": {
+    "initialDiscovery": {
+      "errors": 1,
+      "reason": "New implementation module absent; not a behavioral red-test claim."
+    },
+    "initialAdapter": {
+      "testsRun": 13,
+      "passed": 13,
+      "warning": "Regex string escape warning subsequently corrected without changing regex semantics."
+    },
+    "boundaryExpansion": {
+      "testsRun": 19,
+      "passed": 16,
+      "failed": 2,
+      "errors": 1,
+      "findings": [
+        "A checked disconnect exception did not seal the connection.",
+        "A late NoSuchJob could escape its final deadline.",
+        "An invalid opening deadline poisoned empty-resource closure."
+      ]
+    },
+    "afterCorrections": {
+      "testsRun": 19,
+      "passed": 19
+    },
+    "failureRetention": {
+      "testsRun": 20,
+      "passed": 19,
+      "errors": 1,
+      "reason": "A later successful cleanup request could overwrite last_request evidence; bounded private history was added."
+    },
+    "finalAdapter": {
+      "testsRun": 23,
+      "passed": 23
+    }
+  },
+  "actualTests": {
+    "connection": {
+      "testsRun": 23,
+      "passed": 23,
+      "failed": 0,
+      "exitCode": 0,
+      "reportedSeconds": 0.017,
+      "logSha256": "98606984f1c3994849eb4b45e2e7bf34b78bf7c3f334ba6e51e92b256571add6"
+    },
+    "upstreamAbi": {
+      "testsRun": 7,
+      "passed": 7,
+      "failed": 0,
+      "exitCode": 0,
+      "reportedSeconds": 0.25,
+      "logSha256": "7beb72378613e5a878e2dd4df8873e7060e5f5ea3bba73123a7a16a977289e0c"
+    },
+    "upstreamSession": {
+      "testsRun": 22,
+      "passed": 21,
+      "failed": 1,
+      "exitCode": 1,
+      "reportedSeconds": 0.035,
+      "logSha256": "c01970fe4f6dfef4f088dabccf426f0edd64b9341436cf6190458b1fa75e3177"
+    },
+    "workerSession": {
+      "testsRun": 142,
+      "passed": 142,
+      "failed": 0,
+      "exitCode": 0,
+      "reportedSeconds": 5.523,
+      "logSha256": "3627dc8fc50b87207d53fdab3411cbf3f3a7775550ffddbb41a7531cbef4f7c0"
+    },
+    "protocol": {
+      "testsRun": 20,
+      "passed": 20,
+      "failed": 0,
+      "exitCode": 0,
+      "reportedSeconds": 0.283,
+      "logSha256": "1eee3a8e644497450db248ec9e667b1e18eb9a71dedc091f998195306b0c9a9f"
+    },
+    "binding": {
+      "testsRun": 13,
+      "passed": 13,
+      "failed": 0,
+      "exitCode": 0,
+      "reportedSeconds": 0.04,
+      "logSha256": "d02f48a33492cc20d7143216ef9bf750e4faae028ce669bc26d4ff7bcd79054c"
+    },
+    "fragment": {
+      "testsRun": 21,
+      "passed": 21,
+      "failed": 0,
+      "exitCode": 0,
+      "reportedSeconds": 0.134,
+      "logSha256": "abca83aee868a7c372c6f83fd0f16a518aed678b2d5c7ea1ac57207785c2fd8b"
+    },
+    "originalWorker": {
+      "testsRun": 41,
+      "passed": 41,
+      "failed": 0,
+      "exitCode": 0,
+      "reportedSeconds": 0.027,
+      "logSha256": "274145f1c382b76af06a4255a7aed5c2fbd82afb6d732636eb1286f2803cc6da"
+    },
+    "total": 289,
+    "passed": 288,
+    "failed": 1,
+    "allPassed": false,
+    "noFailedFileRerun": true,
+    "scope": "Local related suites; not real Linux, full product or production acceptance."
+  },
+  "historicalFailure": {
+    "test": "test_persistent_bus.ContractRegression.test_missing_addref_cannot_pin_the_creating_connection",
+    "actual": "Expected AddRef boolean true but the frozen historical contract contains no AddRef row.",
+    "baselineSha256": "650dbad7f0328e1f41b93c9d58f719f717a3d8555ece5d44a5df032736747c61",
+    "baselinePropertyCount": 51,
+    "addRefRows": 0,
+    "baselineAndTestUnchanged": true,
+    "failedResultRetained": true,
+    "distinction": "New route uses LoadUnit/RefUnit on one connection; it does not repair or validate the historical StartTransientUnit/AddRef route."
+  },
+  "independentReview": {
+    "status": "completed",
+    "newAdapterConfirmedP1P2": 0,
+    "reviewerReranTests": false,
+    "historicalFailureNotCountedAsPass": true,
+    "nativeAcceptanceNotClaimed": true
+  },
+  "sourceBinding": {
+    "adapterSha256": "bec212d876904e41e794bf6c956e5740e7cab27a2bb1e5d946bdf3c37164decf",
+    "testsSha256": "3658fd9c9ce4e8d8d5dac532b282c9121f0ea164f9cc7cf2eed5fab0e39cea7d",
+    "planSha256": "f161b25636f83e57a8018f83e7fe9ad02a00836cebe4f6e062e1d2b916470aa8",
+    "baseAdapterSha256": "366ec142f979195d35170a3c76eca23a3bb48e4fd2fcb3c8cc980aa0b422de52",
+    "scopeSha256": "44b063dc333b6e30aea618f75232817a74f7c6ff9e17012c547d7880ce8f6077",
+    "manifestEntries": 7,
+    "abiSymbols": 25,
+    "oldSourcesPreserved": true
+  },
+  "limitations": [
+    "Library and socket provenance and the exact injected scope error type still require a fixed, independently verified native assembly.",
+    "Internal GetAll is a fixed selected-property snapshot, not a complete property/resource/kernel attestation.",
+    "Calls are synchronous and require an outer watchdog for real native use.",
+    "Parent-fd and manager-root acquisition, full verifier, whole-session connector integration and real Linux acceptance remain pending.",
+    "One historical related test remains failed; no all-green or production-readiness claim is made."
+  ],
+  "references": [
+    "https://raw.githubusercontent.com/systemd/systemd/v255/man/org.freedesktop.systemd1.xml",
+    "https://raw.githubusercontent.com/systemd/systemd/v255/src/shared/bus-get-properties.c"
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "actualLinuxSyscalls": 0,
+    "actualSystemBusCalls": 0,
+    "linuxUnitsStarted": 0,
+    "nativeLibraryLoads": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "fullKernelResourceVerifierImplemented": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized checkpoint records successes and the preserved failure; no private source, raw logs, reply bodies or credentials released."
+}
