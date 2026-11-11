@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-11",
+  "stage": "linux_fifo_byte_transport_local_candidate",
+  "status": "related_regressions_passed_two_stderr_boundary_findings_reproduced",
+  "components": [
+    "nonce-bound pinned Linux artifact-store dependency",
+    "nonblocking owned FIFO fds and temporary stdin keeper",
+    "bounded stdout framing and private stderr capture",
+    "partial writes/EAGAIN/EOF/cancellation/deadline handling",
+    "sticky close outcomes and local session-controller pump fixture"
+  ],
+  "actualTests": {
+    "fifo": {
+      "testsRun": 22,
+      "passed": 22,
+      "exitCode": 0,
+      "reportedSeconds": 0.596
+    },
+    "linuxScope": {
+      "testsRun": 36,
+      "passed": 36,
+      "exitCode": 0,
+      "reportedSeconds": 0.666
+    },
+    "session": {
+      "testsRun": 37,
+      "passed": 37,
+      "exitCode": 0,
+      "reportedSeconds": 0.973
+    },
+    "fragment": {
+      "testsRun": 21,
+      "passed": 21,
+      "exitCode": 0,
+      "reportedSeconds": 0.143
+    },
+    "total": 116,
+    "passed": 116,
+    "completeAcceptance": false
+  },
+  "additionalDiagnostics": [
+    {
+      "exitCode": 1,
+      "scenarios": [
+        {
+          "condition": "read completes with stderr bytes as deadline expires",
+          "observed": "bytes consumed from the fake FIFO but absent from private stderr buffer",
+          "errorCode": "deadline"
+        },
+        {
+          "condition": "read completes with stderr bytes as cancellation becomes effective",
+          "observed": "bytes consumed from the fake FIFO but absent from private stderr buffer",
+          "errorCode": "cancelled"
+        }
+      ]
+    },
+    {
+      "exitCode": 1,
+      "condition": "initial stderr read has no writer and returns empty bytes, then later diagnostic bytes arrive",
+      "observed": "stderr EOF is permanently sealed; later bytes are not captured, including during close, while stdout frames still return"
+    }
+  ],
+  "independentReview": {
+    "status": "completed",
+    "scope": "three new FIFO candidate files",
+    "confirmedP1": 0,
+    "confirmedP2": 2,
+    "readOnly": true,
+    "reviewerReranTests": false
+  },
+  "nextRepairScope": [
+    "Retain bounded bytes actually returned by reads before post-read cancellation/deadline failure, without promoting failed operations to successful protocol steps.",
+    "Distinguish initial no-writer empty stderr reads from terminal EOF; preserve later diagnostics and avoid empty-read busy polling."
+  ],
+  "sourceBinding": {
+    "transportSha256": "0cf48ab5fd76b8053b3d46fd765202c230895c8be7f556352559e43f77602114",
+    "testsSha256": "be8dfd61cf29e92d0d452c931b74ddb3173039dd453cbb927bbc8233dba3c615",
+    "planSha256": "0c4b767d05dcec01adb1886bbbc6533512dc1b25e19eec37cf36e06433cf8421",
+    "linuxScopeSha256": "2bf2856d58c01f35389b15305b56418fdaaa898a79164824e269f41f13cafa48",
+    "manifestEntries": 10,
+    "frozenDependenciesMatched": true,
+    "nativePacketBindingComplete": false
+  },
+  "limitations": [
+    "New FIFO tests use in-memory kernel/poll doubles, not actual Linux FIFOs.",
+    "Controller integration fixture uses preprepared mock artifacts; it does not establish complete prepare-budget or native-start acceptance.",
+    "Native connection, manager-view acquisition, kernel/resource attestation and original-worker bootstrap integration remain pending."
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "actualLinuxSyscalls": 0,
+    "actualSystemBusCalls": 0,
+    "linuxUnitsStarted": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0
+  },
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized checkpoint only; private experimental source and raw diagnostics are not released."
+}
