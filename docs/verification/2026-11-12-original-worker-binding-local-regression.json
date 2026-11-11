@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "stage": "original_diagnostic_worker_packet_source_binding",
+  "status": "related_local_regressions_and_read_only_review_passed",
+  "scope": "New private local binding candidate only; original worker, sources, deployed controllers and product code unchanged.",
+  "implemented": [
+    "Prepare and validate the original worker packet with exact schema, nonce, namespace/socket identity types and exact absolute nanosecond deadline.",
+    "Validate all five fixed ASCII source digests and size limits before any compilation; reject duplicate keys, extra source names and non-finite JSON constants.",
+    "Check the eight-second remaining window and deadline before and after validation and loading; return definitions only, without invoking main or opening a native library.",
+    "Run the original worker control flow in a local simulation with explicit identity/dependency/probe doubles and its original ready/gate/result sequence."
+  ],
+  "initialTestDiscovery": {
+    "exitCode": 1,
+    "testsRun": 1,
+    "errors": 1,
+    "reason": "The new implementation module did not yet exist; no behavioral red-test claim is made for that discovery failure."
+  },
+  "actualTests": {
+    "binding": {
+      "testsRun": 13,
+      "passed": 13,
+      "exitCode": 0,
+      "reportedSeconds": 0.126,
+      "logSha256": "e5a035e732195e7fe33ff70cba2fdcb2e083b8e8e7635007448704a26ad4d6de"
+    },
+    "backend": {
+      "testsRun": 25,
+      "passed": 25,
+      "exitCode": 0,
+      "reportedSeconds": 1.378,
+      "logSha256": "323cfd90218a0293bb6e6924c4113eaf857bb1183cfd06f66dda801055c10a3e"
+    },
+    "fifo": {
+      "testsRun": 32,
+      "passed": 32,
+      "exitCode": 0,
+      "reportedSeconds": 2.848,
+      "logSha256": "1b9cf84361135bfa72718ebd237a9ed4c6a9e250d12e0f72ab3a6bf490a4b41d"
+    },
+    "linuxScope": {
+      "testsRun": 36,
+      "passed": 36,
+      "exitCode": 0,
+      "reportedSeconds": 1.245,
+      "logSha256": "ffd51f3fc73e7082ed06e22e263f950345f4d021f72763f6a613713ef798bfb8"
+    },
+    "session": {
+      "testsRun": 37,
+      "passed": 37,
+      "exitCode": 0,
+      "reportedSeconds": 1.534,
+      "logSha256": "948d95138f69edb88a76b7822ed26a12a3bc111fa1e9cb9f3c8d715346e19b0f"
+    },
+    "fragment": {
+      "testsRun": 21,
+      "passed": 21,
+      "exitCode": 0,
+      "reportedSeconds": 0.24,
+      "logSha256": "42c73cb7e929e867157c404ce19cb50b4dc733ab70d6789f37ef01eee8244818"
+    },
+    "originalWorker": {
+      "testsRun": 41,
+      "passed": 41,
+      "exitCode": 0,
+      "reportedSeconds": 0.058,
+      "logSha256": "b59bb6edf0a9869e9e985fea18f4754ac04629a63e98ba11bdf3ee554e3f9bb0"
+    },
+    "total": 205,
+    "passed": 205,
+    "failures": 0,
+    "errors": 0,
+    "scope": "Related private local suites, not a full product regression or native integration acceptance."
+  },
+  "independentReview": {
+    "status": "completed",
+    "confirmedP1P2": 0,
+    "reviewerReranTests": false,
+    "scope": "New binding module, tests and plan",
+    "caveat": "Validation covers the bytes at validation time; returned parsed dictionaries and module.PACKET are mutable and are not trusted after caller mutation."
+  },
+  "sourceBinding": {
+    "moduleSha256": "96815ab70eafe32c491e7a4ab2db9dd706609f672a76efe2c10a73d3ff9b49d4",
+    "testsSha256": "38f1fd6f36807d10ddb106762fb576f32d5c022ecf4c3d7483f577f41c882e7e",
+    "planSha256": "7d52423d5a181551faaa44e842341fc743377c9c87c6d15c02ae88d678591eed",
+    "originalWorkerSha256": "0c5415d43de0abd50557653db644e7bbfda3635acec25673cf6245ee5e35af90",
+    "originalSourceUnchanged": true,
+    "manifestEntries": 8,
+    "allFiveSourcePinsMatched": true
+  },
+  "limits": {
+    "maxPayloadBytes": 98304,
+    "maxSourceBytes": 32768,
+    "maxRemainingWindowNanoseconds": 8000000000
+  },
+  "remainingGates": [
+    "The original packet-first/ready/gate sequence and new controller ready/identity/GO sequence still require explicit FIFO integration.",
+    "Full original diagnostic results must remain separate from transport acknowledgements; a payload hash alone is not native acceptance.",
+    "Native parent-fd acquisition, manager/kernel/resource verifier and exclusive bus connector remain pending.",
+    "Complete runtime/source packet binding, actual native validation and controlled production acceptance are not established by this record."
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "actualLinuxSyscalls": 0,
+    "actualSystemBusCalls": 0,
+    "linuxUnitsStarted": 0,
+    "nativeLibraryLoads": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "handshakeIntegrated": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized verification evidence only; private experimental source, raw logs, probe output and credentials are not released."
+}
