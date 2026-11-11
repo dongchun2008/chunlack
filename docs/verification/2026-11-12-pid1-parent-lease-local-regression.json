@@ -1,0 +1,138 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "stage": "read_only_pid1_parent_descriptor_lease",
+  "status": "selected_local_regressions_and_independent_review_passed",
+  "scope": "New private local filesystem descriptor component; native activation disabled by default.",
+  "implemented": [
+    "Read-only component-wise directory opens with DIRECTORY, NOFOLLOW and CLOEXEC for the two fixed runtime/unit parents.",
+    "Only the fixed kernel /proc/1/root final link may be followed; root and both descendant parent identities are compared against the current view.",
+    "Reject non-root or writable directory components, symlinks, missing parents, inheritable handles and view mismatches; provide no creation or permission workaround.",
+    "Track owned descriptors before post-open checks; verify every path-to-handle binding and preserve verification failures across later deadlines.",
+    "Close within the original budget, retaining returned-close facts and unconfirmed handles separately; preserve interruptions and never reclose an uncertain descriptor."
+  ],
+  "developmentEvidence": {
+    "initialDiscovery": {
+      "errors": 1,
+      "reason": "New module absent; not a behavioral red-test claim."
+    },
+    "initialLease": {
+      "testsRun": 13,
+      "passed": 13
+    },
+    "expandedLease": {
+      "testsRun": 16,
+      "passed": 16
+    },
+    "finalLeaseAndLifecycle": {
+      "testsRun": 17,
+      "passed": 17
+    }
+  },
+  "actualTests": {
+    "parentLease": {
+      "testsRun": 17,
+      "passed": 17,
+      "exitCode": 0,
+      "reportedSeconds": 0.069,
+      "evidence": "Complete tool-captured unittest output, chunk 76a7c0; not a separately saved raw-log file."
+    },
+    "borrowerSession": {
+      "testsRun": 142,
+      "passed": 142,
+      "exitCode": 0,
+      "reportedSeconds": 5.464,
+      "logSha256": "3473ae7cde7726a7dedcf6e0b4c55ca503aa04e7dd9bb9947aa3a8ee42f25d03"
+    },
+    "scopedConnection": {
+      "testsRun": 23,
+      "passed": 23,
+      "exitCode": 0,
+      "reportedSeconds": 0.016,
+      "logSha256": "a2c0a53f530c168c713a639c8483c101a0ab8ee4c0c111416169d7caaf8f6cb3"
+    },
+    "selectedTotal": 182,
+    "selectedPassed": 182,
+    "selectedFailures": 0,
+    "execution": "Batched evidence: the expanded 17-test lease suite replaces the earlier 16-test result; unchanged borrower/connection results were retained without another rerun.",
+    "scope": "Selected current local component suites only, not all historical tests or full product/native acceptance."
+  },
+  "artifactLifecycleEvidence": {
+    "actualCurrentOwnedArtifactsClassUsed": true,
+    "originalWorkerFragmentUsed": true,
+    "flow": [
+      "lease.acquire",
+      "store.prepare",
+      "store.verify",
+      "lease.verify",
+      "store.remove",
+      "store.close",
+      "lease.close"
+    ],
+    "model": "Existing in-memory filesystem extended with read-only root/PID1 aliases; constant test clock and synthetic empty proof.",
+    "assertions": [
+      "Store closure preserves leased parent handles.",
+      "Lease closure preserves the initially borrowed handles.",
+      "The in-memory node set returns to its baseline."
+    ],
+    "realMagiclinkMountOrProcessQuiescenceProven": false
+  },
+  "independentReview": {
+    "status": "completed",
+    "confirmedP1P2": 0,
+    "reviewerReranTests": false,
+    "scope": "Lease implementation and original plus added filesystem/borrower lifecycle tests."
+  },
+  "sourceBinding": {
+    "leaseSha256": "1f5d09827d6867f549a2f2741b68a4345396cf7865697688f9f7380cf33152f8",
+    "leaseTestsSha256": "0780ab715d8823339b0af6f39cbdfb6fed8229f8dd331188e166ec7c0e74e160",
+    "lifecycleTestsSha256": "7a82e81037f5fae6a00044caa3d51c53751100e8a1c549756faf68a1097f0894",
+    "planSha256": "d0544d245df111684831e5e17b3a1318c52f16b5d561d04470a310d6cc4d0659",
+    "borrowerScopeSha256": "44b063dc333b6e30aea618f75232817a74f7c6ff9e17012c547d7880ce8f6077",
+    "connectionSha256": "bec212d876904e41e794bf6c956e5740e7cab27a2bb1e5d946bdf3c37164decf",
+    "manifestEntries": 7,
+    "oldSourcesPreserved": true
+  },
+  "upstreamInspection": {
+    "reference": "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/exec-invoke.c",
+    "finding": "Source order sets up standard input/output before applying the mount namespace and changing user credentials.",
+    "scope": "Upstream v255 source inspection only; not verification of the installed host binary or real FIFO behavior."
+  },
+  "historicalFailure": {
+    "reference": "docs/verification/2026-11-12-scoped-manager-connection-local-checkpoint.json",
+    "test": "test_persistent_bus.ContractRegression.test_missing_addref_cannot_pin_the_creating_connection",
+    "status": "Previously failed historical AddRef baseline remains unchanged, unresolved and not rerun in this selected regression.",
+    "notCountedAsPass": true
+  },
+  "remainingGates": [
+    "Native assembly must independently establish PID1 as the intended manager; filesystem-view comparison alone does not establish that identity.",
+    "Real parent access may fail under permissions/namespaces; no capability or permission relaxation is authorized by this component.",
+    "Library/socket provenance, actual connector activation, full kernel/resource identity and complete native assembly remain pending.",
+    "Real Linux magiclink, mount view, FIFO, timer and cleanup validation plus controlled production acceptance remain unverified."
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "actualLinuxSyscalls": 0,
+    "actualSystemBusCalls": 0,
+    "linuxUnitsStarted": 0,
+    "nativeLibraryLoads": 0,
+    "remoteFilesystemMutations": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "capabilityChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "nativeExecutionEligible": false,
+  "actualPid1ViewMatchProven": false,
+  "managerIdentityProven": false,
+  "kernelResourceVerifierImplemented": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized checkpoint only; private source, descriptor values, generated code, raw logs and credentials not released."
+}
