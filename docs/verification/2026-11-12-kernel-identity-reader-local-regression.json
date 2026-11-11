@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "stage": "fixed_path_kernel_identity_reader_local_candidate",
+  "status": "local_simulation_and_independent_review_passed",
+  "implementation": [
+    "Separate preliminary PID/start-time/cgroup launch binding from strict UID996/GID987 live identity and resource attestation.",
+    "Default native path disabled; injected memory filesystem used for all new tests.",
+    "Descriptor-relative fixed read-only paths; no-follow, close-on-exec, nonblocking leaf opens; regular file and directory identity checks.",
+    "Repeated process start/cgroup and security/resource samples; bounded virtual-file reads do not rely on st_size.",
+    "Consumed late read bytes retained privately; no late success. Per-generation close states; original and cleanup failures retained, uncertain closes never retried.",
+    "Clear prior success before any new input/deadline checks; seal every entry failure and reject subsequent recovery attempts."
+  ],
+  "actualTests": {
+    "groups": [
+      {
+        "group": "reader",
+        "tests": 29,
+        "expected": 29,
+        "passed": true,
+        "exitCode": 0,
+        "logSha256": "79bb73af4f948774da8c356e77a60a7baa62f471d279adbd4993ee04c47e2556"
+      },
+      {
+        "group": "worker_session",
+        "tests": 142,
+        "expected": 142,
+        "exitCode": 0,
+        "passed": true,
+        "reportedSeconds": 8.539,
+        "logSha256": "84ba97a4986c797d1e0f3f98837df1000f6a6c9db0739aa4d05bc4f4a1b78040"
+      },
+      {
+        "group": "parent_lease",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "reportedSeconds": 0.085,
+        "logSha256": "3f6d039e8471cc4eb83a2f62a4af9b191bafa2d3cff96b570a661b4bc65a29d1"
+      },
+      {
+        "group": "scoped_connection",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "reportedSeconds": 0.025,
+        "logSha256": "ef935b6e0fd6a9e097b0875cf87e2887b13339c9befa7b09a728a79e420c2ee0"
+      },
+      {
+        "group": "original_worker",
+        "tests": 110,
+        "expected": 110,
+        "exitCode": 0,
+        "passed": true,
+        "reportedSeconds": 0.357,
+        "logSha256": "b24fbf489c22b0a0fd8f66a55a5926995ad9e3618185a723897cd7e254c264a5",
+        "auditCorrection": "Original discovery included all five local test files (110), not only test_native.py (41); unchanged raw output verifies zero failures; no rerun."
+      }
+    ],
+    "total": 321,
+    "allPassed": true,
+    "historicalAddRefContractFailure": "separately recorded; not rerun or resolved",
+    "batched": true,
+    "originalReceiptPreserved": true
+  },
+  "review": {
+    "status": "completed_read_only",
+    "confirmedP1P2Remaining": 0,
+    "originalP2Closed": 1,
+    "reviewerReranTests": false
+  },
+  "testEvidenceNotes": [
+    "Initial new-module run failed on absent implementation, not a behavioral red-test proof.",
+    "Three later behavioral regressions reproduced stale attestation after entry deadline/interruption/input rejection before the correction; all pass after repair.",
+    "One newly added cleanup test initially included closes completed before the deadline; corrected to compare only post-deadline attempts, implementation unchanged.",
+    "Runner initially expected 41 original worker tests but discovered 110; all 110 exited zero with OK. Original failed audit receipt retained; final receipt verified offline from unchanged raw log. No old tests rerun to correct the count."
+  ],
+  "sourceBinding": [
+    {
+      "path": "kernel-identity-reader-20261112-a1/reader.py",
+      "bytes": 11299,
+      "sha256": "518a2b429d2f525eae89a23687b624ce2aca48d8ded9d328c22ca88afba83b09"
+    },
+    {
+      "path": "kernel-identity-reader-20261112-a1/test_reader.py",
+      "bytes": 14303,
+      "sha256": "dc84439f2572317737a5d50e663d7a6fbf3091fcbc61022f4efe618432e29be5"
+    },
+    {
+      "path": "kernel-identity-reader-20261112-a1/plan.md",
+      "bytes": 1978,
+      "sha256": "24301f87cdd32d744af0e58c1469074ea6f0538d888324ec9652a954c8ff4515"
+    },
+    {
+      "path": "native-worker-session-20261112-a1/backend.py",
+      "bytes": 14687,
+      "sha256": "282932c2cd6cece60d6de4ff295ad27c6c4fa3b1ea77ccad3d93e67b6417ecaa"
+    },
+    {
+      "path": "native-worker-session-20261112-a1/session.py",
+      "bytes": 12409,
+      "sha256": "7fd047c0d968f393b500489b8923537059edf9ad74c12d1b979eb94dd213d1e1"
+    },
+    {
+      "path": "native-connection-live-20261110-a3/worker.py",
+      "bytes": 12293,
+      "sha256": "0c5415d43de0abd50557653db644e7bbfda3635acec25673cf6245ee5e35af90"
+    }
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "actualLinuxSyscalls": 0,
+    "systemBusCalls": 0,
+    "linuxUnitsStarted": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "limitations": [
+    "Selected related suites only, not complete project regression.",
+    "Kernel samples across separate files are not atomic; no installed-kernel, mount provenance, namespace, manager, socket or library identity proof is supplied.",
+    "Reader not yet wired into backend early-MainPID versus READY/GO staging.",
+    "No jobs-empty or cgroup quiescence proof; missing paths reject rather than imply empty.",
+    "Native timing, system calls and outer watchdog still require separately scoped native validation.",
+    "Historical AddRef contract failure remains recorded separately, not rerun or resolved."
+  ],
+  "primaryReference": "https://raw.githubusercontent.com/torvalds/linux/master/Documentation/admin-guide/cgroup-v2.rst",
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized verification only; no private candidate source, raw observations, error bodies or credentials."
+}
