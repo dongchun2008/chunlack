@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-11",
+  "stage": "local_session_constructor_fixture_retest",
+  "status": "all_related_local_regressions_passed",
+  "baselineRecord": "docs/verification/2026-11-11-local-session-error-preservation-fixture-blocker.json",
+  "change": {
+    "testOnly": true,
+    "description": "Synthetic Broken exception initializes through Exception.__init__ without reading its deliberately faulting code property.",
+    "faultingGetterRetained": true,
+    "allExistingAssertionsRetained": true,
+    "sessionImplementationChanged": false,
+    "productCodeChanged": false
+  },
+  "actualResults": {
+    "session": {
+      "testsRun": 37,
+      "passed": 37,
+      "failures": 0,
+      "errors": 0,
+      "exitCode": 0,
+      "reportedSeconds": 1.126
+    },
+    "fragment": {
+      "testsRun": 21,
+      "passed": 21,
+      "failures": 0,
+      "errors": 0,
+      "exitCode": 0,
+      "reportedSeconds": 0.149
+    },
+    "totalTests": 58,
+    "totalPassed": 58,
+    "formerlyFailingConstructorCasePassed": true
+  },
+  "coveredLocalContracts": [
+    "Faulting and missing error-code retrieval cannot abort safe formatting.",
+    "Original threaded IO exception objects propagate to the session controller.",
+    "Controller and fixture preserve interruption semantics after later bounded cleanup attempts.",
+    "Strict quiescence receipts and GO attempted/unknown/confirmed evidence.",
+    "Owned local child pipe round trips, maximum payload, cancellation, partial startup and cleanup failures.",
+    "Pinned unit fragment generation including exact stdio directives, enqueue timeout and failed-unit collection."
+  ],
+  "reviewContext": {
+    "priorReadOnlyReviewConfirmedFixtureOnlyBlocker": true,
+    "proposedConstructorCorrectionReviewedBeforeApplication": true,
+    "newPostPatchReviewClaimed": false
+  },
+  "operations": {
+    "sshAttempts": 0,
+    "linuxUnitsStarted": 0,
+    "nativeLibraryLoads": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0
+  },
+  "remainingGates": [
+    "Linux FIFO and actual systemd backend implementation",
+    "Native manager visibility, parsing and protocol validation",
+    "Actual kernel identity and resource attestation",
+    "Native cleanup and bounded failure acceptance",
+    "Packaging integration, release gates and final production acceptance"
+  ],
+  "nativeBackendImplemented": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized test evidence only; private experimental source is not a deployed product release."
+}
