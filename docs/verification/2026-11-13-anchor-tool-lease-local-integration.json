@@ -1,0 +1,314 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "status": "passed_local_tool_file_lease_and_fixed_factory_not_native",
+  "implementation": {
+    "privateCandidateOnly": true,
+    "publicRecordOnly": true,
+    "sourceManifest": [
+      {
+        "path": "tool_lease.py",
+        "bytes": 7125,
+        "sha256": "c65d70d674a9ec6f5174c20b3cfda82a62ed104290f30e63df58525c06501daa"
+      },
+      {
+        "path": "bound_factory.py",
+        "bytes": 3718,
+        "sha256": "d55a32af7767492d885d64fddcfae0d83325168ddecdd1cb1dcca7e23d433543"
+      },
+      {
+        "path": "test_tools.py",
+        "bytes": 15290,
+        "sha256": "06de7bef874094193162d539ef9159faf84f1381d2a2c6ff42b6ae44ad44ab57"
+      },
+      {
+        "path": "run_local.py",
+        "bytes": 4893,
+        "sha256": "f5c868a45035955fac391b4257f1bcf1f8b8a1a8ab05f3191dd41c40595b87c3"
+      },
+      {
+        "path": "plan.md",
+        "bytes": 2181,
+        "sha256": "91d18ef042bf55bbe20c26d79ccbd36eb87c213228e72e4148d6132d9b5069f1"
+      },
+      {
+        "path": "LOCAL_HANDOFF.md",
+        "bytes": 4172,
+        "sha256": "b7c2bc8d9eea20552c4a6ec9a73f7a94baa119436ad922aa0f48bf47f9495c7a"
+      }
+    ],
+    "unchangedPinnedParentLease": true,
+    "exactPinnedFixedSpawner": true,
+    "defaultHostAndNativePopenRejected": true
+  },
+  "contracts": {
+    "rootViews": "current_and_PID1",
+    "tools": 2,
+    "maximumOwnedDescriptors": 22,
+    "maximumToolBytes": 16777216,
+    "readChunkBytes": 65536,
+    "maximumReadsPerHash": 512,
+    "maximumVerificationPhases": 8,
+    "externallySuppliedExpectedPinsRequired": true,
+    "manifestApprovalVerified": false,
+    "observedHashesAutoApproved": false,
+    "fullRegularFileMetadataAndElfChecked": true,
+    "heldAliasAndLiteralTargetChecked": true,
+    "bothViewsCompared": true,
+    "rehashOnEveryVerifyAndBorrow": true,
+    "phaseDeadlinesNotExtended": true,
+    "sourceFailuresSealed": true,
+    "closeFailuresNotRetried": true,
+    "remainingOwnedClosesAttempted": true,
+    "fixedArgumentsEnvironmentAndClockRequired": true,
+    "stdioCannotAliasLeaseDescriptors": true,
+    "preflightAndSpawnToolsReverified": true,
+    "returnedChildRetainedBeforePostGate": true,
+    "unknownCreationNotRetried": true
+  },
+  "regression": {
+    "groups": [
+      {
+        "group": "tool_lease",
+        "tests": 35,
+        "expected": 35,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.634,
+        "logSha256": "34f142b987ee766aed07363337b38691a45615f8811bcb4e0d6c086e0816c6d2"
+      },
+      {
+        "group": "fixed_launch",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.221,
+        "logSha256": "d3cd6f78ca397584bc2bc7b0f2c8aebfe1349fd3112be06374e811b19e250976"
+      },
+      {
+        "group": "owned_driver",
+        "tests": 30,
+        "expected": 30,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.334,
+        "logSha256": "b2f7d4258a9bcf69387684490ade0607fff8aaea3a29f5571808470a5d7ed825"
+      },
+      {
+        "group": "one_shot_entry",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.905,
+        "logSha256": "91198613f14719dd48dbcfb14c4ad6b887ac91451fdbace053ad79ab1aa6f594"
+      },
+      {
+        "group": "exclusive_prepare",
+        "tests": 25,
+        "expected": 25,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.795,
+        "logSha256": "60a959fc2c60e862cf96eebc94e9fa23e14659bde81f1b571686212439f7d64a"
+      },
+      {
+        "group": "runtime_package",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.004,
+        "logSha256": "ae8f8127db5fc85f3820494b14c1d7ee587f007e63f57e21bf991df79e38a164"
+      },
+      {
+        "group": "lifecycle",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.912,
+        "logSha256": "92895d277a84474fb3ff82c3d037b0375e133202beae85a8b4e593db05476490"
+      },
+      {
+        "group": "manager_port",
+        "tests": 50,
+        "expected": 50,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.013,
+        "logSha256": "e8651defb22a06bb1eff780748956a3b06e1df4e60a3921c62687e10c30c1e4a"
+      },
+      {
+        "group": "host_files",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.835,
+        "logSha256": "977ed4ec8beff23a268ffbbc7542e3e46b0f3010137754d90672a999539eccc9"
+      },
+      {
+        "group": "request_evidence",
+        "tests": 47,
+        "expected": 47,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.855,
+        "logSha256": "abc45998006920e7c2969017090c14a9abe3a54f4cf3529da34b703dd53959a5"
+      },
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.194,
+        "logSha256": "0a725a47f86dfeea50adbdcdc4604643ec30511d779773093d2c9c173c5e9198"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.253,
+        "logSha256": "b7ab4cfd59156c2328750f4ffb1e3be9ab05f8c822de6ccecf339b25a1424d45"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.285,
+        "logSha256": "bc4613ed73b3cf01c70a214b015e1e061555df43936344a5afaeef8eb3d56fb2"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.409,
+        "logSha256": "f873d16e79a53ee89c24741be1da61acf07d09bf69cb89d4e27204bb78fe4603"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 3.932,
+        "logSha256": "e4c963fce33696c9e9bb40e5a1cde3729f19ab8163ef99db69f9167961258cb7"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.275,
+        "logSha256": "9e94a3ae02a0eb1e1e0710c7c0913659321f380863b0d22ef1c1c6d16ee44a12"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.695,
+        "logSha256": "c172568fe58090395c91089a4c86ef86565bd9a0a99baeff8d386b199726a906"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.253,
+        "logSha256": "a00fc545e4201c62cf1bdcb03acf8f9e003c32d2816c333b8e2d1ba08dcce142"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.416,
+        "logSha256": "2d612df3c2c1999ab0d2ae37333b14edc0ed16ae2923411c5597ff6ad5115847"
+      }
+    ],
+    "total": 709,
+    "allPassed": true,
+    "frozenBindingsChecked": 136,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realProcReads": 0,
+    "nativeCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false
+  },
+  "review": {
+    "mode": "independent_read_only_source_review",
+    "independentDefiniteP1Findings": 0,
+    "independentDefiniteP2Findings": 0,
+    "selfReviewFdAliasReproducedAndFixed": true,
+    "coverageGapsAddressed": [
+      "changed argv and stdio",
+      "mismatched deadlines",
+      "closed and failed-close lease before spawn"
+    ],
+    "environmentCoverageRegressionRedThenGreen": true,
+    "finalProductReview": "no_definite_new_P1_P2"
+  },
+  "scope": {
+    "vpsConnections": 0,
+    "linuxUnits": 0,
+    "nativeExecutions": 0,
+    "realTargetProcReads": 0,
+    "realModels": 0,
+    "externalAgentCalls": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false
+  },
+  "limitations": [
+    "709 is related local regression, not full-repository, native or production acceptance.",
+    "All target filesystem, tool bytes, PID1 views and process factory behavior used explicit memory doubles.",
+    "Matching the opened tool files does not establish dynamic loader, library, Python stdlib or manager provenance.",
+    "Path-based subsequent execution is not bound to the leased inode by these observations; independent executable identity remains required.",
+    "Native manifest approval, actual 0xeb PID1-root access, namespace and read-only mount enforcement remain unproven; failures never enable a capability or single-view fallback.",
+    "The original deadline claim/driver/launcher assembly, independent reference and cgroup witness, aggregate resource enforcement and physical recovery remain incomplete.",
+    "Injected factories are trusted local adapters, not a sandbox or a grant to execute arbitrary host commands.",
+    "Only sanitized records uploaded; private sources, original failures, locks and historical quotas retained."
+  ],
+  "designReferences": [
+    "https://man7.org/linux/man-pages/man7/symlink.7.html",
+    "https://man7.org/linux/man-pages/man2/open.2.html"
+  ],
+  "nextLocalWork": "Implement independent controller reference/executable/cgroup evidence and integrate original deadlines and common resource topology before requesting any critical native verification."
+}
