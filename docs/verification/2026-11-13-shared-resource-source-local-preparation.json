@@ -1,0 +1,879 @@
+{
+  "artifact": {
+    "exclusiveCreation": true,
+    "files": 38,
+    "inactive": true,
+    "localSameUserRaceProtection": false,
+    "markerIsSelfAuthenticating": false,
+    "packageSha256": "790724b78d13156f44c963089787b559641507d585ab932222dfaebb8105dbe3",
+    "preexistingTargetNeverOverwritten": true,
+    "sourceBytes": 353909,
+    "verifierSha256": "6a8498681a29961d9985916268cd9ae23bf6731c39655241da6f0546dbe16228"
+  },
+  "date": "2026-11-13",
+  "failedEvidencePreserved": [
+    "missing implementation red baselines",
+    "old ControlGroup in explicit memory manager fixture; corrected without candidate guard changes"
+  ],
+  "implementationUploaded": false,
+  "kernelEnforcementProven": false,
+  "localImplementationBindings": [
+    {
+      "bytes": 4194,
+      "path": "layout.py",
+      "sha256": "beca8ebf6b060d26627110e847cc1988058eb97f0997edba1241efda744f0661"
+    },
+    {
+      "bytes": 10097,
+      "path": "builder.py",
+      "sha256": "f66809307dc84bae54a92cf529cb235559cd37d4791b077af3432a2fc4f0b16b"
+    },
+    {
+      "bytes": 3233,
+      "path": "candidate.py",
+      "sha256": "3bf6e01b76e02acc35a299893c75887fd846581884bc6c3bbc129dd3eae21ecb"
+    },
+    {
+      "bytes": 12129,
+      "path": "shared_detached.py",
+      "sha256": "5348a6a0cbf3661f53ae1c57bb59e06fbc66afe37a4e320fdedac28371135c5f"
+    },
+    {
+      "bytes": 3876,
+      "path": "test_layout.py",
+      "sha256": "79b8ab085c293bf1405fe78974869fc614cbbff008ad9fabe86522d16dfee0f0"
+    },
+    {
+      "bytes": 4528,
+      "path": "test_builder.py",
+      "sha256": "fda42ba2108a08eb6952186b257b7509d174bb191d64b584cdcdd03cddf80d1a"
+    },
+    {
+      "bytes": 2354,
+      "path": "test_candidate.py",
+      "sha256": "ef06ca0ca1dfa3d9ecb267745a1277a1c4e51052a1c4dfee38745269cccacbe5"
+    },
+    {
+      "bytes": 6313,
+      "path": "run_local.py",
+      "sha256": "fc3ca6ab3eea1b0b559233595cbc9855a91d57f4ff9c9672bd3c2abd63b15fe3"
+    },
+    {
+      "bytes": 2785,
+      "path": "plan.md",
+      "sha256": "52ae9aac4c3b43c77be3b32e155e01763484814b46c5b001ebe7a4bd4c5d6993"
+    },
+    {
+      "bytes": 5250,
+      "path": "LOCAL_HANDOFF.md",
+      "sha256": "56c0e4b27b7ef589ba2e5f3e8226927a90a1f463f492b8d5acdbba2cf2bfee30"
+    },
+    {
+      "bytes": 19973,
+      "path": "source-bindings.json",
+      "sha256": "2f756933babfd799c6f8f874d05f29bed57183094e246ccc83ac4ba7698ee2c7"
+    },
+    {
+      "bytes": 733,
+      "path": "prepared-receipt.json",
+      "sha256": "723fc68978403c202bf81be1a2860ebd6d9997d819112d56f87151761e732c2d"
+    },
+    {
+      "bytes": 7555,
+      "path": "detached-evidence.json",
+      "sha256": "228ca6623901eb6758e618d91d2973f2cd70ce3ebbd1a33e1b6e020d7e7c6103"
+    },
+    {
+      "bytes": 1793,
+      "path": "review-receipt.json",
+      "sha256": "b0c36cb13c171ef463798274ff3017f5e2bb4fb942e9344179d1b99c3502d7c6"
+    }
+  ],
+  "nativeExecutionEligible": false,
+  "nativeExecutionProven": false,
+  "plannedLimits": {
+    "cpuPercent": 20,
+    "cpuWeight": 10,
+    "limitsNotNativelyValidated": true,
+    "memoryBytes": 201326592,
+    "serviceNice": 10,
+    "swapBytes": 0,
+    "tasks": 32
+  },
+  "productionReady": false,
+  "remainingGates": [
+    "Independent root/work ownership and held-generation evidence",
+    "Native parent and work cgroup policy enforcement",
+    "Work-subtree emptiness and physical cleanup, not controller-leaf emptiness",
+    "Supervisor lifetime and liveness under aggregate resource exhaustion",
+    "Native library/socket/namespace provenance",
+    "Separately authorized native validation and maintenance before production"
+  ],
+  "reviewed": {
+    "outstandingDefiniteP1P2": 0,
+    "reviewReadOnly": true,
+    "reviewerDidNotRunTests": true
+  },
+  "schema": 1,
+  "scope": {
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "externalAgentTasks": 0,
+    "grantsChanged": false,
+    "localOnly": true,
+    "nativeTargetExecutions": 0,
+    "newLinuxUnits": 0,
+    "portsChanged": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "realTargetProcCgroupBusReads": 0,
+    "relayChanged": false,
+    "sshAttempts": 0
+  },
+  "sourceClosure": {
+    "changedFilesIncludingRebinding": 21,
+    "dependencyEdges": 79,
+    "derivedBindings": [
+      {
+        "afterBytes": 6953,
+        "afterSha256": "9ad745ff839c9ae2c37af280df6956ddb9ffe7124fc73307d33db8bc59fcdde6",
+        "beforeBytes": 6277,
+        "beforeSha256": "22671eaa9370619aacc4a953cae70d784d3f7cc6c81ab8c5ed87ca01b6fbd6c8",
+        "path": "anchor-fixed-launch-20261113-a1/launcher.py"
+      },
+      {
+        "afterBytes": 4136,
+        "afterSha256": "9fa166e0eb231d24d2bd5f07ff7d092da71abbe1d2d85b978398f7cc43c0099c",
+        "beforeBytes": 3718,
+        "beforeSha256": "bd61b87cf0e0db127efc35172f2efeac6d99768906a74d0025f4c1dacb04aeb1",
+        "path": "anchor-tool-lease-20261113-a1/bound_factory.py"
+      },
+      {
+        "afterBytes": 12877,
+        "afterSha256": "b45e89b379d6792e82bd73b01a20561db91ce9d6c05b9fbc0a848d6bbc5f390f",
+        "beforeBytes": 11895,
+        "beforeSha256": "f04ae010b5052ea5f6865e9caaba362b3f7f47fbfa0e20e4cfaf21b2244f2f2e",
+        "path": "deadline-watchdog-20261112-a1/watchdog.py"
+      }
+    ],
+    "files": 38,
+    "inputCatalogSha256": "f80d63b4acecfc4a5abb72836704ea41e5d79a004e60db60323ed1bafff4d995",
+    "legacyFilesByteIdentical": true,
+    "maxFileBytes": 32768,
+    "maxTotalBytes": 524288,
+    "newBytes": 353909,
+    "oldBytes": 353132,
+    "semanticTopologyFiles": 11,
+    "sourceBindings": [
+      {
+        "afterBytes": 14280,
+        "afterSha256": "7c503e0176c40235b177a528cd121a35681d83eae1bedc9a72c3bce7bbb2b0ee",
+        "beforeBytes": 14280,
+        "beforeSha256": "8a98c81f8e0552f9c8923e9f15e5db442dd4501a499847f5a84809b76650517e",
+        "dependencies": [
+          "anchor-native-package-20261112-a1/packager.py",
+          "kernel-identity-reader-20261112-a1/reader.py"
+        ],
+        "path": "anchor-exclusive-prepare-20261112-a1/prepare.py"
+      },
+      {
+        "afterBytes": 14516,
+        "afterSha256": "f4ab59868529e6602fc89363950cc8ebf66f30315cf78ba43b3077d133c91b37",
+        "beforeBytes": 14462,
+        "beforeSha256": "aebc1bfa4a5c0c9608868f220acddbf1144fb5bd3a05bf6d0d001797cc38d33f",
+        "dependencies": [
+          "anchor-host-lifecycle-20261112-a1/lifecycle.py",
+          "anchor-host-lifecycle-20261112-a1/supervision.py",
+          "anchor-host-readers-20261112-a1/host_files.py",
+          "anchor-launch-preparation-20261112-a1/receipt_gate.py",
+          "anchor-launch-preparation-20261112-a1/request_adapter.py",
+          "anchor-native-package-20261112-a1/input-manifest.json",
+          "anchor-native-package-20261112-a1/runtime.py",
+          "anchor-systemd-host-20261112-a1/command_port.py",
+          "anchor-systemd-host-20261112-a1/manager.py",
+          "deadline-watchdog-20261112-a1/watchdog.py",
+          "identity-drop-native-aLDvcs/formal_transient_launch.py",
+          "identity-drop-native-aLDvcs/probe_plan.py",
+          "kernel-identity-reader-20261112-a1/reader.py",
+          "pid1-parent-lease-20261112-a1/parent_lease.py",
+          "root-anchor-diagnostic-20261112-a1/anchor_probe.py"
+        ],
+        "path": "anchor-fixed-launch-20261113-a1/controller.py"
+      },
+      {
+        "afterBytes": 6277,
+        "afterSha256": "22671eaa9370619aacc4a953cae70d784d3f7cc6c81ab8c5ed87ca01b6fbd6c8",
+        "beforeBytes": 6253,
+        "beforeSha256": "1f6631a4910c2d50c86d99a78e5fe76b87969816fa296c9770dd486dce1afce0",
+        "dependencies": [
+          "anchor-exclusive-prepare-20261112-a1/prepare.py",
+          "anchor-fixed-launch-20261113-a1/controller.py"
+        ],
+        "path": "anchor-fixed-launch-20261113-a1/launcher.py"
+      },
+      {
+        "afterBytes": 11987,
+        "afterSha256": "5b81fcfbb2a5ea6b1cbed552afe07cf17934e3e905ee286fbc17eda861f552e3",
+        "beforeBytes": 11987,
+        "beforeSha256": "357a1b4271ae0219bb09f89cac67d2e88762a29dd596a20d0145ea9460186556",
+        "dependencies": [
+          "anchor-host-readers-20261112-a1/host_files.py",
+          "anchor-launch-preparation-20261112-a1/receipt_gate.py",
+          "anchor-systemd-host-20261112-a1/manager.py"
+        ],
+        "path": "anchor-host-lifecycle-20261112-a1/lifecycle.py"
+      },
+      {
+        "afterBytes": 4188,
+        "afterSha256": "758126cb76feb02c99bf6f13337d4432c640c30dc7a18b938fd9fe5baa5c5883",
+        "beforeBytes": 4134,
+        "beforeSha256": "e4d35f0e1b008731c35d327e7d3ad5eb1b25d60ced3a0329a143a654ce366dae",
+        "dependencies": [
+          "anchor-launch-preparation-20261112-a1/request_adapter.py",
+          "deadline-watchdog-20261112-a1/watchdog.py"
+        ],
+        "path": "anchor-host-lifecycle-20261112-a1/supervision.py"
+      },
+      {
+        "afterBytes": 9096,
+        "afterSha256": "2980839ce6258bac1f3fdf098aea8e0306b727b8c03e726894a7f76ca0414e57",
+        "beforeBytes": 9028,
+        "beforeSha256": "dfefdeda7f825238bc9a6979a5f75e8514d31d536ad54302dcfd349883335fc7",
+        "dependencies": [
+          "anchor-launch-preparation-20261112-a1/request_adapter.py",
+          "kernel-identity-reader-20261112-a1/reader.py"
+        ],
+        "path": "anchor-host-readers-20261112-a1/host_files.py"
+      },
+      {
+        "afterBytes": 6220,
+        "afterSha256": "49118f70c9c3b556db8ff52e6200eda6299bb5284f020fafcec91f2214236283",
+        "beforeBytes": 6220,
+        "beforeSha256": "49118f70c9c3b556db8ff52e6200eda6299bb5284f020fafcec91f2214236283",
+        "dependencies": [],
+        "path": "anchor-launch-preparation-20261112-a1/receipt_gate.py"
+      },
+      {
+        "afterBytes": 6765,
+        "afterSha256": "70e49c09eefd49d17fd0021c7ea4d054c85dafd95329e81722af5ef10f91ca9b",
+        "beforeBytes": 6683,
+        "beforeSha256": "f30fd3f16d85e7a2f24ce1981e83b2450796efca0d8bbe9d1a129dee4e21971c",
+        "dependencies": [
+          "identity-drop-native-aLDvcs/formal_transient_launch.py",
+          "identity-drop-native-aLDvcs/probe_plan.py",
+          "pid1-parent-lease-20261112-a1/parent_lease.py",
+          "root-anchor-diagnostic-20261112-a1/anchor_probe.py"
+        ],
+        "path": "anchor-launch-preparation-20261112-a1/request_adapter.py"
+      },
+      {
+        "afterBytes": 2679,
+        "afterSha256": "34de4e57a4d46b28a43f447c30c28bc67a4832fceb0c548bcb5b10d9bc671d3a",
+        "beforeBytes": 2679,
+        "beforeSha256": "ec955d15eb03f664e1f62a20c27b2326a4ec4b78b086cdb7fb138765d6b3337a",
+        "dependencies": [
+          "anchor-host-lifecycle-20261112-a1/lifecycle.py",
+          "anchor-host-lifecycle-20261112-a1/supervision.py",
+          "anchor-host-readers-20261112-a1/host_files.py",
+          "anchor-launch-preparation-20261112-a1/receipt_gate.py",
+          "anchor-launch-preparation-20261112-a1/request_adapter.py",
+          "anchor-native-package-20261112-a1/runtime.py",
+          "anchor-systemd-host-20261112-a1/command_port.py",
+          "anchor-systemd-host-20261112-a1/manager.py",
+          "deadline-watchdog-20261112-a1/watchdog.py",
+          "identity-drop-native-aLDvcs/formal_transient_launch.py",
+          "identity-drop-native-aLDvcs/probe_plan.py",
+          "kernel-identity-reader-20261112-a1/reader.py",
+          "pid1-parent-lease-20261112-a1/parent_lease.py",
+          "root-anchor-diagnostic-20261112-a1/anchor_probe.py"
+        ],
+        "path": "anchor-native-package-20261112-a1/input-manifest.json"
+      },
+      {
+        "afterBytes": 6258,
+        "afterSha256": "e8b648f349180df9bb61b9a12b5c24135f3aaf4c04c0f19ee61afb282d14087e",
+        "beforeBytes": 6258,
+        "beforeSha256": "ff22d000ec3af8a8d5cbaf61840beef8c9e50c58b60cfa57dd8df831ec8fb591",
+        "dependencies": [
+          "anchor-native-package-20261112-a1/input-manifest.json"
+        ],
+        "path": "anchor-native-package-20261112-a1/packager.py"
+      },
+      {
+        "afterBytes": 3197,
+        "afterSha256": "e8816d273e387aa7db7168cd2ad93fcd1d2e765fea73b141f07c44ec38b7531c",
+        "beforeBytes": 3197,
+        "beforeSha256": "d1ce3d20056aed7556a7aa13fc54419abf733e575667299f4bb03651703f89d4",
+        "dependencies": [
+          "anchor-host-lifecycle-20261112-a1/lifecycle.py",
+          "anchor-host-lifecycle-20261112-a1/supervision.py",
+          "anchor-systemd-host-20261112-a1/command_port.py"
+        ],
+        "path": "anchor-native-package-20261112-a1/runtime.py"
+      },
+      {
+        "afterBytes": 12742,
+        "afterSha256": "5878591c4b64f6902f9377d9be5cc961a093040b9f26219967c02e05915ba83f",
+        "beforeBytes": 12688,
+        "beforeSha256": "8cd71a79446045264fd35a7c2c68c8082c0a3dd949fd43946023f7b621b39f5c",
+        "dependencies": [
+          "client-pidfd-20261112-a1/client_owner.py",
+          "deadline-watchdog-20261112-a1/watchdog.py",
+          "posix-pipes-20261112-a1/owned_pipes.py"
+        ],
+        "path": "anchor-owned-driver-20261113-a1/driver.py"
+      },
+      {
+        "afterBytes": 10453,
+        "afterSha256": "b169b17678e14eb2eca9b56e36de21ca6032ab579b813334faea9d24eb3de87e",
+        "beforeBytes": 10453,
+        "beforeSha256": "b169b17678e14eb2eca9b56e36de21ca6032ab579b813334faea9d24eb3de87e",
+        "dependencies": [],
+        "path": "anchor-systemd-host-20261112-a1/command_port.py"
+      },
+      {
+        "afterBytes": 11789,
+        "afterSha256": "742988659f7a5b7afd6ad4d1747c4551efb80fb808877ce8e24b19d61e7840c7",
+        "beforeBytes": 11789,
+        "beforeSha256": "61f211a551dd61a32011023ef72a4161178d4b7525c48af80991a2a00006ff34",
+        "dependencies": [
+          "anchor-launch-preparation-20261112-a1/request_adapter.py"
+        ],
+        "path": "anchor-systemd-host-20261112-a1/manager.py"
+      },
+      {
+        "afterBytes": 3718,
+        "afterSha256": "bd61b87cf0e0db127efc35172f2efeac6d99768906a74d0025f4c1dacb04aeb1",
+        "beforeBytes": 3718,
+        "beforeSha256": "d55a32af7767492d885d64fddcfae0d83325168ddecdd1cb1dcca7e23d433543",
+        "dependencies": [
+          "anchor-fixed-launch-20261113-a1/launcher.py",
+          "anchor-tool-lease-20261113-a1/tool_lease.py"
+        ],
+        "path": "anchor-tool-lease-20261113-a1/bound_factory.py"
+      },
+      {
+        "afterBytes": 7125,
+        "afterSha256": "c65d70d674a9ec6f5174c20b3cfda82a62ed104290f30e63df58525c06501daa",
+        "beforeBytes": 7125,
+        "beforeSha256": "c65d70d674a9ec6f5174c20b3cfda82a62ed104290f30e63df58525c06501daa",
+        "dependencies": [
+          "pid1-parent-lease-20261112-a1/parent_lease.py"
+        ],
+        "path": "anchor-tool-lease-20261113-a1/tool_lease.py"
+      },
+      {
+        "afterBytes": 11707,
+        "afterSha256": "0ea99720ff6d97739f320f184bd639b0dd5a1ef43f56b17c3950930859665c9b",
+        "beforeBytes": 11707,
+        "beforeSha256": "0ea99720ff6d97739f320f184bd639b0dd5a1ef43f56b17c3950930859665c9b",
+        "dependencies": [],
+        "path": "client-pidfd-20261112-a1/client_owner.py"
+      },
+      {
+        "afterBytes": 6925,
+        "afterSha256": "53792c68ca5052d0426fe33005925f05a8247b9459c06aed73ef81558787b168",
+        "beforeBytes": 6713,
+        "beforeSha256": "02999adc000e8a4a045b3ca1918bc3dde6f13a47ca18c5d436b98b31ebe733ae",
+        "dependencies": [
+          "controller-process-reader-20261113-a1/process_reader.py"
+        ],
+        "path": "controller-cgroup-witness-20261113-a1/group_reader.py"
+      },
+      {
+        "afterBytes": 8697,
+        "afterSha256": "bb05203affa614716f5ee384e58f9671b3a24544a5a2ed9d5cf4450356a30c51",
+        "beforeBytes": 8697,
+        "beforeSha256": "2f7c13efe7a52539f62aacd510d8e7074c9c949724307a270e20ad980a930c9b",
+        "dependencies": [
+          "controller-cgroup-witness-20261113-a1/group_reader.py",
+          "controller-manager-port-20261113-a1/controller_port.py"
+        ],
+        "path": "controller-cgroup-witness-20261113-a1/witness.py"
+      },
+      {
+        "afterBytes": 10820,
+        "afterSha256": "942510c29399574696579e58569bb0ad713b75f522aeec8c4e882c458f891156",
+        "beforeBytes": 10766,
+        "beforeSha256": "80067a7aa10cf9bc28264488db06020ecd001060d44630c83ea1140b3dc03002",
+        "dependencies": [
+          "anchor-fixed-launch-20261113-a1/launcher.py",
+          "manager-owner-binding-20261112-a1/manager_connection.py"
+        ],
+        "path": "controller-manager-port-20261113-a1/controller_port.py"
+      },
+      {
+        "afterBytes": 14515,
+        "afterSha256": "de7b33fbe878e193460d33165957593e49f0c0ccbdf8dcaabd938db45d561b82",
+        "beforeBytes": 14461,
+        "beforeSha256": "421e30863dd05f2373312036a7927570d8de4c7f05bb979e85597cd256f3930c",
+        "dependencies": [
+          "anchor-fixed-launch-20261113-a1/launcher.py",
+          "client-pidfd-20261112-a1/client_owner.py",
+          "kernel-identity-reader-20261112-a1/reader.py"
+        ],
+        "path": "controller-process-reader-20261113-a1/process_reader.py"
+      },
+      {
+        "afterBytes": 11895,
+        "afterSha256": "f04ae010b5052ea5f6865e9caaba362b3f7f47fbfa0e20e4cfaf21b2244f2f2e",
+        "beforeBytes": 11841,
+        "beforeSha256": "a21b45128fdab2cc398ef5e2366e25d816b633a12327ac99c7c252c45cbd7b6f",
+        "dependencies": [],
+        "path": "deadline-watchdog-20261112-a1/watchdog.py"
+      },
+      {
+        "afterBytes": 5197,
+        "afterSha256": "4f9e89fde569d896f4000003a6b05781e7079c89064141c113d01e65d4e30319",
+        "beforeBytes": 5197,
+        "beforeSha256": "4f9e89fde569d896f4000003a6b05781e7079c89064141c113d01e65d4e30319",
+        "dependencies": [
+          "effective-unit-profile-20261112-a1/profile_policy.py",
+          "scoped-process-proof-20261112-a1/process_connection.py"
+        ],
+        "path": "effective-unit-profile-20261112-a1/profile_connection.py"
+      },
+      {
+        "afterBytes": 7407,
+        "afterSha256": "012537e4f80304851f631cab7cb023b0861aea21f225e348c2ece6c21045de2f",
+        "beforeBytes": 7407,
+        "beforeSha256": "012537e4f80304851f631cab7cb023b0861aea21f225e348c2ece6c21045de2f",
+        "dependencies": [
+          "native-worker-session-20261112-a1/session.py"
+        ],
+        "path": "effective-unit-profile-20261112-a1/profile_policy.py"
+      },
+      {
+        "afterBytes": 7249,
+        "afterSha256": "ec227b7e2c8f8c7361632dba492adc640bc450aaa6cebecc2c1aa6efef38839c",
+        "beforeBytes": 7249,
+        "beforeSha256": "ec227b7e2c8f8c7361632dba492adc640bc450aaa6cebecc2c1aa6efef38839c",
+        "dependencies": [],
+        "path": "identity-drop-native-aLDvcs/formal_transient_launch.py"
+      },
+      {
+        "afterBytes": 2890,
+        "afterSha256": "14fe2a919c0a986ddaf9ca1f2146cbd16797b1bdbd9384ea78772737e4f273c0",
+        "beforeBytes": 2890,
+        "beforeSha256": "14fe2a919c0a986ddaf9ca1f2146cbd16797b1bdbd9384ea78772737e4f273c0",
+        "dependencies": [],
+        "path": "identity-drop-native-aLDvcs/probe_plan.py"
+      },
+      {
+        "afterBytes": 11299,
+        "afterSha256": "518a2b429d2f525eae89a23687b624ce2aca48d8ded9d328c22ca88afba83b09",
+        "beforeBytes": 11299,
+        "beforeSha256": "518a2b429d2f525eae89a23687b624ce2aca48d8ded9d328c22ca88afba83b09",
+        "dependencies": [],
+        "path": "kernel-identity-reader-20261112-a1/reader.py"
+      },
+      {
+        "afterBytes": 7000,
+        "afterSha256": "6945e4a84509bb1985e8f8c3655439a0595b3237f3fcd2645a23a6cfa00c0674",
+        "beforeBytes": 7000,
+        "beforeSha256": "6945e4a84509bb1985e8f8c3655439a0595b3237f3fcd2645a23a6cfa00c0674",
+        "dependencies": [
+          "effective-unit-profile-20261112-a1/profile_connection.py",
+          "scoped-manager-connection-20261112-a1/scoped_connection.py"
+        ],
+        "path": "manager-owner-binding-20261112-a1/manager_connection.py"
+      },
+      {
+        "afterBytes": 26525,
+        "afterSha256": "366ec142f979195d35170a3c76eca23a3bb48e4fd2fcb3c8cc980aa0b422de52",
+        "beforeBytes": 26525,
+        "beforeSha256": "366ec142f979195d35170a3c76eca23a3bb48e4fd2fcb3c8cc980aa0b422de52",
+        "dependencies": [],
+        "path": "native-persistent-bus-local-20261108-d2/persistent_bus.py"
+      },
+      {
+        "afterBytes": 12409,
+        "afterSha256": "7fd047c0d968f393b500489b8923537059edf9ad74c12d1b979eb94dd213d1e1",
+        "beforeBytes": 12409,
+        "beforeSha256": "7fd047c0d968f393b500489b8923537059edf9ad74c12d1b979eb94dd213d1e1",
+        "dependencies": [],
+        "path": "native-worker-session-20261112-a1/session.py"
+      },
+      {
+        "afterBytes": 10024,
+        "afterSha256": "ab4903e8484c5a583c18ecae481bd7fb890a6d93de216eaeb5c4fff6fa4af3b7",
+        "beforeBytes": 10024,
+        "beforeSha256": "3c09acdc1218b8efbba0cdb5bc932a2124ccd73d4098ca92ce03ac765f972da7",
+        "dependencies": [
+          "anchor-host-lifecycle-20261112-a1/supervision.py",
+          "anchor-owned-driver-20261113-a1/driver.py",
+          "controller-cgroup-witness-20261113-a1/witness.py",
+          "original-clock-bootstrap-20261113-a1/source_adapter.py"
+        ],
+        "path": "original-clock-bootstrap-20261113-a1/bootstrap.py"
+      },
+      {
+        "afterBytes": 6248,
+        "afterSha256": "fa4febf515df0fab6a4e37ed1e9a297a6b15903d5d38f15f89fcd917ddde34e7",
+        "beforeBytes": 6245,
+        "beforeSha256": "d52147355f9535d7db57d8b87ba3b6e3be4fa161f88650d5308c0005d0d6d196",
+        "dependencies": [
+          "anchor-fixed-launch-20261113-a1/launcher.py",
+          "anchor-tool-lease-20261113-a1/bound_factory.py",
+          "deadline-watchdog-20261112-a1/watchdog.py"
+        ],
+        "path": "original-clock-bootstrap-20261113-a1/source_adapter.py"
+      },
+      {
+        "afterBytes": 7359,
+        "afterSha256": "1f5d09827d6867f549a2f2741b68a4345396cf7865697688f9f7380cf33152f8",
+        "beforeBytes": 7359,
+        "beforeSha256": "1f5d09827d6867f549a2f2741b68a4345396cf7865697688f9f7380cf33152f8",
+        "dependencies": [],
+        "path": "pid1-parent-lease-20261112-a1/parent_lease.py"
+      },
+      {
+        "afterBytes": 13314,
+        "afterSha256": "91c2e3ff855ae286ae61c7d14b941f631b472c408126ad5ab9af90943ae6196a",
+        "beforeBytes": 13314,
+        "beforeSha256": "91c2e3ff855ae286ae61c7d14b941f631b472c408126ad5ab9af90943ae6196a",
+        "dependencies": [],
+        "path": "posix-pipes-20261112-a1/owned_pipes.py"
+      },
+      {
+        "afterBytes": 14287,
+        "afterSha256": "26457540d01ad403e69a0c36952119eb2e7aa13fff6582015781bdd19acdae94",
+        "beforeBytes": 14223,
+        "beforeSha256": "e0a61ed42d0976f0d2ea3aac48ec636dde134a78ca8a8507196480c6c1a6e884",
+        "dependencies": [
+          "pid1-parent-lease-20261112-a1/parent_lease.py"
+        ],
+        "path": "root-anchor-diagnostic-20261112-a1/anchor_probe.py"
+      },
+      {
+        "afterBytes": 5689,
+        "afterSha256": "bb8891eaa833c2f3116c711ae8a88d43268a91185fca246688a74730d44ebd0b",
+        "beforeBytes": 5689,
+        "beforeSha256": "bb8891eaa833c2f3116c711ae8a88d43268a91185fca246688a74730d44ebd0b",
+        "dependencies": [
+          "scoped-manager-connection-20261112-a1/scoped_connection.py"
+        ],
+        "path": "scoped-job-proof-20261112-a1/job_connection.py"
+      },
+      {
+        "afterBytes": 13875,
+        "afterSha256": "bec212d876904e41e794bf6c956e5740e7cab27a2bb1e5d946bdf3c37164decf",
+        "beforeBytes": 13875,
+        "beforeSha256": "bec212d876904e41e794bf6c956e5740e7cab27a2bb1e5d946bdf3c37164decf",
+        "dependencies": [
+          "native-persistent-bus-local-20261108-d2/persistent_bus.py"
+        ],
+        "path": "scoped-manager-connection-20261112-a1/scoped_connection.py"
+      },
+      {
+        "afterBytes": 7288,
+        "afterSha256": "8028e481121011f87d97e79c607ac03199e076e34f806e19fddc4fd9e0899a21",
+        "beforeBytes": 7288,
+        "beforeSha256": "8028e481121011f87d97e79c607ac03199e076e34f806e19fddc4fd9e0899a21",
+        "dependencies": [
+          "scoped-job-proof-20261112-a1/job_connection.py"
+        ],
+        "path": "scoped-process-proof-20261112-a1/process_connection.py"
+      }
+    ],
+    "topologySites": 13
+  },
+  "stage": "shared_resource_source_local_preparation",
+  "status": "local_stage_passed_not_activated",
+  "topology": {
+    "cleanupPlanTarget": "work only; no native cleanup API implemented",
+    "client": "inherits supervisor",
+    "controllerAndAnchorcheck": "children of work",
+    "legacyWorkerRoleUnchanged": true,
+    "sharedRoot": "chunlacknative<nonce>.slice",
+    "supervisor": "direct child of root",
+    "work": "chunlacknative<nonce>-work.slice"
+  },
+  "verification": {
+    "coreMethodLocationsChecked": true,
+    "detachedScenarios": [
+      {
+        "passed": true,
+        "scenario": "success"
+      },
+      {
+        "passed": true,
+        "scenario": "prepare_failure"
+      },
+      {
+        "passed": true,
+        "scenario": "factory_failure"
+      },
+      {
+        "passed": true,
+        "scenario": "cancel"
+      },
+      {
+        "passed": true,
+        "scenario": "cleanup_interrupt"
+      }
+    ],
+    "frozenBindingsChecked": 180,
+    "frozenBindingsUnchanged": true,
+    "groups": [
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 22,
+        "group": "shared_resource_source",
+        "logSha256": "5d8ac0e5ed340e841d9143d98d3371ef159e5a4dc2a93128475182fa41e71755",
+        "passed": true,
+        "tests": 22,
+        "wallSeconds": 18.837
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 15,
+        "group": "bootstrap_source_closure",
+        "logSha256": "9428b7313a08943341f1cd62b2e683bef31f251efa81f89cf72bd667caac399c",
+        "passed": true,
+        "tests": 15,
+        "wallSeconds": 19.157
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 29,
+        "group": "original_clock_bootstrap",
+        "logSha256": "558ee9c93e8e15af67b5464d99531b3787b34ec4cf66e2e9a8259ebfea46a7ce",
+        "passed": true,
+        "tests": 29,
+        "wallSeconds": 5.768
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 46,
+        "group": "controller_cgroup_witness",
+        "logSha256": "106daaf6d5db74b90ef595c70ddae5c24d57243c84c8bd928acac49c0dcd35a7",
+        "passed": true,
+        "tests": 46,
+        "wallSeconds": 3.19
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 38,
+        "group": "controller_process",
+        "logSha256": "b56bff8cab768fdd152c67d64b5ee0fbb5269c9accd4adb02a845638890cd174",
+        "passed": true,
+        "tests": 38,
+        "wallSeconds": 0.399
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 23,
+        "group": "controller_manager_port",
+        "logSha256": "92a7f60313f7bd4a3d3458d9fb2205347af1f202c477aa047041af8f2103b53c",
+        "passed": true,
+        "tests": 23,
+        "wallSeconds": 1.191
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 35,
+        "group": "tool_lease",
+        "logSha256": "229253fda63e703e8586ed0d63299ecfd0f2b27bd542936574e0720d8e5b48fa",
+        "passed": true,
+        "tests": 35,
+        "wallSeconds": 1.84
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 22,
+        "group": "fixed_launch",
+        "logSha256": "848278f9380789130a3bdd363cb49194850ec16ee1991be62a6ff6113bf130aa",
+        "passed": true,
+        "tests": 22,
+        "wallSeconds": 2.236
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 30,
+        "group": "owned_driver",
+        "logSha256": "eaecb9aa375db03afbc73fda9905ca6b0068320565c26394b1ffc7c1a98e459c",
+        "passed": true,
+        "tests": 30,
+        "wallSeconds": 0.357
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 23,
+        "group": "one_shot_entry",
+        "logSha256": "df888c75fcc9092a28fd280fa60551736f6e8129957c20ea16ace1870b0d72c7",
+        "passed": true,
+        "tests": 23,
+        "wallSeconds": 4.815
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 25,
+        "group": "exclusive_prepare",
+        "logSha256": "f1043555c6165e4a63b6e9a534e615f843cdba7513ffca0cb75cf42f317095ea",
+        "passed": true,
+        "tests": 25,
+        "wallSeconds": 2.373
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 29,
+        "group": "runtime_package",
+        "logSha256": "d326a507f2a27280635bd1407e08c91d7ba64d747eda558be136c1705f0a4ecb",
+        "passed": true,
+        "tests": 29,
+        "wallSeconds": 4.825
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 33,
+        "group": "lifecycle",
+        "logSha256": "2f82e1f39f3025ff3e1027f7ffd1c0fb83cf515e6a3b04453c555d1176fead84",
+        "passed": true,
+        "tests": 33,
+        "wallSeconds": 2.048
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 50,
+        "group": "manager_port",
+        "logSha256": "7b84bf81aae90fedabfa359591d7b83346a6d174fd09a0bb976d79cf325889d1",
+        "passed": true,
+        "tests": 50,
+        "wallSeconds": 1.07
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 33,
+        "group": "host_files",
+        "logSha256": "a807e9a569400ee759f49a489f1f3b139997fb685fe57cc433ba6fd777a28f38",
+        "passed": true,
+        "tests": 33,
+        "wallSeconds": 0.884
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 47,
+        "group": "request_evidence",
+        "logSha256": "3905c9aa2b203eae567a3987882a2de4380c840194962561a308386437e04932",
+        "passed": true,
+        "tests": 47,
+        "wallSeconds": 0.855
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 22,
+        "group": "anchor",
+        "logSha256": "3b319b9d98fef83a00f72acfc30d51431825efd4fd13f1263c386e3d028dba39",
+        "passed": true,
+        "tests": 22,
+        "wallSeconds": 0.223
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 17,
+        "group": "parent",
+        "logSha256": "a936fc9a4c3212b1a7000243e5723528c46a3cf44d535dee1eabe1df2b82c5bb",
+        "passed": true,
+        "tests": 17,
+        "wallSeconds": 0.293
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 33,
+        "group": "client",
+        "logSha256": "ed03067a0a997fbaad740c4cb74dbaeb506fb9a9a60fa60e84039054306a8691",
+        "passed": true,
+        "tests": 33,
+        "wallSeconds": 0.28
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 41,
+        "group": "pipes",
+        "logSha256": "6ed5373dcfa9bce6ebfcd5c4d77e426d0318ad6d1990fc16b91359f52eea37ef",
+        "passed": true,
+        "tests": 41,
+        "wallSeconds": 0.389
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 134,
+        "group": "closure",
+        "logSha256": "f1a8d37d02d93b5d340e769a9c497cebb2a816061feed50a845343a0a98bef8d",
+        "passed": true,
+        "tests": 134,
+        "wallSeconds": 4.456
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 51,
+        "group": "scope",
+        "logSha256": "7dd43f6f976be5c3a3e8d710b47cd2aba76f2e04595b7c8fa6be9b28c9fb0a94",
+        "passed": true,
+        "tests": 51,
+        "wallSeconds": 0.314
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 34,
+        "group": "watchdog",
+        "logSha256": "0142c4c8dbf7e680151bbde8e708d3e638864124be2306c494ccecba76e4c9ca",
+        "passed": true,
+        "tests": 34,
+        "wallSeconds": 1.78
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 29,
+        "group": "kernel",
+        "logSha256": "97864a377703a9266b08d60502a7a4cabc32efc34096dab100187434ba325f98",
+        "passed": true,
+        "tests": 29,
+        "wallSeconds": 0.304
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 21,
+        "group": "fragment",
+        "logSha256": "14ce2f95f1e1f3ed13c8d80f90f62947fc0c013b62aca4dfd3b3f7c6295dc8d5",
+        "passed": true,
+        "tests": 21,
+        "wallSeconds": 0.435
+      }
+    ],
+    "guardProbesExcludedFromWorkflowCounts": true,
+    "mixedLayoutRejected": true,
+    "nativeTargetWorkflowOperations": 0,
+    "newTests": 22,
+    "originalWorkflowReadAttempts": 0,
+    "relatedTestsIncludingNew": 882,
+    "sourceModuleLocationsCheckedBeforeAndAfter": true
+  },
+  "watchdogLivenessProven": false
+}
