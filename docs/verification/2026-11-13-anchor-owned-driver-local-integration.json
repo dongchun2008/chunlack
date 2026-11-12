@@ -1,0 +1,285 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "status": "passed_local_owned_driver_composition_not_native",
+  "implementation": {
+    "privateCandidateOnly": true,
+    "publicRecordOnly": true,
+    "sourceManifest": [
+      {
+        "path": "driver.py",
+        "bytes": 12688,
+        "sha256": "8cd71a79446045264fd35a7c2c68c8082c0a3dd949fd43946023f7b621b39f5c"
+      },
+      {
+        "path": "test_driver.py",
+        "bytes": 16601,
+        "sha256": "0338b5c39e2b43913dca1d91a38a689752e5fa5a53a6975e5d0dc2f3913e0dc2"
+      },
+      {
+        "path": "run_local.py",
+        "bytes": 4525,
+        "sha256": "5a14bf4a7ae25cddd3e25b8e63ad0f8111b162bd322ffd5dbc1be69c75b815a5"
+      },
+      {
+        "path": "plan.md",
+        "bytes": 3002,
+        "sha256": "3e673379b900c5198f58419a7b8cc0ada0379174bc4478d01de4adeedba330d5"
+      },
+      {
+        "path": "LOCAL_HANDOFF.md",
+        "bytes": 3755,
+        "sha256": "873fa3398b05819dbb3bd19c548811bec3dece4520e96f3d217ac8b6096a64ec"
+      }
+    ],
+    "sourcePinnedPipesClientOwnerAndWatchdog": true,
+    "opaqueSingleUseHandle": true,
+    "launcherAndControllerDistinct": true,
+    "partialLaunchRetainsOwnedResources": true,
+    "defaultNativeFactoryAbsent": true
+  },
+  "contracts": {
+    "controllerSeconds": 10,
+    "includingCleanupSeconds": 12,
+    "localGroupTimeoutSeconds": 90,
+    "oneBlockingWaitPerTick": true,
+    "sourcePollBoundsUnchanged": true,
+    "clientExitRequiresTerminalWaitAndReap": true,
+    "controllerIdentityIndependentOfReceipt": true,
+    "matchingClientAndControllerExitRequired": true,
+    "mainSuccessRequiresFullInputDeliveryAndEof": true,
+    "missingGroupNeverAssumedEmpty": true,
+    "stopRequiresFreshOwnedInvocation": true,
+    "unverifiedGroupNeverStopped": true,
+    "clientSignalsUseBoundPidfd": true,
+    "unknownCloseNotRetried": true,
+    "allOwnedCloseCategoriesAttempted": true,
+    "firstPollErrorRetained": true,
+    "perComponentErrorsRetained": true,
+    "errorBodiesNotIncluded": true,
+    "cancelledWorkRemainsFailedAfterCleanup": true
+  },
+  "regression": {
+    "groups": [
+      {
+        "group": "owned_driver",
+        "tests": 30,
+        "expected": 30,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.354,
+        "logSha256": "82811d87bc8ee8a83d82b825f83cd501ac5019bc9aecad0c2acd8b4e739b909a"
+      },
+      {
+        "group": "one_shot_entry",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 5.325,
+        "logSha256": "5182b7fb564d3957c14095bef0b33cd0b7f2b942090f201c4eb1f742827eb980"
+      },
+      {
+        "group": "exclusive_prepare",
+        "tests": 25,
+        "expected": 25,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.868,
+        "logSha256": "ee964567f0d19cc689acea22d1338c50893285cf56426f7641df30b949955444"
+      },
+      {
+        "group": "runtime_package",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.05,
+        "logSha256": "d9c8a5b27b50d5d0d40b523505f3cbb26493c2ad8753eb083681199c0cedd4b8"
+      },
+      {
+        "group": "lifecycle",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.934,
+        "logSha256": "b4c568eff193dd08ee523693d47ac0b8bc1129ac66df6ada6d7880bf172977b4"
+      },
+      {
+        "group": "manager_port",
+        "tests": 50,
+        "expected": 50,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.098,
+        "logSha256": "3bcaebfccf189c15088b3da8fc001c17bd5568eaede5baaa89dfd6744475ee87"
+      },
+      {
+        "group": "host_files",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.855,
+        "logSha256": "a4423d319258d6b2ffaa123d945ce6e6c3d88fe5343ff6b6479b5f55d0c3415e"
+      },
+      {
+        "group": "request_evidence",
+        "tests": 47,
+        "expected": 47,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.857,
+        "logSha256": "007f797d9b97f8d4361a2d3d0b42547f9d5c3d4544c2ef04ced88e0e6d0002b6"
+      },
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.218,
+        "logSha256": "56fa0f894fd41b518a2da3a01931b5967fde0168456acb8864a163267b369f92"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.302,
+        "logSha256": "a936fc9a4c3212b1a7000243e5723528c46a3cf44d535dee1eabe1df2b82c5bb"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.284,
+        "logSha256": "bc4613ed73b3cf01c70a214b015e1e061555df43936344a5afaeef8eb3d56fb2"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.373,
+        "logSha256": "8d685b384d96fc8d70aec753849417aa6da07b49cdaa2d636e7db9424d5fd86a"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.298,
+        "logSha256": "ca5b88e9509f738bd723656cdce3dec7bc4147ff9f4d3de30d3c50d87e28d047"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.341,
+        "logSha256": "408ea2b4c5a252aacdc0767a4db06b233aaceb1caa7e43f368fb93f414c9b3e0"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.822,
+        "logSha256": "3d8ddcfd6c55a3a4ad02ec686becade3218025dda2d2355a6ce150de9ba30b16"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.202,
+        "logSha256": "33ac99ba22352b8ceffa97e19781699a47eedac4553f8c8118df3f7def166805"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.437,
+        "logSha256": "ace9a2908ec80e7aaa433792bec20dee69375a2d08eaef7d62b956078e235a26"
+      }
+    ],
+    "total": 652,
+    "allPassed": true,
+    "frozenBindingsChecked": 125,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realProcReads": 0,
+    "nativeCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false
+  },
+  "review": {
+    "mode": "independent_read_only_source_review",
+    "definiteP1Findings": 0,
+    "definiteP2Findings": 2,
+    "importantFindingsClosed": 2,
+    "redRegressionsObserved": true,
+    "finalFixReview": "no_definite_new_P1_P2",
+    "findings": [
+      "Zero-exit work could succeed with pending stdin payload.",
+      "Final poll clock exception bypassed work sealing."
+    ],
+    "corrections": [
+      "Require full input offset and stdin EOF for zero-exit main completion; cleanup facts remain independent.",
+      "Capture post-poll exit/input/final-clock errors and preserve the first exception."
+    ]
+  },
+  "scope": {
+    "vpsConnections": 0,
+    "linuxUnits": 0,
+    "nativeExecutions": 0,
+    "realTargetProcReads": 0,
+    "realModels": 0,
+    "externalAgentCalls": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false
+  },
+  "limitations": [
+    "652 is related local regression, not full-repository, native or production acceptance.",
+    "The owned pipes, ClientOwner, Watchdog and lifecycle validator are real fixed implementations; spawn, target kernel, manager and controller witness use explicit trusted doubles.",
+    "The direct launcher in aggregate nativewatch is not the nativehost controller in system.slice; this does not prove combined resource enforcement.",
+    "A fixed native launcher, trustworthy controller witness, independent provenance and physical deadline enforcement remain incomplete.",
+    "Unknown partial launch or exit remains failed with retained owned handles; there is no guessed-PID or unknown-unit adoption fallback.",
+    "The existing native packet and bootstrap closure were not enabled or replaced by this local composition.",
+    "Private implementations remain local; only sanitized verification records are synchronized. Failures, locks and historical quotas retained."
+  ],
+  "nextLocalWork": "Implement and bind the fixed launcher and independent native controller witness, then integrate the owned driver with the trusted entry and aggregate resource topology before any real native test."
+}
