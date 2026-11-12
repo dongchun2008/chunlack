@@ -1,0 +1,1873 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "stage": "shared-parent-call-budget-local-integration",
+  "status": "local_regression_passed_not_published",
+  "scope": {
+    "localOnly": true,
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "targetProcReads": 0,
+    "targetCgroupReads": 0,
+    "nativeLibraryLoads": 0,
+    "nativeCalls": 0,
+    "realModelCalls": 0,
+    "externalAgentMessages": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false
+  },
+  "change": {
+    "sharedBudget": "two fixed parent library views share actual explicit sd_bus_call admission; failed calls consume quota; no retry or rebind",
+    "maximum": 512,
+    "maximumOnlyMayDecrease": true,
+    "priorPerPortCaps": 256,
+    "roleNewAttemptCaps": {
+      "controller": 1,
+      "resource": 1
+    },
+    "epoch": "same original nonce/start/end and clock, original8/10/12second gates",
+    "identity": "retain both raw library owners; require distinct immediate raw library and ABI function objects so private ctypes signature assignments cannot alias",
+    "interfaces": "25 existing ABI names only; no loader, arbitrary attributes, function-pointer extraction or new native API",
+    "ownershipFix": "raw-new normal return reaches caller out-pointer registration before deferred clock checkpoint at next ABI entry or one-shot seal; unknown raw-new exception outcome remains unproved",
+    "failure": "busy before callbacks, sticky denial, no outer success after nested failure; known cleanup available after unwind/failure/seal; busy cleanup refused",
+    "reporting": "actual shared ABI counts separate from per-component reservations; original core/E interruptions precede later cleanup/seal/report errors"
+  },
+  "regression": {
+    "groups": [
+      {
+        "group": "parent_call_budget",
+        "tests": 35,
+        "expected": 35,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 49.498,
+        "logSha256": "3a91b121d8c0659918934f8d753d2b429946f2001156660f46485ff6132a3caf"
+      },
+      {
+        "group": "owned_resource_bootstrap",
+        "tests": 7,
+        "expected": 7,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 44.685,
+        "logSha256": "16c033091799ee8768c54e082aa395b18fa8e0e8415376fc412968aa31ccb8cf"
+      },
+      {
+        "group": "resource_manager_port",
+        "tests": 37,
+        "expected": 37,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.465,
+        "logSha256": "22f1389670eeb76299aa791e29684c1774a8cdc6b91c0e01b530db7f18c423ca"
+      },
+      {
+        "group": "work_tree_bootstrap",
+        "tests": 5,
+        "expected": 5,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 29.615,
+        "logSha256": "65fb68aef02f9e47d8bc98c7f1ef1901f92efedb4056544a668d3c3698e36af6"
+      },
+      {
+        "group": "work_subtree_reader",
+        "tests": 35,
+        "expected": 35,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.831,
+        "logSha256": "f2639de7eccca95084cd2b01797cf15f3f95e7fdd4c7c381787cea8f8fa85f1a"
+      },
+      {
+        "group": "shared_resource_source",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 15.753,
+        "logSha256": "5e5efc7d9b804384a77612da696d9ee8c5f39fad2b77b1e2a1091db9ed6fe50e"
+      },
+      {
+        "group": "bootstrap_source_closure",
+        "tests": 15,
+        "expected": 15,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 18.896,
+        "logSha256": "1d3b61b522343fba49233d8db0b4de3da77f24be44fb5aabbf8e465506e2f644"
+      },
+      {
+        "group": "original_clock_bootstrap",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 5.465,
+        "logSha256": "5b071de904697074a149c5d1e94f99eafcd2e2eb16720a42f531fcc303c9e909"
+      },
+      {
+        "group": "controller_cgroup_witness",
+        "tests": 46,
+        "expected": 46,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 3.457,
+        "logSha256": "24e03ec15899b737df4fe572ac67b510d32898621f47193ecf785fc6d70bd2e9"
+      },
+      {
+        "group": "controller_process",
+        "tests": 38,
+        "expected": 38,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.436,
+        "logSha256": "2527f094abb5f09ce50e1f7dac020d5db8af9e1f17971e7d90e6f8494248b288"
+      },
+      {
+        "group": "controller_manager_port",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.235,
+        "logSha256": "73e5d5df81ce366477a2e6248369333007c3aebfc3ae13c8df2ee102b8e8776e"
+      },
+      {
+        "group": "tool_lease",
+        "tests": 35,
+        "expected": 35,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.682,
+        "logSha256": "fa208a6328760486a81ef2cd9eb9fa184de6604990b355b8b85aaf9f36a157f5"
+      },
+      {
+        "group": "fixed_launch",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.491,
+        "logSha256": "b62b9d7fcefeb643d5ebb60fdb6c51dea012ba8b32197a554a4e1628ac7cfaf7"
+      },
+      {
+        "group": "owned_driver",
+        "tests": 30,
+        "expected": 30,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.376,
+        "logSha256": "a2d94b065f43e770d92b2a80a44d455493d3bfb3ba6c83a8a6c1b0dd6b6a6936"
+      },
+      {
+        "group": "one_shot_entry",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 5.223,
+        "logSha256": "30657e7110c814031b4f2a99971d8f3c70405f0e002bd31748e641d26eb867ec"
+      },
+      {
+        "group": "exclusive_prepare",
+        "tests": 25,
+        "expected": 25,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.894,
+        "logSha256": "53e758deb1c32a848ba338f8595d26538bb3da8964a762afd844a770086b47e3"
+      },
+      {
+        "group": "runtime_package",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.375,
+        "logSha256": "39872d62b7d17bb84626c189339cee0b97cc0e063fc36a617123ecce9bebc0b7"
+      },
+      {
+        "group": "lifecycle",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.208,
+        "logSha256": "61f95a1e13c7bf4834dc487b67b135c9c4de7efa711cc85465203c74cf1b0704"
+      },
+      {
+        "group": "manager_port",
+        "tests": 50,
+        "expected": 50,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.146,
+        "logSha256": "f993eb41df90bb4cfbb8469d3fa4bfd573cae3a1fd5addff5e5594b28410c236"
+      },
+      {
+        "group": "host_files",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.852,
+        "logSha256": "ce62866965e71917c3be7ddcfaddfa10375ecf9fbb2c930933c69188a2140674"
+      },
+      {
+        "group": "request_evidence",
+        "tests": 47,
+        "expected": 47,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.878,
+        "logSha256": "0b51c480a238afaeed029a0c314c16ed723de191128c38cc7dca2f26f2fa4d5c"
+      },
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.197,
+        "logSha256": "0a725a47f86dfeea50adbdcdc4604643ec30511d779773093d2c9c173c5e9198"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.277,
+        "logSha256": "b83084614dbb4d10b2c7013592feaab19c28e88d1943d4dd6da8a734ad575456"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.289,
+        "logSha256": "bc4613ed73b3cf01c70a214b015e1e061555df43936344a5afaeef8eb3d56fb2"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.398,
+        "logSha256": "a66fa7ad82fffba38c21be0c56ac11e031834d0ce2ad083d8cfd397351ec10b0"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.101,
+        "logSha256": "a69715ecc7bdb5b939543f5759e66627df6b27c6ba0d4d3d053226e1b0ef2099"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.283,
+        "logSha256": "d79ebad0aae682e4be730c39514544c68c11f6dd63c7dc4c7b7bf650c34e1595"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.697,
+        "logSha256": "7907c36a7e6ebac52eb17ff9a34b2c23996148ba47570a97378341e82ab97b28"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.197,
+        "logSha256": "33ac99ba22352b8ceffa97e19781699a47eedac4553f8c8118df3f7def166805"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.385,
+        "logSha256": "460cc5d053a0f96b2639d0c96110e3fe04b023755fe8c535d58093f677d129ef"
+      }
+    ],
+    "total": 1001,
+    "allPassed": true,
+    "frozenBindingsChecked": 234,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realProcReads": 0,
+    "nativeCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false
+  },
+  "independentReview": {
+    "mode": "independent read-only source review; no testing/writes/network/native by reviewer",
+    "definiteRemainingP1P2": 0,
+    "fixedFinding": "raw bus-new out-pointer must be registered by original caller before any post-allocation clock checkpoint",
+    "sourceBindings": [
+      {
+        "path": "budget.py",
+        "bytes": 7165,
+        "sha256": "9124dbd57a33193818c932db5f8afcc7a1f054abf1670766fe5f1d3a74a80db6"
+      },
+      {
+        "path": "entry.py",
+        "bytes": 8799,
+        "sha256": "ff1837e193b020de464a177cdf9727c7ec0a9684e77c389dd71f06327e5c7748"
+      },
+      {
+        "path": "candidate.py",
+        "bytes": 4889,
+        "sha256": "4f15140eaa0f436923a6286cf9e443b6fc77f0eec1175503609c8ed6ac7a13a2"
+      },
+      {
+        "path": "test_budget.py",
+        "bytes": 10821,
+        "sha256": "3d57135d652548296de46722008fa95e982cbc710233ea348b9f4c1484169530"
+      },
+      {
+        "path": "test_package.py",
+        "bytes": 3102,
+        "sha256": "15618921048851c9b7a4ab79f6e55f54f130448c5a26afe219a68223a90ca7d6"
+      },
+      {
+        "path": "test_integration.py",
+        "bytes": 1669,
+        "sha256": "557b3898d97991d73a827ba31570e8c7738fc630500a9ae302f0e67f918be39f"
+      },
+      {
+        "path": "integration_run.py",
+        "bytes": 27146,
+        "sha256": "ee4ba55f86010f6bf411a3e8704b0adaf50a60d1f21eade53c730e44b5c988d6"
+      },
+      {
+        "path": "run_local.py",
+        "bytes": 7859,
+        "sha256": "950e080dc13d47c40bea4b8f1128d790d08b1ef3548f3c036e04b7c1d5fce4f0"
+      }
+    ]
+  },
+  "sourceManifest": [
+    {
+      "path": "budget.py",
+      "bytes": 7165,
+      "sha256": "9124dbd57a33193818c932db5f8afcc7a1f054abf1670766fe5f1d3a74a80db6"
+    },
+    {
+      "path": "entry.py",
+      "bytes": 8799,
+      "sha256": "ff1837e193b020de464a177cdf9727c7ec0a9684e77c389dd71f06327e5c7748"
+    },
+    {
+      "path": "candidate.py",
+      "bytes": 4889,
+      "sha256": "4f15140eaa0f436923a6286cf9e443b6fc77f0eec1175503609c8ed6ac7a13a2"
+    },
+    {
+      "path": "test_budget.py",
+      "bytes": 10821,
+      "sha256": "3d57135d652548296de46722008fa95e982cbc710233ea348b9f4c1484169530"
+    },
+    {
+      "path": "test_package.py",
+      "bytes": 3102,
+      "sha256": "15618921048851c9b7a4ab79f6e55f54f130448c5a26afe219a68223a90ca7d6"
+    },
+    {
+      "path": "test_integration.py",
+      "bytes": 1669,
+      "sha256": "557b3898d97991d73a827ba31570e8c7738fc630500a9ae302f0e67f918be39f"
+    },
+    {
+      "path": "integration_run.py",
+      "bytes": 27146,
+      "sha256": "ee4ba55f86010f6bf411a3e8704b0adaf50a60d1f21eade53c730e44b5c988d6"
+    },
+    {
+      "path": "run_local.py",
+      "bytes": 7859,
+      "sha256": "950e080dc13d47c40bea4b8f1128d790d08b1ef3548f3c036e04b7c1d5fce4f0"
+    },
+    {
+      "path": "plan.md",
+      "bytes": 3147,
+      "sha256": "d86e59bd0e84c7f79493fd4dacf4a0f90abd9f718f97138ccddff042040f37ce"
+    },
+    {
+      "path": "LOCAL_HANDOFF.md",
+      "bytes": 5589,
+      "sha256": "96b56608897ee93ac04e6f2fafe0a4bde8d69728d05cee4db6c092c8a34929c5"
+    },
+    {
+      "path": "coverage-audit.json",
+      "bytes": 2586,
+      "sha256": "a025b4b04546bc4622da19eb9e44a709dac0582e435ca4236dd17478a56c0159"
+    },
+    {
+      "path": "review-final.json",
+      "bytes": 1517,
+      "sha256": "23536635feb1b428b79456e5772d731496b39729ab954b5607d64eafebfd5c0d"
+    },
+    {
+      "path": "prepared-v2-receipt.json",
+      "bytes": 749,
+      "sha256": "b71d0bb68c5886aee5c795790dccba645d5fdf31a37706a3d88f37640669d1b5"
+    },
+    {
+      "path": "accepted-receipt.json",
+      "bytes": 8514,
+      "sha256": "f666ab2d1693ac8c065ad2b28468d6ef4f85d23df8bfa9db7cbe7d8721d84988"
+    },
+    {
+      "path": "accepted-integration-evidence.json",
+      "bytes": 55879,
+      "sha256": "f54f913650dd729604bc98644c1a8646f007f3a999d80f52b7872b7238509f4e"
+    },
+    {
+      "path": "finalize_local.py",
+      "bytes": 7086,
+      "sha256": "84167a4ff45cf814d9a7a635eb2a01ef13485f1b06c8d6ee08234b5cd514324e"
+    }
+  ],
+  "inactiveCandidate": {
+    "files": 45,
+    "sourceBytes": 407942,
+    "completeFileSet": true,
+    "packageSha256": "45d3f376451957b040405770a72b26df56abdac53d7d51e8e8eda7ef5b612be5",
+    "nativeExecutionEligible": false,
+    "filesystemProvenanceVerified": false,
+    "productionReady": false,
+    "verifierSha256": "b0d2a93cd199969b69723efc75ca02cc53331648293547972bc7d83abc5b2587",
+    "priorSourcesUnchanged": 43,
+    "inputCatalogSha256": "8428ecfb3f949723313976fb15ff78bf68b6af60b723a1c5d7e0d6b3dbf2b80c",
+    "aggregateFdLimitProven": false,
+    "nativeManagerBudgetProven": false
+  },
+  "prior43SourcesUnchanged": true,
+  "detachedIntegration": {
+    "status": "passed_parent_call_budget_composition",
+    "scenarios": [
+      {
+        "scenario": "success",
+        "passed": true,
+        "aggregateAccepted": true,
+        "cleanupConfirmed": true,
+        "coreAccepted": true,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 182,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 436,
+          "bound": true,
+          "counts": {
+            "controller": 182,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "bind_cost",
+        "passed": true,
+        "aggregateAccepted": true,
+        "cleanupConfirmed": true,
+        "coreAccepted": true,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 182,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 436,
+          "bound": true,
+          "counts": {
+            "controller": 182,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "subtree_survives",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": true,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 182,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 436,
+          "bound": true,
+          "counts": {
+            "controller": 182,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "dirty_before_claim",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": false,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 0,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 254,
+          "bound": true,
+          "counts": {
+            "controller": 0,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 0,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "not_attempted",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "wrong_watcher",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": false,
+        "resourceAbiRequests": 0,
+        "controllerAbiRequestCount": 0,
+        "resourceBusCloseAttempts": 0,
+        "treeCloseAttemptedBeforeBus": false,
+        "sharedCallBudget": null
+      },
+      {
+        "scenario": "initial_manager_failure",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": false,
+        "resourceAbiRequests": 10,
+        "controllerAbiRequestCount": 0,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 10,
+          "bound": true,
+          "counts": {
+            "controller": 0,
+            "resource": 10
+          },
+          "errorCode": null,
+          "errorType": "OSError",
+          "failed": true,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 0,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "not_attempted",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "final_manager_failure",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": true,
+        "resourceAbiRequests": 133,
+        "controllerAbiRequestCount": 182,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 315,
+          "bound": true,
+          "counts": {
+            "controller": 182,
+            "resource": 133
+          },
+          "errorCode": null,
+          "errorType": "OSError",
+          "failed": true,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "manager_generation_drift",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": true,
+        "resourceAbiRequests": 170,
+        "controllerAbiRequestCount": 182,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 352,
+          "bound": true,
+          "counts": {
+            "controller": 182,
+            "resource": 170
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "bind_deadline",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": false,
+        "resourceAbiRequests": 10,
+        "controllerAbiRequestCount": 0,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 10,
+          "bound": true,
+          "counts": {
+            "controller": 0,
+            "resource": 10
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 0,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "not_attempted",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "final_deadline",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": true,
+        "resourceAbiRequests": 133,
+        "controllerAbiRequestCount": 182,
+        "resourceBusCloseAttempts": 0,
+        "treeCloseAttemptedBeforeBus": false,
+        "sharedCallBudget": {
+          "attempts": 315,
+          "bound": true,
+          "counts": {
+            "controller": 182,
+            "resource": 133
+          },
+          "errorCode": "parent_budget_clock",
+          "errorType": "Fault",
+          "failed": true,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "observer_close_failure",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": true,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 182,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 436,
+          "bound": true,
+          "counts": {
+            "controller": 182,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "observer_close_interrupt",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": true,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 182,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 436,
+          "bound": true,
+          "counts": {
+            "controller": 182,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "core_cleanup_interrupt",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": false,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 0,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 254,
+          "bound": true,
+          "counts": {
+            "controller": 0,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 0,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "not_attempted",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "cancel",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": true,
+        "coreAccepted": false,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 183,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 437,
+          "bound": true,
+          "counts": {
+            "controller": 183,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "factory_failure",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": false,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 9,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 263,
+          "bound": true,
+          "counts": {
+            "controller": 9,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "prepare_failure",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": null,
+        "coreAccepted": null,
+        "resourceAbiRequests": 0,
+        "controllerAbiRequestCount": 0,
+        "resourceBusCloseAttempts": 0,
+        "treeCloseAttemptedBeforeBus": false,
+        "sharedCallBudget": null
+      },
+      {
+        "scenario": "core_report_failure",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": null,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 182,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 436,
+          "bound": true,
+          "counts": {
+            "controller": 182,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "getpid_deadline",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": false,
+        "resourceAbiRequests": 0,
+        "controllerAbiRequestCount": 0,
+        "resourceBusCloseAttempts": 0,
+        "treeCloseAttemptedBeforeBus": false,
+        "sharedCallBudget": null
+      },
+      {
+        "scenario": "final_gate_interrupt",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": true,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 182,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 436,
+          "bound": true,
+          "counts": {
+            "controller": 182,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "final_report_failure",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": true,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 182,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 436,
+          "bound": true,
+          "counts": {
+            "controller": 182,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "original_interrupt_over_final_report_interrupt",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": false,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 0,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 254,
+          "bound": true,
+          "counts": {
+            "controller": 0,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 0,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "not_attempted",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "core_interrupt_before_core_report_failure",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": false,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 0,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 254,
+          "bound": true,
+          "counts": {
+            "controller": 0,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 0,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "not_attempted",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "resource_open_failure",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": false,
+        "resourceAbiRequests": 0,
+        "controllerAbiRequestCount": 0,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 0,
+          "bound": true,
+          "counts": {
+            "controller": 0,
+            "resource": 0
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 0,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "not_attempted",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "resource_close_failure",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": true,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 182,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 436,
+          "bound": true,
+          "counts": {
+            "controller": 182,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "resource_close_interrupt",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": true,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 182,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 436,
+          "bound": true,
+          "counts": {
+            "controller": 182,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "original_interrupt_over_bus_close_interrupt",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": false,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 0,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 254,
+          "bound": true,
+          "counts": {
+            "controller": 0,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 0,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "not_attempted",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "resource_close_deadline",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": true,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 182,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 436,
+          "bound": true,
+          "counts": {
+            "controller": 182,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "owned_report_failure",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": true,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 182,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 436,
+          "bound": true,
+          "counts": {
+            "controller": 182,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "original_interrupt_over_owned_report_interrupt",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": false,
+        "resourceAbiRequests": 254,
+        "controllerAbiRequestCount": 0,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 254,
+          "bound": true,
+          "counts": {
+            "controller": 0,
+            "resource": 254
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 0,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "not_attempted",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "shared_initial_cap",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": false,
+        "resourceAbiRequests": 1,
+        "controllerAbiRequestCount": 0,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 1,
+          "bound": true,
+          "counts": {
+            "controller": 0,
+            "resource": 1
+          },
+          "errorCode": "parent_budget_limit",
+          "errorType": "Fault",
+          "failed": true,
+          "globalCohortBudgetProven": false,
+          "maximum": 1,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 0,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "not_attempted",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "shared_controller_cap",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": false,
+        "resourceAbiRequests": 131,
+        "controllerAbiRequestCount": 29,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 160,
+          "bound": true,
+          "counts": {
+            "controller": 29,
+            "resource": 131
+          },
+          "errorCode": "parent_budget_limit",
+          "errorType": "Fault",
+          "failed": true,
+          "globalCohortBudgetProven": false,
+          "maximum": 160,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "shared_final_cap",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": true,
+        "resourceAbiRequests": 253,
+        "controllerAbiRequestCount": 182,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 435,
+          "bound": true,
+          "counts": {
+            "controller": 182,
+            "resource": 253
+          },
+          "errorCode": "parent_budget_limit",
+          "errorType": "Fault",
+          "failed": true,
+          "globalCohortBudgetProven": false,
+          "maximum": 435,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 1,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "returned",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "shared_symbol_alias",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": false,
+        "resourceAbiRequests": 0,
+        "controllerAbiRequestCount": 0,
+        "resourceBusCloseAttempts": 0,
+        "treeCloseAttemptedBeforeBus": false,
+        "sharedCallBudget": {
+          "attempts": 0,
+          "bound": false,
+          "counts": {
+            "controller": 0,
+            "resource": 0
+          },
+          "errorCode": "parent_budget_symbol_alias",
+          "errorType": "Fault",
+          "failed": true,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 0,
+            "resource": 0
+          },
+          "newOutcomes": {
+            "controller": "not_attempted",
+            "resource": "not_attempted"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      },
+      {
+        "scenario": "shared_new_checkpoint_interrupt",
+        "passed": true,
+        "aggregateAccepted": false,
+        "cleanupConfirmed": false,
+        "coreAccepted": false,
+        "resourceAbiRequests": 0,
+        "controllerAbiRequestCount": 0,
+        "resourceBusCloseAttempts": 1,
+        "treeCloseAttemptedBeforeBus": true,
+        "sharedCallBudget": {
+          "attempts": 0,
+          "bound": true,
+          "counts": {
+            "controller": 0,
+            "resource": 0
+          },
+          "errorCode": null,
+          "errorType": null,
+          "failed": false,
+          "globalCohortBudgetProven": false,
+          "maximum": 512,
+          "nativeExecutionEligible": false,
+          "newAttempts": {
+            "controller": 0,
+            "resource": 1
+          },
+          "newOutcomes": {
+            "controller": "not_attempted",
+            "resource": "returned"
+          },
+          "pendingCheckpoints": {
+            "controller": false,
+            "resource": false
+          },
+          "productionReady": false,
+          "sealed": true
+        }
+      }
+    ],
+    "originalWorkflowReadAttempts": 0,
+    "nativeWorkflowOperations": 0,
+    "methodModulesRemainCopied": true,
+    "fullLocalEvidence": {
+      "path": "accepted-integration-evidence.json",
+      "bytes": 55879,
+      "sha256": "f54f913650dd729604bc98644c1a8646f007f3a999d80f52b7872b7238509f4e"
+    }
+  },
+  "coverageAudit": {
+    "mode": "independent read-only frozen43-package source audit; no test/native/network operations",
+    "parentRoutes": "ControllerPort.HostIO and ResourcePort.ResourceIO both call self.lib.sd_bus_call; fixed normal paths do not reload native code or extract pointers",
+    "apiQualification": "explicit application sd_bus_call only; internal authentication, sd_bus_start/process/wait traffic not counted",
+    "abiRisk": "private loader chains define distinct BusError ctypes classes; sharing one mutable raw function object can overwrite argtypes/restype",
+    "viewRequirement": "retain library owner and use distinct immediate raw ABI function objects per symbol and role; pointer/library provenance remains unproven",
+    "childCoverage": {
+      "managerInvocationsMaximum": 64,
+      "commandCreationsMaximum": 64,
+      "collectorsMaximum": 2,
+      "readerHandleRegistrationsMaximum": 96,
+      "commandCountIsWireRequestCount": false,
+      "transport": "controller uses bounded systemctl/busctl subprocesses; cli internal requests and descriptors unproven; probe has fixed metadata/lease path, no explicit manager calls"
+    },
+    "parentAllocators": {
+      "prepare": [
+        "open",
+        "close"
+      ],
+      "tools": [
+        "open including O_PATH aliases",
+        "close"
+      ],
+      "process": [
+        "open",
+        "pidfd_open",
+        "close"
+      ],
+      "groupAndResource": [
+        "open",
+        "close"
+      ],
+      "pipes": [
+        "pipe2 two ends",
+        "close"
+      ],
+      "client": [
+        "factory/create",
+        "pidfd_open",
+        "pidfd close",
+        "reap direct child"
+      ],
+      "library": [
+        "sd_bus_new/start",
+        "message/reply allocations",
+        "close_unref",
+        "message unref",
+        "error free"
+      ]
+    },
+    "census": {
+      "knownNormalPeak": 95,
+      "parts": {
+        "tree": 40,
+        "tools": 22,
+        "process": 12,
+        "group": 18,
+        "pipes": 2,
+        "clientPidfd": 1
+      },
+      "completeNativeOrFailureBound": false,
+      "unaccounted": [
+        "opaque bus and library fds",
+        "existing and standard streams",
+        "source/import transient files",
+        "Popen/error pipes",
+        "listdir/client info implementation internals",
+        "all child/controller/probe/CLI fds",
+        "transient allocations between census samples"
+      ],
+      "RLIMITNOFILEConfiguredInFrozenPackage": false
+    },
+    "nextGate": "explicit shared reservation/generation ledger for parent allocators; unknown close must not release quota; kernel per-process limits alone cannot prove subtree totals"
+  },
+  "retainedRejectedCandidate": {
+    "packageSha256": "8337cc4879731c162f24570f389e7511726631f5e3376827d04935bacde26111",
+    "reason": "independent review found post-new checkpoint could lose registered ownership; v1 retained unchanged"
+  },
+  "retainedRedLogs": [
+    {
+      "path": "red-budget.log",
+      "bytes": 17202,
+      "sha256": "dd71f4540f813972a65bb2bb88a1b42940fba63dc6584e97dc763993a6fc2991"
+    },
+    {
+      "path": "red-cleanup-alias.log",
+      "bytes": 5000,
+      "sha256": "7f5bf69d220eb862868e406d1e10b0704ca3cb6518e66d4ec619c23a376da443"
+    },
+    {
+      "path": "red-library-lifetime.log",
+      "bytes": 4417,
+      "sha256": "6b2b635d15f0b459fab9f515eb36d849907e81726f19f83eefb45eb5f111345b"
+    },
+    {
+      "path": "red-new-transfer.log",
+      "bytes": 1747,
+      "sha256": "dcb3cf02b72f364bee6dff9f68019a304adf124a53579a46eadab1c8604f3a82"
+    },
+    {
+      "path": "red-deferred-checkpoint.log",
+      "bytes": 5318,
+      "sha256": "e24af45ee02784b22a2d8f3a900a011b7a3737b14e6625f6d714e62c19fb2d6f"
+    }
+  ],
+  "qualifications": [
+    "explicit Python ABI and memory filesystem doubles only, not native or kernel validation",
+    "application sd_bus_call attempts exclude bus-internal authentication/setup/process traffic",
+    "protocol-child CLI command caps are not wire request caps",
+    "no shared FD ledger or RLIMIT_NOFILE currently proven;95 is exercised memory census, not global bound",
+    "raw-new exception after possible allocation remainsunknown, not assumed freed",
+    "not thread-safe and not hostile-Python/same-user-race defense",
+    "implementation not uploaded or installed; external Agent access remains unchanged"
+  ],
+  "nextLocalGate": "shared reservation/generation accounting for explicit parent descriptor allocators; retain unknown closes against quota, separately account protocol children and opaque overhead",
+  "productionReady": false,
+  "globalCohortBudgetProven": false,
+  "aggregateFdLimitProven": false
+}
