@@ -1,0 +1,152 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "stage": "backup-capacity-scope-parity-local",
+  "status": "local_contract_regression_passed_not_native_or_production_accepted",
+  "change": {
+    "newPrivateTestsOnly": true,
+    "estimatorChanged": false,
+    "controllerChanged": false,
+    "originalDepth8CollectorChanged": false,
+    "frozenCandidateChanged": false,
+    "newCollectorOrDispatcher": false,
+    "productSchemaOrFeatureChanged": false
+  },
+  "regression": {
+    "finalUniqueCases": 28,
+    "passed": 28,
+    "failed": 0,
+    "initialParity": {
+      "cases": 8,
+      "passed": 8,
+      "seconds": 2.025,
+      "exitCode": 0,
+      "toolChunkId": "392c64",
+      "rawLogSaved": false
+    },
+    "existingMetadataAndDescriptorSimulations": {
+      "cases": 20,
+      "passed": 20,
+      "seconds": 0.041,
+      "exitCode": 0,
+      "toolChunkId": "fdb9c5",
+      "rawLogSaved": false
+    },
+    "finalParityAfterCoverageEnhancement": {
+      "cases": 8,
+      "passed": 8,
+      "seconds": 1.935,
+      "exitCode": 0,
+      "toolChunkId": "7cd66d",
+      "log": {
+        "path": ".superpowers/sdd/backup-capacity-parity-20261113-a1/parity-final.log",
+        "bytes": 1273,
+        "sha256": "7b2428cd1e966426959c89777d57488b0991206f07c24fcc3b444cc858ecebec"
+      }
+    },
+    "executedCaseInstancesIncludingInitialParity": 36,
+    "unrelatedApplicationOr1043ComponentSuitesRerun": false
+  },
+  "coverage": [
+    "real synthetic local data file-path/content-hash parity across original inventory and private_copy_tree",
+    "depth12 includes db/WAL/SHM/hidden file, estimator body-open attempts rejected",
+    "depth32 accepts; depth33 rejects rather than returns partial estimate",
+    "1000 data files accepts;1001 refuses in both estimator and controller",
+    "64MiB-plus1 metadata size rejected by both original guards without allocating that large file",
+    "unknown directory and observed metadata drift refuse estimate",
+    "copy interruption after262144 bytes leaves detectable partial target while source content remains unchanged",
+    "wrong source digest refuses compilation",
+    "existing synthetic Linux descriptor close/open/stat/scandir/volume/link safety cases retained"
+  ],
+  "historicalIncompleteObservation": {
+    "source": {
+      "path": ".superpowers/sdd/publication-readonly-20261107-a4/receipt.json",
+      "bytes": 5926,
+      "sha256": "96bf1537b5c8cc329f52f65f54a9ff8693d5524751b04c6c403b969a790af85b"
+    },
+    "cutoffDepth": 8,
+    "truncatedDirectories": 146,
+    "coverageComplete": false,
+    "refusalStillRequired": true,
+    "recheckedOnTargetThisStage": false
+  },
+  "sourceBindings": [
+    {
+      "path": ".superpowers/sdd/backup-capacity-parity-20261113-a1/test_backup_parity.py",
+      "bytes": 9223,
+      "sha256": "2edaf8088c4bb224af3cc6d5c322ebc086d6ba135894bae16bcf3e19de2765a6"
+    },
+    {
+      "path": ".superpowers/sdd/backup-capacity-parity-20261113-a1/plan.md",
+      "bytes": 1542,
+      "sha256": "6c5ea8ab074a973bc3398b7b46fb41e42c7191208f3e2021d6fb0595e23d4b65"
+    },
+    {
+      "path": ".superpowers/sdd/production-bound-local-c01f6b0d86e5/metadata_sizing.py",
+      "bytes": 8331,
+      "sha256": "d401251ae189eefa2f27357f7c109e5175a88ab9cad7902eaf3cf9f3eb248259"
+    },
+    {
+      "path": ".superpowers/sdd/production-bound-local-c01f6b0d86e5/test_metadata_sizing.py",
+      "bytes": 5412,
+      "sha256": "db1f9a2c8c8f8c76ab7a08d0f092742a1be8e0547e6fd29d3aee4efaeb543cb1"
+    },
+    {
+      "path": ".superpowers/sdd/production-bound-local-c01f6b0d86e5/test_linux_metadata_adapter.py",
+      "bytes": 8057,
+      "sha256": "9f21a71c5506385a5a7ae6111f9aff1418957ddf8d12ee9632c39900147d06ec"
+    },
+    {
+      "path": "deploy/public/release-control/2026-10-17/release-discovery-safe-20261017.py",
+      "bytes": 62879,
+      "sha256": "63ed0731c21411dbe91fbb7a4a7e2f5330df80a49f490f29c47342b7098cdcc1"
+    }
+  ],
+  "review": {
+    "mode": "independent read-only source review",
+    "blockingP1P2": 0,
+    "testsOrNetworkOrWritesByReviewer": false,
+    "qualificationsRetained": [
+      "data file paths/content hashes only, not permission/empty-directory/Caddy-copy/application consistency",
+      "modeled Linux allocation blocks and synthetic candidate allocation4096, not production sizing",
+      "64MiB boundary uses stat metadata simulation, not actual large allocation"
+    ]
+  },
+  "localCleanup": {
+    "exclusiveFixtureDirectoryEntriesRemaining": 0
+  },
+  "productBinding": {
+    "files": 66,
+    "frozenFilesValid": 66,
+    "currentEqualsFrozen": 66,
+    "manifestSha256": "c0ca08d6f03e1e6af3b46259a031239a24c6c89c8f5a4e22102ea8208f9b4c15"
+  },
+  "scope": {
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "targetProcOrBusCalls": 0,
+    "nativeMeasureInvocations": 0,
+    "businessDatabaseContentsRead": false,
+    "realModelCalls": 0,
+    "externalAgentMessages": 0,
+    "servicesControlled": false,
+    "productionPublished": false,
+    "credentialsReadOrChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false
+  },
+  "remaining": [
+    "new explicitly approved current production read-only preflight",
+    "native complete capacity observation and real production candidate allocation bound",
+    "application-consistent maintenance backup and restoration safeguards",
+    "production-bound package and current compatibility proof",
+    "authorized release and complete real-use acceptance"
+  ],
+  "githubScope": "only this sanitized verification record; no private source or fixture submission",
+  "productionReady": false,
+  "backupCreated": false,
+  "nativeCapacityAccepted": false,
+  "fullDeliveryComplete": false
+}
