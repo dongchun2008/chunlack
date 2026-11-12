@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "stage": "own_unit_typed_job_proof_local_integration",
+  "status": "selected_local_regressions_and_read_only_review_passed",
+  "implementation": [
+    "Extends the pinned existing scoped connection with typed Unit.Job (uo) reads; no native loader or new ABI symbol.",
+    "Reads own-unit Job before and after the existing invocation-bracketed Unit/Service samples; failed samples invalidate the service token.",
+    "Checks zero-ID/root-path sentinel and exact nonzero job-ID/path pairs; observed jobs never enter submission/cancellation allowlists.",
+    "Terminal evidence requires the exact known invocation, current job absence, zero main PID/inactive-or-failed observations, and separately queried known submitted job IDs.",
+    "Strict named NoSuchJob required; raw errno, other names, late replies and request cleanup failures cannot become absence.",
+    "Existing original-worker session is connected through the real adapter code with simulated C ABI replies. Cgroup ownership and emptiness remain explicit test doubles."
+  ],
+  "actualTests": {
+    "groups": [
+      {
+        "group": "job_schema_and_compatibility",
+        "tests": 43,
+        "passed": true,
+        "exitCode": 0,
+        "logSha256": "027aeb4805a1f887a4666221718eda120f516007ef65ebb220c15a7175d2310f"
+      },
+      {
+        "group": "job_session_integration",
+        "tests": 2,
+        "passed": true,
+        "exitCode": 0,
+        "logSha256": "18ba893067fa3aff1f3c55e9e8b103cbfccfceecd33e84f3f2a33b5b9ac6e8f7"
+      },
+      {
+        "group": "staged_session",
+        "tests": 25,
+        "expected": 25,
+        "exitCode": 0,
+        "reportedSeconds": 1.961,
+        "logSha256": "78ca4ec4275cbf757cb3cbc97de3b6d7f77807624f84b35e0dfe5350850d02ce",
+        "passed": true
+      },
+      {
+        "group": "reader",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "reportedSeconds": 0.037,
+        "logSha256": "33ac99ba22352b8ceffa97e19781699a47eedac4553f8c8118df3f7def166805",
+        "passed": true
+      },
+      {
+        "group": "existing_session",
+        "tests": 142,
+        "expected": 142,
+        "exitCode": 0,
+        "reportedSeconds": 5.988,
+        "logSha256": "43786a3b3829179f48bd287ddfb3c0c2e6e8b5eea58b9bceeb43e3bc63efa691",
+        "passed": true
+      }
+    ],
+    "total": 241,
+    "allPassed": true,
+    "batched": true,
+    "previousReceiptPreserved": true
+  },
+  "review": {
+    "status": "completed_read_only",
+    "confirmedP1P2Remaining": 0,
+    "reviewerReranTests": false
+  },
+  "sourceBinding": [
+    {
+      "path": "scoped-job-proof-20261112-a1/job_connection.py",
+      "bytes": 5689,
+      "sha256": "bb8891eaa833c2f3116c711ae8a88d43268a91185fca246688a74730d44ebd0b"
+    },
+    {
+      "path": "scoped-job-proof-20261112-a1/test_job_proof.py",
+      "bytes": 10316,
+      "sha256": "4928b475a1933a496d2390888e039a2463c174d07c27eb2dc8d9ff5ed42f5f07"
+    },
+    {
+      "path": "scoped-job-proof-20261112-a1/test_session_jobs.py",
+      "bytes": 5480,
+      "sha256": "7df44ee180bdb49bb4170497c0191c43bd591a146e0bbede9ab01510939973cd"
+    },
+    {
+      "path": "scoped-job-proof-20261112-a1/plan.md",
+      "bytes": 1782,
+      "sha256": "8e4bca243d7fde0c3610ba10bbb555ada851fa73cd4afee98b9204e741249312"
+    },
+    {
+      "path": "scoped-manager-connection-20261112-a1/scoped_connection.py",
+      "bytes": 13875,
+      "sha256": "bec212d876904e41e794bf6c956e5740e7cab27a2bb1e5d946bdf3c37164decf"
+    },
+    {
+      "path": "scoped-manager-connection-20261112-a1/test_scoped_connection.py",
+      "bytes": 17547,
+      "sha256": "3658fd9c9ce4e8d8d5dac532b282c9121f0ea164f9cc7cf2eed5fab0e39cea7d"
+    },
+    {
+      "path": "native-persistent-bus-local-20261108-d2/persistent_bus.py",
+      "bytes": 26525,
+      "sha256": "366ec142f979195d35170a3c76eca23a3bb48e4fd2fcb3c8cc980aa0b422de52"
+    },
+    {
+      "path": "kernel-staged-session-20261112-a1/staged_backend.py",
+      "bytes": 7969,
+      "sha256": "76c2921bfd2ad58e2f1c1b89c3abfca9f57c8437fc275e698cf11918c884df1d"
+    },
+    {
+      "path": "kernel-staged-session-20261112-a1/test_integration.py",
+      "bytes": 13865,
+      "sha256": "2e77f8c8fbe403099b6ad784414c7a9edf4cd93674332e8bec15cd6de6eb40b6"
+    }
+  ],
+  "testEvidenceNotes": [
+    "New module first failed on missing implementation; this is not a behavioral red-test proof.",
+    "A new terminal helper originally omitted existing unit/profile checks; six subcases reproduced acceptance before guards were added.",
+    "A raw-errno injection initially targeted the wrong fake function attribute; corrected to the fixture actual function field, then rejection verified.",
+    "Negative combined test deliberately exhausts simulated original 10-second budget; asserts 9.99 to 10.0 seconds, no quiescence/artifact removal/cleanup success, and no new manager or bus-close attempt after sticky failure.",
+    "The negative fixture accepts only its explicitly recorded identical close_failure; raw failure evidence and artifacts are retained.",
+    "Final selected batch has 43 adapter/schema/compatibility cases including all 23 legacy scoped-connection assertions, 2 coupled session cases, 25 staged-session, 29 reader and 142 existing-session cases. Counts are not summed across reruns."
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "actualSystemBusCalls": 0,
+    "nativeLibraryLoads": 0,
+    "linuxUnitsStarted": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "limitations": [
+    "Returned job facts do not prove cgroup empty, unit ownership, manager/library/socket provenance or namespace isolation.",
+    "The current Unit.Job and tracked submitted IDs are checked; no global job enumeration is performed.",
+    "Cgroup disappearance is not treated as emptiness; a verified native group lifecycle reader remains pending.",
+    "A simulated message table with no entries is not evidence that a connection was closed. Failed final-budget cleanup remains failed.",
+    "Local selected suites only, not full project or native runtime acceptance.",
+    "Historical AddRef contract failure remains separately recorded, not rerun or resolved."
+  ],
+  "primarySources": [
+    "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/dbus-unit.c",
+    "https://raw.githubusercontent.com/systemd/systemd/v255/man/org.freedesktop.systemd1.xml"
+  ],
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized evidence only; no private adapter source, raw diagnostics or credentials."
+}
