@@ -1,0 +1,237 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "phase": "local-only owned Linux pipe component",
+  "status": "passed_local_related_regression",
+  "tests": {
+    "groups": [
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 0.533,
+        "passed": true,
+        "logSha256": "b87be713e27eb97272a6870052f49adb98047b5ea8b6cf956e2fb18ce5efb88d"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 16.376,
+        "passed": true,
+        "logSha256": "9d748841decb33f69668064b894c988cb6e8e1924a268735c612baf2fd081d1b"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 0.617,
+        "passed": true,
+        "logSha256": "78f0404bc5a64bf56b47098a7c1beaa10664df3cdd8f2809233aa42d97284dfa"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 2.848,
+        "passed": true,
+        "logSha256": "f6b5204b0b2603d6ce60e5f8fe7c096ff11717d5464ea71477b8ac3dfea640af"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 0.328,
+        "passed": true,
+        "logSha256": "66ac046bf7333467308445055e965f8a8be1550b1135417ff0caa9838dc0c90b"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 0.626,
+        "passed": true,
+        "logSha256": "7c719e23b36befc390a153616f71680523df6a5c05fa348463942b163495274c"
+      }
+    ],
+    "total": 310,
+    "allPassed": true,
+    "priorBindingsChecked": 57,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realNativeCalls": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productionPublished": false
+  },
+  "sources": [
+    {
+      "path": "LOCAL_HANDOFF.md",
+      "bytes": 3496,
+      "sha256": "833326080e98052ea4c58b7f775bd2a01e9dbf357145d20ff56712f349e21498"
+    },
+    {
+      "path": "owned_pipes.py",
+      "bytes": 13314,
+      "sha256": "91c2e3ff855ae286ae61c7d14b941f631b472c408126ad5ab9af90943ae6196a"
+    },
+    {
+      "path": "plan.md",
+      "bytes": 1223,
+      "sha256": "c5c8fcee6cd977ea5d8c1d08f941916f4451695812a2443bc2d5f12ef8db2177"
+    },
+    {
+      "path": "run_local.py",
+      "bytes": 2589,
+      "sha256": "959e54eadb0f763e16a0e53df0091844782ab30c13d0867a3081da6d882aa005"
+    },
+    {
+      "path": "test_linux_wrapper.py",
+      "bytes": 3182,
+      "sha256": "3eeac1d43ed08f3e01b1eeb3ba7f0246937206ba490c404f3d4fe95c4b11b4f6"
+    },
+    {
+      "path": "test_pipes.py",
+      "bytes": 16122,
+      "sha256": "be6f589abe3ea47dd4f258c8943f1b05a2bdd6ae0873947e64232a3d61924abb"
+    },
+    {
+      "path": "test_supervision.py",
+      "bytes": 4462,
+      "sha256": "5cfd75f0a232e3b177073ba02d04adf5be0b97e696780ce27fd62879dd64de51"
+    }
+  ],
+  "closureInputsRechecked": 27,
+  "independentReview": {
+    "openP1P2": 0,
+    "previousP2Closed": 2,
+    "mode": "read-only static review"
+  },
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "physicalPreemptionProven": false,
+  "productionReady": false,
+  "remaining": [
+    "trusted fixed launch factory",
+    "separate client and controller pidfd ownership",
+    "cgroupfd and aggregate budget assembly",
+    "native acceptance and production delivery"
+  ],
+  "failuresRetained": [
+    {
+      "status": "expected_red",
+      "tests": 19,
+      "failures": 19,
+      "reason": "owned nonblocking pipe component missing",
+      "nativeCalls": 0,
+      "linuxUnits": 0
+    },
+    {
+      "status": "expected_red",
+      "firstBatch": {
+        "tests": 23,
+        "failures": 2,
+        "errors": 1
+      },
+      "focusedFinalGate": {
+        "tests": 1,
+        "failures": 1
+      },
+      "reasons": [
+        "closed channel could poll again",
+        "wrong event direction ignored",
+        "old stream failure masked by state error",
+        "final cleanup gate failure not retained"
+      ],
+      "nativeCalls": 0,
+      "linuxUnits": 0
+    },
+    {
+      "status": "expected_red",
+      "selection": "identity_drift",
+      "tests": 4,
+      "failures": 3,
+      "passed": 1,
+      "reasons": [
+        "post-poll identity not rechecked before consuming bytes",
+        "post-read drift could return success",
+        "post-write drift could return success"
+      ],
+      "nativeCalls": 0,
+      "linuxUnits": 0
+    },
+    {
+      "status": "failed_not_promoted",
+      "tests": 4,
+      "passed": 3,
+      "failures": 1,
+      "reason": "new test assumed only deadline could stop a synthetic clock quantized by integer-ms waits; actual independent poll_limit also correctly rejected incomplete controller",
+      "resolution": "assert one of the two existing bounded stop codes plus pollCalls<=512; retain failed status, no receipt validation, termination and owned-handle closure assertions",
+      "productCodeChangedForThisFailure": false,
+      "nativeCalls": 0,
+      "linuxUnits": 0
+    }
+  ],
+  "implemented": [
+    "Concrete Linux pipe2/poll/read/write/close wrappers are present but normal native construction is disabled.",
+    "Anonymous pipe ownership starts with component allocation; no arbitrary existing FD adoption or process kill API.",
+    "Child stdio blocking and parent nonblocking, CLOEXEC and descriptor identity checked.",
+    "Read/write offsets, independent private stream caps, EOF vs HUP and unknown-close facts remain separate.",
+    "Close start seals work; final cleanup exceptions remain sticky; no failure can reopen I/O.",
+    "Post-poll and post-read/write descriptor identity is rechecked before success."
+  ],
+  "testComposition": {
+    "newTests": 41,
+    "pipeStateMachine": 30,
+    "concreteWrapperWithSyscallDoubles": 7,
+    "existingSupervisorComposition": 4,
+    "exitFacts": "Client exit, controller exit and residual-group state are independent memory doubles; no physical process evidence."
+  },
+  "limits": {
+    "inputBytes": 140000,
+    "stdoutPrivateBytes": 65536,
+    "stderrPrivateBytes": 4096,
+    "readBatchBytes": 4096,
+    "maxPollMilliseconds": 50,
+    "maxPollCalls": 512,
+    "deadlineExtended": false
+  },
+  "boundaries": {
+    "vpsConnections": 0,
+    "linuxUnits": 0,
+    "realPipeCreations": 0,
+    "realNativeCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublications": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0
+  },
+  "publication": {
+    "sanitizedRecordOnly": true,
+    "privateCodePublished": false
+  },
+  "caveats": [
+    "This is a component and local composition proof, not an enabled driver.",
+    "Normal native construction is disabled, but that preparation flag is not an authorization/security boundary.",
+    "No current production health or remote-Agent capability claim.",
+    "Historical failed evidence, quotas and AddRef failure remain retained."
+  ],
+  "references": [
+    "https://docs.python.org/3.13/library/os.html#os.pipe2",
+    "https://docs.python.org/3.13/library/select.html#polling-objects"
+  ]
+}
