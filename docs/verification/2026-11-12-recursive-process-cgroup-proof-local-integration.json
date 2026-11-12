@@ -1,0 +1,160 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "stage": "recursive_own_unit_process_and_cgroup_proof_local_integration",
+  "status": "selected_local_regressions_and_independent_review_passed",
+  "implementation": [
+    "Hash-pinned extension of existing scoped job connection; only own Service.GetProcesses, no args, typed a(sus), no new mutation/global API, native symbol or loader.",
+    "Up to 32 unique process IDs and 65536 decoded text bytes; private command lines are never included in public quiescence results.",
+    "Two recursive process observations plus current/known job checks, exact invocation and final unit/profile/group checks.",
+    "Empty process lists alone are insufficient: two group observations also require strictly zero TasksCurrent or explicit manager deassignment after a fixed active cgroup was observed in the same invocation.",
+    "UINT64_MAX task count is unknown, not zero; missing/errored/changed facts fail or remain pending; no ENOENT or ENODEV success inference.",
+    "A same-invocation release is a manager release observation, not proof that the former path currently exists and is empty.",
+    "Staged worker session now derives empty from typed recursive/process/task/release facts rather than a direct cgroup-empty callback; ownership provenance remains explicitly simulated."
+  ],
+  "actualTests": {
+    "groups": [
+      {
+        "group": "process_schema_and_compatibility",
+        "tests": 65,
+        "expected": 65,
+        "exitCode": 0,
+        "passed": true,
+        "logSha256": "d665cdae90cf12fe758062fd30c8c00324e27a99f253b57564e0f5e0ba9e688c"
+      },
+      {
+        "group": "combined_group_sessions",
+        "tests": 5,
+        "expected": 5,
+        "exitCode": 0,
+        "passed": true,
+        "logSha256": "67da5dfb43fb7d584b405b4cb61af8cf3fb93a0104d052af996514d5b2f14b3d"
+      },
+      {
+        "group": "staged_session",
+        "tests": 25,
+        "expected": 25,
+        "exitCode": 0,
+        "reportedSeconds": 2.04,
+        "logSha256": "a299f7decea6897f75f06311f2978b5abf4a96acee42ac6dcde4d53a72dd484c",
+        "passed": true
+      },
+      {
+        "group": "kernel_reader",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "reportedSeconds": 0.04,
+        "logSha256": "fd91a1667fe53864bd7ef5a4672843159b6289539cf0e0e7cc64e2f530b0f919",
+        "passed": true
+      },
+      {
+        "group": "existing_session",
+        "tests": 142,
+        "expected": 142,
+        "exitCode": 0,
+        "reportedSeconds": 6.056,
+        "logSha256": "b465c2ad39a0e3f593ecbd5cfb37ac71c4cffe36b04fbfb5999fb6fc94b4279a",
+        "passed": true
+      }
+    ],
+    "total": 266,
+    "allPassed": true,
+    "batched": true,
+    "previousReceiptPreserved": true
+  },
+  "review": {
+    "status": "completed_read_only",
+    "confirmedP1P2Remaining": 0,
+    "reviewerReranTests": false
+  },
+  "sourceBinding": [
+    {
+      "path": "scoped-process-proof-20261112-a1/process_connection.py",
+      "bytes": 7288,
+      "sha256": "8028e481121011f87d97e79c607ac03199e076e34f806e19fddc4fd9e0899a21"
+    },
+    {
+      "path": "scoped-process-proof-20261112-a1/test_process_proof.py",
+      "bytes": 11640,
+      "sha256": "e8d72b62b3646c39566183a4b5327ecb75b13b965972982cb44a0aa54d88bd0f"
+    },
+    {
+      "path": "scoped-process-proof-20261112-a1/test_session_groups.py",
+      "bytes": 4877,
+      "sha256": "48352b8221239d59abf0f243f219f4051134d5f0e9c86a57428172208d3597b2"
+    },
+    {
+      "path": "scoped-process-proof-20261112-a1/plan.md",
+      "bytes": 2793,
+      "sha256": "669d234d16b67b134b7103898984d1c40b4e9fbe05a6f9e2d96ec890d67c8e13"
+    },
+    {
+      "path": "scoped-job-proof-20261112-a1/job_connection.py",
+      "bytes": 5689,
+      "sha256": "bb8891eaa833c2f3116c711ae8a88d43268a91185fca246688a74730d44ebd0b"
+    },
+    {
+      "path": "scoped-job-proof-20261112-a1/test_job_proof.py",
+      "bytes": 10316,
+      "sha256": "4928b475a1933a496d2390888e039a2463c174d07c27eb2dc8d9ff5ed42f5f07"
+    },
+    {
+      "path": "scoped-job-proof-20261112-a1/test_session_jobs.py",
+      "bytes": 5480,
+      "sha256": "7df44ee180bdb49bb4170497c0191c43bd591a146e0bbede9ab01510939973cd"
+    },
+    {
+      "path": "kernel-staged-session-20261112-a1/staged_backend.py",
+      "bytes": 7969,
+      "sha256": "76c2921bfd2ad58e2f1c1b89c3abfca9f57c8437fc275e698cf11918c884df1d"
+    },
+    {
+      "path": "kernel-staged-session-20261112-a1/test_integration.py",
+      "bytes": 13865,
+      "sha256": "2e77f8c8fbe403099b6ad784414c7a9edf4cd93674332e8bec15cd6de6eb40b6"
+    }
+  ],
+  "testEvidenceNotes": [
+    "Initial new module run failed on missing implementation; not a behavioral red-test proof.",
+    "Cases cover residual descendants, main/control processes outside the cgroup, nonzero/unknown tasks, group release during reads, invocation changes, actual automatic drift sealing, malformed and oversized replies, late enumeration, empty reply cleanup failure, pending jobs and permission/unsupported-method errors.",
+    "All 43 prior job/manager assertions and 2 prior combined session cases are retained against the extension. Final selected batch is 65 schema/compatibility, 5 session, 25 staged, 29 kernel-reader and 142 existing-session cases; no rerun counts accumulated.",
+    "Negative sessions preserve artifacts and failed cleanup at exhausted simulated budget; no deadline extension or uncertain close retry.",
+    "The combined fixture binds a verified test-source import through an exact AST import replacement, not arbitrary source mutation.",
+    "Command limits are decoded-data bounds, not a bound on native bus-library reply allocation before decoding. Native memory/outer watchdog checks remain required."
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "actualSystemBusCalls": 0,
+    "nativeLibraryLoads": 0,
+    "linuxUnitsStarted": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "limitations": [
+    "Only in-memory C ABI/kernel/FIFO replies and simulated timing were used. Windows wall time and simulated deadlines do not prove VPS CPU/memory/runtime limits.",
+    "Manager/library/root/socket provenance, full prepared-unit security profile and installed GetProcesses/TasksCurrent/release semantics still need trusted assembly and separately scoped native validation.",
+    "Cross-property samples are not atomic and do not prevent a future authorized start.",
+    "Public cgroup/job facts are separate from artifact ownership; no native ownership proof is asserted.",
+    "These are selected related suites, not a full product regression or production acceptance.",
+    "Historical AddRef contract failure remains separately recorded, not rerun or resolved."
+  ],
+  "primarySources": [
+    "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/dbus-unit.c",
+    "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/cgroup.c",
+    "https://raw.githubusercontent.com/torvalds/linux/v6.8/fs/kernfs/inode.c",
+    "https://raw.githubusercontent.com/torvalds/linux/v6.8/fs/kernfs/file.c"
+  ],
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized verification only; no private experimental source, process commands, raw errors or credentials."
+}
