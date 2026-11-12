@@ -1,17 +1,29 @@
 # Research pilot: evidence collection and three-role review
 
-Status: local implementation only, not deployed. Batch 1 passed 30 offline
-regression tests. Batch 2 adds independent role handoffs and strict evidence
-gates; run `node --test tests/*.test.cjs` for current offline validation.
-Real model access and live web retrieval have not been verified.
+Status reviewed locally on 2026-11-13. Historical evidence now includes a
+bounded real 1Cat/search/review run through isolated HTTPS research REST and
+the actual workspace panel on 2026-10-23, and a three-file research release on
+2026-10-24. That release is not evidence that the later strict task budgets,
+timeouts, retry/fallback restrictions or multilingual interface are active in
+production. The strict bounds have separate local and selected Linux test
+records. No current service, provider or production task was probed in this
+review. See the [delivery checklist](DELIVERY_READINESS.zh-CN.md) and
+[source-bound audit](verification/2026-11-13-product-delivery-readiness-local-audit.json).
+
+Earlier batches passed 30 offline tests and added independent role handoffs
+and strict evidence gates. Those counts are historical, not the current suite
+total. Run `npm test` for the configured serial regression command; verified
+TLS coverage additionally requires the existing verified `CADDY_TEST_BIN`.
 
 ## Existing dual V100 deployment
 
 The user's existing inference deployment uses llama.cpp and 1Cat. Do not
 replace it, install Ollama, or infer its GPU split from the number of agents.
 Use the existing OpenAI-compatible provider adapter if the deployed API
-supports its chat-completions contract. Exact private base URL, served model
-ID, authentication requirements and compatibility remain to be confirmed.
+supports its chat-completions contract. Historical direct 1Cat model calls
+have passed acceptance; the current private base URL, served model ID,
+authentication and availability must be confirmed from authorized private
+configuration before a new run, not copied from this guide or Open WebUI.
 One endpoint may serve a model spanning both GPUs; two endpoints may serve
 independent models. LACK should not configure the GPUs itself.
 
