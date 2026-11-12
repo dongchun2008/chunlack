@@ -1,0 +1,482 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "stage": "single-production-readonly-preflight",
+  "status": "rejected_data_coverage_incomplete_partial_evidence_preserved",
+  "observedServerUtc": "2026-11-12T22:47:11.704000+00:00",
+  "authorization": {
+    "newSshAttemptsApproved": 1,
+    "sshAttemptsUsed": 1,
+    "maximumLinuxUnits": 0,
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "automaticRetry": false,
+    "authorizationConsumed": true,
+    "permissionToPublish": false
+  },
+  "transport": {
+    "hostKeyValidatedBeforeAuthenticationByPinnedTransport": true,
+    "bindingSha256": "36d423479a032f5ae1c72f91364c008d4d08773e16970a68bdd2b4d3b8bbf02f",
+    "localOuterMilliseconds": 4414.3918,
+    "remoteExitCode": 2,
+    "remoteExecutionSecondsMeasured": null,
+    "remoteHardEnvelopeSeconds": 20,
+    "exitObserved": true,
+    "channelClosedObservedAtCapture": false,
+    "sshCleanupConfirmed": true,
+    "pendingHandles": 0,
+    "cleanupErrors": [],
+    "remoteStderrBytes": 0,
+    "localChildStderrBytes": 60,
+    "localChildStderrBodyRetained": false,
+    "localChildStderrCause": null
+  },
+  "preflight": {
+    "accepted": false,
+    "reason": {
+      "code": "data_coverage_incomplete",
+      "errno": null,
+      "type": "RuntimeError"
+    },
+    "productionReady": false,
+    "finalBaselineComplete": true,
+    "protectedBaselineUnchangedAcrossSnapshots": true,
+    "services": {
+      "chunlack-https.service": {
+        "activeBeforeAndAfter": "active",
+        "pidUnchangedAcrossSnapshots": true,
+        "restartCounterUnchangedAcrossSnapshots": true,
+        "observedNRestarts": "0"
+      },
+      "chunlack-public.service": {
+        "activeBeforeAndAfter": "active",
+        "pidUnchangedAcrossSnapshots": true,
+        "restartCounterUnchangedAcrossSnapshots": true,
+        "observedNRestarts": "0"
+      },
+      "chunlack.service": {
+        "activeBeforeAndAfter": "active",
+        "pidUnchangedAcrossSnapshots": true,
+        "restartCounterUnchangedAcrossSnapshots": true,
+        "observedNRestarts": "0"
+      },
+      "tailscaled.service": {
+        "activeBeforeAndAfter": "active",
+        "pidUnchangedAcrossSnapshots": true,
+        "restartCounterUnchangedAcrossSnapshots": true,
+        "observedNRestarts": "0"
+      }
+    },
+    "configurationHashesBeforeAfterMatch": true,
+    "priorConfigurationHashesMatch": true,
+    "runtimeHashesMatchPrior": true,
+    "knownCodeFiles": {
+      "bytes": 916900,
+      "checked": 57,
+      "matches": true,
+      "mismatches": []
+    },
+    "codeEnumerationExhaustive": false,
+    "dependencies": {
+      "archiveIntegrityVerified": false,
+      "checked": 257,
+      "manifestSetSha256": "d95ff73f962b04cd0a230192adb9c2c2ae7973ddbc61c1133bb7185530d0f9d1",
+      "mismatches": [],
+      "present": 257,
+      "versionsMatch": true
+    },
+    "dependencyFingerprint": {
+      "complete": true,
+      "fingerprint": {
+        "bytes": 38850588,
+        "files": 4462,
+        "sha256": "5d1e5e56e0ce865a41e881262d72ee711225fb3940b9556416a30cf6dcc639a0"
+      },
+      "status": "complete"
+    },
+    "directoryMetadata": {
+      "/opt/chunlack-public/current": {
+        "bytes": 4096,
+        "directory": true,
+        "gid": 987,
+        "links": 11,
+        "modeOctal": "0o750",
+        "present": true,
+        "regular": false,
+        "symlink": false,
+        "uid": 0
+      },
+      "/opt/chunlack-public/current/node_modules": {
+        "bytes": 12288,
+        "directory": true,
+        "gid": 987,
+        "links": 233,
+        "modeOctal": "0o750",
+        "present": true,
+        "regular": false,
+        "symlink": false,
+        "uid": 0
+      },
+      "/var/backups": {
+        "bytes": 4096,
+        "directory": true,
+        "gid": 0,
+        "links": 10,
+        "modeOctal": "0o755",
+        "present": true,
+        "regular": false,
+        "symlink": false,
+        "uid": 0
+      },
+      "/var/lib/chunlack-public": {
+        "bytes": 4096,
+        "directory": true,
+        "gid": 987,
+        "links": 11,
+        "modeOctal": "0o700",
+        "present": true,
+        "regular": false,
+        "symlink": false,
+        "uid": 996
+      },
+      "/var/lib/chunlack-public/db": {
+        "bytes": 4096,
+        "directory": true,
+        "gid": 987,
+        "links": 2,
+        "modeOctal": "0o700",
+        "present": true,
+        "regular": false,
+        "symlink": false,
+        "uid": 996
+      }
+    },
+    "dataMetadataEstimate": {
+      "bytes": 7808901,
+      "consistentSnapshot": false,
+      "countsAreLowerBounds": true,
+      "coverageComplete": false,
+      "entries": 302,
+      "files": 80,
+      "maximumDepth": 8,
+      "maximumEntries": 4096,
+      "metadataOnly": true,
+      "specialEntries": 0,
+      "symlinksNotFollowed": 0,
+      "truncatedDirectories": 146,
+      "truncationReasons": [
+        "data_depth_limit"
+      ]
+    },
+    "backup": {
+      "backupCreated": false,
+      "estimateCoverageComplete": false,
+      "estimateOnlyNotBackupProof": true,
+      "estimatedRequiredBytes": null,
+      "filesystemAvailableBytes": 28506013696,
+      "observedRequiredBytesLowerBound": 83643566,
+      "restoreTested": false,
+      "spaceAboveEstimate": null
+    },
+    "historicalReleaseRootObservations": [
+      {
+        "rootIndex": 1,
+        "controls": {
+          "controllers/2026-10-17/release-discovery-safe-20261017.py": {
+            "present": true,
+            "sha256": "63ed0731c21411dbe91fbb7a4a7e2f5330df80a49f490f29c47342b7098cdcc1",
+            "matchesLocalFrozenSource": true
+          },
+          "controllers/2026-10-19/launch-controlled-release.py": {
+            "present": true,
+            "sha256": "8f190649815904f1570e57577c2e85f5fc56a7fb52cbbafe7f9d5ead98289d6c",
+            "matchesLocalFrozenSource": true
+          },
+          "controllers/2026-10-23/readonly-code-preflight.py": {
+            "present": true,
+            "sha256": "b704ceefa1bf917c8ce0c18a439d1b50099f6e723e7fcc3d5f892698088bd1e3",
+            "matchesLocalFrozenSource": true
+          },
+          "controllers/2026-10-25/i18n-release-gate.py": {
+            "present": true,
+            "sha256": "95ab206d9f0dcf1bbcb208e600e7c24a94de4218a1025738a1844e67d8cb7af3",
+            "matchesLocalFrozenSource": false
+          },
+          "launch.py": {
+            "present": true,
+            "sha256": "755a8e97bdb486025e06ae8a96cd1b36c54fb34741c057b461a167263ddb7fbd",
+            "matchesLocalFrozenSource": false
+          },
+          "release.py": {
+            "present": true,
+            "sha256": "90b4e09c06eaa757f93a7edc5fb6d5031b0ddff2dd1b98890adedf3b53dc8226",
+            "matchesLocalFrozenSource": false
+          }
+        },
+        "proof": {
+          "status": "passed",
+          "sha256": "eb7daeaefce47f1f957cab7266a00fbed27434aee221ee96ceee7f889061a05d",
+          "timestampContractValid": true,
+          "createdAtMs": 1793917353713,
+          "expiresAtMs": 1793920953713,
+          "serverNowMs": 1794523631686,
+          "freshAtObservation": false,
+          "fullBindingsVerified": false,
+          "productionApproval": false
+        }
+      },
+      {
+        "rootIndex": 2,
+        "controls": {
+          "controllers/2026-10-17/release-discovery-safe-20261017.py": {
+            "present": true,
+            "sha256": "63ed0731c21411dbe91fbb7a4a7e2f5330df80a49f490f29c47342b7098cdcc1",
+            "matchesLocalFrozenSource": true
+          },
+          "controllers/2026-10-19/launch-controlled-release.py": {
+            "present": true,
+            "sha256": "8f190649815904f1570e57577c2e85f5fc56a7fb52cbbafe7f9d5ead98289d6c",
+            "matchesLocalFrozenSource": true
+          },
+          "controllers/2026-10-23/readonly-code-preflight.py": {
+            "present": true,
+            "sha256": "b704ceefa1bf917c8ce0c18a439d1b50099f6e723e7fcc3d5f892698088bd1e3",
+            "matchesLocalFrozenSource": true
+          },
+          "controllers/2026-10-25/i18n-release-gate.py": {
+            "present": true,
+            "sha256": "95ab206d9f0dcf1bbcb208e600e7c24a94de4218a1025738a1844e67d8cb7af3",
+            "matchesLocalFrozenSource": false
+          },
+          "launch.py": {
+            "present": true,
+            "sha256": "755a8e97bdb486025e06ae8a96cd1b36c54fb34741c057b461a167263ddb7fbd",
+            "matchesLocalFrozenSource": false
+          },
+          "release.py": {
+            "present": true,
+            "sha256": "90b4e09c06eaa757f93a7edc5fb6d5031b0ddff2dd1b98890adedf3b53dc8226",
+            "matchesLocalFrozenSource": false
+          }
+        },
+        "proof": {
+          "status": "passed",
+          "sha256": "eb7daeaefce47f1f957cab7266a00fbed27434aee221ee96ceee7f889061a05d",
+          "timestampContractValid": true,
+          "createdAtMs": 1793917353713,
+          "expiresAtMs": 1793920953713,
+          "serverNowMs": 1794523631692,
+          "freshAtObservation": false,
+          "fullBindingsVerified": false,
+          "productionApproval": false
+        }
+      },
+      {
+        "rootIndex": 3,
+        "controls": {
+          "controllers/2026-10-17/release-discovery-safe-20261017.py": {
+            "present": true,
+            "sha256": "63ed0731c21411dbe91fbb7a4a7e2f5330df80a49f490f29c47342b7098cdcc1",
+            "matchesLocalFrozenSource": true
+          },
+          "controllers/2026-10-19/launch-controlled-release.py": {
+            "present": true,
+            "sha256": "8f190649815904f1570e57577c2e85f5fc56a7fb52cbbafe7f9d5ead98289d6c",
+            "matchesLocalFrozenSource": true
+          },
+          "controllers/2026-10-23/readonly-code-preflight.py": {
+            "present": true,
+            "sha256": "b704ceefa1bf917c8ce0c18a439d1b50099f6e723e7fcc3d5f892698088bd1e3",
+            "matchesLocalFrozenSource": true
+          },
+          "controllers/2026-10-25/i18n-release-gate.py": {
+            "present": true,
+            "sha256": "95ab206d9f0dcf1bbcb208e600e7c24a94de4218a1025738a1844e67d8cb7af3",
+            "matchesLocalFrozenSource": false
+          },
+          "launch.py": {
+            "present": true,
+            "sha256": "755a8e97bdb486025e06ae8a96cd1b36c54fb34741c057b461a167263ddb7fbd",
+            "matchesLocalFrozenSource": false
+          },
+          "release.py": {
+            "present": true,
+            "sha256": "90b4e09c06eaa757f93a7edc5fb6d5031b0ddff2dd1b98890adedf3b53dc8226",
+            "matchesLocalFrozenSource": false
+          }
+        },
+        "proof": {
+          "status": "passed",
+          "sha256": "69ecec5fba7afeb72acc5beca7b69d28ba80189311d806bad8d7a0b8576cbb90",
+          "timestampContractValid": true,
+          "createdAtMs": 1793836216589,
+          "expiresAtMs": 1793839816589,
+          "serverNowMs": 1794523631697,
+          "freshAtObservation": false,
+          "fullBindingsVerified": false,
+          "productionApproval": false
+        }
+      },
+      {
+        "rootIndex": 4,
+        "controls": {
+          "controllers/2026-10-17/release-discovery-safe-20261017.py": {
+            "present": true,
+            "sha256": "63ed0731c21411dbe91fbb7a4a7e2f5330df80a49f490f29c47342b7098cdcc1",
+            "matchesLocalFrozenSource": true
+          },
+          "controllers/2026-10-19/launch-controlled-release.py": {
+            "present": true,
+            "sha256": "8f190649815904f1570e57577c2e85f5fc56a7fb52cbbafe7f9d5ead98289d6c",
+            "matchesLocalFrozenSource": true
+          },
+          "controllers/2026-10-23/readonly-code-preflight.py": {
+            "present": true,
+            "sha256": "b704ceefa1bf917c8ce0c18a439d1b50099f6e723e7fcc3d5f892698088bd1e3",
+            "matchesLocalFrozenSource": true
+          },
+          "controllers/2026-10-25/i18n-release-gate.py": {
+            "present": true,
+            "sha256": "95ab206d9f0dcf1bbcb208e600e7c24a94de4218a1025738a1844e67d8cb7af3",
+            "matchesLocalFrozenSource": false
+          },
+          "launch.py": {
+            "present": true,
+            "sha256": "755a8e97bdb486025e06ae8a96cd1b36c54fb34741c057b461a167263ddb7fbd",
+            "matchesLocalFrozenSource": false
+          },
+          "release.py": {
+            "present": true,
+            "sha256": "90b4e09c06eaa757f93a7edc5fb6d5031b0ddff2dd1b98890adedf3b53dc8226",
+            "matchesLocalFrozenSource": false
+          }
+        },
+        "proof": {
+          "status": "passed",
+          "sha256": "8a09e5cdc742e5755a89b3068fbb5a796c28fc45b5587fdadbfc767322e4f710",
+          "timestampContractValid": true,
+          "createdAtMs": 1793500875039,
+          "expiresAtMs": 1793504475039,
+          "serverNowMs": 1794523631704,
+          "freshAtObservation": false,
+          "fullBindingsVerified": false,
+          "productionApproval": false
+        }
+      }
+    ],
+    "deployedFormalEntryTypedPolicy": null,
+    "proposedDestinationsUnusedAtObservation": true
+  },
+  "localPreparation": {
+    "finalTargetedTests": 8,
+    "passed": 8,
+    "seconds": 0.005,
+    "assembledBindingVerified": true,
+    "transportRunnerEntryAndHardDeadlinesUnchanged": true,
+    "originalDepth8CoverageRefusalPreserved": true,
+    "fixedFindings": [
+      "preserve original observation error alongside final baseline error",
+      "preserve nested ResourceFailure cleanup details",
+      "count all64 matching release roots before permission selection"
+    ]
+  },
+  "independentReview": {
+    "sourceAndAssembledReceiptReview": true,
+    "blockingRemainingP1P2": 0,
+    "reviewerRanCommandsOrNetworkOrWroteFiles": false,
+    "receiptEqualsTransportDecodedAndOutcomeEmbedded": true,
+    "failureNotReclassifiedAsPassed": true
+  },
+  "evidenceBindings": [
+    {
+      "name": "preparation.json",
+      "bytes": 592,
+      "sha256": "458b41928b3d8805439a25d77668bfcde35dcbae6e08f119ae4ffd9175ae5042"
+    },
+    {
+      "name": "binding.json",
+      "bytes": 1180,
+      "sha256": "36d423479a032f5ae1c72f91364c008d4d08773e16970a68bdd2b4d3b8bbf02f"
+    },
+    {
+      "name": "local-verification.json",
+      "bytes": 368,
+      "sha256": "828938e31bef7f6d9b0c1192206b59655fe6a22a54404533d34b28c041fbcc0a"
+    },
+    {
+      "name": "outer-result.json",
+      "bytes": 295,
+      "sha256": "3570ee8245688c4d90338985f9abaf1af2810869d92c2b9aaf4fca21586db051"
+    },
+    {
+      "name": "receipt.json",
+      "bytes": 15044,
+      "sha256": "432ab352815c0b952e8ce06e92e56e95a1c9187b487968486e189d9a1e6d6ea6"
+    },
+    {
+      "name": "transport.json",
+      "bytes": 20299,
+      "sha256": "7c794628f094564a96f50ca4a55fcf6e5cf02a7c75f1c2fbff77a0bbb143c0d4"
+    },
+    {
+      "name": "outcome.json",
+      "bytes": 15336,
+      "sha256": "f6511bb082214e74362326a4aaae68b21531ded021b9ce720cb5a05128df4cfb"
+    },
+    {
+      "name": "ssh-attempt.json",
+      "bytes": 147,
+      "sha256": "c44e56827abf8a802e282ac17663c4f5bd76d32c016859f17600c5493b31ee1b"
+    },
+    {
+      "name": "ssh-cleanup.json",
+      "bytes": 525,
+      "sha256": "8e5069e3529d23d0e303ee204ecffe8f95edf636df1f4002c4db19151ecb60bf"
+    },
+    {
+      "name": "remote_collect.py",
+      "bytes": 33976,
+      "sha256": "b2d5e0cc69f70e15db9ef47ce50d9f5a971b83edd39c333b243daf5345c145f7"
+    },
+    {
+      "name": "extra.py",
+      "bytes": 5311,
+      "sha256": "382380bf143f5b7c3ae28a46a50ea67fa495daba79380826df83ca658686baed"
+    }
+  ],
+  "limitations": [
+    "known57 source checks do not prove absence of unknown additional files",
+    "dependency fingerprint is content evidence, not package archive provenance",
+    "146 depth8 truncations leave required backup capacity unknown despite free space",
+    "inspected4 historical proofs expired; uninspected proofs not classified",
+    "historical release directories do not establish installed formal-entry binding or CPU policy",
+    "service/config snapshot equality does not prove continuous health or real Relay forwarding quality",
+    "persisted outcome is provisional and failed; outer terminal failure plus receipt are authoritative",
+    "remote captured channel-close false precedes confirmed owned session closure; no kernel process census claimed",
+    "local60byte child stderr was not retained, so its contents/cause cannot be inferred"
+  ],
+  "scopePreserved": {
+    "remoteExplicitBusinessOrConfigurationOrCodeFileWrites": false,
+    "linuxUnitsCreated": 0,
+    "businessDatabaseContentsRead": false,
+    "servicesStartedStoppedOrRestarted": false,
+    "realModelCalls": 0,
+    "externalAgentMessages": 0,
+    "credentialsChanged": false,
+    "credentialContentsLoggedOrCommitted": false,
+    "grantsChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "productionPublished": false
+  },
+  "remainingGates": [
+    "complete native metadata-only data coverage and actual candidate allocation bound",
+    "production-bound release controller/input/source manifest",
+    "fresh exact-binding database-copy compatibility proof",
+    "separately approved consistent backup and controlled release maintenance",
+    "post-release human/provider/research acceptance and external-Agent quiet-route/Muse delivery"
+  ],
+  "productionReady": false,
+  "fullDeliveryComplete": false
+}
