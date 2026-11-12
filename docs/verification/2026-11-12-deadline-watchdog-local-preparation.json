@@ -1,0 +1,351 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "stage": "independent_deadline_watchdog_policy_local_preparation",
+  "status": "context_adapted_related_regressions_and_focused_review_passed",
+  "implementation": [
+    "One controller10s absolute envelope plus a separate2s supervisor reclamation candidate window;0.1s reserved inside it for handle closure. No existing native quota or runtime setting was changed.",
+    "Register a returned owned launch handle before late checks. Independently supplied identity binds fixed nonce-derived controller unit/cgroup, PID/startTicks/invocation before group termination is permitted.",
+    "Unverified identity permits only the already-owned direct handle to be handled. A future native driver must enforce pidfd/cgroupfd ownership and must never reopen a kill path from child JSON.",
+    "Separate receipt validation, process exit, fresh group emptiness and physical close-return facts. Late new activity invalidates prior acceptance and requests at most one still-owned termination.",
+    "Private stdout64KiB/stderr4KiB,4KiB per poll,512poll bound; strict metadata and JSON bindings. Preserve both consumed streams before reporting overflow or malformed poll metadata.",
+    "Initial clock failures/interruption produce reports without launching. Preserve original interruption object and separate cleanup errors; unknown termination/close operations are not retried.",
+    "Actual pinned envelope/library/protocol code is exercised through a same-process memory driver; failed inner results cannot be promoted by a clean transport exit."
+  ],
+  "actualTests": {
+    "groups": [
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "wallSeconds": 3.737,
+        "fixtureContext": false,
+        "workerClockBinding": false,
+        "logSha256": "48fd4c9713e3161e29125df9fb95c55fdfb4550a855e39241c3a1c380946fcf7",
+        "passed": true
+      },
+      {
+        "group": "provider",
+        "tests": 32,
+        "expected": 32,
+        "exitCode": 0,
+        "wallSeconds": 40.97,
+        "fixtureContext": true,
+        "workerClockBinding": false,
+        "logSha256": "3872f5e72b5b0d7e4b9037990c4d9e1bd2777d64e3f58acd91cb0a87c5f98dda",
+        "passed": true
+      },
+      {
+        "group": "endpoint",
+        "tests": 37,
+        "expected": 37,
+        "exitCode": 0,
+        "wallSeconds": 18.803,
+        "fixtureContext": true,
+        "workerClockBinding": true,
+        "logSha256": "c5bb053db2e77311b48c9494780f8b90163c8a6f51f949d132233a20975243ec",
+        "passed": true
+      },
+      {
+        "group": "session",
+        "tests": 142,
+        "expected": 142,
+        "exitCode": 0,
+        "wallSeconds": 16.987,
+        "fixtureContext": true,
+        "workerClockBinding": true,
+        "logSha256": "75d175cf2c5a7eba3c0da5650e3b33960259da2aad231d4b7924fd0e5720779f",
+        "passed": true
+      },
+      {
+        "group": "original_worker",
+        "tests": 110,
+        "expected": 110,
+        "exitCode": 0,
+        "wallSeconds": 1.504,
+        "fixtureContext": true,
+        "workerClockBinding": false,
+        "logSha256": "40a1fa6dc1db15afc9d86b68e52f799918a67b8ba2a8c918960fec768f80ce19",
+        "passed": true
+      }
+    ],
+    "total": 355,
+    "allPassed": true
+  },
+  "review": {
+    "status": "independent_read_only_review_completed",
+    "confirmedP1P2RemainingInScope": 0,
+    "reviewerExecutedTests": false,
+    "closedFindings": [
+      "Consumed stderr lost when stdout overflowed in the same poll",
+      "Legacy unique-name fake ABI callback retained-buffer lifetime defect"
+    ],
+    "additionalRedGreenRepairs": [
+      "Close reserve after failed termination",
+      "Initial clock failure/interruption report",
+      "Fresh late group activity reclamation",
+      "Malformed poll metadata stream retention",
+      "Legacy read_basic fake string pointer lifetime"
+    ]
+  },
+  "sourceBinding": [
+    {
+      "path": "deadline-watchdog-20261112-a1/watchdog.py",
+      "bytes": 11841,
+      "sha256": "a21b45128fdab2cc398ef5e2366e25d816b633a12327ac99c7c252c45cbd7b6f"
+    },
+    {
+      "path": "deadline-watchdog-20261112-a1/test_watchdog.py",
+      "bytes": 14616,
+      "sha256": "94ff0892c7f5a1ea2be3def3640e81428db5768877a0ed890337f9a620f8b544"
+    },
+    {
+      "path": "deadline-watchdog-20261112-a1/test_envelope_integration.py",
+      "bytes": 4680,
+      "sha256": "8b3ba56d3a1c74ef1aab24f60cb9b490c138bf24deb8aa269fe31bf614a30d40"
+    },
+    {
+      "path": "deadline-watchdog-20261112-a1/fixture_abi.py",
+      "bytes": 5723,
+      "sha256": "a8cd2a155701d9a63605ada8fab1e141087558a18c0762cbbfdff3b86245f31f"
+    },
+    {
+      "path": "deadline-watchdog-20261112-a1/test_fixture_abi.py",
+      "bytes": 5117,
+      "sha256": "466fb761253b73370f8f8edcb14b409c5fd7dcd343149218c9333e9fd008aacb"
+    },
+    {
+      "path": "deadline-watchdog-20261112-a1/plan.md",
+      "bytes": 4900,
+      "sha256": "474182a48e67b357f5ad15a5cb9f7e0dd0ec197a4f2d9b799abab18cd1f329ca"
+    },
+    {
+      "path": "deadline-watchdog-20261112-a1/LOCAL_HANDOFF.md",
+      "bytes": 2799,
+      "sha256": "2582a5d4236ea86bf2675ee541866cd076a048c78c40dcc533cce2849c2db395"
+    },
+    {
+      "path": "native-persistent-bus-local-20261108-d2/test_abi_wire.py",
+      "bytes": 13859,
+      "sha256": "c5e8ea6fcf271691422ee037a9ca58eadb1286722db237775941c9713652488f"
+    },
+    {
+      "path": "leased-library-provider-20261112-a1/provider.py",
+      "bytes": 6906,
+      "sha256": "1aa2efe148e2063319d9a8c75db201133abbc16486e641cd474a558d4476f115"
+    },
+    {
+      "path": "leased-library-provider-20261112-a1/fixture_clock.py",
+      "bytes": 2590,
+      "sha256": "de8498adb3dc310d5ef0a62772a8f0671b1b8a6f7013cfb80fead0756d7dcd6e"
+    },
+    {
+      "path": "leased-library-provider-20261112-a1/test_provider.py",
+      "bytes": 9441,
+      "sha256": "4a160bc57197541113c06b56c1b02a48ed029c7e772d0c634df0ed635858251b"
+    },
+    {
+      "path": "leased-library-provider-20261112-a1/test_clock_binding.py",
+      "bytes": 2694,
+      "sha256": "65ba9e60fee3e92bf157d979063789eefba59cc47120f17e7cad553ce0eae8fe"
+    },
+    {
+      "path": "leased-library-provider-20261112-a1/plan.md",
+      "bytes": 4065,
+      "sha256": "42591596a597f5c8dd5c55acf48a5b25098157d3b7c349b5c31b44073048be71"
+    },
+    {
+      "path": "leased-library-provider-20261112-a1/LOCAL_HANDOFF.md",
+      "bytes": 2034,
+      "sha256": "1b346b1c0f62d0ed3b5191d22f9dc2c7f514e162d83ac7a5b5266efc404649a0"
+    },
+    {
+      "path": "native-connection-live-20261110-a3/worker.py",
+      "bytes": 12293,
+      "sha256": "0c5415d43de0abd50557653db644e7bbfda3635acec25673cf6245ee5e35af90"
+    },
+    {
+      "path": "native-persistent-bus-local-20261108-d2/persistent_bus.py",
+      "bytes": 26525,
+      "sha256": "366ec142f979195d35170a3c76eca23a3bb48e4fd2fcb3c8cc980aa0b422de52"
+    },
+    {
+      "path": "native-worker-session-20261112-a1/test_worker_integration.py",
+      "bytes": 13166,
+      "sha256": "cc0c7be6ea3348ed5a62bf55658907eff88bf4d8ce7088e054588f856e926967"
+    },
+    {
+      "path": "endpoint-envelope-20261112-a1/envelope.py",
+      "bytes": 6389,
+      "sha256": "a872c6fbeb25c625731d1271801bb20ebaf015a910d05fdc883a82c62c570e64"
+    },
+    {
+      "path": "endpoint-envelope-20261112-a1/test_envelope.py",
+      "bytes": 10587,
+      "sha256": "590139ae5b80152bc4951ad93829a0753909f43a2a7b72094d2f93cd9b65c153"
+    },
+    {
+      "path": "endpoint-envelope-20261112-a1/plan.md",
+      "bytes": 1742,
+      "sha256": "f9da3fda2d0c2774249a64913778e7e20eff84c9b7b190a8fa34852589c86a4b"
+    },
+    {
+      "path": "endpoint-envelope-20261112-a1/LOCAL_HANDOFF.md",
+      "bytes": 2117,
+      "sha256": "280dc0f74bfe6ea38b1649e5284217d3707d61ef688d590a8079bcdc368d65f3"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/provenance.py",
+      "bytes": 7416,
+      "sha256": "dd84896826478ecdf5477e9426523a327ee783e449f50788baa33b009baaaa2c"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/endpoint.py",
+      "bytes": 8717,
+      "sha256": "a79cbc4b65ca2283a3ad3c170ce9171ea475f31c817d7deaddb0885df63d9ad1"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/test_provenance.py",
+      "bytes": 8529,
+      "sha256": "556b64ae963f6062afd647716672185708a8d1bfdc763dfc436b53822384a42c"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/test_endpoint.py",
+      "bytes": 10548,
+      "sha256": "6ee4aec8fff4cec9a7e9c269c943b2a8d482d0fd490df395c73a8fdb7463d034"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/test_session_endpoint.py",
+      "bytes": 5534,
+      "sha256": "15df280564e87c7b76b283ce2840d2a12d65bdbd583809206302b00f1bd98c71"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/plan.md",
+      "bytes": 3500,
+      "sha256": "b65bb9e5490a71020fdba051abb11246de94a9bc68637ada596d661669ac48aa"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/LOCAL_HANDOFF.md",
+      "bytes": 3019,
+      "sha256": "97c01250ad6622bc657a6b2ed2a4cf4a7fb30f7bf12d04e91538c40ebffdd1e7"
+    },
+    {
+      "path": "pid1-parent-lease-20261112-a1/parent_lease.py",
+      "bytes": 7359,
+      "sha256": "1f5d09827d6867f549a2f2741b68a4345396cf7865697688f9f7380cf33152f8"
+    },
+    {
+      "path": "pid1-parent-lease-20261112-a1/test_parent_lease.py",
+      "bytes": 10152,
+      "sha256": "0780ab715d8823339b0af6f39cbdfb6fed8229f8dd331188e166ec7c0e74e160"
+    },
+    {
+      "path": "manager-owner-binding-20261112-a1/manager_connection.py",
+      "bytes": 7000,
+      "sha256": "6945e4a84509bb1985e8f8c3655439a0595b3237f3fcd2645a23a6cfa00c0674"
+    },
+    {
+      "path": "manager-owner-binding-20261112-a1/test_manager.py",
+      "bytes": 12775,
+      "sha256": "d5197400a8af087bc34440b98775eab54e8eebd80c9d2095a3e1a33878b142a4"
+    },
+    {
+      "path": "manager-owner-binding-20261112-a1/test_session_manager.py",
+      "bytes": 2737,
+      "sha256": "b2e767c38ead554ef1a5327b3026002f85ae10174461ef4afe3cf9b2f395fbd3"
+    },
+    {
+      "path": "native-worker-session-20261112-a1/linux_scope.py",
+      "bytes": 18143,
+      "sha256": "44b063dc333b6e30aea618f75232817a74f7c6ff9e17012c547d7880ce8f6077"
+    },
+    {
+      "path": "native-worker-session-20261112-a1/backend.py",
+      "bytes": 14687,
+      "sha256": "282932c2cd6cece60d6de4ff295ad27c6c4fa3b1ea77ccad3d93e67b6417ecaa"
+    },
+    {
+      "path": "native-worker-session-20261112-a1/session.py",
+      "bytes": 12409,
+      "sha256": "7fd047c0d968f393b500489b8923537059edf9ad74c12d1b979eb94dd213d1e1"
+    },
+    {
+      "path": "kernel-staged-session-20261112-a1/staged_backend.py",
+      "bytes": 7969,
+      "sha256": "76c2921bfd2ad58e2f1c1b89c3abfca9f57c8437fc275e698cf11918c884df1d"
+    },
+    {
+      "path": "kernel-identity-reader-20261112-a1/reader.py",
+      "bytes": 11299,
+      "sha256": "518a2b429d2f525eae89a23687b624ce2aca48d8ded9d328c22ca88afba83b09"
+    }
+  ],
+  "testContext": {
+    "currentStageCases": 34,
+    "composition": "25 watchdog-state cases,2 pinned-envelope composition cases,7 fake-ABI/context cases.",
+    "changes": "Exact source-bound test constructor contexts fix fake string/object-path/unique-name pointers; optional worker-instance fake-clock binding is explicitly marked per group.",
+    "preserved": "Original assertions, timeout literals, outer90s per test-process limit and frozen source files remain unchanged; production/native ABI callbacks are not patched.",
+    "restoration": "Refuse an existing profiler, restore new per-method memory patches, retain original body error and continue unaffected restores after drift.",
+    "counting": "Final355 is34+32+37+142+110. Earlier354 and other reruns are not added."
+  },
+  "preservedFailure": {
+    "batch": {
+      "groups": [
+        {
+          "group": "watchdog",
+          "tests": 25,
+          "expected": 25,
+          "exitCode": 0,
+          "wallSeconds": 3.006,
+          "logSha256": "ce16c50d022d17b9dc37de7e65422368eccddc6d1e0ac1fcde7a4d435f9e0887",
+          "passed": true
+        },
+        {
+          "group": "provider",
+          "tests": 32,
+          "expected": 32,
+          "exitCode": 1,
+          "wallSeconds": 14.868,
+          "logSha256": "b289a6221eb766ceb87b93bda909e3e64acc5967dee10161ef4f8a8c83c498d7",
+          "passed": false
+        }
+      ],
+      "total": 57,
+      "allPassed": false
+    },
+    "disposition": "Earlier failed57 batch remains failed evidence, not relabeled. Focused trace identified Service.ExecStartEx comparison; deterministic pointer-ownership regressions independently proved unsafe temporary-byte callback pointers. Exact retroactive attribution of every historical failure is not claimed."
+  },
+  "operations": {
+    "sshAttempts": 0,
+    "actualSystemBusCalls": 0,
+    "libsystemdLoads": 0,
+    "nativeDriverLaunches": 0,
+    "nativeGroupTerminations": 0,
+    "linuxUnitsStarted": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "limitations": [
+    "No concrete Linux supervision driver or physical process separation/preemption is supplied. A blocking callback cannot be physically preempted by this in-process policy alone.",
+    "A future driver must enforce nonblocking OS I/O and owned pidfd/cgroupfd targeting, retain handles from partial startup, and bind fixed source/nonce/privilege/namespace proofs.",
+    "All participating processes, including systemd-created business units, must fit an explicitly approved total resource budget; a parent limit alone is not aggregate proof.",
+    "The2s outer candidate reserve is not permission to extend any previously authorized remote unit or test quota. No remote unit was used.",
+    "Supervisor cleanup confirmation concerns its own acquired process/group/handles and does not replace inner task/business-unit cleanup proof.",
+    "No native scheduling/resource/version/ABI enforcement, model validation, external-Agent acceptance or production readiness is inferred.",
+    "Historical frozen AddRef failure and earlier unclassified diagnostics remain preserved; no product-wide green or completed delivery claim."
+  ],
+  "physicalPreemptionProven": false,
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized verification only; private implementation, raw stream/receipt data, diagnostics and credentials remain local."
+}
