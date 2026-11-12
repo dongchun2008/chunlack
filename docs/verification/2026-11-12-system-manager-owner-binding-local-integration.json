@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "stage": "system_manager_owner_binding_local_integration",
+  "status": "selected_local_regressions_and_read_only_review_passed",
+  "implementation": [
+    "Bind own-unit RPC traffic to a validated unique manager connection; query owner before/after UID0/PID1 checks on the same simulated bus.",
+    "Reuse the hash-pinned request lifecycle through a narrowly verified AST destination adaptation; no new native ABI symbols or loader.",
+    "Reject owner drift without reconnecting or rebinding. Recheck manager identity around profile and quiescence proofs; stale success is cleared.",
+    "After drift, cleanup may only target the old bound owner. Known-job ownership is verified before cancellation; foreign jobs and arbitrary metadata remain denied.",
+    "Integrated original-worker sessions verify one bus, READY-to-GO identity drift denial, and artifact retention on failure."
+  ],
+  "actualTests": {
+    "groups": [
+      {
+        "group": "manager_binding",
+        "tests": 24,
+        "expected": 24,
+        "exitCode": 0,
+        "reportedSeconds": 2.289,
+        "logSha256": "8ce5ea29de655162811f0cd6543fe4583e2ca05042c17dfa823cbbf8f1a22fee",
+        "passed": true
+      },
+      {
+        "group": "effective_profile",
+        "tests": 95,
+        "expected": 95,
+        "exitCode": 0,
+        "reportedSeconds": 5.724,
+        "logSha256": "483a58f1052dabcd8a314d31a21400359a167de77cdf1457a1f3428e11c6a645",
+        "passed": true
+      },
+      {
+        "group": "staged_session",
+        "tests": 25,
+        "expected": 25,
+        "exitCode": 0,
+        "reportedSeconds": 1.84,
+        "logSha256": "c852a9c055ba2898ff629fdeac3d26916915f33ff16c662d184dd8cf7c9f6425",
+        "passed": true
+      },
+      {
+        "group": "kernel_reader",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "reportedSeconds": 0.037,
+        "logSha256": "33ac99ba22352b8ceffa97e19781699a47eedac4553f8c8118df3f7def166805",
+        "passed": true
+      },
+      {
+        "group": "existing_session",
+        "tests": 142,
+        "expected": 142,
+        "exitCode": 0,
+        "reportedSeconds": 5.066,
+        "logSha256": "2603abf6ab1b712095114bbad692757c93f41e525a80aba9c32cd63f61e7e622",
+        "passed": true
+      }
+    ],
+    "total": 315,
+    "allPassed": true
+  },
+  "sourceBinding": [
+    {
+      "path": "manager-owner-binding-20261112-a1/manager_connection.py",
+      "bytes": 7000,
+      "sha256": "6945e4a84509bb1985e8f8c3655439a0595b3237f3fcd2645a23a6cfa00c0674"
+    },
+    {
+      "path": "manager-owner-binding-20261112-a1/test_manager.py",
+      "bytes": 12775,
+      "sha256": "d5197400a8af087bc34440b98775eab54e8eebd80c9d2095a3e1a33878b142a4"
+    },
+    {
+      "path": "manager-owner-binding-20261112-a1/test_session_manager.py",
+      "bytes": 2737,
+      "sha256": "b2e767c38ead554ef1a5327b3026002f85ae10174461ef4afe3cf9b2f395fbd3"
+    },
+    {
+      "path": "manager-owner-binding-20261112-a1/plan.md",
+      "bytes": 1826,
+      "sha256": "e797cb76d22a7670a61a3d0c36b305056d3d5c972e7f74daaa990e9ef1a1e17a"
+    },
+    {
+      "path": "effective-unit-profile-20261112-a1/profile_connection.py",
+      "bytes": 5197,
+      "sha256": "4f9e89fde569d896f4000003a6b05781e7079c89064141c113d01e65d4e30319"
+    },
+    {
+      "path": "effective-unit-profile-20261112-a1/test_session_profile.py",
+      "bytes": 3442,
+      "sha256": "e675cb60bb4ad8f6188aab982d4fa73c32f91bdcf877e926f9e621d62ca36f98"
+    },
+    {
+      "path": "scoped-manager-connection-20261112-a1/scoped_connection.py",
+      "bytes": 13875,
+      "sha256": "bec212d876904e41e794bf6c956e5740e7cab27a2bb1e5d946bdf3c37164decf"
+    }
+  ],
+  "review": {
+    "status": "completed_read_only",
+    "confirmedP1P2Remaining": 0,
+    "reviewerReranTests": false,
+    "closedFindings": [
+      "Final profile/quiescence authority recheck",
+      "Known-job ownership read needed for restricted cancellation"
+    ]
+  },
+  "testEvidenceNotes": [
+    "New manager group contains19 manager tests and5 integrated session tests; selected baseline groups contain95,25,29,142 cases.",
+    "Counts describe the final batch only and are not accumulated across reruns.",
+    "Initial native-call AST arity guard failed before simulated traffic and was corrected from7 to6. No native ABI was called.",
+    "Behavioral regressions cover mid-proof owner handover and cleanup ownership checks.",
+    "Logs and source bytes were independently rehashed after completion. No rerun was needed to recover a truncated tool response.",
+    "Earlier stderr repairs have a separate verification record; this broader checkpoint does not replace their original evidence."
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "actualSystemBusCalls": 0,
+    "nativeLibraryLoads": 0,
+    "linuxUnitsStarted": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "limitations": [
+    "Only local in-memory ABI, manager, kernel and FIFO doubles were used.",
+    "Manager UID/PID metadata does not establish bus socket, library or root-view provenance; native assembly and validation remain pending.",
+    "No native compatibility, VPS time/resource acceptance, full product regression or production readiness is inferred.",
+    "Historical frozen AddRef contract failure remains separately recorded, not rerun or resolved."
+  ],
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized verification only. Private candidate source remains local; no raw errors, environment, payloads or credentials."
+}
