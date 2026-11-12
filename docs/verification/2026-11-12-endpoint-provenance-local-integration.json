@@ -1,0 +1,242 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "stage": "endpoint_provenance_and_prepared_binding_local_integration",
+  "status": "selected_local_regressions_passed_after_review_fixes",
+  "scope": "Local-only private candidate and simulated integration. No native activation or production change.",
+  "implementation": [
+    "Reuse pinned ParentLease and its close registry:12 existing directory fds plus14 bounded endpoint fds,26 total.",
+    "Descriptor-relative nofollow/CLOEXEC checks bind controller and PID1 root views, fixed versioned libsystemd file pin and fixed system bus socket. Library reads are full, bounded and checked against independent supplied path/size/SHA256.",
+    "Endpoint binding is borrowed under the current absolute phase deadline. Work cannot consume a global cleanup reserve by using a later binding-read deadline.",
+    "Provider injection occurs only after provenance checks. No native provider/loader is supplied, no automatic hash learning or fallback exists.",
+    "Guarded connection verifies provenance before Load/Ref/Start and around profile/quiescence. Failures seal new work; original narrowly authorized old-owner cleanup remains available.",
+    "Prepared checks bind actual artifact operations, clock, parent fds/stamps, own unit and invocation. Direct close, profile faults and sticky disconnection invalidate aggregate success flags.",
+    "Unified in-memory host tests run the original worker protocol through actual OwnedArtifacts and typed ABI decoders, using one bus. READY-time library or socket replacement blocks GO and retains artifacts."
+  ],
+  "actualTests": {
+    "groups": [
+      {
+        "group": "endpoint_preparation",
+        "tests": 37,
+        "expected": 37,
+        "exitCode": 0,
+        "wallSeconds": 4.896,
+        "logSha256": "1cfe279a56457cc90efcbc865b30cc2609254790d84077b014501d8c9b8ac603",
+        "passed": true
+      },
+      {
+        "group": "parent_lease",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "wallSeconds": 0.495,
+        "logSha256": "186f2d58d2345ec2992520b4affaed2a137d369daeff323389438b4bb30e77b3",
+        "passed": true
+      },
+      {
+        "group": "manager_binding",
+        "tests": 24,
+        "expected": 24,
+        "exitCode": 0,
+        "wallSeconds": 7.137,
+        "logSha256": "47598004d9aa0e909ab2d0de858c5585f1d8c111eb68de0c73edb6b3e1500a6e",
+        "passed": true
+      },
+      {
+        "group": "effective_profile",
+        "tests": 95,
+        "expected": 95,
+        "exitCode": 0,
+        "wallSeconds": 14.043,
+        "logSha256": "fb77e7da44ef6cdffd11c8a7f03917203f6fc2cc0f48f14e3d2f7422ae6ff691",
+        "passed": true
+      },
+      {
+        "group": "staged_session",
+        "tests": 25,
+        "expected": 25,
+        "exitCode": 0,
+        "wallSeconds": 3.059,
+        "logSha256": "a07c028862b61cd2e901ef512e5c6b53cfee7909a93445dd13429e4d6230524a",
+        "passed": true
+      },
+      {
+        "group": "kernel_reader",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "wallSeconds": 0.284,
+        "logSha256": "f8d28d69967e0d599ec5af8b6774dadf399df6ac658defad4b7f4dac470ce228",
+        "passed": true
+      },
+      {
+        "group": "existing_session",
+        "tests": 142,
+        "expected": 142,
+        "exitCode": 0,
+        "wallSeconds": 10.595,
+        "logSha256": "f424194dfd2fa68b4dba8ab787e0817337b5f5c5114464f88cac27b7ff4aae6d",
+        "passed": true
+      },
+      {
+        "group": "worker_protocol",
+        "tests": 20,
+        "expected": 20,
+        "exitCode": 0,
+        "wallSeconds": 1.29,
+        "logSha256": "7dc5ac5ee79edf7bea40bbb5f0d52c05ee9aff8e3e6502a21cab06a9a40ef349",
+        "passed": true
+      },
+      {
+        "group": "worker_binding",
+        "tests": 13,
+        "expected": 13,
+        "exitCode": 0,
+        "wallSeconds": 0.522,
+        "logSha256": "7aba78f6c6701d2345b6cd6251a33fc73b7268ee283d82acc9a6dc910b8dc748",
+        "passed": true
+      }
+    ],
+    "total": 402,
+    "allPassed": true
+  },
+  "review": {
+    "status": "read_only_review_completed_findings_fixed_with_red_green_regressions",
+    "confirmedP1P2Unresolved": 0,
+    "reviewerReranTests": false,
+    "findings": [
+      {
+        "severity": "P2",
+        "issue": "Binding read used the global cleanup deadline during phase work",
+        "resolution": "borrow(phaseDeadline); no further binding reads after first late stat; provider not invoked"
+      },
+      {
+        "severity": "P2",
+        "issue": "Sticky disconnection could leave aggregate success flags true",
+        "resolution": "Connection disconnection invalidates both success properties and cannot reconnect"
+      }
+    ],
+    "additionalSelfReviewFix": "Direct connection close and provenance-profile failure now invalidate aggregate success flags; both were reproduced before repair."
+  },
+  "sourceBinding": [
+    {
+      "path": "endpoint-provenance-20261112-a1/provenance.py",
+      "bytes": 7416,
+      "sha256": "dd84896826478ecdf5477e9426523a327ee783e449f50788baa33b009baaaa2c"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/endpoint.py",
+      "bytes": 8717,
+      "sha256": "a79cbc4b65ca2283a3ad3c170ce9171ea475f31c817d7deaddb0885df63d9ad1"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/test_provenance.py",
+      "bytes": 8529,
+      "sha256": "556b64ae963f6062afd647716672185708a8d1bfdc763dfc436b53822384a42c"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/test_endpoint.py",
+      "bytes": 10548,
+      "sha256": "6ee4aec8fff4cec9a7e9c269c943b2a8d482d0fd490df395c73a8fdb7463d034"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/test_session_endpoint.py",
+      "bytes": 5534,
+      "sha256": "15df280564e87c7b76b283ce2840d2a12d65bdbd583809206302b00f1bd98c71"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/plan.md",
+      "bytes": 3500,
+      "sha256": "b65bb9e5490a71020fdba051abb11246de94a9bc68637ada596d661669ac48aa"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/LOCAL_HANDOFF.md",
+      "bytes": 3019,
+      "sha256": "97c01250ad6622bc657a6b2ed2a4cf4a7fb30f7bf12d04e91538c40ebffdd1e7"
+    },
+    {
+      "path": "pid1-parent-lease-20261112-a1/parent_lease.py",
+      "bytes": 7359,
+      "sha256": "1f5d09827d6867f549a2f2741b68a4345396cf7865697688f9f7380cf33152f8"
+    },
+    {
+      "path": "pid1-parent-lease-20261112-a1/test_parent_lease.py",
+      "bytes": 10152,
+      "sha256": "0780ab715d8823339b0af6f39cbdfb6fed8229f8dd331188e166ec7c0e74e160"
+    },
+    {
+      "path": "manager-owner-binding-20261112-a1/manager_connection.py",
+      "bytes": 7000,
+      "sha256": "6945e4a84509bb1985e8f8c3655439a0595b3237f3fcd2645a23a6cfa00c0674"
+    },
+    {
+      "path": "manager-owner-binding-20261112-a1/test_manager.py",
+      "bytes": 12775,
+      "sha256": "d5197400a8af087bc34440b98775eab54e8eebd80c9d2095a3e1a33878b142a4"
+    },
+    {
+      "path": "manager-owner-binding-20261112-a1/test_session_manager.py",
+      "bytes": 2737,
+      "sha256": "b2e767c38ead554ef1a5327b3026002f85ae10174461ef4afe3cf9b2f395fbd3"
+    },
+    {
+      "path": "native-worker-session-20261112-a1/linux_scope.py",
+      "bytes": 18143,
+      "sha256": "44b063dc333b6e30aea618f75232817a74f7c6ff9e17012c547d7880ce8f6077"
+    },
+    {
+      "path": "native-worker-session-20261112-a1/backend.py",
+      "bytes": 14687,
+      "sha256": "282932c2cd6cece60d6de4ff295ad27c6c4fa3b1ea77ccad3d93e67b6417ecaa"
+    },
+    {
+      "path": "native-worker-session-20261112-a1/session.py",
+      "bytes": 12409,
+      "sha256": "7fd047c0d968f393b500489b8923537059edf9ad74c12d1b979eb94dd213d1e1"
+    },
+    {
+      "path": "kernel-staged-session-20261112-a1/staged_backend.py",
+      "bytes": 7969,
+      "sha256": "76c2921bfd2ad58e2f1c1b89c3abfca9f57c8437fc275e698cf11918c884df1d"
+    },
+    {
+      "path": "kernel-identity-reader-20261112-a1/reader.py",
+      "bytes": 11299,
+      "sha256": "518a2b429d2f525eae89a23687b624ce2aca48d8ded9d328c22ca88afba83b09"
+    }
+  ],
+  "testEvidenceNotes": [
+    "Final batch contains37 stage tests (13 lease,21 endpoint,3 original-worker sessions) and365 selected earlier cases.402 total, no skips or failures.",
+    "Earlier400-pass batch predates the two final review fixes and is retained, not added to the final count.",
+    "Initial missing-implementation failures do not establish behavioral bug reproduction. Stale success and both review findings have actual failing-before/fixed-after regressions.",
+    "All final log hashes, exit codes, expected counts and OK summaries were rechecked; private source binding was recorded separately."
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "actualSystemBusCalls": 0,
+    "nativeLibraryLoads": 0,
+    "linuxUnitsStarted": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "limitations": [
+    "All filesystem, kernel and bus boundaries were in-memory doubles. Default host operations remain disabled; no native execution entry point is provided.",
+    "Metadata equality and supplied file digest do not prove native bus peer credentials, ELF mappings, installed parser/kernel enforcement or systemd version compatibility.",
+    "CORE cleanup report precedes separate Endpoint.close. Final acceptance must independently include source-lease closure and errors; backend cleanup alone is insufficient.",
+    "A future native assembler must bind the independently checked library loader, namespace setup, one outer acquisition/session deadline, watchdog and final combined cleanup receipt. Current test fixtures are not a VPS entry point.",
+    "No new VPS performance/resource or production acceptance is inferred. Product-wide regression was not claimed.",
+    "Historical frozen AddRef contract failure remains separately recorded, not rerun or resolved."
+  ],
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized verification only; private candidate implementation, raw logs and credentials are not published."
+}
