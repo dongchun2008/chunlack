@@ -1,0 +1,159 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "stage": "effective_declared_unit_profile_local_integration",
+  "status": "selected_local_regressions_and_independent_review_passed",
+  "profileFields": 74,
+  "implementation": [
+    "Expected profile derives from the existing pinned original-worker fragment and bootstrap; fixed own-unit property schema only.",
+    "Checks identity, capabilities, NNP, resources, namespace/filesystem settings, exact executable and no-env-expand argv flags, no auxiliary Exec hooks or drop-ins, environment and file policy.",
+    "Two complete fixed-schema reads with invocation/profile brackets; no actual settings cache across checks.",
+    "Nested decoder limits: string8192, decoded bytes131072 per property, nodes512, array entries64. Ordinary scalar string limit remains4096.",
+    "Failed checks clear old success and seal the original failure. Stop/close remain available; closing invalidates profile success.",
+    "Prepared callback verifies artifacts, reads profile and binds unit/invocation before start and before GO."
+  ],
+  "actualTests": {
+    "groups": [
+      {
+        "group": "effective_profile",
+        "tests": 95,
+        "expected": 95,
+        "exitCode": 0,
+        "reportedSeconds": 5.795,
+        "logSha256": "5faf90ebe838b5faba7cf5fee8d9e47005c46c85a619717b10acd6ef0d4e73d4",
+        "passed": true
+      },
+      {
+        "group": "staged_session",
+        "tests": 25,
+        "expected": 25,
+        "exitCode": 0,
+        "reportedSeconds": 1.783,
+        "logSha256": "159d060cfcf93b61cd24122e8f33816be137663ec0db06d13ffd2fb62887528a",
+        "passed": true
+      },
+      {
+        "group": "kernel_reader",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "reportedSeconds": 0.036,
+        "logSha256": "2065facfc64d92e034f5bd03202f00aa65f70c5d4383074c42ea83f9ea881647",
+        "passed": true
+      },
+      {
+        "group": "existing_session",
+        "tests": 142,
+        "expected": 142,
+        "exitCode": 0,
+        "reportedSeconds": 5.138,
+        "logSha256": "70870fc4ab1985f402cab43ca1b0efc32a0bbbd317e6cfb135fb3ab5c04c45d5",
+        "passed": true
+      }
+    ],
+    "total": 291,
+    "allPassed": true
+  },
+  "review": {
+    "status": "completed_read_only",
+    "confirmedP1P2Remaining": 0,
+    "decoderCoverageGapClosed": true,
+    "reviewerReranTests": false
+  },
+  "sourceBinding": [
+    {
+      "path": "effective-unit-profile-20261112-a1/profile_policy.py",
+      "bytes": 7407,
+      "sha256": "012537e4f80304851f631cab7cb023b0861aea21f225e348c2ece6c21045de2f"
+    },
+    {
+      "path": "effective-unit-profile-20261112-a1/profile_connection.py",
+      "bytes": 5197,
+      "sha256": "4f9e89fde569d896f4000003a6b05781e7079c89064141c113d01e65d4e30319"
+    },
+    {
+      "path": "effective-unit-profile-20261112-a1/test_policy.py",
+      "bytes": 5553,
+      "sha256": "bf600e8c0f7fe5ca25277a37d2078a86c6114dd0ce56019954770268f6aecb0a"
+    },
+    {
+      "path": "effective-unit-profile-20261112-a1/test_profile_wire.py",
+      "bytes": 9458,
+      "sha256": "968f310e1aa2081b200db12463e1085cccc921cb92e4c292a8d66c3715002ece"
+    },
+    {
+      "path": "effective-unit-profile-20261112-a1/test_session_profile.py",
+      "bytes": 3442,
+      "sha256": "e675cb60bb4ad8f6188aab982d4fa73c32f91bdcf877e926f9e621d62ca36f98"
+    },
+    {
+      "path": "effective-unit-profile-20261112-a1/plan.md",
+      "bytes": 2459,
+      "sha256": "18e99f6afae4b48b1b65393464782ff01c83b61f76883fec4a9684116c4cb3c2"
+    },
+    {
+      "path": "effective-unit-profile-20261112-a1/reference-manifest-v2.json",
+      "bytes": 1190,
+      "sha256": "ea4f807aca291c4cc64fd8ff4becabf669857cfeffb15128a23f335d07302998"
+    },
+    {
+      "path": "scoped-process-proof-20261112-a1/process_connection.py",
+      "bytes": 7288,
+      "sha256": "8028e481121011f87d97e79c607ac03199e076e34f806e19fddc4fd9e0899a21"
+    },
+    {
+      "path": "native-worker-session-20261112-a1/session.py",
+      "bytes": 12409,
+      "sha256": "7fd047c0d968f393b500489b8923537059edf9ad74c12d1b979eb94dd213d1e1"
+    },
+    {
+      "path": "kernel-staged-session-20261112-a1/staged_backend.py",
+      "bytes": 7969,
+      "sha256": "76c2921bfd2ad58e2f1c1b89c3abfca9f57c8437fc275e698cf11918c884df1d"
+    }
+  ],
+  "testEvidenceNotes": [
+    "First new-module runs failed on missing implementations, not behavioral red-test proof.",
+    "Policy cases mutate every fixed field, enforce strict types and command flags, and reject unsafe hooks, environment and mounts.",
+    "Decoder tests independently exercise exact/over caps for arrays, bytes, nodes and strings, plus wrong containers and extra struct members.",
+    "All65 earlier manager/job/process assertions target the extended decoder; three original-worker sessions cover successful prepared checks, prestart denial and READY-time drift blocking GO.",
+    "Final selected batch:95 profile cases,25 staged-session,29 reader,142 existing-session. Reruns are not accumulated.",
+    "One shell command constructing this record was blocked by automatic approval before execution; record assembled in memory and saved through structured file editing instead. Tests were not rerun for this."
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "actualSystemBusCalls": 0,
+    "nativeLibraryLoads": 0,
+    "linuxUnitsStarted": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "limitations": [
+    "Only local dictionaries, in-memory C ABI and simulated kernel/FIFO/manager data were used.",
+    "Effective metadata does not prove native parser/kernel enforcement or installed binary provenance. Original runtime checks remain required.",
+    "StdIO paths are not readable FilePath properties in the examined v255 table; binding still needs pinned fragment bytes, no drop-ins and runtime FIFO proof.",
+    "Manager/root/socket/library provenance and native assembler are separate gates; current prepared provenance is simulated.",
+    "Decoded bounds do not bound predecode native bus allocation; outer memory/time watchdog is required.",
+    "No VPS CPU/deadline acceptance or full product regression/production acceptance inferred.",
+    "Historical AddRef contract failure remains separately recorded, not rerun or resolved."
+  ],
+  "primarySources": [
+    "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/dbus-execute.c",
+    "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/dbus-service.c",
+    "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/dbus-cgroup.c",
+    "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/load-fragment.c",
+    "https://raw.githubusercontent.com/systemd/systemd/v255/src/shared/exec-util.c"
+  ],
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized verification only; no private candidate source, raw command/environment data, error bodies or credentials."
+}
