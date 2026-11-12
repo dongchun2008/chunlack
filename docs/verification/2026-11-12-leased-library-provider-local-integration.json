@@ -1,0 +1,285 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "stage": "leased_original_library_provider_local_integration",
+  "status": "selected_local_checks_passed_after_fixture_clock_alignment",
+  "implementation": [
+    "Reuse exact AST definitions WorkerError/need/mapped_regions/native_loader from the hash-pinned original worker; fixed25 ABI names derive from the original bus AST without executing it.",
+    "LibraryProvider receives explicit trusted load/maps/symbol-address/device-parts callbacks; current implementations are in-memory only. It checks the same borrowed EndpointLease fd and phase before/after load and provenance validation.",
+    "A returned handle is retained before the post-callback deadline gate. Separate loadCallbackReturned/handleRetained facts do not overstate the original loader's loadReturned field; no unload is claimed.",
+    "Bounded private maps retention and262144-byte exact/overflow tests; foreign/deleted mappings and nonexecutable/outside/boolean symbol addresses fail before any simulated bus opens.",
+    "Successful original-worker envelope uses one simulated controller load and one bus, with the existing final lease cleanup and no reconnect/retry."
+  ],
+  "actualTests": {
+    "groups": [
+      {
+        "group": "provider_and_clock_bound_envelope",
+        "tests": 32,
+        "expected": 32,
+        "exitCode": 0,
+        "wallSeconds": 13.442,
+        "logSha256": "03c82fcbed06b9e8aebdfb03084b349116e387ced832a3475f017a970ad45fa3",
+        "passed": true
+      },
+      {
+        "group": "endpoint",
+        "tests": 37,
+        "expected": 37,
+        "exitCode": 0,
+        "wallSeconds": 4.778,
+        "logSha256": "634ed5ff4cd250315de06cc2c02e0669e28d9d339b4330075ee2b934603219ec",
+        "passed": true
+      },
+      {
+        "group": "session",
+        "tests": 142,
+        "expected": 142,
+        "exitCode": 0,
+        "wallSeconds": 6.983,
+        "logSha256": "0395a68fda2627bee0ca53b304f1a6a44163f6a9952653d5294295aed9e2d417",
+        "passed": true
+      },
+      {
+        "group": "original_worker",
+        "tests": 110,
+        "expected": 110,
+        "exitCode": 0,
+        "wallSeconds": 0.959,
+        "logSha256": "abc0a3910f4b35178801f2bb6b9dcdb68e31b151d9a1d8e5fdcc0f328208cdd6",
+        "passed": true
+      }
+    ],
+    "total": 321,
+    "allPassed": true
+  },
+  "review": {
+    "status": "independent_read_only_provider_and_fixture_reviews_completed",
+    "confirmedP1P2Remaining": 0,
+    "reviewerExecutedTests": false,
+    "limitations": "Native factory and hard watchdog acceptance not reviewed or claimed."
+  },
+  "sourceBinding": [
+    {
+      "path": "leased-library-provider-20261112-a1/provider.py",
+      "bytes": 6906,
+      "sha256": "1aa2efe148e2063319d9a8c75db201133abbc16486e641cd474a558d4476f115"
+    },
+    {
+      "path": "leased-library-provider-20261112-a1/fixture_clock.py",
+      "bytes": 2590,
+      "sha256": "de8498adb3dc310d5ef0a62772a8f0671b1b8a6f7013cfb80fead0756d7dcd6e"
+    },
+    {
+      "path": "leased-library-provider-20261112-a1/test_provider.py",
+      "bytes": 9441,
+      "sha256": "4a160bc57197541113c06b56c1b02a48ed029c7e772d0c634df0ed635858251b"
+    },
+    {
+      "path": "leased-library-provider-20261112-a1/test_clock_binding.py",
+      "bytes": 2694,
+      "sha256": "65ba9e60fee3e92bf157d979063789eefba59cc47120f17e7cad553ce0eae8fe"
+    },
+    {
+      "path": "leased-library-provider-20261112-a1/plan.md",
+      "bytes": 4065,
+      "sha256": "42591596a597f5c8dd5c55acf48a5b25098157d3b7c349b5c31b44073048be71"
+    },
+    {
+      "path": "leased-library-provider-20261112-a1/LOCAL_HANDOFF.md",
+      "bytes": 2034,
+      "sha256": "1b346b1c0f62d0ed3b5191d22f9dc2c7f514e162d83ac7a5b5266efc404649a0"
+    },
+    {
+      "path": "native-connection-live-20261110-a3/worker.py",
+      "bytes": 12293,
+      "sha256": "0c5415d43de0abd50557653db644e7bbfda3635acec25673cf6245ee5e35af90"
+    },
+    {
+      "path": "native-persistent-bus-local-20261108-d2/persistent_bus.py",
+      "bytes": 26525,
+      "sha256": "366ec142f979195d35170a3c76eca23a3bb48e4fd2fcb3c8cc980aa0b422de52"
+    },
+    {
+      "path": "native-worker-session-20261112-a1/test_worker_integration.py",
+      "bytes": 13166,
+      "sha256": "cc0c7be6ea3348ed5a62bf55658907eff88bf4d8ce7088e054588f856e926967"
+    },
+    {
+      "path": "endpoint-envelope-20261112-a1/envelope.py",
+      "bytes": 6389,
+      "sha256": "a872c6fbeb25c625731d1271801bb20ebaf015a910d05fdc883a82c62c570e64"
+    },
+    {
+      "path": "endpoint-envelope-20261112-a1/test_envelope.py",
+      "bytes": 10587,
+      "sha256": "590139ae5b80152bc4951ad93829a0753909f43a2a7b72094d2f93cd9b65c153"
+    },
+    {
+      "path": "endpoint-envelope-20261112-a1/plan.md",
+      "bytes": 1742,
+      "sha256": "f9da3fda2d0c2774249a64913778e7e20eff84c9b7b190a8fa34852589c86a4b"
+    },
+    {
+      "path": "endpoint-envelope-20261112-a1/LOCAL_HANDOFF.md",
+      "bytes": 2117,
+      "sha256": "280dc0f74bfe6ea38b1649e5284217d3707d61ef688d590a8079bcdc368d65f3"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/provenance.py",
+      "bytes": 7416,
+      "sha256": "dd84896826478ecdf5477e9426523a327ee783e449f50788baa33b009baaaa2c"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/endpoint.py",
+      "bytes": 8717,
+      "sha256": "a79cbc4b65ca2283a3ad3c170ce9171ea475f31c817d7deaddb0885df63d9ad1"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/test_provenance.py",
+      "bytes": 8529,
+      "sha256": "556b64ae963f6062afd647716672185708a8d1bfdc763dfc436b53822384a42c"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/test_endpoint.py",
+      "bytes": 10548,
+      "sha256": "6ee4aec8fff4cec9a7e9c269c943b2a8d482d0fd490df395c73a8fdb7463d034"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/test_session_endpoint.py",
+      "bytes": 5534,
+      "sha256": "15df280564e87c7b76b283ce2840d2a12d65bdbd583809206302b00f1bd98c71"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/plan.md",
+      "bytes": 3500,
+      "sha256": "b65bb9e5490a71020fdba051abb11246de94a9bc68637ada596d661669ac48aa"
+    },
+    {
+      "path": "endpoint-provenance-20261112-a1/LOCAL_HANDOFF.md",
+      "bytes": 3019,
+      "sha256": "97c01250ad6622bc657a6b2ed2a4cf4a7fb30f7bf12d04e91538c40ebffdd1e7"
+    },
+    {
+      "path": "pid1-parent-lease-20261112-a1/parent_lease.py",
+      "bytes": 7359,
+      "sha256": "1f5d09827d6867f549a2f2741b68a4345396cf7865697688f9f7380cf33152f8"
+    },
+    {
+      "path": "pid1-parent-lease-20261112-a1/test_parent_lease.py",
+      "bytes": 10152,
+      "sha256": "0780ab715d8823339b0af6f39cbdfb6fed8229f8dd331188e166ec7c0e74e160"
+    },
+    {
+      "path": "manager-owner-binding-20261112-a1/manager_connection.py",
+      "bytes": 7000,
+      "sha256": "6945e4a84509bb1985e8f8c3655439a0595b3237f3fcd2645a23a6cfa00c0674"
+    },
+    {
+      "path": "manager-owner-binding-20261112-a1/test_manager.py",
+      "bytes": 12775,
+      "sha256": "d5197400a8af087bc34440b98775eab54e8eebd80c9d2095a3e1a33878b142a4"
+    },
+    {
+      "path": "manager-owner-binding-20261112-a1/test_session_manager.py",
+      "bytes": 2737,
+      "sha256": "b2e767c38ead554ef1a5327b3026002f85ae10174461ef4afe3cf9b2f395fbd3"
+    },
+    {
+      "path": "native-worker-session-20261112-a1/linux_scope.py",
+      "bytes": 18143,
+      "sha256": "44b063dc333b6e30aea618f75232817a74f7c6ff9e17012c547d7880ce8f6077"
+    },
+    {
+      "path": "native-worker-session-20261112-a1/backend.py",
+      "bytes": 14687,
+      "sha256": "282932c2cd6cece60d6de4ff295ad27c6c4fa3b1ea77ccad3d93e67b6417ecaa"
+    },
+    {
+      "path": "native-worker-session-20261112-a1/session.py",
+      "bytes": 12409,
+      "sha256": "7fd047c0d968f393b500489b8923537059edf9ad74c12d1b979eb94dd213d1e1"
+    },
+    {
+      "path": "kernel-staged-session-20261112-a1/staged_backend.py",
+      "bytes": 7969,
+      "sha256": "76c2921bfd2ad58e2f1c1b89c3abfca9f57c8437fc275e698cf11918c884df1d"
+    },
+    {
+      "path": "kernel-identity-reader-20261112-a1/reader.py",
+      "bytes": 11299,
+      "sha256": "518a2b429d2f525eae89a23687b624ce2aca48d8ded9d328c22ca88afba83b09"
+    }
+  ],
+  "preservedFailure": {
+    "batch": {
+      "groups": [
+        {
+          "group": "provider",
+          "tests": 14,
+          "expected": 14,
+          "exitCode": 0,
+          "wallSeconds": 5.686,
+          "logSha256": "4f85809479e2789a95967956868c1e36c332cb35da018640051bf7c454912770",
+          "passed": true
+        },
+        {
+          "group": "envelope",
+          "tests": 15,
+          "expected": 15,
+          "exitCode": 1,
+          "wallSeconds": 11.649,
+          "logSha256": "8b8b2dea59a95a0aaa7f91ab5998ebc797f5f67936022cc33b30b64fe7c528b1",
+          "passed": false
+        }
+      ],
+      "total": 29,
+      "allPassed": false
+    },
+    "disposition": "Failed29 batch remains failed evidence; it stopped before later groups.",
+    "observations": [
+      "Old envelope group had14/15 passes; one case failed at identity before the intended lease-close assertion.",
+      "A separate isolated diagnostic produced start-stage PolicyFault without the field; cause remains unclassified.",
+      "Controlled2.1s wall delay reproduced a clock-domain mismatch: fake controller budget and real2s worker pre-GO wait. This is a separate deterministic finding, not an attribution of the unclassified PolicyFault."
+    ]
+  },
+  "fixtureCorrection": [
+    "New test-only adapter compiles the full pinned old fixture without executing it, checks the exact method code and clones it with only this instance's copied time.monotonic global bound to its existing fake clock.",
+    "Frozen files, original method code,2s literals, all15 inherited envelope assertions and the90s outer test-process limit remain unchanged. Global time is not modified.",
+    "Partial-class recompilation initially differed in compiler context; full-module code extraction preserved strict code equality.",
+    "Final321 consists of32 provider/clock-bound-envelope checks,37 endpoint,142 existing session and110 original-worker checks. Earlier runs are not accumulated."
+  ],
+  "evidenceNotes": [
+    "Missing-implementation initial failures were not behavioral red proof.",
+    "Callback-return diagnostic omission was reproduced with an actual failing None-is-not-True assertion before repair; the prior missing-key test error is separately retained.",
+    "Final subprocess exit codes, expected counts, OK summaries and log SHA256 were checked.30 source bindings include21 unchanged earlier bindings.",
+    "No full product-wide regression or native resource/scheduling acceptance is inferred."
+  ],
+  "operations": {
+    "sshAttempts": 0,
+    "actualSystemBusCalls": 0,
+    "actualCtypesLoaderCalls": 0,
+    "nativeLibraryLoads": 0,
+    "linuxUnitsStarted": 0,
+    "productionPublications": 0,
+    "existingServiceChanges": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "dnsChanges": 0,
+    "portChanges": 0,
+    "relayChanges": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "limitations": [
+    "All host endpoint/kernel/maps/loader/bus callbacks were synthetic; source/log files are local. No real mapped-library or bus-peer proof.",
+    "Bounds after callback return do not bound the callback's own allocation/blocking; an independent native process memory limit and hard watchdog are still required.",
+    "No actual restricted operations factory, native launcher or watchdog activation is supplied. Those remain next implementation/acceptance gates.",
+    "Historical frozen AddRef contract failure and the preserved failed/unattributed diagnostics are not erased or declared resolved.",
+    "Production services and end-to-end external Agent acceptance were not inspected or modified this turn."
+  ],
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": "Sanitized verification only; private source, raw mapped paths/logs and credentials remain local."
+}
