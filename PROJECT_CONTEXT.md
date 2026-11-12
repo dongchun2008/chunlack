@@ -1,5 +1,7 @@
 # PROJECT_CONTEXT
 
+> 本地交付审计（2026-11-13）：当前源码对应的 66 个产品文件与冻结候选逐字节一致；本轮没有重新运行产品测试或连接 VPS。以[交付状态与接入清单](docs/DELIVERY_READINESS.zh-CN.md)及[本地核对记录](docs/verification/2026-11-13-product-delivery-readiness-local-audit.json)作为阅读历史条目的索引。2026-10-24 已有研究链路三文件发布与真人登录记录；中英文界面、帮助及严格研究限额有本地／隔离证据，但没有据此证明生产已启用。玄玑有一次原生单任务人工验收；苏婳和不打扰日常对话的独立任务路线仍未验收。当前在线状态、配置、授权与资源未核验。下文“当前／最新”和授权数量均只描述各自日期，不代表今天。
+
 ## Project name
 LACK Hybrid Multi-Agent Platform
 
