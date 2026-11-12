@@ -1,0 +1,385 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "phase": "original_clock_bootstrap_local_integration",
+  "status": "local_regression_passed_not_native_accepted",
+  "changes": [
+    "Capture original execution epoch before claim/tool/manager preflight and preserve it through supervision.",
+    "Carry exact fractional start into controller argv rather than reconstructing end minus ten.",
+    "Derive three fixed-source AST candidates and prove inverse normalized AST equality.",
+    "Compose exact-class Preparer, ToolLease, BoundFactory, Spawner, independent Witness, Driver and Watchdog.",
+    "Keep pre-monitor resource cleanup with its actual owner and retain exact fully late component interruptions."
+  ],
+  "tests": {
+    "newTests": 29,
+    "adapterTests": 12,
+    "bootstrapTests": 17,
+    "relatedTests": 845,
+    "groups": 23,
+    "failures": 0,
+    "skipped": 0,
+    "perGroupTimeoutSeconds": 90,
+    "frozenBindingsChecked": 161,
+    "receiptSha256": "3ce7e4dc24f724901927f60c9869aded8212bf676478edb589722fe06a70e57d",
+    "groupsReport": [
+      {
+        "group": "original_clock_bootstrap",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 5.743,
+        "logSha256": "1b867321b843aaa97f6f77514fdd2e1c13584365fe17cfb29f8d08e4fb8e0852"
+      },
+      {
+        "group": "controller_cgroup_witness",
+        "tests": 46,
+        "expected": 46,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 3.169,
+        "logSha256": "05f26a5f7cb9d9e7348b043ab60da478bde3055bba0db6c50df30785380c83f9"
+      },
+      {
+        "group": "controller_process",
+        "tests": 38,
+        "expected": 38,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.611,
+        "logSha256": "f18973eee8afe2276d25d43f7c271b65c934d52ce791652fd086ffff98b0f3da"
+      },
+      {
+        "group": "controller_manager_port",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.368,
+        "logSha256": "df9ab7c86e8cb331fbdcafcc8e930b8d3870d4f6f0ef47f487ab312d6f218075"
+      },
+      {
+        "group": "tool_lease",
+        "tests": 35,
+        "expected": 35,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.765,
+        "logSha256": "71ca82bdc378bfc60cf539b901a05a18754d93e5edecda618b39a71c43fb500d"
+      },
+      {
+        "group": "fixed_launch",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.247,
+        "logSha256": "0bb2e0b3206f3c9f14b3967eef2d87642809ad5ccf8228f797ebfa6c5a251b97"
+      },
+      {
+        "group": "owned_driver",
+        "tests": 30,
+        "expected": 30,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.346,
+        "logSha256": "872203ebb739f4106995790ddb0ebf060fac91eb60708f7e0de6e05b58d9a01f"
+      },
+      {
+        "group": "one_shot_entry",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 5.063,
+        "logSha256": "b95552f38b33dc3a4a73b1b12b7ff8d56b9795faa7930419d4611ba136954bb3"
+      },
+      {
+        "group": "exclusive_prepare",
+        "tests": 25,
+        "expected": 25,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.75,
+        "logSha256": "3dca5f1e523d215e3319c303b1c6f93732a63f4326118d6f6d2b0033d171c9ed"
+      },
+      {
+        "group": "runtime_package",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.051,
+        "logSha256": "0ab60c9800190f11d96ae3caa2d9dd89fe6db370b788edac0fa95c58a4934869"
+      },
+      {
+        "group": "lifecycle",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.944,
+        "logSha256": "e8f212fb11daab5414dbd18fe120c8c3d89e6e748c16625ad0b870953f61f3d9"
+      },
+      {
+        "group": "manager_port",
+        "tests": 50,
+        "expected": 50,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.099,
+        "logSha256": "54bf868abb5b3130ef78a3a22ef822c2d6b2d30791a4ea084500eca22ca02db4"
+      },
+      {
+        "group": "host_files",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.888,
+        "logSha256": "861b9d24c01420a047bd9bec9ca623d44babd53c27f76a933b7b15709edf02d6"
+      },
+      {
+        "group": "request_evidence",
+        "tests": 47,
+        "expected": 47,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.849,
+        "logSha256": "95c6a150bff3068617f65e9f3e2c39061bc67ac03e4aface568789249c7044f3"
+      },
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.208,
+        "logSha256": "56fa0f894fd41b518a2da3a01931b5967fde0168456acb8864a163267b369f92"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.279,
+        "logSha256": "190f136556e23831c43902052f2f8bb48184e598edd6ddb3436339507e1ea2d2"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.288,
+        "logSha256": "c9ae877eb877c4ad4464486e5cdf265a5a0349dfd352189674e8bd6c9218f130"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.36,
+        "logSha256": "3ff317b60806db421d7971980ff678ac3e56bd0046957a2d6f2cb42cf328d1e6"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.241,
+        "logSha256": "493a628ebe006eaa9e800ac9a40f7586b278a63fe0291662c61a2fe5c0c0c9b9"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.28,
+        "logSha256": "e49709e097f9e52604807701d53a4302a66a5692c5e3749ca0446897cd5a2002"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.706,
+        "logSha256": "1b3cc295a60a2bd0351d05bd7475894760185fabb60011b466ce0fda27466b91"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.234,
+        "logSha256": "33ac99ba22352b8ceffa97e19781699a47eedac4553f8c8118df3f7def166805"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.456,
+        "logSha256": "f54a136f978fefffe2c893c7f8b9f69ab81a0a404fed4fea45ccd30071112d36"
+      }
+    ]
+  },
+  "integration": {
+    "realFrozenPreparationAndTools": true,
+    "realSourceDerivedFactoryAndLauncher": true,
+    "realFrozenDriver": true,
+    "realIndependentWitness": true,
+    "realSourceDerivedWatchdog": true,
+    "strictFrozenLifecycleValidator": true,
+    "leafSources": "explicit local memory/syscall/sd-bus ABI doubles",
+    "nonzeroPrelaunchTimeCounted": true,
+    "fractionalStartPreserved": true,
+    "setupFailureBeforeMonitorHandleCleanup": true,
+    "fullyLateOriginalInterruptionPreserved": true,
+    "lateChildRetained": true,
+    "cancellationCleanup": true,
+    "oldPreparationEndNeverExtended": true
+  },
+  "derivedSourceBindings": [
+    {
+      "path": "anchor-fixed-launch-20261113-a1/launcher.py",
+      "beforeBytes": 6253,
+      "beforeSha256": "1f6631a4910c2d50c86d99a78e5fe76b87969816fa296c9770dd486dce1afce0",
+      "afterBytes": 6927,
+      "afterSha256": "cd4f15f2629a9019903df3bf38f47ac1dfb5c5578d798d4106bf53570992f83a"
+    },
+    {
+      "path": "anchor-tool-lease-20261113-a1/bound_factory.py",
+      "beforeBytes": 3718,
+      "beforeSha256": "d55a32af7767492d885d64fddcfae0d83325168ddecdd1cb1dcca7e23d433543",
+      "afterBytes": 4136,
+      "afterSha256": "9fa166e0eb231d24d2bd5f07ff7d092da71abbe1d2d85b978398f7cc43c0099c"
+    },
+    {
+      "path": "deadline-watchdog-20261112-a1/watchdog.py",
+      "beforeBytes": 11841,
+      "beforeSha256": "a21b45128fdab2cc398ef5e2366e25d816b633a12327ac99c7c252c45cbd7b6f",
+      "afterBytes": 12817,
+      "afterSha256": "91ec87307438606f3c07d5cf077ea98f117e3b24f4aa17dcd880220417d87088"
+    }
+  ],
+  "localSourceBindings": [
+    {
+      "path": "source_adapter.py",
+      "bytes": 6245,
+      "sha256": "d52147355f9535d7db57d8b87ba3b6e3be4fa161f88650d5308c0005d0d6d196"
+    },
+    {
+      "path": "bootstrap.py",
+      "bytes": 10024,
+      "sha256": "3c09acdc1218b8efbba0cdb5bc932a2124ccd73d4098ca92ce03ac765f972da7"
+    },
+    {
+      "path": "test_adapter.py",
+      "bytes": 5235,
+      "sha256": "3c2ced7a60548adc3040af099ff95453a16ebbc72e98bca0d19414ef89135e28"
+    },
+    {
+      "path": "test_bootstrap.py",
+      "bytes": 12101,
+      "sha256": "f1749424604e822a8d693e7c168adc2451ee307d6b246501858380f992c4d6f6"
+    },
+    {
+      "path": "run_local.py",
+      "bytes": 5767,
+      "sha256": "e149123e8231409501b6cb59944f5205ea9e4c9937a42d02e8ac332814c7be31"
+    },
+    {
+      "path": "plan.md",
+      "bytes": 3082,
+      "sha256": "44078c439243f00d8165a265c992203f9f7026c527b31ede2ba1d0fb3462b8fe"
+    },
+    {
+      "path": "LOCAL_HANDOFF.md",
+      "bytes": 6358,
+      "sha256": "7960f208f691e5f602cca12208f63d951307e55168f47656888c6d1df0e71c6c"
+    },
+    {
+      "path": "derived-source-audit.json",
+      "bytes": 902,
+      "sha256": "5e9380be6206988e2b35376267f9a1790593871931359375cdb9f33dd8d3fa76"
+    }
+  ],
+  "review": {
+    "kind": "read_only_static_review",
+    "reviewer": "Lovelace",
+    "findingsClosed": [
+      "setup_cleanup_delegates_only_after_monitor_acquired_handle",
+      "fully_late_component_interruption_keeps_exact_instance"
+    ],
+    "residualDefiniteP1P2": 0,
+    "reviewerExecutedTests": false
+  },
+  "limits": {
+    "preparationSecondsMaximum": 90,
+    "setupCutoffOffsetSeconds": 8,
+    "controllerDeadlineOffsetSeconds": 10,
+    "outerDeadlineOffsetSeconds": 12,
+    "originalResourceBudgetsChanged": false
+  },
+  "evidenceBoundaries": {
+    "nativeExecutionVerified": false,
+    "physicalPreemptionVerified": false,
+    "kernelFilesystemProvenanceVerified": false,
+    "managerLibrarySocketProvenanceVerified": false,
+    "commonLauncherControllerWorkerTopologyVerified": false,
+    "fullyMaterializedNativeSourceClosure": false,
+    "wholeNativeIntegrationComplete": false,
+    "productionReady": false
+  },
+  "actions": {
+    "sshAttempts": 0,
+    "newLinuxUnits": 0,
+    "realTargetProcCgroupReads": 0,
+    "nativeBusCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false
+  },
+  "nextSteps": [
+    "Prepare the complete fixed source/FD closure and common resource topology.",
+    "Keep native validation and production outside this local-only phase."
+  ],
+  "synchronization": {
+    "implementationUploaded": false,
+    "sanitizedRecordOnly": true
+  }
+}
