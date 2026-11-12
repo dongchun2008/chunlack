@@ -1,0 +1,343 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "status": "passed_local_controller_manager_port_not_complete_witness",
+  "implementation": {
+    "privateCandidateOnly": true,
+    "publicRecordOnly": true,
+    "sourceManifest": [
+      {
+        "path": "controller_port.py",
+        "bytes": 10766,
+        "sha256": "80067a7aa10cf9bc28264488db06020ecd001060d44630c83ea1140b3dc03002"
+      },
+      {
+        "path": "test_port.py",
+        "bytes": 11802,
+        "sha256": "097e565bd181b0ba85b30bd692ed60ac6811b58e390c9fb2899c8570cf1dd6c5"
+      },
+      {
+        "path": "run_local.py",
+        "bytes": 5085,
+        "sha256": "c07a6f6d3f28c64a8be81213412d6478152648fe109e77c021c39330e2ad15de"
+      },
+      {
+        "path": "plan.md",
+        "bytes": 2286,
+        "sha256": "4d3b22fc9722c70219e86c60a63e8b6b556962e61dfbc913a8b819c5bc3b6758"
+      },
+      {
+        "path": "LOCAL_HANDOFF.md",
+        "bytes": 4168,
+        "sha256": "d42ba0455424d6ce9488eafef93c8062d0c9a3c79a9c14b6846f0978d238481e"
+      },
+      {
+        "path": "capability-source-audit.json",
+        "bytes": 407,
+        "sha256": "2ba50a8d568d33bd75ff1f00e40bb2f4d593d4b43af833c7557ec1c1aa07eced"
+      }
+    ],
+    "pinnedOwnerBoundConnectionAndTypedIO": true,
+    "frozenCallWhitelistChanged": false,
+    "defaultNativeLibraryLoaderAbsent": true,
+    "managerHalfOnly": true,
+    "independentKernelCollectorProvided": false
+  },
+  "contracts": {
+    "fixedNonceHostUnitOnly": true,
+    "preexistingUnitRejected": true,
+    "sameConnectionReferenceOwned": true,
+    "referenceAttemptKeptBeforeLateReturn": true,
+    "managerUniqueOwnerUid0Pid1Bracketed": true,
+    "invocationAndExactExecArgvChecked": true,
+    "longStringLimitOnlyFixedExecStartEx": 32768,
+    "frozenGenericProfileStringLimitUnchanged": 8192,
+    "decoderNodeLimit": 512,
+    "decoderTotalBytes": 131072,
+    "workRequestAttempts": 224,
+    "reservedCleanupRequestAttempts": 32,
+    "totalExplicitRequestAttempts": 256,
+    "ownerPeerRequestsCounted": true,
+    "entryFailuresSealed": true,
+    "firstInterruptInstanceRetained": true,
+    "stopOnceAfterFreshSameInvocation": true,
+    "stopJobIsNotExitProof": true,
+    "terminalManagerStateIsNotKernelEmpty": true,
+    "unrefAndConnectionCloseBothAttempted": true,
+    "unknownCloseNotRetried": true
+  },
+  "regression": {
+    "groups": [
+      {
+        "group": "controller_manager_port",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.046,
+        "logSha256": "597ac7ec0d0c46c601c019b7677d8455bed45841df04dcf4de43644f32775f0f"
+      },
+      {
+        "group": "tool_lease",
+        "tests": 35,
+        "expected": 35,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.662,
+        "logSha256": "a4c6d6b59de2ab82e6c561c2cd60cdc1de30fd95a3cea8d2d33c0aefdf5fabe5"
+      },
+      {
+        "group": "fixed_launch",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 3.714,
+        "logSha256": "78c24c7eaf7ecbdbd6ecce67030561002b43044c7cd23f5cf74939868e315f40"
+      },
+      {
+        "group": "owned_driver",
+        "tests": 30,
+        "expected": 30,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.556,
+        "logSha256": "2bac5bfac2b88aa2b4903fc1084ddf69eccf6b22b6b8a6a6d6957269f9c74015"
+      },
+      {
+        "group": "one_shot_entry",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 8.952,
+        "logSha256": "7a73732ff86a9ce5039a280b52f54143d060584fbce49bce9bde8dadb21b5309"
+      },
+      {
+        "group": "exclusive_prepare",
+        "tests": 25,
+        "expected": 25,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 3.255,
+        "logSha256": "c6161119681020a96ac727a3c911f2dded4f5d2df9090d63f37f951475b8871d"
+      },
+      {
+        "group": "runtime_package",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 8.509,
+        "logSha256": "7c84b3036a21fa94d5f97a010083934e42a85d76336d017313b89e6173ac9cd1"
+      },
+      {
+        "group": "lifecycle",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 3.079,
+        "logSha256": "4d02f8356f536d80e4372179ee40eaef1d0094b97ea3ae766db4915f835e40a4"
+      },
+      {
+        "group": "manager_port",
+        "tests": 50,
+        "expected": 50,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.725,
+        "logSha256": "e0f0073645a3499c4d0d019879acbe965260e9a6ca8821cc0e9c656e95a2ebda"
+      },
+      {
+        "group": "host_files",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.558,
+        "logSha256": "41ce46cfdc333bb960abf3b2adc38d6b72f8e65992c4956dfd2cca395c3d1896"
+      },
+      {
+        "group": "request_evidence",
+        "tests": 47,
+        "expected": 47,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.262,
+        "logSha256": "cb283519970146d127ae57fe97d56631bb5965dc4f3b87e84007e011005ca861"
+      },
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.326,
+        "logSha256": "e0ccccde40c82dfcae7d790885b8a2532a668a1b9f529204aae4e3d2a51f6b64"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.451,
+        "logSha256": "bd0f83931b0bac5b4c9e703ff4f2be499c8900df94417c151215292759138493"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.398,
+        "logSha256": "a0432ab2f6048813bd01fe726a3e874c81b7c6885f3f0042e4108d282728c069"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.485,
+        "logSha256": "1833e3825000ef20a2a84bfd9581be093bfccb0fa3d041507f31e00fa0a1cafb"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 5.842,
+        "logSha256": "b5c6a6fb640c1ad53e9ec14a1e014f1bc5a26bf6db177b647444a527a82431d4"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.369,
+        "logSha256": "9a7497e723398768002372363004fb8c0453525b6f3d739d0847cff529956480"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.067,
+        "logSha256": "dcf4eaddf12994f49abddd20c4fc1df23e4c6a2f3d0ac9e896efad1b3307f2d3"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.243,
+        "logSha256": "f72435cd40317d9711314ef7820df0764f773f537b614c5d3497d2acaffdcd83"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.492,
+        "logSha256": "3947fd05b0ff12a61ddf433ad62129a1345277dd8a757215a394da5bcb3b2a5c"
+      }
+    ],
+    "total": 732,
+    "allPassed": true,
+    "frozenBindingsChecked": 142,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realProcReads": 0,
+    "nativeCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false
+  },
+  "review": {
+    "mode": "independent_read_only_source_review",
+    "definiteP1Findings": 0,
+    "definiteP2Findings": 2,
+    "importantFindingsClosed": 2,
+    "redRegressionsObserved": true,
+    "finalFixReview": "no_definite_new_P1_P2",
+    "findings": [
+      "Snapshot entry timeout or interruption preserved old success and allowed normal work to resume.",
+      "The request counter excluded manager-owner peer requests: 262 actual fixture calls versus 174 counted."
+    ],
+    "corrections": [
+      "Seal BaseException in entry work gate and clear prior snapshot success.",
+      "Count all explicit request attempts at the HostIO request entry, retaining the original 256 total and cleanup reserve."
+    ]
+  },
+  "capabilitySourceClarification": {
+    "wrapperRequestedCapabilities": [
+      "CAP_CHOWN",
+      "CAP_DAC_OVERRIDE",
+      "CAP_FOWNER",
+      "CAP_SETGID",
+      "CAP_SETUID"
+    ],
+    "wrapperRequestedMask": 203,
+    "wrapperRequestedMaskHex": "0xcb",
+    "innerRootProbeExpectedMask": 235,
+    "innerRootProbeExpectedMaskHex": "0xeb",
+    "capabilitiesAdded": false,
+    "frozenSourceChanged": false,
+    "actualHostCapabilitiesObserved": false
+  },
+  "scope": {
+    "vpsConnections": 0,
+    "linuxUnits": 0,
+    "nativeExecutions": 0,
+    "realTargetProcReads": 0,
+    "realModels": 0,
+    "externalAgentCalls": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false
+  },
+  "limitations": [
+    "732 is related local regression, not full-repository, native or production acceptance.",
+    "Actual request construction/decoding/cleanup code used the explicit in-memory ABI library; no real bus or library was loaded.",
+    "This is the manager half of an independent witness; kernel pidfd, executable and held-cgroup evidence remain unimplemented.",
+    "execProfileMatched covers argv/type/user/group/restart checks, not full capabilities/resource/mount or native provenance.",
+    "References can lose a fast-exiting unit; missing observations remain unknown failures and never establish process emptiness.",
+    "The 256 cap counts explicit request attempts, not internal library/authentication frames; physical blocking/preemption is not proven.",
+    "Stop remains a pathname request after fresh invocation verification, not an atomic invocation-specific kernel kill.",
+    "Capability clarification describes the frozen candidate request, not observed host capabilities; no capability was added or frozen source changed.",
+    "Only sanitized records uploaded; private sources, failures, locks and historical quotas retained."
+  ],
+  "designReferences": [
+    "https://www.freedesktop.org/software/systemd/man/256/org.freedesktop.systemd1.html"
+  ],
+  "nextLocalWork": "Implement and combine the independent process/executable/cgroup collector with this manager port, preserving original deadlines and common resource checks before any critical native verification."
+}
