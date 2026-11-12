@@ -1,0 +1,237 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "stage": "complete-data-entry-local-binding",
+  "status": "local_tests_and_inactive_binding_passed_not_native_accepted",
+  "plan": {
+    "path": "docs/superpowers/plans/2026-11-13-complete-data-observation-entry.md",
+    "bytes": 4725,
+    "sha256": "d7f761b040b6d5e9ea822b1f3a2d7082840114c1d6484125556559feef564338"
+  },
+  "regression": {
+    "groups": [
+      {
+        "group": "entry-packet-fixed-pipeline",
+        "tests": 24,
+        "expected": 24,
+        "exitCode": 0,
+        "passed": true,
+        "wallSeconds": 0.756395,
+        "logSha256": "9d0b243b23dce6a84b6871f563f106b7fd86d47a59c4acb7aad1669b3b59c397",
+        "logBytes": 3770
+      },
+      {
+        "group": "projection-and-inactive-plan",
+        "tests": 20,
+        "expected": 20,
+        "exitCode": 0,
+        "passed": true,
+        "wallSeconds": 0.696068,
+        "logSha256": "3d859b0072ae4da9b640c2cdf9e984823cf1528fcddf44070f94308572d4a7fc",
+        "logBytes": 3340
+      },
+      {
+        "group": "unchanged-sizing-descriptor-contract",
+        "tests": 20,
+        "expected": 20,
+        "exitCode": 0,
+        "passed": true,
+        "wallSeconds": 0.627188,
+        "logSha256": "da4858e20f5d91fca1174fa213d8035e6fd5f6e9eb5e9fd78738c1a8bf68199f",
+        "logBytes": 2802
+      }
+    ],
+    "total": 64,
+    "allPassed": true,
+    "sourceBindings": {
+      ".superpowers/sdd/complete-data-entry-20261113-a1/entry.py": "a78f4d8be5f66df779f76c4a5b0e0a440aed8ae76cc1cc571bcc011adcb5bc6c",
+      ".superpowers/sdd/complete-data-entry-20261113-a1/prepare.py": "8a31c2a9d9135674cc37bec4075f12b358b360b518974bd84bfc270ab1a590e2",
+      ".superpowers/sdd/complete-data-entry-20261113-a1/test_entry.py": "60d72f6edc0ac70152942beff65ba23661a6a24b41100f72ec5c5ec3594c6011",
+      ".superpowers/sdd/complete-data-entry-20261113-a1/test_packet.py": "1d025fa1e0df3bb98aafe3ba51d28f5f6cbd37702333bf0f689e0be7432e4593",
+      ".superpowers/sdd/complete-data-entry-20261113-a1/test_pipeline.py": "9027c349e132b25561a7ea29c6384e8406a4b9e8b18b3accb771fd8ab6803213",
+      ".superpowers/sdd/capacity-compat-preparation-20261113-a1/preparation.py": "624649a1aabb3b0a43b824ecee4e4f9a98c36867243e09b5e14248302e6cc1be",
+      ".superpowers/sdd/capacity-compat-preparation-20261113-a1/packet_reader.py": "1bbb98078d7766aa601a571dfbd1532dac542208bcb8cbb70da9a802798f63d5",
+      ".superpowers/sdd/capacity-compat-preparation-20261113-a1/test_preparation.py": "76ebb5517f85dbdf0ea3b5ea84ecd40803d17067e1d7072fd3332705857e3fe0",
+      ".superpowers/sdd/capacity-compat-preparation-20261113-a1/test_packet_reader.py": "bbea4fca5c3047cd8cee603d2af1f963ada43bd7fdf67d09f417a04b1b14c948",
+      ".superpowers/sdd/production-bound-local-c01f6b0d86e5/metadata_sizing.py": "d401251ae189eefa2f27357f7c109e5175a88ab9cad7902eaf3cf9f3eb248259",
+      ".superpowers/sdd/production-bound-local-c01f6b0d86e5/test_metadata_sizing.py": "db1f9a2c8c8f8c76ab7a08d0f092742a1be8e0547e6fd29d3aee4efaeb543cb1",
+      ".superpowers/sdd/production-bound-local-c01f6b0d86e5/test_linux_metadata_adapter.py": "9f21a71c5506385a5a7ae6111f9aff1418957ddf8d12ee9632c39900147d06ec"
+    },
+    "sourcesUnchanged": true,
+    "packetSha256": "010d709aa53aa900c1f81e6f95b730860b7e72c4142071f2860c106cbbf6981e",
+    "collectorSha256": "a78f4d8be5f66df779f76c4a5b0e0a440aed8ae76cc1cc571bcc011adcb5bc6c",
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realNativeTargetCalls": 0,
+    "productionPublished": false
+  },
+  "independentReview": {
+    "readOnlySourceAndArtifactReviewPassed": true,
+    "blockingRemainingP1P2": 0,
+    "reviewerRanTestsOrTargetCallsOrWroteFiles": false,
+    "fixedFinding": "preserve read/interruption and close-error causal chain hidden by frozen sizing wrapper"
+  },
+  "inactiveArtifact": {
+    "packetSha256": "010d709aa53aa900c1f81e6f95b730860b7e72c4142071f2860c106cbbf6981e",
+    "collectorSha256": "a78f4d8be5f66df779f76c4a5b0e0a440aed8ae76cc1cc571bcc011adcb5bc6c",
+    "manifestSha256": "4a6bf514d1a1c80c24cb29f91a8da0f62dc997224c77cf3d992d3ae00644cc19",
+    "files": {
+      "collector.py": {
+        "bytes": 8625,
+        "sha256": "a78f4d8be5f66df779f76c4a5b0e0a440aed8ae76cc1cc571bcc011adcb5bc6c"
+      },
+      "packet.json": {
+        "bytes": 46417,
+        "sha256": "010d709aa53aa900c1f81e6f95b730860b7e72c4142071f2860c106cbbf6981e"
+      },
+      "future-binding.template.json": {
+        "bytes": 982,
+        "sha256": "66683373b333ff5624bde627e22ef0773ad95632389caa5c4bdaf1396ed62bc1"
+      },
+      "request.json": {
+        "bytes": 711,
+        "sha256": "83fd90fd0cdcc4000cea1b244da2cebf31c9dfbc6bd59353179534499eac884d"
+      }
+    },
+    "sourceFiles": 3,
+    "activeBindingIncluded": false,
+    "sshLauncherIncluded": false,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "productionReady": false
+  },
+  "operatorDependencies": {
+    "local_run.py": {
+      "bytes": 8320,
+      "sha256": "f56a8ead6eef11a766a471c501e7c3ac9d27794db4e1a4509499bf7c708a9f6d"
+    },
+    "bounded_entry.py": {
+      "bytes": 4421,
+      "sha256": "90cbd7544c7ca92c013b4038f3cf8bc88003f746fa0e4c1f1350a358f4385f99"
+    },
+    "outer_run.cjs": {
+      "bytes": 7485,
+      "sha256": "0c57f7aa189793f049f27f91aee1ea54e7c0bd4532cac9fb156e429ef74fca44"
+    },
+    "scheduler.py": {
+      "bytes": 17975,
+      "sha256": "4d8af5d0065cc8c53a8bd382581282c3d872e5bb5e84232031586d91c3e0e282"
+    },
+    "ssh_transport.py": {
+      "bytes": 10845,
+      "sha256": "9285484e9b86c50ff1eebffcf47a6db95bf232c50cf19088bc77e53e6ac5c11a"
+    }
+  },
+  "sourceBindings": [
+    {
+      "path": ".superpowers/sdd/complete-data-entry-20261113-a1/entry.py",
+      "bytes": 8625,
+      "sha256": "a78f4d8be5f66df779f76c4a5b0e0a440aed8ae76cc1cc571bcc011adcb5bc6c"
+    },
+    {
+      "path": ".superpowers/sdd/complete-data-entry-20261113-a1/prepare.py",
+      "bytes": 4887,
+      "sha256": "8a31c2a9d9135674cc37bec4075f12b358b360b518974bd84bfc270ab1a590e2"
+    },
+    {
+      "path": ".superpowers/sdd/complete-data-entry-20261113-a1/test_entry.py",
+      "bytes": 13436,
+      "sha256": "60d72f6edc0ac70152942beff65ba23661a6a24b41100f72ec5c5ec3594c6011"
+    },
+    {
+      "path": ".superpowers/sdd/complete-data-entry-20261113-a1/test_packet.py",
+      "bytes": 3045,
+      "sha256": "1d025fa1e0df3bb98aafe3ba51d28f5f6cbd37702333bf0f689e0be7432e4593"
+    },
+    {
+      "path": ".superpowers/sdd/complete-data-entry-20261113-a1/test_pipeline.py",
+      "bytes": 3939,
+      "sha256": "9027c349e132b25561a7ea29c6384e8406a4b9e8b18b3accb771fd8ab6803213"
+    },
+    {
+      "path": ".superpowers/sdd/complete-data-entry-20261113-a1/run_local.py",
+      "bytes": 3354,
+      "sha256": "c89668eac2b9a9d2d580dc3517590991ca01f567038b349c5fb9a1d317d23b85"
+    },
+    {
+      "path": ".superpowers/sdd/complete-data-entry-20261113-a1/plan.md",
+      "bytes": 1269,
+      "sha256": "cb3de9d9d76881c93b7b7b8c0f68489c34bd7e3816e155219cf3c90ecb8b553b"
+    },
+    {
+      "path": ".superpowers/sdd/complete-data-entry-20261113-a1/prepared-receipt-v2.json",
+      "bytes": 1009,
+      "sha256": "0db66692bc727ea3133729a8cd22d8b6c2ea1fa22c5826ded2fa78de9220a773"
+    },
+    {
+      "path": ".superpowers/sdd/complete-data-entry-20261113-a1/accepted-local-receipt.json",
+      "bytes": 3050,
+      "sha256": "ed4bc38b8fd46954cb24a51506711dbf42d7897f4cf27edafa7e5a7b090db423"
+    }
+  ],
+  "scope": {
+    "localOnly": true,
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "realNativeFixedPathReads": 0,
+    "realKernelSignalOrProcessGroupAcceptance": false,
+    "realModelCalls": 0,
+    "externalAgentMessages": 0,
+    "credentialsReadOrChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "productionPublished": false
+  },
+  "entryContract": {
+    "acceptedScope": "data-and-ingress-component-only",
+    "maximumRemoteSeconds": 20,
+    "maximumLocalSeconds": 35,
+    "measurementMaximumSeconds": 15,
+    "finalBaselineReserveSeconds": 5,
+    "measurementBudgetOnlyShrinks": true,
+    "originalEndpointNeverReset": true,
+    "twoEqualMetadataTraversalsRequired": true,
+    "candidateAllocationStillUnknown": true,
+    "fullReleaseCapacityAccepted": false,
+    "firstAndFinalErrorsSeparate": true,
+    "additionalCausalNodesMaximum": 8,
+    "unknownCommandCleanupRefusesSuccess": true,
+    "closeRetry": false
+  },
+  "localPipelineEvidence": {
+    "actualPinnedSizingAndProjectionAndEntryMainWired": true,
+    "targetOsServicesConfigurationsAndSignalsAreDoubles": true,
+    "syntheticDataFiles": 2,
+    "syntheticDataAndCaddyTotalBytes": 1423,
+    "fakeDescriptorsClosedAndNoDoubleClose": true,
+    "physicalTimeoutForcedByKernelVerified": false
+  },
+  "qualifications": [
+    "input/source loading before SIGALRM relies on the original outer20second process-group envelope",
+    "direct collector execution defines functions only;the prepared bundle has no active binding or SSH launcher",
+    "activationAuthorized=false is descriptive metadata,not an authorization control enforced by old operator",
+    "the external reviewed artifact digests must be checked before any later activation",
+    "fake timer settings and FD closure are not kernel enforcement or native lifetime evidence",
+    "native metadata return cannot certify actual candidate space, consistent backup, compatibility or production readiness",
+    "last64 tests executed in3 serial local groups,not a full application or production regression",
+    "old preflight1/1 quota remains consumed;this stage started zero target attempts"
+  ],
+  "nextKeyApprovalProposal": {
+    "newRemoteAttemptsProposed": 1,
+    "authorized": false,
+    "activateInNewExclusiveLocalOperatorDirectory": true,
+    "scope": "fixed complete data/ingress metadata and protected baseline snapshots only",
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "newLinuxUnits": 0,
+    "automaticRetry": false,
+    "businessDatabaseContentsRead": false,
+    "dataCopiesOrBackupsCreated": false,
+    "productionPublication": false
+  },
+  "githubScope": "only sanitized stage plan and verification record;private source/packet not submitted",
+  "productionReady": false,
+  "fullDeliveryComplete": false
+}
