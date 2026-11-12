@@ -1,0 +1,271 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "status": "passed_local_request_and_evidence_preparation_not_native",
+  "scope": {
+    "vpsConnections": 0,
+    "linuxUnits": 0,
+    "nativeExecutions": 0,
+    "realModels": 0,
+    "externalAgentCalls": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false
+  },
+  "implementation": {
+    "privateCandidateOnly": true,
+    "publicRecordOnly": true,
+    "sourceManifest": [
+      {
+        "path": "request_adapter.py",
+        "bytes": 6683,
+        "sha256": "f30fd3f16d85e7a2f24ce1981e83b2450796efca0d8bbe9d1a129dee4e21971c"
+      },
+      {
+        "path": "receipt_gate.py",
+        "bytes": 6220,
+        "sha256": "49118f70c9c3b556db8ff52e6200eda6299bb5284f020fafcec91f2214236283"
+      },
+      {
+        "path": "test_request.py",
+        "bytes": 8414,
+        "sha256": "ad1f26fded3819940d3d04daea5f738a8ec3c6c90459e44c4e2ceabfbd4efcd9"
+      },
+      {
+        "path": "test_receipt.py",
+        "bytes": 6911,
+        "sha256": "4148aa7436fd6fdbae9fc6232f71f285c19986d7be3e69b15e6eeaef1bd92c5c"
+      },
+      {
+        "path": "test_bootstrap_composition.py",
+        "bytes": 3675,
+        "sha256": "0769bdf9232ab505ac58da762591d922f62580ffc219a60e72106bcbaa4b11f0"
+      },
+      {
+        "path": "run_local.py",
+        "bytes": 3296,
+        "sha256": "f55810764177141f50527b420132b3eee0df7e97e7eeb91769e056a38b809af4"
+      },
+      {
+        "path": "plan.md",
+        "bytes": 2022,
+        "sha256": "04f7854c912360e96a3989725850add05e2c57175c24cd87ddfc62e4ebc4a792"
+      },
+      {
+        "path": "LOCAL_HANDOFF.md",
+        "bytes": 3351,
+        "sha256": "d5adfa2685e63d56a69141215ed44d23ad2736c9d816617d1ccf35d3f5a6dc47"
+      }
+    ],
+    "reusedFrozenPlanner": true,
+    "reusedOriginalArgumentFunction": true,
+    "reusedPinnedEncoder": true,
+    "legacyOperationalControllerImported": false,
+    "exactNonceUnitCgroupBinding": true,
+    "exactPropertyValidation": true,
+    "readOnlyTwoFilePackage": true,
+    "verifiedBytesCompiled": true,
+    "nativeEntryDispatchTestedWithMemoryOperations": true,
+    "explicitSeccompFilter": true,
+    "actualSeccompSupportVerified": false,
+    "actualPid1RootAccessVerified": false
+  },
+  "package": {
+    "files": [
+      {
+        "path": "pid1-parent-lease-20261112-a1/parent_lease.py",
+        "bytes": 7359,
+        "sha256": "1f5d09827d6867f549a2f2741b68a4345396cf7865697688f9f7380cf33152f8"
+      },
+      {
+        "path": "probe/anchor_probe.py",
+        "bytes": 14223,
+        "sha256": "e0a61ed42d0976f0d2ea3aac48ec636dde134a78ca8a8507196480c6c1a6e884"
+      },
+      {
+        "path": "request-spec.json",
+        "bytes": 13411,
+        "sha256": "8a0181bcc3a07b757c2426751f2acd685fe15ddf71350cc26ebe9d346020cef7"
+      }
+    ],
+    "bindingSha256": "0f22658b74a4aca0e9dbbba8d2b6a87ea9663045ba73694f9c4733953bcef1e6",
+    "definitionImportVerified": true,
+    "defaultNativeRejected": true,
+    "unitProfileBound": true,
+    "hostLauncherPrepared": false,
+    "nativeExecuted": false,
+    "productionReady": false
+  },
+  "profile": {
+    "memoryBytes": 201326592,
+    "cpuPercent": 20,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasksMax": 32,
+    "swapBytes": 0,
+    "capabilityMask": 235,
+    "noNewPrivileges": true,
+    "privateNetwork": true,
+    "addressFamilies": [
+      "AF_UNIX"
+    ],
+    "runtimeSeconds": 8,
+    "startSeconds": 1,
+    "stopSeconds": 1,
+    "terminalStateRetained": true
+  },
+  "evidenceContract": {
+    "totalSeconds": 10,
+    "workDeadlineSeconds": 8,
+    "cleanupReserveSeconds": 2,
+    "invocationAndSourceBinding": true,
+    "missingCgroupNotEmpty": true,
+    "missingFieldsRejected": true,
+    "exitAndCleanupRequired": true,
+    "serviceBaselinesRequired": true,
+    "callerRecordsNotKernelProof": true,
+    "deadlineEnforcementImplemented": false,
+    "hostLauncherPrepared": false
+  },
+  "regression": {
+    "groups": [
+      {
+        "group": "request_evidence",
+        "tests": 47,
+        "expected": 47,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.839,
+        "logSha256": "ee5f3d6c9671ea71420f669859f77c6abcc966a065843a40d035c60fea6be22b"
+      },
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.2,
+        "logSha256": "3b319b9d98fef83a00f72acfc30d51431825efd4fd13f1263c386e3d028dba39"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.279,
+        "logSha256": "d7683c044de2bfe03e8344b20f305c441e5ce9301c5c5f0533d977f91f7b3d2b"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.298,
+        "logSha256": "c9ae877eb877c4ad4464486e5cdf265a5a0349dfd352189674e8bd6c9218f130"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.366,
+        "logSha256": "a66fa7ad82fffba38c21be0c56ac11e031834d0ce2ad083d8cfd397351ec10b0"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.578,
+        "logSha256": "6ff4265b62d5266a0c6905cb615c1be5d5a884a99c4f876becc7c02e0fbf1e67"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.307,
+        "logSha256": "c7aa66ec53e20bfb24871f2d57420aca9269f37bc2ed59e327cbd99e0eaf09b9"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.736,
+        "logSha256": "60d51929429080a5350987e2389bde005fab65d37cfe20cf0420c3fa7b264f7d"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.231,
+        "logSha256": "2065facfc64d92e034f5bd03202f00aa65f70c5d4383074c42ea83f9ea881647"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.413,
+        "logSha256": "2d612df3c2c1999ab0d2ae37333b14edc0ed16ae2923411c5597ff6ad5115847"
+      }
+    ],
+    "total": 429,
+    "allPassed": true,
+    "frozenBindingsChecked": 78,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realProcReads": 0,
+    "nativeCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false
+  },
+  "review": {
+    "mode": "independent_read_only_source_review",
+    "p1Findings": 0,
+    "p2Findings": 1,
+    "finding": "Handled PID1 metadata read failure was rejected despite the probe preserving the original error.",
+    "correction": "Require the single preserved metadata IO error to match the handled PID1 metadata error exactly; reject missing, mismatched, additional, interrupted and cleanup errors.",
+    "redRegressionObserved": true,
+    "regressionCasesAdded": 3,
+    "realPinnedDefinitionCompositionCasesAdded": 2
+  },
+  "failuresPreserved": [
+    "Initial 19 request tests and 23 receipt tests failed before implementation.",
+    "The first request fixture used a 33-character nonce; corrected only the fixture.",
+    "Review regressions exposed acceptance mismatch and missing original error evidence.",
+    "A composition fixture used a nonexistent open hook; corrected to the existing operation boundary."
+  ],
+  "evidenceLimits": [
+    "429 is related local component regression, not a full repository or production acceptance.",
+    "Bootstrap composition uses actual pinned definitions and memory operations; native_main is replaced in the local fixture.",
+    "A passing receipt record proves internal consistency only; no trusted native collector exists in this candidate.",
+    "Systemd property acceptance, actual seccomp and PID1 root access remain unverified.",
+    "Strong shared-deadline launch/termination/output collection and host factory remain outstanding.",
+    "No existing failure directory, lock, frozen candidate or historical quota was changed."
+  ],
+  "nextLocalWork": "Integrate the request and evidence contracts with a trusted host lifecycle adapter and test bounded startup, terminal collection and cleanup locally before any separate native authorization."
+}
