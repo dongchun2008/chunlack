@@ -1,0 +1,223 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "phase": "local-only direct-client pidfd owner",
+  "status": "passed_local_component_simulation",
+  "tests": {
+    "groups": [
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 0.304,
+        "passed": true,
+        "logSha256": "c9ae877eb877c4ad4464486e5cdf265a5a0349dfd352189674e8bd6c9218f130"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 0.396,
+        "passed": true,
+        "logSha256": "61d0180282ae59d2367d3d5d7691ba4cb7ae93a5e445ce2d97d74e0602227b49"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 4.342,
+        "passed": true,
+        "logSha256": "9e68ce63c458cddc24a2b8637e57f514eb9a14e37af415348f6467ca0d273af9"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 0.313,
+        "passed": true,
+        "logSha256": "cc261f467c6e324eecea775ca0610986a8e553b37858c794c3d1695f575ec946"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 2.303,
+        "passed": true,
+        "logSha256": "ff70e1b894b758bd682f18f35eb34f06055149f25643fe907352cd9675c6aa32"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 0.251,
+        "passed": true,
+        "logSha256": "49fb1e0ebc22c1f515164113033b9333dcc7e26b8021a1f34ff1c293597936ab"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 0.549,
+        "passed": true,
+        "logSha256": "a62057968010bbd1db1d9c685b07275183887009cf3c8641c396d8a918d2794f"
+      }
+    ],
+    "total": 343,
+    "allPassed": true,
+    "priorBindingsChecked": 64,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realProcessCreations": 0,
+    "realPidfdCalls": 0,
+    "realSignals": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false
+  },
+  "sources": [
+    {
+      "path": "client_owner.py",
+      "bytes": 11707,
+      "sha256": "0ea99720ff6d97739f320f184bd639b0dd5a1ef43f56b17c3950930859665c9b"
+    },
+    {
+      "path": "LOCAL_HANDOFF.md",
+      "bytes": 3476,
+      "sha256": "f8e47abb8011ffd14a6ff4d9b08b34b6c2c9e22eaf9bee78366a30db897f4005"
+    },
+    {
+      "path": "plan.md",
+      "bytes": 1556,
+      "sha256": "45634921625e219128f730325358c7ba915f026fde0e5e990a9f7f014d105454"
+    },
+    {
+      "path": "run_local.py",
+      "bytes": 2716,
+      "sha256": "699d9683a5853a9207a255174c00d8cdc3a961b710f4dc253c6270bd78fa2ac2"
+    },
+    {
+      "path": "test_native_wrapper.py",
+      "bytes": 4080,
+      "sha256": "dd2060cbf802bbcf87612700cb38151f81d7ddf9675ebf4950a984a045d8bdf4"
+    },
+    {
+      "path": "test_owner.py",
+      "bytes": 12693,
+      "sha256": "d6e0652b48e241f89fed486ba6bb01ff423d63eaff7c8592f096794515da5d80"
+    }
+  ],
+  "closureInputsRechecked": 27,
+  "independentReview": {
+    "openP1P2": 0,
+    "mode": "read-only static review"
+  },
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "remaining": [
+    "trusted fixed-command creation and bounded process identity/fdinfo providers",
+    "separate controller pidfd proof",
+    "cgroupfd and aggregate resource assembly",
+    "partial startup outer reclamation",
+    "PID1 root-anchor acquisition and authority handoff",
+    "native and production acceptance"
+  ],
+  "failuresRetained": [
+    {
+      "status": "expected_red",
+      "tests": 16,
+      "failures": 16,
+      "reason": "client pidfd owner missing",
+      "linuxUnits": 0,
+      "nativeCalls": 0
+    },
+    {
+      "status": "expected_red",
+      "tests": 1,
+      "failures": 1,
+      "reason": "creation callback returning no child incorrectly allowed empty cleanup confirmation",
+      "resolution": "retain creationAttempted/creationReturned separately; unknown result refuses close and cleanup claim",
+      "nativeCalls": 0,
+      "linuxUnits": 0
+    },
+    {
+      "status": "expected_red",
+      "nonzeroClient": {
+        "tests": 1,
+        "failures": 1
+      },
+      "lateFdinfo": {
+        "tests": 1,
+        "errors": 1
+      },
+      "reasons": [
+        "nonzero client exit was marked successful local work",
+        "consumed late fdinfo was not retained privately"
+      ],
+      "resolution": "require zero exit and no signal attempt for local client success; retain bounded private fdinfo before post-call gate",
+      "nativeCalls": 0,
+      "linuxUnits": 0
+    },
+    {
+      "status": "expected_red",
+      "tests": 1,
+      "failures": 1,
+      "reason": "main work did not reserve independent cleanup observation count",
+      "resolution": "same total512 split into472 main and40 cleanup, original global deadline unchanged",
+      "nativeCalls": 0,
+      "linuxUnits": 0
+    }
+  ],
+  "implemented": [
+    "Creation attempted/returned, child-handle acquisition and pidfd acquisition remain separate facts.",
+    "Direct child PID/startTicks/UID/GID/watcher-cgroup sampled around pidfd binding; bounded fdinfo Pid/NSpid and descriptor consistency checked.",
+    "Only a bound pidfd can receive one fixed SIGKILL; no raw PID/group signal or arbitrary process adoption API.",
+    "Readiness must be followed by strict terminal wait and matching one-time child reap; ESRCH/ECHILD and unknown results do not prove exit.",
+    "A nonzero/signalled client cannot become successful client work; controller and worker proof remains separate.",
+    "Original total512 polls split472 main and40 cleanup, without extending the global deadline."
+  ],
+  "scopeNotes": [
+    "24 owner tests and9 concrete-wrapper tests use in-memory factory/identity/OS/select/signal/child doubles.",
+    "No fixed-command process factory, native identity/fdinfo reader, controller owner or cgroupfd driver is supplied yet.",
+    "Ordinary native construction is disabled. The preparation flag is not an authorization/security boundary.",
+    "Trusted same-process code must not secretly close/reuse the private pidfd or independently reap the child; fstat alone does not prove arbitrary anonymous OFD identity.",
+    "Partial/unknown acquisition is retained without a cleanup claim; bounded outer physical reclamation is still unproven.",
+    "No claim that a local client success proves the controller, worker or application task succeeded."
+  ],
+  "boundaries": {
+    "vpsConnections": 0,
+    "linuxUnits": 0,
+    "realProcessCreations": 0,
+    "realPidfds": 0,
+    "realSignals": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublications": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0
+  },
+  "publication": {
+    "sanitizedRecordOnly": true,
+    "privateCodePublished": false
+  },
+  "references": [
+    "https://docs.python.org/3.13/library/os.html#os.pidfd_open",
+    "https://docs.python.org/3.13/library/os.html#os.waitid",
+    "https://docs.python.org/3.13/library/signal.html#signal.pidfd_send_signal"
+  ]
+}
