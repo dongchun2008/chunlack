@@ -1,0 +1,254 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "stage": "capacity-and-compatibility-local-preparation",
+  "status": "local_preparation_and_regression_passed_not_native_accepted",
+  "plan": {
+    "path": "docs/superpowers/plans/2026-11-13-capacity-and-compatibility-preparation.md",
+    "bytes": 7749,
+    "sha256": "681583bc0f4e6e0f2e702d0e2b1cfb382ffd77252c05543fde2200b70d673a48"
+  },
+  "regression": {
+    "groups": [
+      {
+        "group": "new-preparation-and-packet-amended",
+        "tests": 20,
+        "expected": 20,
+        "exitCode": 0,
+        "passed": true,
+        "wallSeconds": 0.378712,
+        "logBytes": 3340,
+        "logSha256": "189ea39eec459598326aa97082ae8fe965fdb3cef64965015e2d295e53f50c22"
+      },
+      {
+        "group": "existing-sizing-and-full-proof-validator",
+        "tests": 39,
+        "expected": 39,
+        "exitCode": 0,
+        "passed": true,
+        "wallSeconds": 1.341448,
+        "logBytes": 5609,
+        "logSha256": "f5037700619916fef09c06b497f5dfc7ac3e691dc2046d72a53dafec620e412b"
+      },
+      {
+        "group": "cold-backup-scope-parity",
+        "tests": 8,
+        "expected": 8,
+        "exitCode": 0,
+        "passed": true,
+        "wallSeconds": 4.179114,
+        "logBytes": 1273,
+        "logSha256": "61c9469e3cd0147d179a0365125786765f3789558bed1a56ce3c93fabf5aa8aa"
+      }
+    ],
+    "reusedUnchangedGroupTests": 47,
+    "onlyChangedScopesRerun": true,
+    "sourceBindings": {
+      ".superpowers/sdd/capacity-compat-preparation-20261113-a1/preparation.py": "624649a1aabb3b0a43b824ecee4e4f9a98c36867243e09b5e14248302e6cc1be",
+      ".superpowers/sdd/capacity-compat-preparation-20261113-a1/packet_reader.py": "1bbb98078d7766aa601a571dfbd1532dac542208bcb8cbb70da9a802798f63d5",
+      ".superpowers/sdd/capacity-compat-preparation-20261113-a1/test_preparation.py": "76ebb5517f85dbdf0ea3b5ea84ecd40803d17067e1d7072fd3332705857e3fe0",
+      ".superpowers/sdd/capacity-compat-preparation-20261113-a1/test_packet_reader.py": "bbea4fca5c3047cd8cee603d2af1f963ada43bd7fdf67d09f417a04b1b14c948",
+      ".superpowers/sdd/capacity-compat-preparation-20261113-a1/assemble_local.py": "78de85a0802c5b99bcd6459966f9983e1983eb67a9a26195ded61b763b18e23d",
+      ".superpowers/sdd/production-bound-local-c01f6b0d86e5/metadata_sizing.py": "d401251ae189eefa2f27357f7c109e5175a88ab9cad7902eaf3cf9f3eb248259",
+      ".superpowers/sdd/production-bound-local-c01f6b0d86e5/compatibility_inputs.py": "0287575fa437538508e5e42122a4117bbe5bc8f047184a0907c9d1a8631bf7db",
+      ".superpowers/sdd/production-bound-local-c01f6b0d86e5/proof_adapter.py": "63b953b6bf8e83f6ca6659a6924c5410e67a9327017431909c6c98d6592d30b9",
+      ".superpowers/sdd/production-bound-local-c01f6b0d86e5/test_metadata_sizing.py": "db1f9a2c8c8f8c76ab7a08d0f092742a1be8e0547e6fd29d3aee4efaeb543cb1",
+      ".superpowers/sdd/production-bound-local-c01f6b0d86e5/test_linux_metadata_adapter.py": "9f21a71c5506385a5a7ae6111f9aff1418957ddf8d12ee9632c39900147d06ec",
+      ".superpowers/sdd/production-bound-local-c01f6b0d86e5/test_compatibility_inputs.py": "e298d3ec31481faa930cce2ae2a12191057a0fffa51d7293490744f09cbc21f6",
+      ".superpowers/sdd/production-bound-local-c01f6b0d86e5/test_full_proof_adapter.py": "d52ec5d149a969ef9fe60cddb33c6e9a13cd4149f527ba738ff66fc02fddbb10",
+      ".superpowers/sdd/production-bound-local-c01f6b0d86e5/test_pinned_contract_integration.py": "cddda35c56c19892ee7fc61795ed6bcbcd7157a3ffc31971b37e234ed7a54820",
+      ".superpowers/sdd/backup-capacity-parity-20261113-a1/test_backup_parity.py": "2edaf8088c4bb224af3cc6d5c322ebc086d6ba135894bae16bcf3e19de2765a6"
+    },
+    "sourcesUnchangedDuringRetest": true,
+    "changedSinceInitialBatch": [
+      ".superpowers/sdd/capacity-compat-preparation-20261113-a1/packet_reader.py",
+      ".superpowers/sdd/capacity-compat-preparation-20261113-a1/test_packet_reader.py"
+    ],
+    "packetSha256": "9c797df4f1a020b0905efb321dc23b96176659538faa482f980122f3ba7e915b",
+    "total": 67,
+    "allPassed": true,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "productionPublished": false
+  },
+  "countQualification": "20 changed-scope tests rerun after reader fixes;39+8 run earlier in this same stage and reused only after unchanged source/log hash checks;not67 tests in one final fresh run",
+  "review": {
+    "independentReadOnlyReviewPassed": true,
+    "blockingRemainingP1P2": 0,
+    "reviewerRanTestsOrNetworkOrWroteFiles": false,
+    "fixedFindings": [
+      "nested compatibility authorization and explicit pending fields",
+      "v1 parse_float rejects overflow/underflow/all floating syntax"
+    ],
+    "retainedLimitations": [
+      "catalog not an independent trust root",
+      "original validator CLI retained;no assembled compatibility execution workflow",
+      "whole-release capacity cannot be inferred from data-only zero-candidate calculation"
+    ]
+  },
+  "inactiveArtifact": {
+    "sourceFiles": 4,
+    "packetBytes": 44250,
+    "packetSha256": "9c797df4f1a020b0905efb321dc23b96176659538faa482f980122f3ba7e915b",
+    "sourceManifest": {
+      "preparation.py": {
+        "bytes": 8309,
+        "sha256": "624649a1aabb3b0a43b824ecee4e4f9a98c36867243e09b5e14248302e6cc1be"
+      },
+      "metadata_sizing.py": {
+        "bytes": 8331,
+        "sha256": "d401251ae189eefa2f27357f7c109e5175a88ab9cad7902eaf3cf9f3eb248259"
+      },
+      "compatibility_inputs.py": {
+        "bytes": 6109,
+        "sha256": "0287575fa437538508e5e42122a4117bbe5bc8f047184a0907c9d1a8631bf7db"
+      },
+      "readonly-code-preflight.py": {
+        "bytes": 16763,
+        "sha256": "b704ceefa1bf917c8ce0c18a439d1b50099f6e723e7fcc3d5f892698088bd1e3"
+      }
+    },
+    "externalPacketPinRequired": true,
+    "transportIncluded": false,
+    "compatibilityExecutionDriverIncluded": false,
+    "originalValidatorCliRetained": true,
+    "nativeExecutionAuthorized": false,
+    "compatibilityProofCreated": false,
+    "actualCandidateAllocationBound": null,
+    "productionReady": false
+  },
+  "sourceBindings": [
+    {
+      "path": ".superpowers/sdd/capacity-compat-preparation-20261113-a1/preparation.py",
+      "bytes": 8309,
+      "sha256": "624649a1aabb3b0a43b824ecee4e4f9a98c36867243e09b5e14248302e6cc1be"
+    },
+    {
+      "path": ".superpowers/sdd/capacity-compat-preparation-20261113-a1/packet_reader.py",
+      "bytes": 4097,
+      "sha256": "1bbb98078d7766aa601a571dfbd1532dac542208bcb8cbb70da9a802798f63d5"
+    },
+    {
+      "path": ".superpowers/sdd/capacity-compat-preparation-20261113-a1/test_preparation.py",
+      "bytes": 8039,
+      "sha256": "76ebb5517f85dbdf0ea3b5ea84ecd40803d17067e1d7072fd3332705857e3fe0"
+    },
+    {
+      "path": ".superpowers/sdd/capacity-compat-preparation-20261113-a1/test_packet_reader.py",
+      "bytes": 4391,
+      "sha256": "bbea4fca5c3047cd8cee603d2af1f963ada43bd7fdf67d09f417a04b1b14c948"
+    },
+    {
+      "path": ".superpowers/sdd/capacity-compat-preparation-20261113-a1/assemble_local.py",
+      "bytes": 4676,
+      "sha256": "78de85a0802c5b99bcd6459966f9983e1983eb67a9a26195ded61b763b18e23d"
+    },
+    {
+      "path": ".superpowers/sdd/capacity-compat-preparation-20261113-a1/run_local.py",
+      "bytes": 4159,
+      "sha256": "a39434c546d32d232a0c35f9cd71575ce03cbc8628082d35fab7a342fb2f8b59"
+    },
+    {
+      "path": ".superpowers/sdd/capacity-compat-preparation-20261113-a1/run_amended.py",
+      "bytes": 2838,
+      "sha256": "a44f7204911d35c0b038b52f25b69d3e8f441910accf8e42051dae72a5a67d19"
+    },
+    {
+      "path": ".superpowers/sdd/capacity-compat-preparation-20261113-a1/prepared-receipt-v2.json",
+      "bytes": 1096,
+      "sha256": "b2b5ae6a33c0d27d78b7ce1fb3cdb38d65913305ab7f9bb926a4011af9f6c92f"
+    },
+    {
+      "path": ".superpowers/sdd/capacity-compat-preparation-20261113-a1/accepted-local-amended-receipt.json",
+      "bytes": 3612,
+      "sha256": "e5863ecb3798afa7fee8a7c026cff7e6eb9a1857746dcac9f0e6370ae4b1d2ab"
+    }
+  ],
+  "capacityPolicy": {
+    "roots": [
+      "/var/lib/chunlack-public",
+      "/etc/chunlack-public/Caddyfile"
+    ],
+    "backupFilesystem": "/var/backups",
+    "maximumDepth": 32,
+    "maximumEntries": 20000,
+    "maximumDataFiles": 1000,
+    "maximumDataBytes": 67108864,
+    "maximumIngressBytes": 4194304,
+    "internalSeconds": 15,
+    "proposedRemoteSeconds": 20,
+    "proposedLocalSeconds": 35,
+    "twoEqualMetadataTraversalsRequired": true,
+    "fileBodiesRead": false,
+    "partialSuccessAllowed": false,
+    "automaticRetry": false
+  },
+  "compatibilityProposal": {
+    "authorized": false,
+    "maximumUnitsProposed": 1,
+    "seconds": 90,
+    "memoryMiB": 192,
+    "cpuPercent": 20,
+    "nice": 10,
+    "cpuWeight": 10,
+    "tasksMax": 32,
+    "swapBytes": 0,
+    "privateNetwork": true,
+    "businessUid": 996,
+    "businessGid": 987,
+    "noNewPrivileges": true,
+    "scope": "approved per-database copies and original candidate/previous compatibility driver",
+    "applicationConsistentSnapshot": false,
+    "maximumProofTtlMs": 3600000,
+    "minimumFreshnessAtPreparationMs": 300000,
+    "originalFullValidatorRequired": true,
+    "automaticRetry": false
+  },
+  "missingProductionBindings": [
+    "complete native data metadata observation",
+    "actual candidate allocation",
+    "exhaustive previous source inventory",
+    "production prepared configuration and ingress bytes",
+    "full authority and controller fingerprints",
+    "installed formal-entry policy",
+    "fresh exact-binding compatibility proof"
+  ],
+  "observationalReference": {
+    "path": "docs/verification/2026-11-13-production-readonly-preflight.json",
+    "sha256": "400e875e547997ab91fef9590e656d6542e21ad295a109de4ded8c36ebcf1915",
+    "newAuthorizationOrFreshProof": false
+  },
+  "frozenPayload": {
+    "productFilesVerified": 66,
+    "controlFilesVerified": 8,
+    "sourceBytesUnchanged": true,
+    "installedDependenciesIncluded": false
+  },
+  "scope": {
+    "localOnly": true,
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "realNativeFixedPathReads": 0,
+    "realModelCalls": 0,
+    "externalAgentMessages": 0,
+    "realBusinessDatabaseContentsRead": false,
+    "productionPublished": false,
+    "credentialsReadOrChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false
+  },
+  "qualifications": [
+    "real local synthetic file copies and simulated Linux descriptor/allocation tests are not VPS acceptance",
+    "two equal metadata traversals are not application-consistent backup",
+    "zero candidate input is only used to isolate data/ingress cost;its total-space result is never exported",
+    "future candidate allocation remains unknown until actual production-bound measurement",
+    "existing full proof validator exercised with synthetic contract;no native identity or proof manufactured",
+    "no previous SSH/Linux quota reused or refreshed",
+    "future20/35 readonly entry and90second compatibility driver require actual binding before execution"
+  ],
+  "githubScope": "only this sanitized record and its plan;private implementation/source packet and real configurations not submitted",
+  "productionReady": false,
+  "fullDeliveryComplete": false
+}
