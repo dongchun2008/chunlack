@@ -1,0 +1,466 @@
+{
+  "cleanupOwnershipProven": false,
+  "date": "2026-11-13",
+  "failuresPreserved": [
+    "25 missing-implementation red failures",
+    "Malformed synthetic empty cgroup.procs fixture corrected to zero-byte file",
+    "Nonzero root/watch task and root/mount alias rejections added after failing boundary tests",
+    "Symlink fixture distinguishes failure before FD return from unconfirmed returned FD",
+    "Final manager-cycle race red reproduced before fixing identity bracket"
+  ],
+  "implementation": {
+    "allDescriptorsReusedAcrossObservations": true,
+    "allManagerSamplesMatchOriginalInvocation": true,
+    "allOtherConfirmedHandlesAttempted": true,
+    "callbackCap": 256,
+    "defaultNativeDisabled": true,
+    "descriptorRelativeNoFollow": true,
+    "endIsOriginalStartPlusSeconds": 12,
+    "fdReusedOrUnconfirmedNeverBlindlyClosed": true,
+    "generationsCheckedBeforeAndAfter": true,
+    "groupCreatingOrStoppingAPI": false,
+    "heldDescriptors": 40,
+    "heldGroups": [
+      "root",
+      "work",
+      "watcher"
+    ],
+    "managerBracket": [
+      "before",
+      "middle",
+      "after both kernel samples"
+    ],
+    "managerInputsNormalizedNotNative": true,
+    "nativeEnableSwitch": false,
+    "newBudgetGranted": false,
+    "observationCap": 84,
+    "originalAndCleanupErrorsSeparate": true,
+    "perReaderDescriptorCeiling": 96,
+    "physicalPreemptionImplemented": false,
+    "rootOrWorkDirectMembersRefused": true,
+    "staleFactsClearedOnNewObservationErrorAndClose": true,
+    "successfulCallbackMaximum": 255,
+    "supervisorPidMeansMembershipObservationOnly": true,
+    "unknownCloseNeverRetried": true,
+    "unknownRootEmptyIsNull": true,
+    "workEmptyRequires": "Two recursive populated=0, zero pids.current and empty direct member-list samples"
+  },
+  "implementationUploaded": false,
+  "inputs": [
+    {
+      "path": "shared-resource-source-20261113-a1/layout.py",
+      "sha256": "beca8ebf6b060d26627110e847cc1988058eb97f0997edba1241efda744f0661"
+    },
+    {
+      "path": "controller-cgroup-witness-20261113-a1/group_reader.py",
+      "sha256": "02999adc000e8a4a045b3ca1918bc3dde6f13a47ca18c5d436b98b31ebe733ae"
+    }
+  ],
+  "localImplementationBindings": [
+    {
+      "bytes": 8072,
+      "path": "work_tree.py",
+      "sha256": "56ca1216c2100a01ec97039e5065b79d0af0ee4303fe0f1b4864bf05ecfe5c3a"
+    },
+    {
+      "bytes": 14465,
+      "path": "test_tree.py",
+      "sha256": "6923d1eca2a8473d3f4ca041edb5b1a84fb48f383eb2977b218a50d26e8e837e"
+    },
+    {
+      "bytes": 6624,
+      "path": "run_local.py",
+      "sha256": "ef5ef93307f1758e28d883c02d360595a313de30052d6a66e177c607a454ba73"
+    },
+    {
+      "bytes": 3397,
+      "path": "plan.md",
+      "sha256": "bb57901393346303dbb68e196fcd277846cedaa486ebfb6c0157ef03bcb4b09f"
+    },
+    {
+      "bytes": 7182,
+      "path": "LOCAL_HANDOFF.md",
+      "sha256": "9812216700ca919084b0107996f2ec107102c991cbbc499d4917e5c8baefd407"
+    },
+    {
+      "bytes": 905,
+      "path": "review-receipt.json",
+      "sha256": "2b61951a77b414b15e3396380dc31ca726196aa06a9034a8e9fd4f56cd9648db"
+    }
+  ],
+  "nativeExecutionEligible": false,
+  "nativeProvenanceVerified": false,
+  "physicalQuiescenceProven": false,
+  "previousEvidence": {
+    "commit": "6df72a438190b9650b6e8e08a85ad14a4c4a1581",
+    "path": "docs/verification/2026-11-13-shared-resource-source-local-preparation.json"
+  },
+  "productionReady": false,
+  "purpose": "Distinguish the whole nested work subtree from an empty controller leaf while keeping the watcher outside the cleanup target.",
+  "reference": {
+    "title": "Linux kernel cgroup v2 recursive populated notification",
+    "url": "https://docs.kernel.org/admin-guide/cgroup-v2.html#un-populated-notification"
+  },
+  "regression": {
+    "allPassed": true,
+    "caseNames": [
+      "test_bind_holds_shared_tree_and_hidden_descendant_does_not_count_empty",
+      "test_clock_rollback_or_start_before_original_epoch_is_rejected",
+      "test_close_failure_attempts_all_other_handles_and_is_not_retried",
+      "test_close_generation_mismatch_does_not_close_reused_descriptor",
+      "test_default_native_and_bad_original_clock_or_pid_rejected_without_io",
+      "test_direct_process_in_root_or_work_is_rejected",
+      "test_duplicate_or_malformed_recursive_events_are_rejected",
+      "test_empty_member_list_and_zero_tasks_without_recursive_empty_not_enough",
+      "test_held_directory_replacement_or_symlink_seals_reader",
+      "test_in_progress_callback_sees_old_success_facts_cleared",
+      "test_interrupt_and_primary_read_error_are_both_retained",
+      "test_invocation_change_during_last_kernel_sample_cannot_commit_empty",
+      "test_late_manager_response_cannot_extend_original_deadline",
+      "test_late_read_prevents_empty_commit_and_retains_cleanup_budget",
+      "test_leaf_replacement_rejected_but_original_held_fds_can_close",
+      "test_manager_and_observation_budgets_are_bounded",
+      "test_manager_callback_mutating_policy_is_seen_by_second_kernel_sample",
+      "test_manager_invocation_change_between_samples_or_after_bind_is_rejected",
+      "test_manager_schema_policy_and_boolean_integer_confusion_rejected",
+      "test_matching_changed_manager_cycles_at_both_ends_still_fail_original_binding",
+      "test_missing_work_directory_is_not_empty_and_never_created",
+      "test_no_process_stop_launch_or_activation_interface",
+      "test_partial_open_late_handle_is_retained_as_unknown_not_blindly_closed",
+      "test_populated_root_and_watcher_must_also_have_nonzero_task_counts",
+      "test_population_between_samples_prevents_empty",
+      "test_read_error_is_sticky_and_close_remains_independent",
+      "test_rebind_and_after_close_observe_do_not_reopen",
+      "test_repeated_observations_reuse_same_descriptors_and_no_forbidden_paths",
+      "test_repopulation_after_previous_empty_clears_old_fact",
+      "test_root_work_and_watcher_policy_fail_independently",
+      "test_shared_root_cannot_alias_the_cgroup_mount_generation",
+      "test_symlink_directory_and_writable_or_nonroot_file_are_rejected",
+      "test_watcher_disappears_or_pid_migrates_never_claims_safe_cleanup",
+      "test_work_directory_must_remain_on_the_shared_parent_device",
+      "test_work_empty_is_distinct_from_live_root_and_supervisor"
+    ],
+    "frozenBindingsChecked": 194,
+    "frozenBindingsUnchanged": true,
+    "groups": [
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 35,
+        "group": "work_subtree_reader",
+        "logSha256": "a4a2b9644db8696eee60beac0093c3eccb6bc166081be0482251c0d5d409b436",
+        "passed": true,
+        "tests": 35,
+        "wallSeconds": 0.946
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 22,
+        "group": "shared_resource_source",
+        "logSha256": "bf5abe4edd0c738e9ad5509a2bd8ababbe1fd3701fc653920187bd8cfbda70a0",
+        "passed": true,
+        "tests": 22,
+        "wallSeconds": 18.537
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 15,
+        "group": "bootstrap_source_closure",
+        "logSha256": "8b4d78f45908db5f4a38f1f8f1fb90bcb0cd4d82a305b253d914960c63dd910f",
+        "passed": true,
+        "tests": 15,
+        "wallSeconds": 17.769
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 29,
+        "group": "original_clock_bootstrap",
+        "logSha256": "77156eb849c7e63527d9eb400b6d2d5675401af789d3285031f561fe0b1ec9bc",
+        "passed": true,
+        "tests": 29,
+        "wallSeconds": 4.954
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 46,
+        "group": "controller_cgroup_witness",
+        "logSha256": "54b69368559411dd10f9fad1619e86bf57d481ef5cd35b0b2542586910544a7c",
+        "passed": true,
+        "tests": 46,
+        "wallSeconds": 3.157
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 38,
+        "group": "controller_process",
+        "logSha256": "631dfe85eca4fe43328e1f53bfc6646cb0cdcc1bdccef6e29723d3941c9b92eb",
+        "passed": true,
+        "tests": 38,
+        "wallSeconds": 0.388
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 23,
+        "group": "controller_manager_port",
+        "logSha256": "8033bde43c53d439e4c681e87dbfe912cbcf7cb1846e39bb0ad99c8514dd73ee",
+        "passed": true,
+        "tests": 23,
+        "wallSeconds": 1.153
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 35,
+        "group": "tool_lease",
+        "logSha256": "accdc59f9bae503170077627c5863bd45b7f9d203a1e84d9960a2c72ecb612f6",
+        "passed": true,
+        "tests": 35,
+        "wallSeconds": 1.618
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 22,
+        "group": "fixed_launch",
+        "logSha256": "8b0683b673380c894c562dc1d9a2234b436aa2ebc47014856536f380c277dbbd",
+        "passed": true,
+        "tests": 22,
+        "wallSeconds": 2.211
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 30,
+        "group": "owned_driver",
+        "logSha256": "eaecb9aa375db03afbc73fda9905ca6b0068320565c26394b1ffc7c1a98e459c",
+        "passed": true,
+        "tests": 30,
+        "wallSeconds": 0.365
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 23,
+        "group": "one_shot_entry",
+        "logSha256": "e5e89d412b1c3c9cdcb58cd1e4832f19bec64c0a09f4b3be749aa3f42f616966",
+        "passed": true,
+        "tests": 23,
+        "wallSeconds": 5.014
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 25,
+        "group": "exclusive_prepare",
+        "logSha256": "e5357ff8ebc30d9fd955184e5bda09b0c0087b22731bb3af38e3ae9458f75586",
+        "passed": true,
+        "tests": 25,
+        "wallSeconds": 1.736
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 29,
+        "group": "runtime_package",
+        "logSha256": "f527a19edce25651982b2a43c98239a02c3837f10a7f008db4080f4dc994efd3",
+        "passed": true,
+        "tests": 29,
+        "wallSeconds": 4.19
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 33,
+        "group": "lifecycle",
+        "logSha256": "97ab473fcf710ce450bf6e9c88c653f61738cc28118dd5c6f48a82db5cedae91",
+        "passed": true,
+        "tests": 33,
+        "wallSeconds": 1.966
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 50,
+        "group": "manager_port",
+        "logSha256": "757aceb5b90cd47ab49acd41dcccd2538cc0259e4fdec38662d6b97a8dc5d1f8",
+        "passed": true,
+        "tests": 50,
+        "wallSeconds": 1.081
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 33,
+        "group": "host_files",
+        "logSha256": "2115181210dd9819618a6c831c9c16e72b013237b7c97d9f66456fa2b14ef27a",
+        "passed": true,
+        "tests": 33,
+        "wallSeconds": 0.861
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 47,
+        "group": "request_evidence",
+        "logSha256": "9b8e468fe2b49a0f6b46ccef150e6d4aef05f165663dd8488765ff72c42fa7a8",
+        "passed": true,
+        "tests": 47,
+        "wallSeconds": 0.855
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 22,
+        "group": "anchor",
+        "logSha256": "7d750a1a102240f4755cdfdeae2282f2aa5d60456fad0535558e4f58431725f5",
+        "passed": true,
+        "tests": 22,
+        "wallSeconds": 0.206
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 17,
+        "group": "parent",
+        "logSha256": "190f136556e23831c43902052f2f8bb48184e598edd6ddb3436339507e1ea2d2",
+        "passed": true,
+        "tests": 17,
+        "wallSeconds": 0.257
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 33,
+        "group": "client",
+        "logSha256": "bc4613ed73b3cf01c70a214b015e1e061555df43936344a5afaeef8eb3d56fb2",
+        "passed": true,
+        "tests": 33,
+        "wallSeconds": 0.288
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 41,
+        "group": "pipes",
+        "logSha256": "8d685b384d96fc8d70aec753849417aa6da07b49cdaa2d636e7db9424d5fd86a",
+        "passed": true,
+        "tests": 41,
+        "wallSeconds": 0.365
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 134,
+        "group": "closure",
+        "logSha256": "f923a71fde208556971bc86f8b64b9e66112af26ec28a3b4b162d8d7bea4fcc7",
+        "passed": true,
+        "tests": 134,
+        "wallSeconds": 4.626
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 51,
+        "group": "scope",
+        "logSha256": "793300907c96bd0834df892a0f9ad1cdbf48c7ff33263b7a488764e7035ab260",
+        "passed": true,
+        "tests": 51,
+        "wallSeconds": 0.304
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 34,
+        "group": "watchdog",
+        "logSha256": "f5c18db8335ea6fd5e638f99b4a5adf8939d5f659869467671fd22a82b4067ea",
+        "passed": true,
+        "tests": 34,
+        "wallSeconds": 1.814
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 29,
+        "group": "kernel",
+        "logSha256": "49fb1e0ebc22c1f515164113033b9333dcc7e26b8021a1f34ff1c293597936ab",
+        "passed": true,
+        "tests": 29,
+        "wallSeconds": 0.232
+      },
+      {
+        "error": null,
+        "exitCode": 0,
+        "expected": 21,
+        "group": "fragment",
+        "logSha256": "ace9a2908ec80e7aaa433792bec20dee69375a2d08eaef7d62b956078e235a26",
+        "passed": true,
+        "tests": 21,
+        "wallSeconds": 0.459
+      }
+    ],
+    "logHashesVerified": true,
+    "newTests": 35,
+    "relatedTestsIncludingNew": 917
+  },
+  "remainingGates": [
+    "Integrate reader into launch owner with one original epoch and source-closed package",
+    "Account for all launch component FD and native bus request budgets",
+    "Root/work creation and reference lifecycle",
+    "Independent filesystem/library/socket/namespace provenance",
+    "Work-subtree termination ownership and fresh physical cleanup",
+    "Supervisor identity/liveness and full lifetime under aggregate resource exhaustion",
+    "Separately authorized native tests, controlled maintenance and end-to-end production acceptance"
+  ],
+  "review": {
+    "closedFindings": [
+      {
+        "description": "Final kernel sample not followed by manager identity recheck",
+        "greenTest": "test_invocation_change_during_last_kernel_sample_cannot_commit_empty",
+        "priority": "P2",
+        "redReproduced": true,
+        "resolution": "Add final manager identity+generation+deadline bracket; retain256 callback budget and tighten observe limit84"
+      }
+    ],
+    "kind": "independent_read_only_source_review",
+    "nativeProofClaimed": false,
+    "outstandingDefiniteP1P2": 0,
+    "reviewedSourceBindings": [
+      {
+        "bytes": 8072,
+        "path": "work_tree.py",
+        "sha256": "56ca1216c2100a01ec97039e5065b79d0af0ee4303fe0f1b4864bf05ecfe5c3a"
+      },
+      {
+        "bytes": 14465,
+        "path": "test_tree.py",
+        "sha256": "6923d1eca2a8473d3f4ca041edb5b1a84fb48f383eb2977b218a50d26e8e837e"
+      }
+    ],
+    "reviewerExecutedTests": false
+  },
+  "schema": 1,
+  "scope": {
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "externalAgentTasks": 0,
+    "grantsChanged": false,
+    "localOnly": true,
+    "nativeTargetExecutions": 0,
+    "newLinuxUnits": 0,
+    "portsChanged": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "realTargetProcCgroupBusReads": 0,
+    "relayChanged": false,
+    "sshAttempts": 0
+  },
+  "stage": "held_work_subtree_reader_local_preparation",
+  "status": "local_reader_passed_not_activated_or_integrated",
+  "watchdogLivenessProven": false
+}
