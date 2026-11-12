@@ -1,0 +1,252 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "phase": "local-only root-anchor prerequisite diagnostic preparation",
+  "status": "passed_local_diagnostic_preparation",
+  "tests": {
+    "groups": [
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 0.234,
+        "passed": true,
+        "logSha256": "3b319b9d98fef83a00f72acfc30d51431825efd4fd13f1263c386e3d028dba39"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 0.319,
+        "passed": true,
+        "logSha256": "706c6021c326b9054278676d66eec1d8ea6c1935dadeabdd8dbed7f467b017a8"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 0.314,
+        "passed": true,
+        "logSha256": "42d0dc7b8cf28dfa8ca9b534da07680e631feca6d02e2070d0e0c9bbaa34c741"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 0.405,
+        "passed": true,
+        "logSha256": "3d88b1ccaa398c0011619e8204bd18d1a07cc47c8789443fea7fdd7be21c60b5"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 4.357,
+        "passed": true,
+        "logSha256": "5034b3794b4f23155e56983858c26df66fa3deb8fa43fe323fa109de22c2ac5b"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 0.309,
+        "passed": true,
+        "logSha256": "7dd43f6f976be5c3a3e8d710b47cd2aba76f2e04595b7c8fa6be9b28c9fb0a94"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 1.846,
+        "passed": true,
+        "logSha256": "8cd20cc59cdad6cc84676b7ed9fbb49861cf8c97c3d73d9c65efec772898c12c"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 0.217,
+        "passed": true,
+        "logSha256": "1923cb934369768c29cff675b031b9eb2e64632d6579ce6138435716fa8c8437"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "error": null,
+        "wallSeconds": 0.454,
+        "passed": true,
+        "logSha256": "14ce2f95f1e1f3ed13c8d80f90f62947fc0c013b62aca4dfd3b3f7c6295dc8d5"
+      }
+    ],
+    "total": 382,
+    "allPassed": true,
+    "priorBindingsChecked": 70,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realProcReads": 0,
+    "realNativeCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false
+  },
+  "sources": [
+    {
+      "path": "anchor_probe.py",
+      "bytes": 14223,
+      "sha256": "e0a61ed42d0976f0d2ea3aac48ec636dde134a78ca8a8507196480c6c1a6e884"
+    },
+    {
+      "path": "LOCAL_HANDOFF.md",
+      "bytes": 3200,
+      "sha256": "adabb37b5f7da2d3d1ae04922c8710c983cdd2d262351a1b91a2cbc2e9400533"
+    },
+    {
+      "path": "plan.md",
+      "bytes": 1504,
+      "sha256": "2a5be1f78b913755ec6725b976b67953faf24311ea7a555f0ed1965285ed6b80"
+    },
+    {
+      "path": "run_local.py",
+      "bytes": 2829,
+      "sha256": "339bf08a92a100af384f739005afb921f39d7974c749a4beb9960d15908f5317"
+    },
+    {
+      "path": "test_metadata_reader.py",
+      "bytes": 4969,
+      "sha256": "2cd642f4175f5e8fde7003210b4c642540311bec6475e3b304a10f2746ada192"
+    },
+    {
+      "path": "test_probe.py",
+      "bytes": 6405,
+      "sha256": "736313f6fc473ed068c324e476b22e66f1547d0b95fe45b9cbba848ee6738e53"
+    }
+  ],
+  "package": {
+    "files": [
+      {
+        "path": "probe/anchor_probe.py",
+        "bytes": 14223,
+        "sha256": "e0a61ed42d0976f0d2ea3aac48ec636dde134a78ca8a8507196480c6c1a6e884"
+      },
+      {
+        "path": "pid1-parent-lease-20261112-a1/parent_lease.py",
+        "bytes": 7359,
+        "sha256": "1f5d09827d6867f549a2f2741b68a4345396cf7865697688f9f7380cf33152f8"
+      }
+    ],
+    "definitionImportVerified": true,
+    "defaultNativeEntryRejected": true,
+    "nativeExecuted": false,
+    "nativeLauncherPrepared": false,
+    "unitProfileBound": false,
+    "productionReady": false
+  },
+  "closureInputsRechecked": 27,
+  "independentReview": {
+    "openP1P2": 0,
+    "closedP2": 1,
+    "mode": "read-only static review"
+  },
+  "nativeExecutionEligible": false,
+  "nativeCompatibilityProven": false,
+  "productionReady": false,
+  "remaining": [
+    "source/profile/budget-bound diagnostic launcher and evidence wrapper",
+    "separate approval for native root prerequisite diagnosis",
+    "trusted launch factory and controller/cgroup assembly",
+    "native and production acceptance"
+  ],
+  "failuresRetained": [
+    {
+      "status": "expected_red",
+      "tests": 12,
+      "failures": 12,
+      "reason": "fixed root anchor diagnostic missing",
+      "vpsConnections": 0,
+      "linuxUnits": 0
+    },
+    {
+      "status": "expected_red",
+      "tests": 8,
+      "failures": 8,
+      "reason": "bounded proc metadata reader and explicit native entry missing",
+      "nativeCalls": 0,
+      "linuxUnits": 0
+    },
+    {
+      "status": "failed_not_promoted",
+      "tests": 12,
+      "passed": 11,
+      "failures": 1,
+      "reason": "close-failure injection compared original proc path although pinned memory fixture reports resolved /pid1 path",
+      "resolution": "only fix injection path; retain close errno, unconfirmed fd, no duplicate close and incomplete diagnostic assertions",
+      "productionCodeChangedForThisFailure": false
+    },
+    {
+      "status": "expected_red",
+      "tests": 2,
+      "errors": 2,
+      "reason": "cleanup KeyboardInterrupt displaced original read EIO without independent retention in reader/report",
+      "resolution": "retain primary_errors separately and export only code/errno in metadataPrimaryErrors; preserve original interrupt identity",
+      "nativeCalls": 0,
+      "linuxUnits": 0
+    }
+  ],
+  "findings": [
+    "Original ParentLease requires /proc/1/root and matching current/PID1 root, runtime and unit directory views.",
+    "No current VPS evidence proves these reads under the planned0xeb/NNP controller boundary.",
+    "Permission denial or view mismatch must remain a rejection; capability escalation or removing the check is not a justified repair."
+  ],
+  "implemented": [
+    "Pinned original ParentLease reused unchanged through fixed readonly tracing operations.",
+    "Metadata limited to self/PID1 UID/GID/capabilities/NNP/seccomp and exact diagnostic cgroup.",
+    "Diagnostic completion, anchor view match and cleanup confirmation remain separate.",
+    "Original metadata read failures survive cleanup interrupts with only sanitized code/errno exported.",
+    "Two-file local candidate verifies source bytes and definitions-only import; default native call is rejected."
+  ],
+  "boundaries": {
+    "vpsConnections": 0,
+    "linuxUnits": 0,
+    "realProcReads": 0,
+    "realRootReads": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublications": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0
+  },
+  "nativeStatus": {
+    "performed": false,
+    "unitProfileBound": false,
+    "hostLauncherPrepared": false,
+    "newAuthorizationRequested": false,
+    "message": "The constrained native launcher and evidence wrapper must be prepared and reviewed before requesting any new unit."
+  },
+  "publication": {
+    "sanitizedRecordOnly": true,
+    "privateCodePublished": false
+  },
+  "references": [
+    "https://man7.org/linux/man-pages/man5/proc_pid_root.5.html",
+    "https://man7.org/linux/man-pages/man2/ptrace.2.html"
+  ]
+}
