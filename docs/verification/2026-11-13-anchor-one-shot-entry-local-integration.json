@@ -1,0 +1,272 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "status": "passed_local_same_process_one_shot_entry_not_native",
+  "implementation": {
+    "privateCandidateOnly": true,
+    "publicRecordOnly": true,
+    "sourceManifest": [
+      {
+        "path": "entry.py",
+        "bytes": 6383,
+        "sha256": "5f5445eeb81ec61dc60326e1af7c858b3c1a1722f852e1bd750c5843b7bf8722"
+      },
+      {
+        "path": "test_entry.py",
+        "bytes": 11171,
+        "sha256": "36c12f38fda26c43df57f115ab09cac3ea4efb7fc7ee5b44db163e1081a7a141"
+      },
+      {
+        "path": "run_local.py",
+        "bytes": 4336,
+        "sha256": "5ad733ad3604af73487dc3d363b72519092cb60c79fac08fefc2839ed9fbc8c0"
+      },
+      {
+        "path": "plan.md",
+        "bytes": 1356,
+        "sha256": "dcf23ee1a260b3cd500a1f1edf8db0d9884437fb53c58508907fead62b536737"
+      },
+      {
+        "path": "LOCAL_HANDOFF.md",
+        "bytes": 2895,
+        "sha256": "ca70523d76ccbc65a2988497e876cb8667f0d3620906f6be78f983981265eacd"
+      }
+    ],
+    "pinnedPreparerAndRuntime": true,
+    "sameProcessApiOnly": true,
+    "prepareAndExecuteOnce": true,
+    "constructorPerformsNoPortAction": true,
+    "claimAndClosedPreparationRequiredBeforeClientCreation": true,
+    "claimIsUserAuthorization": false,
+    "automaticRetry": false,
+    "nativeDefaultRejected": true
+  },
+  "budgets": {
+    "preparationMaximumSeconds": 90,
+    "executionWorkSeconds": 8,
+    "executionIncludingCleanupSeconds": 10,
+    "sharedClock": true,
+    "callerStartedRetained": true,
+    "originalPreparationDeadlineNeverExtended": true,
+    "claimCrossingWorkDeadlineCreatesZeroClients": true,
+    "claimCloseConsumingEndCreatesZeroClients": true,
+    "finalEntryGateCanRejectAcceptedLifecycle": true,
+    "localGroupTimeoutSeconds": 90
+  },
+  "evidence": {
+    "targetFilesystem": "memory_double",
+    "manager": "injected_double",
+    "pipesAndChild": "injected_doubles",
+    "kernelAndCgroupFacts": "injected_doubles",
+    "realPinnedComponentsComposed": true,
+    "descriptorsCheckedAtClientFactoryTime": true,
+    "originalAndFinalErrorsSeparated": true,
+    "sameInterruptInstanceAndNestedReportsPreserved": true
+  },
+  "regression": {
+    "groups": [
+      {
+        "group": "one_shot_entry",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.945,
+        "logSha256": "e9d8f8a3441a880b5a5f7037e2e583948971793adedea3112b4b0213e992aef4"
+      },
+      {
+        "group": "exclusive_prepare",
+        "tests": 25,
+        "expected": 25,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.834,
+        "logSha256": "014cf91fc53a3d08b5c49710b94c80a7fcb779e853eba3755e3965f997c08abe"
+      },
+      {
+        "group": "runtime_package",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.184,
+        "logSha256": "4f836c834645253dc430674f23a9c7213a0a4b6c7d43a4b11502ba7f32efab00"
+      },
+      {
+        "group": "lifecycle",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.946,
+        "logSha256": "68f26c1e03a0b3a6fc5eb4bbf5fb152e9dcd195f5a37ded33a7b762ea997eafb"
+      },
+      {
+        "group": "manager_port",
+        "tests": 50,
+        "expected": 50,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.031,
+        "logSha256": "5063a0114b5789f527869cdd76b37d60876607f25a6b8f095d996d3b1a903630"
+      },
+      {
+        "group": "host_files",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.86,
+        "logSha256": "95785ff91b35cf6cf0c05c6117a841f5a68f0bbae7b845d329873775f5526eca"
+      },
+      {
+        "group": "request_evidence",
+        "tests": 47,
+        "expected": 47,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.85,
+        "logSha256": "ddafffc2ccdffacdaddb81f260697ceb2b4671d01126bc92be390ff029180b5b"
+      },
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.209,
+        "logSha256": "7d750a1a102240f4755cdfdeae2282f2aa5d60456fad0535558e4f58431725f5"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.266,
+        "logSha256": "99bbeb6ce437e877f4d7b12c4e819a082c508bb629917cc28b51602dc010a924"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.296,
+        "logSha256": "ed03067a0a997fbaad740c4cb74dbaeb506fb9a9a60fa60e84039054306a8691"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.421,
+        "logSha256": "92e97f49c6390c66fbce0ad867375b79c2d3cfa54b85a294262bc59002277fac"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 3.989,
+        "logSha256": "ff521eddd1deb0c90a3dde824db47b5ef8405d749d9a2a64f09bbbe81d934b4a"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.289,
+        "logSha256": "cb4000df841a969825b65dab2d580bf450806e4417d7344772970c4d1e7d1dc2"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.693,
+        "logSha256": "3d8ddcfd6c55a3a4ad02ec686becade3218025dda2d2355a6ce150de9ba30b16"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.2,
+        "logSha256": "57b4fee1939a3adebc43443061a37db8d22f225e070ad9dc0e90a310736b87ae"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.43,
+        "logSha256": "ace9a2908ec80e7aaa433792bec20dee69375a2d08eaef7d62b956078e235a26"
+      }
+    ],
+    "total": 622,
+    "allPassed": true,
+    "frozenBindingsChecked": 120,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realProcReads": 0,
+    "nativeCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false
+  },
+  "review": {
+    "mode": "independent_read_only_source_review",
+    "definiteP1Findings": 0,
+    "definiteP2Findings": 0,
+    "coverageGapsIdentified": 2,
+    "coverageGapsAddressed": true,
+    "newEntryTests": 23
+  },
+  "scope": {
+    "vpsConnections": 0,
+    "linuxUnits": 0,
+    "nativeExecutions": 0,
+    "realTargetProcReads": 0,
+    "realModels": 0,
+    "externalAgentCalls": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false
+  },
+  "failuresPreserved": true,
+  "limitations": [
+    "622 is related local regression, not full-repository, native or production acceptance.",
+    "All target filesystem, pipe, manager and kernel facts used explicit doubles; local interpreter and test-runner processes are not native target execution.",
+    "The API is same-process and does not restore or adopt a prepared root in another process.",
+    "Python isolation flags and the claim record are not authorization or provenance proof.",
+    "Independent native supervision, source and namespace provenance, owned hard recovery and combined resource enforcement remain incomplete.",
+    "The existing fourteen-source runtime bank is unchanged and does not yet contain this Entry and Preparer as a complete native bootstrap closure.",
+    "No private implementation or runtime packet uploaded; frozen inputs, failures, locks and historical quotas retained."
+  ],
+  "nextLocalWork": "Complete the owned native supervisor driver and trusted bootstrap closure; preserve fail-closed provenance and combined resource checks before requesting any real native verification."
+}
