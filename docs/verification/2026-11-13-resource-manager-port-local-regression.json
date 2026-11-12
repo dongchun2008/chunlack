@@ -1,0 +1,568 @@
+{
+  "schemaVersion": 1,
+  "stage": "resource-manager-port-local-regression",
+  "date": "2026-11-13",
+  "status": "local_regression_passed_not_published",
+  "scope": {
+    "localOnly": true,
+    "sshAttempts": 0,
+    "linuxUnitsCreated": 0,
+    "nativeLibraryLoads": 0,
+    "nativeCalls": 0,
+    "targetProcReads": 0,
+    "targetCgroupReads": 0,
+    "realModelCalls": 0,
+    "externalAgentMessages": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false
+  },
+  "change": {
+    "component": "ResourcePort",
+    "contract": "exclusive single-owner synchronous read-only bus connection with explicit ABI library injection; no loader, lifecycle or write API",
+    "fields": "strict Unit metadata and current Slice/Service policy for root/work/watcher",
+    "identity": "same library, bus object and pointer, sender, PID1 root owner, broker GUID, initial invocation generation per role",
+    "freshness": "mutable policy and ending generation are read every snapshot; expected generation binding is retained; non-atomic observation",
+    "requestBudget": {
+      "componentCap": 256,
+      "snapshotCap": 6,
+      "firstSnapshot": 49,
+      "laterSnapshot": 41,
+      "normalSixSnapshots": 254,
+      "globalBudgetProven": false
+    },
+    "failure": "sticky read failure clears stale success; independent close retains failures; active-read close and close reentry rejected before native release; failed native close not retried"
+  },
+  "regression": {
+    "groups": [
+      {
+        "group": "resource_manager_port",
+        "tests": 37,
+        "expected": 37,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.478,
+        "logSha256": "79f2037663ba7c4e101424cab1887a0a7723bf38a7a0cb320851d88f2cb26c4e"
+      },
+      {
+        "group": "work_tree_bootstrap",
+        "tests": 5,
+        "expected": 5,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 33.214,
+        "logSha256": "b43c90191a99943bc7bf93989f6cf6489b1a6f5932acfcc192348e4ce67fa849"
+      },
+      {
+        "group": "work_subtree_reader",
+        "tests": 35,
+        "expected": 35,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.966,
+        "logSha256": "7e48fe77add812c91dd70dfdd2be1c7a37cc330a91f5a8741bc9c82c373d3aee"
+      },
+      {
+        "group": "shared_resource_source",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 17.244,
+        "logSha256": "e690059978acf8a830f8076c9d1c436e11bfede865f0bca6c1c0bfb745029f39"
+      },
+      {
+        "group": "bootstrap_source_closure",
+        "tests": 15,
+        "expected": 15,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 20.708,
+        "logSha256": "3bb08e71522cfcee4a1ff2f7289b52420b6cad55a8a6bb2a4c0a42d8cd14cac2"
+      },
+      {
+        "group": "original_clock_bootstrap",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 5.009,
+        "logSha256": "5de86267f515b6e8b4896c09399ac4403adf305c4e4414aca47eb93d1d9d54ab"
+      },
+      {
+        "group": "controller_cgroup_witness",
+        "tests": 46,
+        "expected": 46,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 3.099,
+        "logSha256": "7cf8ce925cf3cef893c7ef505e0d7f507a35afdceea9daea93207567500b7271"
+      },
+      {
+        "group": "controller_process",
+        "tests": 38,
+        "expected": 38,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.391,
+        "logSha256": "5df0070d1e7aaccb0ed2ca5ab6a75310d68927409fe5e38c5c5602e28c2750bf"
+      },
+      {
+        "group": "controller_manager_port",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.198,
+        "logSha256": "04c5084c1646d6ed55bce271e871ffc2cce5507f2d1eda26bc390a374f589ab7"
+      },
+      {
+        "group": "tool_lease",
+        "tests": 35,
+        "expected": 35,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.632,
+        "logSha256": "fd85fea19a5a5cc24cd86e6c7e2f2215709cfcde20d83404682926d51077222e"
+      },
+      {
+        "group": "fixed_launch",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.219,
+        "logSha256": "a9e3d2c53c4d18314c0c65ee05c5d9ddee5dbaac09c794279c6a6509fc8f8cac"
+      },
+      {
+        "group": "owned_driver",
+        "tests": 30,
+        "expected": 30,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.341,
+        "logSha256": "31c3e66fb4011c348ab8232ae8a8855050a86ba25a38e4f785a3a8a9ff767a10"
+      },
+      {
+        "group": "one_shot_entry",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 5.681,
+        "logSha256": "e8e319d93b36971ea5af0ffd09e5ed438a75294fbdc5c48bf213e75b5133bc01"
+      },
+      {
+        "group": "exclusive_prepare",
+        "tests": 25,
+        "expected": 25,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.797,
+        "logSha256": "a9e0ef9f13d5693a642e26efc9c4dc15d6d087f878c43e6292b0d43973638e46"
+      },
+      {
+        "group": "runtime_package",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.377,
+        "logSha256": "7dcda5ab770dd17e7e87fb0697690370abe4a3b0932c5f30eee2925dba328382"
+      },
+      {
+        "group": "lifecycle",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.97,
+        "logSha256": "1e217c73842edc033e23e4ff18f797ac439bb9aa8590255e26b8f30ac077ab5f"
+      },
+      {
+        "group": "manager_port",
+        "tests": 50,
+        "expected": 50,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.228,
+        "logSha256": "82ec65093c6030b369f4ed6b789798779cfda3c892a3b784fdede231d673a91e"
+      },
+      {
+        "group": "host_files",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.909,
+        "logSha256": "615b3ea2eea50a1d3b55f4a8c6f0e4bca935982180a329cbc7065750d62ff859"
+      },
+      {
+        "group": "request_evidence",
+        "tests": 47,
+        "expected": 47,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.921,
+        "logSha256": "5b05f30ea6db7f9587bdb1e6720622d24dfc9b80608bf0b01d28e2074d909ce0"
+      },
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.22,
+        "logSha256": "94bdf3cceddb1afeee1720cd19df87efba83ea5bcc2624266d4c7c1932d9c8bd"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.315,
+        "logSha256": "bc1a463a22e264f9946cce5098136c613007f640ee770e1e8dc7dce885ed159f"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.318,
+        "logSha256": "42d0dc7b8cf28dfa8ca9b534da07680e631feca6d02e2070d0e0c9bbaa34c741"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.384,
+        "logSha256": "a9a5a262b6a2a69988fcf502fac700b125548d493b54d7fd9a0731c333e9be45"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.549,
+        "logSha256": "3eca35015dbf5032622cbf17c68a1f5a7bc0dc8320e6f136742256b28a37b214"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.313,
+        "logSha256": "154d70b5d046bc2759790fbda9f7d6717eb6e4c78c0872fbfa6e11a96ed022f2"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.729,
+        "logSha256": "b02cecca2fc201296ee89f0f6f0f6c2e23ccfbe255ac55240ef16f91351cadcc"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.197,
+        "logSha256": "2065facfc64d92e034f5bd03202f00aa65f70c5d4383074c42ea83f9ea881647"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.497,
+        "logSha256": "d42be0601b82200ce8d9b07cab88c0242e1643f269be3217ec91bc1dde2a5070"
+      }
+    ],
+    "total": 959,
+    "allPassed": true,
+    "frozenBindingsChecked": 211,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realProcReads": 0,
+    "nativeCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false
+  },
+  "independentReview": {
+    "mode": "independent read-only source review; no tests/network/native/writes by reviewer",
+    "definiteRemainingP1P2": 0,
+    "sourceBindings": [
+      {
+        "path": "resource_port.py",
+        "bytes": 10744,
+        "sha256": "78338b8c591fc521dee4ca0df94ae0edadb4a1a0f490e0d47eb62b8fdfef9cd1"
+      },
+      {
+        "path": "test_port.py",
+        "bytes": 16910,
+        "sha256": "900c48f2cad0c3042b32a91dfbd3464e42693c1ae5a68cdb2fea5eec01e1d242"
+      }
+    ],
+    "fixedFinding": "close reentry before/after native release now rejects before callbacks or state mutation",
+    "limitations": [
+      "single-owner synchronous only",
+      "not thread safe",
+      "not native acceptance"
+    ]
+  },
+  "sourceManifest": [
+    {
+      "path": "resource_port.py",
+      "bytes": 10744,
+      "sha256": "78338b8c591fc521dee4ca0df94ae0edadb4a1a0f490e0d47eb62b8fdfef9cd1"
+    },
+    {
+      "path": "test_port.py",
+      "bytes": 16910,
+      "sha256": "900c48f2cad0c3042b32a91dfbd3464e42693c1ae5a68cdb2fea5eec01e1d242"
+    },
+    {
+      "path": "run_local.py",
+      "bytes": 7223,
+      "sha256": "9f7091083bb7d1ef06e7add32480694fa22c1131008da9673be29f192685631a"
+    },
+    {
+      "path": "plan.md",
+      "bytes": 4927,
+      "sha256": "6a4499233bdf11722cceac00cb48123ed66c9fb48b7df3bb7ecbea975ca4e657"
+    },
+    {
+      "path": "LOCAL_HANDOFF.md",
+      "bytes": 2647,
+      "sha256": "017e6be88ba9ddcb93115e9c23a0dfb9838214a79c5c03bedff03abbbee6703a"
+    },
+    {
+      "path": "interface-reference.json",
+      "bytes": 1214,
+      "sha256": "0044e54d9898a5a95d1846195c38cc5adc3208d7cecdc10bd5fefe9886465f57"
+    },
+    {
+      "path": "review-final.json",
+      "bytes": 674,
+      "sha256": "8c28dbc2be2d524b5a6a433379973b9ed3fe0f1123ba388e4b7e8c298ab5b5da"
+    },
+    {
+      "path": "integration-evidence.json",
+      "bytes": 955,
+      "sha256": "abb35861f269282508d4132ea0c95366545cf5cb379049449895e3e0be429380"
+    },
+    {
+      "path": "final-receipt.json",
+      "bytes": 7947,
+      "sha256": "d1cedff8e26ba9b4edfd94cc09d80b62b866cb2b53b7eef933ee684edf674efa"
+    },
+    {
+      "path": "finalize_local.py",
+      "bytes": 5071,
+      "sha256": "81fdb733d655bb78b44e366af83052e9f3c4802f20e9bb6efd79d3d00bdeddb1"
+    }
+  ],
+  "testNames": [
+    "test_constructor_is_passive_and_native_defaults_refused",
+    "test_snapshot_has_exact_normalized_three_role_policy",
+    "test_six_fresh_callbacks_use254_actual_attempts_and_no_seventh",
+    "test_interfaces_are_real_slice_or_service_never_aliases",
+    "test_all_systemd_queries_use_same_unique_manager_owner",
+    "test_wrong_root_uid_or_pid_or_unbound_owner_is_rejected",
+    "test_owner_change_after_open_is_sticky_without_rebind",
+    "test_owner_change_during_policy_read_is_rejected",
+    "test_invocation_change_during_first_policy_read_is_rejected",
+    "test_later_cycle_change_is_rejected_even_when_initial_ids_not_requeried",
+    "test_mutable_policy_is_read_again_not_cached",
+    "test_zero_duplicate_and_malformed_invocations_rejected",
+    "test_missing_property_or_wrong_variant_has_no_fallback",
+    "test_wrong_parent_cgroup_state_and_service_policy_rejected",
+    "test_actual_requests_cannot_exceed_cap_or_admit_incomplete_snapshot",
+    "test_foreign_path_or_write_is_blocked_before_message_allocation",
+    "test_disconnected_connection_is_not_reopened",
+    "test_late_reply_uses_original_end_and_keeps_independent_close",
+    "test_clock_rollback_is_not_hidden_by_integer_nanosecond_rounding",
+    "test_failed_close_does_not_retry_and_preserves_read_failure",
+    "test_actual_tree_reader_consumes_six_real_abi_snapshots_and_closes",
+    "test_summary_is_sanitized_and_never_claims_native_provenance",
+    "test_broker_guid_change_refuses_even_if_unique_names_are_reused",
+    "test_malformed_or_null_broker_ids_do_not_commit_generation_binding",
+    "test_uuid_hex_case_is_normalized_without_rebinding_bus",
+    "test_original_manager_peer_mapping_and_request_cleanup_code_unchanged",
+    "test_partial_bus_open_remains_owned_for_one_independent_close",
+    "test_same_pointer_value_with_replaced_object_is_not_same_bus_generation",
+    "test_open_identity_diagnostic_does_not_mask_original_interruption",
+    "test_initial_failed_policy_snapshot_never_partially_commits_ids",
+    "test_oversize_string_is_rejected_without_echo_in_summary",
+    "test_close_interruption_keeps_primary_read_failure_and_does_not_retry",
+    "test_fixture_context_lifetime_does_not_depend_on_garbage_collection",
+    "test_nested_read_rejection_during_final_reply_cannot_be_overwritten_by_success",
+    "test_clock_callback_cannot_enter_before_outer_attempt_is_claimed",
+    "test_close_during_active_reply_is_refused_until_owner_unwinds",
+    "test_close_reentry_cannot_mutate_outer_close_state_or_error"
+  ],
+  "integration": {
+    "mode": "explicit C ABI double plus actual HeldWorkTree with memory cgroup filesystem",
+    "snapshots": 6,
+    "actualMethodAttempts": 254,
+    "portSummary": {
+      "fresh": false,
+      "snapshots": 6,
+      "requests": 254,
+      "requestCap": 256,
+      "snapshotCap": 6,
+      "connectionOpened": true,
+      "closed": true,
+      "failed": false,
+      "closeErrorCount": 0,
+      "openDiagnosticCount": 0,
+      "expectedGenerationsBound": true,
+      "brokerBound": true,
+      "nativeProvenanceVerified": false,
+      "nativeExecutionEligible": false,
+      "aggregateRequestLimitProven": false,
+      "resourceEnforcementProven": false,
+      "productionReady": false
+    },
+    "workSubtreeEmptyObserved": true,
+    "remainingFakeTreeDescriptors": 0,
+    "remainingFakeBusMessages": 0,
+    "busCloseAttempts": 1,
+    "nativeCalls": 0,
+    "realProcReads": 0,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "globalBudgetProven": false,
+    "productionReady": false
+  },
+  "primaryInterfaceReferences": {
+    "scope": "upstream reference reviewed during this local stage; target-host support unverified",
+    "references": [
+      {
+        "url": "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/dbus.c",
+        "observation": "Service and Slice expose their respective resource vtables."
+      },
+      {
+        "url": "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/dbus-unit.c",
+        "observation": "Unit InvocationID ay; resource Slice and ControlGroup s."
+      },
+      {
+        "url": "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/dbus-cgroup.c",
+        "observation": "Resource uint64 limits and boolean Delegate."
+      },
+      {
+        "url": "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/dbus-execute.c",
+        "observation": "Nice has int32 signature i."
+      },
+      {
+        "url": "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/slice.c",
+        "observation": "Nonperpetual slice activation acquires invocation identity."
+      },
+      {
+        "url": "https://dbus.freedesktop.org/doc/dbus-specification.html#bus-messages-get-id",
+        "observation": "GetId returns broker ID as 32 hexadecimal digits; normalize valid hex case."
+      }
+    ]
+  },
+  "preservedRedEvidence": [
+    {
+      "path": "red-port.log",
+      "bytes": 20752,
+      "sha256": "0ad0c10f32021926d6772e5112b397d6cf8d6f6281bafdc81628a97bfb7530d0",
+      "evidenceOnly": true
+    },
+    {
+      "path": "red-binding-boundaries.log",
+      "bytes": 12324,
+      "sha256": "33153fd8a44283252eceeb7a939011cb9a92788da501f28b281abc5cf8399fb7",
+      "evidenceOnly": true
+    },
+    {
+      "path": "red-fixture-lifetime.log",
+      "bytes": 6581,
+      "sha256": "ca0e331203c892433cdc5c54d4159e3020ab24f4bf16a0c75ee3b58cf91af52b",
+      "evidenceOnly": true
+    },
+    {
+      "path": "red-reentrant-publication.log",
+      "bytes": 6873,
+      "sha256": "3c9f9ee7332ad3548d63f29efb234f3626aa0b84e773117d74333c8d02fccd35",
+      "evidenceOnly": true
+    },
+    {
+      "path": "red-close-active.log",
+      "bytes": 7700,
+      "sha256": "bce93adf8d5bf1629edbc1b9f43f87867742e06b91092b507d0ecfcdb7ec118c",
+      "evidenceOnly": true
+    },
+    {
+      "path": "red-close-reentry.log",
+      "bytes": 8940,
+      "sha256": "6b275ec166d1f750a54ed165927e1a756549366cea3ea9cd50aa4c40cdc861b0",
+      "evidenceOnly": true
+    }
+  ],
+  "priorLocalRuns": [
+    {
+      "receipt": "accepted-receipt.json",
+      "total": 954,
+      "scope": "earlier source revision"
+    },
+    {
+      "receipt": "verified-receipt.json",
+      "total": 955,
+      "scope": "earlier source revision"
+    }
+  ],
+  "limitations": [
+    "C ABI and filesystem tests use explicit doubles; no target-host/native evidence",
+    "manager observations are bounded non-atomic reads, not permanent quiescence",
+    "port budget is component-local, not shared across controller and other ports",
+    "single-owner synchronous, not thread-safe",
+    "bus lifetime is still caller-owned, not yet integrated into frozen bootstrap wrapper",
+    "native provenance, physical resource enforcement, creation/reference/stop ownership and production acceptance remain unproven"
+  ],
+  "nextLocalGate": "integrate owned bus lifetime and independent cleanup into bootstrap wrapper; extend source closure and aggregate budgets before requesting native validation"
+}
