@@ -1,0 +1,279 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "stageStarted": "2026-11-12",
+  "status": "passed_local_descriptor_exclusive_prepare_and_single_claim_not_native",
+  "implementation": {
+    "privateCandidateOnly": true,
+    "publicRecordOnly": true,
+    "sourceManifest": [
+      {
+        "path": "prepare.py",
+        "bytes": 14280,
+        "sha256": "8a98c81f8e0552f9c8923e9f15e5db442dd4501a499847f5a84809b76650517e"
+      },
+      {
+        "path": "test_prepare.py",
+        "bytes": 13997,
+        "sha256": "c433a5bfa45f1209f301e53e6eca00d8b97b06a9f58dd42b3c252d7aed3eb3eb"
+      },
+      {
+        "path": "run_local.py",
+        "bytes": 4139,
+        "sha256": "5cf6c49fb957255d7198c802e068f313e2f5af5fd3fbe30ff703eedf2f7b5708"
+      },
+      {
+        "path": "plan.md",
+        "bytes": 1506,
+        "sha256": "75d50b01eada2708a1fed079470744b06c10b94e24d66d8cdf8c153f2b63b6f1"
+      },
+      {
+        "path": "LOCAL_HANDOFF.md",
+        "bytes": 3092,
+        "sha256": "41d36b0b2b036d50461754c4c6375aac36958b66af33835e616ea35fa7a5c517"
+      }
+    ],
+    "pinnedPackagerAndKernelReader": true,
+    "descriptorRelativeScope": true,
+    "newNonceRootOnly": true,
+    "existingAndFailedRootsNeverAdopted": true,
+    "bankRuntimeSourceFiles": 14,
+    "probeSourceFiles": 2,
+    "preparedAndAttemptRecordsBound": true,
+    "claimDoesNotExecuteOrAuthorize": true,
+    "nativeDefaultRejected": true,
+    "knownNativeOperationsRejectedInLocalMode": true
+  },
+  "filesystemContract": {
+    "parent": "/var/tmp",
+    "parentOwnerUid": 0,
+    "parentOwnerGid": 0,
+    "parentMode": "1777",
+    "privateDirectoryMode": "0700",
+    "sourceAndPreparedMode": "0400",
+    "attemptMode": "0600",
+    "regularFileLinks": 1,
+    "exclusiveNoFollowCreation": true,
+    "partialWritesAndReadbackBounded": true,
+    "fullFileMetadataAndBytesVerified": true,
+    "exactDirectoryEntries": true,
+    "finalRevalidationAfterAllFsync": true,
+    "heldReadersReusedWithinPhase": true,
+    "closedFdGenerationsNotReusedAsProof": true,
+    "unknownCloseNeverRetried": true,
+    "failedTreesAndMarkersPreserved": true
+  },
+  "allowanceContract": {
+    "maximum": 1,
+    "repeatClaimRejected": true,
+    "newInstanceCannotReuseRoot": true,
+    "claimFailureConsumesObjectAttempt": true,
+    "fileAndDirectoryFsyncAcknowledgementsRequired": true,
+    "powerLossDurabilityNotTested": true,
+    "userAuthorizationProvidedByMarker": false
+  },
+  "regression": {
+    "groups": [
+      {
+        "group": "exclusive_prepare",
+        "tests": 25,
+        "expected": 25,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.802,
+        "logSha256": "d14e526358f06ebd49864cd3a3841fd912ca98e0d841cac80fb9310471192d0f"
+      },
+      {
+        "group": "runtime_package",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.07,
+        "logSha256": "88cd34c1f1ab8100d9f59c1d0bc009b2f4e792bce9279a4794600303977ff49e"
+      },
+      {
+        "group": "lifecycle",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.0,
+        "logSha256": "9e68c9956574121ca5681dd6105720a15c6c67c5a333c40d2dde0e35ea781be3"
+      },
+      {
+        "group": "manager_port",
+        "tests": 50,
+        "expected": 50,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.04,
+        "logSha256": "91ce352399d1a36ff0e505ba944159b73583aedf0ed81087867c80aab749e531"
+      },
+      {
+        "group": "host_files",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.839,
+        "logSha256": "ad00e6bc46a2134e9c2a27e44e3b609f31e526a037c728a1ac807e64bc4e1f40"
+      },
+      {
+        "group": "request_evidence",
+        "tests": 47,
+        "expected": 47,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.844,
+        "logSha256": "007f797d9b97f8d4361a2d3d0b42547f9d5c3d4544c2ef04ced88e0e6d0002b6"
+      },
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.217,
+        "logSha256": "56fa0f894fd41b518a2da3a01931b5967fde0168456acb8864a163267b369f92"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.315,
+        "logSha256": "b7ab4cfd59156c2328750f4ffb1e3be9ab05f8c822de6ccecf339b25a1424d45"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.312,
+        "logSha256": "c9ae877eb877c4ad4464486e5cdf265a5a0349dfd352189674e8bd6c9218f130"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.414,
+        "logSha256": "f873d16e79a53ee89c24741be1da61acf07d09bf69cb89d4e27204bb78fe4603"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.247,
+        "logSha256": "e73f6dadc22de29888a808eb10af1577e5cfb1971910f08f40014193b5cd5bcb"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.301,
+        "logSha256": "cc261f467c6e324eecea775ca0610986a8e553b37858c794c3d1695f575ec946"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.738,
+        "logSha256": "3d8ddcfd6c55a3a4ad02ec686becade3218025dda2d2355a6ce150de9ba30b16"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.202,
+        "logSha256": "57b4fee1939a3adebc43443061a37db8d22f225e070ad9dc0e90a310736b87ae"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.412,
+        "logSha256": "2d612df3c2c1999ab0d2ae37333b14edc0ed16ae2923411c5597ff6ad5115847"
+      }
+    ],
+    "total": 599,
+    "allPassed": true,
+    "frozenBindingsChecked": 115,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realProcReads": 0,
+    "nativeCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false
+  },
+  "review": {
+    "mode": "independent_read_only_source_review",
+    "p1Findings": 0,
+    "p2Findings": 1,
+    "finding": "Source or directory entries could drift during the final fsync after verification and still commit preparation or claim.",
+    "correction": "Recheck the complete tree after the last fsync; retain and rewind owned read descriptors without raising the original fd-record limit.",
+    "redRegressionsObserved": true,
+    "directoryFsyncFailureCovered": true,
+    "crossPhaseFdNumberReuseCovered": true
+  },
+  "compatibility": {
+    "actualPinnedHostFilesSourceRead": true,
+    "memoryFilesystemFacts": true,
+    "prepareThenReadThenClaimPassed": true,
+    "nativeExecutionProven": false
+  },
+  "scope": {
+    "vpsConnections": 0,
+    "linuxUnits": 0,
+    "nativeExecutions": 0,
+    "realProcReads": 0,
+    "realModels": 0,
+    "externalAgentCalls": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false
+  },
+  "failuresPreserved": true,
+  "limitations": [
+    "599 is related local regression, not full-repository, native or production acceptance.",
+    "All target filesystem and permission operations used explicit memory doubles; actual Linux permission and filesystem behavior remain unverified.",
+    "The prepared and claimed marker records at-most-once state, never a user grant or permission to execute.",
+    "Current-namespace path checks do not establish PID1 root, mount/cgroupfs, manager or tool provenance.",
+    "This preparation object is not yet connected to the trusted native entrypoint and independent owned supervisor driver.",
+    "A successful fsync call is not a hardware power-loss durability test; no hostile-root or complete native resource proof is made.",
+    "No private implementation or packet was uploaded; failures, locks, frozen inputs and historical quotas were preserved."
+  ],
+  "nextLocalWork": "Integrate exclusive preparation and claim with the closed runtime and trusted entrypoint, then complete owned native supervision and combined resource enforcement before requesting a critical native test."
+}
