@@ -1,0 +1,360 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "status": "passed_local_concrete_runtime_and_closed_source_package_not_native",
+  "implementation": {
+    "privateCandidateOnly": true,
+    "publicRecordOnly": true,
+    "sourceManifest": [
+      {
+        "path": "runtime.py",
+        "bytes": 3197,
+        "sha256": "d1ce3d20056aed7556a7aa13fc54419abf733e575667299f4bb03651703f89d4"
+      },
+      {
+        "path": "packager.py",
+        "bytes": 6258,
+        "sha256": "ff22d000ec3af8a8d5cbaf61840beef8c9e50c58b60cfa57dd8df831ec8fb591"
+      },
+      {
+        "path": "input-manifest.json",
+        "bytes": 2679,
+        "sha256": "ec955d15eb03f664e1f62a20c27b2326a4ec4b78b086cdb7fb138765d6b3337a"
+      },
+      {
+        "path": "test_runtime.py",
+        "bytes": 5606,
+        "sha256": "a9a292f4d309b87127c529aeddb9b7a439d771a574f0a1d1b04d4b862dacb299"
+      },
+      {
+        "path": "test_packager.py",
+        "bytes": 7417,
+        "sha256": "de127d86ca693c26f5f0e79a9b2a2ad4d48ca14b594043a9f08a5d48755c2cba"
+      },
+      {
+        "path": "run_local.py",
+        "bytes": 3945,
+        "sha256": "40fc3ad6b0b3ed16a5db4481c7ddc154e8300923b5699457052f6b9f887bf10d"
+      },
+      {
+        "path": "plan.md",
+        "bytes": 1734,
+        "sha256": "3d6b9af3b7ed9f630d0fb33f6d4ed258244a6bb153af10c0df2341a066650678"
+      },
+      {
+        "path": "LOCAL_HANDOFF.md",
+        "bytes": 3096,
+        "sha256": "5c1a3242960ef6cda8b8dbdb4544c76a31e57dadfd6c8aae506397335e8f542a"
+      }
+    ],
+    "concretePortManagerCollectorLifecycleInOneFixture": true,
+    "defaultNativeRejected": true,
+    "partialBindingFallbackRejected": true,
+    "knownNativeBindingsRejectedInLocalMode": true,
+    "injectedCallbacksRemainTrusted": true,
+    "closedRuntimeSourceFiles": 14,
+    "wholePacketAndCatalogBinding": true,
+    "independentCopyFullComposition": true,
+    "nativeFactoryProvenanceComplete": false,
+    "nativeEntryActivated": false
+  },
+  "package": {
+    "files": 14,
+    "catalogSha256": "ec955d15eb03f664e1f62a20c27b2326a4ec4b78b086cdb7fb138765d6b3337a",
+    "packetSha256": "ad42306110f989d541aef858dd685b579d4e81406857c55ae950c371a9d6e136",
+    "sourceBytes": 118352,
+    "nativeEntryActivated": false,
+    "nativePermissionsVerified": false,
+    "productionReady": false,
+    "packetBytes": 158712,
+    "definitionImportVerified": true,
+    "fullDependencyLookupVerified": true,
+    "defaultNativeRejected": true,
+    "nativeExecuted": false
+  },
+  "runtimeSourceCatalog": [
+    {
+      "bytes": 11987,
+      "path": "anchor-host-lifecycle-20261112-a1/lifecycle.py",
+      "sha256": "357a1b4271ae0219bb09f89cac67d2e88762a29dd596a20d0145ea9460186556"
+    },
+    {
+      "bytes": 4134,
+      "path": "anchor-host-lifecycle-20261112-a1/supervision.py",
+      "sha256": "e4d35f0e1b008731c35d327e7d3ad5eb1b25d60ced3a0329a143a654ce366dae"
+    },
+    {
+      "bytes": 9028,
+      "path": "anchor-host-readers-20261112-a1/host_files.py",
+      "sha256": "dfefdeda7f825238bc9a6979a5f75e8514d31d536ad54302dcfd349883335fc7"
+    },
+    {
+      "bytes": 6220,
+      "path": "anchor-launch-preparation-20261112-a1/receipt_gate.py",
+      "sha256": "49118f70c9c3b556db8ff52e6200eda6299bb5284f020fafcec91f2214236283"
+    },
+    {
+      "bytes": 6683,
+      "path": "anchor-launch-preparation-20261112-a1/request_adapter.py",
+      "sha256": "f30fd3f16d85e7a2f24ce1981e83b2450796efca0d8bbe9d1a129dee4e21971c"
+    },
+    {
+      "bytes": 3197,
+      "path": "anchor-native-package-20261112-a1/runtime.py",
+      "sha256": "d1ce3d20056aed7556a7aa13fc54419abf733e575667299f4bb03651703f89d4"
+    },
+    {
+      "bytes": 10453,
+      "path": "anchor-systemd-host-20261112-a1/command_port.py",
+      "sha256": "b169b17678e14eb2eca9b56e36de21ca6032ab579b813334faea9d24eb3de87e"
+    },
+    {
+      "bytes": 11789,
+      "path": "anchor-systemd-host-20261112-a1/manager.py",
+      "sha256": "61f211a551dd61a32011023ef72a4161178d4b7525c48af80991a2a00006ff34"
+    },
+    {
+      "bytes": 11841,
+      "path": "deadline-watchdog-20261112-a1/watchdog.py",
+      "sha256": "a21b45128fdab2cc398ef5e2366e25d816b633a12327ac99c7c252c45cbd7b6f"
+    },
+    {
+      "bytes": 7249,
+      "path": "identity-drop-native-aLDvcs/formal_transient_launch.py",
+      "sha256": "ec227b7e2c8f8c7361632dba492adc640bc450aaa6cebecc2c1aa6efef38839c"
+    },
+    {
+      "bytes": 2890,
+      "path": "identity-drop-native-aLDvcs/probe_plan.py",
+      "sha256": "14fe2a919c0a986ddaf9ca1f2146cbd16797b1bdbd9384ea78772737e4f273c0"
+    },
+    {
+      "bytes": 11299,
+      "path": "kernel-identity-reader-20261112-a1/reader.py",
+      "sha256": "518a2b429d2f525eae89a23687b624ce2aca48d8ded9d328c22ca88afba83b09"
+    },
+    {
+      "bytes": 7359,
+      "path": "pid1-parent-lease-20261112-a1/parent_lease.py",
+      "sha256": "1f5d09827d6867f549a2f2741b68a4345396cf7865697688f9f7380cf33152f8"
+    },
+    {
+      "bytes": 14223,
+      "path": "root-anchor-diagnostic-20261112-a1/anchor_probe.py",
+      "sha256": "e0a61ed42d0976f0d2ea3aac48ec636dde134a78ca8a8507196480c6c1a6e884"
+    }
+  ],
+  "packageContract": {
+    "packetBytesMax": 262144,
+    "sourceBytesPerFileMax": 32768,
+    "exactPathsAndFileSet": true,
+    "sourceHashAndLengthBeforeCompile": true,
+    "allValidationBeforeTargetCreation": true,
+    "duplicateKeysRejected": true,
+    "existingTargetRefused": true,
+    "symlinkAndJunctionBranchesCovered": true,
+    "localPortableMaterializerOnly": true,
+    "nativePermissionsVerified": false,
+    "partialFailureTreesNotAutomaticallyDeleted": true
+  },
+  "regression": {
+    "groups": [
+      {
+        "group": "runtime_package",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.053,
+        "logSha256": "46e074f58826df8ab43d32d72e40757482619d8529be80e9726a50ace82db57f"
+      },
+      {
+        "group": "lifecycle",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.944,
+        "logSha256": "55a067f148995e3bf8897a3e8f9dd1385be59b6a80d5bbccec32ddcba1e7f2f4"
+      },
+      {
+        "group": "manager_port",
+        "tests": 50,
+        "expected": 50,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.071,
+        "logSha256": "72c687df4c692f02f925318c87303cec106eadafcc67a91a9e35132ad86f86e6"
+      },
+      {
+        "group": "host_files",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.848,
+        "logSha256": "f799bc58475d18c1041fa808147e9813ca3d887990561ed0098c9c32b2a35bc3"
+      },
+      {
+        "group": "request_evidence",
+        "tests": 47,
+        "expected": 47,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.866,
+        "logSha256": "0f8da5f7ab33877295a63bd0f99c8e6294d7839183ddbf5acee1640650aa7fc2"
+      },
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.192,
+        "logSha256": "7d750a1a102240f4755cdfdeae2282f2aa5d60456fad0535558e4f58431725f5"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.281,
+        "logSha256": "b83084614dbb4d10b2c7013592feaab19c28e88d1943d4dd6da8a734ad575456"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.298,
+        "logSha256": "ed03067a0a997fbaad740c4cb74dbaeb506fb9a9a60fa60e84039054306a8691"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.344,
+        "logSha256": "92e97f49c6390c66fbce0ad867375b79c2d3cfa54b85a294262bc59002277fac"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.184,
+        "logSha256": "f100178db6019154017eb96bfae1b7817f9397e6c96f5d7a4c986d303c47df50"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.285,
+        "logSha256": "cb4000df841a969825b65dab2d580bf450806e4417d7344772970c4d1e7d1dc2"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.671,
+        "logSha256": "a441150b7567221fbc23c55002229f16949b5a211d8dacdd92de418488e95006"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.265,
+        "logSha256": "97864a377703a9266b08d60502a7a4cabc32efc34096dab100187434ba325f98"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.422,
+        "logSha256": "14ce2f95f1e1f3ed13c8d80f90f62947fc0c013b62aca4dfd3b3f7c6295dc8d5"
+      }
+    ],
+    "total": 574,
+    "allPassed": true,
+    "frozenBindingsChecked": 107,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realProcReads": 0,
+    "nativeCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false
+  },
+  "review": {
+    "mode": "independent_read_only_source_review",
+    "p1Findings": 0,
+    "p2Findings": 1,
+    "finding": "Known native factory and operations could be injected while the runtime was labelled local.",
+    "correction": "Reject known Popen, LinuxIO and os bindings in local mode before creating clients; arbitrary callbacks remain a trusted caller responsibility.",
+    "redRegressionsObserved": true,
+    "independentCopyFullCompositionGapCovered": true,
+    "junctionBranchGapCovered": true
+  },
+  "catalogRebinding": {
+    "oldCatalogSha256": "00da0bdcec9ffe530259336170669cf189897c02ef6c9affac3fa8f042b175f7",
+    "newCatalogSha256": "ec955d15eb03f664e1f62a20c27b2326a4ec4b78b086cdb7fb138765d6b3337a",
+    "changedRuntimeSources": 1,
+    "unaffectedBindingsChecked": 13
+  },
+  "runnerCommentCorrection": {
+    "commentOnly": true,
+    "astUnchanged": true,
+    "executedRunnerSha256": "f49bd65ddd96815807f3495e95b8f0ef815c612329d2f38e8a2501617d0d7624",
+    "recordedRunnerSha256": "40fc3ad6b0b3ed16a5db4481c7ddc154e8300923b5699457052f6b9f887bf10d",
+    "testsRerun": false
+  },
+  "scope": {
+    "vpsConnections": 0,
+    "linuxUnits": 0,
+    "nativeExecutions": 0,
+    "realProcReads": 0,
+    "realModels": 0,
+    "externalAgentCalls": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false
+  },
+  "failuresPreserved": true,
+  "limitations": [
+    "574 is related local regression, not full-repository, native or production acceptance.",
+    "This is the complete source set of the diagnostic runtime, not a full LACK application release.",
+    "The concrete command port and lifecycle run against explicit fake child/pipe/kernel/manager facts in these tests.",
+    "The local portable materializer is not a privileged descriptor-bound preparer and does not prove native ownership, POSIX permissions or all filesystem races.",
+    "Exclusive native preparation, a one-time allowance entrypoint, provenance, owned-driver hard supervision and total native resources remain outstanding.",
+    "No candidate packet, private implementation, credential or live configuration was uploaded; old failures, locks and quotas were preserved."
+  ],
+  "nextLocalWork": "Finish exclusive one-shot native preparation and the owned supervisor driver/entrypoint against this closed source package, preserving default refusal and local-only scope until a critical native authorization is appropriate."
+}
