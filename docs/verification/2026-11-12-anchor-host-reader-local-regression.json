@@ -1,0 +1,252 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "status": "passed_local_host_file_collection_preparation_not_native",
+  "implementation": {
+    "privateCandidateOnly": true,
+    "publicRecordOnly": true,
+    "sourceManifest": [
+      {
+        "path": "host_files.py",
+        "bytes": 9028,
+        "sha256": "dfefdeda7f825238bc9a6979a5f75e8514d31d536ad54302dcfd349883335fc7"
+      },
+      {
+        "path": "test_host_files.py",
+        "bytes": 10739,
+        "sha256": "a1189cddc8ea7e919bd5291be25a9841c7e6cc8ad830934a491eb808d2836203"
+      },
+      {
+        "path": "test_receipt_composition.py",
+        "bytes": 2596,
+        "sha256": "1061902cd825d915b95a71ae51f9a5886bbd41367112b92f4c0296bee6cbdcdb"
+      },
+      {
+        "path": "run_local.py",
+        "bytes": 3386,
+        "sha256": "17827afa2337044a204015914e500651d564da06f36df95ac958a2e3b5a191c3"
+      },
+      {
+        "path": "plan.md",
+        "bytes": 1803,
+        "sha256": "cad49466d5370a7f77e2eb44135bc033e04fa75180b7b13fc4c84324a5c3e897"
+      },
+      {
+        "path": "LOCAL_HANDOFF.md",
+        "bytes": 3272,
+        "sha256": "edf5d47282d7873250e3da4950fb4c73427ce30967cf3b6e51e91e7057eb650c"
+      }
+    ],
+    "reusedPinnedKernelDescriptorMethods": true,
+    "reusedPinnedRequestContract": true,
+    "legacyOperationalControllerImported": false,
+    "fixedNoncePathsOnly": true,
+    "sourceHashAndMetadataBound": true,
+    "ordinaryLeafDescriptorsHeldUntilFinalCheck": true,
+    "kernelReadsIndependentOfVirtualFileSize": true,
+    "missingCgroupRejected": true,
+    "cgroupEmptyRepeatedAcrossOutputRead": true,
+    "exactSharedTmpException": true,
+    "binaryStderrPrivateAndBounded": true,
+    "nativeDefaultRejected": true
+  },
+  "fileContract": {
+    "sourceMode": "0400",
+    "outputMode": "0600",
+    "privateDirectoryMode": "0700",
+    "sharedTmpMode": "1777",
+    "uid": 0,
+    "gid": 0,
+    "ordinaryFileLinks": 1,
+    "stdoutBytesMax": 32769,
+    "stderrBytesMax": 4096,
+    "binding": [
+      "device",
+      "inode",
+      "mode",
+      "uid",
+      "gid",
+      "nlink",
+      "size",
+      "mtime_ns",
+      "ctime_ns"
+    ]
+  },
+  "errorsAndTime": {
+    "primaryCleanupFinalErrorsSeparated": true,
+    "sameInterruptRethrown": true,
+    "unknownCloseNotRetried": true,
+    "consumedOutputPrefixPreserved": true,
+    "cleanupUsesOriginalGlobalDeadline": true,
+    "successRechecksOriginalPhaseDeadline": true,
+    "synchronousKernelCallsNotPhysicallyPreempted": true
+  },
+  "regression": {
+    "groups": [
+      {
+        "group": "host_files",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.866,
+        "logSha256": "a807e9a569400ee759f49a489f1f3b139997fb685fe57cc433ba6fd777a28f38"
+      },
+      {
+        "group": "request_evidence",
+        "tests": 47,
+        "expected": 47,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.898,
+        "logSha256": "320430978677054c15c20502cd8bec7ab9bb080b6e0ea24da93485aae80a7ec0"
+      },
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.203,
+        "logSha256": "cebddf552e32f6d49981a08dbb664ff54bf111a4a07c08632654c976c43e1d4b"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.291,
+        "logSha256": "2c366f9d2e5062cfa01541fa7d0016b65c139210c47137f1836b4ce511c488ca"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.304,
+        "logSha256": "c9ae877eb877c4ad4464486e5cdf265a5a0349dfd352189674e8bd6c9218f130"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.401,
+        "logSha256": "b7121434d8e4a5a1b4ae46bdb306b7e0d96c4614d931a22bc26f829b8b15aa9a"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.253,
+        "logSha256": "81a6b1aa8be4a97ae399b14a90cece0ca42d1cd3d5d9c1bfd94d60956eae8824"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.305,
+        "logSha256": "f5c06d25dd163b6593711799ab1fcf27807d87cbb1ce10cd372258f14c248012"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.707,
+        "logSha256": "637a0ddf5fdab16990c59aa1feeeb4c6c1d89748a0be77c4127165e9730adc4c"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.213,
+        "logSha256": "33ac99ba22352b8ceffa97e19781699a47eedac4553f8c8118df3f7def166805"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.439,
+        "logSha256": "55f3bd9fb068270c47782bfc4a029ec3ba0d94670147f1ae191c245f30c8785b"
+      }
+    ],
+    "total": 462,
+    "allPassed": true,
+    "frozenBindingsChecked": 86,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realProcReads": 0,
+    "nativeCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false
+  },
+  "review": {
+    "mode": "independent_read_only_source_review",
+    "p1Findings": 0,
+    "p2Findings": 1,
+    "finding": "Cleanup could cross the original phase deadline while still being within the global deadline and return success.",
+    "correction": "Recheck the original phase deadline after cleanup; preserve primary, cleanup and final errors separately.",
+    "redRegressionObserved": true,
+    "additionalSelfReview": "Late replacement of a source leaf after its verified read is now rejected by retaining the descriptor and comparing final path and full metadata."
+  },
+  "composition": {
+    "actualPinnedProbeAndParentDefinitions": true,
+    "actualHostCollectorAndReceiptGate": true,
+    "memoryDirectoryAndKernelOperations": true,
+    "syntheticManagerEvidence": true,
+    "successAndPermissionDenialPreserved": true,
+    "nativeExecutionProven": false
+  },
+  "scope": {
+    "vpsConnections": 0,
+    "linuxUnits": 0,
+    "nativeExecutions": 0,
+    "realProcReads": 0,
+    "realModels": 0,
+    "externalAgentCalls": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false
+  },
+  "failuresPreserved": [
+    "Initial 25 tests failed before implementation.",
+    "Two late leaf replacement and metadata tests failed before the descriptor retention fix.",
+    "Phase deadline regression failed before correction.",
+    "A first correction mixed final deadline errors into cleanup status; corrected to a separate final-error record."
+  ],
+  "limitations": [
+    "462 is related local component regression, not full-repository, native or production acceptance.",
+    "Namespace and cgroupfs provenance, manager/Invocation binding, trusted client ownership and actual service baselines are not supplied by this component.",
+    "No host launcher, SSH/native execution path or forced shared-deadline termination is enabled.",
+    "A missing cgroup is rejected; no cleanup claim is manufactured.",
+    "Old failure directories, locks, frozen inputs and historical quotas were preserved."
+  ],
+  "nextLocalWork": "Integrate the verified file collector and request/evidence contract into the trusted host launch/observe/cleanup lifecycle; keep native execution disabled until the whole adapter and critical authorization are ready."
+}
