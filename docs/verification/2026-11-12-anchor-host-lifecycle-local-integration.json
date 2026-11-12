@@ -1,0 +1,266 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "status": "passed_local_host_lifecycle_and_watchdog_policy_integration_not_native",
+  "implementation": {
+    "privateCandidateOnly": true,
+    "publicRecordOnly": true,
+    "sourceManifest": [
+      {
+        "path": "lifecycle.py",
+        "bytes": 11987,
+        "sha256": "357a1b4271ae0219bb09f89cac67d2e88762a29dd596a20d0145ea9460186556"
+      },
+      {
+        "path": "supervision.py",
+        "bytes": 4134,
+        "sha256": "e4d35f0e1b008731c35d327e7d3ad5eb1b25d60ced3a0329a143a654ce366dae"
+      },
+      {
+        "path": "test_lifecycle.py",
+        "bytes": 11672,
+        "sha256": "e1385efbe4b09b54c9ac1268426ee2771057b9e052c6dbf954e1c5ce03245809"
+      },
+      {
+        "path": "test_supervision.py",
+        "bytes": 4167,
+        "sha256": "6e8a3af505cecf70e743224abf2b100306eebf2de0252b10e974940392bf9818"
+      },
+      {
+        "path": "run_local.py",
+        "bytes": 3753,
+        "sha256": "a9cfc1a546781accdc5b5ef76e2f4d3808bf99c87e351319aad4282a2ec66144"
+      },
+      {
+        "path": "plan.md",
+        "bytes": 1948,
+        "sha256": "9d391efb411952a3b30da5e189e29bc207167795fe848e062987de653fba7e4d"
+      },
+      {
+        "path": "LOCAL_HANDOFF.md",
+        "bytes": 3587,
+        "sha256": "18a758cafad9ed7426485dd361e7c7d9005fd3aadea1e0290691aad85b461dbd"
+      }
+    ],
+    "pinnedManagerCollectorReceiptGate": true,
+    "unchangedPinnedWatchdog": true,
+    "singleStartedAndClock": true,
+    "controllerSeconds": 10,
+    "workSeconds": 8,
+    "outerCleanupSeconds": 2,
+    "serviceBaselineBeforeAndAfter": true,
+    "sourceVerificationBeforeStart": true,
+    "missingUnitPrecheck": true,
+    "singleStartNoRetry": true,
+    "ownedInvocationBeforeStop": true,
+    "unitReleaseObservedSeparately": true,
+    "cgroupEmptyNeverInferredFromManager": true,
+    "collectorNonceClockDeadlineBinding": true,
+    "collectorErrorsRetainedInFinalReport": true,
+    "nativeDefaultEnabled": false,
+    "hostFactoryComplete": false
+  },
+  "errorAndAcceptanceContract": {
+    "primaryCleanupContentAndDeadlineErrorsSeparated": true,
+    "invalidResultDoesNotEraseIndependentCleanup": true,
+    "sameInterruptRethrownWithReport": true,
+    "unknownFactsRemainUnknown": true,
+    "originalReadErrorAndCloseInterruptBothRetained": true,
+    "finalDeadlineIncludesValidationCost": true
+  },
+  "supervisionContract": {
+    "controllerDeadlineBoundToResult": true,
+    "requestAndCollectorDiagnosticsChecked": true,
+    "independentIdentityExitGroupAndHandleChecksRequired": true,
+    "childSelfReportNotKernelProof": true,
+    "nativeDriverProvided": false,
+    "physicalPreemptionProven": false
+  },
+  "regression": {
+    "groups": [
+      {
+        "group": "lifecycle",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.298,
+        "logSha256": "39528c927a1bf4e07ad6f6b12cebf90588eb06a7508fa509e6602515ee934ef1"
+      },
+      {
+        "group": "manager_port",
+        "tests": 50,
+        "expected": 50,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.072,
+        "logSha256": "5935998e8416086eea6016bfb4b0bf272fa3c764f528e8393262c6f3100af7b9"
+      },
+      {
+        "group": "host_files",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.89,
+        "logSha256": "a807e9a569400ee759f49a489f1f3b139997fb685fe57cc433ba6fd777a28f38"
+      },
+      {
+        "group": "request_evidence",
+        "tests": 47,
+        "expected": 47,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.883,
+        "logSha256": "b8c5ad4e3a5728b056774dec587ee0acfbe6fd02592fad9f45d64ccae5611740"
+      },
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.231,
+        "logSha256": "3b319b9d98fef83a00f72acfc30d51431825efd4fd13f1263c386e3d028dba39"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.371,
+        "logSha256": "b365a2894cfd07d6a581c4912bbc75d82df9119e7080c2b17b247ec96aa3bddb"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.363,
+        "logSha256": "42d0dc7b8cf28dfa8ca9b534da07680e631feca6d02e2070d0e0c9bbaa34c741"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.399,
+        "logSha256": "3ffec40ef410a5bfaed140a2607f052f5ed0c80d74e23bb7882a8a5ecad3e126"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.906,
+        "logSha256": "e59cc0ecf4b561fc3c749e8d861c5d547d8b7bed9e6c6b58727335109dcfddb2"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.31,
+        "logSha256": "154d70b5d046bc2759790fbda9f7d6717eb6e4c78c0872fbfa6e11a96ed022f2"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.9,
+        "logSha256": "5c5a050bb0d445939d12114f3d6d9a2bda8b2f5be77285ccb9643d76a2d711b1"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.219,
+        "logSha256": "1923cb934369768c29cff675b031b9eb2e64632d6579ce6138435716fa8c8437"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.425,
+        "logSha256": "2ba0cec6bc4b7ae38fab392aaf9ea06d89f1271e98f5c7a5880479062b8a9db4"
+      }
+    ],
+    "total": 545,
+    "allPassed": true,
+    "frozenBindingsChecked": 100,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realProcReads": 0,
+    "nativeCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false
+  },
+  "review": {
+    "mode": "independent_read_only_source_review",
+    "p1Findings": 0,
+    "p2Findings": 0,
+    "gaps": [
+      "Wrong collector clock and global deadline were implemented but not independently tested.",
+      "Work read error plus collector close interruption lacked a direct composed assertion."
+    ],
+    "addressedWithNewTests": true,
+    "newNestedDiagnosticGapReproducedBeforeFix": true,
+    "originalReadAndCloseErrorsPreserved": true
+  },
+  "composition": {
+    "actualPinnedProbeParentManagerCollectorAndGateMethods": true,
+    "memoryKernelAndManagerPortFacts": true,
+    "actualPinnedWatchdogPolicy": true,
+    "supervisorDriverMocked": true,
+    "fullConcreteCommandPortInSameLifecycleTest": false,
+    "nativeExecutionProven": false
+  },
+  "scope": {
+    "vpsConnections": 0,
+    "linuxUnits": 0,
+    "nativeExecutions": 0,
+    "realProcReads": 0,
+    "realModels": 0,
+    "externalAgentCalls": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false
+  },
+  "failuresPreserved": true,
+  "limitations": [
+    "545 is related local regression, not full-repository, native or production acceptance.",
+    "A valid envelope provides no identity or authorization; the supervisor driver must independently verify owned handles and kernel facts.",
+    "The complete native package, exclusive preparation and one-time allowance entrypoint are not supplied.",
+    "Namespace, cgroupfs, manager/tool provenance, physical deadline enforcement and total native resources remain unverified.",
+    "The concrete command port was separately tested, but not yet assembled with the lifecycle in one full local factory test.",
+    "Old failure directories, locks, frozen candidates and historical quotas were not reused or changed."
+  ],
+  "nextLocalWork": "Finish the complete source-bound local factory and entrypoint, assemble the concrete command port in the lifecycle fixture, and bind owned-driver and resource enforcement before asking for any critical native execution."
+}
