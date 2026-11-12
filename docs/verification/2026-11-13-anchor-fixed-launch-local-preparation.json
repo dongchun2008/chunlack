@@ -1,0 +1,307 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "status": "passed_local_fixed_launch_and_controller_bootstrap_not_native",
+  "implementation": {
+    "privateCandidateOnly": true,
+    "publicRecordOnly": true,
+    "sourceManifest": [
+      {
+        "path": "controller.py",
+        "bytes": 14462,
+        "sha256": "aebc1bfa4a5c0c9608868f220acddbf1144fb5bd3a05bf6d0d001797cc38d33f"
+      },
+      {
+        "path": "launcher.py",
+        "bytes": 6253,
+        "sha256": "1f6631a4910c2d50c86d99a78e5fe76b87969816fa296c9770dd486dce1afce0"
+      },
+      {
+        "path": "test_launch.py",
+        "bytes": 11412,
+        "sha256": "3db13649a622fef179a2af9cd24101aff74167998d0f8299c03d002317a0e5f2"
+      },
+      {
+        "path": "run_local.py",
+        "bytes": 4710,
+        "sha256": "cff8dfe8ad8d566a38e63a10f90830281af27d9273087d64707be19137bbc013"
+      },
+      {
+        "path": "plan.md",
+        "bytes": 2400,
+        "sha256": "d770e770fc0c86ebc0acf1fdef26bb7eb5af7c50f8ee5a31d9bb8e12c960658b"
+      },
+      {
+        "path": "LOCAL_HANDOFF.md",
+        "bytes": 4817,
+        "sha256": "b0b054ebba0e9d65a7faf5854aa6b0661a5703ecf259c0d16769d4c8955f69bc"
+      }
+    ],
+    "exactPinnedPreparerRequired": true,
+    "claimSnapshotAndRootIdentityBound": true,
+    "runtimeSourceFiles": 14,
+    "wrapperSourceFiles": 2,
+    "controllerSourceSha256": "aebc1bfa4a5c0c9608868f220acddbf1144fb5bd3a05bf6d0d001797cc38d33f",
+    "fixedArgvAndClientEnvironment": true,
+    "callerScriptAndCommandTailAccepted": false,
+    "rawPopenAndDefaultNativeRejected": true
+  },
+  "contracts": {
+    "originalStartRetained": true,
+    "workSeconds": 8,
+    "controllerIncludingCleanupSeconds": 10,
+    "outerBudgetChanged": false,
+    "sourceReadChunkBytes": 4096,
+    "sourceMaximumBytes": 32768,
+    "maximumDescriptors": 96,
+    "allBankSourcesCheckedBeforeBankExecution": true,
+    "markersAndExactDirectoriesChecked": true,
+    "fullRootAndSourceMetadataChecked": true,
+    "closedBeforeRuntimeCompilation": true,
+    "knownOwnedFdsClosedAfterSourceRejection": true,
+    "unknownCloseNotRetried": true,
+    "childRetainedBeforePostReturnCheck": true,
+    "sharedClaimReservedBeforeFactory": true,
+    "newSpawnerCannotRetryUnknownCreation": true,
+    "receiptIdentityIsIndependentWitness": false
+  },
+  "regression": {
+    "groups": [
+      {
+        "group": "fixed_launch",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.278,
+        "logSha256": "cafa1be0e2326a9a310c9a964ad220cc34c61afed37f84defd4e08ee7c68ce4c"
+      },
+      {
+        "group": "owned_driver",
+        "tests": 30,
+        "expected": 30,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.385,
+        "logSha256": "aff972ceb33df557d44fc15f6169e5ed4c37f15ce4296a160d943588cb538136"
+      },
+      {
+        "group": "one_shot_entry",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 5.173,
+        "logSha256": "5b07cfd1c8f2b4652c0a75385200abfffb8f0f1d7d79e8a4eb5490f58fccc6aa"
+      },
+      {
+        "group": "exclusive_prepare",
+        "tests": 25,
+        "expected": 25,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.769,
+        "logSha256": "63a466583deafd195df571e435e452e50e267c3b7e698d113fd406ac538ef31f"
+      },
+      {
+        "group": "runtime_package",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.154,
+        "logSha256": "fecf12604e1d034c290257b20255e4031296c21c73d364f31d75bd573077ea10"
+      },
+      {
+        "group": "lifecycle",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.965,
+        "logSha256": "55a067f148995e3bf8897a3e8f9dd1385be59b6a80d5bbccec32ddcba1e7f2f4"
+      },
+      {
+        "group": "manager_port",
+        "tests": 50,
+        "expected": 50,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.014,
+        "logSha256": "e25279dcd5612c7bde2d1210e13a19f7db3c2c83c5ef45bf040e644f33e025c0"
+      },
+      {
+        "group": "host_files",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.849,
+        "logSha256": "b84752ef332a24bf0119f7d0dbca7b85abca26c011de03bc97a3b38a6c07b218"
+      },
+      {
+        "group": "request_evidence",
+        "tests": 47,
+        "expected": 47,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.848,
+        "logSha256": "7e5a1a070d03d5eca3ee08d5c5ed581870b66787e505aec2e860930b729d5d83"
+      },
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.305,
+        "logSha256": "01b2760eb47545d3e30f05653e234148debe0714bac52acfd5eb71fc90a9db66"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.307,
+        "logSha256": "706c6021c326b9054278676d66eec1d8ea6c1935dadeabdd8dbed7f467b017a8"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.294,
+        "logSha256": "bc4613ed73b3cf01c70a214b015e1e061555df43936344a5afaeef8eb3d56fb2"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.51,
+        "logSha256": "73db94bedaeb46ee5f691f76c6d8739864637ab9dd7184c7e22f0f5a7557ee8d"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.07,
+        "logSha256": "1ea185b510d0ad00655191084f36bf78357047fdfad41cd7b542fa0bff120924"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.272,
+        "logSha256": "9e94a3ae02a0eb1e1e0710c7c0913659321f380863b0d22ef1c1c6d16ee44a12"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.854,
+        "logSha256": "7cfb6e314547b4f2ee0e658746817f66f83e277b241e1e7a2b33faa336525f9c"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.22,
+        "logSha256": "fd91a1667fe53864bd7ef5a4672843159b6289539cf0e0e7cc64e2f530b0f919"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.425,
+        "logSha256": "4550c03e84e23a32db9e977d473f9d915e18eb1233caaa417e4185c234316dad"
+      }
+    ],
+    "total": 674,
+    "allPassed": true,
+    "frozenBindingsChecked": 130,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realProcReads": 0,
+    "nativeCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false
+  },
+  "review": {
+    "mode": "independent_read_only_source_review",
+    "definiteP1Findings": 0,
+    "definiteP2Findings": 1,
+    "importantFindingsClosed": 1,
+    "redRegressionObserved": true,
+    "finalFixReview": "no_definite_new_P1_P2",
+    "finding": "Per-instance launch state allowed two Spawners to reuse one claimed Preparer, including after unknown creation failure.",
+    "correction": "Reserve one shared token on the exact Preparer before factory invocation; same and additional instances retain consumption."
+  },
+  "fullMainTest": {
+    "actualCheckedRuntimeSourceExecuted": true,
+    "actualLifecycleAndSupervisionUsed": true,
+    "targetVerifierIO": "memory_double",
+    "selfIdentity": "explicit_double",
+    "runtimeNativeConstruction": "explicit_local_adapter_substitution",
+    "nativeExecutionProven": false
+  },
+  "scope": {
+    "vpsConnections": 0,
+    "linuxUnits": 0,
+    "nativeExecutions": 0,
+    "realTargetProcReads": 0,
+    "realModels": 0,
+    "externalAgentCalls": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false
+  },
+  "limitations": [
+    "674 is related local regression, not full-repository, native or production acceptance.",
+    "The fixed spawn call used a trusted explicit factory double; native factory, tool hashes, runtime libraries and manager provenance remain incomplete.",
+    "Controller main was tested with explicit target/kernel/runtime construction doubles; self-reported PID and Invocation never authenticate the separate Driver witness.",
+    "Same-process shared allowance is not a persisted external authorization grant; no prepared root adoption or native activation is provided.",
+    "Runtime imports reread the already verified private bank, relying on the declared immutable-tree lifetime; hostile-root, namespace and read-only mount enforcement are not proven.",
+    "Aggregate nativewatch and system.slice nativehost do not establish a common aggregate resource bound.",
+    "The original-start claim/Watchdog/launcher assembly, independent reference ownership and physical hard recovery still require implementation and verification.",
+    "No private implementation or runtime packet uploaded; frozen sources, failed directories, locks and historical quotas retained."
+  ],
+  "designReferences": [
+    "https://www.freedesktop.org/software/systemd/man/latest/systemd-run.html"
+  ],
+  "nextLocalWork": "Bind the native tool profile and independent controller witness, then integrate one original deadline and shared resource scope before any critical native verification."
+}
