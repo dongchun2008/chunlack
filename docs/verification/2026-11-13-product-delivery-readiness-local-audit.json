@@ -1,0 +1,715 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "stage": "product-delivery-readiness-local-audit",
+  "status": "local_source_and_documentation_audit_passed_not_deployed",
+  "checkoutHead": "5610f676bd584c7a9f57a98c1ebf61f7eafcedac",
+  "scope": {
+    "sshAttempts": 0,
+    "vpsRequests": 0,
+    "linuxUnitsCreated": 0,
+    "productTestsExecutedThisStage": 0,
+    "realModelCalls": 0,
+    "externalAgentMessages": 0,
+    "nativeLibraryLoads": 0,
+    "productCodeChanged": false,
+    "frozenCandidateChanged": false,
+    "productionPublished": false,
+    "credentialsReadOrChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "githubDocumentationSyncOnly": true
+  },
+  "sourceAudit": {
+    "schemaVersion": 1,
+    "date": "2026-11-13",
+    "scope": "local-source-only-audit",
+    "manifestSha256": "c0ca08d6f03e1e6af3b46259a031239a24c6c89c8f5a4e22102ea8208f9b4c15",
+    "productFiles": 66,
+    "frozenFilesValid": 66,
+    "currentFilesEqualFrozen": 66,
+    "differences": [],
+    "rows": [
+      {
+        "path": "bin/lack.js",
+        "source": "lack.py:BIN_LACK_JS",
+        "bytes": 1502,
+        "sha256": "b90c910e86e4fe3afdb049157ee2c3830f810acf48cc0c6b0409639df4a66a04",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "collaboration/capacity.cjs",
+        "source": "collaboration/capacity.cjs",
+        "bytes": 22431,
+        "sha256": "fdfc0fbe3798c737ad5fdcb42b7d36fa901ad03e53d92db2a7050db827fd6710",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "collaboration/context.cjs",
+        "source": "collaboration/context.cjs",
+        "bytes": 971,
+        "sha256": "ed4547924de7b08870765d16bc77113f80ed956d9176f1511e664fd511797253",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "collaboration/controls-http.cjs",
+        "source": "collaboration/controls-http.cjs",
+        "bytes": 7038,
+        "sha256": "cf3cd9e22e8ffb0f73132bf2df6c0706286d4a75b54cbd82eb81d8cd0be2be3b",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "collaboration/model-transport.cjs",
+        "source": "collaboration/model-transport.cjs",
+        "bytes": 3990,
+        "sha256": "fee1b40325786e2e71ae176d7766725da02eb6c7b762d79929b38a78a4b6119a",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "collaboration/resources.cjs",
+        "source": "collaboration/resources.cjs",
+        "bytes": 7656,
+        "sha256": "0c6dbad4ff70a61e5b235e4a2ca49e1b2c5c6da99f571aedd4d2cc67fcecfbe5",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "collaboration/state.cjs",
+        "source": "collaboration/state.cjs",
+        "bytes": 3464,
+        "sha256": "54d59d711e227df6db6647bf028f9ddeaa817a997bebf6120d97a2ade2f7ca2c",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "collaboration/store.cjs",
+        "source": "collaboration/store.cjs",
+        "bytes": 17731,
+        "sha256": "cdcc0eb78b47f33d5718eb2e09320ee0c3a34bb8c8a7b93e24b0419fd9651fa8",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "collaboration/task-control.cjs",
+        "source": "collaboration/task-control.cjs",
+        "bytes": 6962,
+        "sha256": "6f31471c99f35ad6ca5ae406cff8f5b0dbeae70c8d6c8c1876939c36f809e7a3",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "collaboration/transport.cjs",
+        "source": "collaboration/transport.cjs",
+        "bytes": 14236,
+        "sha256": "94dcb91bc284dbc77ad845f4930ec55ade7596ce086c56bd0df5212b65c64617",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "deploy/public/Caddyfile.template",
+        "source": "deploy/public/Caddyfile.template",
+        "bytes": 4730,
+        "sha256": "29653768811376aa077c06a6486165af685b36ebfe80289ae627ae1ce03d744a",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "gateway/admin.html",
+        "source": "gateway/admin.html",
+        "bytes": 7818,
+        "sha256": "651a7d5195645262cd9ecea394ae7831b512b8cc1907c1996cc39e9078ff652e",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "gateway/node-facade.cjs",
+        "source": "gateway/node-facade.cjs",
+        "bytes": 7369,
+        "sha256": "2e9b79ad46acb2cc5482c047625908ced1e71a3b4eedd6ed4905e66fdcb1ffbf",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "gateway/pilot-artifacts.cjs",
+        "source": "gateway/pilot-artifacts.cjs",
+        "bytes": 8718,
+        "sha256": "d68325ed90750faf62e96353d94d4631cb247f4e04e4a9b1384bb72fa2bcf683",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "gateway/pilot-openapi.cjs",
+        "source": "gateway/pilot-openapi.cjs",
+        "bytes": 8894,
+        "sha256": "1e6b621e50e2e7605fcea05b6f90a7812f7e0611a8b1ddd49d381463272f9bd2",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "gateway/pilot-schema.cjs",
+        "source": "gateway/pilot-schema.cjs",
+        "bytes": 1406,
+        "sha256": "ecc2ccf9a6fd82fdb4b1dd90c9e7baa8e22e7e848d2870eb7f28bc7b94407215",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "gateway/protocol.cjs",
+        "source": "gateway/protocol.cjs",
+        "bytes": 2825,
+        "sha256": "a1d982015416e10777f9135fdaba09ad84ff1c68390f883eb1f4cdc009d2852a",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "gateway/public-runtime.cjs",
+        "source": "gateway/public-runtime.cjs",
+        "bytes": 14530,
+        "sha256": "483b880aa721f97ce9506c2e81ff2bdb70e51148c256e4e1a723580d8ce31aa2",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "gateway/research-bridge.cjs",
+        "source": "gateway/research-bridge.cjs",
+        "bytes": 5085,
+        "sha256": "80f163a4cc80eec0725074ed6e7e810fc91a2e2ce2471889c587e9dd8b2c7b68",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "gateway/research-search.cjs",
+        "source": "gateway/research-search.cjs",
+        "bytes": 1435,
+        "sha256": "768ddd5471fdb05988716e36384a51e94e1900297249ff5741ad11c1f86d0d26",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "gateway/runtime.cjs",
+        "source": "gateway/runtime.cjs",
+        "bytes": 3015,
+        "sha256": "09b2ad730d9f5312ad4ff1973fd6a54c95527e1dc957f7fd0f93da0328d3e519",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "gateway/server.cjs",
+        "source": "gateway/server.cjs",
+        "bytes": 11325,
+        "sha256": "ccc612c653d52424ec1e57c2ea2b20531b4119eaea302ad4b7ee2cc0e65925f0",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "gateway/store.cjs",
+        "source": "gateway/store.cjs",
+        "bytes": 33599,
+        "sha256": "32cd930faf4967c03cba9e598518bc26eedac7d9c30a107579216dc505500ac9",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "gateway/workspace-access.cjs",
+        "source": "gateway/workspace-access.cjs",
+        "bytes": 6964,
+        "sha256": "fb868f64ad14edaa14d24dba48b96621f2735731cdf3501063f17c249e94de63",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/admission.cjs",
+        "source": "identity/admission.cjs",
+        "bytes": 1930,
+        "sha256": "df7f27b4999455bd27a4f75e4067adff7cdf656152ec0c5424e4d19715fdab06",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/agent-access.cjs",
+        "source": "identity/agent-access.cjs",
+        "bytes": 9052,
+        "sha256": "1175577c4b010fedcf0e029abb5ab95b53b571428e83f55eeab1fdc9938b7ede",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/agent-authority.cjs",
+        "source": "identity/agent-authority.cjs",
+        "bytes": 15794,
+        "sha256": "cd0f36cd51ca393057dd1eebdfad6e12466103115e498792ac013e036f9292ec",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/agent-resource.cjs",
+        "source": "identity/agent-resource.cjs",
+        "bytes": 1724,
+        "sha256": "3b4599612ba1c8372ecceafa4380771e7412b6f685c781323d10a7e061050f89",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/chat-messages.js",
+        "source": "identity/chat-messages.js",
+        "bytes": 19026,
+        "sha256": "d23cabc5eac01c3cc7783664face38bba38ce1050d2e7ca889042c3f2c8c78fb",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/display.js",
+        "source": "identity/display.js",
+        "bytes": 4462,
+        "sha256": "10d95502c5e6bf7be2a24b5eae79816d3f96dbc255ac1e3ef294f7543d1a6588",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/help-assets.cjs",
+        "source": "identity/help-assets.cjs",
+        "bytes": 5570,
+        "sha256": "786a2a20652bb41d3f5178a9ff7a30692b0ecbf5aeb9a905c3c6b15f0e474a56",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/help.js",
+        "source": "identity/help.js",
+        "bytes": 17036,
+        "sha256": "06b9466ebf1e3d5db14f79df625d3e8dad1fbd4382d4d95d28243926d5170241",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/help/en.md",
+        "source": "docs/USER_GUIDE.en.md",
+        "bytes": 30658,
+        "sha256": "ac7eb188ddc76435448135e05c9531eb876ecc328938d0601968d3e2bb4e500c",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/help/zh-CN.md",
+        "source": "docs/USER_GUIDE.zh-CN.md",
+        "bytes": 24391,
+        "sha256": "34a0555416a5accf1be5d37bba34ee8e93b9f710b67d68557864876f61d1dc6c",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/http.cjs",
+        "source": "identity/http.cjs",
+        "bytes": 10506,
+        "sha256": "6fa666fe046db4297d9b71df1853c8bfb2891ecde769e2167cd7bf8a591d1002",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/i18n.js",
+        "source": "identity/i18n.js",
+        "bytes": 10872,
+        "sha256": "df9031f79a01166ef6c8066cd8894b50bd3672953ecf64886294907680abe9a8",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/login.html",
+        "source": "identity/login.html",
+        "bytes": 2365,
+        "sha256": "ed6e146443f550134f30054d9b513ad424855cbd3cf37160954ad728a9115a7c",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/membership-epochs.cjs",
+        "source": "identity/membership-epochs.cjs",
+        "bytes": 5313,
+        "sha256": "d3503021035e04884ef72e03b325c9ab802151b937b6c3d572079db7ae30627a",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/messages.js",
+        "source": "identity/messages.js",
+        "bytes": 30854,
+        "sha256": "7f5ddf81f24e94f90007c5627d32a443656b4290df1a8788e2a0d57298f069f7",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/oauth-core.cjs",
+        "source": "identity/oauth-core.cjs",
+        "bytes": 18935,
+        "sha256": "136779892e395f77be4e5cbc597f400eae1359ba05968ba4ce21ec120e2315d4",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/oauth-schema.cjs",
+        "source": "identity/oauth-schema.cjs",
+        "bytes": 2896,
+        "sha256": "66c27504b69b1a1905588809299bb6bde7a390b3dae7b6031d0aa1352d688ac9",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/oidc-http.cjs",
+        "source": "identity/oidc-http.cjs",
+        "bytes": 3882,
+        "sha256": "e5a4badcef662c1c2179d690af155d71f5239ff991a8e35eed5f23748acc8cd9",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/oidc.cjs",
+        "source": "identity/oidc.cjs",
+        "bytes": 11369,
+        "sha256": "ae459a09646237683d38e3218899b392580395a7729f3ec99282f837f5663f57",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/passwords.cjs",
+        "source": "identity/passwords.cjs",
+        "bytes": 1649,
+        "sha256": "16202920ce6ef04d46d1959b8feac1e979bfb682381c2b3c77e09c7e721615f0",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/policy.cjs",
+        "source": "identity/policy.cjs",
+        "bytes": 1646,
+        "sha256": "56ae44f69082b5be281dad154089a0a341d86bf1a3dd2bbcff4bf554a2ef8941",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/sessions.cjs",
+        "source": "identity/sessions.cjs",
+        "bytes": 8345,
+        "sha256": "ec05c74ed26264afd16e6d78d4f096937521d7680039ad8cc4b68b5e8e1fb65d",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/store.cjs",
+        "source": "identity/store.cjs",
+        "bytes": 27438,
+        "sha256": "2677de34881a2de1f527267a2522fffa3db9ea3fd2dd769f0901e8d666673fda",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/workspace-shell.js",
+        "source": "identity/workspace-shell.js",
+        "bytes": 45510,
+        "sha256": "6594eed08e6313a00952ac6924bb4a5398c50bc8b157d4a64675af8521c67b92",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "identity/workspace-ui.js",
+        "source": "identity/workspace-ui.js",
+        "bytes": 15356,
+        "sha256": "5715ad0251d463649de870d3f802fc5ef662c14dfb9e270132e9b4b28eee1782",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "integrations/mcp/artifact-upload.cjs",
+        "source": "integrations/mcp/artifact-upload.cjs",
+        "bytes": 3443,
+        "sha256": "bec8cb2cd4c22a597f7f2d63013f67deffa468d6bb3bfe570ca2d62f168ad1e4",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "integrations/mcp/events.cjs",
+        "source": "integrations/mcp/events.cjs",
+        "bytes": 18053,
+        "sha256": "679fb62b8a4686cbfe375772f05e4db29a9ff81f1c2dda6f627312d13b27a636",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "integrations/mcp/pilot-server.cjs",
+        "source": "integrations/mcp/pilot-server.cjs",
+        "bytes": 17800,
+        "sha256": "ffba28dad12095d483cd07c83eaa2d7c92aa0754f1798e32a4f4c1b657fcb5a8",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "integrations/mcp/runtime.cjs",
+        "source": "integrations/mcp/runtime.cjs",
+        "bytes": 4870,
+        "sha256": "614dd4fb4d6be2c3538095e3dd3f811abfec9f71e4908c407d5bc60f0a1a5d02",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "integrations/mcp/webhook-transport.cjs",
+        "source": "integrations/mcp/webhook-transport.cjs",
+        "bytes": 6158,
+        "sha256": "5afae90900c1f365fefe44a0697a293dc01a28961eae33f33dee00dde8a59f4b",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "package-lock.json",
+        "source": "package-lock.json",
+        "bytes": 112276,
+        "sha256": "255e393fe99249f578c6f910a501b2b490a070f34784509b760c4042304bfacc",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "package.json",
+        "source": "package.json",
+        "bytes": 691,
+        "sha256": "e79f7668fcd9078fc913ebf15a41587fbd8ce1d0fb13806ba94ff633474d39b9",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "public/index.html",
+        "source": "lack.py:INDEX_HTML",
+        "bytes": 102510,
+        "sha256": "3a4cc1acb6228e7145d2155a3958248580bc098d5b214dbb804ce6fa6f7c3fd4",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "scripts/accounts.cjs",
+        "source": "scripts/accounts.cjs",
+        "bytes": 4908,
+        "sha256": "16801301abb96abf706d1d00d816c09514f67e691b36c610e3375c38061388da",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "sdk/adapters/open-webui.cjs",
+        "source": "sdk/adapters/open-webui.cjs",
+        "bytes": 6676,
+        "sha256": "0b77817b75e5bdcdb02dd1e85ee7c7962afa20e5de98465dcdb9615b06a55cc8",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "sdk/agent-client.cjs",
+        "source": "sdk/agent-client.cjs",
+        "bytes": 8313,
+        "sha256": "99639c302833b57bf2b56b5bf116e4fd323e1fa600bf6fd76dbcada1b96b0bb1",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "sdk/cli.cjs",
+        "source": "sdk/cli.cjs",
+        "bytes": 2677,
+        "sha256": "da2ba54b433e89e3fb040163abb4e7e2f9ce204607825464a03beaa4bd9616cd",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "sdk/credentials.cjs",
+        "source": "sdk/credentials.cjs",
+        "bytes": 2912,
+        "sha256": "1481ab7fabea8ed72f02154aae988df025177489242402005069f6ce39c1600c",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "sdk/open-webui-worker.cjs",
+        "source": "sdk/open-webui-worker.cjs",
+        "bytes": 1225,
+        "sha256": "a9a8419729ab7094bf95de29732c76b5c06f072546b2eb44e22b05e09f8d249c",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "sdk/pairing.cjs",
+        "source": "sdk/pairing.cjs",
+        "bytes": 1260,
+        "sha256": "819c8017b89377b65d00878375087bebfd915829c927ccbc9e7d0aafd855161f",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "sdk/transports/muse-proxy.cjs",
+        "source": "sdk/transports/muse-proxy.cjs",
+        "bytes": 5624,
+        "sha256": "a656d810a9391d9549be72ba51916af91f07659f460039bd29235ead214582f8",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      },
+      {
+        "path": "server.js",
+        "source": "lack.py:SERVER_JS",
+        "bytes": 258337,
+        "sha256": "89df6f9d1c9bf6ff61d3afb891e656cb86f846b360d374d796050b248de69e4b",
+        "frozenValid": true,
+        "currentEqualsFrozen": true
+      }
+    ],
+    "runtimeGenerated": false,
+    "productTestsExecuted": 0,
+    "networkAccess": false,
+    "productionReady": false
+  },
+  "documentation": [
+    {
+      "path": "PROJECT_CONTEXT.md",
+      "bytes": 34173,
+      "sha256": "291d54561e673d02bd241b35336567e871b1eadfcb9f0e1e10a3d8d89c65fc24"
+    },
+    {
+      "path": "docs/RESEARCH_PILOT.md",
+      "bytes": 6825,
+      "sha256": "90566a4715b7377dec538ec482a8689061e047777b739608380c966556024948"
+    },
+    {
+      "path": "docs/DELIVERY_READINESS.zh-CN.md",
+      "bytes": 10529,
+      "sha256": "38900e9d695017407ca291d2465873559fae8b1899a0b310b59da04d61321b5e"
+    }
+  ],
+  "historicalEvidenceBindings": [
+    {
+      "path": "docs/verification/2026-10-20-provider-workspace-routing-recheck.json",
+      "bytes": 4346,
+      "sha256": "88ef348a19fe8f38314d679636faedbf42015c662ffd89a9e4650286678d6322"
+    },
+    {
+      "path": "docs/verification/2026-10-19-onecat-production-acceptance.json",
+      "bytes": 4235,
+      "sha256": "4d9500e2e19b63ddc759e815364c9ca9b89494e9af769c9b9ef9f0a58571476d"
+    },
+    {
+      "path": "docs/verification/2026-10-21-native-dots-single-task-acceptance.json",
+      "bytes": 4042,
+      "sha256": "22a49ede9991911025bc81c4490a953d468ad5c6869772d1981a30e3dc6fb73e"
+    },
+    {
+      "path": "docs/verification/2026-10-23-real-research-rest-acceptance.json",
+      "bytes": 16600,
+      "sha256": "15354d46e6c7904d4f84b82e8cf97d4b0cdb957fab877fef118c7eb56f050845"
+    },
+    {
+      "path": "docs/verification/2026-10-24-research-code-release-production.json",
+      "bytes": 4832,
+      "sha256": "aff2d6ba8b8596394a118a08691e22b70b3ebee10e34b966b3be0d62c334d24f"
+    },
+    {
+      "path": "docs/verification/2026-10-24-research-release-human-login-acceptance.json",
+      "bytes": 2322,
+      "sha256": "c893cf3db2daa230bafc1d67f411d384c12733f6c8061f5928ccf06a26b6a31b"
+    },
+    {
+      "path": "docs/verification/2026-10-25-research-task-bounds-linux.json",
+      "bytes": 6480,
+      "sha256": "bea87e61173c9148ee56eabe7807fb156363a2301346538e97cdbcc106722981"
+    },
+    {
+      "path": "docs/verification/2026-10-25-interface-help-i18n-integration.json",
+      "bytes": 5232,
+      "sha256": "90c92a23b28196f3e70ab6bf78c739ef56708eedc3c37c4e92fa980b7a1d32b8"
+    },
+    {
+      "path": "docs/verification/2026-10-25-interface-help-i18n-linux.json",
+      "bytes": 6911,
+      "sha256": "1fc1b25f4a216eb447dd8530350f5e4ce4c908b2137c7ed9609426bbfd8fda58"
+    },
+    {
+      "path": "docs/verification/2026-10-29-formal-entry-local-diagnostic-acceptance.json",
+      "bytes": 5978,
+      "sha256": "ab2dac92e46e0f1c89c83a1cb8a3e76140b86cd98fcf2a349c3171f381d61ffc"
+    },
+    {
+      "path": "docs/verification/2026-11-01-production-source-package-and-readonly-readiness.json",
+      "bytes": 4129,
+      "sha256": "c2a9ddecacddcdb2467fedfd12ece69778d29a7631552c4fb6c43da0ba83f9ad"
+    },
+    {
+      "path": "docs/verification/2026-11-06-owned-parent-native-three-unit-acceptance.json",
+      "bytes": 7290,
+      "sha256": "b452692336519fafe0428c17d3b535cb33328ac096803dbb31b0decafc755b87"
+    },
+    {
+      "path": "docs/verification/2026-11-13-parent-descriptor-ledger-local-integration.json",
+      "bytes": 64958,
+      "sha256": "c14d839473990261e26e8bd5b16f7198eeb5fe52a0ed004981052dca480f4e69"
+    }
+  ],
+  "validation": {
+    "productFilesChecked": 66,
+    "frozenFilesValid": 66,
+    "currentEqualsFrozen": 66,
+    "relativeLinksChecked": 35,
+    "brokenLinks": [],
+    "originalContextBodyPreserved": true,
+    "historicalMetricAssertionsPassed": true,
+    "selectedDocumentationSecretPatternHits": 0,
+    "productTestRerunNotRequiredForDocumentationOnlyChange": true,
+    "historicalEvidenceNotClaimedAsCurrentLiveState": true
+  },
+  "historicalApplicationRegression": {
+    "date": "2026-10-29",
+    "tests": 1106,
+    "pass": 1106,
+    "fail": 0,
+    "skipped": 0,
+    "exitCode": 0,
+    "executedThisStage": false,
+    "explicitVerifiedCaddy": true
+  },
+  "historicalPrivateProtectionRegression": {
+    "date": "2026-11-13",
+    "tests": 1043,
+    "notApplicationFullSuite": true,
+    "notNativeOrProductionAcceptance": true
+  },
+  "review": {
+    "mode": "independent read-only product and documentation audit",
+    "blockingFindings": 0,
+    "reviewerRanTestsOrNetworkOrWroteFiles": false,
+    "evidence": "66-source result independently supplied by implementer; reviewer verified scope, final1106 record, historical/current separation and relative links except pending audit JSON"
+  },
+  "remaining": [
+    "fresh production code/config/dependency/resource/backup/compatibility bindings",
+    "production-bound formal release package and authorized maintenance",
+    "post-release multilingual/help and strict-budget real research acceptance",
+    "native isolated quiet task destination for Xuanji",
+    "independent Muse Suhua native trigger/computer/result acceptance",
+    "requested real heterogeneous models, users and device coverage"
+  ],
+  "qualifications": [
+    "historical onecat and human OIDC production successes are preserved, not erased",
+    "historical Xuanji manually triggered native task is accepted, grant was subsequently revoked; current grants unknown",
+    "47-file private bootstrap is distinct from66-product and not automatically a release dependency",
+    "existing frozen help guides remain byte-identical; new checklist is a status overlay, not deployed help",
+    "no new test quota or evidence freshness created by this audit"
+  ],
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "synchronization": {
+    "onlySelectedFourDocumentationFiles": true,
+    "projectContextRemoteBaseBlobSha": "6f7426a67481843baca8e578f7d2c650e536856d",
+    "projectContextStrategy": "prepend only the new audit paragraph to fetched main content; preserve its original body; do not upload existing local-only historical sections",
+    "projectContextUploadBytes": 8970,
+    "projectContextUploadSha256": "97dc2488347465bd3b2010a866de43764c517d8c0bd1376b101077f84315f41d",
+    "documentationBindingsDescribeLocalSources": true,
+    "otherThreeFilesUploadedAsExactLocalBytes": true,
+    "existingFilesUseFetchedBlobShaForConflictCheck": true,
+    "remoteExactCommitReadbackRequired": true
+  }
+}
