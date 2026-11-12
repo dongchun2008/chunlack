@@ -1,0 +1,315 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "phase": "controller_process_reader_local_preparation",
+  "status": "local_regression_passed_not_native_accepted",
+  "changes": [
+    "Bind fixed controller PID/startTicks, exact cmdline and externally pinned ELF through owned proc descriptors.",
+    "Check wrapper UID/GID0, capabilities0xcb, NNP1, Seccomp2 and nice10; keep inner probe0xeb separate.",
+    "Use non-child pidfd readiness without waitid, reap, signal or guessed cgroup emptiness.",
+    "Retain/rewind leaf descriptors, reject drift, preserve exit races and all cleanup failures.",
+    "Bind original start+12 absolute end; native activation disabled by default."
+  ],
+  "tests": {
+    "newTests": 38,
+    "relatedTests": 770,
+    "groups": 21,
+    "failures": 0,
+    "skipped": 0,
+    "perGroupTimeoutSeconds": 90,
+    "frozenBindingsChecked": 148,
+    "receiptSha256": "5a9031c90477b07b848974e7714c616690d5bb80ffb82afbcfd64a5af6b476f7",
+    "groupsReport": [
+      {
+        "group": "controller_process",
+        "tests": 38,
+        "expected": 38,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.389,
+        "logSha256": "f18973eee8afe2276d25d43f7c271b65c934d52ce791652fd086ffff98b0f3da"
+      },
+      {
+        "group": "controller_manager_port",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.177,
+        "logSha256": "7c910e3d1b98d583355695e2c84707e65f4ce8d33aba0e51ea0a9e9e430274c8"
+      },
+      {
+        "group": "tool_lease",
+        "tests": 35,
+        "expected": 35,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.714,
+        "logSha256": "2a7c07cdd7ff7e8e7f61936739761e630e80184d1100b5c5e1d1356d9aa43b02"
+      },
+      {
+        "group": "fixed_launch",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.418,
+        "logSha256": "e3000e8c8564fd32b1916186856008c98fd14bbfa175fe3c66ebd878789e36e0"
+      },
+      {
+        "group": "owned_driver",
+        "tests": 30,
+        "expected": 30,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.354,
+        "logSha256": "1d60f082bebfe63acdeda5ddec2311fa4612da0e4de39725cb7c565d66540e50"
+      },
+      {
+        "group": "one_shot_entry",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 5.669,
+        "logSha256": "d365617d9400c864b8fa1c4f77b6545d016032571dfc054a58817969974547e8"
+      },
+      {
+        "group": "exclusive_prepare",
+        "tests": 25,
+        "expected": 25,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.937,
+        "logSha256": "9e41521ece1ab40a76dfd32d2dc408f07301a35fa9e6302bd5f98790f67de40f"
+      },
+      {
+        "group": "runtime_package",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.101,
+        "logSha256": "11eb64ca0f348aa123765249a835135e26ddb6829dd292e893f07fb9f8bf6e23"
+      },
+      {
+        "group": "lifecycle",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.146,
+        "logSha256": "f2386297eaedc320c55965b1243ed2cd525509b76d1b9a694e04224d11f55c2a"
+      },
+      {
+        "group": "manager_port",
+        "tests": 50,
+        "expected": 50,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.142,
+        "logSha256": "d230e6d2419a969c3eb75cd4230f7c00be5e4e681fca5baa3af3e27cf5d96b06"
+      },
+      {
+        "group": "host_files",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.908,
+        "logSha256": "860f146b9d1336bffbe02db2eea3ae76927d54d939f4807ea194760f83a933af"
+      },
+      {
+        "group": "request_evidence",
+        "tests": 47,
+        "expected": 47,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.893,
+        "logSha256": "15362d693895a4ba60644bcee454af784c714a3fe5619687f88b7df6cd7336a9"
+      },
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.212,
+        "logSha256": "3b319b9d98fef83a00f72acfc30d51431825efd4fd13f1263c386e3d028dba39"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.271,
+        "logSha256": "afa6d6f8afbc96542e6c4fcd16f9b2451e5988c4d886b9618509c95083929a3a"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.286,
+        "logSha256": "ed03067a0a997fbaad740c4cb74dbaeb506fb9a9a60fa60e84039054306a8691"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.393,
+        "logSha256": "a66fa7ad82fffba38c21be0c56ac11e031834d0ce2ad083d8cfd397351ec10b0"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 5.153,
+        "logSha256": "0f52120fb19f1bb6d35307612eb728d7a581d177b01ea564bc3a9de06b6260ed"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.604,
+        "logSha256": "e8d75d0d385ec15137742393a50e704612280bf58daf66b607674b1ccc07073d"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.323,
+        "logSha256": "73ba5e2eed51248674bef3879a86cccc0fa9c20eed57dce2beaa78e57cc718ae"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.299,
+        "logSha256": "d085e7df543ed9305b0650e962b531ebd3a5e9befa311683125f793ca995089b"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.456,
+        "logSha256": "ae1c893dbe532192c70597f39778048644ef2b382859a51ca469e93fc414e6cd"
+      }
+    ]
+  },
+  "review": {
+    "kind": "read_only_static_review",
+    "reviewer": "Lovelace",
+    "findingsClosed": [
+      "close_checks_recorded_descriptor_generation",
+      "elf_header_accumulates_short_reads"
+    ],
+    "finalScopeIncludesOriginalClockBinding": true,
+    "residualDefiniteP1P2": 0,
+    "reviewerExecutedTests": false
+  },
+  "localSourceBindings": [
+    {
+      "path": "process_reader.py",
+      "bytes": 14461,
+      "sha256": "421e30863dd05f2373312036a7927570d8de4c7f05bb979e85597cd256f3930c"
+    },
+    {
+      "path": "test_process.py",
+      "bytes": 16192,
+      "sha256": "2bf44dba818785542d490ef7a8eab5cdc88014beef7c99efdd7db6b65accad4a"
+    },
+    {
+      "path": "run_local.py",
+      "bytes": 5308,
+      "sha256": "359a4563f3749d30c7a748f2aa98469b94fedbe50cfcdf33e95b32695e530cea"
+    },
+    {
+      "path": "plan.md",
+      "bytes": 2483,
+      "sha256": "d1f050bd2d84ef5009292a85b268796fa6eeb787d95cb3c816968ad2eb5e8b5e"
+    },
+    {
+      "path": "LOCAL_HANDOFF.md",
+      "bytes": 4458,
+      "sha256": "c171662b39cd3300b4d6a547d016e895b578320c24ac32799c754a83b43f2869"
+    }
+  ],
+  "limits": {
+    "ownedDescriptorRecords": 96,
+    "virtualReadChunkBytes": 4096,
+    "virtualReadsPerField": 128,
+    "observationBytes": 98304,
+    "elfBytes": 16777216,
+    "elfReadChunkBytes": 65536,
+    "elfReadCalls": 512,
+    "pidfdPolls": 512,
+    "pidfdWaitMilliseconds": 50
+  },
+  "evidenceBoundaries": {
+    "nativeExecutionVerified": false,
+    "kernelFilesystemProvenanceVerified": false,
+    "exitStatusSuppliedByThisReader": false,
+    "cgroupEmptinessSuppliedByThisReader": false,
+    "loaderLibrariesVerified": false,
+    "wholeNativeIntegrationComplete": false,
+    "productionReady": false
+  },
+  "actions": {
+    "sshAttempts": 0,
+    "newLinuxUnits": 0,
+    "realTargetProcReads": 0,
+    "nativeBusCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false
+  },
+  "nextSteps": [
+    "Add descriptor-owned controller cgroup observer.",
+    "Compose independent manager/process/cgroup evidence with the existing driver, original clock and common resource topology.",
+    "Native checks or production changes require separately applicable authorization."
+  ],
+  "synchronization": {
+    "implementationUploaded": false,
+    "sanitizedRecordOnly": true
+  },
+  "protocolReference": "https://www.man7.org/linux/man-pages/man2/pidfd_open.2.html"
+}
