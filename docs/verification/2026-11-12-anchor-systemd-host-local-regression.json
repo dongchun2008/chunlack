@@ -1,0 +1,273 @@
+{
+  "schema": 1,
+  "date": "2026-11-12",
+  "status": "passed_local_systemd_manager_and_concrete_command_port_not_native",
+  "implementation": {
+    "privateCandidateOnly": true,
+    "publicRecordOnly": true,
+    "sourceManifest": [
+      {
+        "path": "manager.py",
+        "bytes": 11789,
+        "sha256": "61f211a551dd61a32011023ef72a4161178d4b7525c48af80991a2a00006ff34"
+      },
+      {
+        "path": "command_port.py",
+        "bytes": 10453,
+        "sha256": "b169b17678e14eb2eca9b56e36de21ca6032ab579b813334faea9d24eb3de87e"
+      },
+      {
+        "path": "test_manager.py",
+        "bytes": 10008,
+        "sha256": "bcf6c6bf435aea38ba1f1cb2cd40b8845c8d52c0d8fd5557265b06b9b260b243"
+      },
+      {
+        "path": "test_command_port.py",
+        "bytes": 8452,
+        "sha256": "bb180316331b006c9ce0d113b8d6be648bcde3230988ba1dc2823ca15fcb7d49"
+      },
+      {
+        "path": "test_port_composition.py",
+        "bytes": 2395,
+        "sha256": "0ea3e29761e6b0d075abf4ece09ef2c4bd9f2de0977757e294716cea61324165"
+      },
+      {
+        "path": "run_local.py",
+        "bytes": 3571,
+        "sha256": "ee64eec4d3c97d5808bed57855cfeccb5c3e4560a7d37ada1abfbed8a9c95fdf"
+      },
+      {
+        "path": "plan.md",
+        "bytes": 1368,
+        "sha256": "7d3dcc6f763989e77a4f643df29cdfa0d82b47b2b292570f28522c181d8baff4"
+      },
+      {
+        "path": "LOCAL_HANDOFF.md",
+        "bytes": 3975,
+        "sha256": "7a414ddcd9984e459badc3f7d94550c36ddbf00c05bb9cb8144affb1bc31db93"
+      }
+    ],
+    "fixedNonceCommandsOnly": true,
+    "requestRendererPinned": true,
+    "portRequestDigestAndGlobalDeadlineBound": true,
+    "freshInvocationCheckedBeforeStop": true,
+    "jobOwnerCheckedBeforeCancel": true,
+    "unknownStartNeverAdopted": true,
+    "concreteLinuxIOAndOwnedChildMethodsProvided": true,
+    "nativeDefaultRejected": true,
+    "hostLauncherPrepared": false
+  },
+  "commandContract": {
+    "arbitraryArgvAccepted": false,
+    "arbitraryEnvironmentAccepted": false,
+    "shell": false,
+    "closeFds": true,
+    "stdin": "DEVNULL",
+    "locale": "C",
+    "stdoutBytesMax": 65536,
+    "stderrBytesMax": 4096,
+    "readChunkBytes": 4096,
+    "pollCallsMax": 512,
+    "commandsMax": 64,
+    "ownedChildOnlyTermination": true,
+    "waitAndPipeCloseSeparate": true,
+    "unknownCleanupSealsPort": true
+  },
+  "observationContract": {
+    "services": 4,
+    "unitExecUnitBracket": true,
+    "explicitResourceAndIsolationFields": true,
+    "allProfileFieldsNativelyVerified": false,
+    "sourceArgvAndFlagsCompared": true,
+    "invocationIdBound": true,
+    "stopOrCancelNotExitProof": true,
+    "cgroupEmptyNeverInferredFromManagerState": true,
+    "pollErrorPreserved": true,
+    "unexpectedStdinClosedOnRejection": true,
+    "primaryCleanupFinalErrorsSeparate": true
+  },
+  "regression": {
+    "groups": [
+      {
+        "group": "manager_port",
+        "tests": 50,
+        "expected": 50,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.038,
+        "logSha256": "0ecd4c21fc1c4f7140a2f62dc32cc94e74aa80345da9375de956271e39102326"
+      },
+      {
+        "group": "host_files",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.859,
+        "logSha256": "b84752ef332a24bf0119f7d0dbca7b85abca26c011de03bc97a3b38a6c07b218"
+      },
+      {
+        "group": "request_evidence",
+        "tests": 47,
+        "expected": 47,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.837,
+        "logSha256": "750893bb7e664c7904e66b3477b68ba83a8b5533ef720cf7b68019b0847fa9b8"
+      },
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.199,
+        "logSha256": "7d750a1a102240f4755cdfdeae2282f2aa5d60456fad0535558e4f58431725f5"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.295,
+        "logSha256": "2c366f9d2e5062cfa01541fa7d0016b65c139210c47137f1836b4ce511c488ca"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.293,
+        "logSha256": "c9ae877eb877c4ad4464486e5cdf265a5a0349dfd352189674e8bd6c9218f130"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.365,
+        "logSha256": "b7121434d8e4a5a1b4ae46bdb306b7e0d96c4614d931a22bc26f829b8b15aa9a"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.237,
+        "logSha256": "b8d74fb07eb326f66dd82825ef456761fc55db947b7470a98fe14f316284deae"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.296,
+        "logSha256": "9e94a3ae02a0eb1e1e0710c7c0913659321f380863b0d22ef1c1c6d16ee44a12"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.706,
+        "logSha256": "637a0ddf5fdab16990c59aa1feeeb4c6c1d89748a0be77c4127165e9730adc4c"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.22,
+        "logSha256": "387a5f262f5428fae9658381783486d92a95b21add83e891d653d07e9654086c"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.403,
+        "logSha256": "2d612df3c2c1999ab0d2ae37333b14edc0ed16ae2923411c5597ff6ad5115847"
+      }
+    ],
+    "total": 512,
+    "allPassed": true,
+    "frozenBindingsChecked": 92,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realProcReads": 0,
+    "nativeCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false
+  },
+  "review": {
+    "mode": "independent_read_only_source_review",
+    "p1Findings": 0,
+    "p2Findings": 2,
+    "findings": [
+      "Unexpected returned stdin stream was not registered and closed on rejection.",
+      "POLLERR could disappear after successful reads and EOF."
+    ],
+    "corrections": [
+      "Register all returned standard streams before post-return checks and close rejected stdin.",
+      "Retain consumed bytes and a poll-error flag, reject the call even if later EOF or zero exit would be observed."
+    ],
+    "redRegressionsObserved": true,
+    "additionalSelfChecks": [
+      "Cross-nonce port and global-deadline mismatch rejected before dispatch.",
+      "Malformed child PID does not lose returned streams.",
+      "Failed submission without a known job cannot adopt a matching pre-existing unit."
+    ]
+  },
+  "composition": {
+    "realManagerAndPortMethodBodies": true,
+    "childAndPipesMocked": true,
+    "systemdFactsSynthetic": true,
+    "serviceStartObserveStopCovered": true,
+    "changedInvocationStopRejectionCovered": true,
+    "nativeExecutionProven": false
+  },
+  "scope": {
+    "vpsConnections": 0,
+    "linuxUnits": 0,
+    "nativeExecutions": 0,
+    "realProcReads": 0,
+    "realModels": 0,
+    "externalAgentCalls": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsOrPortsChanged": false
+  },
+  "failuresPreserved": true,
+  "limitations": [
+    "512 is related local component regression, not full-repository, native or production acceptance.",
+    "The low-level fixed command port is not an Agent authorization boundary; trusted assembly must expose only the Manager path.",
+    "Namespace/cgroupfs and manager/tool provenance, exclusive preparation, complete lifecycle and hard outer supervision remain outstanding.",
+    "Unknown start recovery is refused until separate freshness and ownership evidence exists.",
+    "Actual host property rendering and filter expansion have not been verified; the root probe still requires actual Seccomp=2 and capability mask235.",
+    "Clock checks cannot physically preempt a blocked synchronous syscall; no hard deadline claim is made."
+  ],
+  "nextLocalWork": "Assemble the manager, concrete port, fixed file collector and receipt gate under one trusted lifecycle and an outer deadline, with local failure/cancellation coverage before any native authorization."
+}
