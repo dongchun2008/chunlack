@@ -1,0 +1,361 @@
+{
+  "schema": 1,
+  "date": "2026-11-13",
+  "phase": "controller_cgroup_witness_local_integration",
+  "status": "local_regression_passed_not_native_accepted",
+  "changes": [
+    "Hold fixed controller cgroup directories, policy, events and member descriptors for the original generation.",
+    "Require two empty subtree/event/member/task observations; missing or replaced paths remain unknown.",
+    "Compose actual manager, process and held-group components behind the existing Driver contract.",
+    "Keep pidfd readiness, manager terminal exit status and group emptiness separate and conjoin only matching evidence.",
+    "Bracket terminal manager reads and final identity reads against repopulation or process exit.",
+    "Retain original start/end and request/cleanup budgets; no native bootstrap is enabled."
+  ],
+  "tests": {
+    "newTests": 46,
+    "relatedTests": 816,
+    "groups": 22,
+    "failures": 0,
+    "skipped": 0,
+    "perGroupTimeoutSeconds": 90,
+    "frozenBindingsChecked": 153,
+    "receiptSha256": "2e62ef5e893394c5e542e44ddcad3be3e8f97697f71a37a44e4f0da06d26f86a",
+    "groupsReport": [
+      {
+        "group": "controller_cgroup_witness",
+        "tests": 46,
+        "expected": 46,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 3.152,
+        "logSha256": "1757e1b2f84916a73470eb2392416dc10c789a3bf052a0b72775a43988aa5c6c"
+      },
+      {
+        "group": "controller_process",
+        "tests": 38,
+        "expected": 38,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.421,
+        "logSha256": "66c2d6f987ec30a11518701a14cde50e37845229cc97d17e5779892381e0599e"
+      },
+      {
+        "group": "controller_manager_port",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.23,
+        "logSha256": "bf79c695eba5d8ca9771d41f7c0dcd1a3191ed781873ab6bd9d4cf736c58dc90"
+      },
+      {
+        "group": "tool_lease",
+        "tests": 35,
+        "expected": 35,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.623,
+        "logSha256": "ddec1d6decb41dab2f731a07bb8ff62578b128f9cecad128d3c13cda0c9af05d"
+      },
+      {
+        "group": "fixed_launch",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 2.221,
+        "logSha256": "e0b003b49e31ef892c9d80869e68552257b2b71f667b5ad91ae67b89f9645cda"
+      },
+      {
+        "group": "owned_driver",
+        "tests": 30,
+        "expected": 30,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.344,
+        "logSha256": "9dc5540dcc191f452af6e2416fc5ff1ca063cc4e979f99e607235a041e29306d"
+      },
+      {
+        "group": "one_shot_entry",
+        "tests": 23,
+        "expected": 23,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 5.599,
+        "logSha256": "2bfc137e93f9f98be307329ecaae11fc43b46936090908eaf84d9c81ce9e0c81"
+      },
+      {
+        "group": "exclusive_prepare",
+        "tests": 25,
+        "expected": 25,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.918,
+        "logSha256": "4d6d287b7bf75750c9c6c6d4a5cce761eddffcc37ab9c5a174627ccd64905994"
+      },
+      {
+        "group": "runtime_package",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.228,
+        "logSha256": "670a1b8e121264093c16c3f9cfa921fcafbcbd5c2e9fa7700750e5f6100cc25f"
+      },
+      {
+        "group": "lifecycle",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.936,
+        "logSha256": "0b2dbe8ba6c6022874078fe60793fcc464564a65f1683cad6ccb844e90517252"
+      },
+      {
+        "group": "manager_port",
+        "tests": 50,
+        "expected": 50,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.055,
+        "logSha256": "2bad4b7640aafada579a912e5e79f821af637b9c6ef7b040a46894a2ddb528f7"
+      },
+      {
+        "group": "host_files",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.855,
+        "logSha256": "477069fcffaf04aba2a1d666901841f1e050f8dcb504a08cd0e03668356207a1"
+      },
+      {
+        "group": "request_evidence",
+        "tests": 47,
+        "expected": 47,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.855,
+        "logSha256": "320430978677054c15c20502cd8bec7ab9bb080b6e0ea24da93485aae80a7ec0"
+      },
+      {
+        "group": "anchor",
+        "tests": 22,
+        "expected": 22,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.227,
+        "logSha256": "56fa0f894fd41b518a2da3a01931b5967fde0168456acb8864a163267b369f92"
+      },
+      {
+        "group": "parent",
+        "tests": 17,
+        "expected": 17,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.295,
+        "logSha256": "7168aec7f9dc812434425b3e8a778982821afa4cf2f0302083cef3fae3e07ce8"
+      },
+      {
+        "group": "client",
+        "tests": 33,
+        "expected": 33,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.328,
+        "logSha256": "42d0dc7b8cf28dfa8ca9b534da07680e631feca6d02e2070d0e0c9bbaa34c741"
+      },
+      {
+        "group": "pipes",
+        "tests": 41,
+        "expected": 41,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.423,
+        "logSha256": "60870da078dda6eb02e6d1b843ed3ea6d592d14c4f114dc8fc1f1bc258941e07"
+      },
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 4.994,
+        "logSha256": "0477e745cb33c592c1dc8b1b05c55d9565a3cf067d5e04bd193c98846fe71106"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.313,
+        "logSha256": "f6150ccdba193024ca3e4230af66db5edddcfe5dcadda2e23b1996737e3efc51"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 1.728,
+        "logSha256": "47fe0f0c5333d7eda5ff84d19c9e5f836ff4e60b7e3bfd6831e8de7dc189fa67"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.224,
+        "logSha256": "1923cb934369768c29cff675b031b9eb2e64632d6579ce6138435716fa8c8437"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "passed": true,
+        "error": null,
+        "wallSeconds": 0.462,
+        "logSha256": "a44a14cc6bd97aa581423ed07acfbf57de66e70e3459bd31405cb6192f2abdb9"
+      }
+    ]
+  },
+  "integration": {
+    "realFrozenDriver": true,
+    "realFrozenWatchdog": true,
+    "realNewWitness": true,
+    "leafSources": "explicit local syscall and sd-bus ABI doubles",
+    "successConjunction": true,
+    "cancellationCleanup": true,
+    "descendantStillRunningDenied": true,
+    "exitDisagreementDenied": true,
+    "fourTerminalRefreshBoundary": true,
+    "nearLimitStopAndUnrefReserve": true,
+    "nonzeroPreparationClockBootstrapVerified": false
+  },
+  "review": {
+    "kind": "read_only_static_review",
+    "reviewer": "Lovelace",
+    "findingsClosed": [
+      "derived_empty_facts_invalidated_on_close",
+      "original_start_lower_bound_before_io"
+    ],
+    "selfReviewRacesClosed": [
+      "repopulation_during_manager_terminal_read",
+      "process_exit_during_final_binding"
+    ],
+    "residualDefiniteP1P2": 0,
+    "reviewerExecutedTests": false
+  },
+  "localSourceBindings": [
+    {
+      "path": "group_reader.py",
+      "bytes": 6713,
+      "sha256": "02999adc000e8a4a045b3ca1918bc3dde6f13a47ca18c5d436b98b31ebe733ae"
+    },
+    {
+      "path": "witness.py",
+      "bytes": 8697,
+      "sha256": "2f7c13efe7a52539f62aacd510d8e7074c9c949724307a270e20ad980a930c9b"
+    },
+    {
+      "path": "test_group.py",
+      "bytes": 8158,
+      "sha256": "5edb94eb06e8ade0abd4784d4d6453b9f9b272aea722120ea2c366cc0b6afd14"
+    },
+    {
+      "path": "test_witness.py",
+      "bytes": 9607,
+      "sha256": "83acca10a5e35630555c447ed7f92dc60090d7bab112e683e920da4246aadba3"
+    },
+    {
+      "path": "test_driver_integration.py",
+      "bytes": 5680,
+      "sha256": "1a45b820cc2893f51935f9ce4b44d76645d1fe0f8591aeb68c22c73f9a6940f8"
+    },
+    {
+      "path": "run_local.py",
+      "bytes": 5538,
+      "sha256": "30759a90e6ea3f9957f58b2c2811c6412835b8acfb3e57c6af494babdd1f2a7b"
+    },
+    {
+      "path": "plan.md",
+      "bytes": 3506,
+      "sha256": "7131dbe01aa1d2c85f14910b23bd689fbf23d93f3b3f192b296f571c8915e5e8"
+    },
+    {
+      "path": "LOCAL_HANDOFF.md",
+      "bytes": 6033,
+      "sha256": "f2700da8526a36f27a220729a4b9134345572e3605527d781d1621cc3ab4b3e3"
+    }
+  ],
+  "limits": {
+    "ownedDescriptorRecords": 96,
+    "groupObservations": 256,
+    "virtualReadChunkBytes": 4096,
+    "virtualReadsPerField": 128,
+    "groupObservationBytes": 16384,
+    "memberRows": 128,
+    "eventRows": 32,
+    "managerRequestAttempts": 256,
+    "terminalRefreshes": 4,
+    "controllerGroupMemoryBytes": 201326592,
+    "controllerGroupCpuPercent": 20,
+    "controllerGroupTasks": 32,
+    "controllerGroupSwapBytes": 0
+  },
+  "evidenceBoundaries": {
+    "nativeExecutionVerified": false,
+    "kernelFilesystemProvenanceVerified": false,
+    "managerLibrarySocketProvenanceVerified": false,
+    "commonLauncherControllerWorkerTopologyVerified": false,
+    "originalStartOuterBootstrapVerified": false,
+    "permanentFutureEmptinessProven": false,
+    "wholeNativeIntegrationComplete": false,
+    "productionReady": false
+  },
+  "actions": {
+    "sshAttempts": 0,
+    "newLinuxUnits": 0,
+    "realTargetProcCgroupReads": 0,
+    "nativeBusCalls": 0,
+    "realModels": 0,
+    "externalAgents": 0,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false
+  },
+  "nextSteps": [
+    "Bind one original-start outer bootstrap and frozen source closure.",
+    "Complete provenance and common resource topology preparation before separately authorized native validation."
+  ],
+  "synchronization": {
+    "implementationUploaded": false,
+    "sanitizedRecordOnly": true
+  },
+  "protocolReference": "https://docs.kernel.org/admin-guide/cgroup-v2.html"
+}
