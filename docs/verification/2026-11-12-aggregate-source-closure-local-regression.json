@@ -1,0 +1,436 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-12",
+  "phase": "local-only aggregate scope source closure",
+  "status": "passed_related_local_regression_not_native_or_production_acceptance",
+  "implemented": [
+    "27 fixed input sources are verified before AST parsing or candidate compilation.",
+    "12 active cgroup expressions and one kernel directory component use the nonce-bound private slice.",
+    "Worker fragment and complete effective profile declare the same Slice.",
+    "Dependency DAG rebinds 19 changed sources; cycles, drift and mismatched old source references are rejected.",
+    "New and old changed packet members/report layouts cannot be mixed. Unchanged payload components may be reused."
+  ],
+  "acceptance": {
+    "groups": [
+      {
+        "group": "closure",
+        "tests": 134,
+        "expected": 134,
+        "exitCode": 0,
+        "wallSeconds": 15.345,
+        "passed": true,
+        "logSha256": "5f565b995b4e24db09284605aa06ba506044e56e71c653bff32e45895b5975e8"
+      },
+      {
+        "group": "scope",
+        "tests": 51,
+        "expected": 51,
+        "exitCode": 0,
+        "wallSeconds": 0.899,
+        "passed": true,
+        "logSha256": "8a682182189dd1d752f68848172f900f5354d3d8359f4867ad6386edc0c64bf2"
+      },
+      {
+        "group": "watchdog",
+        "tests": 34,
+        "expected": 34,
+        "exitCode": 0,
+        "wallSeconds": 5.338,
+        "passed": true,
+        "logSha256": "a6fb00e44587038e0392427fd0d97afdfac4edc2340d81f6b95c9dd1bc1d7875"
+      },
+      {
+        "group": "kernel",
+        "tests": 29,
+        "expected": 29,
+        "exitCode": 0,
+        "wallSeconds": 0.444,
+        "passed": true,
+        "logSha256": "b7a0965dde27b15a98cf3f720fd9b3e118554ab69e7386f98897440bc0585791"
+      },
+      {
+        "group": "fragment",
+        "tests": 21,
+        "expected": 21,
+        "exitCode": 0,
+        "wallSeconds": 0.806,
+        "passed": true,
+        "logSha256": "5f55f8df8eddb9dd2a4b19d478832d981436205b8568a71f2172bb175b818a8d"
+      }
+    ],
+    "total": 269,
+    "allPassed": true,
+    "frozenSourceBindingsChecked": 50,
+    "linuxUnits": 0,
+    "sshAttempts": 0,
+    "realModelCalls": 0,
+    "nativeLoaderCalls": 0,
+    "externalAgentCalls": 0,
+    "productionPublished": false
+  },
+  "closure": {
+    "bindings": [
+      {
+        "path": "deadline-watchdog-20261112-a1/watchdog.py",
+        "beforeSha256": "a21b45128fdab2cc398ef5e2366e25d816b633a12327ac99c7c252c45cbd7b6f",
+        "beforeBytes": 11841,
+        "afterSha256": "a4d63482f998af029dde15f705f77651f2b90a8042665a8340a64af75a0453c6",
+        "afterBytes": 11920,
+        "dependencies": []
+      },
+      {
+        "path": "effective-unit-profile-20261112-a1/profile_connection.py",
+        "beforeSha256": "4f9e89fde569d896f4000003a6b05781e7079c89064141c113d01e65d4e30319",
+        "beforeBytes": 5197,
+        "afterSha256": "194afccf877ef3f4cb82b5b6da918a13d1a0426352529ff1fc70e7bd85998617",
+        "afterBytes": 5197,
+        "dependencies": [
+          "effective-unit-profile-20261112-a1/profile_policy.py",
+          "scoped-process-proof-20261112-a1/process_connection.py"
+        ]
+      },
+      {
+        "path": "effective-unit-profile-20261112-a1/profile_policy.py",
+        "beforeSha256": "012537e4f80304851f631cab7cb023b0861aea21f225e348c2ece6c21045de2f",
+        "beforeBytes": 7407,
+        "afterSha256": "fc202bae98c114c03fdf5f24b7f7b4564d9afaaf256ce287034ecd7ddd327a16",
+        "afterBytes": 7415,
+        "dependencies": [
+          "native-worker-session-20261112-a1/session.py"
+        ]
+      },
+      {
+        "path": "endpoint-envelope-20261112-a1/envelope.py",
+        "beforeSha256": "a872c6fbeb25c625731d1271801bb20ebaf015a910d05fdc883a82c62c570e64",
+        "beforeBytes": 6389,
+        "afterSha256": "f424fd004c73c742dd9e0caeea14965f4ae1ab6ffa0397826ce85dc3d00cf382",
+        "afterBytes": 6389,
+        "dependencies": [
+          "endpoint-provenance-20261112-a1/endpoint.py",
+          "native-worker-session-20261112-a1/session.py"
+        ]
+      },
+      {
+        "path": "endpoint-provenance-20261112-a1/endpoint.py",
+        "beforeSha256": "a79cbc4b65ca2283a3ad3c170ce9171ea475f31c817d7deaddb0885df63d9ad1",
+        "beforeBytes": 8717,
+        "afterSha256": "18de8b310a44eb921d69df4cc04c7d93fb2766a4242eec81b686e99ff4344efd",
+        "afterBytes": 8717,
+        "dependencies": [
+          "endpoint-provenance-20261112-a1/provenance.py",
+          "manager-owner-binding-20261112-a1/manager_connection.py"
+        ]
+      },
+      {
+        "path": "endpoint-provenance-20261112-a1/provenance.py",
+        "beforeSha256": "dd84896826478ecdf5477e9426523a327ee783e449f50788baa33b009baaaa2c",
+        "beforeBytes": 7416,
+        "afterSha256": "dd84896826478ecdf5477e9426523a327ee783e449f50788baa33b009baaaa2c",
+        "afterBytes": 7416,
+        "dependencies": [
+          "pid1-parent-lease-20261112-a1/parent_lease.py"
+        ]
+      },
+      {
+        "path": "kernel-identity-reader-20261112-a1/reader.py",
+        "beforeSha256": "518a2b429d2f525eae89a23687b624ce2aca48d8ded9d328c22ca88afba83b09",
+        "beforeBytes": 11299,
+        "afterSha256": "59c445f5e5ed68de25e5e995e2b8a98a6f10470bd48f1ce8564d4f9e95320490",
+        "afterBytes": 11447,
+        "dependencies": []
+      },
+      {
+        "path": "kernel-staged-session-20261112-a1/staged_backend.py",
+        "beforeSha256": "76c2921bfd2ad58e2f1c1b89c3abfca9f57c8437fc275e698cf11918c884df1d",
+        "beforeBytes": 7969,
+        "afterSha256": "e9ecf266ea1df1465c51725c32b03eef0db3ee46448f0b154243d2beabdb160b",
+        "afterBytes": 7969,
+        "dependencies": [
+          "kernel-identity-reader-20261112-a1/reader.py",
+          "native-worker-session-20261112-a1/backend.py"
+        ]
+      },
+      {
+        "path": "leased-library-provider-20261112-a1/provider.py",
+        "beforeSha256": "1aa2efe148e2063319d9a8c75db201133abbc16486e641cd474a558d4476f115",
+        "beforeBytes": 6906,
+        "afterSha256": "e95d151fd03ec872969d4a7619451906ad5ab4a094ca2a03c490b2c4494910ab",
+        "afterBytes": 6906,
+        "dependencies": [
+          "endpoint-envelope-20261112-a1/envelope.py",
+          "native-connection-live-20261110-a3/worker.py",
+          "native-persistent-bus-local-20261108-d2/persistent_bus.py"
+        ]
+      },
+      {
+        "path": "manager-owner-binding-20261112-a1/manager_connection.py",
+        "beforeSha256": "6945e4a84509bb1985e8f8c3655439a0595b3237f3fcd2645a23a6cfa00c0674",
+        "beforeBytes": 7000,
+        "afterSha256": "3f25fbb0016634a65960cc536c785a9463152d9c4a07d68cf79ba31a564f8a58",
+        "afterBytes": 7000,
+        "dependencies": [
+          "effective-unit-profile-20261112-a1/profile_connection.py",
+          "scoped-manager-connection-20261112-a1/scoped_connection.py"
+        ]
+      },
+      {
+        "path": "native-connection-live-20261110-a3/remote.py",
+        "beforeSha256": "e6743778f6754cdb300b7b01c3f89cd053ea7f81ec4c96fb714c810a5af70b4b",
+        "beforeBytes": 24340,
+        "afterSha256": "e6743778f6754cdb300b7b01c3f89cd053ea7f81ec4c96fb714c810a5af70b4b",
+        "afterBytes": 24340,
+        "dependencies": []
+      },
+      {
+        "path": "native-connection-live-20261110-a3/worker.py",
+        "beforeSha256": "0c5415d43de0abd50557653db644e7bbfda3635acec25673cf6245ee5e35af90",
+        "beforeBytes": 12293,
+        "afterSha256": "53b9f8f32b24e36bd5356a92a1bbf54450fd749a8c5bfb527ebae5b856d8beee",
+        "afterBytes": 12365,
+        "dependencies": [
+          "native-persistent-bus-local-20261108-d2/persistent_bus.py",
+          "payload/bridge.py",
+          "payload/preflight.py"
+        ]
+      },
+      {
+        "path": "native-jobtimeout-compatibility-20261111-a1/fragment_design.py",
+        "beforeSha256": "473b16496a7dfcda1d5e5f9fb5130b491c3a286369787968aaffcc451cbf8d72",
+        "beforeBytes": 4880,
+        "afterSha256": "501c39a987a39f6591ecfe02955685fdad137c6de15158359002ef51d402400d",
+        "afterBytes": 4942,
+        "dependencies": [
+          "native-connection-live-20261110-a3/remote.py"
+        ]
+      },
+      {
+        "path": "native-persistent-bus-local-20261108-d2/persistent_bus.py",
+        "beforeSha256": "366ec142f979195d35170a3c76eca23a3bb48e4fd2fcb3c8cc980aa0b422de52",
+        "beforeBytes": 26525,
+        "afterSha256": "366ec142f979195d35170a3c76eca23a3bb48e4fd2fcb3c8cc980aa0b422de52",
+        "afterBytes": 26525,
+        "dependencies": []
+      },
+      {
+        "path": "native-worker-binding-20261112-a1/worker_binding.py",
+        "beforeSha256": "96815ab70eafe32c491e7a4ab2db9dd706609f672a76efe2c10a73d3ff9b49d4",
+        "beforeBytes": 4865,
+        "afterSha256": "9a0fb2aa4eba3da179d49c669ab42cc5fe136e387b78e6ff204ef94293e45df8",
+        "afterBytes": 4865,
+        "dependencies": [
+          "native-connection-live-20261110-a3/worker.py",
+          "native-persistent-bus-local-20261108-d2/persistent_bus.py",
+          "payload/bridge.py",
+          "payload/diagnostics.py",
+          "payload/preflight.py"
+        ]
+      },
+      {
+        "path": "native-worker-protocol-20261112-a1/worker_protocol.py",
+        "beforeSha256": "698b9fa5eb34667117c42c8b781ff69bfb1394a9d363fb8bac648e3e1e949bec",
+        "beforeBytes": 9010,
+        "afterSha256": "b36d241e6a8edfab475f530e4dde2b48809e43e203947bc2ee56f58018dbabaf",
+        "afterBytes": 9096,
+        "dependencies": [
+          "native-worker-binding-20261112-a1/worker_binding.py"
+        ]
+      },
+      {
+        "path": "native-worker-session-20261112-a1/backend.py",
+        "beforeSha256": "282932c2cd6cece60d6de4ff295ad27c6c4fa3b1ea77ccad3d93e67b6417ecaa",
+        "beforeBytes": 14687,
+        "afterSha256": "4f01a3fb70d3ce721fedc0a409a516ba162a0c7034fc3c3db61480eaee10ba25",
+        "afterBytes": 14853,
+        "dependencies": [
+          "native-worker-session-20261112-a1/fifo_channel.py"
+        ]
+      },
+      {
+        "path": "native-worker-session-20261112-a1/fifo_channel.py",
+        "beforeSha256": "56f1f31375d8a38a35159390fa2c1ef1e98f6bd5613a9456ad2aea00b7d35c98",
+        "beforeBytes": 14498,
+        "afterSha256": "b2436269a4382762cc0ebb0ecc8c28d7d49d61bbd8e39cf3ec61c43ef94520d0",
+        "afterBytes": 14498,
+        "dependencies": [
+          "native-worker-session-20261112-a1/linux_scope.py"
+        ]
+      },
+      {
+        "path": "native-worker-session-20261112-a1/linux_scope.py",
+        "beforeSha256": "44b063dc333b6e30aea618f75232817a74f7c6ff9e17012c547d7880ce8f6077",
+        "beforeBytes": 18143,
+        "afterSha256": "2f2b690c740c41e6b721cad9e8b1467373a199aa1c48ea09420b9960867dd61a",
+        "afterBytes": 18143,
+        "dependencies": [
+          "native-worker-session-20261112-a1/session.py"
+        ]
+      },
+      {
+        "path": "native-worker-session-20261112-a1/session.py",
+        "beforeSha256": "7fd047c0d968f393b500489b8923537059edf9ad74c12d1b979eb94dd213d1e1",
+        "beforeBytes": 12409,
+        "afterSha256": "43ff4847270b1c4c616cc2ca0db750bb37ab4e4fb18bdc8319a3544e38cbf7a4",
+        "afterBytes": 12493,
+        "dependencies": [
+          "native-jobtimeout-compatibility-20261111-a1/fragment_design.py",
+          "native-worker-protocol-20261112-a1/worker_protocol.py"
+        ]
+      },
+      {
+        "path": "pid1-parent-lease-20261112-a1/parent_lease.py",
+        "beforeSha256": "1f5d09827d6867f549a2f2741b68a4345396cf7865697688f9f7380cf33152f8",
+        "beforeBytes": 7359,
+        "afterSha256": "1f5d09827d6867f549a2f2741b68a4345396cf7865697688f9f7380cf33152f8",
+        "afterBytes": 7359,
+        "dependencies": []
+      },
+      {
+        "path": "scoped-job-proof-20261112-a1/job_connection.py",
+        "beforeSha256": "bb8891eaa833c2f3116c711ae8a88d43268a91185fca246688a74730d44ebd0b",
+        "beforeBytes": 5689,
+        "afterSha256": "fcf0294d62ba11dc139ee2b99eed5471f3f56ce8d51ae1089232e6b142152e76",
+        "afterBytes": 5768,
+        "dependencies": [
+          "scoped-manager-connection-20261112-a1/scoped_connection.py"
+        ]
+      },
+      {
+        "path": "scoped-manager-connection-20261112-a1/scoped_connection.py",
+        "beforeSha256": "bec212d876904e41e794bf6c956e5740e7cab27a2bb1e5d946bdf3c37164decf",
+        "beforeBytes": 13875,
+        "afterSha256": "bec212d876904e41e794bf6c956e5740e7cab27a2bb1e5d946bdf3c37164decf",
+        "afterBytes": 13875,
+        "dependencies": [
+          "native-persistent-bus-local-20261108-d2/persistent_bus.py"
+        ]
+      },
+      {
+        "path": "scoped-process-proof-20261112-a1/process_connection.py",
+        "beforeSha256": "8028e481121011f87d97e79c607ac03199e076e34f806e19fddc4fd9e0899a21",
+        "beforeBytes": 7288,
+        "afterSha256": "a620d5c68403c8b3687fb0286605121e7be72871010742a10b7414b498afa75b",
+        "afterBytes": 7604,
+        "dependencies": [
+          "scoped-job-proof-20261112-a1/job_connection.py"
+        ]
+      },
+      {
+        "path": "payload/preflight.py",
+        "beforeSha256": "0d84f8c1019e0266d329b386920e9460096cc7e9465ab0e45e917f2ddb6591b0",
+        "beforeBytes": 17303,
+        "afterSha256": "0d84f8c1019e0266d329b386920e9460096cc7e9465ab0e45e917f2ddb6591b0",
+        "afterBytes": 17303,
+        "dependencies": []
+      },
+      {
+        "path": "payload/bridge.py",
+        "beforeSha256": "c5569d318c6b45f1340b049b986635d1ecaf167062355f916f9e09807bfba191",
+        "beforeBytes": 11684,
+        "afterSha256": "c5569d318c6b45f1340b049b986635d1ecaf167062355f916f9e09807bfba191",
+        "afterBytes": 11684,
+        "dependencies": []
+      },
+      {
+        "path": "payload/diagnostics.py",
+        "beforeSha256": "27a2bb7219aa16008eefb4bbc068f8c0dde72cf5847d9778b08b52f0c77cceec",
+        "beforeBytes": 2775,
+        "afterSha256": "27a2bb7219aa16008eefb4bbc068f8c0dde72cf5847d9778b08b52f0c77cceec",
+        "afterBytes": 2775,
+        "dependencies": []
+      }
+    ],
+    "inputManifestSha256": "b1eb08850d2425ec2d96583b8ec9723b428e1ec9d87417046b618d9eadf00b33",
+    "nativeExecutionEligible": false,
+    "productionReady": false,
+    "referenceOnly": [
+      "native-connection-live-20261110-a3/remote.py"
+    ],
+    "preservedLegacyBranches": [
+      "persistent_bus.Session.__init__ (unused fdprobe)",
+      "preflight.service_processes (existing co-host census)"
+    ]
+  },
+  "localSourceBindings": [
+    {
+      "path": "closure.py",
+      "bytes": 8841,
+      "sha256": "e6ba0c19ab1dca70f42954584355ea36677640234dfd47e91497dff8deba25a1"
+    },
+    {
+      "path": "input-manifest.json",
+      "bytes": 4712,
+      "sha256": "b1eb08850d2425ec2d96583b8ec9723b428e1ec9d87417046b618d9eadf00b33"
+    },
+    {
+      "path": "LOCAL_HANDOFF.md",
+      "bytes": 2672,
+      "sha256": "64b9886200d5a002f6a9831d159660c5944d677d31ae6eb77f23f73711d51868"
+    },
+    {
+      "path": "plan.md",
+      "bytes": 1974,
+      "sha256": "29ae99811236b5b37ff6517faaee3a4af3df31dbaebe727b453bfc2ef487a9ed"
+    },
+    {
+      "path": "run_local.py",
+      "bytes": 2198,
+      "sha256": "703bbcbd2c32c22b98d0948ba8a95852503ed064f9d111195aeec56b7e0d0206"
+    },
+    {
+      "path": "test_closure.py",
+      "bytes": 11272,
+      "sha256": "df35bd103a6aff32ee51395ff6dd93c49f39dbefe40e332e7f0b63c9b5a5151f"
+    },
+    {
+      "path": "test_inherited_contracts.py",
+      "bytes": 4356,
+      "sha256": "6a6cb10c468c0b8176c6048aa2e58090c546977568bad032645ae30155cbc089"
+    }
+  ],
+  "independentReview": {
+    "openP1P2": 0,
+    "scope": "Static read-only review of assembler, tests, scoped wire and one expected-path adaptation. Reviewer did not execute tests.",
+    "singleLegacyExpectedPath": "Exactly one fixed-hash inherited method expected-expression updated; all other assertions retained."
+  },
+  "preservedFailure": {
+    "status": "failed_not_promoted",
+    "tests": 114,
+    "failures": 1,
+    "passed": 113,
+    "case": "test_scope_load_ref_snapshot_start_cancel_stop_and_close_share_one_connection",
+    "reason": "one inherited hardcoded expected path still used system.slice; actual candidate scope path matched new layout",
+    "resolutionScope": "only one fixed-hash test method expected-path AST; all arguments and other assertions retained",
+    "nativeCalls": 0,
+    "linuxUnits": 0
+  },
+  "scopeNotes": [
+    "Kernel and manager observations are memory-backed test doubles.",
+    "Generated bootstrap is actually decoded and executed with definitions-only module name; original main flow is covered under explicit native, identity and signal doubles.",
+    "No real loader, bus, kernel filesystem reads, models or external Agents were invoked.",
+    "Original remote code is only a static command reference, not a new launch interface.",
+    "Existing co-host census and unused legacy fdprobe branch remain byte-identical.",
+    "50 old frozen file bindings checked before and after final batch. No old test evidence, writer lock or historical quota was removed."
+  ],
+  "publication": {
+    "privateCandidateCodePublished": false,
+    "sanitizedRecordOnly": true,
+    "productionPublished": false
+  },
+  "remaining": [
+    "Combine independent aggregate-resource observation with trusted assembly.",
+    "Implement real nonblocking pipes and independent pidfd/cgroupfd ownership and partial-start cleanup.",
+    "Prove supervisor, controller and systemd-created worker all belong to aggregate budget.",
+    "Native Linux execution and production delivery remain unverified.",
+    "Historical AddRef failure remains unresolved outside this passing related batch."
+  ],
+  "prohibitedActionsPerformed": {
+    "vpsConnections": 0,
+    "linuxUnits": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialChanges": 0,
+    "authorizationChanges": 0,
+    "relayChanges": 0,
+    "productionPublications": 0
+  }
+}
