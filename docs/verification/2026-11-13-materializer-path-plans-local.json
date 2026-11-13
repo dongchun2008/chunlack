@@ -1,0 +1,248 @@
+{
+  "benchmark": {
+    "actualFsyncLatencyMeasured": false,
+    "actualVpsBenefitProven": false,
+    "candidateSourceSha256": "10d920303bd2e788ab3801d3ebe99c5debbada086964fdbe2a1a701246effab8",
+    "candidateToOriginalCpuRatio": 0.8695652173913043,
+    "linuxUnits": 0,
+    "meanCandidateCpuSeconds": 0.625,
+    "meanOriginalCpuSeconds": 0.71875,
+    "order": "ABBA",
+    "originalSourceSha256": "43545869ed21216bc4aac0a6319cd4a70120aedcd8f69feb653127188b9adb5a",
+    "profiles": [
+      {
+        "checks": {
+          "fstat": 4000,
+          "lstat": 29000,
+          "tick": 27000
+        },
+        "cpuSeconds": 1.53125,
+        "operations": 1000,
+        "pathlibProfile": [
+          {
+            "cumulativeSeconds": 0.1972627,
+            "function": "__getitem__",
+            "selfSeconds": 0.030931000000000004,
+            "totalCalls": 18000
+          },
+          {
+            "cumulativeSeconds": 0.042833300000000005,
+            "function": "__new__",
+            "selfSeconds": 0.0259553,
+            "totalCalls": 57000
+          },
+          {
+            "cumulativeSeconds": 0.1360134,
+            "function": "_from_parsed_parts",
+            "selfSeconds": 0.019456300000000003,
+            "totalCalls": 19000
+          },
+          {
+            "cumulativeSeconds": 0.051200300000000004,
+            "function": "parents",
+            "selfSeconds": 0.0045559,
+            "totalCalls": 5000
+          }
+        ],
+        "role": "original",
+        "wallSeconds": 1.5502564000198618
+      },
+      {
+        "checks": {
+          "fstat": 4000,
+          "lstat": 29000,
+          "tick": 27000
+        },
+        "cpuSeconds": 1.265625,
+        "operations": 1000,
+        "pathlibProfile": [
+          {
+            "cumulativeSeconds": 0.054600300000000004,
+            "function": "__getitem__",
+            "selfSeconds": 0.0086383,
+            "totalCalls": 5000
+          },
+          {
+            "cumulativeSeconds": 0.030070600000000003,
+            "function": "__new__",
+            "selfSeconds": 0.0185804,
+            "totalCalls": 40000
+          },
+          {
+            "cumulativeSeconds": 0.0433706,
+            "function": "_from_parsed_parts",
+            "selfSeconds": 0.006257,
+            "totalCalls": 6000
+          },
+          {
+            "cumulativeSeconds": 0.0026661000000000002,
+            "function": "parents",
+            "selfSeconds": 0.0010856000000000001,
+            "totalCalls": 1000
+          }
+        ],
+        "role": "candidate",
+        "wallSeconds": 1.2750024999841116
+      }
+    ],
+    "reducedOsChecks": false,
+    "samples": [
+      {
+        "checks": {
+          "fstat": 8000,
+          "lstat": 58000,
+          "tick": 54000
+        },
+        "cpuSeconds": 0.71875,
+        "operations": 2000,
+        "role": "original",
+        "wallSeconds": 0.7140715999994427
+      },
+      {
+        "checks": {
+          "fstat": 8000,
+          "lstat": 58000,
+          "tick": 54000
+        },
+        "cpuSeconds": 0.640625,
+        "operations": 2000,
+        "role": "candidate",
+        "wallSeconds": 0.6282277000136673
+      },
+      {
+        "checks": {
+          "fstat": 8000,
+          "lstat": 58000,
+          "tick": 54000
+        },
+        "cpuSeconds": 0.609375,
+        "operations": 2000,
+        "role": "candidate",
+        "wallSeconds": 0.6086771000409499
+      },
+      {
+        "checks": {
+          "fstat": 8000,
+          "lstat": 58000,
+          "tick": 54000
+        },
+        "cpuSeconds": 0.71875,
+        "operations": 2000,
+        "role": "original",
+        "wallSeconds": 0.7187434999505058
+      }
+    ],
+    "status": "local-synthetic-metadata-cpu-only"
+  },
+  "benchmarkLimitations": {
+    "nativeMaterializationTimeoutFixed": false,
+    "profileTimesNotUsedForAbbaRatio": true,
+    "realVpsSpeedupUnknown": true,
+    "singleLocalAbbaRunOnly": true,
+    "statisticalConfidenceNotEstablished": true,
+    "syntheticMetadataNotKernelCalls": true
+  },
+  "cachePolicy": {
+    "cacheScopedToStoreInstance": true,
+    "content": "immutable path syntax only",
+    "deadlineOrResourceBudgetRelaxed": false,
+    "fsyncOrReadbackRemoved": false,
+    "identityOrDigestResultsCached": false,
+    "maximumPathsPerPlan": 40,
+    "maximumRootPlans": 8,
+    "maximumRootSpellingChars": 1024,
+    "metadataCached": false,
+    "nonrootOrOversizedPlansUseUncachedWalk": true,
+    "osChecksDeduplicated": false
+  },
+  "date": "2026-11-13",
+  "equivalence": {
+    "firstAndWarmedTickLstatFstatEventOrderEqual": true,
+    "fstatInjectionPositions": 4,
+    "lstatInjectionPositions": 29,
+    "otherFileReadWriteFsyncAndCleanupMethodsAstUnchanged": true,
+    "representativeOperation": {
+      "fstat": 4,
+      "lstat": 29,
+      "tick": 27
+    },
+    "scope": "specified synthetic POSIX model and unchanged local adapter/copy test cases, not all Linux execution paths",
+    "tickDeadlineInjectionPositions": 27,
+    "warmedRootGidDriftStillRejected": true
+  },
+  "nextStep": "local materialization substage profiling; new native scope must be separately confirmed when a measured candidate is ready",
+  "plan": "docs/superpowers/plans/2026-11-13-materializer-path-plans.md",
+  "privateEvidenceSha256": {
+    "benchmark-result.json": "6f5cbda10c919cda38f54b2caf0258d3ef8f9f698156fbd521c6c7899a8befac",
+    "benchmark.log": "63bd7783316eea6372a6236ca36599fbad6c46c43afcaedcb83e70049efaf4ee",
+    "benchmark.py": "1af9731a1cb29349e627ee27527a5c798c6103e50a330f89c69ca8a29d8660ad",
+    "finalize.py": "6e56489f34e6afd7eb118a17d5316fd5c184c0d45ec2fb5826d1595c6347ec15",
+    "fixture.py": "485b8b10e62995de3413e5ebe5745d699659f154cbbb5b5d114e361d4db3b6da",
+    "native_store_candidate.py": "10d920303bd2e788ab3801d3ebe99c5debbada086964fdbe2a1a701246effab8",
+    "path-plans-green.log": "5d5ed3d1d2edbdbf6594c82d4ee216959de1a14153b56f183da03befafa2efad",
+    "path-plans-red.log": "36598f596c5fe79cfcf4beef9b5e80a9390a9a874cee7e95077492bf59b36e70",
+    "related-final.log": "ff99bc8c46ce1c0c03d95436c5fb998c7619a42429cb82a3a637b2c0053e0865",
+    "run_related.py": "9cb89c7561c797a9356498b76bc586175146a04a023de787f37a859ea9fb19bb",
+    "source-bindings.json": "d4f2648fd5b5d5d9f12d70514dca663eb52dd69acd5380020a0df8cdb49b48d8",
+    "test_path_plans.py": "2009dad8f2a4a6bf88afe91e6deb76d1e54b3e4d4b30243117585cddf10d91a7"
+  },
+  "productionReady": false,
+  "regression": {
+    "caseCounts": {
+      "NativeStoreTests": 12,
+      "PathPlanTests": 9,
+      "PhysicalTests": 3
+    },
+    "errors": 0,
+    "failures": 0,
+    "linuxMetadataSimulated": true,
+    "realLocalCopyTests": 3,
+    "skipped": 0,
+    "sourceFiles": 9,
+    "sourceHashesUnchanged": true,
+    "tests": 24
+  },
+  "regressionTerminal": {
+    "actualProcessExitCode": 0,
+    "fullProductSuiteRerun": false,
+    "posixMetadataAndDirectoryFsyncSimulated": true,
+    "realLocalExclusiveCopyReadbackAndPartialFailureTests": 3,
+    "seconds": 9.675
+  },
+  "review": {
+    "confirmedP1P2Remaining": 0,
+    "independentReadOnlyReviewCompleted": true
+  },
+  "schemaVersion": 1,
+  "scope": {
+    "credentialsChanged": false,
+    "credentialsRead": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "productionPublication": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "source": {
+    "candidateNativeStoreSha256": "10d920303bd2e788ab3801d3ebe99c5debbada086964fdbe2a1a701246effab8",
+    "frozenB985PackagePreserved": true,
+    "modifiedExistingMethods": [
+      "__init__",
+      "_trust",
+      "_roots_ok"
+    ],
+    "newMethod": "_path_plan",
+    "notInAnyExecutionPackage": true,
+    "originalAndDeployedSourcesPreserved": true,
+    "originalNativeStoreSha256": "43545869ed21216bc4aac0a6319cd4a70120aedcd8f69feb653127188b9adb5a"
+  },
+  "status": "pure path-plan candidate locally verified; not rebound into a native execution package",
+  "testFixtureCorrection": {
+    "correctedToCompareSingleRecordedOutcome": true,
+    "initialFailureLogPreserved": true,
+    "initialNewFstatCaseInvokedFaultTwice": true,
+    "productChecksChangedForTest": false
+  }
+}
