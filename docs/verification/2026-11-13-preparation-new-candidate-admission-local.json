@@ -1,0 +1,70 @@
+{
+  "basePlan": "docs/superpowers/plans/2026-11-13-preparation-phase-diagnostics.md",
+  "binding": {
+    "exactReviewedDeltaRequired": true,
+    "expectedInputBytesSha256": "41836c5a397229da24f364a47998bc81a52f4dc2e4a7ceccb19a7beaa73c11b2",
+    "freshnessLimitMs": 300000,
+    "fullFiveExpectedFieldsCompared": true,
+    "nativeExecutionAuthorized": false,
+    "newCandidateBinding": "b985bc30571688f7df248c18c69a5de0a529e8b9be065ffd027fa9ce922c84f0",
+    "oldExecutionNotRelabelledAsNew": true,
+    "originalReadonlyPrepareBinding": "78522be042325bad229f1dc67bdd8628f533442d98d83b0c5eff6a96b17e2ef4"
+  },
+  "compatibilityProofCreated": false,
+  "date": "2026-11-13",
+  "independentReview": {
+    "confirmedP1P2Remaining": 0,
+    "nativeEvidenceNotClaimed": true,
+    "readOnly": true
+  },
+  "newQuotaUsed": 0,
+  "previousLocalRecord": "docs/verification/2026-11-13-preparation-phase-diagnostics-local.json",
+  "previousLocalRecordSha256": "1a34373714b7f5639f35b9dd90a1afe391e3a8c2eb72a546b94ede4dccc06ed3",
+  "previousPreparationQuotaUsed": "1/1",
+  "privateEvidenceSha256": {
+    "admission-green.log": "51af7cdb7ceb40a2e11591618a21778607d0af3ec16e8e046d6284c761b965ea",
+    "admission-red.log": "1b505590c607f6aec44a22d040197bd38053c13a081532f9ac64de09d79a3f65",
+    "admission-size-green.log": "83f90fc1cf0e9a70f88d15651bc82eb5a99cd8b015a9cd04a91a7ed5d7ad4bc5",
+    "admission-size-red.log": "11bb272950de5e76f6ef8461e7dbed224e0be9dfa3c2fd89f178d93254e13c02",
+    "admission.py": "5b9a428b370b97db9967107bf13dfa9cd3fa3b2b21b883a0f906e62475a45910",
+    "finalize_admission.py": "d888f2a10a2463c68d64b4da2e152838435b7257f85a0b541c8ba563c57ea007",
+    "test_admission.py": "3886a0b583b2081a24ffd204428d0266e294d2946533b9b9e29a0c0953e40a56"
+  },
+  "productionReady": false,
+  "rejections": [
+    "old observation older than5 minutes",
+    "nonzero actual exit before candidate loading",
+    "incorrect candidate binding",
+    "oversized binding before body read",
+    "missing/extra/different expected inputs",
+    "corrupted precheck binding",
+    "changes outside exact four outer and one archive entry"
+  ],
+  "remainingGate": "await already-requested new native quota; do not treat automatic continuation as approval",
+  "schemaVersion": 1,
+  "scope": {
+    "credentialsChanged": false,
+    "credentialsRead": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "productionPublication": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "status": "new candidate input admission locally verified; native quota confirmation pending",
+  "tests": {
+    "actualProcessExitCode": 0,
+    "count": 9,
+    "currentVpsObservation": false,
+    "errors": 0,
+    "failures": 0,
+    "historicalCaptureFilesComparedUnchangedDuringReplay": true,
+    "historicalClockOfflineReplay": true,
+    "oversizedBodyReadRedFailureThenGreen": true,
+    "previous52SuiteRerun": false,
+    "seconds": 0.229,
+    "skipped": 0
+  }
+}
