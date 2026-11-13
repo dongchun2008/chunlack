@@ -1,0 +1,125 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "stage": "production-private-input-draft-local",
+  "status": "local_composition_and_related_regression_passed_not_native_ready",
+  "fixedSources": {
+    "alignedManifestSha256": "ae7c5db14c5e4ba9886b7ea878a417f53648c3cc1e11aa558db1c81fdadd02ef",
+    "gateSha256": "95ab206d9f0dcf1bbcb208e600e7c24a94de4218a1025738a1844e67d8cb7af3",
+    "productionConfigHelperSha256": "ab1729aaecc2dd748e4c9f38f9e68b4b31cc2366d6b8cf5fafaac3454d66516b",
+    "existingBindingHelperSha256": "0287575fa437538508e5e42122a4117bbe5bc8f047184a0907c9d1a8631bf7db",
+    "originalFullValidatorSha256": "b704ceefa1bf917c8ce0c18a439d1b50099f6e723e7fcc3d5f892698088bd1e3",
+    "candidateCodeMapSha256": "bce4b18a3ef8ba9fe8581e709feb77eacef6b0807b989ed096ea9ff1ebba12a6",
+    "previousCodeMapSha256": "712731e0d1cc9c8b71e58f3933a6694e5bbed99ebe295183110e5ef0fc5d7181",
+    "productFiles": 66,
+    "previousKnownFiles": 57
+  },
+  "composition": {
+    "configurationOriginalBytesRetained": true,
+    "agentModelConfigurationNotModified": true,
+    "environmentRawFileNotReturned": true,
+    "existingClientApprovalAndPocketIdClientBindingRequired": true,
+    "originalControllerScopeAndAuthorityBindingFunctionsReused": true,
+    "loopbackByteDraftPrepared": true,
+    "realCaddyAdaptPerformed": false,
+    "settingsDraftPrepared": true,
+    "preparedHashesDeliberatelyOmitted": true,
+    "proofCreated": false,
+    "formalBundleLoadable": false,
+    "observationOriginAndFreshnessAttested": false,
+    "actualCandidateAllocationBound": null
+  },
+  "regression": {
+    "newCompositionCases": 19,
+    "newPassed": 19,
+    "existingBindingFullValidatorAndContractCases": 19,
+    "existingPassed": 19,
+    "totalAssociatedPassed": 38,
+    "failed": 0,
+    "skipped": 0,
+    "groupsSerial": true,
+    "allFinalProcessExitCodes": 0,
+    "newGroupUnittestSeconds": 0.18,
+    "newGroupLocalCommandWallSeconds": 0.5203468,
+    "existingGroupUnittestSeconds": 0.264,
+    "fullProductSuiteRerun": false,
+    "originalFullValidatorExecutedWithSyntheticEvidence": true,
+    "syntheticSuccessDoesNotCreateNativeProof": true,
+    "tamperedBindingsExpiredProofAndUnverifiedBootRejected": true
+  },
+  "independentReview": {
+    "performedBeforeFix": true,
+    "finding": "mutable context allowed code-map drift to enter a draft",
+    "severity": "P2",
+    "fixedBy": "snapshot mapping data then verify independent fixed canonical hashes;bind controller/source commit separately",
+    "threeMappingControllerReproductionsFailedBeforeFix": true,
+    "separateSourceCommitReproductionFailedBeforeFix": true,
+    "allFourRegressionCasesPassedAfterFix": true,
+    "independentReReviewPerformed": false,
+    "knownUnresolvedReviewedFindings": 0,
+    "fixedFindingVerification": "author-observed RED to GREEN plus complete new local suite"
+  },
+  "loopbackQualification": "The unique approved auto_https line receives a loopback default_bind proposal;unknown existing line-start bind directives or missing/duplicate anchor are refused. This is not a Caddy parser or a native listening-policy proof;real adaptation and original document validation are still required.",
+  "evidence": {
+    "draft.py": {
+      "bytes": 10050,
+      "sha256": "97e1e1a67c2354e21e0dd1d679a44403779de4fc7612c805e5ca6ccdf73b4b35"
+    },
+    "test_draft.py": {
+      "bytes": 14331,
+      "sha256": "cac9737e6d8efa8bd1b56cfb092648d93153b9f03260b2e8ed8775627a0bc119"
+    },
+    "red-missing-composition.log": {
+      "bytes": 658,
+      "sha256": "06ea82ba3eb4831a19bc13374f6ed85c3abe42f74e2d305823e1587571c4bd03"
+    },
+    "green.log": {
+      "bytes": 1788,
+      "sha256": "153037897d7f395fe53e1cf3247d73adacce209409e95217466bb0b11514621a"
+    },
+    "full-local.log": {
+      "bytes": 2320,
+      "sha256": "cfd8bf9bd7d8c5862bf265212a35c679ddd443ded68896c62e6ceb668f2790a2"
+    },
+    "related-existing.log": {
+      "bytes": 2911,
+      "sha256": "94a7b97c95d0d1665147fbba36ad2afa64c6b64eee4fbd0641757829f67f31c8"
+    },
+    "red-context-drift.log": {
+      "bytes": 2280,
+      "sha256": "8421c8703ba7acf3f0e8a7de0af59ad811f4e8bd028579a3e2ecf1c4c3026ff7"
+    },
+    "red-commit-drift.log": {
+      "bytes": 792,
+      "sha256": "0356aee4ab43b4f50a5997f2908904b732afc8f012be9bb4727e001269ab6bcc"
+    },
+    "final-local.log": {
+      "bytes": 2834,
+      "sha256": "8b8741eb960f3665325a89cfa9ec7a6304a5fe1d19feaae30b88bcf73fe640f2"
+    }
+  },
+  "scope": {
+    "localOnly": true,
+    "sshAttempts": 0,
+    "newLinuxUnits": 0,
+    "actualProductionConfigurationRead": false,
+    "businessDatabasesRead": false,
+    "credentialsReadOrChanged": false,
+    "authorizationChanged": false,
+    "realModelsOrExternalAgentsCalled": false,
+    "productOrFrozenControllerBytesChanged": false,
+    "productionServicesStartedOrStopped": false,
+    "relayChanged": false,
+    "productionPublished": false
+  },
+  "remainingRequired": [
+    "a separately bounded real-input observation instead of treating synthetic configuration as production",
+    "actual Caddy adaptation and original document validator for final and loopback ingress",
+    "approved actual candidate preparation and allocated-space measurement",
+    "fresh per-database compatibility using actual input bindings and native service identity",
+    "separate production maintenance and post-publication acceptance"
+  ],
+  "githubScope": "this sanitized evidence record only;private source,tests and input drafts are not submitted",
+  "productionReady": false,
+  "fullDeliveryComplete": false
+}
