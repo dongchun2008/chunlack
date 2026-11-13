@@ -1,0 +1,158 @@
+{
+  "coverage": {
+    "derivedRunBodyExecuted": true,
+    "nativePreparationTimeoutResolved": false,
+    "originalProducerAndAssemblyFunctionsExecuted": true,
+    "pathKernelAndNativeOpsEnvironmentSimulated": true,
+    "producerMaterializations": 1,
+    "producerSnapshots": 2,
+    "realLinuxOwnershipOrCapabilitiesVerified": false,
+    "realNativeStopVerified": false,
+    "virtualRunMacroStages": 11
+  },
+  "date": "2026-11-13",
+  "frozenOriginalPreserved": {
+    "archiveSha256": "edf68d470ef6e955453b91a9e0638498a3b217370b8581d495e81f838c91cd40",
+    "bindingSha256": "78522be042325bad229f1dc67bdd8628f533442d98d83b0c5eff6a96b17e2ef4",
+    "oldFailureDirectoriesAndLocksPreserved": true
+  },
+  "inactiveCandidate": {
+    "approvedExecution": false,
+    "archiveSha256": "e5c59e4b915ce883bad599c96b01994d8bf3b8c3123594dd79aa36a868bdf5bb",
+    "bindingSha256": "b985bc30571688f7df248c18c69a5de0a529e8b9be065ffd027fa9ce922c84f0",
+    "changedArchiveSources": [
+      "source/.superpowers/sdd/actual-input-producer-reserved-20261113-a1/entry.py"
+    ],
+    "changedOuterPayload": [
+      "candidate-source.tar",
+      "dispatch.py",
+      "native_host.py",
+      "remote_bootstrap.py"
+    ],
+    "directoryName": "inactive-bundle-8a681bf12e0c",
+    "entrySha256": "6b31b4dc294fb50641115f1b0409b0097eb9e8ad7d3a298e24808f50dbc7444f",
+    "files": 10,
+    "manifestSha256": "82cc13b935464249426bc47039edb17dee43d8cc3e6e9f88b6665557db5d99d0",
+    "productionPublication": false,
+    "productionReady": false,
+    "sshAttemptsUsed": 0,
+    "traceSha256": "002d1757788a990ef036ad14c2fe211ad3489ecc6d083273d3affa6a6ffacd83",
+    "unitsUsed": 0
+  },
+  "nextGate": "fresh readonly precheck plus at most one separately approved preparation-only unit; no publication, no retry on failure",
+  "plan": "docs/superpowers/plans/2026-11-13-preparation-phase-diagnostics.md",
+  "previousNativeFailure": {
+    "exactPhaseStillUnknown": true,
+    "previousUnitUsagePreserved": "1/1",
+    "record": "docs/verification/2026-11-13-preparation-guard-native-attempt.json",
+    "recordSha256": "2a4ff571a4799430cd360d0a60e5093e5fa44bbc0ea06466cb501016261dc79c",
+    "workerError": "producer_deadline"
+  },
+  "privateEvidenceSha256": {
+    "bundle-green.log": "bb74e2571c796c20295b373992110f4040b7e0afba1f99b27d440ed264bfa0c5",
+    "bundle-red.log": "26ef148a977d4f965a753cd6ae76741f3b00ad85234021b9bcdd69f6b8bbad87",
+    "bundle.py": "03d26a4a863799694552ebb6461dec00b6682611aded01209be6bc992e743a5d",
+    "derive.py": "7ca9b83434c71c87d95d22833e811075e6385326f7a202a3a351f3203165c935",
+    "entry-green.log": "8e1d31ea5dd3956ceaa7273a51e73e5e70ca06b1c8ad63198dddbf7ab4d51350",
+    "entry-integration-green.log": "157cecd33e4a167fc80526de097f7998b277f5f1367d578c800a44a04cb87ec6",
+    "entry-red.log": "016ffdd9576891e6c4ea0dce5364a31391daffe672af577b49e56c45a48d1f62",
+    "finalize.py": "3222864f972052d554d3b9ecdce60cd0b0924873d8771550f0c7b848f86e3836",
+    "inactive-bundle-result.json": "8bb1682235261d7eebde340c4a163689a702510b7e9556209dff6a0d17903bdf",
+    "phase_trace.py": "002d1757788a990ef036ad14c2fe211ad3489ecc6d083273d3affa6a6ffacd83",
+    "related-final.log": "0c967967aeff0c0b9869481268bce2afbf498b8183ecbc7f290685ec24554b95",
+    "run_related.py": "1d952a5189f8efcffdc0036b0f7a0899fb2afc1bb1d339cdda5201ef91c78f79",
+    "source-bindings.json": "5d19c86fefb27248d2d27a7207b64d33c5c9e4aa77e5db4a3b234ab4aaa552b4",
+    "test_bundle.py": "9f1df6f522dff94adf52b67a4d04ad1fc7a9ccd060348f6cc3c33f75a1b0637d",
+    "test_entry_trace.py": "1ddb33a2d009d1b710feb995b96f3cac6ececb55ff3ddfdbc508f67e191baff5",
+    "test_trace.py": "dedb01f332fae13966d02bef4a734f43cddef710e0d59fda65343af5c9deb389",
+    "trace-green.log": "247f16df7ced26339b36329384b6d0168a835847a0f33143b88373f92c6183e5",
+    "trace-red.log": "521453a31f4ee9dae0e8dae19bfd702b352c53b9588041352d952eefb2f80bc4"
+  },
+  "productionReady": false,
+  "regression": {
+    "errors": 0,
+    "failures": 0,
+    "fileCounts": {
+      "DispatchTests": 16,
+      "TerminalTests": 6,
+      "test_bundle.py": 5,
+      "test_entry_trace.py": 7,
+      "test_trace.py": 18
+    },
+    "newUnits": 0,
+    "productionPublication": false,
+    "skipped": 0,
+    "sourceCount": 13,
+    "sourceHashesUnchanged": true,
+    "tests": 52,
+    "vpsConnected": false
+  },
+  "regressionTerminal": {
+    "actualProcessExitCode": 0,
+    "entryCases": 7,
+    "fullProductSuiteRerun": false,
+    "inactivePackageCases": 5,
+    "newRecorderTests": 8,
+    "originalProducerCasesWithTracedOps": 10,
+    "seconds": 3.2,
+    "terminalAndOriginalControllerCases": 22
+  },
+  "review": {
+    "confirmedP1P2Remaining": 0,
+    "independentReadOnlyReviewCompleted": true,
+    "nativeEffectsNotTestedOrClaimed": true
+  },
+  "schemaVersion": 1,
+  "scope": {
+    "credentialsChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "modelCalls": 0,
+    "newLinuxUnits": 0,
+    "productionPublication": false,
+    "realCredentialsRead": false,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "status": "bounded preparation phase telemetry and full inactive package locally verified; not published",
+  "telemetry": {
+    "argumentsOrResultsRecorded": false,
+    "automaticRetry": false,
+    "clockFailurePreventsSuccessExit": true,
+    "entryOriginalPinsUnchanged": true,
+    "exceptionMessagesRecorded": false,
+    "fileNetworkOrSubprocessWrites": false,
+    "fixedMacroPhases": [
+      "pipeline",
+      "initialize",
+      "expected_inputs",
+      "context",
+      "snapshot",
+      "assemble",
+      "materialize",
+      "preparation_metadata"
+    ],
+    "limitations": [
+      "in-memory macro timings do not establish the actual remote slow phase",
+      "hard process termination before receipt output can lose the in-memory trace",
+      "no performance improvement is claimed"
+    ],
+    "maximumRecords": 32,
+    "noExtraTickSamples": true,
+    "originalExceptionTreePreserved": true,
+    "sameWorkerStartClock": true
+  },
+  "unchangedBudgets": {
+    "cpuPercent": 20,
+    "isolatedNetwork": true,
+    "localOuterSeconds": 150,
+    "memoryMiB": 192,
+    "remoteOuterSeconds": 120,
+    "swapBytes": 0,
+    "tasksMax": 32,
+    "unitTotalEnvelopeSeconds": 90,
+    "workerOutputSeconds": 80,
+    "workerWorkSeconds": 75
+  }
+}
