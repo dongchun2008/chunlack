@@ -1,0 +1,254 @@
+{
+  "date": "2026-11-13",
+  "fixedFailureRead": {
+    "actualExitCode": 0,
+    "actualWallSeconds": 1.682201499992516,
+    "localSecondsLimit": 35,
+    "localStderrBytes": 60,
+    "localStderrContentRetained": false,
+    "logs": {
+      "worker.json": {
+        "bytes": 345,
+        "sha256": "8228b1d605d2b2dc18af6d3bc3be6f248424beccf1cf90acc13378d0e7682d5c"
+      },
+      "worker.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "newUnits": 0,
+    "remoteSecondsLimit": 20,
+    "sshAttempts": 1,
+    "sshCleanupConfirmed": true,
+    "unitState": {
+      "ActiveState": "failed",
+      "ControlGroup": "",
+      "ExecMainCode": "1",
+      "ExecMainStatus": "2",
+      "Id": "chunlack-candidate-prepare-29c8bff3f371.service",
+      "InvocationID": "67cc6109054d42c689d54cafdde74d40",
+      "MainPID": "0",
+      "NRestarts": "0",
+      "Result": "exit-code",
+      "SubState": "failed"
+    },
+    "workerError": {
+      "children": [
+        {
+          "code": "producer_deadline",
+          "type": "TimeoutError"
+        },
+        {
+          "code": "producer_deadline",
+          "type": "TimeoutError"
+        }
+      ],
+      "childrenOmitted": 0,
+      "code": null,
+      "type": "ExceptionGroup"
+    },
+    "workerStatus": "candidate-preparation-failed"
+  },
+  "inactiveReadonlyPackage": {
+    "activationAuthorized": false,
+    "bindingSha256": "a30cd2f965edd14b472753af0ad3a20e959e12a1e27c9fc2dd054ec638c7ceca",
+    "entrySha256": "691d1e293f0c73c677bf0262601ba31153545c27906b9d8c87ad6c002cf4d3c6",
+    "exactFileReadback": true,
+    "files": 8,
+    "guardConsumerSha256": "1c46391625a9950eb90c3c6d366adaa9423e7c77962e8a47a822d5d56a1ea0cd",
+    "historicalApprovalCopied": false,
+    "localSeconds": 35,
+    "maximumSshAttemptsProposed": 1,
+    "maximumUnits": 0,
+    "oldAttemptsPreserved": true,
+    "prepareBindingSha256": "78522be042325bad229f1dc67bdd8628f533442d98d83b0c5eff6a96b17e2ef4",
+    "productionPublication": false,
+    "productionReady": false,
+    "remoteSeconds": 20,
+    "sshAttemptsUsed": 0,
+    "status": "inactive-readonly-guard-package",
+    "vpsConnected": false
+  },
+  "localCorrection": {
+    "deployed": false,
+    "emptyCgroupAllowedOnlyForPidZeroAndExactTerminalPair": true,
+    "failedNativeExitStillRejected": true,
+    "file": "dispatch_terminal.py",
+    "frozenPackageChanged": false,
+    "producerTimeoutFixed": false,
+    "sameInvocationStillRequired": true,
+    "sha256": "0d0be1c176d66e317c9e18bf5a64d612463c75a7dc1e8eb47d936ef3c5ff7f5d"
+  },
+  "localRegression": {
+    "fullProductSuiteRerun": false,
+    "guardAndOriginalObserver": {
+      "actualProcessExitCode": 0,
+      "errors": 0,
+      "failures": 0,
+      "seconds": 2.313,
+      "skipped": 0,
+      "sourceBindingsSha256": "84323586c177aca69537a0703a32af5fc43e01d4d002543ea8bf7345ac1ee536",
+      "sourceFilesUnchanged": 15,
+      "tests": 51
+    },
+    "terminalStateCandidate": {
+      "actualProcessExitCode": 0,
+      "errors": 0,
+      "failures": 0,
+      "nativeStopVerified": false,
+      "newTests": 6,
+      "seconds": 0.017,
+      "semanticRedFailures": 2,
+      "skipped": 0,
+      "tests": 22,
+      "unchangedOriginalControllerTests": 16
+    }
+  },
+  "plan": "docs/superpowers/plans/2026-11-13-preparation-guard-transition.md",
+  "preparation": {
+    "accepted": false,
+    "actualCandidateAllocationAccepted": false,
+    "actualTerminal": {
+      "automaticRetry": false,
+      "exitCode": 2,
+      "observedAt": "2026-11-13T09:47:05.591609+00:00",
+      "stderrBytes": 0,
+      "stdoutSha256": "fe03ba704a62dc147d15a40301278be700d9a859cf40a4440468f0235d5c74ac",
+      "timedOut": false,
+      "wallSeconds": 77.57536919997074
+    },
+    "archiveSha256": "edf68d470ef6e955453b91a9e0638498a3b217370b8581d495e81f838c91cd40",
+    "configuredLimits": {
+      "cpuPercent": 20,
+      "isolatedNetwork": true,
+      "memoryMiB": 192,
+      "swapBytes": 0,
+      "tasksMax": 32,
+      "unitSeconds": 90
+    },
+    "failedDirectoriesAndLocksPreserved": true,
+    "frozenBindingSha256": "78522be042325bad229f1dc67bdd8628f533442d98d83b0c5eff6a96b17e2ef4",
+    "operatorVerdictSha256": "11df0172d9d3282284717fa56326b99f68252decf749ed4dec18b0b98acf935c",
+    "partialCandidateDirectoriesMayExist": true,
+    "remoteReceipt": {
+      "accepted": false,
+      "cleanupErrors": [
+        {
+          "code": "dispatch_state_identity",
+          "type": "ValueError"
+        }
+      ],
+      "elapsedSeconds": 75.74193721264601,
+      "finalErrors": [],
+      "nativeExit": null,
+      "primaryError": {
+        "code": "dispatch_state_identity",
+        "type": "ValueError"
+      },
+      "productionPublication": false,
+      "productionReady": false,
+      "protectedBaselineUnchanged": true,
+      "unitAttempts": 1,
+      "unitEmptyVerified": true,
+      "unitInvocation": "67cc6109054d42c689d54cafdde74d40",
+      "workerReceipt": null
+    },
+    "resourceLimitsNotIndependentlySampled": true,
+    "sshCleanupConfirmed": true
+  },
+  "privateEvidenceSha256": {
+    "build.py": "c10630b8faaad0d871c7b2b818320a040f19077c33d18e5801f355ca9931fa66",
+    "cohort-fragment.js": "2bba79e542d87a105f62e7f9d38aa2622ad775a52e12c22e4e33ab8335986e87",
+    "dispatch_terminal.py": "0d0be1c176d66e317c9e18bf5a64d612463c75a7dc1e8eb47d936ef3c5ff7f5d",
+    "failed-unit-readonly.json": "f8ead972a402a832ae10408a8ccfa961c8f4778f973ab30f25fbc08bb2b4e768",
+    "finalize.py": "d3c52d2ae948cace63c747286e095b78bdddd07ab8ed8248e4f108427dfc0451",
+    "gate.py": "1c46391625a9950eb90c3c6d366adaa9423e7c77962e8a47a822d5d56a1ea0cd",
+    "prepare_once.py": "4a2bc2266af6bc57baf0aab7ee60a9e515e2f6e2541c8e30d3ef89abe96c658b",
+    "read_failed_once.py": "208171b104e047e4f7860ca003f3df6ec16cbaafba067dcc77013a4b7645dcd7",
+    "related-final.log": "56a0d89460df1c383dcd1a9eb65b77787ce0b1c1a670ffb21dd256846305df60",
+    "run_once.py": "32c92f0432db384b2c6ec08d7aaf343ae68567223b00cc28523add92526bbe5d",
+    "run_related.py": "ec3dd0caedc1f4b752cccb9bad8c2036ca15407e4753d25e7a36834c87ba2088",
+    "source-bindings.json": "84323586c177aca69537a0703a32af5fc43e01d4d002543ea8bf7345ac1ee536",
+    "terminal-green.log": "9e1dd51673c3a2b64021de46e34780d1c51d522f4c05ef1e8d8b1b85fbb33311",
+    "terminal-semantic-red.log": "24af750f0b6d3d7b3ca16c183a3d543793e0aece5dedb2f6bf6704ff0817757f",
+    "test_build.py": "0d71f9e6477011fe634b27d22c3967d21e30541b6ba5d59c24428d770e127f01",
+    "test_gate.py": "b0a70abeb3d9a9ede6909c5bafb996387b4eeb311fd15713401197c625d60048",
+    "test_node_cohort.py": "7fb7deb31168ef7eb6cdb74344abd5691fcfbe13bb35dd5d4a0358db4b04a3ff",
+    "test_terminal_state.py": "4ea3e0bed0dc909de61c7ef03654cc7d39e7b4259f9b3a3e4165ba3ecdcc62ad"
+  },
+  "productionReady": false,
+  "readonlyObservation": {
+    "actualTerminal": {
+      "automaticRetry": false,
+      "exitCode": 0,
+      "observedAt": "2026-11-13T09:45:00.935138+00:00",
+      "outerResultSha256": "5f70f5f1b733c94ecca4ad651fc09267e79a5993889b14d929727a46d8e327d4",
+      "outerStderrBytes": 0,
+      "sshAttemptFileExists": true,
+      "timedOut": false,
+      "wallSeconds": 4.884988300036639
+    },
+    "completeSourceFiles": 57,
+    "currentBusinessDatabaseContentsRead": false,
+    "dependencyBytes": 38850588,
+    "dependencyFiles": 4462,
+    "guardVerdictSha256": "9c2c0ea1d81812ffb6f096716da49cb23b0f5fd5f59761a82eabfb2064ca5e14",
+    "newUnits": 0,
+    "singleAttempt": true,
+    "verdict": {
+      "accepted": true,
+      "caddyMaterialsMatchFrozenPrepareInputs": true,
+      "checkedAtMs": 1794563100938,
+      "cohortNonce": "6a8a00b422b53e260d1d7ff5cc69a69b",
+      "compatibilityProofCreated": false,
+      "completeSourceFiles": 57,
+      "executionIdentityBound": true,
+      "fullReceiptSha256": "717cc70c2c7e9d4eb4abc3f65ef07559c34be487cbe7fe7cd007fb055d5381ad",
+      "identityLoginVerified": false,
+      "maximumAgeMs": 300000,
+      "nativePreparationAuthorized": false,
+      "observedAtMs": 1794563100935,
+      "outerResultSha256": "5f70f5f1b733c94ecca4ad651fc09267e79a5993889b14d929727a46d8e327d4",
+      "prepareBindingSha256": "78522be042325bad229f1dc67bdd8628f533442d98d83b0c5eff6a96b17e2ef4",
+      "productionReady": false,
+      "protectedBaselineUnchanged": true,
+      "readonlyBindingSha256": "43e320825d5f4b3fede2a307e35acb0f5c3f41964b0ccc686daa3b8ab8a7150c",
+      "readonlyPacketSha256": "013ce15aa8d6a2fd22990c03992c3f9fd230665aa3789c6eaf15dc8853d08e64",
+      "realModelCalls": 0,
+      "sourceConfigRuntimeAndDependencyMatch": true,
+      "status": "readonly-preparation-guard-only",
+      "tlsServiceVerified": false,
+      "unitsGranted": 0
+    }
+  },
+  "remaining": [
+    "locate preparation timeout phase without changing original limits",
+    "integrate and bind any reviewed candidate correction before a separately bounded native attempt",
+    "measure complete actual DATA and candidate footprint",
+    "fresh native three-database copy compatibility",
+    "formal maintenance and runtime acceptance",
+    "Muse Suhua and quiet independent dots task route"
+  ],
+  "review": {
+    "guardAndFrozenInputReview": "no confirmed P1/P2 before readonly invocation",
+    "nativeFinding": "failed systemd terminal empty ControlGroup masked exit status; worker separately reported producer_deadline",
+    "terminalCorrection": "read-only review found no new confirmed P1/P2; mock stop assertion is not native stop acceptance"
+  },
+  "schemaVersion": 1,
+  "scope": {
+    "automaticRetry": false,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingServicesRestarted": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "portsChanged": false,
+    "preparationUnitLimit": 1,
+    "preparationUnitsUsed": 1,
+    "productionPublication": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsConnected": true
+  },
+  "status": "fresh readonly precheck passed; single preparation unit failed and stopped; terminal-state correction local only"
+}
