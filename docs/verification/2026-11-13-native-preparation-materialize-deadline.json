@@ -1,0 +1,372 @@
+{
+  "compatibilityProofCreated": false,
+  "date": "2026-11-13",
+  "failureEvidence": {
+    "actualExitCode": 0,
+    "actualWallSeconds": 1.8873362999875098,
+    "fixedInvocationMatched": true,
+    "localStderr": {
+      "bytes": 60,
+      "containsSocketExceptionMessage": true,
+      "notClaimedEmptyOrHarmless": true,
+      "rawPrivatelyRetained": true,
+      "sha256": "cd55d46c7ba7a33e9673e068a3239ef52760ab180931e2d393893950fe2b1e89"
+    },
+    "logs": {
+      "worker.json": {
+        "bytes": 2012,
+        "sha256": "2627213ec5404235c0835a92e52474a828b499cf7c89d0d30c40d07a2dc8bd64"
+      },
+      "worker.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "preparationTrace": {
+      "exceptionMessagesRecorded": false,
+      "maximumRecords": 32,
+      "parametersRecorded": false,
+      "productionReady": false,
+      "records": [
+        {
+          "clockErrorType": null,
+          "elapsedMilliseconds": 7.259502075612545,
+          "errorType": null,
+          "phase": "pipeline",
+          "sequence": 1,
+          "startedMilliseconds": 81.61579258739948,
+          "state": "completed"
+        },
+        {
+          "clockErrorType": null,
+          "elapsedMilliseconds": 410.6186684221029,
+          "errorType": null,
+          "phase": "initialize",
+          "sequence": 2,
+          "startedMilliseconds": 88.88562116771936,
+          "state": "completed"
+        },
+        {
+          "clockErrorType": null,
+          "elapsedMilliseconds": 0.24926383048295975,
+          "errorType": null,
+          "phase": "expected_inputs",
+          "sequence": 3,
+          "startedMilliseconds": 499.5166212320328,
+          "state": "completed"
+        },
+        {
+          "clockErrorType": null,
+          "elapsedMilliseconds": 82.75705203413963,
+          "errorType": null,
+          "phase": "context",
+          "sequence": 4,
+          "startedMilliseconds": 499.9672183766961,
+          "state": "completed"
+        },
+        {
+          "clockErrorType": null,
+          "elapsedMilliseconds": 3909.1209368780255,
+          "errorType": null,
+          "phase": "snapshot",
+          "sequence": 5,
+          "startedMilliseconds": 582.73911383003,
+          "state": "completed"
+        },
+        {
+          "clockErrorType": null,
+          "elapsedMilliseconds": 303.04859299212694,
+          "errorType": null,
+          "phase": "assemble",
+          "sequence": 6,
+          "startedMilliseconds": 4492.045917548239,
+          "state": "completed"
+        },
+        {
+          "clockErrorType": null,
+          "elapsedMilliseconds": 1.4947028830647469,
+          "errorType": null,
+          "phase": "context",
+          "sequence": 7,
+          "startedMilliseconds": 4795.172252692282,
+          "state": "completed"
+        },
+        {
+          "clockErrorType": null,
+          "elapsedMilliseconds": 70203.85375153273,
+          "errorType": "ExceptionGroup",
+          "phase": "materialize",
+          "sequence": 8,
+          "startedMilliseconds": 4796.683710999787,
+          "state": "failed"
+        }
+      ],
+      "returnBodiesRecorded": false,
+      "sameWorkerStartClock": true,
+      "schemaVersion": 1,
+      "status": "local-stage-timing-only",
+      "valid": true
+    },
+    "sshCleanupConfirmed": true,
+    "transport": {
+      "channelClosedObserved": false,
+      "completed": true,
+      "eofSent": true,
+      "exitCode": 0,
+      "exitObserved": true,
+      "outputLimitExceeded": false,
+      "sentBytes": 0,
+      "stdinBytes": 0
+    },
+    "unitState": {
+      "ActiveState": "failed",
+      "ControlGroup": "",
+      "ExecMainCode": "1",
+      "ExecMainStatus": "2",
+      "Id": "chunlack-candidate-prepare-8a681bf12e0c.service",
+      "InvocationID": "b80cd42974d84f549bfd6bbf31ed3908",
+      "MainPID": "0",
+      "NRestarts": "0",
+      "Result": "exit-code",
+      "SubState": "failed"
+    },
+    "workerError": {
+      "children": [
+        {
+          "code": "producer_deadline",
+          "type": "TimeoutError"
+        },
+        {
+          "code": "producer_deadline",
+          "type": "TimeoutError"
+        }
+      ],
+      "childrenOmitted": 0,
+      "code": null,
+      "type": "ExceptionGroup"
+    },
+    "workerStatus": "candidate-preparation-failed"
+  },
+  "localCountingProbe": {
+    "actualVpsCounters": false,
+    "actualVpsLatencyMeasured": false,
+    "filesystemWritesByNativeStore": 0,
+    "linuxUnitsUsed": 0,
+    "metadataCached": false,
+    "metadataChecksRemoved": false,
+    "oneThousandSourceKind": {
+      "fstat": 4000,
+      "lstat": 29000,
+      "tick": 27000
+    },
+    "originalSourceSha256": "43545869ed21216bc4aac0a6319cd4a70120aedcd8f69feb653127188b9adb5a",
+    "rootsCheckedPerOperation": 4,
+    "singleRootValidation": {
+      "fstat": 4,
+      "lstat": 21,
+      "tick": 21
+    },
+    "singleSourceKind": {
+      "fstat": 4,
+      "lstat": 29,
+      "tick": 27
+    },
+    "status": "local-synthetic-metadata-operation-counts"
+  },
+  "localPreparation": {
+    "archiveSha256": "e5c59e4b915ce883bad599c96b01994d8bf3b8c3123594dd79aa36a868bdf5bb",
+    "candidateBindingSha256": "b985bc30571688f7df248c18c69a5de0a529e8b9be065ffd027fa9ce922c84f0",
+    "frozenInactiveSourceUnchanged": true,
+    "manifestSha256": "82cc13b935464249426bc47039edb17dee43d8cc3e6e9f88b6665557db5d99d0",
+    "onlyFreshExecutionCopyActivated": true,
+    "previous52And9TestsRerun": false
+  },
+  "localStaticTriage": {
+    "fsyncReduced": false,
+    "hypothesesOnly": [
+      "repeated root and ancestor metadata validation per file",
+      "repeated source/stage traversal and content reads",
+      "per-file fsync, parent fsync and readback"
+    ],
+    "identityCacheIntroduced": false,
+    "limitsRelaxed": false,
+    "metadataChecksRemoved": false
+  },
+  "nextStep": "local counting and profiling of materialization without changing its security invariants; no automatic remote retry",
+  "preparation": {
+    "actualTerminal": {
+      "automaticRetry": false,
+      "exitCode": 2,
+      "observedAt": "2026-11-13T11:00:47.152478+00:00",
+      "stderrBytes": 0,
+      "stdoutSha256": "38de96473e60dff9715ff10c16f0a225856252bab4e56cae017338c68a013155",
+      "timedOut": false,
+      "wallSeconds": 78.59069189999718
+    },
+    "configuredResourceLimitsNotSeparatelySampled": true,
+    "localSshElapsedSeconds": 77.38350670004729,
+    "nativeFailureStatusPreserved": true,
+    "oldAndNewFailedDirectoriesAndLocksPreserved": true,
+    "parentElapsedSeconds": 77.8384944999707,
+    "partialCandidateDirectoriesMayExist": true,
+    "protectedBaselineUnchanged": true,
+    "remoteReceipt": {
+      "accepted": false,
+      "cleanupErrors": [],
+      "elapsedSeconds": 75.92425903212279,
+      "finalErrors": [],
+      "nativeExit": {
+        "code": 1,
+        "status": 2
+      },
+      "primaryError": {
+        "code": "dispatch_worker_exit",
+        "type": "ValueError"
+      },
+      "productionPublication": false,
+      "productionReady": false,
+      "protectedBaselineUnchanged": true,
+      "unitAttempts": 1,
+      "unitEmptyVerified": true,
+      "unitInvocation": "b80cd42974d84f549bfd6bbf31ed3908",
+      "workerReceipt": null
+    },
+    "sshCleanupConfirmed": true,
+    "terminalEmptyCgroupNoLongerMasksExit": true,
+    "unitEmptyVerified": true
+  },
+  "privateEvidenceSha256": {
+    "authorization.json": "122c4f7305ab1ab8b9dc714c00257dfaf86fe7ea210cb1a208844ff7791c9581",
+    "count_metadata.py": "f264b15365d8999310d2084202ff222a446c42f9a35f4e77d25697ca3d630119",
+    "execution/actual-terminal.json": "e2f6adc321b25331bf40404a52d2624a5c0cab37b6cfdcee0817e4fdee55df62",
+    "execution/binding.json": "14fb77b218a0d2bf5576025faf1b668e9864667cb9a84f6ee9e2f3a3b70183d4",
+    "execution/operator-verdict.json": "49120748f2113a926345bed6952d8ad38096e258aedadc6b6bd2d60b4e3603e1",
+    "execution/outcome.json": "9b5a9ce9e40fa9c84edcbdf20ad5ae13ed53e759e8005482c854e7a68c120a38",
+    "execution/outer-attempt.json": "0583cf81c5825b31c4da721b1965969e8744ff46483263255b455ca9cd080a70",
+    "execution/parent-stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "execution/parent-stdout.json": "38de96473e60dff9715ff10c16f0a225856252bab4e56cae017338c68a013155",
+    "execution/ssh-attempt.json": "e60fa6a8a1d129e5e043dab2e3dacd1efdef7b892f0961fcaa9c97c482f3a50f",
+    "execution/ssh-cleanup.json": "ef703ba774f2faec401a49bce5ed3afb26617e453ac1c752ca11504aa94c4bb0",
+    "execution/terminal.json": "efde2ac813d67708f9e15a50412a1ed5be3d331e1049c2ca9537f2e8632f0f0d",
+    "execution/transport.json": "e8c9fe902352ac87361a8a16921dfe95c64361e511604f2a1f0b459fa59dc95a",
+    "failed-unit-readonly-attempt.json": "55535899acc06d405c0a37fcdd24d19554bc9aa5988865e210557bc5d51bedbf",
+    "failed-unit-readonly.json": "4c685276a3947eea996cfc48a3e6d6d42fbda0911673659ba80e0a4c60c3bdda",
+    "finalize.py": "79e8e1ed3cc372c4f300a95b01a4bce346adeb8b189a53118fa3a75b54b6eed2",
+    "metadata-counts.json": "b146947b178cd39450c48d223845b25e8a60c6e68679647c9b9ccf02c841a9d6",
+    "precheck-attempt.json": "f8cca54efa30e427e11ec98240d1b93a879d5097072acd6d002eca2d4218f851",
+    "preparation-operator-claim.json": "ab6cdd7b238cf4d282e783cca3251a17a54ad942300e4dec49f7a0a1b33aa677",
+    "prepare_once.py": "703ad64dccca3c0427683f8e1f9ce3f50044305e7989892acacc8847cb4c7997",
+    "read_failed_once.py": "4b95874a55efdcd1bbd28a851b79a543490e2742ac8fe71869f893c341970c70"
+  },
+  "productionReady": false,
+  "readonlyPrecheck": {
+    "actualTerminal": {
+      "automaticRetry": false,
+      "exitCode": 0,
+      "observedAt": "2026-11-13T10:59:19.164028+00:00",
+      "outerResultSha256": "ad975067627bef1c8d167680f386bf483d4e161b2e04c0a5730d9f97f5996986",
+      "outerStderrBytes": 0,
+      "sshAttemptFileExists": true,
+      "timedOut": false,
+      "wallSeconds": 4.505505900015123
+    },
+    "noDatabaseContentsRead": true,
+    "preparationAdmission": {
+      "baseFrozenBindingSha256": "78522be042325bad229f1dc67bdd8628f533442d98d83b0c5eff6a96b17e2ef4",
+      "candidateBindingSha256": "b985bc30571688f7df248c18c69a5de0a529e8b9be065ffd027fa9ce922c84f0",
+      "checkedAtMs": 1794567568595,
+      "compatibilityProofCreated": false,
+      "exactNewCandidateAndReviewedDeltaBound": true,
+      "expectedInputBytesEqual": true,
+      "expectedInputSha256": "41836c5a397229da24f364a47998bc81a52f4dc2e4a7ceccb19a7beaa73c11b2",
+      "maximumAgeMs": 300000,
+      "nativeExecutionAuthorized": false,
+      "productionReady": false,
+      "readonlyBindingSha256": "43e320825d5f4b3fede2a307e35acb0f5c3f41964b0ccc686daa3b8ab8a7150c",
+      "readonlyCohortNonce": "6e57867ebd21d317fdb3a1db5f80e4ab",
+      "readonlyFullReceiptSha256": "8c637d47e4dc1dac862c51c5ee5d72149212b6a8a491ca79e67824ba5fc45726",
+      "readonlyObservedAtMs": 1794567559164,
+      "readonlyOriginalPrepareBindingSha256": "78522be042325bad229f1dc67bdd8628f533442d98d83b0c5eff6a96b17e2ef4",
+      "readonlyOuterResultSha256": "ad975067627bef1c8d167680f386bf483d4e161b2e04c0a5730d9f97f5996986",
+      "status": "new-candidate-inputs-bound-only",
+      "unitsStarted": 0
+    },
+    "verdict": {
+      "accepted": true,
+      "caddyMaterialsMatchFrozenPrepareInputs": true,
+      "checkedAtMs": 1794567559167,
+      "cohortNonce": "6e57867ebd21d317fdb3a1db5f80e4ab",
+      "compatibilityProofCreated": false,
+      "completeSourceFiles": 57,
+      "executionIdentityBound": true,
+      "fullReceiptSha256": "8c637d47e4dc1dac862c51c5ee5d72149212b6a8a491ca79e67824ba5fc45726",
+      "identityLoginVerified": false,
+      "maximumAgeMs": 300000,
+      "nativePreparationAuthorized": false,
+      "observedAtMs": 1794567559164,
+      "outerResultSha256": "ad975067627bef1c8d167680f386bf483d4e161b2e04c0a5730d9f97f5996986",
+      "prepareBindingSha256": "78522be042325bad229f1dc67bdd8628f533442d98d83b0c5eff6a96b17e2ef4",
+      "productionReady": false,
+      "protectedBaselineUnchanged": true,
+      "readonlyBindingSha256": "43e320825d5f4b3fede2a307e35acb0f5c3f41964b0ccc686daa3b8ab8a7150c",
+      "readonlyPacketSha256": "013ce15aa8d6a2fd22990c03992c3f9fd230665aa3789c6eaf15dc8853d08e64",
+      "realModelCalls": 0,
+      "sourceConfigRuntimeAndDependencyMatch": true,
+      "status": "readonly-preparation-guard-only",
+      "tlsServiceVerified": false,
+      "unitsGranted": 0
+    }
+  },
+  "review": {
+    "failureNotPromotedToSuccess": true,
+    "independentReadOnlyEvidenceReviewCompleted": true
+  },
+  "schemaVersion": 1,
+  "scopeUsage": {
+    "automaticRetry": false,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingServicesRestarted": false,
+    "externalAgentCalls": 0,
+    "failureReadonlyCaptures": 1,
+    "grantsChanged": false,
+    "newPreparationUnits": 1,
+    "portsChanged": false,
+    "previousPreparationRoundStillUsed": "1/1",
+    "productionPublication": false,
+    "readonlyPrechecks": 1,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "status": "new preparation unit failed at materialization deadline; stopped without retry or publication",
+  "supportedConclusion": {
+    "exactSuboperationBottleneckProven": false,
+    "failedMacroPhase": "materialize",
+    "firstSnapshotCompleted": true,
+    "firstSnapshotSeconds": 3.9091209368780255,
+    "nativePreparationAccepted": false,
+    "performanceImprovementProven": false,
+    "phaseElapsedSeconds": 70.20385375153273,
+    "secondSnapshotReached": false
+  },
+  "userApproval": {
+    "automaticRetry": false,
+    "candidateBindingSha256": "b985bc30571688f7df248c18c69a5de0a529e8b9be065ffd027fa9ce922c84f0",
+    "cpuPercent": 20,
+    "isolatedNetwork": true,
+    "maximumFailureReadonlyCaptures": 1,
+    "maximumNewPreparationUnits": 1,
+    "maximumReadonlyPrechecks": 1,
+    "memoryMiB": 192,
+    "oldQuotaPreserved": "1/1",
+    "preparationLocalOuterSeconds": 150,
+    "preparationRemoteOuterSeconds": 120,
+    "productionPublication": false,
+    "readonlyLocalSeconds": 35,
+    "readonlyRemoteSeconds": 20,
+    "status": "explicitly approved by user",
+    "swapBytes": 0,
+    "tasksMax": 32,
+    "unitSeconds": 90
+  }
+}
