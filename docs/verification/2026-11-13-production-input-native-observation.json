@@ -1,0 +1,163 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "status": "accepted-scoped-read-only-observation; not production delivery",
+  "observedAtClient": "2026-11-13T13:02:19.9290701+08:00",
+  "scope": {
+    "sshAttemptsAuthorized": 1,
+    "sshAttemptsUsed": 1,
+    "automaticRetry": false,
+    "remoteEnvelopeSeconds": 20,
+    "localEnvelopeSeconds": 35,
+    "workMaximumSeconds": 15,
+    "newLinuxUnits": 0,
+    "businessDatabasesRead": false,
+    "productionPublication": false,
+    "servicesStartedOrStopped": false,
+    "credentialsOrGrantsChanged": false,
+    "relayChanged": false
+  },
+  "timing": {
+    "localTerminalWallSeconds": 4.6751391,
+    "outerMilliseconds": 4545.9038,
+    "sshOperatorSeconds": 4.265917300013825,
+    "workSeconds": 2.687573742121458,
+    "observedWorkBudgetSeconds": 14.914834497496486
+  },
+  "sourceBinding": {
+    "collectorSha256": "583555ef57ac468ae0e2fbbdf6065f969cc72749e567b27a739b92bd8a3d245f",
+    "packetSha256": "013ce15aa8d6a2fd22990c03992c3f9fd230665aa3789c6eaf15dc8853d08e64",
+    "packetBytes": 174525,
+    "nineRoleSha256": {
+      "api.py": "b71cdcb41294d8fc5e5e6fe093b8d9f0d3423d5fce127333db20a8d212fc11db",
+      "base.py": "63ed0731c21411dbe91fbb7a4a7e2f5330df80a49f490f29c47342b7098cdcc1",
+      "reference.py": "b704ceefa1bf917c8ce0c18a439d1b50099f6e723e7fcc3d5f892698088bd1e3",
+      "config.py": "ab1729aaecc2dd748e4c9f38f9e68b4b31cc2366d6b8cf5fafaac3454d66516b",
+      "gate.py": "95ab206d9f0dcf1bbcb208e600e7c24a94de4218a1025738a1844e67d8cb7af3",
+      "detail.py": "a78f4d8be5f66df779f76c4a5b0e0a440aed8ae76cc1cc571bcc011adcb5bc6c",
+      "adapt.py": "33190705866e041719f706c10d2a6fdffbc17740de89cd35091dfac7acf962a7",
+      "observe.py": "500ae0f99c7ee4ec76f894a2bc0b572184ff9d0a2a59ee7da9533aa51f8bdf25",
+      "draft.py": "97e1e1a67c2354e21e0dd1d679a44403779de4fc7612c805e5ca6ccdf73b4b35"
+    },
+    "unchangedOperatorHashes": {
+      "runnerSha256": "f56a8ead6eef11a766a471c501e7c3ac9d27794db4e1a4509499bf7c708a9f6d",
+      "entrySha256": "90cbd7544c7ca92c013b4038f3cf8bc88003f746fa0e4c1f1350a358f4385f99",
+      "outerSha256": "0c57f7aa189793f049f27f91aee1ea54e7c0bd4532cac9fb156e429ef74fca44",
+      "helperSha256": {
+        "scheduler.py": "4d8af5d0065cc8c53a8bd382581282c3d872e5bb5e84232031586d91c3e0e282",
+        "ssh_transport.py": "9285484e9b86c50ff1eebffcf47a6db95bf232c50cf19088bc77e53e6ac5c11a"
+      }
+    },
+    "bindingSha256": "ae04cf3b9215065b7c7117ae8c6904f86ad2815896408520902fc53ff6056ea5"
+  },
+  "sourceAndDependencies": {
+    "previousCodeFiles": 57,
+    "previousCodeCanonicalSha256": "712731e0d1cc9c8b71e58f3933a6694e5bbed99ebe295183110e5ef0fc5d7181",
+    "enumerationScope": "complete inventory under fixed collector exclusion and directory rules",
+    "dependencyFingerprint": {
+      "bytes": 38850588,
+      "files": 4462,
+      "sha256": "5d1e5e56e0ce865a41e881262d72ee711225fb3940b9556416a30cf6dcc639a0"
+    },
+    "completeReadRounds": 2,
+    "observedMapsMatchPacket": true,
+    "runtimeHashesMatch": true
+  },
+  "caddyAdapt": {
+    "final": {
+      "cleanupConfirmed": true,
+      "commandExitCode": 0,
+      "documentBytes": 9111,
+      "documentSha256": "3b5c7a34f751d19ef0c17b15f4757d87eb1161ea91d22e3ad13f524bfb23f5fd",
+      "expectedListen": ":443",
+      "materialSha256": "8002d809f17b7416b34f641e8d3f23e0ba69936926f0af314193228eb3fc9808",
+      "originalDocumentValidatorPassed": true,
+      "stderrBytes": 2710
+    },
+    "loopback": {
+      "cleanupConfirmed": true,
+      "commandExitCode": 0,
+      "documentBytes": 9144,
+      "documentSha256": "5f2e873a1d6867af9fcb9e89371869a4fd486eea3c0326ad4685ad467bef16f2",
+      "expectedListen": "127.0.0.1:443",
+      "materialSha256": "f59357741f21378c7ac13e79909b186f363cdc385482a1f2f98dc636d7e8d16b",
+      "originalDocumentValidatorPassed": true,
+      "stderrBytes": 2713
+    }
+  },
+  "protectedBaseline": {
+    "serviceCount": 4,
+    "allActiveRunningAtBothSnapshots": true,
+    "servicesSnapshotsEqual": true,
+    "sameMainPidsAndRestartCounters": true,
+    "configurationCount": 3,
+    "configurationHashesEqual": true,
+    "configurationBytesUnchanged": true,
+    "existingClientConfigurationHashBound": true,
+    "approvedClientCount": 1
+  },
+  "exitAndCleanup": {
+    "terminalExitCode": 0,
+    "innerExitCode": 0,
+    "remoteExitCode": 0,
+    "remoteExitObserved": true,
+    "stdinEofSent": true,
+    "packetBytesSent": 174525,
+    "transportStdoutMatchesReceiptAndSavedOutcome": true,
+    "savedOutcomeIsProvisional": true,
+    "finalOuterSummaryIsProvisional": false,
+    "ownedSshHandleCleanupConfirmed": true,
+    "ownedHandles": [
+      "socket",
+      "transport",
+      "channel-0"
+    ],
+    "pendingHandleCount": 0,
+    "cleanupErrorCount": 0,
+    "channelClosedObservedAtExit": false,
+    "commandCleanupUnknown": false,
+    "remoteTransportStderrBytes": 0,
+    "localChildStderrBytes": 60,
+    "outerStderrBytes": 0
+  },
+  "independentReview": {
+    "scope": "local read-only audit of saved evidence; no tests or network",
+    "result": "No definite P1/P2 or evidence contradiction identified",
+    "reviewerAgentId": "01a1cb40-ff10-7292-bb4f-30264528ea87"
+  },
+  "limitations": [
+    "Caddy adapt and parsed document validation do not establish real TLS/listener, application, business UID, cgroup, or global FD acceptance.",
+    "Caddy stderr 2710/2713 bytes and local child stderr 60 bytes have counts only; their contents and causes were not retained or inferred.",
+    "Owned SSH handle closure is not an independent kernel process census; channelClosedObserved=false preceded the confirmed owned close.",
+    "Equal before/after service and configuration snapshots do not establish continuous availability or Relay forwarding quality.",
+    "No business database was read and no fresh compatibility proof was created; no cross-database consistency claim.",
+    "Actual candidate allocation and complete release space sufficiency remain unknown.",
+    "Current private raw configuration and authority bindings still require a separately scoped actual-input producer.",
+    "No real model or external Agent was invoked; historical acceptance is not renewed by this observation.",
+    "No application tests were rerun; the prior 32 local tests and source/log bindings were checked before this single observation."
+  ],
+  "nextGates": [
+    "Prepare and measure an actual remote candidate under separately approved write scope",
+    "Bind complete actual private inputs and obtain fresh per-database copy compatibility evidence",
+    "Separately approved maintenance, rollback protection and production acceptance"
+  ],
+  "productionReady": false,
+  "privateEvidenceSha256": {
+    "approval.json": "17b762aaf5d3b388d878165f610ab4368ccb5c06611a4dcf0c4e3fb0f65b1b20",
+    "binding.json": "ae04cf3b9215065b7c7117ae8c6904f86ad2815896408520902fc53ff6056ea5",
+    "ssh-attempt.json": "2b8d0fa35fb2e40af36584a96e79066886c21e973848b4d0f2fbfde693a3c84d",
+    "terminal.json": "12fcef4c4a840181d7e62ff5de9a85a82c20bc946e610b62f0e5efa1be4cf492",
+    "outer-result.json": "3b1ff3ac060821aff685eea61894b8505d2ad3d772bf732c8c7332d246a48871",
+    "outer-stderr.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "transport.json": "1442cb3709d1b7a3e95332006017c7633b965f1dcf6f1323d911ff06c3c05ef7",
+    "ssh-cleanup.json": "793c77be454402cb5c3b5249c4f36b17074c1ac6c6b71e322ef955c5f5f07214",
+    "receipt.json": "35bddf937f9402d69bc001fce691d56df55b3a35e7141de77bfec41a37e228d0",
+    "outcome.json": "6fe2a9fc69233464fdbdfe6955eeb0caf7844d3c0dce3618cef5d07032f6efea",
+    "packet.json": "013ce15aa8d6a2fd22990c03992c3f9fd230665aa3789c6eaf15dc8853d08e64",
+    "remote_collect.py": "583555ef57ac468ae0e2fbbdf6065f969cc72749e567b27a739b92bd8a3d245f",
+    "local_run.py": "f56a8ead6eef11a766a471c501e7c3ac9d27794db4e1a4509499bf7c708a9f6d",
+    "bounded_entry.py": "90cbd7544c7ca92c013b4038f3cf8bc88003f746fa0e4c1f1350a358f4385f99",
+    "outer_run.cjs": "0c57f7aa189793f049f27f91aee1ea54e7c0bd4532cac9fb156e429ef74fca44",
+    "offline-audit.py": "bc85fc6229bbb931c3489cb02da79c6797c6e20a0b64fdc385210094cc62d883"
+  }
+}
