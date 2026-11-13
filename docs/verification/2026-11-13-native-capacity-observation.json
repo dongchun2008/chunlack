@@ -1,0 +1,192 @@
+{
+  "authorization": {
+    "automaticRetry": false,
+    "failureCaptureOrAdditionalRemoteCallPerformed": false,
+    "localSeconds": 35,
+    "maximumSshAttempts": 1,
+    "maximumUnits": 0,
+    "remoteSeconds": 20,
+    "sshAttemptsUsed": 1,
+    "unitsUsed": 0
+  },
+  "capacity": {
+    "allThreeDestinationsShareOneDevice": true,
+    "dataOrBackupCapacityAcceptance": false,
+    "devices": [
+      {
+        "allocationUnit": 4096,
+        "device": 64771,
+        "freeBytes": 28382674944,
+        "freeInodes": 2262417,
+        "requiredFreeBytes": 1231290368,
+        "requiredFreeInodes": 31376,
+        "roles": [
+          "release",
+          "source",
+          "stage"
+        ],
+        "sufficient": true
+      }
+    ],
+    "policyIsEstimateNotReservation": true,
+    "preparationSpaceSufficient": true
+  },
+  "collectorSeconds": 0.0014041857793927193,
+  "date": "2026-11-13",
+  "diagnosticLimitations": {
+    "localChildStderrBodyRetained": false,
+    "localChildStderrBytes": 60,
+    "localChildStderrCauseVerified": false,
+    "note": "The unchanged outer wrapper retained the60-byte child stderr count but not its body. It is not recorded as empty or harmless. No replay or extra SSH was performed to recover it.",
+    "outerStderrBytes": 0,
+    "remoteStderrBytes": 0
+  },
+  "inputBinding": {
+    "activationOnlyChanged": true,
+    "candidateBindingSha256": "1007bc80b1b8a04fe484fb159d5e58caaf07398c326df750334d03fd1ab97d66",
+    "capacityPacketBindingSha256": "a9d946539edb8bdfd9d87883075083be1192efdf21ff7d91fc5733f55d82702a",
+    "executionBindingSha256": "054059c3dc3bc4f3d5100a6602b236fd33d2cddbbf21ef6edece50d71f2765ed",
+    "originalInactiveBindingSha256": "145fabbb2a568237ed0a367b6068b510cbef734a51e9b1f4fc4f942fb2fad85d",
+    "originalOuterAndSshHelperSourcesUnchanged": true
+  },
+  "limitations": [
+    "Space and inode figures describe the observed instant, not a lease or a guarantee against concurrent writers, quotas or arbitrary filesystem overhead.",
+    "No actual candidate allocation, post-preparation DATA/backup sizing or database-copy compatibility proof was produced.",
+    "The previous70.2-second materialization deadline failure remains unresolved; this observation does not identify its substage.",
+    "Remote channel closure was not observed before session cleanup; socket/transport/channel cleanup was separately confirmed.",
+    "No new resource usage, pressure, sustained multi-Agent, login, TLS or model acceptance was performed.",
+    "The new single remote quota is fully consumed; preparation or another observation requires a new bounded approval.",
+    "Only this sanitized record is synchronized; private raw evidence and operational code remain local."
+  ],
+  "localOperatorReview": {
+    "independentStaticCorrectionReviewCompleted": true,
+    "optimizationDependentChecksReplacedWithExplicitChecks": true,
+    "optimizedFalseValueChecks": 3
+  },
+  "nativePreparationAuthorized": false,
+  "nextGate": "locally bind fresh capacity and source/config prechecks to the inactive instrumented preparation candidate, then propose its new bounded preparation unit",
+  "observedAtAsiaShanghai": "2026-11-13T21:49:51.156674+08:00",
+  "operatorEvidenceSha256": {
+    "finalize_native.py": "9f1c8ccffdddb7f400d23e8ee74844984fc9e0905a8a1e6bab1e7bd66eee5330",
+    "native-observation-attempt.json": "f287a7a4a5f3ec56b5b02b23382742794b59c87b88248136898cc7f2ad378148",
+    "native-observation-authorization.json": "0162819069177af77d51c2483693eb2597e9d4229ad750de2418a7ed602b2c4f",
+    "native-observation-result.json": "c586bf89602b44948c4d738a0ff46c3df52231f7a3972e9ee6da1d42bcdae2cb",
+    "observe_once.py": "7f4a3c0c998d97079d815159c88ac0ac4dc4add5367030c9947148d8ffbf5ec1"
+  },
+  "privateEvidenceSha256": {
+    "binding.json": "054059c3dc3bc4f3d5100a6602b236fd33d2cddbbf21ef6edece50d71f2765ed",
+    "capture-attempt.json": "6191f09a7ac73e2f07cddbce9244766defb03bd281e55822da7025f095229880",
+    "observation-verdict.json": "9c2086f206cbab92c763e0e9815ff350bb030fa98489ef3050dd0fce2f888072",
+    "outcome.json": "cb33c74e7509f88271fd66394ac3edea56969fef1ebbb5654a98ca22eeaab9d3",
+    "outer-result.json": "e57daad79b78f9f5250ad1788bd495edc5143f9875c612c56bb6928272f75e9f",
+    "outer-stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "receipt.json": "5ac67e8c29a40462e7b22636a22bb4c7acffeec062f0ad0ecda47c3e7b7714a2",
+    "ssh-attempt.json": "2a2f93305a3eb7b9194494e1c7c4bc7da1092216212e5d07a4cdcc218b23f689",
+    "ssh-cleanup.json": "81a33a366900761545fb15d6a9ed3059b554c116d0af469cf23c1defe74cb0d6",
+    "terminal.json": "4ad46a98602b50a5a25f46f1184e7af47e6d69f5202a7947001d887fcc2fff58",
+    "transport.json": "de6c4616d7c68b6a2772cce1c2a329975007ad3d7ddde1476b7eaea2fc252ad6"
+  },
+  "productionReady": false,
+  "remoteStderrBytes": 0,
+  "schemaVersion": 1,
+  "scope": {
+    "credentialDisplayedOrCommitted": false,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingCredentialUsedThroughPinnedTransport": true,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "portsChanged": false,
+    "productionPublication": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "remoteFilesWrittenByCollector": false,
+    "servicesStartedStoppedOrRestarted": false,
+    "vpsConnected": true
+  },
+  "serviceBaseline": {
+    "allFourActiveBeforeAndAfter": true,
+    "exactEightFieldSnapshotsEqual": true,
+    "services": {
+      "chunlack-https.service": {
+        "activeAfter": "active",
+        "activeBefore": "active",
+        "processIdUnchanged": true,
+        "restartCountAfter": "0",
+        "restartCountBefore": "0"
+      },
+      "chunlack-public.service": {
+        "activeAfter": "active",
+        "activeBefore": "active",
+        "processIdUnchanged": true,
+        "restartCountAfter": "0",
+        "restartCountBefore": "0"
+      },
+      "chunlack.service": {
+        "activeAfter": "active",
+        "activeBefore": "active",
+        "processIdUnchanged": true,
+        "restartCountAfter": "0",
+        "restartCountBefore": "0"
+      },
+      "tailscaled.service": {
+        "activeAfter": "active",
+        "activeBefore": "active",
+        "processIdUnchanged": true,
+        "restartCountAfter": "0",
+        "restartCountBefore": "0"
+      }
+    }
+  },
+  "sshCleanup": {
+    "completions": [
+      {
+        "elapsedSeconds": 0.004116699972655624,
+        "handle": "socket",
+        "wallElapsedSeconds": 0.0041179999825544655,
+        "withinBudget": true
+      },
+      {
+        "elapsedSeconds": 0.004278599983081222,
+        "handle": "transport",
+        "wallElapsedSeconds": 0.004279299988411367,
+        "withinBudget": true
+      },
+      {
+        "elapsedSeconds": 0.004641099949367344,
+        "handle": "channel-0",
+        "wallElapsedSeconds": 0.004641299950890243,
+        "withinBudget": true
+      }
+    ],
+    "confirmed": true,
+    "deadlineExhausted": false,
+    "errors": [],
+    "lateHandles": [],
+    "pendingHandles": [],
+    "subDeadlineExceeded": false,
+    "timedOut": false
+  },
+  "status": "single native read-only preparation-capacity observation completed; preparation and release not authorized",
+  "terminal": {
+    "automaticRetry": false,
+    "exitCode": 0,
+    "outerResultSha256": "e57daad79b78f9f5250ad1788bd495edc5143f9875c612c56bb6928272f75e9f",
+    "outerStderrBytes": 0,
+    "sshAttemptFileExists": true,
+    "timedOut": false,
+    "wallSeconds": 2.325587600003928
+  },
+  "transport": {
+    "channelClosedObserved": false,
+    "completed": true,
+    "eofSent": true,
+    "exitCode": 0,
+    "exitObserved": true,
+    "outputLimitExceeded": false,
+    "sentBytes": 48125,
+    "stderrPresent": true,
+    "stdinBytes": 48125,
+    "stdoutPresent": true
+  }
+}
