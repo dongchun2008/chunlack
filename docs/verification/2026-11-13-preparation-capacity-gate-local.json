@@ -1,0 +1,140 @@
+{
+  "candidateBindingSha256": "1007bc80b1b8a04fe484fb159d5e58caaf07398c326df750334d03fd1ab97d66",
+  "corrections": [
+    "Policy fixture now represents the existing sticky /var/tmp requirement; safety check retained.",
+    "Local report parsing uses splitlines while retaining exact raw CRLF output.",
+    "Envelope rejects a backwards clock; the regression checks the exact expected error code.",
+    "Output flush is explicit and checked afterward; a late provisional body exits nonzero.",
+    "Expired-clock fixture includes the post-flush sample; original failed reports retained."
+  ],
+  "date": "2026-11-13",
+  "inactivePacketBindingSha256": "a9d946539edb8bdfd9d87883075083be1192efdf21ff7d91fc5733f55d82702a",
+  "inactivePacketFilesSha256": {
+    "config.json": "85ee57075d65dc0e784fe4d58dbb63fc046faab29d755801dfb9971e773cf632",
+    "remote.py": "7075b08d90836df8cd56afe258bc88bf294e1cd62f3d9ebeeb2f738671a80609",
+    "stdin.json": "dc6dcd65a4d08bcfa6fc8342cab92acdf9a4f44bf94b3c9c5bca359580be0fb8"
+  },
+  "limitations": [
+    "No current VPS free-space, inode or service facts have been collected in this phase.",
+    "This estimate is not a reservation, quota guarantee, or proof against concurrent writers or arbitrary filesystem overhead.",
+    "The collector reports elapsed time only; a future caller must bind it to fresh transport and terminal evidence before writing.",
+    "Observation acceptance is distinct from sufficient capacity, preparation authorization and publication readiness.",
+    "The external 20-second timeout and 35-second local lifecycle are required, not newly proven by these local tests.",
+    "Existing post-preparation DATA/backup sizing and database-copy compatibility remain mandatory.",
+    "Prior preparation and failure-capture quotas remain consumed; no new quota or execution is created by this record.",
+    "Private code, stdin payloads and local failure artifacts are not synchronized."
+  ],
+  "nextGate": "complete the existing bounded transport binding, then obtain a new single read-only capacity-observation approval; do not run preparation from this observation alone",
+  "observationPolicy": {
+    "additionalAllocationUnitsPerEntry": 4,
+    "budgetGroupedByDevice": true,
+    "databaseQueries": 0,
+    "descriptorsReopenedForSecondPass": true,
+    "destinations": [
+      "/var/tmp",
+      "/var/lib",
+      "/opt/chunlack-public"
+    ],
+    "directoryEnumeration": false,
+    "estimatedMaximumEntriesByRole": {
+      "release": 528,
+      "source": 8464,
+      "stage": 22128
+    },
+    "estimatedMaximumLogicalBytesByRole": {
+      "release": 16777216,
+      "source": 16777216,
+      "stage": 150994944
+    },
+    "fileBodiesRead": false,
+    "freeByteAndInodeValuesUseLowerObservation": true,
+    "identityModeFlagsAndAllocationUnitDriftReject": true,
+    "originalPinnedReaderUnmodified": true,
+    "passes": 2,
+    "paths": [
+      "/",
+      "/var",
+      "/var/tmp",
+      "/var/lib",
+      "/opt",
+      "/opt/chunlack-public"
+    ],
+    "policyIsEstimateNotReservation": true,
+    "readOrCleanupFailureReject": true,
+    "remainingByteMarginPerDevice": 536870912,
+    "remainingInodeMarginPerDevice": 256,
+    "sameDescriptorForFstatAndStatvfsWithinEachObservation": true
+  },
+  "plan": "docs/superpowers/plans/2026-11-13-preparation-capacity-gate.md",
+  "privateEvidenceSha256": {
+    "capacity.py": "0a964b9873a44b6ba1332a8a0c8f22eed73fe813056858a467374c8c18fcc18f",
+    "envelope.py": "0c7ef515c5fd4149782c024b7a573d1207b95040a2a2765a3914e170113dac0f",
+    "finalize.py": "82e65437ff89eb747df5ac991365f34a558e9cb657a644cbb359ed0471b518a0",
+    "green-first.log": "c9b9df2a29fd3c9580c24b6ce1c7b3354b57a56494ccdd5e6ebcb7a97ce22cf0",
+    "green-second.log": "5a2ef0d0d71ade489e55acd979e1e473248d065a39e5fa45c5fb4256ef78a142",
+    "packet-clock-red-confirmed.log": "cc19917754b30b2bef481f2944016d5844ae5f26cae5c9723fd01b1693567b16",
+    "packet-flush-red.log": "88262dd8c54b7bb48b9fa0b5a0966f2b1b7f38d5fc80f1a155771b130869073b",
+    "packet.py": "c8cfeb518329ff55629d97dbe0493a3bac2386f712fbc1eb4a8647b3f25c3378",
+    "red.log": "94fc3232d13d866ec24ce68d0962484030d0fad5fa36b5587429902037bcf356",
+    "related-final-terminal.json": "a7bfc10a5d5f00244d800657db83f88fa76503aa63e402a9a854766659f9e5fc",
+    "related-final.stderr": "8991c388c1077b98568b88cff0e6d25e6844167bbd1a832c40767e5c20ddb367",
+    "related-final.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "related-v2-terminal.json": "3bd5908202e1081c1b7012a8f61f87dff454b8be42a7ea9fd8733abc8cf94b61",
+    "related-v2.stderr": "7dd5410d139a31a540fd191ff12e853e4e420e09d4a9dcbbe3d3e15762ab4324",
+    "run_all.py": "273cbdd6cd4cc8b28cfe156738085f72ed8b36a62cbd8128496d16c449985a86",
+    "test_capacity.py": "b70a5ac56d07d1e46ea68aa969a6490f6edf8b379920baff2f8a7cdd52053a0a",
+    "test_packet.py": "5423eb42ebb608c766f9608b06d1d232db9b4459af95c68f26e37b7c99ad8d26"
+  },
+  "productionReady": false,
+  "regression": {
+    "actualProcessExitCode": 0,
+    "capacityCases": 18,
+    "envelopeCases": 6,
+    "errors": 0,
+    "failures": 0,
+    "fullProductOrPreviousIntegrationTestsRerun": false,
+    "skipped": 0,
+    "sourceCount": 6,
+    "sourceHashesUnchanged": true,
+    "tests": 24,
+    "wallSeconds": 0.31188039999688044
+  },
+  "review": {
+    "confirmedP2FoundAndFixed": 1,
+    "independentReadOnlyStaticReview": true,
+    "reviewerExecutedTests": false
+  },
+  "schemaVersion": 1,
+  "scope": {
+    "credentialsChanged": false,
+    "credentialsRead": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "productionPublication": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "servicesChanged": false,
+    "sshAttemptsUsed": 0,
+    "vpsConnected": false
+  },
+  "sourceHashesSha256": {
+    "capacity.py": "0a964b9873a44b6ba1332a8a0c8f22eed73fe813056858a467374c8c18fcc18f",
+    "envelope.py": "0c7ef515c5fd4149782c024b7a573d1207b95040a2a2765a3914e170113dac0f",
+    "packet.py": "c8cfeb518329ff55629d97dbe0493a3bac2386f712fbc1eb4a8647b3f25c3378",
+    "run_all.py": "273cbdd6cd4cc8b28cfe156738085f72ed8b36a62cbd8128496d16c449985a86",
+    "test_capacity.py": "b70a5ac56d07d1e46ea68aa969a6490f6edf8b379920baff2f8a7cdd52053a0a",
+    "test_packet.py": "5423eb42ebb608c766f9608b06d1d232db9b4459af95c68f26e37b7c99ad8d26"
+  },
+  "status": "preparation capacity collector and inactive metadata envelope locally verified",
+  "timing": {
+    "blockedIoPreemptionClaimed": false,
+    "collectorSeconds": 15,
+    "envelopeSeconds": 18,
+    "externalNativeTimingVerified": false,
+    "externalTimeoutRequiredSeconds": 20,
+    "localTotalProposedSeconds": 35,
+    "nonzeroActualExitRejectsProvisionalSuccessBody": true,
+    "outputFlushAndPostFlushDeadlineChecked": true
+  }
+}
