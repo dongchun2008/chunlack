@@ -1,0 +1,239 @@
+{
+  "benchmark": {
+    "actualFilesystemFsyncTimed": false,
+    "actualVpsCostKnown": false,
+    "aggregateNoopStress": {
+      "calls": 100000,
+      "cpuSeconds": 0.125,
+      "report": {
+        "aggregates": {
+          "directory_fsync": {
+            "calls": 33333,
+            "failures": 0,
+            "millisecondsLowerBound": 12.709100905340165,
+            "timingComplete": true
+          },
+          "file_fsync": {
+            "calls": 33334,
+            "failures": 0,
+            "millisecondsLowerBound": 12.956797785591334,
+            "timingComplete": true
+          },
+          "write_readback": {
+            "calls": 33333,
+            "failures": 0,
+            "millisecondsLowerBound": 13.256400532554835,
+            "timingComplete": true
+          }
+        },
+        "argumentsOrBodiesRecorded": false,
+        "completedInputsLowerBound": 0,
+        "diagnosticErrors": [],
+        "exceptionMessagesRecorded": false,
+        "filenamesRecorded": false,
+        "inputBytesLowerBound": 0,
+        "lastWorkPhase": null,
+        "maximumRecords": 96,
+        "omittedRecords": 0,
+        "productionReady": false,
+        "records": [],
+        "schemaVersion": 1,
+        "status": "materialization-detail-only",
+        "valid": true
+      },
+      "wallSeconds": 0.12528269999893382
+    },
+    "limitations": [
+      "single local run; CPU clock quantization can dominate small differences",
+      "synthetic in-memory stores do not model metadata syscalls or fsync latency",
+      "no native performance or materialization deadline claim"
+    ],
+    "memoryEngineABBA": [
+      {
+        "cpuSeconds": 0.15625,
+        "dependencyInputs": 4462,
+        "role": "original",
+        "sourceInventoryRounds": 3,
+        "storeClosedCount": 1,
+        "wallSeconds": 0.1559102000319399
+      },
+      {
+        "cpuSeconds": 0.15625,
+        "dependencyInputs": 4462,
+        "progressRows": 17,
+        "role": "observed",
+        "sourceInventoryRounds": 3,
+        "storeClosedCount": 1,
+        "timelineRows": 29,
+        "wallSeconds": 0.15518429997609928
+      },
+      {
+        "cpuSeconds": 0.171875,
+        "dependencyInputs": 4462,
+        "progressRows": 17,
+        "role": "observed",
+        "sourceInventoryRounds": 3,
+        "storeClosedCount": 1,
+        "timelineRows": 29,
+        "wallSeconds": 0.15814339998178184
+      },
+      {
+        "cpuSeconds": 0.140625,
+        "dependencyInputs": 4462,
+        "role": "original",
+        "sourceInventoryRounds": 3,
+        "storeClosedCount": 1,
+        "wallSeconds": 0.1400407999753952
+      }
+    ],
+    "newLinuxUnits": 0,
+    "productionReady": false,
+    "status": "local-instrumentation-overhead-only"
+  },
+  "candidateSourcesSha256": {
+    "detail_trace.py": "dc0972e3bbdc9630de94dbdc7174680771074cd65f701515773728825223a0e6",
+    "materialize_candidate.py": "8ed15ae686e1d77df0a534305ca0caf5e89e7a61f9493bdf4e4445e5c54a05fa",
+    "native_store_candidate.py": "4d577d5005e3f57b419f416f1d999e1d9115e4866893a616e6942fe354f19511"
+  },
+  "date": "2026-11-13",
+  "measurementLimitations": [
+    "aggregate windows include CPU and scheduler delay, not pure disk latency",
+    "write readback timing includes its original metadata and identity checks",
+    "local memory and noop measurements do not establish VPS overhead or resolve the70s timeout"
+  ],
+  "nativeOpsEntryIntegrationComplete": false,
+  "newInactiveExecutionPackageCreated": false,
+  "nextGate": "bind observer and valid-check into NativeOps/entry, preserve complete hash closure, test locally before proposing native quota",
+  "observerPolicy": {
+    "aggregateLabels": [
+      "file_fsync",
+      "directory_fsync",
+      "write_readback"
+    ],
+    "failedWriteNotCountedAsCompleted": true,
+    "filenamesArgumentsBodiesOrExceptionMessagesRecorded": false,
+    "inMemoryOnly": true,
+    "lastWorkPhaseSurvivesCleanup": true,
+    "maximumAggregateLabels": 3,
+    "maximumDiagnosticErrorCodes": 8,
+    "maximumTimelineRows": 96,
+    "progressIntervalCompletedInputs": 256,
+    "timingLowerBoundsMarkedWhenIncomplete": true,
+    "twentyThousandInputCaseFitsWithinLimit": true
+  },
+  "physicalObservedCoverage": {
+    "actualLinuxCapabilitiesOrMountsVerified": false,
+    "aggregateCallsPerRun": [
+      {
+        "directory_fsync": 0,
+        "file_fsync": 78,
+        "write_readback": 78
+      },
+      {
+        "directory_fsync": 0,
+        "file_fsync": 76,
+        "write_readback": 76
+      },
+      {
+        "directory_fsync": 0,
+        "file_fsync": 78,
+        "write_readback": 78
+      }
+    ],
+    "posixMetadataAndDirectoryFsyncSimulated": true,
+    "realLocalFileWritesAndFsyncReadbackMeasured": true,
+    "runs": 3
+  },
+  "plan": "docs/superpowers/plans/2026-11-13-materializer-detail-trace.md",
+  "preservedSourcesSha256": {
+    "materialize.py": "be69820c8f56cb1744249a07c46fade1510b3b78184f23b9f3cf15fa1ab3c446",
+    "native_store.py": "43545869ed21216bc4aac0a6319cd4a70120aedcd8f69feb653127188b9adb5a"
+  },
+  "privateEvidenceSha256": {
+    "benchmark-result.json": "0940a5d5ad610263a3eb41f88934eae22de9aa7c0554e83e68648ea6dcb63c6c",
+    "benchmark.log": "85e57ea54d2e070a2e9f9649bfc496a2093ac1933059100edd30c8081a4f0e3f",
+    "benchmark.py": "e6e72f70de148c1e099a14d2d0c1479ff73e9b3f7c3ba0652431918a9f027cd5",
+    "cancellation-green.log": "46fd16f74112b5d050da0916446048a3d91dae181466b17dcabbb5c0601278d5",
+    "cancellation-red.log": "279f974eef6640539f6f95c3194b317dcde1a4c82a98c162468fa6f76e61ea60",
+    "detail_trace.py": "dc0972e3bbdc9630de94dbdc7174680771074cd65f701515773728825223a0e6",
+    "engine-boundary-green.log": "094fc86fe6d306180103e942a36df6b71c3be3d2ee25f4898f580133e664c53d",
+    "engine-green.log": "59dece4aa879a7f5a829faabb540601c9bc622869fed1bb8fa4c3ab5a318fc43",
+    "engine-red.log": "944b425455f72fe01c7ad1c7aa84c5875f2f5df52239fcc797189a7e2d9a7f1e",
+    "finalize.py": "084a02a1067547cbd763e90a7608ad787cbd5e7d5db282f295ff5df32a1423ab",
+    "materialize_candidate.py": "8ed15ae686e1d77df0a534305ca0caf5e89e7a61f9493bdf4e4445e5c54a05fa",
+    "native_store_candidate.py": "4d577d5005e3f57b419f416f1d999e1d9115e4866893a616e6942fe354f19511",
+    "related-final.log": "f8ad7b6ab6fd28058901fc326cf341129c1ad8bb95727d7fdf7529c617096cb3",
+    "run_related.py": "77202f5a7a71e708804056759bd2bba57cd6b4b6e478348bd460889ee70cb2e8",
+    "source-bindings.json": "899ee589166bd90689f32074f042b23a7129af50517a29023a6c24ee8d36a3ce",
+    "store-green.log": "1358cb0d00b248494a917768df1cb3fe7f3e7ffd081dbd78cc3a703282315f0b",
+    "store-red.log": "4162420a60de76f7bcef70eec2317b7fdbb8d846c08abf6851124bafd156b482",
+    "test_engine.py": "2469711dfc4ce7c4211e2157a3d5c38accf86edcb423c0da0abc20d968caf5f2",
+    "test_store.py": "c0f6ad24470c2fabb4c6cbef4f88b62884d92daa8e61ba3609f11e86b19d9e54",
+    "test_trace.py": "f376b8b8974936d31e3a2c89b434ae41127eb5e36047179d40d7243f976c2f2c",
+    "trace-green.log": "9cc30cf5beb401eb305a720ac198697124d037450df77abaa42aa882456c1203",
+    "trace-red.log": "ebd92984993c633f27bdd806fcb2f7e66198061ac65bf67b90a5e7c099052991"
+  },
+  "productionReady": false,
+  "redGreenNotes": {
+    "allInitialFailureLogsPreserved": true,
+    "constantPatchedOnlyInsideMockedIoTests": true,
+    "initialMockStoreNeededWindowsNoFollowConstant": true,
+    "newCancellationCasesFirstFailedThenPassed": true
+  },
+  "regression": {
+    "caseCounts": {
+      "EngineTraceTests": 9,
+      "MaterializeTests": 22,
+      "NativeStoreTests": 12,
+      "PhysicalTests": 3,
+      "StoreTraceTests": 5,
+      "TraceTests": 13
+    },
+    "errors": 0,
+    "failures": 0,
+    "newLinuxUnits": 0,
+    "posixMetadataAndDirectoryFsyncSimulated": true,
+    "productionPublication": false,
+    "realLocalCopyObserved": true,
+    "skipped": 0,
+    "sourceFiles": 12,
+    "sourceHashesUnchanged": true,
+    "tests": 64,
+    "vpsConnected": false
+  },
+  "regressionTerminal": {
+    "actualProcessExitCode": 0,
+    "fullProductSuiteRerun": false,
+    "newCases": 27,
+    "originalEngineAdapterAndPhysicalCases": 37,
+    "seconds": 14.488
+  },
+  "review": {
+    "confirmedP1P2Remaining": 0,
+    "independentReadOnlyReviewCompleted": true
+  },
+  "safety": {
+    "fsyncReadbackMetadataAndIdentityChecksRemoved": false,
+    "metadataOrHashResultsCached": false,
+    "observerCleanupFailureCannotSkipStoreClose": true,
+    "operationAndTimingCancellationPreservedSeparately": true,
+    "originalExceptionObjectRetainedForOrdinaryTimingErrors": true,
+    "originalFilesystemAndTickOrderPreservedInComparisonCases": true,
+    "pathPlanOptimizationNotMixedIntoDiagnosticCandidate": true,
+    "sourceInventoryShortCircuitPreserved": true,
+    "timeOrResourceLimitsRelaxed": false
+  },
+  "schemaVersion": 1,
+  "scope": {
+    "credentialsChanged": false,
+    "credentialsRead": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "productionPublication": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "status": "materialization detail observer locally verified; NativeOps and entry integration pending"
+}
