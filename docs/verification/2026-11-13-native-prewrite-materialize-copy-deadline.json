@@ -1,0 +1,313 @@
+{
+  "authorization": {
+    "additionalRemoteCallsPerformed": false,
+    "automaticRetry": false,
+    "failureCaptureUsed": "1/1",
+    "precheckUsed": "1/1",
+    "preparationUnitUsed": "1/1"
+  },
+  "date": "2026-11-13",
+  "executionEvidenceSha256": {
+    "actual-terminal.json": "1db854e78da69f54024e64c353504acfefaff418bc05b4c965bcdb0866ae0af9",
+    "binding.json": "79d4da973a18b701da97cd586dd88aadbae67aca7290bf5c539083542dca1be6",
+    "operator-verdict.json": "bb6b165fbc5ebdaa057edfcde6396a9233272a004201f1e23703156d3ee5ace9",
+    "outcome.json": "fc37b115a620751b8f30836e33727105dbcc2d9fd9df14418d9b118977204e98",
+    "outer-attempt.json": "c59c48aecb136d2e1ec95c469ea60d03136bcdac37a9ed986daa5332c4ced8e9",
+    "parent-stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "parent-stdout.json": "931f3877aabd5e20fec13576bbba502226bad55b0a99f16c887d22b6f0455f11",
+    "ssh-attempt.json": "3eb18494450028bf4dd644c3ef80f7d92abea7a66f76ebd0c42885422558945f",
+    "ssh-cleanup.json": "5caab49a75555f38c97b1650f7fec0fb99f68fa1e5a08574ea21d878a52f4524",
+    "terminal.json": "f2bdea1616429fdd15bb24d2e5502fd74dd9b62d177ab1e6afc58951f6f448cc",
+    "transport.json": "849859fd0dce503747602460987fa4decdaec34c878b67507d16064a95422c31"
+  },
+  "failureCapture": {
+    "actualProcessExitCode": 0,
+    "capturedFiles": {
+      "worker.json": {
+        "bytes": 5908,
+        "sha256": "5de60e2d17fa081651ef84876f89dfe84fb971564dbce9cbc629c314f7a0781e"
+      },
+      "worker.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "localChildStderr": {
+      "bytes": 60,
+      "causeOrTimingVerified": false,
+      "containsSocketExceptionPrefix": true,
+      "rawRetainedPrivately": true,
+      "sha256": "cd55d46c7ba7a33e9673e068a3239ef52760ab180931e2d393893950fe2b1e89"
+    },
+    "rawStreamsRetainedPrivately": true,
+    "sameTagAndInvocationVerified": true,
+    "unitState": {
+      "ActiveState": "failed",
+      "ControlGroup": "",
+      "ExecMainCode": "1",
+      "ExecMainStatus": "2",
+      "Id": "chunlack-candidate-prepare-f491a76c02bd.service",
+      "InvocationID": "d8ad704a001c49178e9d064596ba130d",
+      "MainPID": "0",
+      "NRestarts": "0",
+      "Result": "exit-code",
+      "SubState": "failed"
+    },
+    "wallSeconds": 2.319109199976083,
+    "workerStderrBytes": 0
+  },
+  "inputBinding": {
+    "activationOnlyChanged": true,
+    "executionBindingSha256": "79d4da973a18b701da97cd586dd88aadbae67aca7290bf5c539083542dca1be6",
+    "expectedInputSha256": "41836c5a397229da24f364a47998bc81a52f4dc2e4a7ceccb19a7beaa73c11b2",
+    "inactiveCandidateSha256": "0e6cb7a5ea3c9cea5e5d734e218e97c574478716accdabc9539ffe237373574d",
+    "workerArchiveSha256": "d3c2a978ae7684aef461b535cf25267adce10f3a40d1997c8160ce4889911a38"
+  },
+  "interpretation": [
+    "The worker explicitly reported producer_deadline while copying; the75-second work bound was reached before the remaining validation stages.",
+    "At least3840 of4462 dependency inputs had reached the sampled completed counter; this is not the exact failure index.",
+    "The source-inventory and copy windows include all work between observer boundaries, including metadata, reads, scheduling and diagnostics.",
+    "Aggregate windows cover materialization so far; they are not pure disk latency, CPU attribution or proof that fsync is the sole bottleneck.",
+    "A valid diagnostic trace and zero aggregate operation failures do not mean the candidate finished.",
+    "Capacity passed and cleanup was confirmed; partial candidate files remain preserved and were not rolled back or accepted."
+  ],
+  "limitations": [
+    "No candidate allocation/post-copy verification or second pipeline snapshot completed; private input/source stability through the entire partial copy is not accepted.",
+    "No DATA/backup sizing, database-copy compatibility, production publication, login, TLS, real-model or external-Agent acceptance was performed.",
+    "The60-byte capture diagnostic has a Socket exception prefix; its cause, timing and harmlessness remain unverified.",
+    "The75-second work guard was reached. The enclosing80/90/120/150 limits were not all reached; no changed deadline is authorized or tested natively.",
+    "All three approved remote phases are consumed; no further SSH/unit may be run from this authorization.",
+    "Only this sanitized record is synchronized; private operational code, raw evidence and partial remote artifacts remain preserved."
+  ],
+  "livePrewriteCapacity": {
+    "candidateBindingSha256": "1007bc80b1b8a04fe484fb159d5e58caaf07398c326df750334d03fd1ab97d66",
+    "databaseQueries": 0,
+    "devices": [
+      {
+        "allocationUnit": 4096,
+        "device": 64771,
+        "freeBytes": 28381741056,
+        "freeInodes": 2262413,
+        "requiredFreeBytes": 1231290368,
+        "requiredFreeInodes": 31376,
+        "roles": [
+          "release",
+          "source",
+          "stage"
+        ],
+        "sufficient": true
+      }
+    ],
+    "directoriesEnumerated": 0,
+    "elapsedSeconds": 0.000729207880795002,
+    "fileBodiesRead": false,
+    "maximumSeconds": 15,
+    "nativeExecutionAuthorized": false,
+    "policyIsEstimateNotReservation": true,
+    "preparationSpaceSufficient": true,
+    "productionReady": false,
+    "readerSha256": "b71cdcb41294d8fc5e5e6fe093b8d9f0d3423d5fce127333db20a8d212fc11db",
+    "status": "preparation-capacity-observation-only",
+    "volumes": {
+      "release": {
+        "allocationUnit": 4096,
+        "device": 64771,
+        "flags": 4096,
+        "freeBytes": 28381741056,
+        "freeInodes": 2262413,
+        "gid": 0,
+        "inode": 654089,
+        "links": 139,
+        "mode": 16877,
+        "uid": 0
+      },
+      "source": {
+        "allocationUnit": 4096,
+        "device": 64771,
+        "flags": 4096,
+        "freeBytes": 28381741056,
+        "freeInodes": 2262413,
+        "gid": 0,
+        "inode": 654096,
+        "links": 132,
+        "mode": 17407,
+        "uid": 0
+      },
+      "stage": {
+        "allocationUnit": 4096,
+        "device": 64771,
+        "flags": 4096,
+        "freeBytes": 28381741056,
+        "freeInodes": 2262413,
+        "gid": 0,
+        "inode": 947742,
+        "links": 27,
+        "mode": 16877,
+        "uid": 0
+      }
+    }
+  },
+  "livePrewriteCapacityError": null,
+  "livePrewriteCapacityStatus": "passed",
+  "materializationEvidence": {
+    "aggregates": {
+      "directory_fsync": {
+        "calls": 4738,
+        "failures": 0,
+        "millisecondsLowerBound": 2164.6486902609468,
+        "timingComplete": true
+      },
+      "file_fsync": {
+        "calls": 4044,
+        "failures": 0,
+        "millisecondsLowerBound": 11375.746757723391,
+        "timingComplete": true
+      },
+      "write_readback": {
+        "calls": 4044,
+        "failures": 0,
+        "millisecondsLowerBound": 2840.057979337871,
+        "timingComplete": true
+      }
+    },
+    "deadlineElapsedMilliseconds": 75000.1776907593,
+    "expectedDependencyInputs": 4462,
+    "expectedDependencyLogicalBytes": 38850588,
+    "lastWorkPhase": "dependency_copy",
+    "phaseEventsNotReached": [
+      "dependency_copy_complete",
+      "source_inventory_after",
+      "stage_inventory",
+      "verify_artifacts",
+      "allocation",
+      "complete"
+    ],
+    "phaseIntervals": {
+      "dependencyCopyUntilDeadlineMilliseconds": 43185.51990110427,
+      "materializeMacroMilliseconds": 70201.06113050133,
+      "sourceInventoryBeforeMilliseconds": 26602.2254768759,
+      "writeArtifactsMilliseconds": 322.7953426539898
+    },
+    "sampledCompletedInputsLowerBound": 3840,
+    "sampledInputBytesLowerBound": 36117278,
+    "secondPipelineSnapshotReached": false,
+    "traceRecords": 21,
+    "traceValidMeansRecordIntegrityNotWorkCompletion": true,
+    "workerError": {
+      "children": [
+        {
+          "code": "producer_deadline",
+          "type": "TimeoutError"
+        },
+        {
+          "code": "producer_deadline",
+          "type": "TimeoutError"
+        }
+      ],
+      "childrenOmitted": 0,
+      "code": null,
+      "type": "ExceptionGroup"
+    }
+  },
+  "nativePreparationSucceeded": false,
+  "nextLocalAction": "model and align a separate preparation-only deadline candidate while preserving all IO/security checks and CPU/memory limits; propose a new bounded native scope only after local validation",
+  "observedAtAsiaShanghai": "2026-11-13T23:29:29.101831+08:00",
+  "policy": {
+    "actualPeakMemoryOrCpuUsageSampled": false,
+    "cpuPercent": 20,
+    "cpuWeight": 10,
+    "localOuterSeconds": 150,
+    "memoryMiB": 192,
+    "nice": 10,
+    "privateNetwork": true,
+    "remoteOuterSeconds": 120,
+    "swapBytes": 0,
+    "tasksMax": 32,
+    "unitSeconds": 90,
+    "workGuardSeconds": 75,
+    "workerOutputSeconds": 80
+  },
+  "precheck": {
+    "actualExitCode": 0,
+    "caddyMaterialsMatchFrozenPrepareInputs": true,
+    "cohortNonce": "d05673087b30f7ad1cd2f27f620304bf",
+    "completeSourceFiles": 57,
+    "fullReceiptSha256": "390e874ed72d21fea82398e134ba8bb6a0e3c87e6531712de847cd864dc1b583",
+    "protectedBaselineUnchanged": true,
+    "readonlyBindingSha256": "43e320825d5f4b3fede2a307e35acb0f5c3f41964b0ccc686daa3b8ab8a7150c",
+    "sourceConfigRuntimeAndDependencyMatch": true,
+    "wallSeconds": 3.856533699959982
+  },
+  "preparation": {
+    "actualProcessExitCode": 2,
+    "artifactsAccepted": false,
+    "candidateDirectoriesMayExist": true,
+    "cleanupErrors": [],
+    "compatibilityProofCreated": false,
+    "controllerElapsedSeconds": 75.88199457339942,
+    "finalErrors": [],
+    "invocation": "d8ad704a001c49178e9d064596ba130d",
+    "nativeExit": {
+      "code": 1,
+      "status": 2
+    },
+    "parentStderrBytes": 0,
+    "primaryError": {
+      "code": "dispatch_worker_exit",
+      "type": "ValueError"
+    },
+    "protectedBaselineUnchanged": true,
+    "settingsSealed": false,
+    "sshCleanupConfirmed": true,
+    "tag": "f491a76c02bd",
+    "timedOut": false,
+    "unitEmptyVerified": true,
+    "wallSeconds": 78.39911649998976,
+    "workerStatus": "candidate-preparation-failed"
+  },
+  "privateEvidenceSha256": {
+    "analysis.json": "473f81b6c68769f8b22e05bf650d5bd0d5384b8e955bf08a66ca52dc8e8894e4",
+    "analyze_local.py": "648bf56e8221516661632a7d2a7f628d110d71172f98d219509fc5db35b04b4f",
+    "authorization.json": "3d8f64a42a4d153966f79cbcf995ef8834c72d3434a2cffb7207a8ec43511c3d",
+    "decoded-capture.json": "3236143b0a29c7d67ef9a339f6001ced3ef07b74dbe7d3a0bb604d01a2458165",
+    "decoded-worker.json": "c6b97120043d0d1193bfbb4af31f3a312dcb796ee7c0398acd03217ebe6bff9f",
+    "failed-unit-readonly-attempt.json": "5ee6f0b9de5f19b6146344f1717b01f48d9387eb3238f51b17c53dda792f6257",
+    "failed-unit-readonly.json": "c4b9cd2ca5b1b07f3660865f249d6ac03a32ce5914e9389c031e699dba8c2992",
+    "failure-capture-binding.json": "b1289ae0761e4b859f5db8b63da68344bc7475db556d3ba02d3bfe47acc6df4c",
+    "finalize.py": "b50adb27b52a2dd354f6275d69ab3e83073133241bd887f8d7fb14181f5cc065",
+    "precheck-attempt.json": "f9e80de1d975b9d1cd08d355658d00da47440fca0ffd54f51e107afe48320827",
+    "precheck-result.json": "dab4da2e6e522a5c0ba4f38262acf5e3c6aef3d518cabad15b2c5f02b5ce80ed",
+    "preparation-operator-claim.json": "bae3668225ed5d463e11a227994a03fefec281a819b5f4cd337043dfaa29918c",
+    "preparation-summary.json": "c522cb03ba83b770b5b714afc76b04483dd1ebbf0c5c39aa1b09d78571b11638",
+    "prepare-tool-completion.json": "681944c883713812ecb26ad725d527fde0af1c0ac4c33dc9f41a502f304b2727",
+    "prepare_once.py": "c098fd948337b383493eb857dc93b6438e6287a60713586c28802cdbe8f25ed0",
+    "read_failed_once.py": "3815517a39372888636d9b0ae89fc70bb0e2753f271edbbbd85bfc50c2653bcf"
+  },
+  "productionReady": false,
+  "review": {
+    "confirmedMaterialDiscrepancies": 0,
+    "offlineIndependentEvidenceReviewCompleted": true,
+    "reviewerExecutedTestsOrRemoteCalls": false
+  },
+  "schemaVersion": 1,
+  "scope": {
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingFailureDirectoriesOrLocksModified": false,
+    "existingServicesStartedStoppedOrRestarted": false,
+    "existingSshCredentialUsedThroughPinnedTransport": true,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newDiagnosticUnitsStarted": 1,
+    "portsChanged": false,
+    "productionPublication": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "remoteWritesRestrictedToNewExclusiveCandidateDirectories": true,
+    "secretValuesDisplayedOrCommitted": false,
+    "serverConfigurationModified": false,
+    "serverConfigurationReadForPrivateInputAssemblyAndChecks": true,
+    "vpsConnected": true
+  },
+  "status": "diagnostic preparation failed at75-second work deadline during dependency copy; detailed evidence captured"
+}
