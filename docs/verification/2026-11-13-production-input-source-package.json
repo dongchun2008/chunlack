@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "stage": "production-input-source-package",
+  "status": "local_source_transfer_prepared_not_remote_activated",
+  "frozenManifestSha256": "c0ca08d6f03e1e6af3b46259a031239a24c6c89c8f5a4e22102ea8208f9b4c15",
+  "sourceAuditReferenceSha256": "6f7e0655f9a499f2accdfc141852123a7f78318cfb7facfc55f3f6af813a82a7",
+  "completeDataObservationSha256": "e7b7e257e3b2073946f353d33830859317216d66439a9390789905cf735a719b",
+  "archive": {
+    "format": "uncompressed USTAR source-only",
+    "entries": 75,
+    "productFiles": 66,
+    "controlFiles": 8,
+    "manifestFiles": 1,
+    "sourceLogicalBytes": 1238166,
+    "transferBytes": 1300480,
+    "sha256": "3697e0b3a48c12aaa6dd239dd4eafe244f54d796001647b7e22c1713a319b8b0",
+    "allMemberBytesReadBackEqual": true,
+    "linksAndSpecialMembers": 0,
+    "absoluteOrParentPaths": 0,
+    "businessDatabaseOrConfigurationOrCredentialFiles": 0,
+    "installedDependenciesIncluded": false,
+    "remoteExtractorOrTransportIncluded": false,
+    "launcherAndControllerSourceIncluded": true,
+    "automaticActivationIncluded": false
+  },
+  "currentSourceBinding": {
+    "productFilesChecked": 66,
+    "currentEqualsFrozen": 66,
+    "frozenFilesChecked": 74,
+    "unexpectedFrozenFiles": 0,
+    "installerOrProductRuntimeExecuted": false
+  },
+  "formalCandidateStaticContract": {
+    "launcherSha256": "681e480295ba83da9d51a720243b9dad2494bda200913d12d1aaadb209688df2",
+    "entrySha256": "73521af6d2885af306627fb77f216a7af97e9c3976196ac8cfb3bb9246c002bc",
+    "typedCpuQuotaPerSecUSec": 200000,
+    "memoryMaxBytes": 201326592,
+    "tasksMax": 32,
+    "swapMaxBytes": 0,
+    "noNewPrivileges": true,
+    "capabilityBoundingSet": 235,
+    "staticAstReadOnly": true,
+    "existingDeployedTypedPolicy": null,
+    "existingApplicationServiceResourceChanges": false
+  },
+  "capacityInputs": {
+    "dataComponentObservationAccepted": true,
+    "dataComponentMeasuredAtMs": 1794538048751,
+    "dataAndIngressCopyModelBytes": 27770880,
+    "backupFilesystemFreeBytesObserved": 28503752704,
+    "actualRemoteCandidateAllocationBytes": null,
+    "fullReleaseSpaceSufficient": null,
+    "localArchiveBytesAreNotRemoteAllocation": true,
+    "candidatePlusDependenciesMustBeMeasuredAfterApprovedPreparation": true
+  },
+  "missingInputs": [
+    "fresh exhaustive previous product inventory and installed dependency fingerprint",
+    "approved new remote candidate allocation and permission binding",
+    "private exact configuration/environment/ingress input bytes and validation without changing them",
+    "complete authority schema/index/trigger/row fingerprints read under approved database scope",
+    "explicit new formal launcher policy binding;historical installed entry remains unassumed",
+    "fresh original full-validator copy proof bound to the exact above inputs",
+    "separate maintenance approval and consistent backup before production switch"
+  ],
+  "notProvenByThisStage": [
+    "remote allocation",
+    "Linux extraction permissions",
+    "database compatibility",
+    "fresh native unit identity or kernel policy",
+    "production publication"
+  ],
+  "scope": {
+    "localOnly": true,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "productionServicesStartedOrStopped": false,
+    "realModelCalls": 0,
+    "externalAgentMessages": 0,
+    "credentialsReadOrChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "productionPublished": false,
+    "newTestsExecuted": 0,
+    "packagingAndSourceAssertionsExecuted": true
+  },
+  "independentReview": {
+    "completed": true,
+    "remainingDefiniteP1P2": 0,
+    "scope": "read-only local archive,bindings and statement review",
+    "reviewerExecutedAssemblerOrProductOrTests": false,
+    "reviewerUsedNetworkOrWroteFiles": false
+  },
+  "activated": false,
+  "deployable": false,
+  "productionReady": false,
+  "githubScope": "sanitized preparation record only;source archive remains private"
+}
