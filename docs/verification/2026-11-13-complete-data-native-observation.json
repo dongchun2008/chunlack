@@ -1,0 +1,161 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "stage": "complete-data-native-observation",
+  "status": "accepted_data_component_only_not_release_capacity_or_compatibility",
+  "authorization": {
+    "explicitUserApproval": true,
+    "sshAttemptsAuthorized": 1,
+    "sshAttemptsUsed": 1,
+    "linuxUnitsAuthorized": 0,
+    "linuxUnitsCreated": 0,
+    "maximumRemoteSeconds": 20,
+    "maximumLocalSeconds": 35,
+    "maximumMeasurementSeconds": 15,
+    "automaticRetry": false,
+    "previousAttemptAllowancesNotReused": true
+  },
+  "sourceBinding": {
+    "collectorSha256": "a78f4d8be5f66df779f76c4a5b0e0a440aed8ae76cc1cc571bcc011adcb5bc6c",
+    "packetSha256": "010d709aa53aa900c1f81e6f95b730860b7e72c4142071f2860c106cbbf6981e",
+    "bindingSha256": "f632969f0e151cb5dec857c228eb0ea96b7c17619397e1cddcfb6c74b5b1f086",
+    "originalOperatorAndHelperDigestsMatched": true,
+    "prior64CaseSourcesStillMatchedBeforeExecution": true,
+    "testsRerunThisStage": 0,
+    "productionSourceChanged": false
+  },
+  "execution": {
+    "terminalExitCode": 0,
+    "localWallSeconds": 2.8004668,
+    "outerElapsedMilliseconds": 2683.3677000000002,
+    "innerElapsedSeconds": 2.3865646999911405,
+    "remoteExitCode": 0,
+    "measurementSeconds": 0.629486515186727,
+    "measurementBudgetSeconds": 14.960334306582808,
+    "terminalOuterAccepted": true,
+    "remoteDataComponentAccepted": true,
+    "exitObserved": true,
+    "receiptMatchesTransportAndSavedInnerOutcome": true,
+    "remoteStdoutBytes": 3420,
+    "remoteStderrBytes": 0,
+    "localOuterStderrBytes": 0,
+    "localPythonStderrBytesOnlyObserved": 60,
+    "localPythonStderrContentRetained": false,
+    "localPythonStderrCause": null,
+    "transportChannelClosedAtExitObservation": false,
+    "subsequentOwnedSshCleanupConfirmed": true,
+    "closedOwnedHandles": [
+      "socket",
+      "transport",
+      "channel-0"
+    ],
+    "pendingOrLateCloseHandles": [],
+    "kernelProcessCensusPerformed": false
+  },
+  "observationUtc": "2026-11-13T02:47:28.751000+00:00",
+  "dataAndIngressComponent": {
+    "actualCandidateAllocationBound": null,
+    "allocatedCopyModelBytes": 17739776,
+    "applicationConsistentSnapshot": false,
+    "backupFilesystemFreeBytesObserved": 28503752704,
+    "dataAndIngressCopyModelBytes": 27770880,
+    "dataCoverageCompleteWithinPolicy": true,
+    "dataFiles": 558,
+    "directories": 865,
+    "files": 559,
+    "logicalBytesIncludingIngress": 16222696,
+    "measuredAtMs": 1794538048751,
+    "metadataFingerprint": "a25ae30288266590512258b2c8035f5bd10ee2e9711cb5c682d4fd3288a6544d",
+    "metadataOnly": true,
+    "nativeExecutionVerified": false,
+    "productionReady": false,
+    "releaseCapacityAccepted": false,
+    "status": "data-and-ingress-component-only"
+  },
+  "metadataPolicy": {
+    "maximumDepth": 32,
+    "maximumEntries": 20000,
+    "maximumDataFiles": 1000,
+    "maximumDataBytes": 67108864,
+    "maximumIngressBytes": 4194304,
+    "twoEqualFullTraversals": true,
+    "partialResultsAccepted": false,
+    "businessFileBodiesRead": false
+  },
+  "protectedBaseline": {
+    "fourServicesActiveBeforeAndAfter": true,
+    "serviceSnapshotsUnchangedIncludingPidRestartsAndResourceFields": true,
+    "threeProtectedConfigurationHashesUnchanged": true,
+    "serviceHealthContinuouslyObserved": false,
+    "relayForwardingQualityTested": false
+  },
+  "limitations": [
+    "Complete fixed-policy metadata observation only;not a cross-database consistent snapshot.",
+    "Copy bytes are conservative model output;no backup/copy/reservation was created.",
+    "Actual candidate allocation remains null;full release space sufficiency was not asserted.",
+    "The projection nativeExecutionVerified=false was retained;remote execution evidence applies only to this metadata path,not all Linux safety contracts.",
+    "No timeout was triggered;success does not prove kill/timeout behavior under failure.",
+    "channelClosedObserved=false at exit is distinct from subsequently confirmed owned handle close.",
+    "The saved inner outcome is provisional;the final outer result plus terminal exit0 is authoritative.",
+    "60 bytes of local Python stderr were counted but not retained by the unchanged operator;their content and cause are unknown.",
+    "Service snapshot equality is not continuous service or relay acceptance.",
+    "Previous source inventory,actual candidate allocation,formal policy,authority bindings and fresh compatibility proof remain separate release gates."
+  ],
+  "scope": {
+    "businessDatabaseContentsRead": false,
+    "dataCopiesOrBackupsCreated": false,
+    "remoteExplicitFilesWritten": false,
+    "productionServicesStartedOrStopped": false,
+    "credentialsUsedForExistingSshAuthentication": true,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "realModelCalls": 0,
+    "externalAgentMessages": 0,
+    "productionPublished": false
+  },
+  "privateEvidenceDigests": {
+    "terminal.json": {
+      "bytes": 283,
+      "sha256": "93a560b3dbc62b129f68295f1dad0fd9bbe0a25625c85459a1e25e454a784e93"
+    },
+    "outer-result.json": {
+      "bytes": 803,
+      "sha256": "52b0695283cd3c34d5b04ab3755354931225a5a03ce74ccbddee3d8782b0b39b"
+    },
+    "receipt.json": {
+      "bytes": 3419,
+      "sha256": "e9368271bc98d688e607157bf7efb219d80e143e84fabcb683f85ffc4f529a64"
+    },
+    "transport.json": {
+      "bytes": 4799,
+      "sha256": "096f782f3d0eeae1ea9109bf9f3ed80a302e28bb15f9c1fe1a21274355327e81"
+    },
+    "ssh-cleanup.json": {
+      "bytes": 523,
+      "sha256": "70a4b3d90055a83e5ba4e09cc724b0703654aefbd1ded6aab33767be1deb6dcc"
+    },
+    "outcome.json": {
+      "bytes": 3709,
+      "sha256": "4a33f9eca9a2ffa15da6bc06f483d902ec5980269a05a78eb6b86bbbbeb90d7e"
+    }
+  },
+  "nextKeyStage": {
+    "status": "proposed_not_remote_authorized",
+    "scope": "bind actual candidate and previous inventory,prepared configuration,authority/controller fingerprints and formal execution policy before one fresh copy-compatibility verification",
+    "compatibilityUnitStarted": false,
+    "productionMaintenanceApprovedThisStage": false
+  },
+  "independentReview": {
+    "completed": true,
+    "mode": "read-only local evidence review after the remote operation",
+    "remainingDefiniteP1P2": 0,
+    "reviewerRanTestsOrNetworkOrWroteFiles": false,
+    "acceptedScope": "complete DATA and ingress metadata observation only"
+  },
+  "productionReady": false,
+  "fullDeliveryComplete": false,
+  "githubScope": "this sanitized record only;no private source,raw receipts,configuration or credentials"
+}
