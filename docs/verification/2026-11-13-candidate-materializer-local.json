@@ -1,0 +1,133 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "status": "local candidate materializer implemented and verified; native target preparation pending",
+  "plan": "docs/superpowers/plans/2026-11-13-candidate-materializer.md",
+  "scope": {
+    "vpsConnected": false,
+    "linuxUnitsUsed": 0,
+    "productionPublication": false,
+    "businessDatabaseRead": false,
+    "realCredentialContentRead": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productCodeChanged": false
+  },
+  "implementation": {
+    "engineSha256": "be69820c8f56cb1744249a07c46fade1510b3b78184f23b9f3cf15fa1ab3c446",
+    "nativeStoreSha256": "43545869ed21216bc4aac0a6319cd4a70120aedcd8f69feb653127188b9adb5a",
+    "candidateCodeFiles": 66,
+    "releaseFiles": 11,
+    "fixedEntryAndControllerPins": 6,
+    "stageManifestCanonicalSha256": "bce4b18a3ef8ba9fe8581e709feb77eacef6b0807b989ed096ea9ff1ebba12a6",
+    "kind": "library functions; no SSH, systemd, model, service or publication launcher",
+    "nativeSupportedEntry": "native_prepare: fixed roots and Linux root guard",
+    "sourceRoot": "/opt/chunlack-public/current",
+    "releaseRootPattern": "/var/lib/chunlack-release-<12hex>",
+    "stageRootPattern": "/opt/chunlack-public/staged-<12hex>/current",
+    "exclusiveCreation": true,
+    "automaticCleanupOrOverwrite": false,
+    "failedDirectoriesPreservedByImplementation": true,
+    "dependencyCopy": "full local copy; internal relative regular-file links retain spelling; no external directory link",
+    "fingerprintFormat": "original records bytes/sha256/link, canonical sorted JSON",
+    "fingerprintChecks": "complete source before/after and target after copy",
+    "copyBudgets": {
+      "filesMaximum": 20000,
+      "logicalDependencyBytesMaximum": 134217728,
+      "singleFileBytesMaximum": 33554432,
+      "alsoBoundToOriginalSnapshotFilesAndBytes": true,
+      "depthMaximum": 32
+    },
+    "nativeSafety": [
+      "root-owned non-group/other-writable ancestors; root adversary excluded",
+      "NOFOLLOW leaf reads and exclusive writes",
+      "lstat/fstat identity and metadata binding; atime excluded",
+      "held output root identity and permissions",
+      "stage source/target rename-volume equality",
+      "group-readable and traversable staged tree; dependency execute bit retained",
+      "file and parent fsync; target bytes reread",
+      "all owned descriptor closures attempted without close retry",
+      "final deadline after closing; original, cleanup and final errors remain separate"
+    ],
+    "allocation": "sum st_blocks*512 for new release/stage/container entries, no unknown-to-zero fallback",
+    "settingsOrProofOrClaimCreated": false
+  },
+  "tests": {
+    "finalTotal": 96,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 11.581,
+    "files": {
+      "test_materialize.py": 22,
+      "test_native_store.py": 12,
+      "test_physical_copy.py": 3,
+      "test_assemble.py": 21,
+      "test_draft.py": 19,
+      "test_compatibility_inputs.py": 11,
+      "test_full_proof_adapter.py": 5,
+      "test_pinned_contract_integration.py": 3
+    },
+    "failureFirst": {
+      "missingEngineMethods": 13,
+      "missingAdapterMethods": 8,
+      "reviewRedMethods": 2
+    },
+    "windowsFixtureCorrection": "O_BINARY only for local fixture; real byte checks preserved; initial text-mode failure retained",
+    "physicalTests": "real local regular-file reads/writes and exclusive directories, with explicit simulated POSIX metadata, directory descriptors, fsync and allocated blocks",
+    "notAFullApplicationRegression": true
+  },
+  "independentReview": {
+    "reviewerAgentId": "01a1cb40-ff10-7292-bb4f-30264528ea87",
+    "readOnly": true,
+    "testsRunByReviewer": false,
+    "initialFindings": [
+      "P2 final deadline not rechecked after close",
+      "P2 cumulative copy budget checked only after writes"
+    ],
+    "deterministicRedPreserved": true,
+    "targetedFixReview": "Both original P2s closed; no new definite P1/P2 identified",
+    "final96CountSource": "actual local terminal and preserved log, not reviewer execution"
+  },
+  "limitations": [
+    "No native Linux execution, owner/mode, directory FD, fsync, kernel/cgroup or real allocation was accepted by these Windows tests.",
+    "No remote producer, unit launcher or upload was included. Actual input/package hashes and existing resource-bound entry must still be composed before native execution.",
+    "All caller inputs for physical tests are synthetic. No live configuration or authority database was read.",
+    "Native allocation code covers currently created objects only; final settings/proof/other later materials require measurement before complete release capacity approval.",
+    "No global capacity sufficiency, cross-database consistency, fresh compatibility proof or production readiness is asserted.",
+    "Candidate configuration remains private; no environment raw file, private implementation, synthetic payload or raw test artifact is published."
+  ],
+  "nativeLinuxExecutionVerified": false,
+  "actualCandidateAllocationBound": null,
+  "completeReleaseCapacitySufficient": null,
+  "compatibilityProofCreated": false,
+  "productionReady": false,
+  "nextSteps": [
+    "Compose fixed-hash materializer and assembly into the existing bounded native preparation mechanism, preserving its identity/resource checks.",
+    "Provide a concrete new exclusive-directory and real-input preparation scope before remote writes or new units.",
+    "Measure actual candidate and later sealed materials; obtain fresh database-copy compatibility evidence before a maintenance release."
+  ],
+  "privateEvidenceSha256": {
+    "materialize.py": "be69820c8f56cb1744249a07c46fade1510b3b78184f23b9f3cf15fa1ab3c446",
+    "native_store.py": "43545869ed21216bc4aac0a6319cd4a70120aedcd8f69feb653127188b9adb5a",
+    "test_materialize.py": "23cdde966f61acad1ed7b9ce315064d9adc72e7e0bf7344161c71de29edff0d4",
+    "test_native_store.py": "8b89c545bd16268721ff39775f17cf3fa0182e00d06ff23e96e646d4cd59db95",
+    "test_physical_copy.py": "d9a01c0b5b7205d0096ceb19c177636d3bab3b5ef350bc1e55ad77bb9b53a2d8",
+    "run_related.py": "0e6a3b561580bcb463d7605cccc23b956e859af80936d8613305cd16b3d76536",
+    "red.log": "861024c15b7cf39b139ca8791e5e3c8c3c045cc514d727283bf4436d4e950e80",
+    "green.log": "e99ee2160edcf31daae283115bbea4da3d8b659ea3f9fbecf4afa0bad1c2c254",
+    "engine-expanded.log": "c8404a37cd3e8c32591e72e0b2f4626fe7d201c5623955db54c0ac8c128eb3f5",
+    "native-red.log": "ac52b3f9878df0adbc31373094ce75d70bf5e48dc83e3a46dbf487051da66702",
+    "native-green.log": "712d9323cfcaf36a238fc155aafa042f2c9d73847dc609ebb0c64676ab50446d",
+    "physical.log": "4ed07dd51aaab4639f73cc3e93d170d41c20318f75f79c8a7b936def88315275",
+    "physical-binary.log": "128d08ecd7d0b3ee2d211c645601eb59ea5346482aa314afd2477a404ff5d2c0",
+    "related-final.log": "c6f4b84452bdb9217f594b5660614919b2b1ef3d48c926dc30d203df9d1ce50d",
+    "review-red.log": "9e843be05031fd2153c673e0c33f48de936f314402711b85aa0b9ef831019833",
+    "review-green.log": "97888d10de46e8c4aaa63d309837eacf4845f13fdd76109d4c7db1ca572ada3a",
+    "review-related-final.log": "6f73180c9f41fa72c6d6b966a72724704f15ee55797a4e134138583316d70b84",
+    "progress.md": "3a4c10b87daeb801fa3a40caea0b3ff502c20ce720234e9db9b4761cd443c6ce"
+  }
+}
