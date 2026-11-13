@@ -1,0 +1,144 @@
+{
+  "boundSources": {
+    "collectorSha256": "7075b08d90836df8cd56afe258bc88bf294e1cd62f3d9ebeeb2f738671a80609",
+    "entrySha256": "46a3555d81a46adff8888d92049980baf8e7d43bfc69635d48afbd5ed6392ff1",
+    "outerSha256": "0e4b1d56f8ec6f473c161a6bb9fae676366040aa04f34ee59cfe879b39ebcb76",
+    "packetSha256": "dc6dcd65a4d08bcfa6fc8342cab92acdf9a4f44bf94b3c9c5bca359580be0fb8",
+    "runnerSha256": "bcb10faff85cbc02f2c7a4e3dc5be8043f632e875c6dfa173661ebe27b520670"
+  },
+  "coverage": [
+    "inactive entry rejects before creating a capture or SSH attempt",
+    "fixed source/config require the original20-second timeout wrapper",
+    "original command renderer accepts the actual small source within its65536-byte limit without connecting",
+    "capacity estimate recomputed from the same pinned pure policy",
+    "insufficient space is a valid observation and never a permission to write",
+    "claim exists before the fake session is constructed and before connect",
+    "close happens before transport/receipt persistence",
+    "nonzero/unknown exit, short stdin, malformed receipt and wrong scope reject",
+    "connection failure, partial streams and missing stderr remain distinct",
+    "unconfirmed/failed close and persistence failure prevent local acceptance",
+    "late outcome snapshot may be provisional success while actual returned status rejects",
+    "existing one-shot attempt prevents a second fake session"
+  ],
+  "date": "2026-11-13",
+  "existingHelperSha256": {
+    "scheduler.py": "4d8af5d0065cc8c53a8bd382581282c3d872e5bb5e84232031586d91c3e0e282",
+    "ssh_transport.py": "9285484e9b86c50ff1eebffcf47a6db95bf232c50cf19088bc77e53e6ac5c11a"
+  },
+  "inactiveCliNegativeCheck": {
+    "actualExitCode": 2,
+    "captureAttemptExists": false,
+    "expectedRejection": true,
+    "outer": {
+      "accepted": false,
+      "elapsedMilliseconds": 8.536200000000001,
+      "innerExitCode": null,
+      "localSeconds": 35,
+      "outerErrorCode": "outer_activation_required",
+      "signal": null,
+      "stderrBytes": 0,
+      "stdoutBytes": 0
+    },
+    "sshAttemptExists": false,
+    "stderrBytes": 0,
+    "wallSeconds": 0.09621720004361123
+  },
+  "inactivePackage": {
+    "activationAuthorized": false,
+    "bindingSha256": "145fabbb2a568237ed0a367b6068b510cbef734a51e9b1f4fc4f942fb2fad85d",
+    "directoryName": "capacity-observation-inactive-20261113-a1",
+    "newLinuxUnits": 0,
+    "productionPublication": false,
+    "productionReady": false,
+    "sourceFiles": 6,
+    "sshAttemptsUsed": 0,
+    "status": "inactive-capacity-transport-package"
+  },
+  "limitations": [
+    "Every session used in the new regression is fake; no actual SSH connection or credential read occurred.",
+    "The actual CLI check proves default rejection only, not a successful native observation.",
+    "No current remote free-space, inode, service or whole lifecycle facts were newly collected.",
+    "This package can collect metadata only; it grants no preparation unit, compatibility proof or release authority.",
+    "Prior1/1 preparation and failure-capture quotas remain consumed; automatic continuations do not renew them.",
+    "A new one-shot read-only approval and fresh execution copy are required before connecting.",
+    "No production, login, TLS, model, Muse or sustained dots acceptance is implied."
+  ],
+  "limits": {
+    "activationAuthorized": false,
+    "automaticRetry": false,
+    "localSeconds": 35,
+    "maximumSshAttemptsProposed": 1,
+    "maximumUnits": 0,
+    "nativePreparationAuthorized": false,
+    "remoteSeconds": 20
+  },
+  "nextGate": "request at most one new metadata-only SSH observation,20-second remote/35-second local, no units or writes",
+  "plan": "docs/superpowers/plans/2026-11-13-capacity-transport-binding.md",
+  "privateEvidenceSha256": {
+    "binding-first.log": "3a6634cbc4db094186d5dea55e4d420e880065bb1fac965699a7837ba12f1eb1",
+    "finalize.py": "2bc42d95ea92e41249155e82abff127230b724f622996e93db03e6595bf8a974",
+    "inactive-cli-terminal.json": "9323664daf588db790a219250f30621dc9d982ad4d1fe3c8794698b1a3b3ef3c",
+    "package-receipt.json": "9272880fc1f4adff70863b511255c39013bc1156fd7887de8253a71857f0cfd8",
+    "red.log": "0ae083a3e692b76c256e21d22a0bdb459c817e4c07b6deab8dff91b664aa590f",
+    "related.stderr": "4dfa8761bcd89863dd2c2e1f94019e068cafb5dd01ef0527346068a452b6657f",
+    "related.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "session-budget.log": "b4934cf7a344e5af82978d8148ce3c4d9f1c57583d43cfa78b382a84eddd831b",
+    "session-first.log": "8b1f03503844380685b9c1ee83871ce1a4dd3eec10db61ceb946cf988dfd45e0",
+    "terminal.json": "5d6d3314ae445ec3407c1e6c9d4b5963b5a846b0a355230efc22222892349d3d"
+  },
+  "productionReady": false,
+  "regression": {
+    "actualProcessExitCode": 0,
+    "bindingAndReceiptCases": 7,
+    "errors": 0,
+    "failures": 0,
+    "simulatedSessionCases": 10,
+    "skipped": 0,
+    "sourceHashesUnchanged": true,
+    "tests": 17,
+    "trackedSourceAndArtifactCount": 12,
+    "wallSeconds": 2.769741099968087
+  },
+  "reuse": {
+    "capacityCollectorAndEnvelopeBytesUnchangedFromPrevious24CaseRecord": true,
+    "existingSshAndSchedulerUnchanged": true,
+    "originalCloseBeforePersistencePreserved": true,
+    "originalHostKeyBeforePasswordChecksUnchanged": true,
+    "originalPartialAndCleanupErrorRetentionPreserved": true,
+    "outerWrapperByteIdentical": true,
+    "previousProductCapacityAndIntegrationTestsRerun": false
+  },
+  "review": {
+    "confirmedMaterialFindingsRemaining": 0,
+    "independentReadOnlyStaticReviewCompleted": true,
+    "reviewerExecutedTests": false
+  },
+  "schemaVersion": 1,
+  "scope": {
+    "credentialsChanged": false,
+    "credentialsRead": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "productionPublication": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "sshAttemptsUsed": 0,
+    "vpsConnected": false
+  },
+  "sourceBindings": {
+    "capacity-transport-binding-20261113-a1/derive.py": "5a35f93562317798c806140cad09e5751df7faa552e33a1ae1a1a99349aa27a3",
+    "capacity-transport-binding-20261113-a1/receipt_fragment.py": "0151ae7768226530413d456a58c64b94bfbb5f5cb496137783deee0b6f389b84",
+    "capacity-transport-binding-20261113-a1/run_related.py": "62227ce9f034f3b98c4505f1b1c615054fe7fa99a21a2a673e200e0bba8035d6",
+    "capacity-transport-binding-20261113-a1/test_binding.py": "33edf61f4471a0052929a8d5b448665488ee7c032ef32e295596292a8be4a4e9",
+    "capacity-transport-binding-20261113-a1/test_session.py": "c1d715728a600cf53f7050a5d221c1bd46a927a9261610dcf8fe5f26532b985d",
+    "preparation-capacity-gate-20261113-a1/inactive-packet-v2/binding.json": "a9d946539edb8bdfd9d87883075083be1192efdf21ff7d91fc5733f55d82702a",
+    "preparation-capacity-gate-20261113-a1/inactive-packet-v2/config.json": "85ee57075d65dc0e784fe4d58dbb63fc046faab29d755801dfb9971e773cf632",
+    "preparation-capacity-gate-20261113-a1/inactive-packet-v2/remote.py": "7075b08d90836df8cd56afe258bc88bf294e1cd62f3d9ebeeb2f738671a80609",
+    "preparation-capacity-gate-20261113-a1/inactive-packet-v2/stdin.json": "dc6dcd65a4d08bcfa6fc8342cab92acdf9a4f44bf94b3c9c5bca359580be0fb8",
+    "readonly-guard-execution-73bdb6198e80/bounded_entry.py": "691d1e293f0c73c677bf0262601ba31153545c27906b9d8c87ad6c002cf4d3c6",
+    "readonly-guard-execution-73bdb6198e80/local_run.py": "f56a8ead6eef11a766a471c501e7c3ac9d27794db4e1a4509499bf7c708a9f6d",
+    "readonly-guard-execution-73bdb6198e80/outer_run.cjs": "0e4b1d56f8ec6f473c161a6bb9fae676366040aa04f34ee59cfe879b39ebcb76"
+  },
+  "status": "capacity observation bound to an inactive existing SSH lifecycle; local validation only"
+}
