@@ -23,4 +23,6 @@
 - [x] Test a pure bounded observer, monotonic clock, aggregation, redaction and original-exception retention.
 - [x] Derive engine and store diagnostics only; compare exact filesystem/tick call sequences, default-mode behavior, all original engine/adapter cases and real local copy/readback.
 - [x] Measure local instrumentation overhead and perform independent review; sanitized synchronization is recorded separately with exact readback evidence.
-- [ ] Later bind the reviewed observer through NativeOps and entry into a new inactive package; verify complete hashes before any new native proposal. No native execution authorized by this plan.
+- [x] Bind the reviewed observer through NativeOps and entry into a new inactive package; verify complete hashes before any new native proposal. No native execution authorized by this plan.
+
+Local integration evidence: [23-case integration record](../../verification/2026-11-13-detail-entry-integration-local.json). The original 64 core cases were not rerun; their exact source bytes were rechecked. The candidate remains inactive. A fresh free-space/inode check is still required before proposing further writing preparation.
