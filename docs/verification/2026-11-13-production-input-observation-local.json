@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "stage": "production-input-observation-local",
+  "status": "local_tests_and_inactive_fixed_packet_prepared_not_native_accepted",
+  "plan": {
+    "path": "docs/superpowers/plans/2026-11-13-production-input-observation.md",
+    "bytes": 4799,
+    "sha256": "4b29bcd7113b7137b8c31d45d33ea1f198dae1c40ae853dea502c6e94bb7268e"
+  },
+  "sourceBinding": {
+    "entrySha256": "583555ef57ac468ae0e2fbbdf6065f969cc72749e567b27a739b92bd8a3d245f",
+    "packetSha256": "013ce15aa8d6a2fd22990c03992c3f9fd230665aa3789c6eaf15dc8853d08e64",
+    "packetBytes": 174525,
+    "sourceSha256": {
+      "api.py": "b71cdcb41294d8fc5e5e6fe093b8d9f0d3423d5fce127333db20a8d212fc11db",
+      "base.py": "63ed0731c21411dbe91fbb7a4a7e2f5330df80a49f490f29c47342b7098cdcc1",
+      "reference.py": "b704ceefa1bf917c8ce0c18a439d1b50099f6e723e7fcc3d5f892698088bd1e3",
+      "config.py": "ab1729aaecc2dd748e4c9f38f9e68b4b31cc2366d6b8cf5fafaac3454d66516b",
+      "gate.py": "95ab206d9f0dcf1bbcb208e600e7c24a94de4218a1025738a1844e67d8cb7af3",
+      "detail.py": "a78f4d8be5f66df779f76c4a5b0e0a440aed8ae76cc1cc571bcc011adcb5bc6c",
+      "adapt.py": "33190705866e041719f706c10d2a6fdffbc17740de89cd35091dfac7acf962a7",
+      "observe.py": "500ae0f99c7ee4ec76f894a2bc0b572184ff9d0a2a59ee7da9533aa51f8bdf25",
+      "draft.py": "97e1e1a67c2354e21e0dd1d679a44403779de4fc7612c805e5ca6ccdf73b4b35"
+    },
+    "sshAttempts": 0,
+    "activationAuthorized": false,
+    "operatorOrActiveBindingIncluded": false,
+    "productionReady": false
+  },
+  "preparedArtifact": {
+    "preparedDirectory": ".superpowers/sdd/production-input-observation-20261113-a1/prepared-v1",
+    "manifestSha256": "7487475788e7f6c4622a1a5527d80448b6e8659f5ae244b5970daea49efcfa43",
+    "files": {
+      "collector.py": {
+        "bytes": 5238,
+        "sha256": "583555ef57ac468ae0e2fbbdf6065f969cc72749e567b27a739b92bd8a3d245f"
+      },
+      "packet.json": {
+        "bytes": 174525,
+        "sha256": "013ce15aa8d6a2fd22990c03992c3f9fd230665aa3789c6eaf15dc8853d08e64"
+      },
+      "future-binding.template.json": {
+        "bytes": 991,
+        "sha256": "e8416763a4cafa66f4868b28f90ea9a2ca063d5631a966d374325c94a4880917"
+      },
+      "request.json": {
+        "bytes": 580,
+        "sha256": "21cfb2f3daed74b57c4f14ecd05da5c9e0f4888aebd21bceb89c9bc9c4e30a4c"
+      }
+    },
+    "allBytesReadBackEqual": true,
+    "activeBindingExists": false,
+    "sshLauncherExists": false,
+    "sshAttempts": 0,
+    "nativeCalls": 0,
+    "productionReady": false
+  },
+  "operatorDependencies": {
+    "local_run.py": {
+      "bytes": 8320,
+      "sha256": "f56a8ead6eef11a766a471c501e7c3ac9d27794db4e1a4509499bf7c708a9f6d"
+    },
+    "bounded_entry.py": {
+      "bytes": 4421,
+      "sha256": "90cbd7544c7ca92c013b4038f3cf8bc88003f746fa0e4c1f1350a358f4385f99"
+    },
+    "outer_run.cjs": {
+      "bytes": 7485,
+      "sha256": "0c57f7aa189793f049f27f91aee1ea54e7c0bd4532cac9fb156e429ef74fca44"
+    },
+    "scheduler.py": {
+      "bytes": 17975,
+      "sha256": "4d8af5d0065cc8c53a8bd382581282c3d872e5bb5e84232031586d91c3e0e282"
+    },
+    "ssh_transport.py": {
+      "bytes": 10845,
+      "sha256": "9285484e9b86c50ff1eebffcf47a6db95bf232c50cf19088bc77e53e6ac5c11a"
+    }
+  },
+  "operatorDependencyCurrentBytesMatch": true,
+  "regression": {
+    "total": 32,
+    "passed": 32,
+    "failed": 0,
+    "skipped": 0,
+    "processExitCodeObserved": 0,
+    "unittestSeconds": 0.116,
+    "adaptPipeCleanupCases": 13,
+    "observationAndSmallLocalInventoryCases": 12,
+    "entryAndPacketCases": 7,
+    "fullProductSuiteRerun": false,
+    "targetsProcessesClocksAndSignalsAreDoubles": true,
+    "actualPinnedSourceDefinitionsLoaded": true,
+    "actualOriginalCaddyDocumentValidatorUsed": true,
+    "actualCaddyOrLinuxFdExecutionTested": false
+  },
+  "independentReview": {
+    "completedBeforeFix": true,
+    "finding": "unprotected cleanup clock calls could bypass pipe cleanup and unknown-state latch",
+    "severity": "P2",
+    "fixedBy": "bounded safe cleanup clock sampling;zero wait budget if unknown;attempt remaining handles;unconditional cleanup latch and in-flight state sealing",
+    "twoDirectedCasesFailedBeforeFix": true,
+    "all32CasesPassedAfterFix": true,
+    "actualPinnedErrorFormatterPreservesOriginalEioAndCleanupInterruptSeparately": true,
+    "privateExceptionTextAbsentFromFormattedRecord": true,
+    "secondIndependentReviewPerformed": false,
+    "knownUnresolvedReviewedFindings": 0
+  },
+  "fixtureCorrection": {
+    "initialObservationCasesFailed": 7,
+    "cause": "Windows Path string keys differed from fixed POSIX fixture keys",
+    "testOnlyCorrection": "use as_posix for synthetic configuration lookup",
+    "failureLogRetained": true,
+    "productionPathLogicChangedForThisFixture": false
+  },
+  "scope": {
+    "localOnly": true,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "businessDatabasesRead": false,
+    "actualProductionConfigurationRead": false,
+    "actualCaddyAdaptCommandsExecuted": 0,
+    "realModelCalls": 0,
+    "externalAgentMessages": 0,
+    "productionServicesStartedOrStopped": false,
+    "credentialsReadOrChanged": false,
+    "authorizationsChanged": false,
+    "dnsChanged": false,
+    "portsChanged": false,
+    "relayChanged": false,
+    "productionPublished": false
+  },
+  "observationContract": {
+    "acceptedScope": "source-config-and-caddy-observation-only",
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "maximumWorkSeconds": 15,
+    "finalBaselineReserveSeconds": 5,
+    "caddyAdaptCommandCount": 2,
+    "commandDetectionSeconds": 2,
+    "cleanupMaximumSeconds": 2,
+    "maximumStdinBytes": 1048576,
+    "maximumStdoutBytes": 65536,
+    "maximumStderrBytes": 4096,
+    "maximumReceiptBytes": 131072,
+    "allSourcesVerifiedBeforeAnyCompilation": true,
+    "originalMonitoredProcessGroupInheritedByAdaptCommand": true,
+    "unknownCleanupWaitsForOriginalOuterEnvelope": true,
+    "directoryErrorsRefuseRatherThanTruncate": true,
+    "twoCompleteSourceAndDependencyReadsRequired": true,
+    "privateConfigurationBodiesReturned": false,
+    "candidateAllocationBound": null,
+    "compatibilityProofCreated": false
+  },
+  "evidence": {
+    "caddy_adapt.py": {
+      "bytes": 6454,
+      "sha256": "33190705866e041719f706c10d2a6fdffbc17740de89cd35091dfac7acf962a7"
+    },
+    "observe.py": {
+      "bytes": 8437,
+      "sha256": "500ae0f99c7ee4ec76f894a2bc0b572184ff9d0a2a59ee7da9533aa51f8bdf25"
+    },
+    "entry.py": {
+      "bytes": 5238,
+      "sha256": "583555ef57ac468ae0e2fbbdf6065f969cc72749e567b27a739b92bd8a3d245f"
+    },
+    "build_entry.py": {
+      "bytes": 8235,
+      "sha256": "cab94e5628b374e2c4dcb634cd40c48a9d7f18d8937ecd29ee347e4c7249fe73"
+    },
+    "test_adapt.py": {
+      "bytes": 12592,
+      "sha256": "28845b38fe4792260ce4e4cffa4dff055550417446b09f7c9d737329101c3a7d"
+    },
+    "test_observe.py": {
+      "bytes": 12671,
+      "sha256": "3fffc566bf8855af304e4e28d57a5a9a1447974fe6912b031d9cdbb71385a36f"
+    },
+    "test_entry.py": {
+      "bytes": 6036,
+      "sha256": "6d7e3b47207955e4391eab0954769e84ddb0f719dfea3040c8bea77edc953039"
+    },
+    "whole-first.log": {
+      "bytes": 4124,
+      "sha256": "efb24330f8d3860a952b3bd0edefcf5f01c4e301b46fbc8b7c39d14f643028af"
+    },
+    "clock-red.log": {
+      "bytes": 1659,
+      "sha256": "d553c16952909927b68c7276f3e455a9923cd045a98df9f4ec08c42e8e813fc4"
+    },
+    "whole-final.log": {
+      "bytes": 4658,
+      "sha256": "bbc664b6797a9c4316be03ef71a927e2d3f01f805bb536a8982a32f5bef72d33"
+    },
+    "observe-first.log": {
+      "bytes": 7157,
+      "sha256": "21a244428c4147ef10db16d3024cc5dcd5c1c7b083430d96f9f7ce67166e38f5"
+    },
+    "prepared-receipt.json": {
+      "bytes": 942,
+      "sha256": "abfd6676a3415fd5dc12771d6c072a9b52281fae520dfaf4761fe054ed88d26a"
+    },
+    "local-source-binding.json": {
+      "bytes": 1128,
+      "sha256": "7ccb2eec3957d07af9e2bec18873bf7e37c009bbe20cc48ddfc0a881adfe296a"
+    }
+  },
+  "qualifications": [
+    "No SSH/operator active binding is included;activationAuthorized=false is descriptive state rather than an authorization mechanism.",
+    "Original20-second process-group envelope bounds input loading and uncertain process creation/cleanup;local mocks do not prove physical kernel enforcement.",
+    "Caddy source text and adapted JSON remain in memory;only hashes/counts and controlled errors may enter receipts.",
+    "Adaptation and document validation do not establish actual TLS/listening,real identity,model behavior or continuous Relay health.",
+    "The existing client list is bound by the unchanged full configuration hash;no new client/workspace/task permission is granted.",
+    "The nine-source packet includes unused database function definitions but does not call them;no business database content is read.",
+    "The Windows-versus-POSIX path-string fixture mismatch was corrected in the test,not in native production path logic.",
+    "The prepared packet retains null actual candidate allocation and creates no settings/preparedHashes/native compatibility proof.",
+    "Previous one-shot observation quota remains consumed;this new proposal has no execution allowance yet."
+  ],
+  "nextKeyApprovalProposal": {
+    "authorized": false,
+    "newSshAttemptsProposed": 1,
+    "newLinuxUnits": 0,
+    "remoteSeconds": 20,
+    "localSeconds": 35,
+    "automaticRetry": false,
+    "businessDatabaseRead": false,
+    "explicitRemoteFilesCreated": false,
+    "servicesStartedOrStopped": false,
+    "productionPublication": false
+  },
+  "githubScope": "only sanitized plan and this verification record;private source/packet/tests/receipts remain private",
+  "productionReady": false,
+  "fullDeliveryComplete": false
+}
