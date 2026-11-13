@@ -1,0 +1,153 @@
+{
+  "date": "2026-11-13",
+  "inactivePackage": {
+    "approvedExecution": false,
+    "archiveSha256": "d3c2a978ae7684aef461b535cf25267adce10f3a40d1997c8160ce4889911a38",
+    "bindingSha256": "1007bc80b1b8a04fe484fb159d5e58caaf07398c326df750334d03fd1ab97d66",
+    "changedArchiveSources": [
+      "source/.superpowers/sdd/actual-input-producer-reserved-20261113-a1/entry.py",
+      "source/.superpowers/sdd/actual-input-producer-reserved-20261113-a1/native_ops.py",
+      "source/.superpowers/sdd/candidate-materializer-20261113-a1/materialize.py",
+      "source/.superpowers/sdd/candidate-materializer-20261113-a1/native_store.py"
+    ],
+    "changedOuterPayload": [
+      "candidate-source.tar",
+      "native_host.py",
+      "remote_bootstrap.py"
+    ],
+    "directoryName": "inactive-bundle-b47d905c2e16",
+    "engineSha256": "8ed15ae686e1d77df0a534305ca0caf5e89e7a61f9493bdf4e4445e5c54a05fa",
+    "entrySha256": "27a1f142a4e6d137591ac93a75d9a9facca74ac89933e3e581fca72a4ebe8da8",
+    "manifestSha256": "033fa39947ef21d6f619dba56fa5ba501380134ed4a41ff4e0805995c41d0149",
+    "nativeOpsSha256": "ae34fdd14690b0454526619b20622038e1523be98f72a305e6cd895b892f0fa1",
+    "newUnits": 0,
+    "observerSha256": "dc0972e3bbdc9630de94dbdc7174680771074cd65f701515773728825223a0e6",
+    "payloadFiles": 10,
+    "productionPublication": false,
+    "productionReady": false,
+    "sourceFiles": 93,
+    "sshAttemptsUsed": 0,
+    "storeSha256": "4d577d5005e3f57b419f416f1d999e1d9115e4866893a616e6942fe354f19511"
+  },
+  "integration": {
+    "admissionPreservesDistinctOriginalAndDerivedBindings": true,
+    "expectedJsonRawBytesUnchanged": true,
+    "failureRetainsOriginalErrorTree": true,
+    "historicalAdmissionReplayOnly": true,
+    "macroAndDetailModuleNamespacesSeparate": true,
+    "pathPlanOptimizationIncluded": false,
+    "sameObserverPassedToEngineAndStore": true,
+    "sourceMembers": 93,
+    "successRequiresCompletePositiveSyncAndReadbackAggregates": true,
+    "successRequiresCompleteValidTrace": true,
+    "successRequiresCountersMatchingDependencyFingerprint": true,
+    "unchangedSourceMembers": 89
+  },
+  "limitations": [
+    "Local wiring tests do not prove Linux identity, capabilities, mounts or runtime limits.",
+    "The test exit code was observed in the execution tool result; no standalone terminal receipt was saved.",
+    "No new native timing or evidence of a timeout fix exists.",
+    "Historical freshness replay does not constitute a fresh VPS precheck.",
+    "No current free-space or inode proof was collected; reservation code is not such a proof.",
+    "Capacity must be verified before another candidate-writing preparation is proposed.",
+    "No new allocation, database-copy compatibility, release or end-to-end acceptance was completed.",
+    "Only this sanitized record and the plan completion marker are eligible for synchronization; private code is not submitted."
+  ],
+  "nextGate": "prepare and review a bounded read-only capacity/precheck collection before requesting fresh native execution",
+  "plan": "docs/superpowers/plans/2026-11-13-materializer-detail-trace.md",
+  "policy": {
+    "cpuPercent": 20,
+    "fsyncOrReadbackRemoved": false,
+    "localOuterSeconds": 150,
+    "memoryMiB": 192,
+    "metadataOrHashResultsCached": false,
+    "privateNetwork": true,
+    "remoteOuterSeconds": 120,
+    "swapBytes": 0,
+    "tasksMax": 32,
+    "unitSeconds": 90,
+    "workGuardSeconds": 75,
+    "workerOutputSeconds": 80
+  },
+  "previousNativeAttempt": {
+    "failureCaptureUsed": "1/1",
+    "materializeMilliseconds": 70203.8537515,
+    "newExecutionAuthorizedByThisRecord": false,
+    "precheckUsed": "1/1",
+    "preparationUsed": "1/1",
+    "record": "docs/verification/2026-11-13-native-preparation-materialize-deadline.json"
+  },
+  "privateEvidenceSha256": {
+    "admission-red.log": "04d778ab0ef6e3bd7e1b258de51a2d9168cf6b434aa9f145be5539431083e659",
+    "bundle-red.log": "b49eff797492341bc502c6a58eaf7c1351677c1b18cb8fd682d6e03a945c8166",
+    "entry-red.log": "51537e785f701fc734a915fca0f086239975d8fcf69d68242e4a4a711ea780ed",
+    "finalize.py": "bac32469767243bcbac803b007b9c5892039dc7731ef8f6d53f1d3c8eabfd073",
+    "inactive-bundle-result.json": "3678861ef9e9d045495f5ef3cd4a43d0d7205ae7f5d3317a840321517071360c",
+    "related-final.log": "4178e06239b2de42974bf2329d5972dcf787c1f388622bbbdace617197ae12ac",
+    "source-bindings.json": "ff2c0fbe1f09f754f52188cda44a41489944677fed4a52335d49e8cd439d19a9"
+  },
+  "productionReady": false,
+  "regression": {
+    "caseCounts": {
+      "test_admission.py": 5,
+      "test_bundle.py": 6,
+      "test_entry.py": 9,
+      "test_native.py": 3
+    },
+    "errors": 0,
+    "failures": 0,
+    "previous64CoreCasesRerun": false,
+    "skipped": 0,
+    "sourceCount": 13,
+    "sourceHashesUnchanged": true,
+    "tests": 23
+  },
+  "regressionTerminal": {
+    "actualProcessExitCodeFromStandaloneReceipt": null,
+    "fullProductSuiteRerun": false,
+    "observedExitCodeInExecutionToolResult": 0,
+    "seconds": 3.382,
+    "standaloneTerminalReceiptAvailable": false,
+    "unittestSummarySuccess": true
+  },
+  "review": {
+    "confirmedP1P2RemainingInReviewedScope": 0,
+    "independentReadOnlyStaticReviews": 2,
+    "reviewerExecutedTests": false
+  },
+  "schemaVersion": 1,
+  "scope": {
+    "credentialsChanged": false,
+    "credentialsRead": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "productionPublication": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "sourceBindingsSha256": {
+    "detail-entry-integration-20261113-a1/admission.py": "1c94a687568999371751193fd8ed2d5ff97a894b8e69f0d7331d68b06e144b4a",
+    "detail-entry-integration-20261113-a1/bundle.py": "d4560a8638190d8639fcfa15c1bdf034e58b7eece7128e61b8c9426a1ba01aa7",
+    "detail-entry-integration-20261113-a1/derive.py": "0cf805d2ecca7035eab17a1544ce589f6fae72ed033d3eb8148e013feda2a275",
+    "detail-entry-integration-20261113-a1/inactive-bundle-b47d905c2e16/binding.json": "1007bc80b1b8a04fe484fb159d5e58caaf07398c326df750334d03fd1ab97d66",
+    "detail-entry-integration-20261113-a1/inactive-bundle-b47d905c2e16/candidate-source.tar": "d3c2a978ae7684aef461b535cf25267adce10f3a40d1997c8160ce4889911a38",
+    "detail-entry-integration-20261113-a1/run_related.py": "cb41981c30b5211dfef0818f1c34d904945116911ab112199d4306fb63a6516d",
+    "detail-entry-integration-20261113-a1/test_admission.py": "7b855355c6244048fb8b8dbe01a504d32c5336d27ff27524a44d9c4dcc30e6ec",
+    "detail-entry-integration-20261113-a1/test_bundle.py": "e54dca7f6654d542895353b81c7e352fbed45d5f153c2561af14271d82c28c4a",
+    "detail-entry-integration-20261113-a1/test_entry.py": "aa9a1b8cac8d18befd887b3510f949f8be162fb46e9127cdbfc3ed4d4165af0a",
+    "detail-entry-integration-20261113-a1/test_native.py": "6feec235fc51a7e51724b367fa2295b22a7b25d949cdf9b5bafc2b244fc0b701",
+    "materializer-detail-trace-20261113-a1/detail_trace.py": "dc0972e3bbdc9630de94dbdc7174680771074cd65f701515773728825223a0e6",
+    "materializer-detail-trace-20261113-a1/materialize_candidate.py": "8ed15ae686e1d77df0a534305ca0caf5e89e7a61f9493bdf4e4445e5c54a05fa",
+    "materializer-detail-trace-20261113-a1/native_store_candidate.py": "4d577d5005e3f57b419f416f1d999e1d9115e4866893a616e6942fe354f19511"
+  },
+  "status": "detail tracing integrated into an inactive preparation candidate; local validation only",
+  "unchangedCore": {
+    "previouslyPassedCases": 64,
+    "record": "docs/verification/2026-11-13-materializer-detail-trace-local.json",
+    "recordSha256": "2b869142892f1ca5d073d6f52d1452892c5d733e63378f601f32e7026d8267a5",
+    "rerun": false,
+    "reuseBasis": "exact observer, engine and store bytes pinned and rechecked"
+  }
+}
