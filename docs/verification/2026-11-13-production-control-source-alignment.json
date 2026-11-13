@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "stage": "production-controller-source-alignment",
+  "status": "local_aligned_source_and_regression_passed_not_activated",
+  "alignment": {
+    "schemaVersion": 1,
+    "status": "aligned_source_only_not_activated",
+    "parentManifestSha256": "c0ca08d6f03e1e6af3b46259a031239a24c6c89c8f5a4e22102ea8208f9b4c15",
+    "manifestSha256": "ae7c5db14c5e4ba9886b7ea878a417f53648c3cc1e11aa558db1c81fdadd02ef",
+    "archiveSha256": "f3c66b71ab5c42766ab2c75d907f35d8777ac29ea027ec54e40090c12184dd1a",
+    "archiveBytes": 1310720,
+    "members": 76,
+    "productFiles": 66,
+    "controlFiles": 8,
+    "preparationHelpers": 1,
+    "manifestFiles": 1,
+    "productBytesUnchanged": true,
+    "controlChanges": [
+      {
+        "path": "control/formal-entry.py",
+        "beforeSha256": "73521af6d2885af306627fb77f216a7af97e9c3976196ac8cfb3bb9246c002bc",
+        "afterSha256": "90b4e09c06eaa757f93a7edc5fb6d5031b0ddff2dd1b98890adedf3b53dc8226"
+      },
+      {
+        "path": "control/formal-launcher.py",
+        "beforeSha256": "681e480295ba83da9d51a720243b9dad2494bda200913d12d1aaadb209688df2",
+        "afterSha256": "755a8e97bdb486025e06ae8a96cd1b36c54fb34741c057b461a167263ddb7fbd"
+      },
+      {
+        "path": "control/repo/deploy/public/release-control/2026-10-25/i18n-release-gate.py",
+        "beforeSha256": "38bac77f1925ef736d15ff3ba5b5387a5c80631f53da4fcaef93e7645d19f64c",
+        "afterSha256": "95ab206d9f0dcf1bbcb208e600e7c24a94de4218a1025738a1844e67d8cb7af3"
+      }
+    ],
+    "helperSha256": "ab1729aaecc2dd748e4c9f38f9e68b4b31cc2366d6b8cf5fafaac3454d66516b",
+    "reviewedParentManifestSha256": "188d1abb02e934a7c9c6ad04a0bd6c14391a517316be8363a34f7f8f0f5cd06b",
+    "actualRemoteCandidateAllocation": null,
+    "freshCompatibilityProof": null,
+    "oldFrozenAndArchivedCandidateModified": false,
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "activated": false,
+    "productionReady": false
+  },
+  "supersedesControlSelectionOfSourcePackage": {
+    "record": "2026-11-13-production-input-source-package.json",
+    "sha256": "1dc8da2147e8f4d8e982f98c63bc27c4a32aadb2b9f2cc1a247c9235dd58320b",
+    "oldArtifactRetained": true,
+    "productSelectionUnchanged": true,
+    "notAHistoricalRecordRewrite": true
+  },
+  "regression": {
+    "baselineCrLfCaseObserved": "old fixed gate raised ingress_baseline_not_exact",
+    "baselineCaseExitCodeObserved": 1,
+    "alignedTests": 12,
+    "passed": 12,
+    "failed": 0,
+    "skipped": 0,
+    "processExitCodeObserved": 0,
+    "unittestReportedSeconds": 0.019,
+    "localCommandWallSecondsObserved": 0.2721548,
+    "fullProductSuiteRerun": false,
+    "coverage": [
+      "LF and CRLF target fragments preserve selected style",
+      "target-fragment style mismatch refused;not a global newline ban",
+      "duplicate/already-updated targets refused",
+      "synthetic noncanonical configuration raw bytes retained",
+      "client-boundary mismatch refused",
+      "Events true/integer/float/string values refused",
+      "input/gate digest drift refused",
+      "no settings/proof/activation invented"
+    ]
+  },
+  "independentReview": {
+    "completed": true,
+    "remainingDefiniteP1P2": 0,
+    "mode": "read-only local source/archive/digest review",
+    "reviewerReranTests": false,
+    "reviewerUsedNetworkOrWroteFiles": false
+  },
+  "evidence": {
+    "alignment-receipt.json": {
+      "bytes": 1693,
+      "sha256": "2f83610d1113970b10396b6cf44456c801cb69ee79d7bb6cfd1d06c69c4d7892"
+    },
+    "test_alignment.py": {
+      "bytes": 7106,
+      "sha256": "a070505918a8ec1e532f9cf22ea3749bfac50dadb244c932c0598d6fc1c3b605"
+    },
+    "baseline-crlf-red.log": {
+      "bytes": 791,
+      "sha256": "d9ba8a6ce0cb7d3fc17c1c2cbf8145ce6ca9e8d6c6d804203042f847276b04a2"
+    },
+    "alignment-green.log": {
+      "bytes": 1434,
+      "sha256": "05ec8b9455c93880f3c79aa57537d42f196fd1e41aab6df3a61e551cd0368975"
+    },
+    "align.py": {
+      "bytes": 5398,
+      "sha256": "4e8d8448c0314d2bc3b5b9ebb9b7a1f29af73f0cabf3e3b89f7e48c3c5b02e66"
+    }
+  },
+  "compatibilityDriverFinding": {
+    "existingPrepareDriver": ".pmc-1105-331c26116f68/dispatch/package/source/harness/native-driver-3a97b1b5/owned_native_prepare.py",
+    "usesSyntheticConfigurationAndEnvironmentAndIngress": true,
+    "copiesAndChecksOriginalProductionRowsInPrivateFixture": true,
+    "productionConfigurationProofReusableWithoutNewBinding": false,
+    "existingPureProductionConfigHelperBound": true,
+    "loopbackSettingsAndActualInputDriverStillRequired": true
+  },
+  "qualifications": [
+    "These are existing reviewed controller bytes,not new product changes or a production deployment.",
+    "The historical source manifest self-digest is provenance metadata;individual controller/helper fixed hashes are checked separately.",
+    "Earlier native three-phase acceptance uses the same selected controller revisions but does not establish actual production input bindings or a fresh proof.",
+    "Mixed target styles are rejected;unrelated surrounding bytes are preserved rather than normalized.",
+    "Current work is local only;the earlier complete data observation is a separate accepted remote operation.",
+    "The archive includes launcher/controller source but no automatic activation or transport.",
+    "Actual target allocation and full release capacity remain unknown."
+  ],
+  "remainingRequired": [
+    "actual production byte/config/environment/ingress bindings",
+    "complete previous source and installed-dependency binding",
+    "actual staged candidate allocation",
+    "full authority and controller fingerprints",
+    "one newly authorized bound copy-compatibility verification",
+    "separate maintenance scope and post-publication acceptance"
+  ],
+  "scope": {
+    "sshAttempts": 0,
+    "linuxUnits": 0,
+    "realModelsOrExternalAgentsCalled": false,
+    "existingServicesStartedOrStopped": false,
+    "oldCandidatesOrFailureScenesChanged": false,
+    "productionCredentialsOrAuthorizationsChanged": false,
+    "relayChanged": false,
+    "productionPublished": false
+  },
+  "githubScope": "this sanitized record only;archive and private tests not submitted",
+  "activated": false,
+  "productionReady": false,
+  "fullDeliveryComplete": false
+}
