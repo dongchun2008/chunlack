@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "status": "actual-input preparation pipeline locally integrated; inactive source package only",
+  "plan": "docs/superpowers/plans/2026-11-13-actual-input-producer.md",
+  "scope": {
+    "vpsConnected": false,
+    "linuxUnitsUsed": 0,
+    "productionPublication": false,
+    "productionBusinessDatabaseRead": false,
+    "realCredentialContentRead": false,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "modelCalls": 0,
+    "externalAgentCalls": 0,
+    "productFilesChanged": false
+  },
+  "sourceBinding": {
+    "frozenExpectedSha256": "41836c5a397229da24f364a47998bc81a52f4dc2e4a7ceccb19a7beaa73c11b2",
+    "frozenExpectedBytes": 6588,
+    "previousCodeFiles": 57,
+    "frozenDependencyFiles": 4462,
+    "frozenSnapshotOrigin": "accepted 2026-11-13 source/config/Caddy observation; not a new live observation",
+    "previousNativeObservationRecord": "docs/verification/2026-11-13-production-input-native-observation.json"
+  },
+  "pipeline": {
+    "sequence": [
+      "actual unit/identity/resource context",
+      "complete private input snapshot",
+      "frozen code/dependency/config/runtime check",
+      "fixed byte assembler",
+      "exact prior native Caddy material match",
+      "context recheck and exclusive materializer",
+      "complete final input equality and context check",
+      "bounded receipt and original end-to-end output deadline"
+    ],
+    "candidateCodeFiles": 66,
+    "privateReleaseMaterials": 11,
+    "environmentRawCopied": false,
+    "candidateConfigRemainsPrivate": true,
+    "settingsOrProofOrClaimCreated": false,
+    "authorityReader": "original readonly authority_fingerprint; complete schema/index/trigger and authority/epoch table fingerprints",
+    "authorityGuard": [
+      "fixed mode=ro URI",
+      "readonly database directory mount",
+      "existing checked database FD identity contract",
+      "busy wait bounded by remaining original deadline",
+      "SQLite progress under same deadline",
+      "original SQLite module restored on error"
+    ],
+    "contextGuard": "original formal verify_controller_identity plus fixed prepare cgroup and kernel resource checks",
+    "plannedNativeLimits": {
+      "totalSeconds": 90,
+      "replyReserveSeconds": 5,
+      "memoryMiB": 192,
+      "cpuPercent": 20,
+      "nice": 10,
+      "cpuWeight": 10,
+      "tasks": 32,
+      "swapBytes": 0,
+      "controllerCapabilityMask": "0xeb",
+      "noNewPrivileges": true,
+      "ambientAndInheritedCapabilities": 0,
+      "interfaces": [
+        "lo"
+      ]
+    },
+    "internalSystemdOrServiceQueries": false,
+    "outerProtectionVerificationRequired": true,
+    "outerProtectionVerified": false,
+    "caddyAdaptRerun": false,
+    "exactPriorIngressMaterialHashesReused": true
+  },
+  "entry": {
+    "requiresExplicitPrepareFlag": true,
+    "tagFormat": "12 lowercase hex",
+    "fixedOwnedSourceLocationRequired": true,
+    "noCliDefaultActivation": true,
+    "oneStartClockAcrossRunAndOutput": true,
+    "afterFlushDeadlineChecked": true,
+    "nonzeroExitRequiredOnOutputFailure": true,
+    "hardPreemptionStillRequiresOuterUnitRuntimePolicy": true,
+    "errorRecordsMaximum": 32,
+    "errorDepthMaximum": 3,
+    "errorMessagesAndArbitraryAttributesCopied": false,
+    "originalAndCleanupAndCauseContextPreservedWithExplicitTruncation": true
+  },
+  "tests": {
+    "finalTotal": 130,
+    "failures": 0,
+    "errors": 0,
+    "skips": 0,
+    "seconds": 18.173,
+    "files": {
+      "test_producer.py": 10,
+      "test_native_ops.py": 13,
+      "test_entry.py": 10,
+      "test_local_integration.py": 1,
+      "test_materialize.py": 22,
+      "test_native_store.py": 12,
+      "test_physical_copy.py": 3,
+      "test_assemble.py": 21,
+      "test_draft.py": 19,
+      "test_compatibility_inputs.py": 11,
+      "test_full_proof_adapter.py": 5,
+      "test_pinned_contract_integration.py": 3
+    },
+    "realLocalComponents": "producer, original helper/validator functions, local regular-file I/O, readonly SQLite on synthetic database",
+    "simulatedComponents": [
+      "kernel context and cgroup/resources",
+      "readonly mount flag",
+      "POSIX ownership/modes and directory FD/fsync/allocation"
+    ],
+    "initialLocalFixes": [
+      "numeric FileCount labels separated from raw releaseFiles payload",
+      "SQLite positional database_uri label avoids collision with uri=True",
+      "Windows-only extended packaging prefix after path206; failed partial directory retained"
+    ]
+  },
+  "independentReview": {
+    "reviewerAgentId": "01a1cb40-ff10-7292-bb4f-30264528ea87",
+    "readOnlyNoExecution": true,
+    "findings": [
+      "P2 output missing original deadline checks",
+      "P2 original resource/SQLite error details lost",
+      "P2 depth-three error records excluded from shared32 budget"
+    ],
+    "allFindingsDeterministicallyReproduced": true,
+    "finalTargetedReview": "All reported paths closed; final record-count repair showed no new definite P1/P2",
+    "reviewerDidNotRunFinal130": true
+  },
+  "sourcePackage": {
+    "accepted": true,
+    "buildId": "87743fe87f7e",
+    "sourceFiles": 88,
+    "sourceBytes": 1393468,
+    "archiveBytes": 1546240,
+    "archiveSha256": "fe4ec024674ec0eeacc8303579ab6af06447b515857bd7493b432b9b09dde207",
+    "manifestSha256": "14ed48190da16a0a03f144a95a11ed5a04d2318c3f1aac1345eb069213d8443f",
+    "relocatedSourceClosureLoaded": true,
+    "productionInputsRead": false,
+    "unitStarted": false,
+    "activated": false,
+    "productionReady": false
+  },
+  "archiveReadback": {
+    "accepted": true,
+    "buildId": "87743fe87f7e",
+    "members": 89,
+    "sourceFiles": 88,
+    "currentSourceHashesAndArchiveMatch": true,
+    "safeRegularRelativePaths": true,
+    "activated": false,
+    "archiveSha256": "fe4ec024674ec0eeacc8303579ab6af06447b515857bd7493b432b9b09dde207",
+    "manifestSha256": "14ed48190da16a0a03f144a95a11ed5a04d2318c3f1aac1345eb069213d8443f"
+  },
+  "limitations": [
+    "No actual Linux worker, resource enforcement, readonly production mount or native process exit was verified in this stage.",
+    "The package is not uploaded and includes no SSH or systemd unit-launch operator. Host protected service baselines remain unverified.",
+    "Outer private-parent namespace mapping and exclusive host candidate promotion are not implemented by this package; do not grant broad existing host-parent write access.",
+    "Native business UID996/GID987 readability is not established by the root preparation controller.",
+    "Actual candidate and whole release capacity are unknown. Control package, private parent mirrors, results and later settings/proof must also be measured.",
+    "No real production authorization database was read; local SQLite tests used synthetic rows and did not renew any compatibility proof.",
+    "Prior Caddy byte/binary binding is reused; no new Caddy adapt, listener/TLS, actual application or model acceptance is asserted.",
+    "All previous source packages, test failures and candidate/lock scenes are preserved. Only this record and the plan are synchronized."
+  ],
+  "nextSteps": [
+    "Implement exact outer namespace/request and no-replace inactive candidate promotion using the reviewed source package.",
+    "Obtain concrete key-node approval before new remote writes, production authority queries or native units; do not reuse prior quotas.",
+    "After actual candidate preparation, measure all allocations and obtain a fresh bound database-copy compatibility proof before maintenance."
+  ],
+  "actualCandidateAllocationBound": null,
+  "compatibilityProofCreated": false,
+  "productionReady": false,
+  "privateEvidenceSha256": {
+    "producer.py": "d1811d865d5cd3ae03f1676c0aebad9e0f47a9d9925688c7b60361205deaad4f",
+    "native_ops.py": "c1a949d7b5f0f2606132fbcbb8cd1f9b43516a8ef90fdbb322d9cc3f773418c6",
+    "entry.py": "9fe0118fa913f9218667f03376a80eba3e06a00792241233880b4e495e9d9bfa",
+    "expected.json": "41836c5a397229da24f364a47998bc81a52f4dc2e4a7ceccb19a7beaa73c11b2",
+    "build_package.py": "546b6ed1c385cc9ed9a593991aca7a68621123710a387fdcd1deefe456d405fe",
+    "test_producer.py": "5ad7492ea69e047b4d71c87a325fe4cf656c7df533e32f559b9cfd6413d7028d",
+    "test_native_ops.py": "679ac8351a23d003e8a069062837529958f66a4d75fd0151954802745498a8bd",
+    "test_entry.py": "d35c4056ee36f1d7786346254cdc2a5512d3921595def5035e62315cc833a237",
+    "test_local_integration.py": "13997f20676486a57eae16e0683d2a88372a0e3a822d045c1ba166f780038968",
+    "run_related.py": "7189d6bafd9fe22b32898fc6e87e885c608e2b51df4440db90908fb535d8daf1",
+    "red.log": "be71a1b328fd3c070b12f2bfddaddae776fcb5b25a646f02e91491634f21bb34",
+    "green.log": "13d3f05d3cb1b7a42c60c5a66dd45210fd877abab2fac687614926fdd1094fda",
+    "green-count-label.log": "ff3ab87de9372a8a98d4b8492a9bcc0c53b132dfde4021d3db8c7cf1cd71aac9",
+    "native-red.log": "63ceb56225d1e42611af8b2b94da776eeb9c4b151ca9afc085c5650a86493830",
+    "native-green.log": "42dd66569666ba9b57b5884b5ea232812f2c9ead5b6ab6766440f01099acf465",
+    "native-green-uri-label.log": "e88a6e5a2b23bdf292ebced3646228c97c20ba77e16059a393dae9b29a85cb22",
+    "native-expanded.log": "897a120a627b77caca4ca1aa93dd3aa78f84083c4103d780ec0779042e22158a",
+    "entry-red.log": "f37bb65ad33838557179205015a9992f9785fc3ea64a33238085b0dcf26c020c",
+    "entry-green.log": "fa51cb72365868738637ccdcd51945b7bb05958aedcaa21f3084c1e3aee30ed1",
+    "related-final.log": "7d06fe085ecb9891da57d3c9f1a721927728a684ca6890668e3f6eac9ea8a764",
+    "review-red.log": "45caec70b1ff36ecead6f7e946d4eb28ca8514f96df3c4e0a402c5ea952ef90b",
+    "review-red-assertions.log": "8c6c093a1510a63e66823c29af921156c01c03db14ea89a4eece61d614d5e075",
+    "review-green.log": "f190963e561409770896f1c33b141e3abee144ddc2f00d5dbbfd92537821a5b0",
+    "review-related-final.log": "49149ff649a01a5028d6d11ae4256be39c54903e0e186cf9a3a008f59806c0ca",
+    "error-budget-red.log": "4f9559e9d120bcb111d1b4aca7d0db3331baff754736cdd57083ed81bd483e56",
+    "error-budget-green.log": "da36754f47a67525cf50b8688941a3f70b683dbcf9aa6b9c041a7f5645d403b3",
+    "final-related.log": "cca93bf0d04e3b4f2eea1ea79ba810313cc117de05ef8888d85461bf21b34c01",
+    "package.log": "259114b324348800c2c31bc315227d8d2a76da508685c2d5c5dfbc5e5bd18ee0",
+    "package-v2.log": "c84f2dca896582bb60eb117cee9e6479d2b4d3fb5cb1d00b1be08c99448df3eb",
+    "package-reviewed.log": "eadd8b21d09ec24677a73885f7fe8af16d86b2aebb58c98a0afb4c47db4883d9",
+    "package-final.log": "13ee28aada4d948a8fac5a3c118a8f2bec66230401306c4d2a6471b8464b1d71",
+    "package-result-87743fe87f7e.json": "b383e984946d9cf24719bdef39300b96ef97b95841590844bf39c02794fb59f0",
+    "archive-audit-final.json": "e6ce5f429350604f35aaea2dc7a08c523ca4aa2851a0a645905e2683585ea4f5",
+    "progress.md": "6124eb0b91745d1a3bdcc85f9e4262a6299e80d4ba9adeceadeb14b32a7720b9",
+    "execution-notes.md": "5050eab166a89c502b248a4665bcd63d24a6a2f564bc8bba84a2596b3bf44be3"
+  }
+}
