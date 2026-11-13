@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-13",
+  "status": "local candidate byte assembly and synthetic materialization verified; not production delivery",
+  "plan": "docs/superpowers/plans/2026-11-13-actual-candidate-input-assembly.md",
+  "scope": {
+    "vpsConnected": false,
+    "linuxUnitsUsed": 0,
+    "productionPublication": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "credentialsChanged": false,
+    "grantsChanged": false,
+    "relayChanged": false,
+    "productCodeChanged": false
+  },
+  "inputs": {
+    "alignedPayloadManifestSha256": "ae7c5db14c5e4ba9886b7ea878a417f53648c3cc1e11aa558db1c81fdadd02ef",
+    "draftSha256": "97e1e1a67c2354e21e0dd1d679a44403779de4fc7612c805e5ca6ccdf73b4b35",
+    "productFileCount": 66,
+    "candidateMapCanonicalSha256": "bce4b18a3ef8ba9fe8581e709feb77eacef6b0807b989ed096ea9ff1ebba12a6",
+    "observations": "local synthetic configuration/environment and authority only",
+    "liveConfigurationFromPriorObservationNotDownloadedOrReusedAsFixture": true
+  },
+  "implementation": {
+    "kind": "private pure byte assembler, no SSH/units/process execution",
+    "fullSourcePayloadKeysAndHashesChecked": true,
+    "contextLoadedFromFixedSource": true,
+    "formalEntryAndLauncherMapped": true,
+    "fourPinnedControllersMapped": true,
+    "configurationBytesPreserved": true,
+    "existingClientIdsPreserved": true,
+    "rawEnvironmentFileCopied": false,
+    "dependencyExpectationFromSamePreparedSnapshot": true,
+    "settingsJsonCreated": false,
+    "proofCreated": false,
+    "claimCreated": false,
+    "targetWriteDriverCreated": false,
+    "finalBundleSealCreated": false
+  },
+  "localMaterialization": {
+    "releaseFileCount": 11,
+    "stageFileCount": 66,
+    "totalSourceBytes": 1240802,
+    "stageManifestCanonicalSha256": "bce4b18a3ef8ba9fe8581e709feb77eacef6b0807b989ed096ea9ff1ebba12a6",
+    "originalConfigurationBytesPreserved": true,
+    "settingsJsonCreated": false,
+    "nativeProofCreated": false,
+    "realProductionInputsUsed": false,
+    "nativePermissionsVerified": false,
+    "actualCandidateAllocationBound": null
+  },
+  "tests": {
+    "red": {
+      "methods": 13,
+      "subtestFailures": 21,
+      "reason": "assembly function not implemented",
+      "preserved": true
+    },
+    "initialGreenMethods": 13,
+    "expandedGreenMethods": 21,
+    "finalRelated": {
+      "total": 59,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0,
+      "seconds": 1.331,
+      "files": {
+        "test_assemble.py": 21,
+        "test_draft.py": 19,
+        "test_compatibility_inputs.py": 11,
+        "test_full_proof_adapter.py": 5,
+        "test_pinned_contract_integration.py": 3
+      }
+    },
+    "checks": [
+      "exact full payload bytes, missing/extra/drift rejection",
+      "formal entry and four fixed controller pins",
+      "path traversal, case and file/directory collision rejection",
+      "original private configuration and existing clients retained",
+      "no raw environment copy, no fake settings/proof/claim",
+      "no process or network call during assembly",
+      "original entry rejects absent settings through simulated filesystem reader",
+      "synthetic materialization exact readback of 77 regular files",
+      "full original copy-proof validator contract using clearly synthetic evidence"
+    ]
+  },
+  "independentReview": {
+    "reviewerAgentId": "01a1cb40-ff10-7292-bb4f-30264528ea87",
+    "mode": "read-only local source/test review; no execution/network/writes",
+    "result": "No definite P1/P2 identified",
+    "qualification": "Candidate config remains private; missing-settings test does not prove a complete native bundle."
+  },
+  "dependencyPreparation": {
+    "mode": "future complete stage-local copy of installed dependencies, not a symlink outside stage",
+    "nativeCopyPerformed": false,
+    "nativeReadabilityVerified": false,
+    "actualAllocatedBytes": null
+  },
+  "limitations": [
+    "Only synthetic inputs were used. Original configuration byte composition does not attest live input origin/freshness.",
+    "The 1240802 logical source bytes omit dependencies and filesystem allocation; they cannot establish release capacity sufficiency.",
+    "No native file owner/mode, systemd/cgroup, UID/GID, capabilities, NNP, network, TLS or application startup was verified in this local stage.",
+    "No actual database was read, no compatibility proof created and no settings bundle sealed. Existing proof TTLs were not renewed.",
+    "No remote materializer, native actual-input compatibility driver or final proof-sealing path was delivered by this stage.",
+    "No full application regression rerun was warranted because product files and existing helpers were unchanged.",
+    "Private implementation, synthetic config, raw input materials and test artifacts remain local; only this record and the plan are synchronized."
+  ],
+  "nextSteps": [
+    "Implement the exclusive target materializer and complete dependency-copy/allocation checks using this exact layout.",
+    "Integrate an actual-input native database-copy compatibility driver with original validators and bounded non-root runtime checks.",
+    "Seek key-node approval for concrete new remote writes/units; production maintenance remains separate."
+  ],
+  "productionReady": false,
+  "privateEvidenceSha256": {
+    "assemble.py": "2281504b4ac72fcaa680055cd81b266974c936fbfc1f56c571e0f43bfdcf2113",
+    "test_assemble.py": "d8d47c7bbea387437d06e0defe92ab8804d4ce6201eb1eff8faeb2c3c0c27778",
+    "run_related.py": "2baaedc0b738391c797b879972de9e06a04dfe06aa5ec808f17ef91c59824635",
+    "local_integration.py": "bc8b964ea2f7683b2cb6c0723d1a380dbd6bd0da38ef267f6f8a292140a34a3a",
+    "red.log": "507b45c602e99fb62459311212ccc7ad558d95b724f780e66cf551618f33c04a",
+    "green.log": "38ae4059ffef143b92b8ec718ca672f5bee132c47352ed5c8761853b7f4ea176",
+    "expanded-green.log": "01bc3bbdba38bae11f85caf6eab842e3e635abb18ca27ebcdb4631cce11eb32f",
+    "related-final.log": "fe5c2bb14653f73ed3f96c8158b1d6486e2ed894f9946944a7a0845f78e2d0e4",
+    "local-materialization-result.json": "50fed136a106a37de1d2f9310184acffaed86424f3a7aa974d31478e86930a1e",
+    "progress.md": "016941d3c978dc91c9ea5c61d359d90ab0974db9212464193dffd6fd79292caa"
+  }
+}
