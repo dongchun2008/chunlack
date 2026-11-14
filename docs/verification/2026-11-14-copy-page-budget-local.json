@@ -1,0 +1,88 @@
+{
+  "businessAuthorizationChanged": false,
+  "businessDatabasesOpened": false,
+  "captureEntry": {
+    "allSixControlFilesUnchanged": true,
+    "bindingSha256": "424af5629e2311a940e68766f3ff1c20462211961c4a60ce274cfa2cb4ff95be",
+    "copyHelperBindingReplaced": false,
+    "newAttemptsPresent": false,
+    "newAuthorizationPresent": false
+  },
+  "credentialsChanged": false,
+  "date": "2026-11-14",
+  "evidenceSha256": {
+    "copy_helper.py": "694b9fab5cd0459edf1332ef88a9c09b5878a4ea12ac803e57aada95d5e3fd9a",
+    "probe-result.json": "695dc76d8f9cde353a382f2de2eeeb540e2963b933111e1c2aa170bbbd423dda",
+    "probe.py": "a5bae9fae923768a012b40a22b8aecfbacf4f89d712bbf0981336489d9c7fe25",
+    "run_local.py": "fc413f1635244a57effc5759bbb96b6a1acadefb080083ea69bff73fc6c45890",
+    "test-terminal.json": "28caef927217c0f9aaa26326dffec5fe04cb650b67bb3ca727ebf31b33486ce2",
+    "test_legacy.py": "435d553357359a7c6afdf55e06162a474f5eb10847f48b9e5eae0c25e927bb7e",
+    "test_page_budget.py": "5fbef9878e0c9e54ddbdacc22a551519afbd5eef1ce9f374323342fd8d5f0e07",
+    "tests.stderr.bin": "781b6db34c1022a6b616bcccaa99f458378eb0ad969d1650f0058ab0bd3ced4d",
+    "tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "externalAgentCalls": 0,
+  "guards": {
+    "actualSourcePageSizeEachCallback": true,
+    "deadlineBeforeAndAfterPageSizeQuery": true,
+    "immutableFlagAdded": false,
+    "integerNonnegativePageCount": true,
+    "mainAndFinalDatabaseLimitBytes": 16777216,
+    "originalRowLimit": 50000,
+    "pageSizePowerOfTwo512Through65536": true,
+    "queryFailureNoFallback": true,
+    "singleAttemptAndLockRefusalRetained": true,
+    "sourceUriModeReadOnlyRetained": true,
+    "transferLimitBytes": 67108864,
+    "walIncluded": true
+  },
+  "limits": [
+    "This is a separate future private helper revision, not part of the frozen capture or an approved native unit.",
+    "Progress callbacks occur after a backup batch; the limit is not a pre-write hard disk quota or physical interruption guarantee.",
+    "Local SQLite 3.50.4 supports this PRAGMA in the tested backup callbacks; target runtime and kernel read-only mount compatibility remain unverified.",
+    "mode=ro does not prove zero filesystem writes: synthetic SHM bytes changed. Future native use must protect production DATA with a kernel read-only mount.",
+    "Copies are per-database SQLite snapshots, not an application-consistent multi-database release backup.",
+    "The fresh capacity and generated-material read still requires its separately pending one-shot scope approval.",
+    "No native database-copy proof or production delivery acceptance is established."
+  ],
+  "newLinuxUnits": 0,
+  "privateSourceSubmitted": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "sourceBinding": {
+    "addedFunction": "check_copy_pages",
+    "allOtherOriginalSourcePreserved": true,
+    "candidateSha256": "694b9fab5cd0459edf1332ef88a9c09b5878a4ea12ac803e57aada95d5e3fd9a",
+    "onlyExistingFunctionChanged": "copy_into_fixture",
+    "originalSha256": "afa8d6565ad1302b3dca88d81283c9974c18ae380568895f8cbbccb80a869ef3",
+    "originalUnchanged": true
+  },
+  "stage": "future private database-copy page-budget revision; local only",
+  "syntheticEvidence": {
+    "2048PageRejection": "injected backup progress count against tiny real synthetic source",
+    "exact64MiBBoundary": "injected count accepted, followed by actual tiny synthetic backup",
+    "large128MiBDatabaseCreated": false,
+    "pageSizesActuallyCopied": [
+      512,
+      4096,
+      65536
+    ],
+    "probeDbAndWalBytesUnchanged": true,
+    "probePageSize": 65536,
+    "probePages": 2,
+    "probeShmBytesChanged": true
+  },
+  "tests": {
+    "actualExitCode": 0,
+    "count": 11,
+    "entireProductSuiteRerun": false,
+    "failed": 0,
+    "newTestMethodCount": 7,
+    "originalRegressionCount": 4,
+    "skipped": 0,
+    "wallSeconds": 7.895030099956784
+  },
+  "vpsConnected": false
+}
