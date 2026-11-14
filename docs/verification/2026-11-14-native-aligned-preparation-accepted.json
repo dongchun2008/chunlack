@@ -1,0 +1,229 @@
+{
+  "authorization": {
+    "automaticRetry": false,
+    "failureOnlyCaptureUsed": "0/1; not eligible because preparation succeeded",
+    "furtherRemoteExecutionAuthorizedByThisRecord": false,
+    "preparationUsed": "1/1",
+    "readonlyPrecheckUsed": "1/1",
+    "source": "explicit user message approving 240-second preparation and 280/310-second outer bounds"
+  },
+  "date": "2026-11-14",
+  "executionBindings": {
+    "activationOnlyChangedApprovalFlag": true,
+    "activeBindingSha256": "988bf0c9152db31b1966bcb6f318619e14edbd488cc6d0477c2bcfe29adb1918",
+    "expectedInputSha256": "41836c5a397229da24f364a47998bc81a52f4dc2e4a7ceccb19a7beaa73c11b2",
+    "inactiveCandidateSha256": "d6917469af4cace34d64ac4e1ebb522a5fd4f9b25e063ddd9f806ae43b070cbe",
+    "workerArchiveSha256": "a587528d28c998b175b26458cfb4d051beea5ccb52aa6e7bd4da393bdbbcadea"
+  },
+  "executionEvidenceSha256": {
+    "actual-terminal.json": "ccf1674ddc73384c64ae339e6124ee11209978f4a00699b5223aa3bd87e003c3",
+    "binding.json": "988bf0c9152db31b1966bcb6f318619e14edbd488cc6d0477c2bcfe29adb1918",
+    "operator-verdict.json": "da573750313623aaed4f88c51e325cbc89c46cce4936559742e094bbe8fc81c9",
+    "outcome.json": "c5cd04636d10fdeafffbcbaea4c503978ff47699de75d5794a4a05cc28120f95",
+    "outer-attempt.json": "a29e589630f164d4856d6161e159393ea489e427e5ee00ef83c608e4a5179a85",
+    "parent-stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "parent-stdout.json": "b4ca0a400b228cd218ffeb6463aee06b538e76791f117fee62bae95de2178825",
+    "ssh-attempt.json": "eccbcd4ec66e153bb29df5420d2e396c9dcdd5f659daba0aa5789f9d82a54de1",
+    "ssh-cleanup.json": "18d69ccf456323058d3e4313743dc0cd92e88882cd362f1f6c186d0acedb169a",
+    "terminal.json": "4079d77713ce6c30a7c47c15fe971ff34b336478e24a5f6d4349965c5ae91998",
+    "transport.json": "a022c009a33ddca32136c19237383b797b2376b020efa0a9c973fa1896432ea3"
+  },
+  "limitations": [
+    "This proves one completed native preparation, not sustained operation, database compatibility or production acceptance.",
+    "Allocation covers only the currently materialized candidate; later settings, proof, DATA copies and backup capacity are excluded.",
+    "The configured resource ceilings and original identity/capability/NNP checks were retained; actual CPU, RSS, FD and IO peaks were not sampled.",
+    "Worker outerProtectionVerified remains false by design; the outer validated baseline/empty-unit evidence is kept separate.",
+    "Configured client whitelist counts are not business-grant changes; no authorization was created or restored.",
+    "Disk terminal/outcome are provisional accepted=false snapshots. Final parent stdout plus actual exit and retained cleanup evidence are the acceptance authority.",
+    "No fresh database-copy proof, settings sealing, consistent cold backup, production release, login, TLS, real-model or external-Agent acceptance was performed.",
+    "The conditional failure-capture allowance is unused and cannot be repurposed for a new capacity query or another unit.",
+    "Private sources, credentials/configuration bodies, raw operational evidence and archives are not synchronized; old failed directories and locks are untouched."
+  ],
+  "limits": {
+    "actualPeakCpuMemoryOrFdUsageSampled": false,
+    "cpuPercent": 20,
+    "cpuWeight": 10,
+    "identityCapabilityNnpChecksRetained": true,
+    "localSeconds": 310,
+    "memoryMiB": 192,
+    "nice": 10,
+    "privateNetwork": true,
+    "remoteSeconds": 280,
+    "runtimeSeconds": 230,
+    "swapBytes": 0,
+    "tasksMax": 32,
+    "unitSeconds": 240,
+    "workSeconds": 220,
+    "workerOutputSeconds": 225
+  },
+  "localOperatorVerification": {
+    "actualProcessExitCode": 0,
+    "cases": [
+      "200-second success with current binding",
+      "old authorization rejection before claim or launch",
+      "timeout retained without retry",
+      "311-second result rejected",
+      "repeat claim rejected without second launch"
+    ],
+    "combinedBuildAndTestCommandWallSeconds": 7.8999876,
+    "historicalTimeReplayOnly": true,
+    "newNativeAuthorityFromLocalTests": false,
+    "previousCandidate23TrackedFilesVerifiedUnchanged": true,
+    "previousCandidate27ChecksRepeated": false,
+    "reportedTestSeconds": 6.487,
+    "tests": 5
+  },
+  "nativePreparationSucceeded": true,
+  "nextLocalAction": "rebind complete-capacity and database-copy verification inputs to this accepted preparation before proposing any further bounded remote step",
+  "precheck": {
+    "actualExitCode": 0,
+    "caddyMaterialsMatchFrozenPrepareInputs": true,
+    "cohortNonce": "2a51f0d25e910457727d413a824bbf3d",
+    "completeSourceFiles": 57,
+    "fullReceiptSha256": "b5481e636166d86dfedf735b2baf8e24e8e566d35a7c1a86fe88ea80cd880ce8",
+    "protectedBaselineUnchanged": true,
+    "readonlyBindingSha256": "43e320825d5f4b3fede2a307e35acb0f5c3f41964b0ccc686daa3b8ab8a7150c",
+    "sourceConfigRuntimeAndDependencyMatch": true,
+    "wallSeconds": 5.22396510001272
+  },
+  "preparation": {
+    "actualProcessExitCode": 0,
+    "actualWallSeconds": 151.81289150001248,
+    "allocationScope": "currently materialized candidate only; later settings/proof excluded",
+    "cleanupErrors": [],
+    "compatibilityProofCreated": false,
+    "controllerSeconds": 149.32339586224407,
+    "currentCandidateAllocationBytes": 55582720,
+    "dependencyFingerprint": {
+      "bytes": 38850588,
+      "files": 4462,
+      "sha256": "5d1e5e56e0ce865a41e881262d72ee711225fb3940b9556416a30cf6dcc639a0"
+    },
+    "finalErrors": [],
+    "invocation": "967a1ec1ea0843cabc33234b4f6d1c9c",
+    "nativeExit": {
+      "code": 1,
+      "status": 0
+    },
+    "observedAt": "2026-11-14T00:02:13.602666+00:00",
+    "outerProtectionEvidence": "the validated outer controller separately confirms protected baseline and empty unit",
+    "parentStderrBytes": 0,
+    "primaryError": null,
+    "productFiles": 66,
+    "productionPublication": false,
+    "protectedBaselineUnchanged": true,
+    "releaseFiles": 11,
+    "settingsSealed": false,
+    "sourceAndPrivateInputsUnchanged": true,
+    "sourceManifestSha256": "34d89378f273c4fd34af080c2f25bd695e2b35002fb86ad623f29018607bd3d3",
+    "sshCleanupConfirmed": true,
+    "tag": "2b83a54d91ef",
+    "timedOut": false,
+    "unitAttempts": 1,
+    "unitEmptyVerified": true,
+    "workerOuterProtectionVerificationRequired": true,
+    "workerOuterProtectionVerified": false,
+    "workerStatus": "candidate-prepared-only"
+  },
+  "prewriteCapacity": {
+    "devices": [
+      {
+        "allocationUnit": 4096,
+        "device": 64771,
+        "freeBytes": 28333740032,
+        "freeInodes": 2257535,
+        "requiredFreeBytes": 1231290368,
+        "requiredFreeInodes": 31376,
+        "roles": [
+          "release",
+          "source",
+          "stage"
+        ],
+        "sufficient": true
+      }
+    ],
+    "elapsedSeconds": 0.0010246364399790764,
+    "historicalBasisIsNotCurrentExecutionIdentity": true,
+    "historicalInputBasisBindingSha256": "1007bc80b1b8a04fe484fb159d5e58caaf07398c326df750334d03fd1ab97d66",
+    "policyIsEstimateNotReservation": true,
+    "status": "passed"
+  },
+  "privateEvidenceSha256": {
+    "authorization.json": "56b13e7ba9b3a4e236d85fa1d8a2cf0da8437c8790f9666c2c39470202f953b2",
+    "build_operator.py": "09ab2961ceed612deaaba45cc159cf865c0adfe170965d672f6f78f2053d7745",
+    "operator-build.json": "e5c9b72e12cea207c6bd9d480d927f1c1624ec13c226ad01ec59afd8aec0ea32",
+    "operator-tests.log": "28853f50915039a92e4bfa3f95dffe71062e33a4bc6dad6b183b650743c5ecdb",
+    "precheck-attempt.json": "8e5292306ba4882142a35c02a8be1c5a4cd6c2abb5c70185631627404c895e94",
+    "precheck-output.json": "89b6a69962ab84c3ce5dfaba54314d42df7deceed4c028daa9569e4e2b8da478",
+    "precheck-result.json": "b1ea484c3e4a9a218b362f65c681da8206f8149d1fc47e5c54456cb797b40eb3",
+    "preparation-operator-claim.json": "068fbe3cb01b4d55c409ea9d2cfe3687c2b09d7e79257a79a34fb43da1c0e50e",
+    "preparation-summary.json": "53b4d87a99475bbf48cd926646800ad9c34f961c95fa6bf74c4d84f3a0b02fbe",
+    "prepare_once.py": "c520d50aed6dd6f0b550e450c185b93fe653b46c242a894a28845652fe90f72a",
+    "run_precheck.py": "ea90a47b98a5c29eb2a637d21a0f94262420343a68e2d22e8c503394ac7dce4a",
+    "test_operator.py": "a1db3477323e2612c90d31661b0023dbbec03cffd1d2e4eb0b37345ce34527ce"
+  },
+  "productionReady": false,
+  "review": {
+    "confirmedMaterialFindings": 0,
+    "independentOfflineEvidenceReviewCompleted": true,
+    "reviewerRanTestsOrRemoteCalls": false
+  },
+  "scope": {
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingServicesStartedStoppedOrRestarted": false,
+    "externalAgentCalls": 0,
+    "failureCaptureExecuted": false,
+    "grantsChanged": false,
+    "portsChanged": false,
+    "privateConfigurationModified": false,
+    "privateConfigurationReadForCandidateAssemblyAndChecks": true,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "status": "native candidate preparation accepted; production delivery incomplete",
+  "trace": {
+    "aggregates": {
+      "directory_fsync": {
+        "calls": 5285,
+        "failures": 0,
+        "millisecondsLowerBound": 1666.781174018979,
+        "timingComplete": true
+      },
+      "file_fsync": {
+        "calls": 4540,
+        "failures": 0,
+        "millisecondsLowerBound": 12964.06441833824,
+        "timingComplete": true
+      },
+      "write_readback": {
+        "calls": 4540,
+        "failures": 0,
+        "millisecondsLowerBound": 2820.1380483806133,
+        "timingComplete": true
+      }
+    },
+    "completedInputs": 4462,
+    "detailRecords": 29,
+    "diagnosticErrors": [],
+    "inputLogicalBytes": 38850588,
+    "lastWorkPhase": "complete",
+    "macroAllCompleted": true,
+    "macroRecords": 11,
+    "materializeSeconds": 140.00463632307947,
+    "maximumDetailRecords": 96,
+    "notPureIoOrCpuAttribution": true,
+    "omittedRecords": 0,
+    "phaseWallIntervalsSeconds": {
+      "allocation__to__close": 14.593847,
+      "dependency_copy__to__dependency_copy_complete": 47.195934,
+      "source_inventory_after__to__stage_inventory": 24.507978,
+      "source_inventory_before__to__write_artifacts": 27.101308,
+      "stage_inventory__to__verify_artifacts": 26.005829,
+      "verify_artifacts__to__allocation": 0.196519,
+      "write_artifacts__to__dependency_copy": 0.39342
+    },
+    "secondSnapshotCompleted": true
+  }
+}
