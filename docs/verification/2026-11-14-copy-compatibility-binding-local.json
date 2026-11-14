@@ -1,0 +1,73 @@
+{
+  "basis": "docs/verification/2026-11-14-copy-page-budget-local.json",
+  "binding": {
+    "allOtherReceiverCodeUnchanged": true,
+    "candidateCopyHelperSha256": "694b9fab5cd0459edf1332ef88a9c09b5878a4ea12ac803e57aada95d5e3fd9a",
+    "candidateReceiverSha256": "399352c8838e05c828af727aae59e61c65de60d09880b6de85888d0a8240aa2b",
+    "capturedSourceHashesUnchangedDuringTests": true,
+    "changes": [
+      "copy helper digest literal",
+      "copy helper fixed relative path literal"
+    ],
+    "originalSourceAndFrozenCaptureUnchanged": true,
+    "previousCopyHelperSha256": "afa8d6565ad1302b3dca88d81283c9974c18ae380568895f8cbbccb80a869ef3",
+    "previousReceiverSha256": "2e4d975a5093d41bcf5a6e540b32f6758d8e640e1ccfcde997054e1455cf59ae",
+    "requestResultOnlyDifference": "copySourceSha256"
+  },
+  "businessAuthorizationChanged": false,
+  "businessDatabasesOpened": false,
+  "capture": {
+    "allSixControlFilesUnchanged": true,
+    "bindingSha256": "424af5629e2311a940e68766f3ff1c20462211961c4a60ce274cfa2cb4ff95be",
+    "newAttempts": 0,
+    "newAuthorizationCreated": false,
+    "receiverSourceBindingReplaced": false
+  },
+  "credentialsChanged": false,
+  "date": "2026-11-14",
+  "evidenceSha256": {
+    "binding.py": "399352c8838e05c828af727aae59e61c65de60d09880b6de85888d0a8240aa2b",
+    "run_local.py": "228ae55016d47a1c127cacbd923fdb7dedace2545c4b1200544020d8721c75f4",
+    "test-terminal.json": "e8604dc7f7ed8a9a5d62a65f7407fe3e14ee79c3b7735240558fbb2be6b4878a",
+    "test_original_bindings.py": "0d21fe913622811f6a8d8839e550517993ee90616f2ec4ff4df3312d0b6ccd8c",
+    "test_revision.py": "09082888da90c8bc385fde49f283f4b1da869745b3252a6039d107ccd28b0fa0",
+    "tests.stderr.bin": "09de37dfc1008b65f002ff51d0a4cb046d5f13a6c075c021dd3eff694421fa75",
+    "tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "externalAgentCalls": 0,
+  "limits": [
+    "This revision emits only an inactive request. It does not authorize, schedule or launch a native unit.",
+    "The fixed capture retains its original receiver/helper source pins; a later native package must explicitly bind this reviewed revision.",
+    "Kernel read-only mounting of production DATA and compatibility in that target namespace still require implementation and native verification before any source database read.",
+    "mode=ro is not zero-filesystem-write assurance; local synthetic SHM bytes changed in the preceding probe.",
+    "No real capacity/generated materials were collected; the separately requested one-shot collection remains pending.",
+    "No database-copy proof, multi-database application-consistent backup, release or overall production delivery is established."
+  ],
+  "newLinuxUnits": 0,
+  "privateSourcesSubmitted": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "request": {
+    "authorized": false,
+    "nativeExecutionVerified": false,
+    "oldDigestCannotSelectPreviousHelper": true,
+    "productionReady": false,
+    "proofCreated": false,
+    "resourceIdentityConfigurationAndCapacityFieldsUnchanged": true,
+    "sourceHashDriftRefused": true
+  },
+  "stage": "inactive future database-copy request source binding; local synthetic integration",
+  "tests": {
+    "actualExitCode": 0,
+    "count": 16,
+    "entireProductSuiteRerun": false,
+    "failures": 0,
+    "newRevisionTestCount": 5,
+    "originalBindingRegressionCount": 11,
+    "skips": 0,
+    "wallSeconds": 3.040973600000143
+  },
+  "vpsConnected": false
+}
