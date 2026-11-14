@@ -1,0 +1,160 @@
+{
+  "basis": {
+    "candidateBindingSha256": "d6917469af4cace34d64ac4e1ebb522a5fd4f9b25e063ddd9f806ae43b070cbe",
+    "currentConsumerSha256": "091257cca0ab5a4b9b88f34d1cdbc152baf8828ec11558225bdbf283143f2098",
+    "nativeRecord": "docs/verification/2026-11-14-native-aligned-preparation-accepted.json",
+    "original120SecondConsumerRejectsActual149SecondReceipt": true,
+    "recordSha256": "25a4dcee9b9a2e6fd450ca7c6ef57ecf9d4aa2780e0fdf43edd49104f4c73861",
+    "sourceManifestSha256": "34d89378f273c4fd34af080c2f25bd695e2b35002fb86ad623f29018607bd3d3"
+  },
+  "compatibilityProofCreated": false,
+  "date": "2026-11-14",
+  "inactiveCapture": {
+    "activated": false,
+    "actualSshCommandBytes": 51588,
+    "beforeAfterFileDigestAndServiceChecks": true,
+    "bindingSha256": "426fd2d01732c52b6459322cc22aca2a60dc732653ed4c7b840a0482f6216001",
+    "commandLimit": 65536,
+    "exactFrozenReadback": true,
+    "fdIdentityOwnerModeNoFollowChecksRetained": true,
+    "fixedSourceModules": 5,
+    "inboundPortsOpened": 0,
+    "knownStaticErrorCodesOnly": true,
+    "localSecondsProposed": 35,
+    "maximumSshAttemptsProposed": 1,
+    "maximumUnits": 0,
+    "nativeExecutionAuthorized": false,
+    "originalMetadataInnerMaximumSeconds": 15,
+    "outputLimitBytes": 262144,
+    "postOutputClockFiniteNondecreasingAndBounded": true,
+    "privateBodiesWouldBeRetainedLocallyOnly": true,
+    "privateMaterialNames": [
+      "candidate-config.json",
+      "compatibility-inputs.json",
+      "expected-code.json",
+      "Caddyfile.final",
+      "Caddyfile.loopback"
+    ],
+    "privateMaterialTotalLimitBytes": 131072,
+    "readScope": [
+      "complete prepared source/control/results, release and stage metadata",
+      "DATA and fixed Caddy metadata for backup sizing; no database contents",
+      "fixed reservation JSON and five generated candidate materials, each hash-bound",
+      "four existing service status snapshots before and after"
+    ],
+    "remoteFileWrites": 0,
+    "remoteSecondsProposed": 20,
+    "runtimeEnvOrSshCredentialBodiesIncluded": false,
+    "safeOriginalCleanupErrorsAndOmissionCountsRetained": true,
+    "sharedOuterBudgetReservesFinalServiceAndCleanupTime": true,
+    "sourceBytes": 38347,
+    "sourceCatalog": {
+      "api": {
+        "bytes": 28644,
+        "path": "publication-readonly-20261107-a4/remote_collect.py",
+        "sha256": "b71cdcb41294d8fc5e5e6fe093b8d9f0d3423d5fce127333db20a8d212fc11db"
+      },
+      "capacity": {
+        "bytes": 6509,
+        "path": "post-prepare-capacity-20261113-a1/capacity.py",
+        "sha256": "41e6bfdf95dd5880194bc7b5185ea56bfe6506fe08f9d77c3eeb3836ecaa9b79"
+      },
+      "collector": {
+        "bytes": 4492,
+        "path": "aligned-capacity-inputs-20261114-a1/capture.py",
+        "sha256": "fb7a357ad5570c968692a6aaad50dd1ba14bf74b9ed63dca768a272304b36c39"
+      },
+      "metadata": {
+        "bytes": 5741,
+        "path": "post-prepare-capacity-20261113-a1/native_metadata.py",
+        "sha256": "f5b1262ac3f5b04d02cf3e3fff4f4386b5669771809da3c8fd07179ac3b70eef"
+      },
+      "sizing": {
+        "bytes": 8331,
+        "path": "production-bound-local-c01f6b0d86e5/metadata_sizing.py",
+        "sha256": "d401251ae189eefa2f27357f7c109e5175a88ab9cad7902eaf3cf9f3eb248259"
+      }
+    },
+    "sourceSha256": "aefd4d71c60622b3a679864c236cae06a5e0a978bb9820c62f5f5d06e1bcef56",
+    "sqlQueries": 0,
+    "sshAttemptsUsed": 0,
+    "unconfirmedOwnedCommandCleanupKeepsFixedEnvelopeWait": true,
+    "unitCreation": 0
+  },
+  "inputBinding": {
+    "finalParentStdoutAndActualExitRequired": true,
+    "fixtureOnlyManifestAlignedForElevenExistingBindingCases": true,
+    "knownEmptyDigestOnlyUsesZeroByteFdContract": true,
+    "originSourceCompiledFromPinnedBytesWithoutPycache": true,
+    "originalCapacityAndCopyChecksRetained": true,
+    "originalSourceReaderNonemptyRuleUnchanged": true,
+    "provisionalDiskSnapshotsNotPromoted": true,
+    "remainingTenGuardFunctionsAstUnchanged": true,
+    "samePinnedBuffersParsedWithoutEvidenceReopen": true
+  },
+  "limitations": [
+    "This is local preparation, not a fresh native capacity observation or database-copy proof.",
+    "A separate bounded one-attempt invocation receiver/authorization/cleanup integration must be completed and tested before any new remote proposal is executable.",
+    "No new remote operation is authorized by these files. Existing precheck/preparation allowances are consumed; conditional failure-capture is ineligible.",
+    "The metadata inner15s and proposed remote20/local35s are ceilings with shared reserves, not a native timing adequacy claim.",
+    "Generated candidate material bodies can contain private configuration. No such body was fetched or synchronized in this local phase.",
+    "Capacity remains an estimate rather than a reservation. DATA copies, cross-database application consistency, settings/proof, backups, publication and live acceptance remain separate gates.",
+    "Private sources, compressed packet, authorization material and raw evidence are not submitted; only this sanitized record and plan are synchronized."
+  ],
+  "localVerification": {
+    "actualProcessExitCode": 0,
+    "caseCounts": {
+      "test_binding.py": 11,
+      "test_capacity.py": 9,
+      "test_capture.py": 10,
+      "test_origin.py": 8,
+      "test_package_capture.py": 12,
+      "test_rebind.py": 6
+    },
+    "confirmedRemainingP1P2": 0,
+    "earlierRunsNotAddedToFinalCount": true,
+    "independentSourceReviewCompleted": true,
+    "reviewerRanTestsOrNetwork": false,
+    "sourceHashesUnchanged": true,
+    "stderrSha256": "0dd467c4b311575e07579cf450da0f0f3b5220b47ae2f70b473821f58a36ddd7",
+    "stdoutSha256": "2deabd19f02061896672602641c5ee23f570df7a773e28af1487d95e08aa6c39",
+    "terminalSha256": "cd3be866ff2f237b28ac253d73437d368c495d39404f24e20fa5a92105c93d4f",
+    "tests": 56,
+    "trackedFileCount": 20,
+    "wallSeconds": 12.495807399973273
+  },
+  "nativeCapacityAccepted": false,
+  "nextLocalAction": "integrate and test the fixed inactive capture source with a separately approved, one-attempt20s/35s SSH entry and private result receiver; do not connect before new explicit approval",
+  "phase": "local accepted-preparation capacity continuation",
+  "privateSourceSha256": {
+    "accepted.py": "41e61c8544dd2c0ffd0070862f35b8faaefd9b10b7879fdafc258332430faac3",
+    "binding.py": "2e4d975a5093d41bcf5a6e540b32f6758d8e640e1ccfcde997054e1455cf59ae",
+    "capacity.py": "41e6bfdf95dd5880194bc7b5185ea56bfe6506fe08f9d77c3eeb3836ecaa9b79",
+    "capture.py": "fb7a357ad5570c968692a6aaad50dd1ba14bf74b9ed63dca768a272304b36c39",
+    "derive.py": "f0d1281ab9b6692e5c4deaeb446c585ba5d4a6ea04b1052b4a0b96b16ef4efa5",
+    "package_capture.py": "5190427018eeb3b7f73c21df934fdb8cb45a7113e02bd21efe4bb46702276946",
+    "run_related.py": "e949bde1872444e5390962ffb4e4d5337143d26eef4c68cf0c77d7ca80fc1110",
+    "test_binding.py": "16ce448931c48b3f0b41b29538a2a1d30946b6b2b6e2855bddfa9ddde61fcba3",
+    "test_capacity.py": "483a742a39f392d6a0de8eb6bf3c1f5e1b8d647ba91df6d5e1eec5ee2a2613fe",
+    "test_capture.py": "03860d7c7595840b58bdb9d0485f416c1d63a281b117420514c5ef2ff37e391a",
+    "test_origin.py": "0a816ec482820c10bf0c7a572102921a1c6564d169934787b222829a78a7781e",
+    "test_package_capture.py": "f251a3816464c0248d7baac66877e728bc59d556dc2777ba66220062bf0d8860",
+    "test_rebind.py": "84e271367faf3dff52472aedd8732b27e0d798a11488f55e936eb5e28c4ccd6a"
+  },
+  "productionReady": false,
+  "scope": {
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "portsChanged": false,
+    "previousFailureCaptureQuotaReused": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "status": "local receivers and inactive capture package verified; invocation integration still pending"
+}
