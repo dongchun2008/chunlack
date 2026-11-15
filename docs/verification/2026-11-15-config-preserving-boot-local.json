@@ -1,0 +1,145 @@
+{
+  "actualLocalLack": {
+    "blockedOperationCounterSum": 0,
+    "childStderrBytes": 44,
+    "configurationBytesUnchangedAsserted": true,
+    "data": "three synthetic databases; no business data",
+    "diagnosticModuleLoadWrapperInFinalSpawn": false,
+    "enabledOidcAndNonemptyAgentProviderDefinitions": true,
+    "guardReceiptMoment": "process-before-exit; not terminal or kernel proof",
+    "healthStatusAsserted": 200,
+    "localDependencyJunctionUsed": true,
+    "mockDiscoveryResponses": 1,
+    "nativeExecutionVerified": false,
+    "observedNormalExitZeroAsserted": true,
+    "proofCreated": false,
+    "rawChildLogsPrivateAndNotDiscarded": true,
+    "seededProjectStatePreservedAsserted": true,
+    "writerLockReleasedAsserted": true
+  },
+  "agentConfigurationChangedInProduction": false,
+  "businessAuthorizationChanged": false,
+  "businessDatabasesOpened": false,
+  "candidate": {
+    "bindingSha256": "07012726f3f0daa49a3ef945a478fb9ca35fb3fd0ead43705a3f4420c48e1d75",
+    "coreSources": {
+      "isolation.cjs": "7208ab3841a5cc68458e1881977a1591adc591a4afebbe8f2811dd315dfa2d1c",
+      "preload.cjs": "172fa1316bc23d3a01a2b9068739b3d900c2539638dfe16ea654624bcb56647a"
+    },
+    "guardImportHasNoInstallationEffect": true,
+    "nativeExecutionAuthorized": false,
+    "nativeLauncherIncluded": false,
+    "preloadRequiresPinnedContextAndCapturedSource": true
+  },
+  "capabilityBoundary": {
+    "commandConvenienceAndChildProcessPrototypeSpawnDenied": true,
+    "counterLimitPerKind": 64,
+    "javascriptHooksAreNotAKernelOrUntrustedJavascriptSandbox": true,
+    "nativeIdentityNetworkAndResourceVerificationStillRequired": true,
+    "otherFetchesDenied": true,
+    "receiptsContainOnlyHashesCountersAndNonProofStatus": true,
+    "tcpConnectDenied": true,
+    "udpConvenienceAndConstructorPrototypePathsDenied": true
+  },
+  "configurationAndCredentials": {
+    "agentAndProviderDefinitionsPreserved": true,
+    "childOnlySyntheticCredentialValues": 2,
+    "configurationRawBytesPreserved": true,
+    "credentialOrCookieBearingDiscoveryRefused": true,
+    "existingCredentialEnvironmentValuesRefused": true,
+    "maximumDiscoveryResponses": 4,
+    "oidcRemainsEnabled": true,
+    "onlyExactGetIssuerDiscoveryMocked": true,
+    "productionCredentialsRead": false,
+    "realPocketIdLoginVerified": false,
+    "reservedAndAliasedCredentialNamesRejected": true
+  },
+  "credentialsChanged": false,
+  "date": "2026-11-15",
+  "diagnosticsAndFailures": {
+    "initialWorkspaceSeedFixtureCorrectedUsingExistingWorkspaceContext": true,
+    "localHttpProviderFixtureMarkedLocalWithoutChangingProductHttpsPolicy": true,
+    "missingLocalBareEsmDependenciesConfirmedByReadOnlyResolver": true,
+    "readinessDeadlineSeconds": 20,
+    "retainedIncompleteRuntimeDiagnosticRecords": 3,
+    "runtimeCaseDeadlineSeconds": 40,
+    "timeoutsIncreasedToHideFailure": false,
+    "windowsImplicitEnvironmentDiagnosedWithKeyNamesOnly": true,
+    "windowsSpecificSystemFieldAllowanceNotAppliedToLinux": true
+  },
+  "dnsChanged": false,
+  "evidenceSha256": {
+    "DESIGN.md": "d243d25b2758ca0a4b61d60d3c2511c0983e936e0d2e0830d9c92be73d0882b6",
+    "final-terminal.json": "d05db5d3a6fc85177b10f31c915e4172e70c9e61a25f770992e59059be0112a3",
+    "final.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "final.stdout.bin": "6a930b8bf8d2e15d7247ee9ba2e22aafa8cd4902ed0398e50faf3a580f7297ae",
+    "isolation.test.cjs": "8422ef2f462f2ea39656657d4cb2c90944b818a5110734e312c2db9174b2edd0",
+    "preload.test.cjs": "36abf43fb3545afc25603c252d4c6132c0a115700ec0d1cbc776a501ee760eb5",
+    "reader.test.cjs": "06725c7070879bdf7bcf22c596ae39d0377b425c1e661e62971fdd6ef0d4d210",
+    "resolution-diagnostic.json": "960b019e76d2279b61ed442686d7cb9020c84d216972b910dbe5161e93493855",
+    "review-source-only.txt": "8caba66e3efd6f3be983ea0a72935a878016700199beb02a0f88f6d02f28f6e4",
+    "run_local.py": "c2a67dcd1e04baf9421ffa3151c0292f2a5c102ff0a342506d1fd328a8666f28",
+    "runtime.test.cjs": "fea2f14c9defc16916a93cc41b06b8952ea5d45098878cdf7184283772957f6d"
+  },
+  "externalAgentCalls": 0,
+  "fileBoundary": {
+    "boundedSameDescriptorReadAndCapturedGuardCompilation": true,
+    "configurationMaximumBytes": 131072,
+    "contextMaximumBytes": 8192,
+    "hugeOrChangedDescriptorRefusesBeforeAllocation": true,
+    "openedDescriptorValidatedBeforeAllocation": true
+  },
+  "independentReview": {
+    "confirmedP2Resolved": 2,
+    "initialConfirmedP2": 2,
+    "newConfirmedP1P2AfterDeltaReview": 0,
+    "reviewerConnectedNetwork": false,
+    "reviewerExecutedTests": false,
+    "sourceOnly": true
+  },
+  "newLinuxUnits": 0,
+  "portsChanged": false,
+  "privateSourcesSubmitted": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "remainingWork": [
+    "Fresh explicitly authorized accepted VPS capacity/input capture remains pending; the earlier single-attempt capture is exhausted.",
+    "The new guard must still be bound into the exact native worker/source closure; no runnable native compatibility launcher is completed by this component.",
+    "Native UID996/GID987, NNP, zero business capabilities, kernel network/read-only DATA isolation and cgroup limits remain unverified for this candidate.",
+    "Native copies must preserve original rows/schema/authority and boot actual candidate and previous versions through the original full validator.",
+    "A Windows dependency junction is not an approved Linux dependency-copy layout.",
+    "Mock discovery and ephemeral values prove no real Pocket ID authentication, model inference or external Agent execution.",
+    "Controlled production publication and complete user-facing delivery remain unfinished."
+  ],
+  "runtimeEvidenceSha256": {
+    "runtime-07823d162a86.json": "ac2a6e4e388943d7b53c6e2b67b2e90bbcb84e7ad3b1f07b198c930211538613",
+    "runtime-07823d162a86.stderr.bin": "52817f1cc6e28ed8a33e71bdf4e5824141c76e967a599a95849020b7dde8976f",
+    "runtime-07823d162a86.stdout.bin": "439dc3fd18566a86803ead541af34bb0f45793a7bf41206572506048846266d3"
+  },
+  "stage": "local configuration-preserving compatibility boot boundary",
+  "tests": {
+    "actualExitCode": 0,
+    "actualSyntheticChildCases": 4,
+    "actualUnmodifiedLocalLackCases": 1,
+    "cancelled": 0,
+    "count": 15,
+    "entireProductSuiteRerun": false,
+    "failures": 0,
+    "guardCases": 9,
+    "openedDescriptorCases": 1,
+    "skips": 0,
+    "sourceHashesStable": true,
+    "twoReviewFindingsReproducedBeforeFixAndPassedAfterFix": true,
+    "wrapperWallSeconds": 3.8298518000519834
+  },
+  "vpsConnected": false,
+  "why": {
+    "actualCandidateBindingRequiresEnabledOidc": true,
+    "oldNativeFixtureModified": false,
+    "oldNativeFixtureRequiresOidcDisabledAndEmptyAgentsProviders": true,
+    "oldNativeFixtureSha256": "07a3749d8c4b01d460446667dac8d4523947d5cb3eb1fe89bb2e3cb022b215ae",
+    "productSourcesModified": false
+  }
+}
