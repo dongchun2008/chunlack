@@ -1,0 +1,133 @@
+{
+  "acceptedLocalComponents": true,
+  "base200FileArchiveAndCatalogPins": {
+    "native-copy-catalog.json": "ddefd898b60ba90bd8335112202924279def770258dfdd0cde71aec9cf1381ff",
+    "native-copy-source.tar": "1ec99f3862ffb3568e8a28a6f9417cdd8878d068093d1a0597134feb25ee2f91"
+  },
+  "baseUnchanged": true,
+  "boundaries": {
+    "actualModelCalls": 0,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "earlierCaptureAllowance": "consumed-1/1-not-repeated",
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "portsChanged": false,
+    "privateImplementationSynced": false,
+    "productionPublished": false,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-16",
+  "evidence": {
+    "localEvidenceSha256": {
+      "inactive-file-component.tar": "1195d834f572b2983a472c96e23da2270827ec5177a84a83679ec274761a07fb",
+      "tests.stderr.bin": "5e74068cd288a4d43d562a7e27faa86bf5fddd475ab03001ca53580cbea3667c",
+      "tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "oldFailuresRetained": true,
+    "privateBodiesPublished": false,
+    "terminalSha256": "f3cbeba2bad5b89589376559a03351a238fa7ff7da545e7f4744a6a1384ed2da"
+  },
+  "goalStatus": "active-incomplete",
+  "implemented": [
+    "exact-candidate66-first-and-previous57-second-file-layout",
+    "root-immutable-group-readable-source-job-input-policy-separated-from-business-owned-private-config-and-output",
+    "descriptor-relative-new-root-and-parent-identity-owner-mode-alias-checks",
+    "root-only-0700-staging-through-component-return-no-business-traversal-release",
+    "exclusive-nofollow-create-with-no-overwrite-delete-or-symlink-path",
+    "bounded-partial-writes-fsync-and-same-descriptor-hash-readback",
+    "immediate-owned-descriptor-registration-once-only-close-and-no-new-acquisition-after-uncertainty",
+    "separate-primary-cleanup-final-errors-and-no-acceptance-after-expiry-or-uncertain-close"
+  ],
+  "inactiveSourceSnapshot": {
+    "archiveSha256": "1195d834f572b2983a472c96e23da2270827ec5177a84a83679ec274761a07fb",
+    "files": {
+      "layout.py": "cd6f2c6aeb290c0dd28ca634e8a95305bf9297f2ddb9c92d62c6f8467bdf8336",
+      "materialize.py": "2597e2b72d44722ff57014874ef0c65600a97e90620137018e97e3f44622ee43",
+      "store.py": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd"
+    },
+    "nativeExecutionClaimed": false,
+    "savedBytesVerified": true,
+    "sourceFiles": 3
+  },
+  "originalFullInputOracle": {
+    "freshHostOrNativeEvidenceClaimed": false,
+    "layoutTestHistoryIsNotRealProductionSource": true,
+    "originalFrozenInputsAccepted": true,
+    "syntheticPrevious57Rejected": "owned_job_manifests"
+  },
+  "remainingCriticalPath": [
+    "fresh-real-previous-source-native-runtime-and-dependency-reader",
+    "mandatory-original-input-admission-fresh-host-context-and-capsule-seal",
+    "actual-host-entry-hard-watchdog-and-aggregate-resource-boundary",
+    "new-native-compatibility-and-controlled-publication-live-acceptance",
+    "quiet-dedicated-dots-route-and-Muse-Suhua-real-task-acceptance"
+  ],
+  "review": {
+    "businessAccessReleased": false,
+    "concentratedSourceReviewComplete": true,
+    "confirmedFindingsFixed": true,
+    "findings": [
+      {
+        "fix": "keep-fresh-execution-root-0700-throughout-construction-and-component-return-no-business-traversal-release",
+        "issue": "early-business-parent-ownership-allows-directory-adoption-between-mkdir-and-open",
+        "localFeasibleUid996ReplacementRedGreenConfirmed": true,
+        "nativeReproductionClaimed": false,
+        "severity": "P2"
+      }
+    ],
+    "oneRegressionBackedFixPass": true,
+    "reviewDidNotRunTestsNetworkOrReadMaterialBodies": true,
+    "rootPolicy": [
+      0,
+      987,
+      448
+    ],
+    "secondIndependentReviewClaimed": false,
+    "supersededPreReviewTerminalSha256": "7c20f59514caa2615dea09d79b1b7f008628706ff05e50abbcb2ab53d8a74583",
+    "testGroups": {
+      "descriptorRelativeStore": 10,
+      "joinedMaterializerAndErrorBoundaries": 5,
+      "layoutAndOriginalFullInputOracle": 7
+    }
+  },
+  "schemaVersion": 1,
+  "scope": "local-exclusive-root-file-materialization-component-only",
+  "sourcePins": {
+    "DESIGN.md": "2fb39e738156d2e954231c6f3d5e5e416d8912884c09806ff934820e3a01d4de",
+    "finalize.py": "c3a71b926dcbb368d4b3635c36aea75ce79ba0481df6201944a1f53e2be9ff60",
+    "layout.py": "cd6f2c6aeb290c0dd28ca634e8a95305bf9297f2ddb9c92d62c6f8467bdf8336",
+    "materialize.py": "2597e2b72d44722ff57014874ef0c65600a97e90620137018e97e3f44622ee43",
+    "store.py": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd",
+    "test_layout.py": "91621e3975836178b1d23e4c58bfc42080172277b743104280c3c7df68f78ccc",
+    "test_materialize.py": "d83af42838daf5c36a385487c2fbb61e2a2d209af44bcf47463747b07976ad22",
+    "test_store.py": "4ea20ba5091e315803f968f86749eb1e0f259f40e224853f1b2a78c1d8da79dd"
+  },
+  "sourcePinsUnchanged": true,
+  "tests": {
+    "actualExitCode": 0,
+    "failures": 0,
+    "groups": {
+      "descriptorRelativeStore": 10,
+      "joinedMaterializerAndErrorBoundaries": 5,
+      "layoutAndOriginalFullInputOracle": 7
+    },
+    "prior52NotRerunOrAdded": true,
+    "skips": 0,
+    "sourceBoundSeconds": 4.641832900000736,
+    "timeouts": 0,
+    "total": 22
+  },
+  "verificationLimits": {
+    "LinuxDescriptorMetadataAndWrites": "memory filesystem doubles",
+    "actualLinuxSyscallsValidated": false,
+    "actualProductionSourceOrDependencyReads": false,
+    "nativeCompatibilityVerified": false,
+    "original200FilePackagePreserved": true,
+    "productionReady": false,
+    "proofCreated": false,
+    "snapshotIsThreeSourceFilesNotFullNativeDistribution": true
+  }
+}
