@@ -1,0 +1,104 @@
+{
+  "actualResult": {
+    "accepted": false,
+    "actualLauncherExitCode": 2,
+    "actualOwnedSdkProcessExitCode": 2,
+    "actualPowerShellExitCode": 1,
+    "operationElapsedSeconds": 4.676040099991951,
+    "outerElapsedSeconds": 7.9427325000287965,
+    "ownedProcessElapsedSeconds": 7.777544100012165,
+    "phaseTimings": [
+      {
+        "elapsedSeconds": 3.000545700022485,
+        "stage": "sdk_version"
+      },
+      {
+        "elapsedSeconds": 3.090871300024446,
+        "stage": "transport"
+      },
+      {
+        "elapsedSeconds": 7.771696100011468,
+        "stage": "validation"
+      }
+    ],
+    "primaryError": {
+      "code": "scheduler_deadline_exhausted",
+      "errno": null,
+      "type": "ValueError"
+    },
+    "rawObservationRetainedBeforeRejection": true,
+    "receiverRejection": {
+      "code": "capture_child_contract",
+      "errno": null,
+      "type": "ValueError"
+    },
+    "sameLiveHandlePolled": true,
+    "wallSeconds": 8.351637199986726
+  },
+  "authorization": {
+    "automaticRetry": false,
+    "furtherRemoteExecutionAuthorizedByThisRecord": false,
+    "invocationsUsed": 1,
+    "localSeconds": 35,
+    "maximumInvocations": 1,
+    "maximumUnits": 0,
+    "reference": "explicit user approval of one new same-limit readonly capture",
+    "remoteSeconds": 20
+  },
+  "binding": {
+    "allSixSourcePinsStillMatch": true,
+    "frozenSourceModified": false,
+    "invocationSha256": "820bd4bb141465b899deb0e6dde00f2b5b19bad852f1f4b65b9c16cb07e2a2c2",
+    "operationSourceSha256": "b049c640641986b6cc3709e4f86c28044dad486d103b6c77a259591ef483be2e"
+  },
+  "businessAuthorizationChanged": false,
+  "businessDatabasesOpened": false,
+  "connectionEvidence": {
+    "emptyHandleCleanupConfirmed": true,
+    "fixedTransportSourceSha256": "9285484e9b86c50ff1eebffcf47a6db95bf232c50cf19088bc77e53e6ac5c11a",
+    "networkPacketObservationCollected": false,
+    "noOwnedHandlesPending": true,
+    "ownedNetworkHandleCompletions": 0,
+    "sdkImportOccursInsideConnectPhaseBeforeSocketFactory": true,
+    "sdkImportTimeSeparatelyMeasured": false,
+    "socketCreationAndCredentialReadNotReachedByVerifiedControlFlow": true,
+    "stageTimeoutEvaluatedBeforeSocketCreation": true,
+    "transportObservationAbsent": true
+  },
+  "credentialsChanged": false,
+  "date": "2026-11-15",
+  "externalAgentCalls": 0,
+  "limitations": [
+    "No successful SSH or VPS capacity collection occurred. Invocation allowance is consumed; it is not automatically replayed.",
+    "Cold SDK initialization is included in the connection phase, which failed its remaining-budget check. The exact SDK import contribution was not separately sampled.",
+    "The receiver exposed capture_child_contract; the more specific scheduler_deadline_exhausted cause is retained in the private operation observation.",
+    "Empty owned-handle cleanup is not evidence that a real three-handle SSH connection was closed.",
+    "No current service baseline, generated private material bodies, database-copy proof, release or overall production acceptance was obtained.",
+    "A future local revision must separate SDK initialization from handshake timing and keep the global bounds and mandatory cleanup reserve explicit; this record does not authorize that revision remotely."
+  ],
+  "newLinuxUnits": 0,
+  "privateEvidenceSha256": {
+    "actual-tool-terminal.json": "83e997952812d50a10f4a6c2ba6528b9d23fe59ee5d1c2add0511b319637115e",
+    "attempt.json": "f7f1b2bea8341244d0439bf3091e8aa27f83c6645b784d86ec41c9fa3d050daa",
+    "attempt/outcome.json": "aa54ceb165e5381e5ad20c3267ba7c5b7b2de614d67360e43870803592bddc68",
+    "attempt/transport-observation.json": "5ef652a159fafae150f3f8fbb8cfcb47dac1a41d9534719978d3a69f32ffc0b9",
+    "capture-authorization.json": "6c3309c407e4421442e4253f9252d3a8006fecbfa31439cf768cfad61436f767",
+    "outer-attempt.json": "6973f3ee25da249b5dbad8d8898bde456d5adec37d24d9fc8b055288f42d84e5",
+    "outer-outcome.json": "f1407b53dadc5ac16be332bb9b3d607f27ec7037273b7c5e92ebc9af95f7559b",
+    "outer-parent-stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outer-parent-stdout.bin": "8aef166cf5ee2ad8f5207e85118551a0335e5b5d81d033b8e5d9770793cde3ad",
+    "trusted-positive-start.json": "84b98855c3e8e259e5488cc20ecb67dd4c76453c35d16a2595e9c1a30fd6e5d6",
+    "trusted-positive-terminal.json": "bffda2314d219b69e1483e4b3b00271cdfa8b8cfffbe7411abad9e4a00725dce",
+    "trusted-positive.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "trusted-positive.stdout": "7d58553fbf92f95a1db62ed4607857dbcb9dbfa3e8baf5c504c286af95f6287e"
+  },
+  "privateSourcesSubmitted": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "remoteServiceChanges": false,
+  "remoteWrites": 0,
+  "stage": "one approved two-process capacity invocation; not accepted"
+}
