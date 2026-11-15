@@ -1,0 +1,162 @@
+{
+  "basis": {
+    "priorActualOuterExitCode": 2,
+    "priorAllowanceConsumed": "1/1",
+    "priorFreshnessReset": false,
+    "priorOverallAccepted": false,
+    "priorPrivateMaterialsUse": "qualified offline planning only; not an accepted release-capacity proof",
+    "priorRealInvocation": "docs/verification/2026-11-15-real-capacity-data-outer-diagnostic-rejection.json",
+    "priorResultReinterpreted": false
+  },
+  "budget": {
+    "automaticRetry": false,
+    "clockReset": false,
+    "closeMaximumSeconds": 5,
+    "executeGlobalReserveSeconds": 8,
+    "executeStageMaximumSeconds": 22,
+    "finalReceiptReserveSeconds": 3,
+    "handshakeMaximumSeconds": 8,
+    "localHardSeconds": 35,
+    "remoteHardSeconds": 20,
+    "sdkLoadCountedInsideLocalBudget": true
+  },
+  "businessAuthorizationChanged": false,
+  "businessDatabasesOpened": false,
+  "candidate": {
+    "addedControls": [
+      "sdk-diagnostics.py"
+    ],
+    "bindingSha256": "450fa8a0733c96e0edf47e39775a296365bd78ebe6ac9b6ed1c18f5823c7b449",
+    "changedControls": [
+      "launch.py",
+      "operation.py",
+      "run.py"
+    ],
+    "controlFiles": {
+      "entry-bootstrap-template.py.txt": "cccfb78d5f3cd6552ed0c3a00edb40b3cd81d3add6383a6818b3980371161f1e",
+      "launch.py": "c1e28282e0a2aadddc20d5256c8334d7b50b351fd4c1c109d490891b15fe3ef9",
+      "operation.py": "642df31a9b47757822aabe5b1b92b28a3b0116bb00da9a774cfcc3507a7b4bc7",
+      "policy.py": "e8cb9b87cfb31ef1baba6ef564c794629e7615ee7dbcd6b80ce6757f3dca24a8",
+      "receiver.py": "abdfb083eb9ce1eca4a01d389df403530bee295a5baadfd2742467e2e6545b31",
+      "run.py": "3e2fd94502dc10f897cea377b6dd409c494106423cc8a3eb0e6d074bbb0e5517",
+      "sdk-diagnostics.py": "125f1d58e97da49bb0d72183be3819247817c6b32f95bb89dde7fd8edb8828d4"
+    },
+    "maximumUnits": 0,
+    "newAuthorizationCreated": false,
+    "sshAttempts": 0,
+    "unchangedControls": [
+      "entry-bootstrap-template.py.txt",
+      "policy.py",
+      "receiver.py"
+    ]
+  },
+  "credentialsChanged": false,
+  "credentialsRead": false,
+  "date": "2026-11-15",
+  "evidenceSha256": {
+    "build-receipt.json": "6a50f7ebb5b189b0c11e80cec44f73291ae042c7e851295e769ffaee6dd63c96",
+    "final-test-terminal.json": "e8f0f65643a29a406e59402beb7bc0cc04f7adf757be847c0dec24f2a5d4a199",
+    "final-tests.stderr.bin": "394fa19618ae56a2e367e61a99078a3fec43c86d544c418a6ec9fb4b539891eb",
+    "final-tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "negative-terminal.json": "2e85adef564f690f40c408b1d08746f103a17da5eabe95fcf46d79985d4214c0",
+    "negative.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "negative.stdout.bin": "981ac361c611c35d394c8a4ce1e5752ed1d055cd630141aff2ebf772a892db93",
+    "progress.md": "cda1cb6816ce432848fb1816c45da880be9b843b3de488216d580f90d897370b",
+    "real-command-render.json": "2d02956ae113a50b8fdd5e2b3c9f4a9316bc67a535d3f52d02791bb33d46b5d2",
+    "review-source-only.txt": "d12f1ca2e54a5eb62d9ca87359df51e2f9d00e1a0d50e03c96e23f2acdb1bd1f",
+    "reviewed-test-terminal.json": "71dd70a358d41dbbe26a84ff97f24727eb6550ecd9b1593406d8acc64c46221a",
+    "reviewed-tests.stderr.bin": "0c0c2dba258f3817a586a3439bbe5660c97774f4880329ae573da55ff059aa48",
+    "reviewed-tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "test_sdk_diagnostics.py": "09a395b9dcfe6efb75e1303ad9b28c9bc8892fdb670652a2de19cbb68529c93d"
+  },
+  "externalAgentCalls": 0,
+  "independentReview": {
+    "confirmedP2Resolved": 1,
+    "initialConfirmedP2": 1,
+    "newConfirmedP1P2AfterDeltaReview": 0,
+    "reviewerConnectedNetwork": false,
+    "reviewerExecutedTests": false,
+    "sourceOnly": true
+  },
+  "lifecycle": {
+    "captureThreadBeforeTransportDetachment": true,
+    "combinedMemberDiagnosticsRetainedInPrivateObservation": true,
+    "compactSummaryContainsMemberDetails": false,
+    "failedTimeSampleStillAttemptsOriginalClose": true,
+    "hostKeyBeforeCredentialAccessPreserved": true,
+    "maximumDirectMemberDiagnostics": 4,
+    "nestedExceptionBodiesNotSerialized": true,
+    "originalPinnedSessionUnchanged": true,
+    "originalThreeOwnedHandleClosesPreserved": true,
+    "secondCloseCannotPromoteEarlierFailure": true,
+    "singleAttemptCloseCachesResultOrException": true,
+    "threadJoinOnlyWithinRemainingOriginalCloseAndGlobalBudget": true
+  },
+  "limitations": [
+    "Local actual processes, synthetic transport and logging do not establish real SSH or target SDK cleanup behavior.",
+    "WARNING and higher named transport logs are captured; DEBUG/INFO logging is not enabled.",
+    "No new approved remote query, capacity proof, database-copy compatibility result or release was produced.",
+    "The previous real invocation remains rejected; its single-attempt permission is exhausted.",
+    "Kernel-enforced read-only production DATA and fresh input checks remain necessary for a future DB-copy unit.",
+    "Only this sanitized record is synchronized. Private controls, logs, configuration bodies and scope receipts are not submitted."
+  ],
+  "negativeMissingAuthorization": {
+    "actualExitCode": 2,
+    "attemptCreated": false,
+    "expectedMissingAuthorization": true,
+    "networkAndCredentialAuditDenial": true,
+    "sshConnections": 0,
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdoutSha256": "981ac361c611c35d394c8a4ce1e5752ed1d055cd630141aff2ebf772a892db93",
+    "wallSeconds": 0.11782540002604946
+  },
+  "newLinuxUnits": 0,
+  "privateSdkLog": {
+    "errorCodeDiscardFilter": false,
+    "exclusiveCreation": true,
+    "globalStderrSuppression": false,
+    "headerFooterStrictJsonAndSameFdHashVerifiedByOuter": true,
+    "logger": "paramiko.transport",
+    "maximumBytesIncludingFraming": 65536,
+    "maximumRecords": 64,
+    "messagesNotInReceiptOrPublicRecord": true,
+    "minimumLevel": "WARNING",
+    "overflowWriteFailureOrUnconfirmedThreadRejects": true,
+    "requestedPosixMode": "0600",
+    "severityIsDiagnosticNotAuthority": true,
+    "unexpectedProtocolStderrStillRejects": true
+  },
+  "privateSourcesSubmitted": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "realCommandRender": {
+    "maximumWindowsCommandUtf16Units": 30000,
+    "sdkFlags": [
+      "-E",
+      "-P",
+      "-B"
+    ],
+    "sourceBytes": 12877,
+    "spawned": false,
+    "windowsCommandUtf16Units": 17981
+  },
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "stage": "inactive local SDK diagnostic routing and thread lifecycle correction",
+  "tests": {
+    "actualExitCode": 0,
+    "actualLocalSyntheticSdkProcess": true,
+    "beforeAfterSourceHashesMatch": true,
+    "count": 79,
+    "earlier76CaseRunRetainedWithoutOverwrite": true,
+    "entireProductSuiteRerun": false,
+    "failures": 0,
+    "originalNonzeroExitAndUnexpectedStderrRejectionRetained": true,
+    "realNetworkOrCredentialAccessInSyntheticProcessBlocked": true,
+    "redThenGreenAddedCases": 3,
+    "skips": 0,
+    "unittestSeconds": 15.231,
+    "wrapperWallSeconds": 15.781418500002474
+  },
+  "vpsConnected": false
+}
