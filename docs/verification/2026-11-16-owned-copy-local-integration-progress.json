@@ -1,0 +1,141 @@
+{
+  "businessAuthorizationChanged": false,
+  "copyAndProbe": {
+    "configurationSourceDependencyAndCopyRecordDriftRejected": true,
+    "copiedGatewayCapacityLimitPreserved": true,
+    "dataAncestorSymlinkRejectedBeforeOutsideWrite": true,
+    "destinationExclusiveDescriptorHeldThroughBackup": true,
+    "existingActiveOwnerRequired": true,
+    "existingWriterLockPreserved": true,
+    "fullAuthorityComparedWithoutEpochFiltering": true,
+    "identityAndCollaborationSeedsAdded": 0,
+    "linuxParentDescriptorSqlitePathImplementedButNotNativelyExecuted": true,
+    "missingOwnerAndFullCapacityFailWithoutRetry": true,
+    "originalRowsAndSchemasChecked": true,
+    "threeSyntheticSourceDatabasesBackedUpWithOriginalFixedPrimitives": true
+  },
+  "credentialsChanged": false,
+  "date": "2026-11-16",
+  "dnsChanged": false,
+  "entirePlanAccepted": false,
+  "evidenceSha256": {
+    "reviewed-local-terminal.json": "55760e754073c076ef13588edc66018b522453c002f906d0a2763429e65c1291"
+  },
+  "externalAgentCalls": 0,
+  "fullBootJoinPassed": false,
+  "fullLocalJoin": {
+    "automaticRemoteRetry": false,
+    "dependenciesOmittedToPass": false,
+    "existingControllerOperationCapsSeconds": 10,
+    "lastFailurePredatesAdditionalDiagnosticStreamPersistence": true,
+    "latestFixtureSetupMaximumSeconds": 60,
+    "nativeProofCreated": false,
+    "observedFailedAttempts": [
+      {
+        "applicationsSpawned": 0,
+        "failedFixtureRetained": true,
+        "flowCompleted": false,
+        "liveChildren": 0,
+        "receiptSha256": "a8773be9e648a750c89a30bb4fcf3a0a52aba4da20d1a05fbc21c9ffe3b69d5a"
+      },
+      {
+        "applicationsSpawned": 0,
+        "failedFixtureRetained": true,
+        "flowCompleted": false,
+        "liveChildren": 0,
+        "receiptSha256": "094dcaf817ca304d59cdef6d546bb9a58f853798cdb5a0dee56325fd9b8302e4"
+      },
+      {
+        "applicationsSpawned": 0,
+        "failedFixtureRetained": true,
+        "flowCompleted": false,
+        "liveChildren": 0,
+        "receiptSha256": "2bc1919737ab69ea54f05a2520303ef620f39e54ce83770736e9904f3d969646"
+      }
+    ],
+    "overallTestMaximumSeconds": 90,
+    "privateDependencySharing": "one copied dependency tree and hardlinks entirely inside the synthetic fixture; no repository links or writes",
+    "productionTimeoutChanged": false,
+    "remainingBootAndCleanupReserveSeconds": 15,
+    "retainedFailureReason": "fixture initialization exhausted its bound while scanning complete copied dependency tree",
+    "status": "failed-before-application-spawn"
+  },
+  "independentSourceReview": {
+    "confirmedP1": 0,
+    "confirmedP2": 5,
+    "localCorrectionsWithRegression": [
+      "fixed child bootstrap unblocks SIGTERM SIGINT SIGALRM before worker module",
+      "validate canonical directory ancestry before copy; anchor Linux parent fd and hold exclusive target fd through connection closure",
+      "reject RESULT or partial extra stdout observed before GO; validate frame order",
+      "retain primary and cleanup errors before spawn and after source verification; also cover attempt-write and close failure together",
+      "bounded no-follow nonblocking regular single-link diagnostic append and preservation of original fingerprint exceptions"
+    ],
+    "nativeEffectsNotEstablishedByTheseTests": true,
+    "reviewerConnectedNetwork": false,
+    "reviewerExecutedTests": false
+  },
+  "limitations": [
+    "The 44 narrower passing cases do not establish that the failing full local join passed.",
+    "Linux process, signal and descriptor checks are local syscall doubles; no Linux backend was executed.",
+    "The local boot fixture uses two current materializations with distinct test HTML, not historical versions.",
+    "The observed failed initializations launched no LACK/Caddy application processes.",
+    "Private helper sources, raw failure evidence, copied data and configuration bodies are not synchronized."
+  ],
+  "newLinuxUnits": 0,
+  "openWork": [
+    "finish and validate complete unseeded copy to two-boot join within the envelope",
+    "native worker job and owner-only full-validator proof publication",
+    "fresh native source and kernel containment evidence with actual historical candidate/previous versions",
+    "controlled publication and live user/model/external-Agent acceptance for the complete delivery objective"
+  ],
+  "portsChanged": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "sourcePins": {
+    "native-copy-entry-20261116-a1/common.py": "d5abe37676062ab7f949fef2197145a1c0af5085654f63071e1daa1d96fa421d",
+    "native-copy-entry-20261116-a1/phase.py": "0bd162167d1a239eb09e381d9d8e2f7d104b5872d2f2aa1c8c19ebcd9e8fc6d2",
+    "native-copy-entry-20261116-a1/probe.cjs": "7766c606b048d3c91b6d5c633956b2e09fb05fca26309e8bc6e57ed11df2082a",
+    "owned-native-worker-20261116-a1/engine.py": "5b2bebadb12946b7f6e91932f962cf5aef223daaeeeb7b7fd599ef5538adbd4d",
+    "owned-native-worker-20261116-a1/linux_backend.py": "0b6d0438f1a20c5a558e28ce03728dbfc5991cb2e06f2d178d9378c40187c669",
+    "owned-native-worker-20261116-a1/local_bridge.py": "a6cec1ddd4f0ed2460b56345a694ad9f2f5ebd9c2b987d772565b00afa400a99",
+    "owned-native-worker-20261116-a1/plain_copy.py": "bdca7e98b467e69940c1832e59bdaa0a1c7d62eba9371a47bd273e64c42c49be",
+    "owned-native-worker-20261116-a1/probe.test.cjs": "eb8ad93c6a09c3fc96bd0a7145f941bff7482309a643d4dbb6a38ac2cdd3001c",
+    "owned-native-worker-20261116-a1/test_checkpoints.py": "a37f987cf6d1083730fb5661e060b5215abcde868af4e9853a27d2863ee86454",
+    "owned-native-worker-20261116-a1/test_engine.py": "a6564dbd61463684f3ded517cc64501ce2f40adf2f156fbb34a185288d20d3d1",
+    "owned-native-worker-20261116-a1/test_job_inputs.py": "b30de6fa283c7a8c6329a7279d577c08823adf80ebdc433a491fee12f425ae21",
+    "owned-native-worker-20261116-a1/test_linux_backend.py": "6324f6b6cf1626253a12ef9ae6b28da85b3b3f27462bfb1af7743cf236043a79",
+    "owned-native-worker-20261116-a1/test_local_diagnostics.py": "da439488733c602c8ee4dd55da1850cd219489224559a1a0a1a9c7fe672ec685",
+    "owned-native-worker-20261116-a1/test_plain_copy.py": "7d485e8622eb68abcadb698091faf197f330ba90c3dfcbfae2eb020043811eea",
+    "owned-native-worker-20261116-a1/test_seed_authority.py": "11d49541b7bca2a2c9a2622d46e555779ff0674e312e5e5c19c7d776bf233169",
+    "owned-native-worker-20261116-a1/unseeded-boot.test.cjs": "661e869debe8bb1ae38c95bea4e46ec0b1d30d8f535bd2f67fdc4235156a86bd"
+  },
+  "stage": "incomplete local unseeded-copy and owned-worker integration",
+  "verifiedLocalGroups": {
+    "python": {
+      "count": 40,
+      "exitCode": 0,
+      "failures": 0,
+      "skips": 0,
+      "stderrSha256": "40b40b7fd2e92839adb89635aea85ae8b74c95587b4877adb623ec348028fdb3",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "testGroup": "python40",
+      "timedOut": false,
+      "wallSeconds": 8.950218999991193
+    },
+    "realStoreNode": {
+      "count": 4,
+      "exitCode": 0,
+      "failures": 0,
+      "skips": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutSha256": "66dfef7b880844e0d4ed6b19267d4630403267ec6d3046a04515914c7aa924f8",
+      "testGroup": "node4",
+      "timedOut": false,
+      "wallSeconds": 4.928737299982458
+    }
+  },
+  "vpsConnected": false
+}
