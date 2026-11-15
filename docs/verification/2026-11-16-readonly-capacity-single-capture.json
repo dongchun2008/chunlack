@@ -1,0 +1,144 @@
+{
+  "accepted": true,
+  "approvalConsumed": "1/1",
+  "automaticRetry": false,
+  "basis": {
+    "diagnosticCandidateLocalRegression": 79,
+    "previousFailedAttemptReinterpreted": false,
+    "prior57CaseTimingCandidateAttemptRemainsRejected": true,
+    "productTestsRerun": false
+  },
+  "budget": {
+    "actualOuterElapsedSeconds": 6.3181887999526225,
+    "closeMaximumSeconds": 5,
+    "executeReserveSeconds": 8,
+    "finalReceiptReserveSeconds": 3,
+    "localHardSeconds": 35,
+    "remoteElapsedSeconds": 3.0569429071620107,
+    "remoteHardSeconds": 20,
+    "sdkLoadCountedInsideLocalBudget": true
+  },
+  "businessAuthorizationChanged": false,
+  "candidateBindingSha256": "450fa8a0733c96e0edf47e39775a296365bd78ebe6ac9b6ed1c18f5823c7b449",
+  "capacity": {
+    "actualPreparedFootprintBytes": 57425920,
+    "estimatedSpaceSufficient": true,
+    "measuredDataAtMs": 1794763424237,
+    "minimumFreeBytesObserved": 28284297216,
+    "minimumFreeInodesObserved": 2252107,
+    "releaseCapacityAccepted": false,
+    "requiredFreeBytes": 536870912,
+    "requiredFreeInodes": 3104
+  },
+  "capture": {
+    "databaseQueries": 0,
+    "fourServiceBaselineUnchanged": true,
+    "metadataOnlyForBusinessData": true,
+    "privateBodiesSubmitted": false,
+    "privateCandidateFileBytes": 34278,
+    "privateCandidateFileCount": 5,
+    "remoteWrites": 0,
+    "reservationRead": true,
+    "sourcePinsStillMatch": true
+  },
+  "credentialsChanged": false,
+  "date": "2026-11-16",
+  "dnsChanged": false,
+  "evidenceSha256": {
+    "actual-tool-terminal.json": "1a4cff392d530a936937eaffd28bd7409fe4baa5ef49fab36fd84364caf7a682",
+    "attempt.json": "33b88a43dc6e9021234ca5082a26aa46be98f70ed7c56cb88c38c0bae790b2dc",
+    "attempt/outcome.json": "bff4eb8aa49eefcb80d09462d68beb1200ec7d745a21e32d9a061cbddc333502",
+    "attempt/transport-observation.json": "ef18115624ff3f91d292d55d63e71bc2dd0a580ed5c1d7d009ba2644422112cf",
+    "attempt/validated-inputs.json": "693328a7b460845c5c0e10a363805031b835583f1894db3b3c1a385d3b65575d",
+    "invocation-binding.json": "450fa8a0733c96e0edf47e39775a296365bd78ebe6ac9b6ed1c18f5823c7b449",
+    "outer-attempt.json": "fd0018c9d8e8218d0905bb129aa2ca79c4a26193d36b97172fa7e9834a9ffe65",
+    "outer-outcome.json": "daf9256053923f982e1be0fa667da7d9a6279240cdcea27f0fe76b46d718994c",
+    "outer-parent-stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outer-parent-stdout.bin": "641bcac515fc69d4f8db1e4f135a075270ab7b1f4317689e5d92e569be787272",
+    "sdk-diagnostics.jsonl": "e0342ae3ba1636440bbb13e77ba88f2da55712f23ac23e02a7b5a3e16b97c795"
+  },
+  "execution": {
+    "actualCapturedLauncherExitCode": 0,
+    "actualOuterStdout": {
+      "accepted": true,
+      "actualPreparedFootprintBytes": 57425920,
+      "elapsedSeconds": 6.3181887999526225,
+      "minimumFreeBytesObserved": 28284297216,
+      "parentExitCode": 0,
+      "privateMaterialCount": 5,
+      "productionReady": false,
+      "proofCreated": false,
+      "requiredFreeBytes": 536870912,
+      "stage": "output",
+      "status": "readonly-capacity-inputs-validated"
+    },
+    "actualOwnedSdkProcessExitCode": 0,
+    "actualPowerShellExitCode": 0,
+    "automaticRetry": false,
+    "completedInInitialCall": true,
+    "sessionRestarted": false,
+    "toolChunk": "f53773",
+    "toolWallSeconds": 6.8411093
+  },
+  "externalAgentCalls": 0,
+  "lifecycle": {
+    "cleanupErrors": [],
+    "lateHandles": [],
+    "pendingHandles": [],
+    "remoteStderrBytes": 0,
+    "sdkThreadExitConfirmed": true,
+    "threeOwnedHandlesClosed": true,
+    "unexpectedParentStderrBytes": 0
+  },
+  "limitations": [
+    "Accepted only as this bounded read-only collection, not as production-release acceptance.",
+    "One ERROR-level Windows socket 10038 diagnostic occurred during close and is retained privately; it is not classified as harmless or claimed fixed.",
+    "Acceptance requires the observed zero launcher/SDK exits, verified remote receipt, complete handle closure and confirmed SDK-thread exit.",
+    "Capacity is time-specific metadata estimation, not a consistency backup or database-copy compatibility proof.",
+    "The five fixed generated candidate files do not refresh the live production configuration, authority or source attestations.",
+    "No production publication, Linux test unit, model call or external-Agent call was performed.",
+    "A new remote attempt or database-copy unit is not authorized by this consumed one-shot scope."
+  ],
+  "newLinuxUnits": 0,
+  "phaseTimings": [
+    {
+      "elapsedSeconds": 0.7419588000047952,
+      "stage": "sdk_version"
+    },
+    {
+      "elapsedSeconds": 0.8235075999982655,
+      "stage": "sdk_import"
+    },
+    {
+      "elapsedSeconds": 2.1101051999721676,
+      "stage": "transport"
+    },
+    {
+      "elapsedSeconds": 6.147772099997383,
+      "stage": "validation"
+    }
+  ],
+  "portsChanged": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "sdkDiagnostics": {
+    "bytes": 271,
+    "classifiedHarmless": false,
+    "events": [
+      {
+        "level": 40,
+        "phase": "close",
+        "windowsSocket10038Observed": true
+      }
+    ],
+    "loggerSeverityUsedAsCompletionAuthority": false,
+    "messagesPrivateOnly": true,
+    "records": 1,
+    "sha256": "e0342ae3ba1636440bbb13e77ba88f2da55712f23ac23e02a7b5a3e16b97c795",
+    "verified": true
+  },
+  "stage": "single approved real SSH read-only capacity and generated-material capture"
+}
