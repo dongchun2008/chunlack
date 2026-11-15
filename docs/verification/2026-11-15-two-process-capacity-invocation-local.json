@@ -1,0 +1,131 @@
+{
+  "architecture": {
+    "before": "outer launcher -> validation parent -> SDK worker",
+    "candidate": "outer launcher -> owned SDK and validation process",
+    "fabricatedChildExitCode": false,
+    "fullTransportObservationGuardBodyAstUnchanged": true,
+    "legacyActualChildExitChecksRetained": true,
+    "oneInterpreterStartupAndDuplicateInputLoadRemoved": true,
+    "outerUsesActualOwnedProcessExit": true,
+    "preconnectReserveSeconds": 27,
+    "privateObservationSavedBeforeValidation": true,
+    "receiptReserveSeconds": 3,
+    "sdkDistributionVersionRequired": "5.0.0",
+    "sdkFlags": [
+      "-E",
+      "-P",
+      "-B"
+    ],
+    "sdkFlagsMatchPreviousSdkWorker": true,
+    "structuredPreconnectFailure": true
+  },
+  "basis": {
+    "failedInvocationRecord": "docs/verification/2026-11-15-capacity-capture-startup-failure.json",
+    "packetBindingSha256": "426fd2d01732c52b6459322cc22aca2a60dc732653ed4c7b840a0482f6216001",
+    "previousBindingSha256": "424af5629e2311a940e68766f3ff1c20462211961c4a60ce274cfa2cb4ff95be",
+    "remoteSourceSha256": "aefd4d71c60622b3a679864c236cae06a5e0a978bb9820c62f5f5d06e1bcef56"
+  },
+  "businessAuthorizationChanged": false,
+  "businessDatabasesOpened": false,
+  "candidate": {
+    "automaticRetry": false,
+    "bindingSha256": "820bd4bb141465b899deb0e6dde00f2b5b19bad852f1f4b65b9c16cb07e2a2c2",
+    "changedControls": [
+      "launch.py",
+      "receiver.py",
+      "run.py"
+    ],
+    "controlFiles": {
+      "entry-bootstrap-template.py.txt": "cccfb78d5f3cd6552ed0c3a00edb40b3cd81d3add6383a6818b3980371161f1e",
+      "launch.py": "8d6104565c10965a2894b7e519858eeebb1a7f0a7884b6eceee43de6ef78153b",
+      "operation.py": "b049c640641986b6cc3709e4f86c28044dad486d103b6c77a259591ef483be2e",
+      "policy.py": "e8cb9b87cfb31ef1baba6ef564c794629e7615ee7dbcd6b80ce6757f3dca24a8",
+      "receiver.py": "abdfb083eb9ce1eca4a01d389df403530bee295a5baadfd2742467e2e6545b31",
+      "run.py": "8c57d6b90145deb7ce23c05b850acf45f054da5fc63431b4cfb63686ae507137"
+    },
+    "invocationsUsed": 0,
+    "localSeconds": 35,
+    "maximumUnits": 0,
+    "newAuthorizationCreated": false,
+    "remoteSeconds": 20,
+    "sourceLoadingAndCapturedBootstrapPrefixUnchanged": true,
+    "sshConnections": 0,
+    "unchangedControls": [
+      "entry-bootstrap-template.py.txt",
+      "operation.py",
+      "policy.py"
+    ]
+  },
+  "credentialsChanged": false,
+  "date": "2026-11-15",
+  "developmentFailuresRetained": [
+    "Owned process initially used -I and could not locate user-installed SDK; corrected to previous SDK worker -E/-P/-B boundary.",
+    "One earlier full run passed48/49; synthetic fixture construction inside the owned process exhausted its admission budget. Test-only data is now prepared before launching that process.",
+    "Embedding synthetic fixture JSON exceeded the existing Windows command bound; fixture data now uses a separately hash-checked local file. Executable source remains captured and pinned.",
+    "Diagnostic assertion originally tried reading absent stdout and masked preparation failure; it now preserves the outer result. No time, size or safety assertion was removed."
+  ],
+  "evidenceSha256": {
+    "DESIGN.md": "075c15088400b98de355337ea84d3b300b91c7d179a82bc218ffa3a2cb97bba3",
+    "build-receipt.json": "f665df53344c039dd9f6b3d13a9879f4153418765d35a8e65c0e34b62017d1d9",
+    "final-test-terminal.json": "dd658f26e293b40a0b0c750afcd0f93a211923f965c90afcf6b087d9a5deabe2",
+    "final-tests.stderr.bin": "40faf816dcc3efd02f4325dcb53822162f13ddda7f2503c64e4d6cdf731f1df3",
+    "final-tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "negative-terminal.json": "c15c88db75c84ff2ad0370c1dd239be23e7eebae6e780ecfbdb54b03fccb8836",
+    "negative.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "negative.stdout.bin": "981ac361c611c35d394c8a4ce1e5752ed1d055cd630141aff2ebf772a892db93",
+    "origin-copy.json": "a89e25f96891cd91de190f79beb4cadd05ddb61d15ff14e2bae018320f3f0963",
+    "review-source-only.txt": "f71d843c7c7b41d5cdbdbf781b55aa0a3d8a58923c2adcc20967e25deaa96df7",
+    "test_actual_process.py": "6a3c2e7d7a9e1a14f44f94dc658c1a40ffb948fbc2ae99a69222f776ba5acf33",
+    "test_direct.py": "6533b444b74d46994c7161b8db524570c36286efb9e38838b4a27475ff01f508",
+    "test_source_gates.py": "3190ac452d29bd08cd7034dfc8f72297113c1cf7044608273cfbb59241793e97"
+  },
+  "externalAgentCalls": 0,
+  "independentReview": {
+    "confirmedP1P2Findings": 0,
+    "networkUsedByReviewer": false,
+    "runtimeSourcesUnchangedAfterReview": true,
+    "sourceOnly": true,
+    "testsExecutedByReviewer": false
+  },
+  "limitations": [
+    "The candidate is local and inactive. The earlier failed invocation remains consumed and is not replayed.",
+    "Synthetic transport/session doubles and actual local process tests are not real SSH, target cold-start, remote capacity or production acceptance.",
+    "Preparing synthetic fixture data outside a process-exit test budget does not move any real invocation preflight outside its35-second window.",
+    "The source-only independent review did not execute tests or validate native cleanup timing.",
+    "No current VPS service baseline, capacity/generated material bodies, database-copy proof, consistent release backup or production release was obtained.",
+    "A new one-shot remote scope approval is required before using this candidate. Kernel read-only database protection and future copy-helper binding remain separate subsequent work.",
+    "Only sanitized verification evidence is synchronized; private control source, fixtures, raw outputs, operator receipts and configuration bodies are not submitted."
+  ],
+  "negativeMissingAuthorization": {
+    "accepted": false,
+    "actualExitCode": 2,
+    "attemptCreated": false,
+    "authorizationCreated": false,
+    "sameFileDescriptorTemplateAndLauncherPin": true,
+    "sshConnections": 0,
+    "wallSeconds": 0.3816560000414029
+  },
+  "newLinuxUnits": 0,
+  "privateSourcesSubmitted": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "stage": "inactive two-process readonly capacity invocation candidate; local only",
+  "tests": {
+    "actualExitCode": 0,
+    "actualLocalOwnedProcessSuccess": true,
+    "actualNonzeroExitRejectsSuccessStdout": true,
+    "allCapturedSourceHashesBeforeAfterCurrentMatch": true,
+    "count": 49,
+    "entireProductSuiteRerun": false,
+    "failures": 0,
+    "newMethods": 17,
+    "originalRuntimeDeadlineAndAdmissionGuardsUnchanged": true,
+    "skips": 0,
+    "syntheticFixturePreparationOutsideProcessExitTestBudget": true,
+    "unchangedRegressionMethods": 32,
+    "wallSeconds": 20.53214660001686
+  },
+  "vpsConnected": false
+}
