@@ -1,0 +1,126 @@
+{
+  "date": "2026-11-15",
+  "fullDeliveryComplete": false,
+  "privateSourcesSubmitted": false,
+  "productionReady": false,
+  "qualifications": [
+    "This verifies local byte correspondence to the archive used by the accepted preparation. It does not claim a fresh production source comparison or live feature acceptance.",
+    "The candidate includes both language/help assets and the strict research control files; their byte hashes do not by themselves prove semantic behavior or deployed availability.",
+    "Generated server/index/bin assets were read with AST literal evaluation; generated help paths were mapped to the two canonical guide sources without executing an installer.",
+    "The first audit omitted the help-source mapping and stopped on a missing generated path. Only that local mapping was corrected; no source file was fabricated or modified.",
+    "The real readonly collection has inner validation evidence but remains rejected by its outer stderr gate; this source audit does not promote that result or refresh its timestamp.",
+    "Current production bindings, database-copy compatibility, formal release preparation, backup/recovery and post-release user/model/Agent acceptance remain incomplete."
+  ],
+  "scope": {
+    "businessGrantsChanged": false,
+    "credentialsReadOrChanged": false,
+    "externalAgentCalls": 0,
+    "frozenCandidateChanged": false,
+    "networkAccess": false,
+    "newLinuxUnits": 0,
+    "productCodeChanged": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "selectedFeatureFiles": {
+    "collaboration/model-transport.cjs": {
+      "bytes": 3990,
+      "currentEqualsFrozen": true,
+      "sha256": "fee1b40325786e2e71ae176d7766725da02eb6c7b762d79929b38a78a4b6119a",
+      "source": "collaboration/model-transport.cjs"
+    },
+    "collaboration/task-control.cjs": {
+      "bytes": 6962,
+      "currentEqualsFrozen": true,
+      "sha256": "6f31471c99f35ad6ca5ae406cff8f5b0dbeae70c8d6c8c1876939c36f809e7a3",
+      "source": "collaboration/task-control.cjs"
+    },
+    "deploy/public/Caddyfile.template": {
+      "bytes": 4730,
+      "currentEqualsFrozen": true,
+      "sha256": "29653768811376aa077c06a6486165af685b36ebfe80289ae627ae1ce03d744a",
+      "source": "deploy/public/Caddyfile.template"
+    },
+    "identity/chat-messages.js": {
+      "bytes": 19026,
+      "currentEqualsFrozen": true,
+      "sha256": "d23cabc5eac01c3cc7783664face38bba38ce1050d2e7ca889042c3f2c8c78fb",
+      "source": "identity/chat-messages.js"
+    },
+    "identity/help-assets.cjs": {
+      "bytes": 5570,
+      "currentEqualsFrozen": true,
+      "sha256": "786a2a20652bb41d3f5178a9ff7a30692b0ecbf5aeb9a905c3c6b15f0e474a56",
+      "source": "identity/help-assets.cjs"
+    },
+    "identity/help.js": {
+      "bytes": 17036,
+      "currentEqualsFrozen": true,
+      "sha256": "06b9466ebf1e3d5db14f79df625d3e8dad1fbd4382d4d95d28243926d5170241",
+      "source": "identity/help.js"
+    },
+    "identity/help/en.md": {
+      "bytes": 30658,
+      "currentEqualsFrozen": true,
+      "sha256": "ac7eb188ddc76435448135e05c9531eb876ecc328938d0601968d3e2bb4e500c",
+      "source": "docs/USER_GUIDE.en.md"
+    },
+    "identity/help/zh-CN.md": {
+      "bytes": 24391,
+      "currentEqualsFrozen": true,
+      "sha256": "34a0555416a5accf1be5d37bba34ee8e93b9f710b67d68557864876f61d1dc6c",
+      "source": "docs/USER_GUIDE.zh-CN.md"
+    },
+    "identity/i18n.js": {
+      "bytes": 10872,
+      "currentEqualsFrozen": true,
+      "sha256": "df9031f79a01166ef6c8066cd8894b50bd3672953ecf64886294907680abe9a8",
+      "source": "identity/i18n.js"
+    },
+    "identity/messages.js": {
+      "bytes": 30854,
+      "currentEqualsFrozen": true,
+      "sha256": "7f5ddf81f24e94f90007c5627d32a443656b4290df1a8788e2a0d57298f069f7",
+      "source": "identity/messages.js"
+    },
+    "identity/workspace-shell.js": {
+      "bytes": 45510,
+      "currentEqualsFrozen": true,
+      "sha256": "6594eed08e6313a00952ac6924bb4a5398c50bc8b157d4a64675af8521c67b92",
+      "source": "identity/workspace-shell.js"
+    },
+    "public/index.html": {
+      "bytes": 102510,
+      "currentEqualsFrozen": true,
+      "sha256": "3a4cc1acb6228e7145d2155a3958248580bc098d5b214dbb804ce6fa6f7c3fd4",
+      "source": "lack.py:INDEX_HTML"
+    },
+    "server.js": {
+      "bytes": 258337,
+      "currentEqualsFrozen": true,
+      "sha256": "89df6f9d1c9bf6ff61d3afb891e656cb86f846b360d374d796050b248de69e4b",
+      "source": "lack.py:SERVER_JS"
+    }
+  },
+  "sourceBinding": {
+    "archiveSha256": "a587528d28c998b175b26458cfb4d051beea5ccb52aa6e7bd4da393bdbbcadea",
+    "installerSha256": "b4e27a5dc93f834ce258c81d21423f36ad2485e7db381371440bc913991568b9",
+    "parentFrozenManifestSha256": "c0ca08d6f03e1e6af3b46259a031239a24c6c89c8f5a4e22102ea8208f9b4c15",
+    "payloadManifestSha256": "ae7c5db14c5e4ba9886b7ea878a417f53648c3cc1e11aa558db1c81fdadd02ef",
+    "sourceManifestSha256": "34d89378f273c4fd34af080c2f25bd695e2b35002fb86ad623f29018607bd3d3"
+  },
+  "stage": "current local product bytes versus prepared frozen product archive",
+  "verification": {
+    "auditSourceSha256": "52b9886a3bb94d2c371446fbebd4e1392d17a600fafcdd344649a494a53bd117",
+    "completePrivateRowsSha256": "bd86d119d38c8cd709fd295852c6a3b95668714692814f58698053ddec3aedf0",
+    "currentFilesMatchFrozen": 66,
+    "differences": [],
+    "embeddedLiteralsReadWithAstOnly": 3,
+    "frozenArchiveFilesValid": 66,
+    "generatedHelpPathsMappedToCanonicalGuideSources": 2,
+    "installerOrApplicationExecuted": false,
+    "productFilesChecked": 66,
+    "productTestsExecuted": 0
+  }
+}
