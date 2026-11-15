@@ -1,0 +1,176 @@
+{
+  "acceptedLocalComponents": true,
+  "boundaries": {
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "earlierCaptureAllowance": "consumed-1/1-not-repeated",
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "portsChanged": false,
+    "privateImplementationSynced": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-16",
+  "evidence": {
+    "failureLogsAndOldFrozenCandidatesRetained": true,
+    "finalTerminalSha256": "3f2110530903d30a54bb215130e4e1dbb38439a63ead60e2e4b2aa5d1de1de0a",
+    "localEvidenceDigests": {
+      "artifact.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifact.stdout.bin": "1c6a705cbe63aa0561b2902a2119120a66001827b81fc4bfac5f9cfc00659b9f",
+      "package-receipt.json": "7bbd715e90049549f402e9af71c1e73a8c1d16fb7877f70b5215a33e355cf1c7",
+      "tests.stderr.bin": "9667a47312c44bd7fb329a3474e6daa6f6bd0a03039ece0f5a522159c5a45f2f",
+      "tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "priorStepRecordSha256": "e24815f607dfbad8876f29482aaded9a6ae1dc990614e6d2705819c3d47a05fd",
+    "privateBodiesPublished": false
+  },
+  "goalStatus": "active-incomplete",
+  "implemented": [
+    "distribution-systemctl-busctl-concrete-subprocess-control-with-no-shell-or-retry",
+    "exact-executable-fingerprints-and-held-Linux-executable-descriptors",
+    "bounded-output-and-original-command-deadline-including-owned-pidfd-kill-and-reap",
+    "exact-fresh-unit-retained-exit-policy-and-job-description-correlation",
+    "actual-live-origin-normal-exit-full-proof-and-kernel-empty-scope-required",
+    "generation-checked-owned-stop-and-observed-unload-plus-held-scope-evidence",
+    "Linux-root-default-factory-with-transitive-source-pins-and-no-Windows-native-substitution"
+  ],
+  "inactivePackage": {
+    "archiveSha256": "1ec99f3862ffb3568e8a28a6f9417cdd8878d068093d1a0597134feb25ee2f91",
+    "candidateProductFiles": 66,
+    "catalogSha256": "ddefd898b60ba90bd8335112202924279def770258dfdd0cde71aec9cf1381ff",
+    "nativeDependenciesIncluded": false,
+    "nativeManagerReady": false,
+    "oldFrozen194FilePackageChanged": false,
+    "overlay": {
+      "addedFiles": [
+        "source/.superpowers/sdd/native-copy-cli-20261116-a1/commands.py",
+        "source/.superpowers/sdd/native-copy-cli-20261116-a1/controller.py",
+        "source/.superpowers/sdd/native-copy-cli-20261116-a1/observation.py",
+        "source/.superpowers/sdd/native-copy-cli-20261116-a1/process.py",
+        "source/.superpowers/sdd/native-copy-cli-20261116-a1/profile.py",
+        "source/.superpowers/sdd/native-copy-cli-20261116-a1/terminal.py"
+      ],
+      "baseArchiveSha256": "ab3681772b70b16924bf0916157c3fb00c751995948e55594aca1e632f11fc73",
+      "baseCatalogSha256": "b5e1d1d84d57f3e6bbef9b15c0f015cb96f7910e21b5596bf28df2123d25cce7",
+      "control": "distribution-cli-retained-exit",
+      "descriptionIsJobCorrelationNotAuthorization": true,
+      "oldFrozenFilesChanged": false
+    },
+    "privateInputFiles": 6,
+    "productionReady": false,
+    "sourceFiles": 200
+  },
+  "persistedArtifactReplay": {
+    "archiveSha256": "1ec99f3862ffb3568e8a28a6f9417cdd8878d068093d1a0597134feb25ee2f91",
+    "catalogSha256": "ddefd898b60ba90bd8335112202924279def770258dfdd0cde71aec9cf1381ff",
+    "closedSourceReplayPassed": true,
+    "nativeCompatibilityVerified": false,
+    "originalManagerFixtureReplacedByCLI": true,
+    "productionReady": false,
+    "profileEncodingOnly": true,
+    "proofCreated": false,
+    "readFileCount": 29,
+    "readNamesSha256": "7f1a6b72ca598e740a0f8a81c900208062aaaf80cb9ea7797a532ce4a0492c70",
+    "retainedCLIControllerReplayed": true,
+    "sourceFiles": 200,
+    "syntheticRetainedManagerReplay": false,
+    "syntheticTerminalBindingReplay": true
+  },
+  "remainingCriticalPath": [
+    "root-scoped-host-materialization-and-hard-outer-watchdog-entry",
+    "fresh-historical57-candidate66-native-dependency-host-and-resource-bindings",
+    "new-explicit-scope-native-database-copy-and-release-rehearsals",
+    "consistent-backup-controlled-production-release-and-live-acceptance",
+    "quiet-dedicated-dots-route-and-Muse-Suhua-real-task-acceptance"
+  ],
+  "review": {
+    "concentratedSourceReviewComplete": true,
+    "confirmedFindingsFixed": true,
+    "findings": [
+      {
+        "fix": "require-default-SIGCHLD-single-root-Linux-thread-and-pidfd-primitives-before-spawn-and-poll-wait",
+        "issue": "unrestricted-SIGCHLD-auto-reaping-before-pidfd-can-break-child-ownership-and-exit-status",
+        "localPolicyRejectionRedGreenConfirmed": true,
+        "nativeReproductionClaimed": false,
+        "severity": "P1"
+      },
+      {
+        "fix": "retain-safe-bounded-resource-ledger-before-post-command-deadline-and-include-in-controller-cleanup",
+        "issue": "first-CLI-resource-uncertainty-lost-before-unit-start-can-misreport-cleanup-confirmed",
+        "localDeterministicRedGreenConfirmed": true,
+        "severity": "P2"
+      }
+    ],
+    "oneRegressionBackedFixPass": true,
+    "reviewDidNotRunTestsNetworkOrReadMaterialBodies": true,
+    "secondIndependentReviewClaimed": false,
+    "supersededPreReviewTerminalSha256": "641512e73d68fa8511031881ee74e29b417962a46ca13f4e8e37252fe77362d2",
+    "testGroups": {
+      "actualWindowsOwnedSubprocess": 6,
+      "commandsParsingAndResourceLedger": 7,
+      "controllerJoins": 6,
+      "existingObserverAssertionsWithExplicitRetentionFixture": 18,
+      "inactivePackageAndReplay": 2,
+      "nativePolicyDoubles": 2,
+      "newObserverAndSourceBindings": 7,
+      "retentionAndFactoryContract": 4
+    }
+  },
+  "schemaVersion": 1,
+  "scope": "local-distribution-cli-retained-exit-controller-and-inactive-package-only",
+  "sourcePins": {
+    "DESIGN.md": "805a1eb71bb911d6228151662e121a2e758c4ea56b8c4363f6f2fde689d41e6e",
+    "commands.py": "6e01706e33f2feb59ac502ee08e99e109355125d96d5c96232899299354baa8f",
+    "controller.py": "bd244abfd432b76705ed630c205fecca39faacdebe7871eb544c7bf8d5a28839",
+    "derivation.json": "acedeaa85e55cbb478d624806c7000bbd87869b94ba7c79e7eaf5ee694e4d592",
+    "derive.py": "d8ec827a9f0adf13b31fb3e3476f9d4771622dc1fabe2a91d8502a35c0799fee",
+    "finalize.py": "092c96a652aa936ce4871fcbac2fb8a7c75cc01b02db7326a12256ed272fb3f8",
+    "observation.py": "7a370379d853f42e968e3cd97031bb430f492b03ac3bc249ee1058427fed41b0",
+    "package.py": "dca2f692f8b098548cd117dbe3e43b0982fad1fc07b15cb10db10d161636f372",
+    "process.py": "35489bcf3e648475a5b7dc54da9e55fcad6f2da9157e6f4b774da8b1128ea170",
+    "profile.py": "6c26837cdc36d00bfda003b86969188c18f605b1571004203cdb99ee00c85869",
+    "record.py": "b24e821535d6c8d7edfa7804df2ba5ca547d5e8c7ef1028c076ab4233e328a48",
+    "replay_support.py": "22e63629d272d39fe2275e8d36103346a18728cf87b2646e29244d61c7e4d494",
+    "terminal.py": "2c14ff69dea14c6e29db7925e27b95801f443b698931c2193ac64ebc52aba98c",
+    "test_commands.py": "79681b697869705afbf5a6d6ed26827641b81005780b76cafb62bcc0349a3d4f",
+    "test_contract.py": "649fa608c9070c9b44b15cb5cdb1381ff3236d0332763348ee70cdd2a25797e5",
+    "test_controller.py": "5ce5218ef98644c692281291cbb26ea2ef93e766f43caa9e9afc2485fac491cc",
+    "test_existing_observer.py": "ed385a3b22fbc3c97ba75ed7a0acb20597b9af0f94770ada7bd5898ad728290e",
+    "test_native_policy.py": "90b19909de8d8c9e7a356674ff30750e03be06db83eb89b3c6239bc58e8fadcd",
+    "test_observation_binding.py": "7a754bda64ba43b510c7934f8154134d0b728415ff1378350e49d521c8da382d",
+    "test_package.py": "e3fe220bc96c512d4981c9a7b7672012b1eeea613643da7844fc2d2006ce9a86",
+    "test_process.py": "c55d099e60fc05f40ec7d40effab4d1688160c6c8547c37dc61b82a83d7964ce"
+  },
+  "sourcePinsUnchanged": true,
+  "tests": {
+    "actualExitCode": 0,
+    "failures": 0,
+    "groups": {
+      "actualWindowsOwnedSubprocess": 6,
+      "commandsParsingAndResourceLedger": 7,
+      "controllerJoins": 6,
+      "existingObserverAssertionsWithExplicitRetentionFixture": 18,
+      "inactivePackageAndReplay": 2,
+      "nativePolicyDoubles": 2,
+      "newObserverAndSourceBindings": 7,
+      "retentionAndFactoryContract": 4
+    },
+    "priorProductOrOtherStageCountsNotAdded": true,
+    "skips": 0,
+    "sourceBoundSeconds": 4.3172497999621555,
+    "timeouts": 0,
+    "total": 52
+  },
+  "verificationLimits": {
+    "LinuxSystemdAndKernelMetadata": "local doubles",
+    "actualWindowsOwnedCLIHelperChildren": true,
+    "nativeCompatibilityVerified": false,
+    "productionReady": false,
+    "proofCreated": false,
+    "replayGuardIsNotArbitraryCodeSandbox": true
+  }
+}
