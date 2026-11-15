@@ -1,0 +1,148 @@
+{
+  "acceptedLocalComponents": true,
+  "boundaries": {
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "earlierCaptureAllowance": "consumed-1/1-not-repeated",
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "portsChanged": false,
+    "privateImplementationSynced": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-16",
+  "earlierJoinFailure": {
+    "cause": "BASE-versus-BASE-plus-known-EXTRA-terminal-schema-mismatch",
+    "fixedWithExplicitSchemaRegression": true,
+    "unknownFieldsStillRejected": true
+  },
+  "evidence": {
+    "finalTerminalSha256": "6b4f2e6c7463d479376555f1f22902eab6f0f73cc53851e2acbfe8332634d94c",
+    "localEvidenceDigests": {
+      "artifact.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifact.stdout.bin": "8b1eb4925a7796479b00d4c9aec44c0c9d19bb5e2ced833081617bad63fb8e21",
+      "package-receipt.json": "ae2d0464cb2522366b5a167cb2cd267977027252e13de1ddd62de36c1f387558",
+      "tests.stderr.bin": "a4176dec316a28f886acf6fe12a3b3ea733cc187fd35bec97ad79e254eb97d34",
+      "tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "priorStepRecordSha256": "d74e72bd0f7108ce4413092b4109bc09ee9cd0041425326105e3423ac1adc5fb",
+    "privateLogsAndPreReviewCopiesRetained": true,
+    "privateMaterialBodiesOrAbsolutePrivatePathsPublished": false
+  },
+  "goalStatus": "active-incomplete",
+  "implemented": [
+    "concrete-Linux-root-readonly-descriptor-relative-result-and-cgroup-observer",
+    "exact-tag-path-scope-and-owner-mode-link-count-metadata-guards",
+    "bounded-kernel-streams-without-st_size-assumption",
+    "live-held-cgroup-binding-and-generation-correlated-empty-evidence",
+    "strict-held-unlinked-plus-reclaimed-terminal-branch-no-ENOENT-only-proof",
+    "required-observer-port-in-new-Manager-at-live-empty-result-and-close-stages",
+    "unknown-close-stops-new-opens-and-main-error-revokes-cached-empty-state"
+  ],
+  "inactivePackage": {
+    "archiveSha256": "ab3681772b70b16924bf0916157c3fb00c751995948e55594aca1e632f11fc73",
+    "candidateProductFiles": 66,
+    "catalogSha256": "b5e1d1d84d57f3e6bbef9b15c0f015cb96f7910e21b5596bf28df2123d25cce7",
+    "nativeDependenciesIncluded": false,
+    "nativeManagerReady": false,
+    "oldFrozen193FilePackageChanged": false,
+    "overlay": {
+      "afterManagerSha256": "800539a2dc2590cbcaa2e6f953e024c68a9ad07224a10676c34c301bac19eb87",
+      "baseArchiveSha256": "7625ced1349e2f18ac39c185182fe7ebfc6f891b837d3418544640d9e5da556d",
+      "baseCatalogSha256": "0e1c59fc4cab25070f7f390bc5f10632fd3ef52d9de3ac78fc577e4d3883cad8",
+      "beforeManagerSha256": "c0c187e9876a092f720fa4fc7d83180d4cf13172faaf435e141374abaadb79f0",
+      "changedFiles": [
+        "source/.superpowers/sdd/native-copy-observer-20261116-a1/observation.py",
+        "source/.superpowers/sdd/native-copy-producer-20261116-a1/manager.py"
+      ],
+      "observerSha256": "b254b3e31e020ea5f1a794177ae92580232af8781c2c03bff52814ffde95aacb"
+    },
+    "privateInputFiles": 6,
+    "productionReady": false,
+    "sourceFiles": 194
+  },
+  "persistedArtifactReplay": {
+    "archiveSha256": "ab3681772b70b16924bf0916157c3fb00c751995948e55594aca1e632f11fc73",
+    "catalogSha256": "b5e1d1d84d57f3e6bbef9b15c0f015cb96f7910e21b5596bf28df2123d25cce7",
+    "closedSourceReplayPassed": true,
+    "nativeCompatibilityVerified": false,
+    "productionReady": false,
+    "profileEncodingOnly": true,
+    "proofCreated": false,
+    "readFileCount": 24,
+    "readNamesSha256": "35f4f7464e393f0761207507ad4a7fb6e3c297e3cbf0a9d7ff03055ec9f3b233",
+    "requiredScopeObserverReplayed": true,
+    "sourceFiles": 194,
+    "syntheticRetainedManagerReplay": true,
+    "syntheticTerminalBindingReplay": true
+  },
+  "remainingCriticalPath": [
+    "concrete-native-systemd-control-and-host-materialization-entry",
+    "fresh-readonly-real-previous57-current66-native-dependency-and-resource-bindings",
+    "hard-outer-watchdog-and-real-native-compatibility-rehearsals-under-new-explicit-scope",
+    "consistent-release-backup-controlled-production-publication-live-acceptance",
+    "quiet-dedicated-native-dots-task-route-and-Muse-Suhua-acceptance"
+  ],
+  "review": {
+    "confirmedFindings": [
+      {
+        "fix": "refuse-all-new-opens-before-syscall-after-any-uncertain-close",
+        "issue": "uncertain-close-followed-by-reused-FD-leak",
+        "redGreenConfirmed": true,
+        "severity": "P2"
+      },
+      {
+        "fix": "revoke-on-main-failure-and-require-fresh-generation-held-scope-check",
+        "issue": "stale-empty-confirmation-after-cgroup-binding-drift",
+        "redGreenConfirmed": true,
+        "severity": "P2"
+      }
+    ],
+    "oneConcentratedSourceReview": true,
+    "oneRegressionBackedFixPass": true,
+    "reviewDidNotRunTestsNetworkOrReadMaterialBodies": true,
+    "secondReviewClaimed": false
+  },
+  "scope": "local-concrete-copy-result-and-cgroup-observer-only",
+  "sourcePins": {
+    "DESIGN.md": "488660289330c198a0cde3112a305ebaba8df88c0712233bc6c52a873b356230",
+    "derive.py": "2f0ce0b7219599cacf8098edde95cc1c15dc0f135d16e6784b59060ae99242dd",
+    "finalize.py": "1fdb44dbe3ecc14355358456436deecc064e93373c839e8aa518000672dd4008",
+    "manager-derivation.json": "a11c93048808e6ca50b9865ac7383c40c761c3a0b33c3f899ed0cfa2c3a26bba",
+    "manager.py": "800539a2dc2590cbcaa2e6f953e024c68a9ad07224a10676c34c301bac19eb87",
+    "observation.py": "b254b3e31e020ea5f1a794177ae92580232af8781c2c03bff52814ffde95aacb",
+    "package.py": "5a52891ead0dc527e24fd7af848a56a7cae725d58a7f7cda58d0e8b08c04a988",
+    "test_existing_manager_contract.py": "b20bca95383f22e2ae83934ea04f6c94942e247a184632f3b7495a6d8f046bb3",
+    "test_join.py": "783ed6576de4586fcd887347b648af26076213a85ff9aa52a4e5a54252f668c3",
+    "test_observation.py": "d12aa363210e5447f29a7ca86020fc1c7836532bfcc6709114fd42747872b0dc",
+    "test_package.py": "1ca66b0044a45c325286fafb4914a618b31562a0b29e36da175b24279cb31f0f"
+  },
+  "sourcePinsUnchanged": true,
+  "tests": {
+    "actualExitCode": 0,
+    "failures": 0,
+    "groups": {
+      "concreteObserver": 18,
+      "joinedManager": 6,
+      "originalManagerAssertionsWithRequiredPortFixture": 13,
+      "packageOverlayAndReplay": 2
+    },
+    "prior74And125NotRerunOrAdded": true,
+    "skips": 0,
+    "sourceBoundSeconds": 2.8708237999817356,
+    "timeouts": 0,
+    "total": 39
+  },
+  "verificationLimits": {
+    "linuxMetadataAndSystemdReplies": "local doubles",
+    "nativeCompatibilityVerified": false,
+    "productionReady": false,
+    "proofCreated": false,
+    "realWindowsDescriptorStreaming": true,
+    "replayGuardIsNotArbitraryCodeSandbox": true
+  }
+}
