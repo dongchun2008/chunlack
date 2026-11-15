@@ -1,0 +1,139 @@
+{
+  "agentConfigurationChanged": false,
+  "binding": {
+    "attachmentSha256": "6e4e97f32aba63320395be29b67af364af708a286989822f9171af487199c1b1",
+    "frozenPreflightSha256": "90fff40d957b93b4b7dc9fe8f343e5916896cb067cd1be569885e8550012e7c3",
+    "maximumContextAgeMilliseconds": 30000,
+    "maximumContextBytes": 4096,
+    "maximumSharedPreflightSeconds": 10,
+    "nativeExecutionAuthorized": false,
+    "nativeLauncherIncluded": false,
+    "productionReady": false,
+    "proofCreated": false,
+    "schemaVersion": 1,
+    "scope": "host-origin-attachment-only"
+  },
+  "bindingSha256": "43d3dd1a0dedae97f84eb9543941341d30f8a59fe4cba16d27b9b9d2492881fd",
+  "businessAttachment": {
+    "businessOpensPid1Namespace": false,
+    "contextAndNamespaceRequireExactReadOnlyMounts": true,
+    "elapsedIncludesOwnedCleanup": true,
+    "entryAlarmCoversFixedSourceLoading": true,
+    "extraCapabilitiesRequired": false,
+    "freshModuleForEachAttachment": true,
+    "frozenDataMountValidationUnchanged": true,
+    "hardOuterProcessDeadlineStillRequired": true,
+    "kernelIdentityChecked": true,
+    "maximumTrackedOwnedDescriptors": 16,
+    "namespaceTypeDeviceInodeOwnerChecked": true,
+    "nsfsRootNormalizedOnlyAfterExactAnchorValidation": true,
+    "originalRawMountInfoHashRetained": true,
+    "ownedDescriptorClosureFailureRejects": true,
+    "ownedDescriptorRegistrationAndDrainSignalProtected": true,
+    "rootOwned0440Gid987ContextRequired": true,
+    "safePrimaryCleanupAndFinalErrorsSeparated": true,
+    "sameDescriptorLengthIdentityHashValidation": true,
+    "tagBootAndMonotonicFreshnessRequired": true,
+    "uncertainDescriptorCloseNeverRetried": true
+  },
+  "businessAuthorizationChanged": false,
+  "businessDatabaseBodiesRead": false,
+  "credentialsReadOrChanged": false,
+  "date": "2026-11-16",
+  "dnsChanged": false,
+  "evidenceSha256": {
+    "DESIGN.md": "fbb8ee8ae1d8a8496c612956ec5402f264f8e671097d5ed3bcaba3f0cf8a367f",
+    "review-result.json": "5f476b29a01068f2e6f49ca5f7cadb3bebcdea318a97d0e5adc0e59913d08d97",
+    "reviewed-attachment-stderr.bin": "b0a3099704248039157d59eec35d60b6a93da263b8dc0e78d87e526d2f3ff477",
+    "reviewed-attachment-stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reviewed-preflight-stderr.bin": "bd690236f5847f3b661df945605fd07f0dcd944ff1c8e3d8d5cd92ea23ac9fb5",
+    "reviewed-preflight-stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reviewed-terminal.json": "703309eca548ce7cde1dbd41890850f399de6f6e993db837401989f797edbba7",
+    "run_local.py": "692a28403c82a46e340e57042def2ceb7df2daf567e56be7b94f4eabd2a0e110",
+    "test_attachment.py": "a074e0c760c1cf60760adc45ccf276f5d42d76fbbf2862b783abe64f8c2c95cd",
+    "test_integration.py": "9c2b69f8cc393fd05a8978865e3dca92801363f224dc2cbbcb189f1825edef4f"
+  },
+  "externalAgentCalls": 0,
+  "hostPreparation": {
+    "comparesSelfAndPid1Namespace": true,
+    "grantsExecutionOrBusinessAccess": false,
+    "linuxRootOnly": true,
+    "readsFixedNamespaceAndBootMetadataOnly": true,
+    "returnsMetadataWithoutWritingFiles": true
+  },
+  "newLinuxUnits": 0,
+  "portsChanged": false,
+  "primarySources": [
+    {
+      "url": "https://github.com/torvalds/linux/blob/v5.15/fs/nsfs.c",
+      "use": "namespace regular-file permissions and dynamic namespace mount-root format; not verification of VPS kernel"
+    }
+  ],
+  "privateSourcesSubmitted": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "remainingRequirements": [
+    "Trusted native launch code must create the root-owned context and actual read-only binds in a new private unit.",
+    "Outer owned-worker termination and verified reap must bound all operations, including uninterruptible-I/O uncertainty.",
+    "Fresh accepted capacity/configuration/authority inputs and a separately authorized native execution scope.",
+    "Actual fixed copier provenance, historical candidate/previous source and dependency binding, serial boots and original complete compatibility validator.",
+    "Production maintenance and live user/model/feature/external-Agent acceptance remain incomplete."
+  ],
+  "review": {
+    "cleanupSetupRefinementP2": 1,
+    "confirmedRemainingP1P2": 0,
+    "editsPerformed": false,
+    "fixed": [
+      "entry alarm covers fixed source loading",
+      "registered attachment descriptor owners drain on alarm before raising",
+      "owned acquisition and drain bookkeeping are signal protected",
+      "entry drains scope again and restores its context token"
+    ],
+    "initialConfirmedP2": 2,
+    "nativeValidationEstablished": false,
+    "networkAccess": false,
+    "outerKillAndReapGuaranteeEstablished": false,
+    "processWideDescriptorGuaranteeEstablished": false,
+    "reviewer": "independent source reviewer Beauvoir",
+    "sourceOnly": true,
+    "testResultsIndependentlyExecuted": false
+  },
+  "stage": "local root-origin namespace attachment",
+  "tests": {
+    "entireProductSuiteRerun": false,
+    "failures": 0,
+    "frozenPreflightCases": 24,
+    "groups": [
+      {
+        "actualExitCode": 0,
+        "count": 20,
+        "expected": 20,
+        "group": "attachment",
+        "passed": true,
+        "stderrSha256": "b0a3099704248039157d59eec35d60b6a93da263b8dc0e78d87e526d2f3ff477",
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "wallSeconds": 0.39469819999067113
+      },
+      {
+        "actualExitCode": 0,
+        "count": 24,
+        "expected": 24,
+        "group": "preflight",
+        "passed": true,
+        "stderrSha256": "bd690236f5847f3b661df945605fd07f0dcd944ff1c8e3d8d5cd92ea23ac9fb5",
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "wallSeconds": 0.3525353000150062
+      }
+    ],
+    "linuxSyscallsAndSignalsUsedLocalDoubles": true,
+    "newAttachmentCases": 20,
+    "realNativeRootCaptureOrAttachmentExecuted": false,
+    "skips": 0,
+    "sourcesBeforeAfterEqual": true,
+    "totalAffectedCases": 44,
+    "wrapperWallSeconds": 0.7482777999830432
+  },
+  "vpsConnected": false
+}
