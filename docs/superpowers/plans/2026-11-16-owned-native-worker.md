@@ -24,11 +24,19 @@ One absolute <=90-second envelope, cleanup reserve10s. READY<=10s; GO once only 
 
 This plan is not a native execution or maintenance grant. Real previous/candidate source bytes, fresh accepted root inputs, actual copy provenance, kernel restrictions and original proof validation are required before production readiness. Local doubles cannot establish any of these native facts.
 
-## Current incomplete integration checkpoint
+## Earlier incomplete integration checkpoint
 
 2026-11-16: 40 Python cases and four real-store Node cases passed after independent source review and local corrections. Three unseeded databases, an existing-owner-only private probe and full source/dependency/configuration/row/schema/authority checkpoints are implemented. The full two-boot join has **not** passed: its local fixture exhausted preparation while scanning the complete physical dependency tree, before application spawn. Failed fixtures are retained; no compatibility proof was produced. Worker/job/publisher integration, native validation and production delivery remain open. The reviewed local adapter is not the native pidfd execution path.
 
 Local test ruling: the new full-tree fixture's initialization uses the remaining original 90-second overall deadline with 15 seconds reserved for boots/cleanup (maximum initialization 60 seconds). Existing boot-controller operations retain their original 10-second caps. This changes only fixture setup allocation and did not make the join pass; it changes no production or Linux-unit budget. Subsequent work must resolve this failed integration rather than treat the 44 narrower passes as whole-plan acceptance.
+
+## Current Windows fixture verification
+
+2026-11-16: a separate test retained the original Windows fixture dependency junctions and completed the three-database unseeded copy, actual candidate/previous-role CLI boots, full serial source/dependency/configuration/row/schema/authority checkpoints, authenticated private node read and forwarded-node rejection. Final affected run: 40 Python cases, four real-store Node cases and one complete Windows join passed, no skips; the join took20.419 seconds (20.715 seconds including its command wrapper). Actual replacement-adapter diagnostics show two normally closed children, exit0, no signals/forced cleanup/overflow and no live children.
+
+The earlier physical-copy fixture failures and sources remain unchanged. Assuming that the Linux directory-link rejection also required a physical copy for this existing Windows fixture was incorrect: a direct test showed the original validator accepts its Windows junctions. This correction is local fixture wiring, not a relaxation of the Linux read-only mount requirement or a claim that the old physical-copy case passed. All complete serial fingerprints remain recomputed. Both source roles are current materializations with distinct test HTML, not historical version compatibility.
+
+A four-reader experiment produced the same full digest but did not show a warm-cache wall-time benefit and used more CPU; it is not adopted. Native worker/job/proof publication, actual historical source versions, kernel containment, formal release and live delivery acceptance remain incomplete.
 
 ## Verified integration ruling
 
