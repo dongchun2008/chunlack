@@ -1,0 +1,168 @@
+{
+  "basis": {
+    "failedInvocationRecord": "docs/verification/2026-11-15-two-process-capacity-budget-failure.json",
+    "packetBindingSha256": "426fd2d01732c52b6459322cc22aca2a60dc732653ed4c7b840a0482f6216001",
+    "previousBindingSha256": "820bd4bb141465b899deb0e6dde00f2b5b19bad852f1f4b65b9c16cb07e2a2c2",
+    "remoteSourceSha256": "aefd4d71c60622b3a679864c236cae06a5e0a978bb9820c62f5f5d06e1bcef56"
+  },
+  "budget": {
+    "automaticRetry": false,
+    "clockOrDeadlineResetToExcludeSdkTime": false,
+    "closeMaximumSeconds": 5,
+    "executeGlobalReserveSeconds": 8,
+    "executeStageMaximumSeconds": 22,
+    "finalReceiptReserveSeconds": 3,
+    "fixedTransportInnerReservesUnchanged": true,
+    "handshakeStageMaximumSeconds": 8,
+    "localHardSeconds": 35,
+    "newConnectGlobalReserveSeconds": 8,
+    "newEntryAdmissionRemainingSeconds": 16,
+    "newOperationAdmissionRemainingSeconds": 16,
+    "oldConnectGlobalReserveSeconds": 27,
+    "oldEntryAdmissionRemainingSeconds": 30,
+    "oldOperationAdmissionRemainingSeconds": 27,
+    "preloadedTransportUsesOriginalSessionInjectionPoint": true,
+    "remoteHardSeconds": 20,
+    "sdkImportBeforeHandshakeStage": true,
+    "sdkImportInsideSharedWindow": true,
+    "sdkProcessFlags": [
+      "-E",
+      "-P",
+      "-B"
+    ],
+    "sdkVersionRequired": "5.0.0"
+  },
+  "businessAuthorizationChanged": false,
+  "businessDatabasesOpened": false,
+  "candidate": {
+    "bindingSha256": "e9b6c2d51c5c52e51c508cb1ea2a424e22271a99cf9f6a49164822307e0c5e84",
+    "changedControls": [
+      "operation.py",
+      "run.py"
+    ],
+    "controlFiles": {
+      "entry-bootstrap-template.py.txt": "cccfb78d5f3cd6552ed0c3a00edb40b3cd81d3add6383a6818b3980371161f1e",
+      "launch.py": "8d6104565c10965a2894b7e519858eeebb1a7f0a7884b6eceee43de6ef78153b",
+      "operation.py": "229cc264221f247ad2db1b2ba392de862920f4cd9a8e7abf02738715ccd8e27e",
+      "policy.py": "e8cb9b87cfb31ef1baba6ef564c794629e7615ee7dbcd6b80ce6757f3dca24a8",
+      "receiver.py": "abdfb083eb9ce1eca4a01d389df403530bee295a5baadfd2742467e2e6545b31",
+      "run.py": "33b626f847407c06c6593426d04ccedddec05754c41aedb2fe3b01592685d60c"
+    },
+    "invocationsUsed": 0,
+    "maximumUnits": 0,
+    "newAuthorizationCreated": false,
+    "unchangedControls": [
+      "entry-bootstrap-template.py.txt",
+      "launch.py",
+      "policy.py",
+      "receiver.py"
+    ]
+  },
+  "credentialsChanged": false,
+  "date": "2026-11-15",
+  "evidenceSha256": {
+    "DESIGN.md": "6efa8c38d8331a86ee5b742c0d0f24983e2333e3437658c1c922377de95b87e7",
+    "build-receipt.json": "4758c0227194c1cf97c7abf52b37582e857b7ae8047a2cb924a4c60bfd372fbf",
+    "final-test-terminal.json": "5376273c9b31a8d2c980e120bb8f109c740ba37dc2044ddd39ef8e961e33f7ba",
+    "final-tests.stderr.bin": "d5e8d110e7b16e032897e4b317645afe6371cfd62f198e0f499c3a4b987b785e",
+    "final-tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "negative-terminal.json": "0aec03a4a53ead70d20524bf6ddcf4cb60fa5a0b5292c8db6779809acae8e383",
+    "negative.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "negative.stdout.bin": "981ac361c611c35d394c8a4ce1e5752ed1d055cd630141aff2ebf772a892db93",
+    "origin-copy.json": "6ecd0ca5954aa8017515c29103bd07028d77411bd8ad80f5853e7e5678ea6c0c",
+    "real-command-render.json": "59c306b006e192e64655372e392de9a5d2ffff2620030828b9c961186376014a",
+    "review-source-only.txt": "9a2caae6fbe83224fa0560a06da55047c0d20d90bcfd84f6cc97b44c139cc8cd",
+    "test_fixed_transport.py": "5e897dd9cbcf846e896fb7701513356621e2c777b70e37bcc40973ac84a3e8e6",
+    "test_phase_budget.py": "51ed90735bafe9a965f8051d05919b69918b866bbee5c83a46aa3805fefb5e91"
+  },
+  "externalAgentCalls": 0,
+  "failureDiagnostics": {
+    "arbitraryErrorTextNotForwarded": true,
+    "failedOrUnknownCleanupCannotPromote": true,
+    "knownPrimaryNotHiddenByGenericReceiverFailure": true,
+    "primaryCleanupCleanupClockFinalErrorsSeparated": true,
+    "privateObservationSavedBeforeSummary": true,
+    "summaryErrorFields": [
+      "type",
+      "code",
+      "errno"
+    ]
+  },
+  "independentReview": {
+    "confirmedP1P2Findings": 0,
+    "networkUsedByReviewer": false,
+    "sourceOnly": true,
+    "testsExecutedByReviewer": false
+  },
+  "limitations": [
+    "The27-second admission/connect-reserve policy was deliberately revised, not retained. The20/35hard ceilings and teardown/receipt reserves remain explicit.",
+    "Remote20seconds is a maximum, not a promise of20seconds of work if the shared deadline and conservative inner reserves leave less time.",
+    "Local deterministic clocks, synthetic sockets and actual local processes are not a real SSH, cold-start, target capacity or production acceptance.",
+    "No new remote query, current service baseline, generated private material capture, database-copy proof or release was performed.",
+    "A3 and all older allowances remain consumed. This candidate has no operator scope receipt; a new one-shot query approval is required.",
+    "Only this sanitized record is synchronized; private controls, operator scope receipts, fixture data, raw operational evidence and credential/configuration bodies remain private."
+  ],
+  "negativeMissingAuthorization": {
+    "accepted": false,
+    "actualExitCode": 2,
+    "attemptCreated": false,
+    "sameFileDescriptorInitialTemplateAndLaunchPin": true,
+    "sshConnections": 0,
+    "wallSeconds": 0.22479569999268278
+  },
+  "newLinuxUnits": 0,
+  "privateSourcesSubmitted": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "realCommandRender": {
+    "authorizationCreated": false,
+    "maximumCommandUtf16Units": 30000,
+    "renderOnly": true,
+    "sdkFlags": [
+      "-E",
+      "-P",
+      "-B"
+    ],
+    "sourceBytes": 12196,
+    "sourceSha256": "33b626f847407c06c6593426d04ccedddec05754c41aedb2fe3b01592685d60c",
+    "sshConnections": 0,
+    "windowsCommandUtf16Units": 17067
+  },
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "sourcePreservation": {
+    "allOtherOldRunFunctionsAstUnchanged": true,
+    "fixedSshTransportSha256": "9285484e9b86c50ff1eebffcf47a6db95bf232c50cf19088bc77e53e6ac5c11a",
+    "fixedSshTransportUnchanged": true,
+    "newRunFunctions": [
+      "sdk_transport",
+      "safe_operation_error"
+    ],
+    "onlyOldRunFunctionChanged": "direct_attempt",
+    "operationChangeExactlyThreeBudgetLiterals": true
+  },
+  "stage": "inactive local SDK and phase-budget correction",
+  "tests": {
+    "actualExitCode": 0,
+    "actualLocalOwnedProcessSuccessAndNonzeroExitRejection": true,
+    "badKeyPreventsCredentialRead": true,
+    "beforeAfterCurrentCapturedSourceHashesMatch": true,
+    "count": 57,
+    "entireProductSuiteRerun": false,
+    "explicitPhaseContractFixtureAdjustments": [
+      "expired operation lower-bound sample27 becomes16 under declared new admission contract",
+      "late SDK lookup sample advances20 instead of9 to reach insufficient new admission budget"
+    ],
+    "failures": 0,
+    "inheritedAssertCallsUnchanged": true,
+    "inheritedMethods": 49,
+    "matchingKeyBeforeSyntheticCredentialRead": true,
+    "newMethods": 8,
+    "originalPinnedSessionTestedWithSyntheticSocketAndSdk": true,
+    "sdkImportFailureAndLatenessNeverCreateSession": true,
+    "skips": 0,
+    "threeSyntheticOwnedHandlesClosedOnce": true,
+    "wallSeconds": 23.60006379999686
+  },
+  "vpsConnected": false
+}
