@@ -1,0 +1,177 @@
+{
+  "actualResult": {
+    "actualLauncherExitCode": 2,
+    "actualOwnedSdkProcessExitCode": 0,
+    "actualPowerShellExitCode": 1,
+    "dataAndCopyInputValidationPassed": true,
+    "outerElapsedSeconds": 7.614461000019219,
+    "overallInvocationAccepted": false,
+    "ownedProcessElapsedSeconds": 7.539026400016155,
+    "ownedProcessReportedAccepted": true,
+    "phaseTimings": [
+      {
+        "elapsedSeconds": 1.4944946000468917,
+        "stage": "sdk_version"
+      },
+      {
+        "elapsedSeconds": 1.578469000000041,
+        "stage": "sdk_import"
+      },
+      {
+        "elapsedSeconds": 2.5005090000340715,
+        "stage": "transport"
+      },
+      {
+        "elapsedSeconds": 7.450259200006258,
+        "stage": "validation"
+      }
+    ],
+    "realSshTransportCompleted": true,
+    "remoteElapsedSeconds": 3.7654454968869686,
+    "wallSeconds": 7.827252299990505
+  },
+  "authorization": {
+    "automaticRetry": false,
+    "furtherRemoteExecutionAuthorizedByThisRecord": false,
+    "invocationsUsed": 1,
+    "localSeconds": 35,
+    "maximumInvocations": 1,
+    "maximumNewUnits": 0,
+    "reference": "explicit user approval of one corrected same-limit readonly collection",
+    "remoteSeconds": 20
+  },
+  "binding": {
+    "allSixSourcePinsStillMatch": true,
+    "frozenSourceModified": false,
+    "invocationSha256": "e9b6c2d51c5c52e51c508cb1ea2a424e22271a99cf9f6a49164822307e0c5e84"
+  },
+  "businessAuthorizationChanged": false,
+  "capacitySnapshot": {
+    "actualCandidateAllocationBound": 55582720,
+    "actualPreparedFootprintBytes": 57425920,
+    "estimatedSpaceSufficient": true,
+    "minimumFreeBytesObserved": 28276076544,
+    "minimumFreeInodesObserved": 2252106,
+    "nativeExecutionVerified": false,
+    "productionReady": false,
+    "releaseCapacityAccepted": false,
+    "requiredFreeBytes": 536870912,
+    "requiredFreeInodes": 3104
+  },
+  "collection": {
+    "businessDatabaseContentsRead": false,
+    "databaseQueries": 0,
+    "newUnits": 0,
+    "privateMaterialBytes": 34278,
+    "privateMaterialCount": 5,
+    "privateMaterialHashes": {
+      "Caddyfile.final": "8002d809f17b7416b34f641e8d3f23e0ba69936926f0af314193228eb3fc9808",
+      "Caddyfile.loopback": "f59357741f21378c7ac13e79909b186f363cdc385482a1f2f98dc636d7e8d16b",
+      "candidate-config.json": "1ed22c1256793e7c6bb07ff102f285b7b63789aad581f797581755805973cdcf",
+      "compatibility-inputs.json": "fce01deabf526ef9073b4502f784d742742f04e7f016e965f20f91ce101d5d38",
+      "expected-code.json": "766975b7c4ec97f1b6fb6606be1f6b942bff63d139ddd950cd803f95ef5ed2d1"
+    },
+    "readOnly": true,
+    "remoteWrites": 0,
+    "reservationSha256": "5932a04edb8e0a5627140bbe2c8a3baf26ff8930eeda3734e9be490579fca126",
+    "runtimeEnvBodyRead": false,
+    "serviceBaselineBeforeAfterUnchanged": true,
+    "serviceCount": 4
+  },
+  "credentialsChanged": false,
+  "date": "2026-11-15",
+  "externalAgentCalls": 0,
+  "limitations": [
+    "This is a real collection with successful inner validation, but the authoritative outer invocation exited2 and was not accepted.",
+    "A60-byte SDK Socket diagnostic with errno10038 appeared on local stderr. Its exact emission phase was not instrumented; it is not automatically classified as harmless.",
+    "The captured data may inform offline planning, but is not promoted to an accepted capacity/release proof, and its freshness is not extended.",
+    "The service comparison describes only this readonly collection interval, not continued service health or production acceptance.",
+    "The invocation allowance is consumed. No retry or additional SSH, unit or release is authorized by this record.",
+    "No database-copy proof, application-consistent backup, product publication, live user/model or external-Agent acceptance was performed.",
+    "Only sanitized evidence is synchronized; generated private configuration/material bodies, SDK log text, operator scope receipt and raw transport remain private."
+  ],
+  "newLinuxUnits": 0,
+  "outerRejection": {
+    "diagnosticEmissionPhaseMeasured": false,
+    "onlyFailedPredicate": "parentStderrEmpty",
+    "overallResultNotManuallyPromoted": true,
+    "parentStderrBytes": 60,
+    "parentStderrSha256": "cd55d46c7ba7a33e9673e068a3239ef52760ab180931e2d393893950fe2b1e89",
+    "predicates": {
+      "actualOwnedExitZero": true,
+      "noProductionReady": true,
+      "noProof": true,
+      "parentAccepted": true,
+      "parentElapsedBound": true,
+      "parentStderrEmpty": false,
+      "sourcePinMatches": true
+    },
+    "rawLogBodySubmitted": false,
+    "sdkSocketDiagnosticErrno": 10038
+  },
+  "privateEvidenceSha256": {
+    "actual-tool-terminal.json": "59495a4133b1755c16438064dfc7db128562d05a8d5a9bb73e5a9985cff878c0",
+    "attempt.json": "1befe26938e478274e829af9965375dcaa90093fee9d5df921e777feb9efc909",
+    "attempt/outcome.json": "1b5cd3cf7d5d709cc837dec28be528e00e4d08cefe6d42dfa9d0d0779431a7b6",
+    "attempt/transport-observation.json": "7beddc77c5a6b9033d5407fa4c886dda3e715e9e463ab35b35181d2f51e0d001",
+    "attempt/validated-inputs.json": "f7e85af6f8a14fa025d54e758341bd57257292816370a3e1fced73fcb568d04e",
+    "capture-authorization.json": "fb66089c179d3fc92b391de19d844f8134b168aef2a90e6cdb3a90d2cc9d4dd8",
+    "outer-attempt.json": "d57432760021e5c6027d94c02885a02806de523bff34e3b55b6bda2656a76c1c",
+    "outer-outcome.json": "cfe900d7aa26b79685f4f97ccb905631526ff22c097620790202be1a03f8d915",
+    "outer-parent-stderr.bin": "cd55d46c7ba7a33e9673e068a3239ef52760ab180931e2d393893950fe2b1e89",
+    "outer-parent-stdout.bin": "ef206502e7c93e825f6778e4db33a2e0511eafda6c3189891929bc9dac685d45",
+    "outer-rejection-diagnostic.json": "23d23770adff084b8f6ea3164e9de5eccd01cd6d6b530b708c3622467910837a",
+    "trusted-positive-start.json": "c5cc531a5ec7f482474a8a8f5f1cfe4e5496f799dbf7d712a0388029ce34186c",
+    "trusted-positive-terminal.json": "c5987ea34119ecaf26caadf6b9b7bce847c6272be96bad7d86944dd0824b2ac5",
+    "trusted-positive.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "trusted-positive.stdout": "101bbb662d897acf6b6e3dd191197734c84057e1d99857f6bf13cdcecbd74ba7"
+  },
+  "privateSourcesSubmitted": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "remoteServiceChanges": false,
+  "stage": "real readonly collection data validated; overall invocation rejected on SDK stderr",
+  "transport": {
+    "cleanup": {
+      "completions": [
+        {
+          "elapsedSeconds": 0.0011922999983653426,
+          "handle": "socket",
+          "wallElapsedSeconds": 0.001192399999126792,
+          "withinBudget": true
+        },
+        {
+          "elapsedSeconds": 0.001076799992006272,
+          "handle": "transport",
+          "wallElapsedSeconds": 0.0010783000034280121,
+          "withinBudget": true
+        },
+        {
+          "elapsedSeconds": 0.00148460001219064,
+          "handle": "channel-0",
+          "wallElapsedSeconds": 0.001484300009906292,
+          "withinBudget": true
+        }
+      ],
+      "confirmed": true,
+      "deadlineExhausted": false,
+      "errors": [],
+      "lateHandles": [],
+      "pendingHandles": [],
+      "subDeadlineExceeded": false,
+      "timedOut": false
+    },
+    "eofSent": true,
+    "exitObserved": true,
+    "hostKeyBeforePasswordImplementationUnchanged": true,
+    "outputLimitExceeded": false,
+    "remoteExitCode": 0,
+    "remoteStderrBytes": 0,
+    "sentBytes": 0,
+    "stdinBytes": 0,
+    "threeOwnedHandleClosesConfirmedWithinBudget": true
+  }
+}
