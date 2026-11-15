@@ -1,0 +1,176 @@
+{
+  "actualLocalIntegration": {
+    "agentAndProviderDefinitionsPreserved": true,
+    "allObservedChildrenClosedAndNoLiveChildren": true,
+    "bothNormalExitZeroAndWriterLockRelease": true,
+    "data": "three synthetic databases only",
+    "healthPrivateNodeAndForwardedRefusalCheckedForBothRoles": true,
+    "negativeActualCliStarts": 1,
+    "negativeOriginalRowCorruptionStopsBeforeSecondStart": true,
+    "oidcEnabled": true,
+    "originalRowsSchemaAuthorityConfigAndDataIdentityPreservedAtEachCheckpoint": true,
+    "positiveActualCliStarts": 2,
+    "realPocketIdOrModelAcceptance": false,
+    "sourceSnapshots": "two current materializations differentiated by test-only HTML; not actual historical production versions",
+    "windowsDependencyJunctionsAreLocalTestOnly": true
+  },
+  "budget": {
+    "actualLocalFlowBudgetMilliseconds": 50000,
+    "actualLocalIntegrationCaseMaximumMilliseconds": 60000,
+    "cleanupReserveMilliseconds": 10000,
+    "closeMaximumMilliseconds": 8000,
+    "lateCompletionRejected": true,
+    "linuxResourceLimitsExercised": false,
+    "probeMaximumMilliseconds": 3000,
+    "readyMaximumMilliseconds": 20000,
+    "sharedMaximumMilliseconds": 90000
+  },
+  "businessDatabasesOpened": false,
+  "candidate": {
+    "bindingSha256": "7acbf746f85f6e2b99f40942509d88e5fa87bb62c402fff8e6cbe0ac46474e3a",
+    "childGuardSources": {
+      "isolation.cjs": "7208ab3841a5cc68458e1881977a1591adc591a4afebbe8f2811dd315dfa2d1c",
+      "preload.cjs": "172fa1316bc23d3a01a2b9068739b3d900c2539638dfe16ea654624bcb56647a"
+    },
+    "coreSources": {
+      "checks.py": "869faee0e4e9c8418643a2acc39bc96c51f64066ae2d2d5ea5e6e04ea877512b",
+      "controller.cjs": "0800894fe736a07a4b395b803ea1bcc22850a70b8f1f77e68a62a91700dfb9ab",
+      "owned-runtime.cjs": "afa43cf5a24e0735ad582f63e21e0c4e4d590c384cb20f95532a4a0240aac29f"
+    },
+    "effectFreeControllerImport": true,
+    "nativeExecutionAuthorized": false,
+    "productionReady": false,
+    "proofCreated": false
+  },
+  "checks": {
+    "completeCodeInventoryReused": true,
+    "copyHelperSha256": "694b9fab5cd0459edf1332ef88a9c09b5878a4ea12ac803e57aada95d5e3fd9a",
+    "fullAuthorityFingerprintReused": true,
+    "fullOriginalRowAndSchemaRetentionFunctionsReused": true,
+    "localBaselineExplicitlySyntheticAndExternallyHashBound": true,
+    "mandatoryCheckpointCallbacksAreNotIndependentNativeAuthority": true,
+    "originalGateSha256": "95ab206d9f0dcf1bbcb208e600e7c24a94de4218a1025738a1844e67d8cb7af3",
+    "originalPrivateExchangeSourceSha256": "6466eb30d7184c02cf40660b6126e930ab476549494113d417801f442bd130af"
+  },
+  "credentialsChanged": false,
+  "date": "2026-11-15",
+  "dnsChanged": false,
+  "evidenceSha256": {
+    "DESIGN.md": "4495f4c4551948134d3a55c8a7b8fa7ca21a33bba1ae5e55e9a79f548dd2dbd4",
+    "adapter.test.cjs": "c61ee9b13ddb9b8121f80ecf5af202813b32e65a65ec5d6b8496bcd6ad6a40ad",
+    "controller.test.cjs": "69f1851ad6cff041fa23f517bb92c370b2c900b45b7cd661656ed8957d568070",
+    "fixture.cjs": "5aec98b91ed5d7f44d838c9ad98b8e8d8a295bbdb103d9e3a717bbfdbeabc360",
+    "integration.test.cjs": "33adfa08c8c8b1e92050c5e7fb2bf1cfcea5d344af2a04a3ba67b34edaf3d8bc",
+    "review-result.json": "6087f4db25196eed8ab2432a909bac245db7b46ace316a7839a7f3f2169ad8f3",
+    "reviewed-node.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reviewed-node.stdout.bin": "1fc48739c0d23fa6a34613fbeb8164a835400c942556f9b82e01b3a95e2285e3",
+    "reviewed-python.stderr.bin": "4c98dc27b24244359bc715bb17ed131d4f0e2f5506394715ecdd35bf8421bb26",
+    "reviewed-python.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "reviewed-terminal.json": "cf4c52bda94f106112323cebcae1f43d265225ce289e053e825dd35e85e61910",
+    "run_local.py": "c45caac14d039a4a2dd7849f8019ca691c8ed74c58406ee6b98c44c970662952",
+    "test_checks.py": "f4d7b58f2fe88a6ee05f3dee7c7658261d7bff6fd6bb98c6ccf0c65ecb81069d"
+  },
+  "externalAgentCalls": 0,
+  "flow": {
+    "automaticRetry": false,
+    "configurationBytesPreserved": true,
+    "dataResetRestoreOrWriterLockDeletion": false,
+    "failedAndCleanupErrorsSeparated": true,
+    "immediateOpaqueOwnedHandleTracking": true,
+    "knownOriginalCopyDiagnosticCodesRetainedWithoutBodies": true,
+    "normalCloseAndLockReleaseBeforeCheckpointAndSwap": true,
+    "provisionalObservationsNeverBecomeNativeProof": true,
+    "roleOrder": [
+      "candidate",
+      "previous"
+    ],
+    "sameDataDirectoryIdentity": true,
+    "unknownForcedOrLateCloseStopsBeforeNextRole": true
+  },
+  "independentReview": {
+    "confirmedUnresolvedP1P2": 0,
+    "fixed": [
+      "per-operation cap and absolute HTTP response deadline",
+      "zero-budget owned-child termination with unconfirmed closure preserved",
+      "failed-flow fixture retained independently of test completion"
+    ],
+    "initialConfirmedP2": 3,
+    "networkAccess": false,
+    "privateBodyReads": false,
+    "redFailures": 4,
+    "redRegressionTests": 14,
+    "reviewer": "independent source reviewer Volta",
+    "sourceOnly": true,
+    "testResultsIndependentlyExecutedOrVerified": false
+  },
+  "integrationEvidenceSha256": {
+    "integration-319b4cfcd084.json": "f1d44b7dc099c76b8adf2f9343ef02237543a0f97b25ae4c84565a0c0e710d50",
+    "integration-e0ac2fc8620e.json": "5f680dbc724c38592c4ad1a186dc07287b8d91858df7c73a69cba91e69bf2bd5"
+  },
+  "newLinuxUnits": 0,
+  "portsChanged": false,
+  "privateSourcesSubmitted": false,
+  "productionAgentConfigurationChanged": false,
+  "productionBusinessAuthorizationChanged": false,
+  "productionCredentialsRead": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "remainingNativeGates": [
+    "New explicit remote scope and fresh accepted capacity/configuration/authority inputs.",
+    "An exact-context native entry that validates UID996/GID987, NNP, zero capabilities, cgroup resources and kernel network isolation.",
+    "Kernel-enforced read-only production DATA and actual copy-helper provenance before booting the copies.",
+    "Actual production previous/candidate source and read-only dependency inventory binding, replacing synthetic role snapshots and local junctions.",
+    "Original complete copy proof validation; local callback observations and local baseline cannot replace it.",
+    "Controlled production maintenance, TLS/user/feature acceptance and external Agent delivery remain unfinished."
+  ],
+  "reviewFixes": {
+    "absoluteHttpProbeDeadline": true,
+    "eachOperationCapChecked": true,
+    "failedFlowFixtureRetained": true,
+    "zeroBudgetTerminationAttemptedWithoutInventedClosure": true
+  },
+  "stage": "local serial candidate-previous copy boot controller",
+  "tests": {
+    "actualExitCodes": [
+      0,
+      0
+    ],
+    "beforeAfterSourceHashesMatch": true,
+    "count": 20,
+    "entireProductSuiteRerun": false,
+    "failures": 0,
+    "groups": [
+      {
+        "actual": 14,
+        "actualExitCode": 0,
+        "expected": 14,
+        "group": "node",
+        "passed": true,
+        "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutSha256": "1fc48739c0d23fa6a34613fbeb8164a835400c942556f9b82e01b3a95e2285e3",
+        "timedOut": false,
+        "wallSeconds": 13.776336700015236
+      },
+      {
+        "actual": 6,
+        "actualExitCode": 0,
+        "expected": 6,
+        "group": "python",
+        "passed": true,
+        "stderrSha256": "4c98dc27b24244359bc715bb17ed131d4f0e2f5506394715ecdd35bf8421bb26",
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timedOut": false,
+        "wallSeconds": 2.3659173999913037
+      }
+    ],
+    "initialZeroDiscoveryCorrectedWithoutCountingItAsPass": true,
+    "nodeCases": 14,
+    "pythonCases": 6,
+    "skips": 0,
+    "testSqliteConnectionsExplicitlyClosedBeforeTemporaryDirectoryCleanup": true,
+    "wrapperWallSeconds": 16.144723600009456
+  },
+  "vpsConnected": false
+}
