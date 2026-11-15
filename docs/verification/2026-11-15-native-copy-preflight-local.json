@@ -1,0 +1,117 @@
+{
+  "agentConfigurationChanged": false,
+  "bindingSha256": "98e63cd0f93d72ed6c4c44dbaf82b0a54bcbfd6ed52de9b68a11742cf4fc28b7",
+  "businessAuthorizationChanged": false,
+  "candidate": {
+    "hostNamespaceOriginRequiresTrustedLaunchBinding": true,
+    "linuxExecutionAuthorized": false,
+    "maximumSeconds": 10,
+    "preflightSha256": "90fff40d957b93b4b7dc9fe8f343e5916896cb067cd1be569885e8550012e7c3",
+    "productionReady": false,
+    "proofCreated": false,
+    "readsProductionDatabaseBodies": false,
+    "requiresOuterNativeTerminationAndReapDeadline": true,
+    "schemaVersion": 1,
+    "scope": "native-copy-preflight-point-in-time-observations-only",
+    "serialBootControllerBindingSha256": "7acbf746f85f6e2b99f40942509d88e5fa87bb62c402fff8e6cbe0ac46474e3a"
+  },
+  "checks": {
+    "additionalCapabilitiesAdded": false,
+    "borrowedNamespaceDescriptorOwnerTypeAndIdentityRechecked": true,
+    "businessProcessOpensPid1Namespace": false,
+    "emptyMountOptionsRejected": true,
+    "exactTaggedSliceAndPrepareUnit": true,
+    "existingAlarmNotOverridden": true,
+    "longestCoveringMountMustBeReadOnly": true,
+    "loopbackInterfacesOnly": true,
+    "mountEscapesStrictlyDecoded": true,
+    "namespaceHostOriginValidated": false,
+    "ordinaryBlockingProbesCoveredByLinuxAlarm": true,
+    "priorSignalHandlerRestored": true,
+    "readsLimitedToFixedProcAndCgroupPaths": true,
+    "regexFilenameDotsLiteral": true,
+    "statvfsMustIndependentlyConfirmReadOnly": true,
+    "uninterruptibleIoBoundedByAlarmAlone": false,
+    "writableNestedMountsRejected": true
+  },
+  "credentialsReadOrChanged": false,
+  "databaseBodiesRead": false,
+  "date": "2026-11-15",
+  "dnsChanged": false,
+  "evidenceSha256": {
+    "DESIGN.md": "b433da97ad4c1b2cf4c2d1d21404776ff19482943d6e9f8f5fdb32bdf95cef0d",
+    "final-stderr.bin": "19607d66867c668dddaeb689d08904d8483ef9d5d31cab1b16297a48f5c8882a",
+    "final-stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "final-terminal.json": "00934055f9f64531aeabbfbe54ff30222c55acddd84ba385dedc01fa7ed08a11",
+    "review-result.json": "d176d19220ae2dc0586e8349484f553676f3be0d9262d6fbc4360812beef3985",
+    "run_local.py": "0a9c068962de15aecfcac77a1377ece96b53cef5b53bbeb382d15c13fe727b7e",
+    "test_preflight.py": "3443fe9a6c549c622c8ef4cbb93a86b980f081936b3991e15f80ba020fc5cbde"
+  },
+  "externalAgentCalls": 0,
+  "identityPolicy": {
+    "effectivePermittedInheritableAmbientCapabilities": 0,
+    "gid": 987,
+    "maximumBoundingMaskHex": "0xeb",
+    "noNewPrivileges": true,
+    "supplementaryGroupsOnly": [
+      987
+    ],
+    "uid": 996
+  },
+  "newLinuxUnits": 0,
+  "portsChanged": false,
+  "privateSourcesSubmitted": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "remainingNativeEntryRequirements": [
+    "Trusted launch-layer acquisition and independent host-origin binding of the inherited namespace descriptor.",
+    "Owned outer worker termination/reap budget; unconfirmed cleanup must reject, not be counted as success.",
+    "Fresh accepted capacity/configuration/authority inputs and a separately authorized native unit scope.",
+    "Kernel read-only production DATA for the entire copy operation, actual copy provenance and actual historical source/dependency binding.",
+    "Exact-context native copier/serial-controller integration and original full proof validation.",
+    "Controlled production maintenance and live user/feature/external-Agent acceptance remain unfinished."
+  ],
+  "resources": {
+    "maximumCpuPercent": 20,
+    "maximumCpuWeight": 10,
+    "maximumMemoryMiB": 192,
+    "maximumTasks": 32,
+    "minimumNice": 10,
+    "swapBytes": 0
+  },
+  "review": {
+    "confirmedRemainingP1P2": 0,
+    "editsPerformed": false,
+    "fixes": [
+      "borrowed host descriptor with externally required trusted origin binding replaces business PID1 access",
+      "Linux deadline alarm covers collection while outer termination and reap remains mandatory",
+      "empty mount option elements rejected",
+      "literal-dot fixed path allowlist"
+    ],
+    "hostOriginRequirementWaived": false,
+    "initialP1": 1,
+    "initialP2": 2,
+    "nativeValidationEstablished": false,
+    "networkAccess": false,
+    "outerTerminationRequirementWaived": false,
+    "reviewer": "independent source reviewer Heisenberg",
+    "sourceOnly": true,
+    "testResultsIndependentlyExecuted": false
+  },
+  "stage": "local native-copy kernel preflight preparation",
+  "tests": {
+    "actualExitCode": 0,
+    "count": 24,
+    "entireProductSuiteRerun": false,
+    "failures": 0,
+    "nativeLinuxCollectionUsedLocalDoubles": true,
+    "readerDescriptorCloseAndOverflowTestsUseActualLocalDescriptors": true,
+    "signalBehaviorUsedLocalDoubles": true,
+    "skips": 0,
+    "sourceHashesUnchanged": true,
+    "wrapperWallSeconds": 0.7457129000104032
+  },
+  "vpsConnected": false
+}
