@@ -1,0 +1,117 @@
+{
+  "actualResult": {
+    "accepted": false,
+    "actualChildExitCode": 1,
+    "actualLauncherExitCode": 2,
+    "actualParentExitCode": 2,
+    "actualPowerShellExitCode": 1,
+    "childStderrBytes": 2128,
+    "childStdoutBytes": 0,
+    "childTimedOut": false,
+    "fixedExceptionCode": "capture_shared_deadline",
+    "fixedExceptionType": "ValueError",
+    "outerElapsedSeconds": 8.679414700018242,
+    "parentElapsedSeconds": 8.57702840003185,
+    "terminalHandlePolledRatherThanRestarted": true,
+    "wallSeconds": 9.538987400010228
+  },
+  "authorization": {
+    "automaticRetry": false,
+    "furtherRemoteExecutionAuthorizedByThisRecord": false,
+    "invocationsUsed": 1,
+    "localSeconds": 35,
+    "maximumInvocations": 1,
+    "maximumNewUnits": 0,
+    "reference": "user confirmed one remote20/local35 readonly capacity capture",
+    "remoteSeconds": 20
+  },
+  "binding": {
+    "allSixControlFilesStillMatch": true,
+    "frozenSourcesModified": false,
+    "invocationSha256": "424af5629e2311a940e68766f3ff1c20462211961c4a60ce274cfa2cb4ff95be",
+    "sourceSha256": "aefd4d71c60622b3a679864c236cae06a5e0a978bb9820c62f5f5d06e1bcef56"
+  },
+  "businessAuthorizationChanged": false,
+  "businessDatabasesOpened": false,
+  "controlFlowEvidence": {
+    "childPrivateTransportObservationProduced": false,
+    "credentialReaderNotReachedByVerifiedControlFlow": true,
+    "deadlineGuardRequiresMoreThan27SecondsRemaining": true,
+    "failurePrecedesDeadlineAndSessionFactoryCalls": true,
+    "networkPacketObservationCollected": false,
+    "operationSourceSha256": "b049c640641986b6cc3709e4f86c28044dad486d103b6c77a259591ef483be2e",
+    "sshConnectionNotReachedByVerifiedControlFlow": true
+  },
+  "credentialsChanged": false,
+  "date": "2026-11-15",
+  "externalAgentCalls": 0,
+  "limitations": [
+    "This invocation failed locally before SSH session creation; it is not a completed VPS capacity collection.",
+    "The local startup probe ran against warm state and omits operating-system process startup and separate parent work; it does not identify the exact cold-start bottleneck.",
+    "The prior successful preparation does not supply a new capacity or service baseline for this attempt.",
+    "No new capacity estimate, private candidate materials, database-copy compatibility proof, production release or end-to-end acceptance was obtained.",
+    "Invocation allowance is consumed despite no SSH connection. Do not replay the approved entry or repurpose its ledgers.",
+    "Local operator scope receipt is not an API, workspace or external-Agent business grant.",
+    "Original failure evidence and frozen sources are preserved. Raw private output, credentials and control source are not submitted."
+  ],
+  "localStartupProbe": {
+    "attemptReplayed": false,
+    "auditBlockedCalls": {
+      "credential": 0,
+      "network": 0,
+      "process": 0,
+      "write": 0
+    },
+    "credentialMaterialRead": false,
+    "remoteConnections": 0,
+    "resultSha256": "a3894eddaef28820b37a101614dca9d9c9f5a6cef700d5d1b42471bc5c11132f",
+    "sourceSha256": "228e2145c4a09fed303d3088b1ffb98475c0371a7eb1d07affc98b2324d68218",
+    "stages": [
+      {
+        "seconds": 0.03382469998905435,
+        "stage": "fixed_run_module_compile_and_import"
+      },
+      {
+        "seconds": 0.45275019999826327,
+        "stage": "fixed_inputs_load_only"
+      },
+      {
+        "seconds": 8.90000956133008e-06,
+        "stage": "import_importlib_metadata"
+      },
+      {
+        "seconds": 0.062154199986252934,
+        "stage": "paramiko_distribution_version_lookup"
+      }
+    ],
+    "wallSeconds": 0.5487628999981098
+  },
+  "newLinuxUnits": 0,
+  "privateEvidenceSha256": {
+    "actual-tool-terminal-20261115.json": "bd731c9d6aadc3f08505462e933a05556d2f94da07765e9d65153d036a5c086c",
+    "attempt.json": "7b6f42cf6e8904373989ec38e22963724732ca5a585e242e53768a329ce67316",
+    "attempt/child-actual.json": "87aece1bdffeff2d4761242bef95207c9a2fcfc7870e8fc4dd46dad526090c63",
+    "attempt/child-start.json": "9911636d0efc9bd138872e465095b09f69079c47e8c837a921d8ba223cbdeb98",
+    "attempt/child-stderr.bin": "c922eae1ed69eaaedb600ebe587106337bfaa2c2445bc3c83e6397c6ae546068",
+    "attempt/child-stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "attempt/outcome.json": "fb8b346e1116e866543f069960a133edaa50a98189e5c576452a314854fcd200",
+    "capture-authorization.json": "ec9c91c9ece859aedd544e781e8fbb76a72dc2bc009df175d5c07e1ff2a727e0",
+    "outer-attempt.json": "a7bfafce6bbb6e16d901990685f6bf1ec48c57f2b35b5289ed1aed24d7e8250a",
+    "outer-outcome.json": "116fd1c22f5baf2879936e6371584904070c54ab7862088c9fb1eec510fa40a1",
+    "outer-parent-stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "outer-parent-stdout.bin": "8bfa7b848a35ab18517bd4c0f8ed21e41565e45a839f7a3783d7c7752a193432",
+    "trusted-positive-start.json": "a798dd9b2a9d85b0edc8acb73ea10222e6fb4cec60c18356be70c1dc16cac269",
+    "trusted-positive-terminal.json": "e88179d55642fc408160f4b7e06031dbfecc13a964e00d96930e6e426e7ca14f",
+    "trusted-positive.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "trusted-positive.stdout": "a8d538818fbe29f19f0a930d970eaa6a04ec1d15fd8703604d0fe2c97a27309b"
+  },
+  "privateSourcesSubmitted": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "remoteServiceChanges": false,
+  "remoteWrites": 0,
+  "stage": "single approved readonly capacity invocation; not accepted"
+}
