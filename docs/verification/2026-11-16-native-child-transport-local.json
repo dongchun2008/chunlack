@@ -1,0 +1,119 @@
+{
+  "acceptedLocalComponents": true,
+  "date": "2026-11-16",
+  "earlierApprovedCapture": {
+    "allowanceConsumed": "1/1",
+    "record": "docs/verification/2026-11-16-readonly-capacity-single-capture.json",
+    "repeatedByThisStep": false
+  },
+  "groups": [
+    {
+      "accepted": true,
+      "actualExitCode": 0,
+      "expectedCount": 28,
+      "group": "newPython28",
+      "stderrSha256": "4c90619d3aa64d4686358735476a480ac8f81cbe4914d8b1de6a7457194b1f5e",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timedOut": false,
+      "wallSeconds": 0.3986596999457106
+    },
+    {
+      "accepted": true,
+      "actualExitCode": 0,
+      "expectedCount": 40,
+      "group": "existingPython40",
+      "stderrSha256": "c3515d28f26e35e41aa191a3fa967f646071bd1a11138e1a387c76da8b6de92e",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timedOut": false,
+      "wallSeconds": 9.071354600018822
+    },
+    {
+      "accepted": true,
+      "actualExitCode": 0,
+      "expectedCount": 6,
+      "group": "metadataNode6",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutSha256": "95d344278dc8e237cd9f632854292b7958c1a688fdf63b24dc01efcab5aefb67",
+      "timedOut": false,
+      "wallSeconds": 0.32404729997506365
+    },
+    {
+      "accepted": true,
+      "actualExitCode": 0,
+      "expectedCount": 4,
+      "group": "existingProbeNode4",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutSha256": "adff66276a7bd7868ec6ff883c062ab2c1cc21542afebdb437f86578d33b4fd0",
+      "timedOut": false,
+      "wallSeconds": 4.934191399952397
+    }
+  ],
+  "independentSourceReview": {
+    "confirmedImportantFindings": 1,
+    "finding": "Original namespace_id accepts only /proc/self; the new child adapter now owns a fixed child namespace descriptor and validates its type, identity and closure between pidfd generation checks.",
+    "fixedWithRedGreenRegression": 1,
+    "originalFrozenHelperChanged": false,
+    "postFixEvidence": "Fixed-source contract regression plus namespace drift/type/close tests; no second source review claimed."
+  },
+  "limitations": [
+    "Linux syscalls and host context admission are doubled locally, not natively executed.",
+    "The full job capsule, worker entry and owner-only final proof publication remain unimplemented.",
+    "No historical candidate/previous native compatibility or production release acceptance is established.",
+    "Previously passed Windows full join and earlier failed physical-copy fixtures were not rerun or reclassified."
+  ],
+  "nativeCompatibilityVerified": false,
+  "privateTerminalSha256": "f214a95f89c57719b6447790a97b1ecface25f4792e2f017d457412278e33fe2",
+  "productionReady": false,
+  "proofCreated": false,
+  "runtimeScope": {
+    "actualModelCalls": 0,
+    "credentialsChanged": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "relayChanged": false,
+    "vpsConnectedDuringThisLocalStep": false
+  },
+  "schemaVersion": 1,
+  "scope": "local-native-child-components-only",
+  "sourcePins": {
+    "native-copy-entry-20261116-a1/child.py": "da741539a3b3787986f933a349515c4eeb57e7ca2339deff94eb8686a9f9a7cc",
+    "native-copy-entry-20261116-a1/common.py": "d5abe37676062ab7f949fef2197145a1c0af5085654f63071e1daa1d96fa421d",
+    "native-copy-entry-20261116-a1/lease.py": "3359e5a3a70ce0e710812b737dde5db30f2eea9faf6466bb1f219184d5fa1188",
+    "native-copy-entry-20261116-a1/metadata.py": "bf0a14b175eda8096daa33da21ae9b552c25a55fd3a44df7fce587a6ef13af6f",
+    "native-copy-entry-20261116-a1/phase.py": "0bd162167d1a239eb09e381d9d8e2f7d104b5872d2f2aa1c8c19ebcd9e8fc6d2",
+    "native-copy-entry-20261116-a1/pipe-channel.cjs": "34e687e36b2d2229234cc964efeaadc444ac6e1d92d191f25505d1b3879931f0",
+    "native-copy-entry-20261116-a1/pipe-channel.test.cjs": "8ff841d5417ebc817c33bd92c13cc1a2eb9884d66ef8d24886f176fb961c2712",
+    "native-copy-entry-20261116-a1/probe.cjs": "7766c606b048d3c91b6d5c633956b2e09fb05fca26309e8bc6e57ed11df2082a",
+    "native-copy-entry-20261116-a1/test_child.py": "02d02299e419915d83b6c85fb71492238d5a7ab40fae94322f20990b1263f8e0",
+    "native-copy-entry-20261116-a1/test_lease.py": "480708ebaa72ed0cf471164b783ca3efb6b18f7011c7dfc52c71965fbab8fd72",
+    "native-copy-entry-20261116-a1/test_metadata.py": "70c4d8544ec6d3a5c90b589210d4e23a01cd0e2e73841bbf0aa1a8e48abdd2e6",
+    "owned-native-worker-20261116-a1/engine.py": "5b2bebadb12946b7f6e91932f962cf5aef223daaeeeb7b7fd599ef5538adbd4d",
+    "owned-native-worker-20261116-a1/linux_backend.py": "0b6d0438f1a20c5a558e28ce03728dbfc5991cb2e06f2d178d9378c40187c669",
+    "owned-native-worker-20261116-a1/local_bridge.py": "a6cec1ddd4f0ed2460b56345a694ad9f2f5ebd9c2b987d772565b00afa400a99",
+    "owned-native-worker-20261116-a1/plain_copy.py": "bdca7e98b467e69940c1832e59bdaa0a1c7d62eba9371a47bd273e64c42c49be",
+    "owned-native-worker-20261116-a1/probe.test.cjs": "eb8ad93c6a09c3fc96bd0a7145f941bff7482309a643d4dbb6a38ac2cdd3001c",
+    "owned-native-worker-20261116-a1/test_checkpoints.py": "a37f987cf6d1083730fb5661e060b5215abcde868af4e9853a27d2863ee86454",
+    "owned-native-worker-20261116-a1/test_engine.py": "a6564dbd61463684f3ded517cc64501ce2f40adf2f156fbb34a185288d20d3d1",
+    "owned-native-worker-20261116-a1/test_job_inputs.py": "b30de6fa283c7a8c6329a7279d577c08823adf80ebdc433a491fee12f425ae21",
+    "owned-native-worker-20261116-a1/test_linux_backend.py": "6324f6b6cf1626253a12ef9ae6b28da85b3b3f27462bfb1af7743cf236043a79",
+    "owned-native-worker-20261116-a1/test_local_diagnostics.py": "da439488733c602c8ee4dd55da1850cd219489224559a1a0a1a9c7fe672ec685",
+    "owned-native-worker-20261116-a1/test_plain_copy.py": "7d485e8622eb68abcadb698091faf197f330ba90c3dfcbfae2eb020043811eea",
+    "owned-native-worker-20261116-a1/test_seed_authority.py": "11d49541b7bca2a2c9a2622d46e555779ff0674e312e5e5c19c7d776bf233169",
+    "owned-native-worker-20261116-a1/unseeded-boot.test.cjs": "661e869debe8bb1ae38c95bea4e46ec0b1d30d8f535bd2f67fdc4235156a86bd",
+    "owned-native-worker-20261116-a1/unseeded-windows-fixture.test.cjs": "fb368d105f8e7424b4ddfe76ae0d826371143f715f0335ceeb9547eb77fdfe7c"
+  },
+  "sourcePinsUnchanged": true,
+  "testsFailed": 0,
+  "testsPassed": 78,
+  "testsSkipped": 0,
+  "verifiedLocally": [
+    "Strict bounded startup metadata and extra inherited Node descriptor transport",
+    "Initially fresh host context retained on owned descriptors without refreshing capture time",
+    "Python-owned Node spawn captures pidfd before polling/reaping; failed setup retains process ownership",
+    "Kernel identity, executable, exact command, child network namespace and socket ownership checks through syscall doubles",
+    "Private HTTP probes share a three-second deadline; normal close requires EOF, quiet group, guard receipt and absent writer lock",
+    "Actual Windows extra-descriptor child exchange and real synthetic gateway store tests"
+  ]
+}
