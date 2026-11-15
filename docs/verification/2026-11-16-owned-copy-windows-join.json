@@ -1,0 +1,182 @@
+{
+  "actualLocalBootEvidence": {
+    "closedChildCount": 2,
+    "configurationPreserved": true,
+    "configurationSha256": "b8e7012a280650ee298aafc9454c6c5f156bf2917330852889a942ffe761276b",
+    "count": 2,
+    "dataCopyMode": "three unseeded synthetic-source SQLite online backups",
+    "elapsedMilliseconds": 13686.502099990845,
+    "forcedCleanup": false,
+    "forwardedNodeDenied": true,
+    "fullIdentityAuthorityPreserved": true,
+    "healthChecked": true,
+    "liveChildren": 0,
+    "newAdapterDiagnosticsPersisted": true,
+    "normalExitCodes": [
+      0,
+      0
+    ],
+    "oldFixtureFinalizerUsesUnusedAdapter": true,
+    "originalRowsAndSchemasPreserved": true,
+    "privateNodeReadChecked": true,
+    "runtimeOrder": [
+      "candidate",
+      "previous"
+    ],
+    "signals": false,
+    "writerLocksReleased": true
+  },
+  "affectedCasesPassed": 45,
+  "businessAuthorizationChanged": false,
+  "credentialsChanged": false,
+  "date": "2026-11-16",
+  "dnsChanged": false,
+  "entireNativePlanAccepted": false,
+  "entireProductSuiteRerun": false,
+  "evidenceSha256": {
+    "abba-retained-fixture.json": "e3ec89a766163d9fad069cf4c4e152cc5c408a3eb901595845c738de6168f4fb",
+    "actual-replacement-adapter-record": "61a364e9c7cfc6806041bf1d7d70aabd40fc37b322a5868f3e7f333aed52cbde",
+    "join-final-terminal.json": "31a7696453934384856dff05fd209961f9e47ff4269404e1cad676331fa1ceb6"
+  },
+  "externalAgentCalls": 0,
+  "failures": 0,
+  "fixtureCorrection": {
+    "allOriginalCompleteSerialFingerprintsStillUsed": true,
+    "bothJunctionTargetsVerifiedAgainstKnownRepositoryDependencies": true,
+    "crossBoundaryDigestCache": false,
+    "earlierProgressRecord": "docs/verification/2026-11-16-owned-copy-local-integration-progress.json",
+    "existingWindowsJunctionsRetained": true,
+    "incorrectAssumptionCorrected": "The existing Windows junction fixture does not require the physical dependency copy inferred from the Linux directory-link policy.",
+    "linuxDirectoryLinkOrReadonlyMountPolicyChanged": false,
+    "oldPhysicalCopyFixtureClaimedFixed": false,
+    "oldPhysicalCopyFixtureFailuresPreserved": true
+  },
+  "fullWindowsFixtureJoinPassed": true,
+  "groups": [
+    {
+      "actualExitCode": 0,
+      "count": 40,
+      "group": "python40",
+      "stderrSha256": "4f4c485e13fb4cfa687358602a0b84e83accbc891871eeec74439d82260c3805",
+      "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "timedOut": false,
+      "wallSeconds": 10.563732700014953
+    },
+    {
+      "actualExitCode": 0,
+      "count": 4,
+      "group": "node4",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutSha256": "050d335ccacc009a619ea913b4e7a61f8b6129926e3465bb32fc29c2af1bc81c",
+      "timedOut": false,
+      "wallSeconds": 9.620169700006954
+    },
+    {
+      "actualExitCode": 0,
+      "count": 1,
+      "group": "windowsJoin1",
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutSha256": "5f2771b594c343a5d213d9ce880dcc8dce5458f787c70136ee5b07f33b88c55d",
+      "timedOut": false,
+      "wallSeconds": 20.715182699961588
+    }
+  ],
+  "historicalVersions": false,
+  "limitations": [
+    "Windows current-version materializations with distinct test HTML are not historical candidate/previous runtime acceptance.",
+    "Windows fixture junction acceptance does not establish Linux read-only mounts, UID996/GID987, pidfd behavior or cgroup resource containment.",
+    "No native worker/job or owner-only final compatibility proof writer is accepted by this record.",
+    "Earlier physical-copy fixture failures remain failures; they were not rerun or converted to passing results.",
+    "Fresh native compatibility evidence, controlled release and full live user/model/external-Agent delivery acceptance remain required.",
+    "Private helper implementations, raw copied data/configuration and raw logs are not submitted."
+  ],
+  "nativeCompatibilityVerified": false,
+  "newLinuxUnits": 0,
+  "parallelReaderExperiment": {
+    "adopted": false,
+    "allCompleteFingerprintsEqual": true,
+    "lowerCpuBenefitEstablished": false,
+    "notIncludedIn45AffectedCases": true,
+    "proofOrNativeAuthorityCreated": false,
+    "results": [
+      {
+        "cpuSeconds": 1.0625,
+        "fingerprint": {
+          "bytes": 38755810,
+          "files": 4483,
+          "sha256": "01c0b4404fe70c9b790772161f8ee4b53e58e44ecfad3b7d345d0f2105f98c8c"
+        },
+        "implementation": "original",
+        "wallSeconds": 1.088941199996043
+      },
+      {
+        "cpuSeconds": 2.453125,
+        "fingerprint": {
+          "bytes": 38755810,
+          "files": 4483,
+          "sha256": "01c0b4404fe70c9b790772161f8ee4b53e58e44ecfad3b7d345d0f2105f98c8c"
+        },
+        "implementation": "parallel",
+        "wallSeconds": 1.2151715999934822
+      },
+      {
+        "cpuSeconds": 3.046875,
+        "fingerprint": {
+          "bytes": 38755810,
+          "files": 4483,
+          "sha256": "01c0b4404fe70c9b790772161f8ee4b53e58e44ecfad3b7d345d0f2105f98c8c"
+        },
+        "implementation": "parallel",
+        "wallSeconds": 1.5247912000049837
+      },
+      {
+        "cpuSeconds": 1.03125,
+        "fingerprint": {
+          "bytes": 38755810,
+          "files": 4483,
+          "sha256": "01c0b4404fe70c9b790772161f8ee4b53e58e44ecfad3b7d345d0f2105f98c8c"
+        },
+        "implementation": "original",
+        "wallSeconds": 1.051621399994474
+      }
+    ],
+    "warmWallBenefitEstablished": false
+  },
+  "portsChanged": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "review": {
+    "confirmedP1P2": 0,
+    "minorLimitation": "The legacy fixture finalizer still reports its unused initial adapter; the separate replacement-adapter record supplies actual child evidence.",
+    "reviewerConnectedNetwork": false,
+    "reviewerExecutedTests": false,
+    "scope": "Windows fixture wiring and actual replacement-adapter diagnostics only",
+    "sourceOnly": true
+  },
+  "skips": 0,
+  "sourcePins": {
+    "native-copy-entry-20261116-a1/common.py": "d5abe37676062ab7f949fef2197145a1c0af5085654f63071e1daa1d96fa421d",
+    "native-copy-entry-20261116-a1/phase.py": "0bd162167d1a239eb09e381d9d8e2f7d104b5872d2f2aa1c8c19ebcd9e8fc6d2",
+    "native-copy-entry-20261116-a1/probe.cjs": "7766c606b048d3c91b6d5c633956b2e09fb05fca26309e8bc6e57ed11df2082a",
+    "owned-native-worker-20261116-a1/engine.py": "5b2bebadb12946b7f6e91932f962cf5aef223daaeeeb7b7fd599ef5538adbd4d",
+    "owned-native-worker-20261116-a1/linux_backend.py": "0b6d0438f1a20c5a558e28ce03728dbfc5991cb2e06f2d178d9378c40187c669",
+    "owned-native-worker-20261116-a1/local_bridge.py": "a6cec1ddd4f0ed2460b56345a694ad9f2f5ebd9c2b987d772565b00afa400a99",
+    "owned-native-worker-20261116-a1/plain_copy.py": "bdca7e98b467e69940c1832e59bdaa0a1c7d62eba9371a47bd273e64c42c49be",
+    "owned-native-worker-20261116-a1/probe.test.cjs": "eb8ad93c6a09c3fc96bd0a7145f941bff7482309a643d4dbb6a38ac2cdd3001c",
+    "owned-native-worker-20261116-a1/test_checkpoints.py": "a37f987cf6d1083730fb5661e060b5215abcde868af4e9853a27d2863ee86454",
+    "owned-native-worker-20261116-a1/test_engine.py": "a6564dbd61463684f3ded517cc64501ce2f40adf2f156fbb34a185288d20d3d1",
+    "owned-native-worker-20261116-a1/test_job_inputs.py": "b30de6fa283c7a8c6329a7279d577c08823adf80ebdc433a491fee12f425ae21",
+    "owned-native-worker-20261116-a1/test_linux_backend.py": "6324f6b6cf1626253a12ef9ae6b28da85b3b3f27462bfb1af7743cf236043a79",
+    "owned-native-worker-20261116-a1/test_local_diagnostics.py": "da439488733c602c8ee4dd55da1850cd219489224559a1a0a1a9c7fe672ec685",
+    "owned-native-worker-20261116-a1/test_plain_copy.py": "7d485e8622eb68abcadb698091faf197f330ba90c3dfcbfae2eb020043811eea",
+    "owned-native-worker-20261116-a1/test_seed_authority.py": "11d49541b7bca2a2c9a2622d46e555779ff0674e312e5e5c19c7d776bf233169",
+    "owned-native-worker-20261116-a1/unseeded-boot.test.cjs": "661e869debe8bb1ae38c95bea4e46ec0b1d30d8f535bd2f67fdc4235156a86bd",
+    "owned-native-worker-20261116-a1/unseeded-windows-fixture.test.cjs": "fb368d105f8e7424b4ddfe76ae0d826371143f715f0335ceeb9547eb77fdfe7c"
+  },
+  "sourcePinsUnchangedDuringTests": true,
+  "stage": "complete local Windows fixture join; native delivery incomplete",
+  "vpsConnected": false
+}
