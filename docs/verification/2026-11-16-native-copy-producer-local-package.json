@@ -1,0 +1,193 @@
+{
+  "acceptedLocalComponents": true,
+  "boundaries": {
+    "allSystemdKernelRepliesAndNativeAbiPathsLocallySimulated": true,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "nativeCompatibilityVerified": false,
+    "nativeExecutionAuthorized": false,
+    "newLinuxUnits": 0,
+    "portsChanged": false,
+    "privateImplementationSynced": false,
+    "productionPublished": false,
+    "productionReady": false,
+    "proofCreated": false,
+    "publicFilesOnlySynced": true,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "replayGuardIsNotArbitraryCodeSandbox": true,
+    "vpsConnected": false
+  },
+  "closedPersistedArtifactReplay": {
+    "archiveSha256": "7625ced1349e2f18ac39c185182fe7ebfc6f891b837d3418544640d9e5da556d",
+    "catalogSha256": "0e1c59fc4cab25070f7f390bc5f10632fd3ef52d9de3ac78fc577e4d3883cad8",
+    "closedSourceReplayPassed": true,
+    "nativeCompatibilityVerified": false,
+    "productionReady": false,
+    "profileEncodingOnly": true,
+    "proofCreated": false,
+    "readFileCount": 23,
+    "readNamesSha256": "09fc48b920c81ec94f0bd29224a54c7647b8c4ffed92443038ae4e8782911a4e",
+    "sourceFiles": 193,
+    "syntheticRetainedManagerReplay": true,
+    "syntheticTerminalBindingReplay": true
+  },
+  "date": "2026-11-16",
+  "evidence": {
+    "earlierUnobservedTestOutputExcludedFromAcceptance": true,
+    "failedAttemptsAndFrozenSourcesRetained": true,
+    "finalTerminalSha256": "7c9eddb5b80637a47e55f276f676b0f526ba929e1a36dbe6b926fe03bd8b754d",
+    "localFileDigests": {
+      "artifact.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "artifact.stdout.bin": "fb02dc83b2167dbcd32cc698ba7195f1bfffed6c3035d807ebb6d7fb3e0129be",
+      "package-receipt.json": "73cb4b61c343ea6812da5f801ee3965045f150c4a5e2bf07747aebbffcd8a57a",
+      "tests.stderr.bin": "0b59c76ce5078188a7543e0acd8f86750e2cf469026da14ba588ae7e162d9bfc",
+      "tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "privatePathsOrMaterialBodiesPublished": false
+  },
+  "goalStatus": "active-incomplete",
+  "inactivePackage": {
+    "archiveSha256": "7625ced1349e2f18ac39c185182fe7ebfc6f891b837d3418544640d9e5da556d",
+    "candidateProductFiles": 66,
+    "catalogSha256": "0e1c59fc4cab25070f7f390bc5f10632fd3ef52d9de3ac78fc577e4d3883cad8",
+    "files": 193,
+    "historicalEntrySourceFiles": 22,
+    "nativeDependenciesIncluded": false,
+    "nativeHierarchyOverlay": {
+      "source/.superpowers/sdd/native-copy-entry-20261116-a1/child.py": {
+        "afterSha256": "65ab5685fa3bc312d2d9ff7ac5612170624c6a72c7afab264d9ec5627367c826",
+        "beforeSha256": "1cb7621bbd39afa8515ae936e3971cab51a33345451e233bd6d12440fd516b7d"
+      },
+      "source/.superpowers/sdd/native-copy-entry-20261116-a1/lease.py": {
+        "afterSha256": "45c39f5c20f1a8b233929c83602122ca93258070c0aaa2bebda43a663cf107a5",
+        "beforeSha256": "3359e5a3a70ce0e710812b737dde5db30f2eea9faf6466bb1f219184d5fa1188"
+      },
+      "source/.superpowers/sdd/native-copy-entry-20261116-a1/worker.py": {
+        "afterSha256": "86de6f99bbca4047af865d313fb8f78ddd37af56a67c4d06186f9b6e8ceeb06c",
+        "beforeSha256": "dc64a79c6ec065b0e9544d5465bcdc9b222caced436cadc5b8767da03a9a3bd2"
+      },
+      "source/.superpowers/sdd/native-copy-preflight-20261115-a1/preflight.py": {
+        "afterSha256": "31bfe814a1e316b6408844bab48ae3ec1b71144f83066e832b7208bd750b1c75",
+        "beforeSha256": "90fff40d957b93b4b7dc9fe8f343e5916896cb067cd1be569885e8550012e7c3"
+      },
+      "source/.superpowers/sdd/native-host-anchor-20261115-a1/attachment.py": {
+        "afterSha256": "b265e37fa859a08f04c98459fcd4ce812f5ff2a981a994bfb36eb0c024f231ce",
+        "beforeSha256": "6e4e97f32aba63320395be29b67af364af708a286989822f9171af487199c1b1"
+      },
+      "source/.superpowers/sdd/owned-native-worker-20261116-a1/linux_backend.py": {
+        "afterSha256": "f9f18966db46840b03b8e812a0376e008188bfa2ed3558977faf0e3995aa36bb",
+        "beforeSha256": "0b6d0438f1a20c5a558e28ce03728dbfc5991cb2e06f2d178d9378c40187c669"
+      }
+    },
+    "nativeManagerReady": false,
+    "ownerAfterSha256": "7a87936f46dd1a339416d0c96c2792db3311d22c0a30156da9dd3ae3b8491deb",
+    "ownerBeforeSha256": "f73f5eb72312dd4783265a178826f790e54c2a17d5dc9504165b9d75fdbe57c1",
+    "privateInputs": 6
+  },
+  "otherCorrections": [
+    "derived-copy-request-sole-helper-pin-change-preserves-original-capture",
+    "product-bytes-read-from-actual-manifest-bound-frozen-product-tree",
+    "startup-five-plus-runtime-eighty-four-plus-stop-one-fit-original-ninety-seconds",
+    "Windows-audit-test-uses-real-dlopen-audit-event-instead-of-None-TypeError",
+    "prior-live-origin-required-before-reclaimed-terminal-cgroup-is-accepted"
+  ],
+  "remainingCriticalPath": [
+    "concrete-same-descriptor-library-and-owned-bus-entry",
+    "scoped-host-materialization-of-fresh-real-previous57-candidate66-and-native-dependencies",
+    "fixed-readonly-result-file-observer-and-hard-outer-watchdog",
+    "fresh-readonly-precheck-and-separately-authorized-native-copy-and-release-rehearsals",
+    "consistent-release-backup-controlled-publication-and-live-acceptance",
+    "quiet-dedicated-dots-task-route-and-native-Muse-Suhua-acceptance"
+  ],
+  "requestProvenance": {
+    "captureRecordSha256": "963f06af65af2e4cdf6b9d645e906d8ec7d0031b853974a65aaeedc7ea2c7c66",
+    "changedRequestKeys": [
+      "copySourceSha256"
+    ],
+    "derivedRequestCanonicalSha256": "aeccfd0c8741d5ca667a31bc51a3e03a73e865ff72c819fe465548577e58c5de",
+    "earlierCaptureAllowance": "consumed-1/1-not-repeated",
+    "freshnessReset": false,
+    "observedCaptureRewritten": false,
+    "observedRequestCanonicalSha256": "cde7d7ca2f7eb1d2ac9c4507cdb2b8b8b7a38e62e47042c9de7eae7ce1a9525b"
+  },
+  "review": {
+    "managerFindings": [
+      {
+        "correction": "allow-only-forward-exact-group-to-empty-change",
+        "issue": "terminal-cgroup-reclamation-between-samples",
+        "redGreenConfirmed": true,
+        "severity": "P2"
+      },
+      {
+        "correction": "bounded-safe-error-tree-and-cleanup-uncertainty-propagation",
+        "issue": "nested-transport-cleanup-loss",
+        "redGreenConfirmed": true,
+        "severity": "P2"
+      }
+    ],
+    "packageCorrectionsNarrowlyReviewed": true,
+    "packageFindings": [
+      {
+        "correction": "exact-derived-kernel-paths-and-five-static-pin-rebindings",
+        "issue": "slice-hierarchy-mismatch",
+        "redGreenConfirmed": true,
+        "severity": "P1"
+      },
+      {
+        "correction": "actual-package-compile-event-byte-digests",
+        "issue": "transitive-compile-bytes-not-bound",
+        "redGreenConfirmed": true,
+        "severity": "P2"
+      }
+    ],
+    "reviewDidNotRunTestsOrReadPrivateMaterialBodies": true,
+    "secondManagerReviewClaimed": false
+  },
+  "scope": "local-native-copy-components-and-inactive-source-package-only",
+  "sourcePins": {
+    "DESIGN.md": "66432c33aab5fc78ec7f0711a72a2474e2d7549ae9e0f2e17aa3b994e4785383",
+    "bundle.py": "df4e83ac2f06327f28693f016ef94b96a722e4d32dfb0ffca8170d4aaae31917",
+    "candidate_owner.py": "7a87936f46dd1a339416d0c96c2792db3311d22c0a30156da9dd3ae3b8491deb",
+    "finalize.py": "11d1b8d6710d0260dcc4169b2dfdb0c51298e553e6a266505864426a4e02393b",
+    "manager.py": "c0c187e9876a092f720fa4fc7d83180d4cf13172faaf435e141374abaadb79f0",
+    "profile.py": "5522b0933ad5b8b3227f414274f720cc9d52501a351ee330670024bef4c5c0e0",
+    "terminal.py": "45fa31b88d21cc72188c1410ae64168cd8164f851295067b68fa9986cd1d3287",
+    "test_bundle.py": "18458bd24434310baa927ad46b9ae46264c6b3f31fb96ebd697c2e17eab82f59",
+    "test_existing_guard_contract.py": "336bb5d6600f292fed48c994809096c65034cfa6f815af06736d32029502d1eb",
+    "test_manager.py": "478bf91f47ed04f0f4b719aa6678a5cb273d3538f8099e89e9cf4e4fdb5d8698",
+    "test_owner_binding.py": "38a501934025d1b67e6f7686ae1c92da2bb8e0fea87c0abbe0453b74f35b0542",
+    "test_package_verifier.py": "f7259d317888494635b548b90cddc46df8da2facc2a40e731b8f90fe542bc167",
+    "test_profile.py": "9d3e45137d135044669d7cd6fde8004028e0d51f6e19acf3964dd0165bff3242",
+    "test_slice_binding.py": "61e0e920b2d812e3ad989656b1ba01999c855564193784ddd43ec9a541e5d063",
+    "test_terminal.py": "1b09dbbf1a0d6de7743591ed05c8cbae58a6b48cbe5249486f2aeab59fa40215",
+    "verify_package.py": "409908d9c938bed7df399fb297d2156e1fa4cbb616602398cea14b4a747b50db"
+  },
+  "sourcePinsUnchanged": true,
+  "tests": {
+    "actualExitCode": 0,
+    "failures": 0,
+    "groups": {
+      "bundle": 6,
+      "hierarchyBinding": 3,
+      "originalGuardAssertionsAgainstCandidate": 24,
+      "ownerBinding": 3,
+      "packageVerifier": 9,
+      "retainedManager": 13,
+      "terminalBinding": 11,
+      "unitProfile": 5
+    },
+    "prior125CasesNotRerunOrAdded": true,
+    "skips": 0,
+    "sourceBoundFinalRunSeconds": 11.873690400039777,
+    "timeouts": 0,
+    "total": 74
+  },
+  "upstreamReferences": [
+    "https://www.freedesktop.org/software/systemd/man/latest/systemd.slice.html",
+    "https://github.com/systemd/systemd/blob/v249/src/core/cgroup.c",
+    "https://github.com/systemd/systemd/blob/v249/src/core/dbus-unit.c"
+  ]
+}
