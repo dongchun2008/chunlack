@@ -1,0 +1,151 @@
+{
+  "basis": {
+    "captureActualOuterExitCode": 2,
+    "captureDataUse": "qualified offline planning only",
+    "captureFreshnessReset": false,
+    "captureMeasurementAtMs": 1794748388382,
+    "captureOverallAccepted": false,
+    "capturePermissionConsumed": "1/1",
+    "currentAcceptedCapacityObservation": false,
+    "priorRejectedCaptureRecord": "docs/verification/2026-11-15-real-capacity-data-outer-diagnostic-rejection.json"
+  },
+  "businessAuthorizationChanged": false,
+  "businessDatabasesOpened": false,
+  "credentialsChanged": false,
+  "credentialsRead": false,
+  "date": "2026-11-15",
+  "dnsChanged": false,
+  "evidenceSha256": {
+    "DESIGN.md": "913ddd377e1e94b50ba619831f172ff8c4c2980aaf167e97fd1e5c27a950e37a",
+    "build-receipt.json": "aec3995465bb9810712746dff9600ca930f2ee202542f2ff11df790d8107a0be",
+    "build_inactive.py": "daacd7e4e92a91aa33d5077633a4eac5b8c187750782c047c5a87467548462c5",
+    "package.py": "b002627e43dbd81470c4b8f856c989e8562c49370568e5c20698561e25fd4b0c",
+    "related-1.stderr.bin": "1af3cb54b6db2252819da83b7e761e3e4ea1a50e05c54956747cb7ba2eb87d3d",
+    "related-1.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "related-2.stderr.bin": "3e08f63f7485fdd8b17861385d0421a9f60b8072ed3a6a82aa3f95f15d6cfa0e",
+    "related-2.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "related-3.stderr.bin": "673eef6c556e0123f8b42f2bae784a196a89a8c4c393aa94abb37310bc54462c",
+    "related-3.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "related-terminal.json": "b13b6b6346c5947e620bb38eb5e49202fd0ebcbb17690f91fe4871135865a35e",
+    "review-source-only.txt": "78869f8b58903f11ad600f25dd7d9d358fc47b8fbb0e55a5f2a8db88ffce1ec2",
+    "run_related.py": "e8c4fa45a5fe49f79bc47c4a5bfb1b7f474929bbc6d19368db502b3b45ba70ad",
+    "test_package.py": "b76e17fcdfa484793f59be1e109fb803be21d42311210011d793619aadc4b946"
+  },
+  "externalAgentCalls": 0,
+  "independentReview": {
+    "confirmedP1P2Findings": 0,
+    "reviewerConnectedNetwork": false,
+    "reviewerExecutedTests": false,
+    "reviewerReadBusinessDatabases": false,
+    "sourceOnly": true
+  },
+  "newLinuxUnits": 0,
+  "portsChanged": false,
+  "privateSourcesSubmitted": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "productionServicesStartedOrStopped": false,
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "remainingNativeRequirements": [
+    "New accepted current capacity/configuration/authority collection under a fresh explicit scope.",
+    "An explicitly authorized native launcher with real UID996/GID987, NNP, zero business capabilities and approved cgroup limits.",
+    "Kernel-enforced read-only production DATA; SQLite mode=ro alone is not sufficient to guarantee no WAL/SHM writes.",
+    "New exclusive writable fixture copies, real candidate and previous boots, original row/schema preservation and full proof validation.",
+    "Per-database SQLite snapshots do not establish application-consistent release backup.",
+    "Controlled production maintenance and live feature/user acceptance remain unfinished."
+  ],
+  "request": {
+    "authorized": false,
+    "bindingSourceSha256": "399352c8838e05c828af727aae59e61c65de60d09880b6de85888d0a8240aa2b",
+    "copySourceSha256": "694b9fab5cd0459edf1332ef88a9c09b5878a4ea12ac803e57aada95d5e3fd9a",
+    "nativeExecutionVerified": false,
+    "originalFullConfigAuthorityAndProofGuardsRetained": true,
+    "productionReady": false,
+    "proofCreated": false,
+    "updatedPageBudgetAndRequestSourcesAgree": true
+  },
+  "sourcePackage": {
+    "addedSourceHashes": {
+      "source/.superpowers/sdd/capacity-compat-preparation-20261113-a1/preparation.py": "624649a1aabb3b0a43b824ecee4e4f9a98c36867243e09b5e14248302e6cc1be",
+      "source/.superpowers/sdd/copy-compatibility-binding-20261114-a1/binding.py": "399352c8838e05c828af727aae59e61c65de60d09880b6de85888d0a8240aa2b",
+      "source/.superpowers/sdd/copy-page-budget-20261114-a1/copy_helper.py": "694b9fab5cd0459edf1332ef88a9c09b5878a4ea12ac803e57aada95d5e3fd9a",
+      "source/.superpowers/sdd/preparation-deadline-alignment-20261114-a1/inactive-bundle-2b83a54d91ef/local_run.py": "091257cca0ab5a4b9b88f34d1cdbc152baf8828ec11558225bdbf283143f2098",
+      "source/.superpowers/sdd/production-bound-local-c01f6b0d86e5/metadata_sizing.py": "d401251ae189eefa2f27357f7c109e5175a88ab9cad7902eaf3cf9f3eb248259"
+    },
+    "addedSources": 5,
+    "archiveBytes": 1658880,
+    "archiveMembersIncludingNewCatalog": 100,
+    "archivedDefinitionsNotCertifiedForArbitraryInvocation": true,
+    "artifactSha256": {
+      "compatibility-source-catalog.json": "5a1473427412bd929aa7727faf1edb7a70a9679e03a661f5ddcc4e6172634cb3",
+      "planning-request.json": "be86f0397c01f4ab250161994bac35d0fee730d9c93356f8b4b75f38f3086c6e",
+      "source-package.tar": "64fd9165fd0a41766ddbef80187f4782871acbd44340131b0bf860bfcbce6e5e"
+    },
+    "baseArchiveMembers": 94,
+    "baseArchiveSha256": "a587528d28c998b175b26458cfb4d051beea5ccb52aa6e7bd4da393bdbbcadea",
+    "baseMemberBodiesChanged": 0,
+    "basePreparationSources": 93,
+    "capturedPrivateMaterialBodiesAddedToSourceArchive": false,
+    "catalogBoundFilesIncludingOldManifest": 99,
+    "deterministicArchive": true,
+    "exactArtifactReadback": true,
+    "nativeLauncherIncluded": false,
+    "originalSourceManifestSha256": "34d89378f273c4fd34af080c2f25bd695e2b35002fb86ad623f29018607bd3d3",
+    "sourceFiles": 98,
+    "sourceOnlyPackageNotRunnableUnit": true
+  },
+  "stage": "inactive local copy compatibility source and request package",
+  "tests": {
+    "entireProductSuiteRerun": false,
+    "existingSyntheticSqliteFixturesOnly": true,
+    "failedCaptureProvenanceAndTimestampRetained": true,
+    "failures": 0,
+    "groups": [
+      {
+        "actual": 8,
+        "actualExitCode": 0,
+        "expected": 8,
+        "group": "copy-input-package-20261115-a1",
+        "passed": true,
+        "stderrSha256": "1af3cb54b6db2252819da83b7e761e3e4ea1a50e05c54956747cb7ba2eb87d3d",
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timedOut": false,
+        "wallSeconds": 1.3170832000323571
+      },
+      {
+        "actual": 11,
+        "actualExitCode": 0,
+        "expected": 11,
+        "group": "copy-page-budget-20261114-a1",
+        "passed": true,
+        "stderrSha256": "3e08f63f7485fdd8b17861385d0421a9f60b8072ed3a6a82aa3f95f15d6cfa0e",
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timedOut": false,
+        "wallSeconds": 7.316219500033185
+      },
+      {
+        "actual": 16,
+        "actualExitCode": 0,
+        "expected": 16,
+        "group": "copy-compatibility-binding-20261114-a1",
+        "passed": true,
+        "stderrSha256": "673eef6c556e0123f8b42f2bae784a196a89a8c4c393aa94abb37310bc54462c",
+        "stdoutSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "timedOut": false,
+        "wallSeconds": 2.948697300045751
+      }
+    ],
+    "inheritedCopyHelperCases": 11,
+    "inheritedRequestBindingCases": 16,
+    "newPackageCases": 8,
+    "originalFullCopyProofValidatorLoadsAndRejectsInvalidProof": true,
+    "relatedTestCount": 35,
+    "relocatedLoaderClosureCheckedWithoutCheckoutFallback": true,
+    "skips": 0,
+    "sourceArchiveCorruptionAndMemberPathTypeDuplicateRefusal": true,
+    "sourcesUnchanged": true,
+    "wrapperWallSeconds": 11.585328999964986
+  },
+  "vpsConnected": false
+}
