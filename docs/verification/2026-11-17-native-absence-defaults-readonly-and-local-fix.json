@@ -1,0 +1,132 @@
+{
+  "actions": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingServicesStoppedOrRestarted": false,
+    "externalAgentCalls": 0,
+    "privateSourceOrRawBodiesSynced": false,
+    "productionPublished": false,
+    "publicPortsChanged": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "date": "2026-11-17",
+  "diagnosis": {
+    "cause": "The absence branch incorrectly treated nonzero policy defaults of a not-found unit as evidence of an existing unit.",
+    "nativeHostRowReproducesFrozenPredicateFailure": true,
+    "previousFailureInstantRawRowRetained": false,
+    "rawPropertyValuesPublished": false
+  },
+  "evidenceSha256": {
+    "executionProposal": "73c6514d650c344cccc005b4f17ff30ecda0f48c972e9e719569c3098af098e6",
+    "localIntegrationTerminal": "5776c45d1696d11a8981c94b8e92a2ee48f9568d756229037aa8066ce16b6935",
+    "queryTerminal": "d5de736e35aa547156d797d2b35c66ac4ce76226b91095ad841df8d158ed2cad",
+    "rawPropertyRow": "94d1547af71010cdaaa644ac97e0a76d9093403c6deffa136e7e141ffe89ea60"
+  },
+  "inactiveIntegration": {
+    "bindingSha256": "0d9be904a05c6ac457813f47fbcd5791ac83f319c6acbeb2d2d38e2a07d90eb9",
+    "boundFileCount": 13,
+    "executionAuthorized": false,
+    "executionCopyInputsMatchVerifiedCandidate": true,
+    "falseApprovalGate": {
+      "accepted": true,
+      "authorizationGenerated": false,
+      "exitCode": 1,
+      "ownedProcessReturnedAfterCleanup": true,
+      "sdkOrRemoteExecutionClaimed": false,
+      "seconds": 0.5186030000913888
+    },
+    "fileCount": 15,
+    "fixedSourceSlotsChanged": [
+      "setup_manager.py"
+    ],
+    "localTests": {
+      "accepted": true,
+      "count": 61,
+      "exitCode": 0,
+      "seconds": 12.468510399921797
+    },
+    "nativeCompatibilityVerified": false,
+    "otherAssemblyPinsUnchanged": true,
+    "packetBytes": 21585920,
+    "packetMembers": 170,
+    "productionReady": false,
+    "sourcePinsUnchanged": true
+  },
+  "independentReview": {
+    "confirmedP1": 0,
+    "confirmedP2": 0,
+    "exhaustiveAuditClaimed": false,
+    "reviewerRanTests": false,
+    "scope": "Local absence compatibility patch, AST boundary and retained assertions only"
+  },
+  "limits": [
+    "The read-only query verified the nonexistent unit state, not current health of other services.",
+    "No complete native lifecycle or production readiness is claimed from local tests.",
+    "The eight transport tests, 39 manager tests and 61 integration tests have different scopes and are reported separately.",
+    "The single query allowance is consumed; no further SSH or unit is authorized."
+  ],
+  "localFix": {
+    "change": "Require complete property set, inactive/dead state, zero process/time/exit/restart markers and empty unit/cgroup identities; policy defaults do not establish a loaded generation.",
+    "exitCode": 0,
+    "legacyAssertionCallsRetained": 165,
+    "loadedBranchUnchanged": true,
+    "newRegressionTests": 8,
+    "originalSourceSha256": "814f5b55dda416c1052f705ce85a9934285fa908c92d875efa199db98e47aef9",
+    "originalSupervisorTests": 31,
+    "otherNativeMethodsAstUnchanged": true,
+    "privateCandidateOnly": true,
+    "realRowReplayAfterFix": "absent",
+    "realRowReplayBeforeFix": "bridge_setup_manager_absence",
+    "sourceSha256": "a3c2a110501c85049df526314d87386dab3582e29756980a4314a77821a9d481",
+    "tests": 39,
+    "toolTerminal": "bf732a",
+    "unittestSeconds": 27.226
+  },
+  "readonlyQuery": {
+    "accepted": true,
+    "automaticRetry": false,
+    "localElapsedSeconds": 2.0617861999198794,
+    "localTotalLimitSeconds": 35,
+    "maximumOutputBytes": 65536,
+    "maximumSshAttempts": 1,
+    "newLinuxUnits": 0,
+    "nonzeroDefaultPropertyNames": [
+      "CPUWeight",
+      "Description",
+      "FinalKillSignal",
+      "KillMode",
+      "KillSignal",
+      "Result",
+      "RuntimeMaxUSec",
+      "SendSIGKILL",
+      "TimeoutStartUSec",
+      "TimeoutStopUSec"
+    ],
+    "originalAbsencePredicatePassed": false,
+    "outputBytes": 602,
+    "propertiesRead": 32,
+    "remoteExitCode": 0,
+    "remoteHardLimitSeconds": 20,
+    "remoteWrites": 0,
+    "sdkDiagnosticClassifiedHarmless": false,
+    "sdkSocket10038Observed": true,
+    "sdkThreadExitConfirmed": true,
+    "serviceHealthRechecked": false,
+    "sshAttemptsUsed": 1,
+    "sshCleanupConfirmed": true,
+    "unitAbsentAndIdleVerified": true
+  },
+  "remaining": [
+    "New explicitly authorized whole-chain native compatibility run using the corrected inactive candidate.",
+    "Fresh production bindings, consistent backup, controlled maintenance and live acceptance.",
+    "Full multi-user/provider/research/bilingual and quiet Muse/dots delivery gates remain."
+  ],
+  "scope": "approved-readonly-query-and-local-absence-fix",
+  "transportPreparationTests": {
+    "count": 8,
+    "exitCode": 0,
+    "toolTerminal": "9fbece"
+  }
+}
