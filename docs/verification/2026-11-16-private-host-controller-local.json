@@ -1,0 +1,182 @@
+{
+  "boundaries": {
+    "actualModelCalls": 0,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "earlierCapacityAllowance": "consumed-1/1-not-repeated",
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "portsChanged": false,
+    "privateBodiesSynced": false,
+    "privateImplementationSynced": false,
+    "productionPublished": false,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-16",
+  "evidenceSha256": {
+    "hostController.stderr.bin": "463b19ab3e8d72f078f19ec1074af9fa9e8ef9a4d6e273869e5ea675add7e751",
+    "hostController.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "inactive-private-host-package.tar": "9ef9a7747a06c50c48a2f6a7898a44e98380e438cd1a5819b1889657a09695a3",
+    "unchangedRootEntry.stderr.bin": "850cc34c399e3d9e98298bf38714abf79b421d33a5cc3589dd01e16924316a10",
+    "unchangedRootEntry.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "executedTestsThisCheckpoint": 45,
+  "failures": 0,
+  "goalStatus": "active-incomplete",
+  "historicalProductTestsClaimedRerun": false,
+  "implemented": [
+    "actual-descriptor-relative-private-payload-and-fresh-root-request-staging",
+    "standalone-Linux-host-entry-and-concrete-native-default-without-adapter-selection",
+    "typed-host-profile-in-same-parent-with-root-and-business-for-aggregate-resource-accounting",
+    "existing-bounded-CLI-runner-for-exact-root-start-observe-stop",
+    "actual-kernel-root-UID-NNP-capability-cgroup-and-held-scope-checks",
+    "matching-stop-post-normal-exit-plus-original-complete-report-and-input-validation",
+    "owned-generation-cleanup-held-empty-or-unlinked-scope-and-unknown-close-retention",
+    "phase-budgets-applied-to-real-reader-deadlines-and-restored-in-finally",
+    "entry-body-hash-verified-before-native-module-execution",
+    "runtime-reserve-sampled-again-after-absence-query-before-start-attempt"
+  ],
+  "localComponentAccepted": true,
+  "nativeCompatibilityVerified": false,
+  "nativeManagerReady": false,
+  "package": {
+    "archiveMembers": 161,
+    "archiveSha256": "9ef9a7747a06c50c48a2f6a7898a44e98380e438cd1a5819b1889657a09695a3",
+    "containsExecutionRequest": false,
+    "executedSavedArchiveReplayClaimed": false,
+    "hostIdsOrClockInvented": false,
+    "savedBytesVerified": true
+  },
+  "previousRootArtifactUnchanged": true,
+  "previousRootSourcePinsUnchanged": true,
+  "productionReady": false,
+  "proofCreated": false,
+  "remainingCriticalPath": [
+    "one-shot-exclusive-external-upload-parent-and-host-unit-creation",
+    "actual-host-exit-original-full-result-and-aggregate-empty-final-observation",
+    "freshly-approved-native-full-compatibility-and-controlled-consistent-production-release",
+    "live-bilingual-help-research-provider-workspace-and-quiet-Muse-dots-delivery-acceptance"
+  ],
+  "review": {
+    "agentId": "01a1e506-f1ef-7343-8bb2-19dd3c9c069b",
+    "authorFinding": {
+      "fix": "Sample and enforce the original runtime and cleanup reserve again immediately before recording the start attempt.",
+      "issue": "The pre-start absence query could consume the root runtime reserve.",
+      "regressionObservedRedThenGreen": "test_absence_query_cannot_consume_root_start_and_cleanup_reserve"
+    },
+    "concentratedReviews": 1,
+    "confirmedP1": 0,
+    "confirmedP2": 2,
+    "findings": [
+      {
+        "additionalCoverage": "test_counter_read_expires_after_open_under_work_deadline_and_keeps_fd_for_cleanup",
+        "fix": "Reuse the original dispatch work_budget for own admission, live-root kernel/cgroup binding, parent counters and limit reads, and empty-scope reads; restore budgets in finally.",
+        "issue": "Phase reads used the total deadline and could consume cleanup reserve.",
+        "regressionsObservedRedThenGreen": [
+          "test_root_kernel_reads_inherit_ready_deadline_and_restore_outer_budget",
+          "test_final_parent_limit_read_cannot_run_in_cleanup_reserve"
+        ]
+      },
+      {
+        "fix": "Bind actual entry path and reread its original expected hash before compiling native.py; recheck all four new program bodies in NativeOps before effects.",
+        "issue": "Entry script bytes were not rechecked before native module execution.",
+        "regressionsObservedRedThenGreen": [
+          "test_uploaded_entry_comment_drift_is_refused_before_native_module_execution"
+        ]
+      }
+    ],
+    "fixtureCorrections": [
+      "Use a private-body marker that does not overlap the legitimate private scope name.",
+      "Limit simulated Linux platform to constructor admission; use actual Windows semantics for local original-oracle file reads."
+    ],
+    "nativeCompatibilityVerified": false,
+    "observedGreenSuite": {
+      "exitCode": 0,
+      "failures": 0,
+      "tests": 28
+    },
+    "observedRedSuite": {
+      "exitCode": 1,
+      "failures": 4,
+      "tests": 27
+    },
+    "oneRegressionBackedFixPass": true,
+    "productionReady": false,
+    "remaining": [
+      "External one-shot upload and parent/host creation",
+      "Actual host exit and aggregate empty observation",
+      "Native Linux ABI, namespace, ownership and whole-budget compatibility evidence",
+      "Production delivery and live product acceptance"
+    ],
+    "reviewer": "Godel",
+    "secondIndependentReviewClaimed": false,
+    "vpsConnected": false
+  },
+  "schemaVersion": 1,
+  "scope": "local-concrete-private-host-controller-only",
+  "skips": 0,
+  "sourcePins": {
+    "DESIGN.md": "a2371ad24fcc8da43e31d6beff629002412ed63aa7ac707f48f731eda9c9f2e4",
+    "entry.py": "0aa3de13c7a6aa4400f8f6cd3ab7ad9cd1c158ab715e8fd3192fa811f9691c45",
+    "finalize.py": "a1b0614dd9564cbf0d1e3b0583f543a1cd4cccfcbf5f22a0bfa1c7a7fc9de04e",
+    "native.py": "c49a1e890bdc31fb9338c0086b7bc2f2c9a26cac83c26dc13c27352680af37f8",
+    "package.py": "fcecc8e8f13a979ffdf3ae0640d44375c45f272a10fb511d1178649907af6f39",
+    "profile.py": "37d0eb1654a7139546aa1108961f5a10c2eb80b4b43fff8f0b53d4537d7a9309",
+    "review.json": "fa335be7f750de3f5dc7385ff58b337f73ef66caed5d3d1a64be03859717ff8d",
+    "staging.py": "c071011475cc6abc42fcc52c666d8bac3f6e08a253586e232f547a1ad8eed4b5",
+    "test_control.py": "77ea185db644f3fbd01499355d24e2a329d38d381cc0ebc902f2d316f8453823",
+    "test_package.py": "63d22541348c94b08d6e5f85fc0a8aef3f07d15327366f477bdcf77a02a5458c",
+    "test_profile.py": "caf0e2ff9c3078ae71d27b38bdc54fc26d674f1e5830312ac0c308ef2f036047",
+    "test_source_join.py": "4fad49dcd7601829142275472f184acda5f9dfe27d2c14e1531f910d5da57250",
+    "test_stage.py": "d96e89cd30331b2237e0f528903e07e46ec67a904dc7ed2f809a86f256463ff5"
+  },
+  "sourcePinsUnchanged": true,
+  "terminalSha256": "e7b277e716055963b95b34d81c84b16f60a200cb6a362dffe53a86ad4e6750ed",
+  "testGroups": {
+    "hostController": {
+      "accepted": true,
+      "actualExitCode": 0,
+      "seconds": 5.819287799997255,
+      "skips": 0,
+      "tests": 28
+    },
+    "unchangedRootEntry": {
+      "accepted": true,
+      "actualExitCode": 0,
+      "seconds": 4.387302799965255,
+      "skips": 0,
+      "tests": 17
+    }
+  },
+  "verificationLimits": {
+    "actualLocalReconstructedSourceLoading": true,
+    "completeNativeLaunchChainReady": false,
+    "executedSavedArchiveReplayClaimed": false,
+    "existingProductionStartupPolicyChanged": false,
+    "externalBootstrapImplemented": false,
+    "hostCapsuleReadPath": "partial test stops intentionally at context read; no completed report is fabricated",
+    "linuxSyscallsAndManager": "explicit doubles only",
+    "liveHostExitAndAggregateCleanupVerified": false,
+    "nativeReportProducedOrAccepted": false,
+    "originalCapsuleConstructedFromActualPinnedSources": true,
+    "originalFullRawInputOracleExecuted": true,
+    "proposedInactiveHostPolicy": {
+      "cpuPercent": 20,
+      "hostCleanupReserveSeconds": 12,
+      "memoryMiB": 192,
+      "newExecutionAllowanceGranted": false,
+      "preparationSeconds": 50,
+      "rootRuntimeSeconds": 350,
+      "rootStartSeconds": 5,
+      "rootStopSeconds": 1,
+      "runtimeSeconds": 420,
+      "swapBytes": 0,
+      "tasksMax": 32
+    },
+    "savedArchiveBytesVerified": true,
+    "standaloneHostProgramImplemented": true
+  }
+}
