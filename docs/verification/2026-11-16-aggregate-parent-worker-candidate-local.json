@@ -1,0 +1,188 @@
+{
+  "boundaries": {
+    "actualModelCalls": 0,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "earlierCapacityAllowance": "consumed-1/1-not-repeated",
+    "existingServicesStoppedOrChanged": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "oldFailuresAndFrozenArtifactsPreserved": true,
+    "portsChanged": false,
+    "privateImplementationSynced": false,
+    "productionPublished": false,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "catalogSha256": "4f36bf37987ba5356da8424493d338ac048a03dcdf996e8f01c53a37d43cef30",
+  "date": "2026-11-16",
+  "evidenceSha256": {
+    "inactive-catalog.json": "4f36bf37987ba5356da8424493d338ac048a03dcdf996e8f01c53a37d43cef30",
+    "inactive-host-support.tar": "a4cf1b213e390d4e671d5715a361aba58182cc414e307630d6123aaeee2d5281",
+    "inactive-worker.tar": "4b04c316bda891f9e3a0d9dd34253323514555f7168f8e0b4d142ef1dd733257",
+    "tests.stderr.bin": "aae7a03d95a25cf202a2d337270d989c1f4cd4485af364b63c39da5e4ced4ba4",
+    "tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "exitCode": 0,
+  "failures": 0,
+  "frozenBase": {
+    "archiveSha256": "1ec99f3862ffb3568e8a28a6f9417cdd8878d068093d1a0597134feb25ee2f91",
+    "catalogSha256": "ddefd898b60ba90bd8335112202924279def770258dfdd0cde71aec9cf1381ff",
+    "changedFiles": 11,
+    "hostSupportSources": 6,
+    "originalHostPins": {
+      "native-copy-fused-20261116-a1/prepare.py": "4173b562e5a36e1ac62027606c8c98aa2338ff71753c2500d898388e566594b7",
+      "native-copy-host-20261116-a1/layout.py": "cd6f2c6aeb290c0dd28ca634e8a95305bf9297f2ddb9c92d62c6f8467bdf8336",
+      "native-copy-host-20261116-a1/materialize.py": "2597e2b72d44722ff57014874ef0c65600a97e90620137018e97e3f44622ee43",
+      "native-copy-host-20261116-a1/store.py": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd",
+      "native-copy-seal-20261116-a1/capsule.py": "b7a26353d01cf5dd3540b8ce66be2c885673525e902409bc513556e2bc826e2f"
+    },
+    "productFilesUnchanged": true,
+    "sourceFiles": 200,
+    "sourceNamesUnchanged": true,
+    "unchangedFiles": 189
+  },
+  "goalStatus": "active-incomplete",
+  "historicalTestsNotAddedOrClaimedRerun": true,
+  "hostArchive": {
+    "archiveMembers": 6,
+    "archiveSha256": "a4cf1b213e390d4e671d5715a361aba58182cc414e307630d6123aaeee2d5281",
+    "executedArchiveReplayClaimed": false,
+    "files": {
+      "native-copy-aggregate-20261116-a1/boundary.py": "4a9edba23c6f3ad1f829e2e4738e43811afba2f5e96b86a08533f833ffac13b3",
+      "native-copy-fused-20261116-a1/prepare.py": "b53eaa7aac6660dcc67be0e23476a868bca51badeac55380d29548d9ba2fa306",
+      "native-copy-host-20261116-a1/layout.py": "cd6f2c6aeb290c0dd28ca634e8a95305bf9297f2ddb9c92d62c6f8467bdf8336",
+      "native-copy-host-20261116-a1/materialize.py": "2597e2b72d44722ff57014874ef0c65600a97e90620137018e97e3f44622ee43",
+      "native-copy-host-20261116-a1/store.py": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd",
+      "native-copy-seal-20261116-a1/capsule.py": "bf4124a7c7cc5897f25a742bc664e168cd777a0951a638186edca9671e574872"
+    },
+    "savedBytesVerified": true
+  },
+  "implemented": [
+    "exact-tag-parent-slice-business-Slice-BindsTo-and-After-in-actual-inactive-profile",
+    "strict-cgroup-guard-parser-observer-terminal-alignment-and-explicit-transitive-pin-closure",
+    "new-catalog-explicitly-rebound-through-original-capsule-and-held-tree-host-admission",
+    "original-input-validator-executed-from-actual-local-reconstructed-source-files",
+    "FD-bound-fixed-parent-read-only-streaming-gate-using-unchanged-Store-close-ledger",
+    "same-parent-inode-metadata-alias-limits-and-final-clock-checks",
+    "typed-tag-only-slice-argv-with-original-codec-and-empty-auxiliary"
+  ],
+  "localComponentAccepted": true,
+  "nativeCompatibilityVerified": false,
+  "nativeManagerReady": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "remainingCriticalPath": [
+    "actual-aggregate-parent-setup-and-root-controller-hard-watchdog",
+    "kernel-host-origin-lineage-same-held-root-late-freshness-validation-and-traversal-handoff",
+    "freshly-scoped-native-full-source-and-database-copy-compatibility",
+    "consistent-controlled-release-restore-and-live-bilingual-research-direct-model-acceptance",
+    "quiet-dedicated-dots-and-Muse-Suhua-native-acceptance"
+  ],
+  "review": {
+    "concentratedSourceReviewComplete": true,
+    "confirmedP1P2Findings": 0,
+    "developmentRegressionCorrections": [
+      "final-parent-alias-check-expiry-now-requires-a-final-validated-clock-sample",
+      "direct-leaf-read-before-fixed-parent-walk-is-refused-before-any-cwd-open"
+    ],
+    "finalLocalTestCount": 16,
+    "nativeCompatibilityVerified": false,
+    "productionReady": false,
+    "reviewDidNotRunTestsNetworkOrReadPrivateBodies": true,
+    "reviewFindings": [],
+    "reviewIncludedSixthHostSupportSource": true,
+    "secondIndependentReviewClaimed": false,
+    "verificationLimits": [
+      "parent-resource-reader-is-sequential-sampling-not-continuous-monitoring",
+      "root-and-business-actual-membership-in-the-parent-remains-unverified",
+      "typed-slice-and-business-dependencies-are-not-native-systemd-acceptance",
+      "manager-parent-setup-hard-watchdog-origin-lineage-and-traversal-handoff-remain-pending",
+      "kernel-FS-operations-are-memory-doubles-on-current-Windows-host"
+    ]
+  },
+  "schemaVersion": 1,
+  "scope": "local-aggregate-parent-worker-candidate-and-read-only-limit-gate",
+  "seconds": 3.006464699981734,
+  "skips": 0,
+  "sourcePins": {
+    "DESIGN.md": "dd3f357229a65bade2b4f436302bca6fa3327e44d600635309dbffe9afd0c27e",
+    "PLAN.md": "14a057eb45718643f3d1f65b2cc1a3bd921f3de399d626cbb9332b0e9a26d64a",
+    "boundary.py": "4a9edba23c6f3ad1f829e2e4738e43811afba2f5e96b86a08533f833ffac13b3",
+    "derive.py": "f52e16b10acbedcff4be8b908d5ef46dc9890b2f64feb520c583ee8a15ac441f",
+    "finalize.py": "2255d4a0fca55d1dab18cb557c1bec9dc99bafe632935297490a82c703479e63",
+    "review.json": "8406577532fc47b1e45766cf348f970ae3143a9212ebb45e31d46e60ed1bc938",
+    "test_aggregate.py": "52f352f72271d734411b77eaee30cf6a8e3a33a01806b62263067ce3eabd3514"
+  },
+  "sourcePinsUnchanged": true,
+  "terminalSha256": "3bdcc284f6fe2aa23749beb765777d8018399a4b25d43679582cc549969eaa20",
+  "tests": 16,
+  "transitions": {
+    "source/.superpowers/sdd/native-copy-cli-20261116-a1/commands.py": {
+      "after": "434133d0921578ab7b06dc6e0f69dc83cf302387546414f70c3f23f7477c72f3",
+      "before": "6e01706e33f2feb59ac502ee08e99e109355125d96d5c96232899299354baa8f"
+    },
+    "source/.superpowers/sdd/native-copy-cli-20261116-a1/controller.py": {
+      "after": "c5c3857f9761c08bf851793b2832d015dd28b56c93acf89103349913bfdafba7",
+      "before": "bd244abfd432b76705ed630c205fecca39faacdebe7871eb544c7bf8d5a28839"
+    },
+    "source/.superpowers/sdd/native-copy-cli-20261116-a1/observation.py": {
+      "after": "38bd312befbe5b3dfcde6f1c9df89ac1ab0f6fef700ce1764bbb1f6721fd4899",
+      "before": "7a370379d853f42e968e3cd97031bb430f492b03ac3bc249ee1058427fed41b0"
+    },
+    "source/.superpowers/sdd/native-copy-cli-20261116-a1/profile.py": {
+      "after": "29164ac57ef9b92cd3019bc1269f3d36b2168329dd9cc15d30272a4b19123fdc",
+      "before": "6c26837cdc36d00bfda003b86969188c18f605b1571004203cdb99ee00c85869"
+    },
+    "source/.superpowers/sdd/native-copy-cli-20261116-a1/terminal.py": {
+      "after": "2f295eb81fb0e7d6ae906d995d0025cf663db0f8a65846dbdfad77a4b3c452ba",
+      "before": "2c14ff69dea14c6e29db7925e27b95801f443b698931c2193ac64ebc52aba98c"
+    },
+    "source/.superpowers/sdd/native-copy-entry-20261116-a1/child.py": {
+      "after": "c0ec0b7212f635250984dc73a45fcf7aa849f4ec9aa8dfd0d78d63b5d788bb22",
+      "before": "65ab5685fa3bc312d2d9ff7ac5612170624c6a72c7afab264d9ec5627367c826"
+    },
+    "source/.superpowers/sdd/native-copy-entry-20261116-a1/lease.py": {
+      "after": "cd42426097c3a540cef871129bcd52f076dc32b64384ff1825450659506ccf71",
+      "before": "45c39f5c20f1a8b233929c83602122ca93258070c0aaa2bebda43a663cf107a5"
+    },
+    "source/.superpowers/sdd/native-copy-entry-20261116-a1/worker.py": {
+      "after": "8c6a18c849da7fd5826875bb3e90b48f845403f38b9fb7e82a323bdb4b619e03",
+      "before": "86de6f99bbca4047af865d313fb8f78ddd37af56a67c4d06186f9b6e8ceeb06c"
+    },
+    "source/.superpowers/sdd/native-copy-preflight-20261115-a1/preflight.py": {
+      "after": "623039b296c28d5702a3a0e981544bd2a7fbfbed35f94fea7ad3888d1bb1aa0c",
+      "before": "31bfe814a1e316b6408844bab48ae3ec1b71144f83066e832b7208bd750b1c75"
+    },
+    "source/.superpowers/sdd/native-host-anchor-20261115-a1/attachment.py": {
+      "after": "0b60e756130e4dceeb327a9ac57929251ae261e87863f2a86f8876938e01b103",
+      "before": "b265e37fa859a08f04c98459fcd4ce812f5ff2a981a994bfb36eb0c024f231ce"
+    },
+    "source/.superpowers/sdd/owned-native-worker-20261116-a1/linux_backend.py": {
+      "after": "31270c1b85a3873255bb249b903b8e347267985a62a237b69e3c748eb2ac4351",
+      "before": "f9f18966db46840b03b8e812a0376e008188bfa2ed3558977faf0e3995aa36bb"
+    }
+  },
+  "verificationLimits": {
+    "LinuxKernelFilesystem": "memory-FS doubles",
+    "actualOriginalRawInputCapsuleOraclePassedLocally": true,
+    "aggregateHardWatchdogImplemented": false,
+    "aggregateLimitsActuallyEnforced": false,
+    "businessTraversalReleased": false,
+    "continuousLimitMonitoring": false,
+    "executedSavedArchiveReplayClaimed": false,
+    "fullRealHistoricalSourceWriteVerified": false,
+    "kernelOriginLineageVerified": false,
+    "managerAcceptedProposals": false,
+    "newJobOrContextFreshnessGrantCreated": false,
+    "rootBusinessActualParentMembershipVerified": false,
+    "savedArchiveBytesVerified": true
+  },
+  "workerArchive": {
+    "archiveMembers": 201,
+    "archiveSha256": "4b04c316bda891f9e3a0d9dd34253323514555f7168f8e0b4d142ef1dd733257",
+    "executedArchiveReplayClaimed": false,
+    "savedBytesVerified": true
+  }
+}
