@@ -42,3 +42,11 @@ The saved inactive candidate contains15 files with13 bound inputs and the existi
 The portable local checker intentionally does not invoke Common's path-dependent input reconstruction. It checks the already approved packet's material/source/request bindings and calls the original complete proof validator with those trusted settings/manifests. The unchanged native Host/root retain the original full reconstruction. Independent kernel/Node/lifecycle claims remain false for the raw checker and for every simulated test. A future real default path must jointly verify the frozen live chain, exact source/target/authorization, raw report and all cleanup; no current native or production acceptance is claimed.
 
 Evidence: [independent copy-proof local verification](../../verification/2026-11-17-independent-copy-proof-local.json).
+
+## Late-phase admission correction in a fresh candidate
+
+Preparation for native execution deterministically reproduced an additional budget gap: a clamped client stage could still start a fixed-duration remote envelope. A fresh private fork now requires the complete remote cap plus15 seconds transport and15 seconds close reserve before each phase and again when rendering the command after channel creation. An explicitly delayed600-second local clock can no longer start the620-second watch. The one-shot profile binds this rule;950 seconds, phase caps and unit/resource policy are not enlarged.
+
+The new source-bound61/61 local run passed with zero skips and exit0. It retains the actual reader/packet/original-validator simulation and rejection cases, and verifies both prior59 and prior114 frozen sources unchanged without rerunning those suites. A new inactive candidate was saved and refused before SDK/remote attempt. This is not native acceptance. These are client checkpoints plus relative server/unit caps, not proof of an absolute cross-host deadline after arbitrary server queuing. The prior59 record remains historical and unchanged.
+
+Evidence: [phase-budget local verification](../../verification/2026-11-17-copy-proof-phase-budget-local.json).
