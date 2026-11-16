@@ -1,0 +1,100 @@
+{
+  "actions": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingServicesStoppedOrRestarted": false,
+    "externalAgentCalls": 0,
+    "oldFailureEvidenceDeleted": false,
+    "productionPublished": false,
+    "publicPortsChanged": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "date": "2026-11-17",
+  "diagnosis": {
+    "capabilityFieldsAtFailureCaptured": false,
+    "exactCauseOfSetupExitKnown": false,
+    "fixedOutputLogProposalPrepared": true,
+    "fixedOutputLogsRead": false,
+    "managerCleanupCapabilityCheckFailed": true,
+    "permissionsOrLifecycleChecksRelaxed": false,
+    "setupExitedWithStatusOne": true,
+    "validRunningGenerationWasNotObserved": true
+  },
+  "evidenceSha256": {
+    "nativeCallerTerminal": "e6563e702523f349707608849a0d8edb65c3fc1a07f04c067937673ef61a0940",
+    "nativeOutcome": "8e5cf9b5577935c966ecf5075c75620ba10d493b44d926da90c01439753ded01",
+    "nativeSetupTransport": "eebe1f7c7897fed8ac3a77fcc179bdc21bc7991a1cd27d0af0f6ed56714f7d60",
+    "ownUnitVerification": "d3444c1b2dc0494574498a43bd7efdc5ef7381542dfa0c88f27380dc9b8dfbcf"
+  },
+  "limitations": [
+    "The later fixed-unit check closes the physical exit/empty-scope uncertainty; it does not promote the failed original trial to passed.",
+    "Protected service comparison describes the original trial interval; the cleanup query did not recheck those services.",
+    "Both separately approved one-SSH allowances are consumed. No additional SSH, unit, business retry or log read is authorized.",
+    "Failed unit metadata and local/remote files are retained; no reset-failed, file deletion or service mutation was performed.",
+    "The next fixed output/journal read requires a new grant; no speculative root-cause or permission fix has been made."
+  ],
+  "nativeAcceptance": {
+    "accepted": false,
+    "automaticRetry": false,
+    "cleanupError": {
+      "code": "root_dispatch_kernel_caps",
+      "type": "RuntimeError"
+    },
+    "fourServiceRecordsExactlyUnchanged": true,
+    "fourServicesActiveDuringTrial": true,
+    "localElapsedSeconds": 6.886297999997623,
+    "localLimitSeconds": 950,
+    "maximumSshAttempts": 1,
+    "maximumTemporaryObjects": 6,
+    "nativeCompatibilityVerified": false,
+    "observerWatchPhaseInvoked": false,
+    "originalSetupCleanupConfirmed": false,
+    "ownedProcessExitCode": 1,
+    "ownedProcessStderrBytes": 0,
+    "passedPriorAbsenceGate": true,
+    "primaryError": {
+      "code": "bridge_setup_manager_missing_live",
+      "type": "RuntimeError"
+    },
+    "rawProofCreated": false,
+    "sdkThreadExitConfirmed": true,
+    "sshAttemptsUsed": 1,
+    "sshCleanupConfirmed": true
+  },
+  "productionReady": false,
+  "scope": "corrected-native-trial-failure-and-separately-approved-own-unit-verification",
+  "separateOwnUnitVerification": {
+    "accepted": true,
+    "activeState": "failed",
+    "cgroupExists": false,
+    "execMainCode": 1,
+    "execMainStatus": 1,
+    "explicitUserApproval": true,
+    "loadState": "loaded",
+    "localElapsedSeconds": 3.289243599982001,
+    "localLimitSeconds": 35,
+    "localSafetyTests": {
+      "count": 8,
+      "exitCode": 0,
+      "toolTerminal": "bb5887"
+    },
+    "maximumSshAttempts": 1,
+    "newLinuxUnits": 0,
+    "processCount": 0,
+    "remoteElapsedSeconds": 0.024288581684231758,
+    "remoteExitCode": 0,
+    "remoteLimitSeconds": 20,
+    "result": "exit-code",
+    "scopeEmptyConfirmed": true,
+    "sdkThreadExitConfirmed": true,
+    "sshAttemptsUsed": 1,
+    "sshCleanupConfirmed": true,
+    "stopAttempted": false,
+    "subState": "failed",
+    "toolTerminal": "a45a2e",
+    "unitExitedConfirmed": true,
+    "unitOriginAndInvocationChecked": true
+  }
+}
