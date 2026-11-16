@@ -1,0 +1,200 @@
+{
+  "accepted": true,
+  "actionsThisCheckpoint": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingServicesChanged": false,
+    "externalThirdPartyAgentCalls": 0,
+    "newLinuxUnits": 0,
+    "portsChanged": false,
+    "privateSourceOrMaterialBodiesSynced": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "additionalCoverage": [
+    "Bounded private transport receipts are kept before response/exit/deadline validation without granting completion or retry authority.",
+    "Captured driver bytes are executed without reopening the driver source path.",
+    "The existing owned subprocess runner shares the initial clock across compilation, interpreter/SDK startup, execution and cleanup.",
+    "Actual local timed-out child was killed and reaped; unknown cleanup remains rejection.",
+    "All four actual remote sources with large typed identities fit the existing renderer wire limit."
+  ],
+  "authorization": {
+    "inactiveApprovalHasNoReference": true,
+    "nativeBridgeAuthorized": false,
+    "previousCapacityCapture": "completed 1/1; not repeated here"
+  },
+  "candidate": {
+    "approvalSha256": "9aa6ad39b25e9ff91f45acacbbdc3df9621957d0bc47683ad85058fdf63cb33c",
+    "bindingSha256": "1613a39fc42f348865e9d5d62787b00e33135d9a519e55f643b4278b26c25f5c",
+    "boundFileCount": 9,
+    "bundleSha256": "75d1a4a8c5c888194d528762de2a2f7044a3e99c1280a08d098b6438b6a1982b",
+    "fileCount": 11,
+    "fileSha256": {
+      "approval.json": "9aa6ad39b25e9ff91f45acacbbdc3df9621957d0bc47683ad85058fdf63cb33c",
+      "binding.json": "1613a39fc42f348865e9d5d62787b00e33135d9a519e55f643b4278b26c25f5c",
+      "driver.py": "8c632255599ad15cebaed53a0674726038d0f0204ba99cdfe78144dda9130c97",
+      "packet.tar": "2ff157ec4121490b51fef8537901467e5a4f33b0f0c244d745da82095c3728aa",
+      "preflight.py": "81b94134fd94f0b77b3630bb702222f0d1fcfaaeb6f5958351b8062c623eba5d",
+      "receiver.py": "2a6e6e7ae5cea1d77814dd11e8f6fbcfe9dd38a57383566c4c68b37e25bffeb0",
+      "scheduler.py": "4d8af5d0065cc8c53a8bd382581282c3d872e5bb5e84232031586d91c3e0e282",
+      "setup_manager.py": "814f5b55dda416c1052f705ce85a9934285fa908c92d875efa199db98e47aef9",
+      "ssh_transport.py": "9285484e9b86c50ff1eebffcf47a6db95bf232c50cf19088bc77e53e6ac5c11a",
+      "store.py": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd",
+      "watch.py": "8037db55bdcd5981b59de7091aa1fecd1cc1fad2ab453750799ada559cde872f"
+    },
+    "manifestFiles": 169,
+    "manifestSha256": "c664ae1ab3bfb460f3bc078248838e0cbb4076ddcf7c5196df072a2efc9d81a6",
+    "nativeCompatibilityVerified": false,
+    "nativeExecutionAuthorized": false,
+    "nativeExecutionVerified": false,
+    "packetByteCount": 21585920,
+    "packetMembers": 170,
+    "packetSha256": "2ff157ec4121490b51fef8537901467e5a4f33b0f0c244d745da82095c3728aa",
+    "productionPublished": false,
+    "productionReady": false,
+    "proofCreated": false,
+    "scope": "local-inactive-copy-invocation-only",
+    "sourceSha256": {
+      "driver.py": "8c632255599ad15cebaed53a0674726038d0f0204ba99cdfe78144dda9130c97",
+      "packet.py": "a9edd3fd06a8df8be1e9fff86fdc98a1e1f85c992b0e8bd8285f97b5f4daf515",
+      "preflight.py": "81b94134fd94f0b77b3630bb702222f0d1fcfaaeb6f5958351b8062c623eba5d",
+      "receiver.py": "2a6e6e7ae5cea1d77814dd11e8f6fbcfe9dd38a57383566c4c68b37e25bffeb0",
+      "scheduler.py": "4d8af5d0065cc8c53a8bd382581282c3d872e5bb5e84232031586d91c3e0e282",
+      "setup.py": "031689344f8fb6e8a002e6a81874e5412c6c3f584fd0fde07efbc609c2f2c6e6",
+      "setup_manager.py": "814f5b55dda416c1052f705ce85a9934285fa908c92d875efa199db98e47aef9",
+      "setup_profile.py": "7b7490b2cbaad51524836947373d1c53175b151896b4e6c0721621c49c3261a2",
+      "ssh_transport.py": "9285484e9b86c50ff1eebffcf47a6db95bf232c50cf19088bc77e53e6ac5c11a",
+      "store.py": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd",
+      "watch.py": "8037db55bdcd5981b59de7091aa1fecd1cc1fad2ab453750799ada559cde872f"
+    },
+    "totalBytes": 21721713,
+    "userApproved": false
+  },
+  "date": "2026-11-17",
+  "evidenceSha256": {
+    "captured-entry.py": "03c4321c77811854eb6d8098b69cc6918c04e0f46f131e5c886dc16596abc92e",
+    "captured-owned-process.py": "07e7ed3bf0174221a8a94faf4f11097f54fda1b6b73d9705261c0430efe67973",
+    "inactive-gate.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "inactive-gate.stdout.bin": "53f8464a126b41e1ee5e743edc8d54c302426bf2675e8124f97aaee885585c1d",
+    "terminal.json": "594b78e7213eec53f6b8208b68f713dc1ca0716305ebdf009eac53f5b3e34c4b",
+    "tests.stderr.bin": "7772b8c94ae40af015c1ea75eee89db26351ace14d877a499fd44e17e3bc70eb",
+    "tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "execution": {
+    "finalizerExitCode": 0,
+    "gateRefusalWasExpected": true,
+    "inactiveCandidateGateExitCode": 1,
+    "prior81CaseRunAddedToCount": false,
+    "repositoryProductRegressionRerun": false,
+    "testExitCode": 0
+  },
+  "fixes": [
+    "Validate receiver tag and nonce at the driver phase boundary.",
+    "Establish NNP and the existing capEB/nice contract on the SSH child; retain native identity refusal.",
+    "Separate 192 ordinary, 24 cleanup and 4 final protected-service calls under the original Runner cap256.",
+    "Anchor fresh output directory writes to a held FD; on Windows require tested read-sharing exclusion and reparse rejection.",
+    "Require complete explicit reviewed source/assembly pin sets; never fill missing review entries from current disk."
+  ],
+  "futureDesignOnly": {
+    "combinedWorkPhaseCpuPercentOneCore": 30,
+    "combinedWorkPhaseMemoryMiB": 288,
+    "deployedLauncherChanged": false,
+    "localOuterSeconds": 950,
+    "managementOverheadClaimedAbsent": false,
+    "maximumNewUnitObjects": 6,
+    "observer": {
+      "cpuPercentOneCore": 10,
+      "memoryMiB": 96,
+      "swapBytes": 0,
+      "tasksMax": 16
+    },
+    "phaseSeconds": {
+      "basicProbe": 20,
+      "receiver": 60,
+      "setupManager": 140,
+      "watch": 620
+    },
+    "productionForwardRecoverySeconds": [
+      55,
+      120
+    ],
+    "serialSetup": {
+      "cpuPercentOneCore": 20,
+      "memoryMiB": 192,
+      "swapBytes": 0,
+      "tasksMax": 32
+    },
+    "sharedWorkload": {
+      "cpuPercentOneCore": 20,
+      "memoryMiB": 192,
+      "swapBytes": 0,
+      "tasksMax": 32
+    },
+    "sshManagementInsideThoseCgroups": false
+  },
+  "nativeCompatibilityVerified": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "references": {
+    "CreateFileW": "https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew",
+    "setpriv": "https://raw.githubusercontent.com/util-linux/util-linux/master/sys-utils/setpriv.1.adoc"
+  },
+  "remainingGates": [
+    "Native setpriv/nice/kernel/systemd and resource feasibility remain unverified.",
+    "Original frozen Host/root already call the original full copy-proof validator, but independent raw report fetching and validation against trusted local inputs are not integrated.",
+    "Four fixed bounded artifacts were identified for the next local proof-reader design; no artifact was fetched from the VPS.",
+    "Fresh whole native compatibility, application-consistent backup, controlled release/rollback and live product acceptance remain open.",
+    "Quiet native Muse SuHua/dots routes remain separately gated; no external-Agent call occurred.",
+    "Historical Windows socket10038 close diagnostic is not claimed fixed by local doubles."
+  ],
+  "review": {
+    "confirmedFindingsFixed": true,
+    "confirmedP1": 1,
+    "confirmedP2": 4,
+    "exhaustiveReviewClaimed": false,
+    "limitedStaticScopesOnly": true,
+    "reviewersReranTests": false
+  },
+  "savedCandidateGate": {
+    "accepted": true,
+    "authorizationGenerated": false,
+    "exitCode": 1,
+    "ownedProcessReturnedAfterCleanup": true,
+    "sdkOrRemoteExecutionClaimed": false,
+    "seconds": 0.43248240009415895
+  },
+  "sourcePins": {
+    "bundle.py": "01bba8e25b3e3c2473b8172cd39ec0cc1b84ec486891c3fe1f27a08774d083a6",
+    "driver.py": "8c632255599ad15cebaed53a0674726038d0f0204ba99cdfe78144dda9130c97",
+    "entry.py": "03c4321c77811854eb6d8098b69cc6918c04e0f46f131e5c886dc16596abc92e",
+    "finalize.py": "01bf9801a2db4edc0ef99aa3c04976a4a7c3031bc5e9ca9e4d6025790b78539a",
+    "packet.py": "a9edd3fd06a8df8be1e9fff86fdc98a1e1f85c992b0e8bd8285f97b5f4daf515",
+    "preflight.py": "81b94134fd94f0b77b3630bb702222f0d1fcfaaeb6f5958351b8062c623eba5d",
+    "receiver.py": "2a6e6e7ae5cea1d77814dd11e8f6fbcfe9dd38a57383566c4c68b37e25bffeb0",
+    "review.json": "3265eb8be0f95068d3791c56c6330b849758e185f9ec0eb84587502872def5f9",
+    "setup.py": "031689344f8fb6e8a002e6a81874e5412c6c3f584fd0fde07efbc609c2f2c6e6",
+    "setup_manager.py": "814f5b55dda416c1052f705ce85a9934285fa908c92d875efa199db98e47aef9",
+    "setup_profile.py": "7b7490b2cbaad51524836947373d1c53175b151896b4e6c0721621c49c3261a2",
+    "test_bundle.py": "92c242459aef5cd56e96fb973f5affe651557eaf43a68280d075de3bdfb9749b",
+    "test_driver.py": "1ac327bb9ffbb1bcdc67f5375c1f71c4402f5b144c302b0911f721bc7ed38d98",
+    "test_entry.py": "945b61400b3a2ce99ebced16c6daa858187286cc726c99a258dfd4e9e4fe1257",
+    "test_finalize.py": "a86319017957fb046e017fff6a5a681f34bfc20110c905efe64856e2ae5221d6",
+    "test_packet.py": "980187b2c448b328b2e4a23a564d207f8d1c4f790a118909b4fe9f44f8065ceb",
+    "test_preflight.py": "44dc8a14b15ec1b33f10e38808a194ab112478b4523e7bbbc4d99a147d4746a3",
+    "test_receiver.py": "29c559240a4db58994d2da0af471db6ae239300a5ba7827831f6c402e1c5cdb3",
+    "test_setup.py": "023f6d407fc1364a6c9c3922f2e4762cae3f4b2888fd200223609d58cd7091c9",
+    "test_setup_manager.py": "0a5041f7eeab75f04340c08690858e7fe4e3323559f82975563363965647a027",
+    "test_setup_profile.py": "27ea284234dff738912fa23224222069cfc0d071d208ecaab77b4dd9f40e1e54"
+  },
+  "sourcePinsUnchanged": true,
+  "stage": "source-bound local SSH bridge preparation; not native acceptance",
+  "tests": {
+    "accepted": true,
+    "count": 114,
+    "exitCode": 0,
+    "seconds": 46.23561720002908
+  }
+}
