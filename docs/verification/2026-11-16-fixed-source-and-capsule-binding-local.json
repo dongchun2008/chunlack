@@ -1,0 +1,194 @@
+{
+  "acceptedLocalComponents": true,
+  "boundaries": {
+    "actualModelCalls": 0,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "earlierCapacityAllowance": "consumed-1/1-not-repeated",
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "oldFrozenArtifactsPreserved": true,
+    "portsChanged": false,
+    "privateImplementationSynced": false,
+    "productionPublished": false,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "capsuleBinding": {
+    "actualExitCode": 0,
+    "catalogSha256": "ddefd898b60ba90bd8335112202924279def770258dfdd0cde71aec9cf1381ff",
+    "evidenceSha256": {
+      "inactive-capsule.py": "b7a26353d01cf5dd3540b8ce66be2c885673525e902409bc513556e2bc826e2f",
+      "tests.stderr.bin": "ddd3e401a125486e95496569d522e2bbc9f104fb678e244a0aef2c4035202200",
+      "tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "failures": 0,
+    "implemented": [
+      "fixed-reviewed200-file-catalog-admission-before-module-compilation",
+      "original-job-common-and-host-context-validators-reused",
+      "raw-six-private-files-authoritative-parsed-input-maps-ignored",
+      "canonical-request-digest-bound-to-fixed-catalog-provenance",
+      "frozen-source-private-node-inputs-and-single-clock-created-deadline-pair",
+      "existing22-source-node-context-nonce-request-and-five-material-bindings"
+    ],
+    "review": {
+      "additionalLocalRegressions": [
+        "self-consistent-forged-catalog-rejected-before-foreign-code-compilation",
+        "admitted-source-private-maps-and-native-node-fingerprint-frozen-before-clock-callback"
+      ],
+      "concentratedSourceReviewComplete": true,
+      "confirmedFindingsFixed": true,
+      "findings": [
+        {
+          "deterministicLocalRedGreenConfirmed": true,
+          "fix": "strict-request-canonical-digest-must-equal-frozen-catalog-derived-request-digest-before-capsule-creation",
+          "issue": "changed-capacity-binding-request-can-pass-format-only-original-oracle-without-fixed-catalog-provenance",
+          "severity": "P2"
+        }
+      ],
+      "kernelOriginOrNativeExecutionClaimed": false,
+      "oneRegressionBackedFixPass": true,
+      "reviewDidNotRunTestsNetworkOrReadMaterialBodies": true,
+      "secondIndependentReviewClaimed": false,
+      "testGroups": {
+        "originalCapsuleInputContextAndMutationBoundaries": 10
+      }
+    },
+    "seconds": 1.7828224999830127,
+    "skips": 0,
+    "snapshot": {
+      "nativeExecutionAuthorized": false,
+      "savedBytesVerified": true,
+      "sha256": "b7a26353d01cf5dd3540b8ce66be2c885673525e902409bc513556e2bc826e2f",
+      "sourceFiles": 1
+    },
+    "sourcePins": {
+      "DESIGN.md": "1635be1ff877a1d63bd8a902a4ca5b92f44452834f57562b5192c2c1580340e1",
+      "capsule.py": "b7a26353d01cf5dd3540b8ce66be2c885673525e902409bc513556e2bc826e2f",
+      "finalize.py": "5f23a27757f4d321d882ab8a2e37dab3862f0169faca33c63d62a0c83fec85e1",
+      "test_capsule.py": "b1181b9f6a1f59f9de49547311bce1b44e9687915e50f59fe99005330367e0a1"
+    },
+    "sourcePinsUnchanged": true,
+    "terminalSha256": "d3562d7fddc08d1c24efccdb206ff65a45d2d8abd09649b68c3ae46e310ee6ef",
+    "tests": 10,
+    "timeouts": 0,
+    "verificationLimits": {
+      "capsuleWrittenOrFsynced": false,
+      "hostOriginKernelVerified": false,
+      "nativeExecutionClaimed": false,
+      "originalFullInputOracleExecutedLocally": true,
+      "rootTraversalReleased": false
+    }
+  },
+  "date": "2026-11-16",
+  "goalStatus": "active-incomplete",
+  "historical22And52NotAddedOrClaimedRerun": true,
+  "nativeCompatibilityVerified": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "remainingCriticalPath": [
+    "join-actual-root-input-materialization-origin-capture-capsule-write-and-byte-recheck",
+    "release-business-root-traversal-only-after-full-sealing",
+    "aggregate-resource-hard-watchdog-host-entry-and-owned-unit-cleanup",
+    "new-native-compatibility-controlled-consistent-release-and-live-acceptance",
+    "quiet-dedicated-dots-route-and-Muse-Suhua-native-task-acceptance"
+  ],
+  "schemaVersion": 1,
+  "scope": "local-fixed-host-source-and-original-job-capsule-binding-only",
+  "sourceReader": {
+    "actualExitCode": 0,
+    "evidenceSha256": {
+      "inactive-source-reader.tar": "293f17c86740751631c32813b5d65bd2577c9b37fca540864381d35b5c69a38b",
+      "replay.stderr.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "replay.stdout.bin": "3937180d3be241f01155607a8e3e9b8e9222150e4dd90b7034ee6d2dc47f438a",
+      "snapshot-receipt.json": "3b0b5a3a48c82873eb264b1790588a7503117ac4855844887a39055931f231c6",
+      "tests.stderr.bin": "f4a4dee4ee0d2801183a86675213ffef141a1c916788ff739226a1edb4f14073",
+      "tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "failures": 0,
+    "implemented": [
+      "fixed57-filename-body-scope-current-native-node-and-node_modules-only",
+      "no-body-open-for-unknown-source-files-or-generated-config",
+      "root-owner-alias-metadata-digest-and-native-ELF-checks-with-business-account-readability",
+      "original-dependency-canonical-record-schema-relative-only-link-resolution",
+      "real-component-order-validation-and-cancelled-directory-FDs-held-through-read",
+      "frozen-scalar-inputs-before-filesystem-callbacks-and-validated-observation-clocks",
+      "once-only-descriptor-and-directory-iterator-cleanup-with-no-partial-body-promotion"
+    ],
+    "review": {
+      "additionalLocalRegressions": [
+        "caller-mutation-cannot-expand-frozen-source-body-scope",
+        "unvalidated-clock-sample-cannot-be-published-as-success"
+      ],
+      "concentratedSourceReviewComplete": true,
+      "confirmedFindingsFixed": true,
+      "findings": [
+        {
+          "deterministicMemoryFsRedGreenConfirmed": true,
+          "fix": "validate-real-components-in-order-and-hold-cancelled-directory-descriptors-through-target-read",
+          "issue": "lexical-normalization-cancels-unverified-directory-and-misvalidates-broken-dependency-link",
+          "nativeLinuxReproductionClaimed": false,
+          "severity": "P2"
+        }
+      ],
+      "initialReviewInterruptedByUserPause": true,
+      "nativeLinkOracleStillPending": true,
+      "oneRegressionBackedFixPass": true,
+      "reviewDidNotRunTestsNetworkOrReadMaterialBodies": true,
+      "reviewResumedAfterExplicitActivation": true,
+      "secondIndependentReviewClaimed": false,
+      "testGroups": {
+        "originalFingerprintSchemaAndSourcePins": 2,
+        "sourceReaderAndFailureBoundaries": 16
+      }
+    },
+    "savedArtifactReplay": {
+      "archiveSha256": "293f17c86740751631c32813b5d65bd2577c9b37fca540864381d35b5c69a38b",
+      "descriptorAndIteratorClosureConfirmed": true,
+      "nativeCompatibilityVerified": false,
+      "previousFiles": 57,
+      "productionReady": false,
+      "proofCreated": false,
+      "savedSourceReplayPassed": true,
+      "sourceFiles": 3
+    },
+    "seconds": 1.2555503000039607,
+    "sharedResourceHelperSha256": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd",
+    "sharedResourceHelperUnchanged": true,
+    "skips": 0,
+    "snapshot": {
+      "archiveSha256": "293f17c86740751631c32813b5d65bd2577c9b37fca540864381d35b5c69a38b",
+      "files": {
+        "native-copy-host-20261116-a1/store.py": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd",
+        "native-copy-source-20261116-a1/reader.py": "9a314bd159bd4eba6cbb3ebf78efc6a9ce1cfc64e317f5f212659ebf5786a101",
+        "native-copy-source-20261116-a1/scope.py": "44621a5932de7de49dcae6198972cb87b24ae14aa09a2689e4ac00b89fc0680d"
+      },
+      "nativeExecutionAuthorized": false,
+      "productionReady": false,
+      "sourceFiles": 3
+    },
+    "sourcePins": {
+      "DESIGN.md": "217fccfa230ae0523da1a52f2c0976c401110ad3baff418f6be9c62547acc502",
+      "build_scope.py": "ee5ac7295da905cc0e668c4324d0fbbb40c1470da2a002f2d45f646d11f9261a",
+      "finalize.py": "59b05aa7345ec2707803e2161e33f1637251de0b6b968d52e0145fc4c8d8d10c",
+      "reader.py": "9a314bd159bd4eba6cbb3ebf78efc6a9ce1cfc64e317f5f212659ebf5786a101",
+      "replay.py": "84c29899e8b074bcf6a4e9841e07601a665e8681529c8932db03f26dc33f70d4",
+      "scope.py": "44621a5932de7de49dcae6198972cb87b24ae14aa09a2689e4ac00b89fc0680d",
+      "test_compatibility.py": "b16e73872943d9272279bd327bc022fe6f56c092e54bf5bfcf07f8323da40301",
+      "test_reader.py": "2eb72985838ed06afa4dea27be1fc9722c87577b54b74f7fb4eca9f90305058e"
+    },
+    "sourcePinsUnchanged": true,
+    "terminalSha256": "a801576c823385bac9b2e12b01ca05cbaadb259859a4c9a153561c2a18d52df8",
+    "tests": 18,
+    "timeouts": 0,
+    "verificationLimits": {
+      "LinuxFilesystemAndPosixLinkSemantics": "memory-FS doubles",
+      "nativeLinuxLinkOraclePending": true,
+      "nativeNodeWasExecuted": false,
+      "originalFingerprintOracleComparedOnActualWindowsTempOrdinaryFiles": true,
+      "productionSourceOrConfigBodiesRead": false
+    }
+  },
+  "totalDistinctFinalLocalTests": 28
+}
