@@ -1,0 +1,133 @@
+{
+  "actions": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "nativeBudgetIncreased": false,
+    "newLinuxUnits": 0,
+    "privateSourceOrRawBodiesSynced": false,
+    "productionPublished": false,
+    "publicPortsChanged": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsConnections": 0
+  },
+  "actualVpsCapabilityValuesKnown": false,
+  "completeNativePacketRebound": false,
+  "date": "2026-11-17",
+  "implementation": {
+    "expectedMasks": {
+      "CapAmb": 0,
+      "CapBnd": 235,
+      "CapEff": 235,
+      "CapInh": 0,
+      "CapPrm": 235
+    },
+    "extraStatusReads": 0,
+    "firstFailureOnly": true,
+    "maximumDiagnosticMessageBytes": 2048,
+    "maximumDiagnosticMessagesPerInstance": 1,
+    "newFileOrProcessFromComponent": false,
+    "nonCapabilityStatusExported": false,
+    "originalReadValueAndExceptionPreserved": true,
+    "rawMalformedValuesExported": false,
+    "reuseExistingReadOnly": true,
+    "sampleBoundToCurrentSnapshot": true,
+    "statusFieldsCaptured": [
+      "CapEff",
+      "CapPrm",
+      "CapBnd",
+      "CapInh",
+      "CapAmb"
+    ],
+    "successPathDiagnosticWrites": 0
+  },
+  "independentReview": {
+    "componentConfirmedP1": 0,
+    "componentConfirmedP2": 0,
+    "exhaustiveAuditClaimed": false,
+    "limitations": [
+      "Writer time is not independently bounded by the pure component.",
+      "Manager admit and cleanup have existing in-process alarms; setup relies on its original systemd RuntimeMax and external supervision.",
+      "Before/after deadline checks alone cannot interrupt a blocking write.",
+      "Native watchdog effects and actual VPS capability field values remain unverified."
+    ],
+    "producerConfirmedP1": 0,
+    "producerConfirmedP2": 0,
+    "reviewerRanTests": false,
+    "reviewerUsedNetworkOrCredentials": false
+  },
+  "localVerificationAccepted": true,
+  "nativeCompatibilityVerified": false,
+  "newNativeAuthorizationGranted": false,
+  "preservedFailedLocalRuns": [
+    {
+      "assertionsRelaxed": false,
+      "reason": "Missing copied fixture modules"
+    },
+    {
+      "fix": "Update only the exact reviewed setup digest; negative and AST-equivalence checks retained",
+      "reason": "Receiver rejected new setup bytes under the old exact source digest"
+    }
+  ],
+  "producerIntegration": {
+    "embeddedHelperBytesAndDigestVerified": true,
+    "frozenCapabilityGuardByteIdentical": true,
+    "frozenGuardSha256": "cbf21c1393a5dcc9e644b5aa0ecdfe276afd0f19bf3217105cd6bd0429570010",
+    "installationBeforeFirstSnapshot": true,
+    "legacyTestAssertionsRetained": true,
+    "oldSetupWithRecomputedManifestRejected": true,
+    "originalHostClosureFiles": 161,
+    "privateCopiesOnly": true,
+    "receiverAlgorithmUnchangedExceptExactSetupDigest": true,
+    "roles": [
+      "setup",
+      "manager"
+    ],
+    "setupProfileByteIdentical": true,
+    "sourceSlotsRequiringNewPackageBinding": [
+      "setup.py",
+      "setup_manager.py",
+      "receiver.py"
+    ],
+    "synchronousWriterHasIndependentTimeout": false,
+    "writerChecksExistingDeadlineBeforeAndAfter": true
+  },
+  "productionReady": false,
+  "remaining": [
+    "Bind the three producer source slots into a new inactive package and prepare a bounded diagnostic-only execution entry.",
+    "Verify package/source closure and diagnostic transport locally before requesting a new native key grant.",
+    "Identify the actual VPS field mismatch before changing capability policy.",
+    "Full native compatibility, production release/live acceptance and all original product delivery gates remain."
+  ],
+  "scope": "local-passive-capability-evidence-and-producer-integration",
+  "sourceSha256": {
+    "passive.py": "fe247bef7021880d39fa7c2d7e7d941c45765c96d7462d608e7854bb5740fbca",
+    "receiver.py": "1d3966ca9c90bbc3d978755289df6d4de666e812aa6d171a01e774e5ca578d55",
+    "setup.py": "58b1e3e459ef9f97679ec270e8c071dd66e8a421f7fb48fcf8402876d40c3f40",
+    "setup_manager.py": "efdb831ca75999f6c1b98b4dcc43b66597c2d175696b4e584800a43d69d108b1",
+    "setup_profile.py": "7b7490b2cbaad51524836947373d1c53175b151896b4e6c0721621c49c3261a2"
+  },
+  "tests": {
+    "component": {
+      "exitCode": 0,
+      "tests": 23,
+      "toolTerminal": "b266c1",
+      "unittestSeconds": 0.094
+    },
+    "hashBinding": {
+      "exitCode": 0,
+      "tests": 3,
+      "toolTerminal": "1aed13",
+      "unittestSeconds": 0.947
+    },
+    "producers": {
+      "exitCode": 0,
+      "tests": 53,
+      "toolTerminal": "08cf94",
+      "unittestSeconds": 36.123
+    }
+  }
+}
