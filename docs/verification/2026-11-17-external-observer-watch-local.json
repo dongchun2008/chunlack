@@ -1,0 +1,100 @@
+{
+  "additionalFixes": [
+    "required-peer-status-fields",
+    "strict-integer-scope-identities-not-bools",
+    "canonical-helper-error-prefixes-retained"
+  ],
+  "boundaries": {
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingServicesChanged": false,
+    "externalThirdPartyAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "portsChanged": false,
+    "privateImplementationSynced": false,
+    "privateMaterialBodiesSynced": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "confirmedFix": "external-Runner-gets-exclusive-captures-watch-commands;inner-commands-unchanged;original-O_EXCL-and-counters-preserved",
+  "date": "2026-11-17",
+  "earlierCapacityCapture": "consumed-1/1-not-repeated",
+  "evidenceScope": {
+    "actualLocalWindowsChildProcesses": 2,
+    "completeNativeRunOrLinuxAcceptanceClaimed": false,
+    "existingSshRendererWireLimitVerified": true,
+    "installedSourceAndActualNativeMethodsExercised": true,
+    "kernelAndManagerAreExplicitDoubles": true,
+    "sameDirectoryCollisionRejectedBeforeThirdSpawn": true,
+    "savedArchiveExecutedReplayClaimed": false
+  },
+  "executedTests": 18,
+  "failures": 0,
+  "goalStatus": "active-incomplete",
+  "historicalTestsClaimedRerun": false,
+  "implemented": [
+    "actual-default-Linux-manager-start-live-normal-exit-and-owned-stop-join",
+    "held-root-and-request-directory-identity-admission",
+    "fixed-own7-and-Host161-source-closure-verification",
+    "original-bounded-command-runner-kernel-reader-and-held-scope-reuse",
+    "strict-peer-UID-GID-NNP-capabilities-cgroup-and-manager-generation-binding",
+    "preserved-stdout-descriptor-frame-check",
+    "four-protected-service-comparisons-and-all-owned-resource-closure"
+  ],
+  "inactiveTimingProposal": {
+    "externalCleanupReserveSeconds": 25,
+    "externalWatchSeconds": 600,
+    "grantedNativeAllowance": false,
+    "observerSeconds": 540,
+    "ordinaryCommandCap": 192,
+    "originalRunnerTotalCap": 256,
+    "scopeSourceDerivationObserveOnly": true,
+    "wholeUploadSetupSshEnvelopeFinalized": false
+  },
+  "localWatchComponentAccepted": true,
+  "nativeCompatibilityVerified": false,
+  "parallelLocalWorkStarted": [
+    "private-fixed-input-packet-builder",
+    "private-receiver-and-setup-unit-entry"
+  ],
+  "parallelWorkAccepted": false,
+  "productionPublished": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "remainingCriticalPath": [
+    "closed-upload-and-Linux-setup-entry-integration",
+    "one-shot-SSH-authorization-before-SDK-and-complete-hard-watchdog",
+    "fresh-native-whole-compatibility",
+    "controlled-consistent-release-and-live-product-and-quiet-Muse-dots-acceptance"
+  ],
+  "review": {
+    "concentratedReviews": 1,
+    "confirmedP1": 1,
+    "coverage": "limited-static",
+    "regressionBackedFix": true,
+    "secondReviewClaimed": false
+  },
+  "scope": "local-actual-external-observer-watch-only",
+  "skips": 0,
+  "snapshot": {
+    "containsExecutionRequestOrAuthority": false,
+    "executedArchiveReplayClaimed": false,
+    "fileHashes": {
+      "store.py": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd",
+      "watch.py": "8037db55bdcd5981b59de7091aa1fecd1cc1fad2ab453750799ada559cde872f"
+    },
+    "files": 2,
+    "savedBytesVerified": true,
+    "sha256": "850e7cd5010f4dee98e2f2b78d4e0c32f309719fe20f8f8e69162e251f5acf45"
+  },
+  "sourceBoundTerminalSha256": "62eaf7ea747370a103091c12ab837086175702469e0589d048f9c69e080ed1dc",
+  "sourcePins": {
+    "DESIGN.md": "aaa7369eaa390955ccbb32cf0cc93e6833d2096aed062cd3c9c7f90182901577",
+    "finalize.py": "3ca87f7a7fbd4f8d5022809a6b3ac2e9bda79689880f9191811576879f0f9d6c",
+    "review.json": "13e4d5c73be08046919bd8a676073e3f0f6cb98b93ffba7e06468668b9ff639a",
+    "test_watch.py": "4449c9da0ae8a4cfd3f4865b6b8b5411879258abfb6bf47b5cddcf55b992cee5",
+    "watch.py": "8037db55bdcd5981b59de7091aa1fecd1cc1fad2ab453750799ada559cde872f"
+  }
+}
