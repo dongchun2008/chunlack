@@ -1,0 +1,142 @@
+{
+  "boundaries": {
+    "actualModelCalls": 0,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "earlierCapacityAllowance": "consumed-1/1-not-repeated",
+    "existingServicesStoppedOrChanged": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "oldFailuresAndFrozenArtifactsPreserved": true,
+    "portsChanged": false,
+    "privateImplementationSynced": false,
+    "productionPublished": false,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-16",
+  "evidenceSha256": {
+    "inactive-root-dispatch-support.tar": "040870aa2bb09f27b753d3f2b5aacca76bd63e11dbd78223ca95ed868fea58bd",
+    "tests.stderr.bin": "ca26bcf7b315ec9a85586c357032e7e0c6825aabdca9b28e205705b688195352",
+    "tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "exitCode": 0,
+  "failures": 0,
+  "frozenArtifacts": {
+    "inactive-host-support.tar": "a4cf1b213e390d4e671d5715a361aba58182cc414e307630d6123aaeee2d5281",
+    "inactive-worker.tar": "4b04c316bda891f9e3a0d9dd34253323514555f7168f8e0b4d142ef1dd733257"
+  },
+  "frozenArtifactsUnchanged": true,
+  "goalStatus": "active-incomplete",
+  "historicalTestTotalsNotAddedOrClaimedRerun": true,
+  "hostSnapshot": {
+    "archiveMembers": 7,
+    "archiveSha256": "040870aa2bb09f27b753d3f2b5aacca76bd63e11dbd78223ca95ed868fea58bd",
+    "executedArchiveReplayClaimed": false,
+    "existingSixSupportSourcesUnchanged": true,
+    "files": {
+      "native-copy-aggregate-20261116-a1/boundary.py": "4a9edba23c6f3ad1f829e2e4738e43811afba2f5e96b86a08533f833ffac13b3",
+      "native-copy-dispatch-20261116-a1/dispatch.py": "cbf21c1393a5dcc9e644b5aa0ecdfe276afd0f19bf3217105cd6bd0429570010",
+      "native-copy-fused-20261116-a1/prepare.py": "b53eaa7aac6660dcc67be0e23476a868bca51badeac55380d29548d9ba2fa306",
+      "native-copy-host-20261116-a1/layout.py": "cd6f2c6aeb290c0dd28ca634e8a95305bf9297f2ddb9c92d62c6f8467bdf8336",
+      "native-copy-host-20261116-a1/materialize.py": "2597e2b72d44722ff57014874ef0c65600a97e90620137018e97e3f44622ee43",
+      "native-copy-host-20261116-a1/store.py": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd",
+      "native-copy-seal-20261116-a1/capsule.py": "bf4124a7c7cc5897f25a742bc664e168cd777a0951a638186edca9671e574872"
+    },
+    "savedBytesVerified": true,
+    "standaloneEntryClaimed": false
+  },
+  "implemented": [
+    "native-factory-reuses-protected-pinned-aggregate-CLI-controller-commands-runner-and-original-terminal-validation",
+    "same-live-root-main-PID-invocation-start-cgroup-and-kernel-root-NNP-capeb-checks",
+    "typed-exact-root-runtime-kill-restart-policy-and-concrete-parent-limit-read",
+    "original-immutable-capsule-context-and-source-bindings-revalidated-at-final-sampled-time",
+    "actual-start-command-deadline-clipped-to-original-validity-with-command-startup-minimum-work-reserves",
+    "self-and-parent-reader-deadlines-tighten-to-work-end-before-I/O-and-restore-only-for-cleanup",
+    "session-factory-deadline-binding-launch-gate-required-and-once-only-all-resource-closure"
+  ],
+  "localComponentAccepted": true,
+  "nativeCompatibilityVerified": false,
+  "nativeManagerReady": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "remainingCriticalPath": [
+    "concrete-root-host-entry-and-parent-creation-hard-watchdog",
+    "physical-host-vs-virtual-root-source-bindings-and-fresh-kernel-origin-lineage",
+    "same-held-root-permission-handoff-and-final-native-dispatch",
+    "newly-scoped-native-full-compatibility-consistent-controlled-release-and-live-acceptance",
+    "quiet-native-dots-and-Muse-Suhua-task-routes"
+  ],
+  "review": {
+    "concentratedSourceReviewComplete": true,
+    "confirmedFindingsFixed": true,
+    "confirmedP1Findings": 0,
+    "confirmedP2Findings": 2,
+    "developmentRegressions": [
+      "parsed-capsule-mutation-cannot-extend-immutable-admitted-bytes",
+      "session-cannot-expand-factory-deadline-or-report-success-without-launch-gate",
+      "Windows-source-stat-fstat-ctime-cross-view-adaptation-is-test-only"
+    ],
+    "findings": [
+      {
+        "fix": "final-clock-freshness-revalidation-and-actual-start-deadline-clipped-to-original-validity-window",
+        "issue": "final-scheduling-delay-can-outlive-context-before-original-start",
+        "redGreenRegression": true,
+        "severity": "P2"
+      },
+      {
+        "actualMemoryFsReaderAdaptersCovered": [
+          "SelfKernel",
+          "ParentGate"
+        ],
+        "fix": "actual-reader-store-budget-tightened-to-call-work-end-with-original-total-restored-for-cleanup-only",
+        "issue": "self-and-parent-readers-use-total-deadline-and-can-consume-cleanup-reserve",
+        "redGreenRegression": true,
+        "severity": "P2"
+      }
+    ],
+    "nativeCompatibilityVerified": false,
+    "oneRegressionBackedFixPass": true,
+    "productionReady": false,
+    "reviewDidNotRunTestsNetworkOrReadPrivateBodies": true,
+    "secondIndependentReviewClaimed": false,
+    "standaloneRootEntryReady": false
+  },
+  "schemaVersion": 1,
+  "scope": "local-root-bound-original-cli-dispatch-library-only",
+  "seconds": 1.3296837999951094,
+  "skips": 0,
+  "sourcePins": {
+    "DESIGN.md": "69b8b364a9c07a98689268863069566935f3527c4b6325426cfecaa0e92a71ca",
+    "dispatch.py": "cbf21c1393a5dcc9e644b5aa0ecdfe276afd0f19bf3217105cd6bd0429570010",
+    "finalize.py": "dc9e30aff70d6635781c72c466a16dbb0fefc544d5a8d4885b6d33394a3acd46",
+    "review.json": "57554a23685d7d8cccad4dfd65f714107326a18c92b8a26acebf7b63f3fb2435",
+    "test_dispatch.py": "28def5ce4fd2febb974152327999127947786c4d562237a604d9576dbbabf387"
+  },
+  "sourcePinsUnchanged": true,
+  "terminalSha256": "2e2da6e57389b89d8da5e0f05736cc852993e73b825e107c0290ce593b00802e",
+  "tests": 18,
+  "verificationLimits": {
+    "actualAggregateSourcePinClosureChecked": true,
+    "actualSharedParentMembershipVerified": false,
+    "executedArchiveReplayClaimed": false,
+    "fileTraversalHandoffPerformed": false,
+    "kernelAndCgroupSyscalls": "memory-FS doubles",
+    "kernelNamespaceOriginLineageVerified": false,
+    "managerRootReplies": "explicit synthetic replies",
+    "nativeRootWatchdogCreatedOrVerified": false,
+    "originalKernelAndJobContextProtocolsExecutedLocally": true,
+    "proposedRootPolicyOnly": {
+      "externalReserveSeconds": 4,
+      "newExecutionAllowanceGranted": false,
+      "rootCleanupReserveSeconds": 8,
+      "runtimeSeconds": 350,
+      "startSeconds": 5,
+      "stopSeconds": 1,
+      "totalSeconds": 360
+    },
+    "savedArchiveBytesVerified": true,
+    "standaloneRootEntryReady": false
+  }
+}
