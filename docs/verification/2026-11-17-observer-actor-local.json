@@ -1,0 +1,97 @@
+{
+  "boundaries": {
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "portsChanged": false,
+    "privateImplementationSynced": false,
+    "privateMaterialBodiesSynced": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-17",
+  "diagnosticLimitations": [
+    "early-quota-test-fake-loop-was-stopped-on-exact-owned-local-Python;authoritative-RED-used-bounded25-attempts",
+    "Linux-kernel-filesystem-and-manager-observations-are-explicit-doubles;not-native-acceptance",
+    "saved-asset-bytes-verified;complete-executed-archive-replay-not-claimed"
+  ],
+  "executedTests": 23,
+  "failures": 0,
+  "fixes": [
+    "fixed-input-length-derived-from-admitted-archive",
+    "admitted-directory-descriptors-reused",
+    "request-writer-identity-check",
+    "strict-protected-service-fields",
+    "work-call-cap192-cleanup24-plus24-plus4-original-total256-unchanged"
+  ],
+  "frozenInputsUnchanged": true,
+  "goalStatus": "active-incomplete",
+  "historicalProductTestsClaimedRerun": false,
+  "implemented": [
+    "fixed-default-Linux-observer-entry",
+    "exact-parent-and-Host-manager-proposals",
+    "live-generation-kernel-and-held-scope-joining",
+    "original-full-report-validator-reuse",
+    "four-protected-service-state-comparison",
+    "phase-deadlines-and-owned-cleanup-with-all-resource-close",
+    "source-closed-assets-and-request-construction"
+  ],
+  "inactiveResourceProposal": {
+    "authorized": false,
+    "cleanupReserveSeconds": 25,
+    "combinedCPUPercentOfOneCore": 30,
+    "combinedMemoryMiB": 288,
+    "hostSeconds": 420,
+    "observerCPUPercentOfOneCore": 10,
+    "observerMemoryMiB": 96,
+    "observerSeconds": 540,
+    "workloadCPUPercentOfOneCore": 20,
+    "workloadMemoryMiB": 192
+  },
+  "localComponentAccepted": true,
+  "nativeCompatibilityVerified": false,
+  "previousCapacityCapture": {
+    "allowanceConsumed": "1/1-not-repeated",
+    "record": "docs/verification/2026-11-16-readonly-capacity-single-capture.json",
+    "releaseCapacityAccepted": false,
+    "timeSpecificMetadataOnly": true
+  },
+  "productionPublished": false,
+  "productionReady": false,
+  "remaining": [
+    "held-descriptor-bootstrap-runtime-installation",
+    "one-shot-SSH-source-target-and-complete-shared-envelope",
+    "observer-final-exit-and-cleanup-proof",
+    "freshly-approved-native-full-database-compatibility",
+    "controlled-consistent-release-and-live-product-acceptance"
+  ],
+  "review": {
+    "concentratedReviews": 1,
+    "confirmedP2": 1,
+    "coverage": "limited-static",
+    "regressionBackedFix": true,
+    "secondReviewClaimed": false
+  },
+  "scope": "local-observer-actor-component-only",
+  "skips": 0,
+  "snapshot": {
+    "containsRequestOrAuthority": false,
+    "executedArchiveReplayClaimed": false,
+    "fileHashes": {
+      "host-archive.tar": "9ef9a7747a06c50c48a2f6a7898a44e98380e438cd1a5819b1889657a09695a3",
+      "runtime/native-copy-observer-actor-20261117-a1/actor.py": "421f8e94cf28a1d7ab3af40a87665ddc5f745daf9ab8f7f0c7b7e59567ad851b",
+      "runtime/native-copy-observer-actor-20261117-a1/entry.py": "a5bda48212efb6e872f80ac627c6a014e0b4609da8f4d157bb3146cb06023362",
+      "runtime/native-copy-observer-actor-20261117-a1/profile.py": "f5938267c484e1a6b9f6acde0d9b90e4bd3d60cf4a35beb197cbe68b8c6b98bb",
+      "runtime/native-copy-outer-20261117-a1/files.py": "67ce4960915350ea9bbfb117878e547c95698836af973f647a4d712c4fd0ecc1",
+      "runtime/native-copy-outer-20261117-a1/scope.py": "3730bfbe3ec832300d20e54df1f43cebe1f7fe4248a9db7894f2cb911457e70e"
+    },
+    "files": 6,
+    "savedBytesVerified": true,
+    "sha256": "bd8d35c813e7c1cb2e375b9473fb6ae4ad41907bda3c89341c0c351d3c530cbd"
+  },
+  "sourceBoundTerminalSha256": "4fcdcac0d7add2e0c89557529900d5c02c5585e833e264dbb5f8dbc80fc9af5d"
+}
