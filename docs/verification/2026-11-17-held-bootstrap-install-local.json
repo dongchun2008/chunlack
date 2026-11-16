@@ -1,0 +1,86 @@
+{
+  "archiveException": {
+    "aggregateWriteMaximumMiB": 32,
+    "exactBytes": 10690560,
+    "exclusiveIOIdentityAndCloseRulesPreserved": true,
+    "onlyPath": "input/host-archive.tar",
+    "otherFileMaximumMiB": 8,
+    "sha256": "9ef9a7747a06c50c48a2f6a7898a44e98380e438cd1a5819b1889657a09695a3"
+  },
+  "boundaries": {
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "portsChanged": false,
+    "privateImplementationSynced": false,
+    "privateMaterialBodiesSynced": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-17",
+  "earlierCaptureAllowance": "consumed-1/1-not-repeated",
+  "executedTests": 14,
+  "failures": 0,
+  "goalStatus": "active-incomplete",
+  "historicalTestsClaimedRerun": false,
+  "implemented": [
+    "fixed-assets-installed-within-original-Bootstrap-held-FD-run-sequence",
+    "original-manifest-compared-not-overwritten",
+    "scope-device-inodes-sampled-from-original-held-descriptors",
+    "request-clock-sampled-after-assets-and-readback",
+    "fresh-four-service-baseline-and-original-request-constructor",
+    "capacity-includes-added-assets-before-first-directory",
+    "last-clock-failure-clears-ready-and-preserves-structured-result",
+    "new-canonical-error-prefix-retained-without-private-messages"
+  ],
+  "localInstallationAccepted": true,
+  "nativeCompatibilityVerified": false,
+  "previousObserverSourcesUnchanged": true,
+  "productionPublished": false,
+  "productionReady": false,
+  "remainingCriticalPath": [
+    "actual-one-shot-SSH-source-target-budget-and-cleanup-joining",
+    "observer-final-normal-exit-and-cgroup-empty-proof",
+    "fresh-native-database-copy-compatibility",
+    "controlled-consistent-release-and-live-bilingual-research-provider-workspace-Muse-dots-acceptance"
+  ],
+  "review": {
+    "concentratedReviews": 1,
+    "coverage": "limited-static",
+    "remainingConfirmedP1P2": 0,
+    "secondReviewClaimed": false
+  },
+  "scope": "local-held-bootstrap-runtime-installation-only",
+  "skips": 0,
+  "snapshot": {
+    "containsExecutionRequestOrAuthority": false,
+    "fileHashes": {
+      "install.py": "54bcb006331066b5de549655049bd28fe9b49f95e1d0a61ff72caad0e8d62c7c",
+      "observer-assets.tar": "bd8d35c813e7c1cb2e375b9473fb6ae4ad41907bda3c89341c0c351d3c530cbd",
+      "package-source.py": "2790122d7a510ef85ba7a45c2318881f8663503896be1d5f8de8c5d7f27e7fbb"
+    },
+    "files": 3,
+    "replayEnvironment": "MemoryFS",
+    "savedArchiveReplay": true,
+    "savedBytesVerified": true,
+    "sha256": "a76378ad850f87110a36dbc36cd9d6d3f473bcaa4f04d03a1b82ed4eba67850b"
+  },
+  "sourceBoundTerminalSha256": "ac74e6fb9a022ff03351c8f5b9e8a13d86180b275f465bf28955ab533eea97bb",
+  "sourcePins": {
+    "DESIGN.md": "038a561cf70e071a02171938d5ddd952d7088b198b25ec0eabb9e48c8ff9f38b",
+    "finalize.py": "8f6c30629d4ba010d88331aae6e11c877b3fb6b4447dec6dd75e025fc26ddfa2",
+    "install.py": "54bcb006331066b5de549655049bd28fe9b49f95e1d0a61ff72caad0e8d62c7c",
+    "review.json": "cd78a1a0e1dfcc734215b8983ad94e1e86cc660b17a112abd21f0adabca068ea",
+    "test_install.py": "bdc80a9ad32b14e411c3fac6e883a9ac1310436c4d4d9a617e382483dd558756"
+  },
+  "verificationLimitations": [
+    "explicit-MemoryFS-POSIX-and-kernel-doubles;not-Linux-acceptance",
+    "installed-request-accepted-by-actual-frozen-actor-factory-before-kernel-or-command-creation",
+    "saved-three-file-package-replayed-with-MemoryFS-only",
+    "initial-virtual-namespace-test-did-not-map-frozen-Path.read_bytes;test-only-mapping-corrected"
+  ]
+}
