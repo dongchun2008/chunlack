@@ -1,0 +1,174 @@
+{
+  "boundaries": {
+    "actualModelCalls": 0,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "earlierCapacityAllowance": "consumed-1/1-not-repeated",
+    "existingServicesChanged": false,
+    "externalThirdPartyAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "portsChanged": false,
+    "privateImplementationSynced": false,
+    "privateMaterialBodiesSynced": false,
+    "productionPublished": false,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-17",
+  "evidenceSha256": {
+    "inactive-files-scope-components.tar": "22df52842054cc120e55bf958cbba5ee09fe7103d43dd9d7ce0a0e66a07ac68c",
+    "outerComponents.stderr.bin": "dc20955ab6febfd700b7371af679c74e1dc41530c2cf8990e8aaeb145faeb143",
+    "outerComponents.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unchangedHost.stderr.bin": "13e7643be32fa7fcc9ba69ffe17919d34d6e6d4af94de40d5797f1d1674339f2",
+    "unchangedHost.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "unchangedRoot.stderr.bin": "854dc60386ea1d6eb4a04e928d9d4071643c74fb8591cfe3a87eb8d26b678be6",
+    "unchangedRoot.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "executedTestsThisCheckpoint": 66,
+  "failures": 0,
+  "goalStatus": "active-incomplete",
+  "historicalProductTotalsAddedOrClaimedRerun": false,
+  "implemented": [
+    "actual-exact-three-fresh-private-root-file-preparation-before-any-unit",
+    "frozen-161-file-host-archive-admission-before-filesystem-effects",
+    "original-Store-guarded-descriptor-relative-exclusive-writes-and-same-inode-readback",
+    "original-live-scope-held-directory-and-fixed-role-cgroup-path-observation",
+    "same-manager-generation-required-without-treating-manager-JSON-as-native-authority",
+    "events-procs-final-events-subtree-check-and-no-cached-empty-promotion",
+    "unlinked-held-inode-plus-final-alias-absence-check-after-ancestor-verification",
+    "strict-process-ID-types-foreign-group-rejection-and-known-reclaimed-group-compatibility",
+    "phase-deadline-propagation-all-resource-close-and-failure-tree-preservation"
+  ],
+  "localComponentsAccepted": true,
+  "nativeCompatibilityVerified": false,
+  "nativeManagerReady": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "remainingCriticalPath": [
+    "actual-observer-controller-manager-live-normal-exit-and-parent-host-create-stop-joining",
+    "one-shot-source-target-budget-bound-SSH-driver-and-full-hard-envelope",
+    "newly-approved-native-whole-compatibility-and-controlled-consistent-release",
+    "live-bilingual-help-research-provider-workspace-and-quiet-Muse-dots-production-delivery"
+  ],
+  "review": {
+    "agentId": "01a1e506-f1ef-7343-8bb2-19dd3c9c069b",
+    "authorRegressionsObservedBeforeCorrection": [
+      "Boolean process IDs are refused rather than treated as numeric zero.",
+      "Matching reclaimed host or slice accepts empty ControlGroup only with actual original unlinked scope evidence.",
+      "Parent subtree repopulation between events and procs is refused by final events reread."
+    ],
+    "concentratedReviews": 1,
+    "confirmedFindingsFixed": true,
+    "confirmedP1": 0,
+    "confirmedP2": 1,
+    "finding": "An alias rebuilt during final ancestor verification could pass the unlinked branch in the same call.",
+    "fix": "After ancestor verification, recheck the held directory identity and zero link count and require the exact alias still absent before returning.",
+    "fixtureCorrection": "The deadline test checks both preserved deadline errors in the actual ExceptionGroup instead of expecting only a single RuntimeError.",
+    "freshContextClaimed": false,
+    "greenRelatedGroup": {
+      "exitCode": 0,
+      "failures": 0,
+      "tests": 21
+    },
+    "nativeCompatibilityVerified": false,
+    "newLinuxUnits": 0,
+    "productionReady": false,
+    "redTestGroup": {
+      "exitCode": 1,
+      "failures": 1,
+      "tests": 12
+    },
+    "regressionObservedRedThenGreen": "test_scope_recreated_during_final_ancestor_verify_is_rejected_in_same_call",
+    "reviewer": "Godel",
+    "reviewerReusedAfterAgentLimit": true,
+    "secondIndependentReviewClaimed": false,
+    "verificationLimits": [
+      "Linux metadata and cgroup operations are explicit MemoryFS doubles",
+      "Full manager/normal-exit/bootstrap/SSH joining remains incomplete",
+      "Observer budget is a separate inactive proposal and has no execution authorization"
+    ],
+    "vpsConnected": false
+  },
+  "schemaVersion": 1,
+  "scope": "local-outer-file-preparation-and-held-scope-components",
+  "skips": 0,
+  "snapshot": {
+    "archiveSha256": "22df52842054cc120e55bf958cbba5ee09fe7103d43dd9d7ce0a0e66a07ac68c",
+    "containsAuthorizationOrExecutionRequest": false,
+    "executedSavedArchiveReplayClaimed": false,
+    "fileHashes": {
+      "files.py": "67ce4960915350ea9bbfb117878e547c95698836af973f647a4d712c4fd0ecc1",
+      "scope.py": "3730bfbe3ec832300d20e54df1f43cebe1f7fe4248a9db7894f2cb911457e70e"
+    },
+    "runtimeFiles": 2,
+    "savedBytesVerified": true
+  },
+  "sourcePins": {
+    "DESIGN.md": "0c9d36624b3db88329f2f301d78e24469dc17969a733765fb36cc56da6772154",
+    "files.py": "67ce4960915350ea9bbfb117878e547c95698836af973f647a4d712c4fd0ecc1",
+    "finalize.py": "824b1d7ac6ba1fa2e1b14d337af4db2360499d17c1a1b631df58ab2e6b6ccbbe",
+    "review.json": "21caa35b4f59a9f4f9da3a9f7249b45a33274b415949b9bb45205a5123f161b5",
+    "scope.py": "3730bfbe3ec832300d20e54df1f43cebe1f7fe4248a9db7894f2cb911457e70e",
+    "test_files.py": "aaca01dcbab4258ede5fa78cb536533b26d50c77b49c8708932829d917d4844e",
+    "test_scope.py": "a28257764384b8c5b21a2f112929b765ad378913a2d8f3f7c1911eb15b551c5a"
+  },
+  "sourcePinsUnchanged": true,
+  "terminalSha256": "433035868e55c027dd83bf57f97ee1bf4e2275ee050968be9675819205cc2b9c",
+  "testGroups": {
+    "outerComponents": {
+      "accepted": true,
+      "actualExitCode": 0,
+      "seconds": 3.8687505000270903,
+      "skips": 0,
+      "tests": 21
+    },
+    "unchangedHost": {
+      "accepted": true,
+      "actualExitCode": 0,
+      "seconds": 5.393314899993129,
+      "skips": 0,
+      "tests": 28
+    },
+    "unchangedRoot": {
+      "accepted": true,
+      "actualExitCode": 0,
+      "seconds": 3.684557899949141,
+      "skips": 0,
+      "tests": 17
+    }
+  },
+  "unchangedHostArchiveVerified": true,
+  "unchangedHostSourcePinsVerified": true,
+  "verificationLimits": {
+    "completeOuterRunnerImplemented": false,
+    "continuousKernelMonitoringClaimed": false,
+    "databaseCapacityProven": false,
+    "executedCompleteSavedArchiveReplayClaimed": false,
+    "filesystemAndLinuxMetadata": "explicit MemoryFS doubles",
+    "nativeDirectoryPreparationWouldChangeParentDirectoryMetadata": true,
+    "nativeManagerRepliesOrActions": false,
+    "normalExitProvenByScopeAlone": false,
+    "observerRoleBudgetProposalOnly": {
+      "activated": false,
+      "cpuPercent": 10,
+      "memoryMiB": 96,
+      "remoteApprovalGranted": false,
+      "swapBytes": 0,
+      "tasksMax": 16
+    },
+    "preexistingFileContentsOverwritten": false,
+    "proposedCombinedMaximum": {
+      "approvedOrMeasured": false,
+      "cpuPercentOfOneCore": 30,
+      "memoryMiB": 288
+    },
+    "sourceHelperBodiesFromFrozenArchiveExecutedLocally": true,
+    "workloadParentBudgetUnchanged": {
+      "cpuPercent": 20,
+      "memoryMiB": 192,
+      "swapBytes": 0,
+      "tasksMax": 32
+    }
+  }
+}
