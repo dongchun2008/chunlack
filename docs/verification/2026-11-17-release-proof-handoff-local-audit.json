@@ -1,0 +1,72 @@
+{
+  "date": "2026-11-17",
+  "scope": "offline-release-handoff-audit",
+  "offlineChecksCompleted": true,
+  "checks": {
+    "frozenManifestMatches": true,
+    "frozenFilesVerified": 75,
+    "frozenInventoryExact": true,
+    "nativeExecutionFilesVerified": 15,
+    "executionApprovalStillFalse": true,
+    "remoteAttemptLedgerAbsent": true,
+    "packetMembers": 170,
+    "sameManifestInNativePacket": true,
+    "candidateProductFiles": 66,
+    "nativeCandidateMatchesFormalCandidate": true,
+    "settingsStageHashesMatchCandidate": true,
+    "formalControllerPinsVerified": 4
+  },
+  "formalEntryRequiredFiles": [
+    "Caddyfile.final",
+    "Caddyfile.loopback",
+    "candidate-config.json",
+    "controllers/2026-10-17/release-discovery-safe-20261017.py",
+    "controllers/2026-10-19/launch-controlled-release.py",
+    "controllers/2026-10-23/readonly-code-preflight.py",
+    "controllers/2026-10-25/i18n-release-gate.py",
+    "expected-code.json",
+    "launch.py",
+    "release.py",
+    "schema-compatibility-report.json"
+  ],
+  "handoff": {
+    "nativeReportPath": "schema-compatibility-report.json",
+    "reportMustBeOriginalBytes": true,
+    "acceptedLocalSummaryIsNotReport": true,
+    "reportMustMatchLiveInputsAndBeUnexpired": true,
+    "nativeProofCannotReplaceApplicationConsistentBackup": true,
+    "existingPinnedGateReused": true,
+    "newParallelReleaseFrameworkNeeded": false
+  },
+  "remainingGates": [
+    "newly-authorized-native-kernel-and-database-copy-acceptance",
+    "fresh-production-code-config-dependency-authority-bindings",
+    "complete-formal-settings-materialization-with-original-proof",
+    "application-consistent-backup-and-controlled-maintenance",
+    "production-login-bilingual-research-and-provider-live-acceptance",
+    "quiet-native-Muse-and-dots-and-device-delivery"
+  ],
+  "productionReady": false,
+  "actions": {
+    "vpsConnections": 0,
+    "newLinuxUnits": 0,
+    "testsRerun": 0,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "productionChanges": 0,
+    "credentialsChanged": false,
+    "businessAuthorizationChanged": false,
+    "relayChanged": false
+  },
+  "evidence": {
+    "payloadManifestSha256": "ae7c5db14c5e4ba9886b7ea878a417f53648c3cc1e11aa558db1c81fdadd02ef",
+    "executionBindingSha256": "be193b77cb726449c8d662f7399717618d8146368f218a0e938d0c2b6244a9ce",
+    "packetSha256": "cd001b5e07cbb6df5564c9c336f2b8977edb90fb0c193ada4029429760b05155",
+    "formalEntrySha256": "90b4e09c06eaa757f93a7edc5fb6d5031b0ddff2dd1b98890adedf3b53dc8226"
+  },
+  "limitations": [
+    "Only local source and captured packet contents were checked; no current VPS state was verified.",
+    "No claim that a native proof exists or that full delivery is complete.",
+    "Private configuration, proof bodies and credentials are excluded."
+  ]
+}
