@@ -1,0 +1,167 @@
+{
+  "boundaries": {
+    "actualModelCalls": 0,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "earlierCapacityAllowance": "consumed-1/1-not-repeated",
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "oldFailuresAndFrozenArtifactsPreserved": true,
+    "portsChanged": false,
+    "privateImplementationSynced": false,
+    "productionPublished": false,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-16",
+  "executedTestsThisCheckpoint": 44,
+  "goalStatus": "active-incomplete",
+  "groups": {
+    "joinedFiles": {
+      "evidenceSha256": {
+        "inactive-held-tree-source.tar": "c8702634c95ee9e466ef3c2eec8eda991aced769aa9f91c507ad26469eff7622",
+        "tests.stderr.bin": "fe81a5df1ded18a485417d5dd82dfd9e7e58a4d630b7dc51945b91cc3eebfe4f",
+        "tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "externalFrozenSources": {
+        "native-copy-host-20261116-a1/layout.py": "cd6f2c6aeb290c0dd28ca634e8a95305bf9297f2ddb9c92d62c6f8467bdf8336",
+        "native-copy-host-20261116-a1/materialize.py": "2597e2b72d44722ff57014874ef0c65600a97e90620137018e97e3f44622ee43",
+        "native-copy-host-20261116-a1/store.py": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd",
+        "native-copy-seal-20261116-a1/capsule.py": "b7a26353d01cf5dd3540b8ce66be2c885673525e902409bc513556e2bc826e2f"
+      },
+      "failures": 0,
+      "seconds": 12.440745000028983,
+      "skips": 0,
+      "snapshot": {
+        "archiveSha256": "c8702634c95ee9e466ef3c2eec8eda991aced769aa9f91c507ad26469eff7622",
+        "executedArchiveReplay": false,
+        "files": {
+          "native-copy-fused-20261116-a1/prepare.py": "4173b562e5a36e1ac62027606c8c98aa2338ff71753c2500d898388e566594b7",
+          "native-copy-host-20261116-a1/layout.py": "cd6f2c6aeb290c0dd28ca634e8a95305bf9297f2ddb9c92d62c6f8467bdf8336",
+          "native-copy-host-20261116-a1/materialize.py": "2597e2b72d44722ff57014874ef0c65600a97e90620137018e97e3f44622ee43",
+          "native-copy-host-20261116-a1/store.py": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd",
+          "native-copy-seal-20261116-a1/capsule.py": "b7a26353d01cf5dd3540b8ce66be2c885673525e902409bc513556e2bc826e2f"
+        },
+        "savedBytesVerified": true,
+        "sourceFiles": 5
+      },
+      "sourcePins": {
+        "DESIGN.md": "fcf8766ef8fa55174c615a74c1e94ea673bbca5dc7fbadd8df757243d751382a",
+        "finalize.py": "2d5a028cd8a588457c1cd0ddcb6aa086ddb733ca04722e22a79a840629194cd7",
+        "prepare.py": "4173b562e5a36e1ac62027606c8c98aa2338ff71753c2500d898388e566594b7",
+        "review.json": "510096c07f0b82ebfd8d8f44f89c08de48105e8a53422d3f33698686dca56985",
+        "test_fused.py": "2015dd885979bdaeb74a8a776bcbb2e6932fff8a7f19aba09590a26c0afc3d72"
+      },
+      "sourcePinsUnchanged": true,
+      "terminalSha256": "9415e326ea111b8c103bfed3d3b0f5926210c4964c11e0a47c1ecf12c748e91f",
+      "tests": 12
+    },
+    "originalCapsule": {
+      "evidenceSha256": {
+        "inactive-capsule.py": "b7a26353d01cf5dd3540b8ce66be2c885673525e902409bc513556e2bc826e2f",
+        "tests.stderr.bin": "20bdea406d9f25ada4efab2180e4b240f8d5f86cff0718813d10bfb0d9ede201",
+        "tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "failures": 0,
+      "seconds": 1.377790999948047,
+      "skips": 0,
+      "sourcePins": {
+        "DESIGN.md": "1635be1ff877a1d63bd8a902a4ca5b92f44452834f57562b5192c2c1580340e1",
+        "capsule.py": "b7a26353d01cf5dd3540b8ce66be2c885673525e902409bc513556e2bc826e2f",
+        "finalize.py": "5f23a27757f4d321d882ab8a2e37dab3862f0169faca33c63d62a0c83fec85e1",
+        "test_capsule.py": "b1181b9f6a1f59f9de49547311bce1b44e9687915e50f59fe99005330367e0a1"
+      },
+      "sourcePinsUnchanged": true,
+      "terminalSha256": "aa073a1c0668e104cd235bf8b1681a05226e3c86181a0e635712e809a981886e",
+      "tests": 10
+    },
+    "originalFileComponent": {
+      "evidenceSha256": {
+        "inactive-file-component.tar": "1195d834f572b2983a472c96e23da2270827ec5177a84a83679ec274761a07fb",
+        "tests.stderr.bin": "0409d5304fb78596b3b5076d98bcc3da90ceeae2f286a3beb487dbb1501e802c",
+        "tests.stdout.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "exitCode": 0,
+      "failures": 0,
+      "seconds": 4.463072199956514,
+      "skips": 0,
+      "sourcePins": {
+        "DESIGN.md": "2fb39e738156d2e954231c6f3d5e5e416d8912884c09806ff934820e3a01d4de",
+        "finalize.py": "c3a71b926dcbb368d4b3635c36aea75ce79ba0481df6201944a1f53e2be9ff60",
+        "layout.py": "cd6f2c6aeb290c0dd28ca634e8a95305bf9297f2ddb9c92d62c6f8467bdf8336",
+        "materialize.py": "2597e2b72d44722ff57014874ef0c65600a97e90620137018e97e3f44622ee43",
+        "store.py": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd",
+        "test_layout.py": "91621e3975836178b1d23e4c58bfc42080172277b743104280c3c7df68f78ccc",
+        "test_materialize.py": "d83af42838daf5c36a385487c2fbb61e2a2d209af44bcf47463747b07976ad22",
+        "test_store.py": "4ea20ba5091e315803f968f86749eb1e0f259f40e224853f1b2a78c1d8da79dd"
+      },
+      "sourcePinsUnchanged": true,
+      "terminalSha256": "3fa40d8fbffd2fcfa47e0480d8b4f533aebe7606c5c0bb583ec48d293c863329",
+      "tests": 22
+    }
+  },
+  "historicalProductTotalsNotAdded": true,
+  "implemented": [
+    "original-six-file-input-reconstruction-before-tree-effects",
+    "same-held-tree-descriptor-ledger-through-layout-context-and-job-write",
+    "two-unique-hash-checked-derivation-hooks-original-frozen-files-unchanged",
+    "original-capsule-format-and-exclusive-fsync-same-descriptor-write-readback",
+    "complete-final-reread-against-original-writer-FD-stamp-size-policy-and-digest",
+    "structured-primary-cleanup-final-error-retention-and-validated-clock-sample"
+  ],
+  "localComponentAccepted": true,
+  "nativeCompatibilityVerified": false,
+  "newJoinTests": 12,
+  "productionReady": false,
+  "proofCreated": false,
+  "remainingCriticalPath": [
+    "real-kernel-namespace-origin-lineage-and-delayed-root-traversal-handoff",
+    "root-and-business-aggregate-resource-hard-watchdog-with-owned-generation-cleanup",
+    "newly-approved-native-full-source-file-and-database-copy-compatibility-evidence",
+    "consistent-backup-controlled-release-recovery-and-live-bilingual-research-model-acceptance",
+    "quiet-dedicated-dots-route-and-Muse-Suhua-native-acceptance"
+  ],
+  "reusedDependencyTestsRerun": 32,
+  "review": {
+    "concentratedSourceReviewComplete": true,
+    "confirmedP1P2Findings": 0,
+    "developmentRegressions": [
+      "same-bytes-file-inode-swap-now-rejected-against-original-writer-FD-stamp",
+      "capsule-error-code-retained-through-original-materializer-error-formatter",
+      "clock-helper-validates-monotonic-integer-before-millisecond-conversion"
+    ],
+    "limits": [
+      "positive-file-IO-sequencing-uses-explicit-synthetic-admission-and-capsule-test-doubles",
+      "original-raw-input-oracle-is-separate-not-full-real-historical-source-write-proof",
+      "Linux-filesystem-syscalls-are-memory-FS-doubles",
+      "kernel-origin-lineage-and-aggregate-hard-watchdog-remain-unimplemented",
+      "business-traversal-never-released"
+    ],
+    "nativeCompatibilityVerified": false,
+    "productionReady": false,
+    "reviewDidNotRunTestsNetworkOrReadMaterialBodies": true,
+    "reviewFindings": [],
+    "secondIndependentReviewClaimed": false
+  },
+  "schemaVersion": 1,
+  "scope": "local-held-tree-file-and-task-capsule-sealing-only",
+  "verificationLimits": {
+    "LinuxSyscalls": "memory-FS doubles",
+    "aggregateHardWatchdogImplemented": false,
+    "businessAccessReleased": false,
+    "fullRealHistoricalSourceWriteVerified": false,
+    "hostOriginKernelVerified": false,
+    "originalRawInputOracleExecutedSeparately": true,
+    "positiveWriteSequenceUsesSyntheticProtocolDoubles": true,
+    "rootPolicy": [
+      0,
+      987,
+      448
+    ],
+    "snapshotExecutedReplayClaimed": false,
+    "snapshotSavedBytesVerified": true
+  }
+}
