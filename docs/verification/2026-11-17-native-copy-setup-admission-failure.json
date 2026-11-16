@@ -1,0 +1,85 @@
+{
+  "date": "2026-11-17",
+  "scope": "approved-one-ssh-native-isolation-acceptance",
+  "accepted": false,
+  "productionReady": false,
+  "authorization": {
+    "explicitUserApproval": true,
+    "maximumSshAttempts": 1,
+    "sshAttemptsUsed": 1,
+    "maximumUnitObjects": 6,
+    "localTotalBudgetSeconds": 950,
+    "automaticRetry": false,
+    "remainingSshAttempts": 0
+  },
+  "execution": {
+    "ownedProcessExitCode": 1,
+    "elapsedSeconds": 7.367269100039266,
+    "ownedProcessStderrBytes": 0,
+    "completedPhases": [
+      "readonly-before",
+      "receiver-transfer",
+      "readonly-after"
+    ],
+    "failedPhase": "setup-manager-admission-before-unit-creation",
+    "primaryErrorCode": "bridge_setup_manager_absence",
+    "driverRejectionCode": "bridge_driver_transport_receipt",
+    "newLinuxUnitsCreated": 0,
+    "unitCountEvidence": "Pinned setup-manager start method checks absence before setting started or invoking StartTransientUnit.",
+    "nativeCompatibilityVerified": false,
+    "proofCreated": false
+  },
+  "protection": {
+    "fourServicesActive": true,
+    "fourServiceRecordsExactlyUnchanged": true,
+    "sshCleanupConfirmed": true,
+    "sdkThreadExitConfirmed": true,
+    "setupOwnedResourcesCleanupConfirmed": true,
+    "cleanupErrors": [],
+    "scopeEmptyConfirmed": false,
+    "productionPublished": false,
+    "credentialsChanged": false,
+    "businessAuthorizationChanged": false,
+    "dnsChanged": false,
+    "publicPortsChanged": false,
+    "relayChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "capacityObservation": {
+    "availableMemoryBeforeBytes": 1006059520,
+    "availableMemoryAfterBytes": 972484608,
+    "minimumFreeDiskBeforeBytes": 28270530560,
+    "releaseCapacityAccepted": false
+  },
+  "localPreparation": {
+    "firstLocalInvocationFailedBeforeAuthorizationOrAllowance": true,
+    "cause": "Invocation supplied two-field directory identity to an existing five-field held-directory API.",
+    "correction": "Compare approved device/inode, then pass the existing full metadata tuple to the unchanged held-directory API.",
+    "newInterfaceChecksPassed": 2,
+    "frozenTestsRerun": 0,
+    "previousFailurePreserved": true
+  },
+  "diagnosis": {
+    "confirmed": "The setup manager rejected the not-found unit property row before StartTransientUnit.",
+    "propertyRowRetained": false,
+    "exactMismatchedPropertyKnown": false,
+    "noSpeculativePermissionRelaxation": true,
+    "sdkSocket10038DiagnosticCount": 1,
+    "sdkDiagnosticClassifiedHarmless": false
+  },
+  "evidenceSha256": {
+    "outcome.json": "dc1427435f629a1cc9bd092307bd48d718672dfe82999d0d53ab879c8b9d6128",
+    "before.private.json": "be623ad226afac1b6510837faf0d87aafc7fe6c12b784534638056b81d6a7918",
+    "after.private.json": "eda94a7612171fd7ec36c96c922d72a78fc9f69d865d149464d553104570eaa0",
+    "setup.transport.private.json": "6498da21be5f0d7e1945ed4da717ec5ed23fd241604006f50b0850aa673b162f",
+    "setup_manager.py": "814f5b55dda416c1052f705ce85a9934285fa908c92d875efa199db98e47aef9"
+  },
+  "limits": [
+    "The capture establishes service identity only during this execution interval.",
+    "Transferred files remain in the new remote directory; failed evidence was not deleted.",
+    "The one SSH allowance is consumed despite zero units created; no automatic retry or additional remote log query.",
+    "No compatibility, application-consistent backup, production publication or complete-delivery claim.",
+    "No raw configuration, credential, nonce, callback or private artifact bodies are included."
+  ]
+}
