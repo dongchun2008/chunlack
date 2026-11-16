@@ -1,0 +1,56 @@
+{
+  "actions": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "externalAgentCalls": 0,
+    "frozenCandidateChanges": 0,
+    "newLinuxUnits": 0,
+    "productCodeChanges": 0,
+    "productionChanges": 0,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsConnections": 0,
+    "preexistingProductOrFrozenTestsRerun": 0
+  },
+  "contract": {
+    "actualFailedPropertyRowAvailable": false,
+    "actualNativeRootCauseConfirmed": false,
+    "diagnosticGrantsExecutionAuthority": false,
+    "fixedPropertyCount": 32,
+    "newRemoteExecutionAuthorized": false,
+    "originalAbsencePredicateUnchanged": true,
+    "propertyValuesExported": false,
+    "queryProposalMatchesAnalyzer": true
+  },
+  "date": "2026-11-17",
+  "limitations": [
+    "This diagnostic is private local tooling, not a new product dispatcher or release controller.",
+    "Fifteen tests and 98 vectors are nested evidence, not 113 independent tests.",
+    "The previous native SSH allowance remains consumed; no retry or refresh was performed.",
+    "Full production delivery and quiet native Agent acceptance remain incomplete."
+  ],
+  "localWorkCompleted": true,
+  "nativeCompatibilityVerified": false,
+  "observations": [
+    "Synthetic nonzero policy defaults reproduce the existing absence predicate rejection.",
+    "The observed native failure did not retain the property row, so no particular default is asserted as the real cause.",
+    "No permission, capability, lifecycle, source or acceptance check was relaxed.",
+    "The pending one-SSH 20/35-second property query has not been run."
+  ],
+  "productionReady": false,
+  "scope": "local-fixed-systemd-row-diagnostic-preparation",
+  "sourceSha256": {
+    "analysis.py": "4abcc7d438bf9d33c5d096ea084a377c05a8a6e65e5ccb4b583b3c903aafeaf5",
+    "test_analysis.py": "ae78d13bf68a63599c8606d259a913d6751d03be4efbb09b76b119b8b135671d"
+  },
+  "tests": {
+    "count": 15,
+    "exitCode": 0,
+    "failures": 0,
+    "frozenManagerDifferentialVectors": 98,
+    "frozenManagerSha256": "814f5b55dda416c1052f705ce85a9934285fa908c92d875efa199db98e47aef9",
+    "skips": 0,
+    "testScope": "Pure local simulated property rows; includes malformed input, no value export, original predicate equivalence and forbidden file/network/process/SQL operations.",
+    "toolChunk": "d0af9d"
+  }
+}
