@@ -257,3 +257,11 @@ The new fixed read has a25-second remote hard cap and creates no additional unit
 Fresh native whole compatibility/resource evidence remains the next key authorization point. It does not replace application-consistent backup, a current bound maintenance package, controlled production release/recovery or live multi-user/workspace/bilingual/research/model/quiet-Agent acceptance. Those requirements stay in the full delivery goal rather than being inferred from local tests.
 
 Evidence: [independent copy-proof verification](../../verification/2026-11-17-independent-copy-proof-local.json) and [implementation plan](2026-11-17-independent-copy-proof.md).
+
+## Full phase admission before native execution
+
+A further deterministic timing regression led to a fresh private fork: full remote cap plus15-second transport and15-second close reserve is now required before invoke and again after channel creation, rather than allowing a shortened client stage to launch a full-duration server envelope. The final source-bound61/61 local run passed with no skips; both prior59 and prior114 frozen sources stayed unchanged and were not rerun. A separate15-file execution copy was prepared with the same reviewed input binding and false approval, and again refused before SDK/remote attempt.
+
+The950-second local limit, six-unit maximum, relative remote/unit caps and resource policy are unchanged. The client checkpoints do not prove an absolute cross-host deadline after arbitrary server queuing. No VPS action or native/production acceptance is claimed. The next key request is one fresh, non-retrying SSH/native copy-compatibility run using only new isolated directories and owned temporary units, with mock models and read-only source mappings; no publication or existing-service change. Its global one-shot allowance remains absent until the user confirms this scope.
+
+Evidence: [phase admission local verification](../../verification/2026-11-17-copy-proof-phase-budget-local.json).
