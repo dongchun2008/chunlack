@@ -1,0 +1,121 @@
+{
+  "baseArtifacts": {
+    "hostSha256": "040870aa2bb09f27b753d3f2b5aacca76bd63e11dbd78223ca95ed868fea58bd",
+    "oldCatalogSha256": "4f36bf37987ba5356da8424493d338ac048a03dcdf996e8f01c53a37d43cef30",
+    "workerSha256": "4b04c316bda891f9e3a0d9dd34253323514555f7168f8e0b4d142ef1dd733257"
+  },
+  "boundaries": {
+    "actualModelCalls": 0,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "earlierCapacityAllowance": "consumed-1/1-not-repeated",
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "portsChanged": false,
+    "productionPublished": false,
+    "relayChanged": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-16",
+  "exitCode": 0,
+  "failures": 0,
+  "goalStatus": "active-incomplete",
+  "implemented": [
+    "concrete-Linux-root-entry-with-fixed-source-admission-and-real-NativeOps-default",
+    "private-host-physical-to-controller-and-worker-virtual-bind-mapping",
+    "original-raw-input-source-reader-materializer-capsule-dispatch-sequence",
+    "late-held-nsfs-origin-and-original-time-horizon-validation",
+    "same-held-directory-fchmod-fsync-and-final-validation-before-business-release",
+    "stop-post-bounded-frame-on-inherited-output-without-inventing-missing-exit-fields",
+    "closed-156-file-payload-recomputed-before-request-building",
+    "uncertain-component-cleanup-latched-while-other-owned-resources-close-once"
+  ],
+  "localComponentAccepted": true,
+  "nativeCompatibilityVerified": false,
+  "nativeManagerReady": false,
+  "payload": {
+    "archiveMembers": 156,
+    "archiveSha256": "5cd961cfd6877686338c39e15e63aff62c15adb58dc90859b9ca2c2392b27849",
+    "catalogSha256": "81fa3c0019114cb628e1a7edfa517d4346d2ed0f5822ea365d4257653d85254b",
+    "containsExecutionRequest": false,
+    "executedArchiveReplayClaimed": false,
+    "hostScopeIdsOrClockInvented": false,
+    "savedBytesVerified": true
+  },
+  "productionReady": false,
+  "proofCreated": false,
+  "remaining": [
+    "bounded-concrete-host-launcher-and-aggregate-parent-creation",
+    "freshly-approved-native-manager-namespace-and-database-copy-compatibility-evidence",
+    "consistent-backup-controlled-release-and-live-bilingual-research-provider-workspace-acceptance",
+    "quiet-native-dots-and-Muse-Suhua-routes"
+  ],
+  "review": {
+    "agentId": "01a1e048-6618-7fb1-a874-b863f254fa35",
+    "concentratedReviews": 1,
+    "confirmedP1": 0,
+    "confirmedP2": 1,
+    "finding": "Materializer uncertain close was not latched in top-level cleanup.",
+    "fix": "Latch component cleanup fault; attempt all other resource closes; retain original cleanup detail; never retry unknown close.",
+    "greenExit": 0,
+    "greenTests": 17,
+    "productionReady": false,
+    "redFailures": 1,
+    "redTestExit": 1,
+    "redTests": 17,
+    "regression": "test_materializer_unknown_close_survives_native_prepare_and_all_resource_cleanup",
+    "reproducedBeforeFix": true,
+    "reviewer": "Jason",
+    "secondIndependentReviewClaimed": false,
+    "vpsConnected": false
+  },
+  "schemaVersion": 1,
+  "scope": "local-standalone-private-root-copy-entry",
+  "skips": 0,
+  "sourcePins": {
+    "DESIGN.md": "0303a0e4f401b1078e56c9238c361e2210ffb2cf877822d2d2442dfcc6d62909",
+    "builder.py": "56c7e0a445ea56f736af82b7e00c0ee317acf5a97f900e2a9649705a793b6604",
+    "derive.py": "e10e701a76557af7c40c16135c962151b56402f6841fb0294d870f3ba6bac2d9",
+    "final.py": "df4f905d07ba6c6c580fc95f9dd4d9dcf25b43f70a4314e15ec1754e8c4f672d",
+    "finalize.py": "55f80ccd83217ca0d26663994ad8961cb2db89dde203e6450970b1eff57eea35",
+    "flow.py": "be75cdc3755bbaa807d8fe077e23e0c6a159968c3a5217d0b816a20c4e412d93",
+    "origin.py": "fa2cdf462a7855b6a68ddded1c6f60ef0bd60ebe702fc50eb2efac5974d6bdaf",
+    "profile.py": "229164e4118422fc312cfc656789fdafd6dcfe6a3990f669684c3d32b4cc9e2b",
+    "review.json": "db10365cf09d0a33dadaa40e3e3a4b6f37b16424441b9fb22cb0142c7a912503",
+    "root.py": "d8a98461839a8dd08ff9796483f6ce2484060cf48c07666f5c3590fa86a75750",
+    "runtime.py": "8ecd3cb18b297a200cf38de55a95d1c795df51ea6cb7c73b9b1a4524fec0b3b1",
+    "test_entry.py": "b220d34d2935f1af3d532f904ff8b82b9e518ef095d0593847a5a65eedec6b54"
+  },
+  "sourcePinsUnchanged": true,
+  "terminalSha256": "2618c3103cc14b0b7668ba4b4b7a64d02497098ac7cbe320b238fd4f14210569",
+  "tests": 17,
+  "verificationLimits": {
+    "actualLocalSourceTreeAndOriginalInputOracle": true,
+    "historicalTestsClaimedRerun": false,
+    "hostLauncherImplemented": false,
+    "independentReviews": 1,
+    "linuxSyscallsAndManager": "explicit doubles only",
+    "nativeExitReceiptVerified": false,
+    "nativeNamespaceProof": false,
+    "privateBodiesSynced": false,
+    "privateImplementationSynced": false,
+    "sameHeldRootHandoff": "original Store with memory filesystem",
+    "secondIndependentReviewClaimed": false
+  },
+  "workerTransitions": {
+    "source/.superpowers/sdd/native-copy-cli-20261116-a1/commands.py": {
+      "after": "38ec870b44dbe4de1861c10234e2eb2261a79a892d47037ff282a4ec0fccaf36",
+      "before": "434133d0921578ab7b06dc6e0f69dc83cf302387546414f70c3f23f7477c72f3"
+    },
+    "source/.superpowers/sdd/native-copy-cli-20261116-a1/controller.py": {
+      "after": "29d9c92c49a0c2ad0f762fe6d65d75fcaf086fc19f8ff1413a2bb009c715a7fe",
+      "before": "c5c3857f9761c08bf851793b2832d015dd28b56c93acf89103349913bfdafba7"
+    },
+    "source/.superpowers/sdd/native-copy-cli-20261116-a1/profile.py": {
+      "after": "126683e064ee5f674ca6fc1236e6316cfdb9384f02d678ac204c4ba6cf0543e4",
+      "before": "29164ac57ef9b92cd3019bc1269f3d36b2168329dd9cc15d30272a4b19123fdc"
+    }
+  }
+}
