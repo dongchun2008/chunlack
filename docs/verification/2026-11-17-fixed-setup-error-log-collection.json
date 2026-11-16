@@ -1,0 +1,97 @@
+{
+  "accepted": true,
+  "actions": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingServicesStoppedOrRestarted": false,
+    "externalAgentCalls": 0,
+    "productionPublished": false,
+    "publicPortsChanged": false,
+    "rawBodiesSynced": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "authorization": {
+    "automaticRetry": false,
+    "combinedReplyLimitBytes": 65536,
+    "explicitUserApproval": true,
+    "fileLimitBytesEach": 8192,
+    "journalLimitBytes": 16384,
+    "journalLimitRows": 16,
+    "localLimitSeconds": 35,
+    "maximumSshAttempts": 1,
+    "remainingSshAttempts": 0,
+    "remoteLimitSeconds": 20,
+    "sshAttemptsUsed": 1
+  },
+  "date": "2026-11-17",
+  "evidenceSha256": {
+    "localCaller": "06dc1773db1aa5754cc40664bb7b8cd371bffe4f7bf2e5964ab765548bbbfcaa",
+    "remoteSource": "6a763fdc571ff9beab712279919fbd9567d1611e89db68db045ff11aa53cb95c",
+    "terminal": "32b4e03ba6c59a1c50ed9561b24f91a58f8bc760dac1de2f6047446524a57392"
+  },
+  "execution": {
+    "descriptorCloseErrors": [],
+    "exitCode": 0,
+    "files": {
+      "setup.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "setup.stdout": {
+        "bytes": 472,
+        "sha256": "9915e3a168d7a0af4681083e0ce0823488256467c6502a22a03c3a81ef28225e"
+      }
+    },
+    "journalBytes": 0,
+    "journalRows": 0,
+    "localElapsedSeconds": 2.8649890000233427,
+    "newLinuxUnits": 0,
+    "remoteElapsedSeconds": 1.0486087957397103,
+    "remoteWrites": 0,
+    "sdkThreadExitConfirmed": true,
+    "sshCleanupConfirmed": true,
+    "toolTerminal": "7dcd03",
+    "unitInvocationUnchanged": true,
+    "unitStoppedOrStarted": false
+  },
+  "interpretation": {
+    "actualCapabilityFieldValuesCaptured": false,
+    "bothSetupAndManagerCleanupReportedSameCapabilityGuard": true,
+    "capabilityFormatVersusValueFailureDistinguished": false,
+    "noSpeculativePermissionFixMade": true,
+    "specificFieldOrMaskMismatchConfirmed": false
+  },
+  "limitations": [
+    "Original output is stored only in private local files. Public records contain bounded error identifiers, lengths and hashes.",
+    "The error code covers both hexadecimal-format and capability-policy checks; it does not identify the actual differing field.",
+    "The existing unit remained failed; this was not a business retry, repair, production acceptance or new compatibility proof.",
+    "This read did not refresh other service health or inspect business databases.",
+    "The one-SSH allowance is consumed; further native diagnostics require a separate key grant after local preparation."
+  ],
+  "localPreparation": {
+    "exitCode": 0,
+    "newBoundaryTests": 8,
+    "toolTerminal": "e039e0"
+  },
+  "nextLocalWork": {
+    "avoidExtraReadOrExtendedNativeBudget": true,
+    "noNewVpsConnectionAuthorized": true,
+    "passiveCapabilityDiagnosticsOnly": true,
+    "preserveCapabilityAndIdentityChecks": true,
+    "reuseAlreadyReadStatusData": true
+  },
+  "observedSetupError": {
+    "cleanupConfirmed": true,
+    "cleanupError": null,
+    "completed": false,
+    "nativeCompatibilityVerified": false,
+    "primaryError": {
+      "code": "root_dispatch_kernel_caps",
+      "type": "RuntimeError"
+    }
+  },
+  "productionReady": false,
+  "scope": "approved-fixed-setup-error-readonly-collection"
+}
