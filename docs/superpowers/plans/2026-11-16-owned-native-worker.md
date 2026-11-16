@@ -193,3 +193,13 @@ The observe-role resource check currently describes an inactive96MiB/10%CPU/16Ta
 Actual manager/normal-exit joining, parent/Host create-stop orchestration, one-shot SSH transport and native full compatibility remain incomplete, followed by controlled consistent release and live delivery acceptance. No VPS, unit, model/external Agent, production, credential/grant, DNS/port or Relay action occurred; capture1/1 remains consumed. Only sanitized evidence and this plan synchronize; private helpers and material bodies stay local.
 
 Evidence: [outer files and held-scope local verification](../../verification/2026-11-17-outer-files-and-held-scope-local.json).
+
+## Local observer actor component, still inactive
+
+2026-11-17: a concrete default observer now joins exact parent/Host proposals, live manager/kernel generation, held scopes, retained normal exit, original complete report validation, protected-service comparisons and owned cleanup. Closed assets/request generation is implemented. The fixed archive's exact lengths replace an incorrect128KiB cap, existing directory bindings are retained, the request-writer inode is checked and service fields are exact. All frozen input archives are unchanged.
+
+One limited concentrated review confirmed command polling could exhaust the frozen Runner's256-call total before cleanup. Regression-backed correction caps work at192, reserves bounded24 Host/24 parent cleanup attempts plus4 protected-service observations, and samples running Host every4 seconds. Original256 total, deadlines and resource limits remain. An early fake-loop diagnostic was stopped on its exact owned local Python process; authoritative failure/success tests use25 bounded attempts. No second review or exhaustive safety claim is made. Final source-bound23 local tests passed, no skips. The six-file inactive asset snapshot was byte-verified; full executed archive replay and Linux acceptance are not claimed.
+
+The Bootstrap runtime installer, one-shot SSH launcher, observer's own final-exit proof and complete shared external envelope are NOT implemented. Proposed extra observer96MiB/10%CPU plus unchanged workload192MiB/20% remain unapproved (combined288MiB/30% of one core). No native readiness or production delivery is implied. Existing capacity capture1/1 stays consumed; this checkpoint made no VPS connection/unit, model/external-Agent call, production/service/credential/grant/DNS/port/Relay change. Native compatibility, consistent controlled release and live bilingual/research/provider/workspace/quiet Muse-dots acceptance still remain. Only sanitized record/plan synchronize; private assets/material bodies stay local.
+
+Evidence: [local observer actor verification](../../verification/2026-11-17-observer-actor-local.json).
