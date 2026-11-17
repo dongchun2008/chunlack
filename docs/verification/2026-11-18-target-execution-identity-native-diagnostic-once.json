@@ -1,0 +1,180 @@
+{
+  "allowance": {
+    "additionalConnections": 0,
+    "automaticRetry": false,
+    "localEnvelopeSeconds": 450,
+    "maximumSetupUnits": 1,
+    "maximumSshConnections": 1,
+    "setupUnitCreated": true,
+    "usedSshConnections": 1
+  },
+  "capturedBeforeExternalStop": {
+    "journalErrorRows": 0,
+    "postStopLogsCollected": false,
+    "setupStderrBytes": 0,
+    "setupStdoutBytes": 0,
+    "terminalLogStateProvenEmpty": false
+  },
+  "date": "2026-11-18",
+  "diagnosticEvidenceCollected": true,
+  "effects": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "dnsChanges": false,
+    "existingServicesModified": false,
+    "externalAgentCalls": 0,
+    "observerHostOrBusinessPhaseStarted": false,
+    "oldLackModified": false,
+    "productionPublished": false,
+    "publicPortChanges": false,
+    "realModelCalls": 0,
+    "relayChanges": false
+  },
+  "evidenceAuditAccepted": true,
+  "execution": {
+    "cleanupErrors": [],
+    "driverError": {
+      "code": "bridge_driver_transport_receipt",
+      "type": "RuntimeError"
+    },
+    "driverSeconds": 9.159252400044352,
+    "externalOwnUnitCleanupConfirmed": true,
+    "localOwnedProcessExitCode": 1,
+    "localTotalSeconds": 9.490844999905676,
+    "managerInternalCleanupConfirmed": false,
+    "managerInternalCleanupError": {
+      "code": "root_dispatch_kernel_caps",
+      "type": "RuntimeError"
+    },
+    "managerPrimaryError": {
+      "code": "root_dispatch_kernel_caps",
+      "type": "RuntimeError"
+    },
+    "setupCompleted": false,
+    "simulation": false
+  },
+  "executionIdentity": {
+    "executionAuthorized": false,
+    "fullExecutionHistoryAtomicOrScriptReadyProven": false,
+    "identityBoundAtObservedEndpoints": true,
+    "identityStableAtSampledEndpoints": true,
+    "matchesConfiguredInterpreterAtBothEndpoints": true,
+    "metadataErrors": [],
+    "observedExecutableAndConfiguredPythonMetadataMatch": true,
+    "pidAndKernelStartTicksMatch": true,
+    "sameInvocationMainPidExecMainPidAndUnitStartAtBothRows": true,
+    "snapshotBracketNanoseconds": 814902,
+    "snapshotError": {
+      "code": "root_dispatch_kernel_caps",
+      "type": "RuntimeError"
+    },
+    "snapshotOrdinal": 1,
+    "underlyingCapabilityDropMechanismKnown": false,
+    "unitAfter": {
+      "activeState": "active",
+      "controlGroupMatchesExpected": true,
+      "subState": "running"
+    },
+    "unitBefore": {
+      "activeState": "active",
+      "controlGroupMatchesExpected": true,
+      "subState": "running"
+    }
+  },
+  "limitations": [
+    "Both executable metadata endpoints match the configured interpreter; no atomic or continuous history/ABA exclusion, script/import/credential-readiness proof is claimed.",
+    "The missing effective/permitted bit is confirmed at the correlated first target failure, but its removal mechanism and responsible component remain unverified.",
+    "Original manager cleanup failed; the separate bound own-unit cleanup succeeded and does not erase that failure.",
+    "Setup output and journal were read before external stop; empty snapshots do not establish post-stop log state.",
+    "Protected service evidence is an observed before/after interval, not a guarantee of continuous availability or Relay traffic.",
+    "The one SSH allowance is fully consumed; no retries or additional remote actions were performed.",
+    "Private process identifiers, inode values, source, approval artifacts and raw outputs remain local."
+  ],
+  "localAndTransportCleanup": {
+    "allSixPhaseTransportHashesAndExitReceiptsAudited": true,
+    "ownedLocalChildReaped": true,
+    "sdkThreadExitConfirmed": true,
+    "transportCleanupConfirmed": true
+  },
+  "nativeCompatibilityVerified": false,
+  "ownUnitCleanup": {
+    "activeState": "failed",
+    "cleanupSeconds": 0.12009062711149454,
+    "conditionalStopAttempted": true,
+    "execMainCode": 2,
+    "execMainStatus": 9,
+    "processCount": 0,
+    "result": "signal",
+    "scopeEmptyConfirmed": true,
+    "subState": "failed",
+    "unitExitedConfirmed": true
+  },
+  "productionReady": false,
+  "proofCreated": false,
+  "protectedServices": {
+    "allActiveBeforeAndAfter": true,
+    "continuousFunctionOrRelayTrafficProven": false,
+    "count": 4,
+    "exactBeforeAfterIdentityAndRestartRecordsMatch": true,
+    "existingServiceStopRestartOrConfigChangePerformed": false
+  },
+  "requestedUnitResources": {
+    "completeLiveResourceProfileIndependentlyVerified": false,
+    "cpuPercentOfOneCore": 20,
+    "cpuWeight": 10,
+    "memoryMiB": 192,
+    "nice": 10,
+    "originalCapabilityUidNnpAndLifecycleGuardsPreserved": true,
+    "privateNetwork": true,
+    "setupSeconds": 90,
+    "swapAllowed": false,
+    "tasksMax": 32
+  },
+  "schemaVersion": 1,
+  "scope": "single-approved-linux-target-execution-identity-diagnostic",
+  "setupPassed": false,
+  "sourceBinding": {
+    "driverSha256": "d8219608759f58dffad6a109e9fe1db847a75a3d26bff8d689cabe67eb9655bb",
+    "entrySha256": "80ada5c8774385efdf3e3d10fb6e44d51bebecbcfd170177b8c526b746e65d66",
+    "evidenceAuditSha256": "532501c99caeca36a6c8ff276ab0869c2499b0e5c9635c32bf792d6a511fdacd",
+    "frozenSourcesModified": false,
+    "packetSha256": "4c3d03aeeb0498e782337839a8584f3e49989959dec0ddaa1e71f13fc405e8e2"
+  },
+  "startupAndCapabilityEvidence": {
+    "bitNameReference": "https://raw.githubusercontent.com/torvalds/linux/master/include/uapi/linux/capability.h",
+    "capabilityWriteAttempts": 1,
+    "completeLiveWitnessVerified": false,
+    "differentFields": [
+      "CapEff",
+      "CapPrm"
+    ],
+    "expected": {
+      "CapAmb": 0,
+      "CapBnd": 235,
+      "CapEff": 235,
+      "CapInh": 0,
+      "CapPrm": 235
+    },
+    "firstWaitState": {
+      "activeState": "activating",
+      "subState": "start"
+    },
+    "formatValid": true,
+    "identityForCapabilityFailure": true,
+    "missingCapabilityName": "CAP_SETUID",
+    "missingMaskHex": "0x80",
+    "observed": {
+      "CapAmb": 0,
+      "CapBnd": 235,
+      "CapEff": 107,
+      "CapInh": 0,
+      "CapPrm": 107
+    },
+    "selectedCapabilitySource": "target",
+    "startingSamples": 1,
+    "targetFrameBytes": 528,
+    "targetFrameSha256": "3ad95fbeb34996ef7fcf974553e62037e875e89733f17c1f0142ae8b8c2c30c1",
+    "targetReceiptWritten": true
+  },
+  "summary": "已取得与首次能力异常关联的执行身份记录：两个采样端点均匹配配置中的Python inode，PID/starttime及单元代次一致，Eff/Prm仍为0x6b、Bnd为0xeb。准备未通过，已受限清理且未重试；缺位机制仍未知。"
+}
