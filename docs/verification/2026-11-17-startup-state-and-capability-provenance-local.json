@@ -1,0 +1,127 @@
+{
+  "accepted": true,
+  "candidate": {
+    "approvalReferencePresent": false,
+    "archiveMembers": 170,
+    "attemptCreated": false,
+    "boundFiles": 16,
+    "driverSha256": "ba3255001b5b81adf6d8708d1b2a02d1f7491994b9bc59f53c119619cd3b6384",
+    "entrySha256": "80ada5c8774385efdf3e3d10fb6e44d51bebecbcfd170177b8c526b746e65d66",
+    "managerSha256": "8c7b5aec2d9eb89dacbc5349364734fc2ba88a19af6a6a4854f62004349153c3",
+    "manifestFiles": 169,
+    "packetSha256": "df6cdb36f6ce5a3377cba043fd7d803f42df75e77148be584a7807da073b9ab6",
+    "savedFiles": 18,
+    "userApproved": false
+  },
+  "changes": {
+    "boundedManagerEvidence": [
+      "first recognized wait state",
+      "starting sample count",
+      "selected self/target source",
+      "attempted/written/error type/message hash and size"
+    ],
+    "entryBindsManifestAndExistingCommonFields": true,
+    "entryRequiresSelectedWrittenReceiptAndExactStderrDigestSize": true,
+    "failedWriteDoesNotPromoteSample": true,
+    "liveWitnessStillRequired": true,
+    "originalCapabilityIdentityResourceNormalExitAndEmptyScopeGuardsPreserved": true,
+    "originalFailureNeverPromotedByEvidence": true,
+    "originalStartupDeadlineSeconds": 5,
+    "sharedMaximumDiagnosticWriteAttempts": 1,
+    "startupInvocationAndStartIdentityPreserved": true,
+    "startupStates": [
+      "activating/start-pre",
+      "activating/start",
+      "activating/start-post"
+    ],
+    "stderrEnvelopeUnchanged": true,
+    "targetUsesExactExistingPassiveTrace": true,
+    "unknownStatesSanitized": true,
+    "waitWithinOriginalDeadline": true
+  },
+  "date": "2026-11-17",
+  "effectsThisLocalPhase": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "dnsChanges": false,
+    "externalAgentCalls": 0,
+    "newLinuxUnits": 0,
+    "portChanges": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnected": false
+  },
+  "futureNativeScopeNotYetAuthorized": {
+    "automaticRetry": false,
+    "cpuPercentOfOneCore": 20,
+    "cpuWeight": 10,
+    "freshBeforeAfterBaselineAndBoundOwnUnitCleanupRequired": true,
+    "localSeconds": 450,
+    "maximumSetupUnits": 1,
+    "maximumSshAttempts": 1,
+    "memoryMiB": 192,
+    "nice": 10,
+    "observerOrBusinessLaunchAllowed": false,
+    "privateNetwork": true,
+    "setupUnitSeconds": 90,
+    "swapAllowed": false,
+    "tasksMax": 32
+  },
+  "limitations": [
+    "The prior single native diagnostic remains failed and its 1/1 SSH allowance consumed.",
+    "The original observed startup state and capability error origin were not captured and remain unknown; the local fixes do not prove the native failure cause.",
+    "liveWitnessed metadata can reflect a cleanup-stage witness and is not normal-exit or task-success proof.",
+    "Synchronous diagnostic writes still rely on existing alarms, unit timeout and outer supervision; native watchdog behavior not validated in this local phase.",
+    "Test groups are separate local operational regressions, not product-wide or production acceptance.",
+    "Private operational sources, synthetic fixtures, raw evidence and inactive package remain local; only this sanitized record is synchronized."
+  ],
+  "nativeCompatibilityVerified": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "schemaVersion": 1,
+  "scope": "local-startup-state-and-capability-provenance-correction",
+  "summary": "本地复现并修正启动中状态过早拒绝，补齐self/target采样来源及写出回执校验；新未授权包通过离线验证，尚未进行本版原生验收。",
+  "unchanged": {
+    "commandCallLimits": true,
+    "passiveTraceComponent": true,
+    "productSources": true,
+    "receiverSource": true,
+    "resourcePolicy": true,
+    "setupProfile": true,
+    "setupSource": true,
+    "transportAndBootstrapSizeLimit": true
+  },
+  "verification": {
+    "actualManagerTargetFailureToEntryDecoderRoundtrip": true,
+    "allFiveFullSourceRendererCasesRetained": true,
+    "allSavedCandidateHashesRechecked": true,
+    "independentReview": "Two separate read-only static reviews: manager state/cleanup/trace boundaries, then entry provenance decoder and wiring. No reviewer tests or native actions.",
+    "integration": {
+      "accepted": true,
+      "count": 37,
+      "exitCode": 0,
+      "seconds": 6.922685900004581
+    },
+    "managerGroups": [
+      {
+        "count": 10,
+        "exitCode": 0,
+        "name": "new-startup-and-capability-evidence-regressions",
+        "seconds": 13.78
+      },
+      {
+        "count": 31,
+        "exitCode": 0,
+        "name": "unchanged-original-manager-guard-regressions",
+        "seconds": 63.831
+      }
+    ],
+    "originalGuardFixtureBytesUnchanged": true,
+    "priorFrozenSourcePackageUnchanged": true,
+    "sameStatusReadCountsAndGuardResultComparedToPriorManager": true,
+    "savedFalseApprovalEntryRefusedBeforeSdk": true,
+    "savedLocalChildCleanupVerified": true,
+    "sourceChangeScopeChecked": true
+  }
+}
