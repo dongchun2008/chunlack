@@ -1,0 +1,102 @@
+{
+  "auditPassed": true,
+  "currentLocalProduct": {
+    "currentFilesByteEqualFrozen": 66,
+    "differences": [],
+    "embeddedServerHtmlBinReadViaAst": true,
+    "files": 66,
+    "frozenFilesValid": 66,
+    "installerExecuted": false,
+    "manifestSha256": "c0ca08d6f03e1e6af3b46259a031239a24c6c89c8f5a4e22102ea8208f9b4c15"
+  },
+  "date": "2026-11-17",
+  "duplicateConfirmationRequestedThisAudit": false,
+  "frozenReleaseControls": {
+    "actualSelectedProductionEntryOrLiveCpuPolicyVerified": false,
+    "allByteCountsAndSha256Valid": true,
+    "bothFormsRemainInFrozenSource": true,
+    "files": 8,
+    "includesFormalEntryLauncherAndIngressGate": true,
+    "legacyTextCpuQuotaPercent": 10,
+    "sourcePresenceNotTakenAsLivePolicyProof": true,
+    "typedCandidateCpuQuotaPercentOfOneCore": 20
+  },
+  "fullDeliveryComplete": false,
+  "latestSavedNativeEvidence": {
+    "actualCapabilitiesStillUnknown": true,
+    "diagnosticPassed": false,
+    "fourServiceBeforeAfterRecordsUnchanged": true,
+    "observationIsHistoricalNotCurrentLiveCheck": true,
+    "ownUnitExitedAndEmptyConfirmed": true,
+    "reference": "2026-11-17-passive-setup-native-diagnostic-once.json",
+    "singleSshAllowanceMaximum": 1,
+    "singleSshAllowanceUsed": 1
+  },
+  "pendingKeyConfirmationAlreadyRequested": true,
+  "productionReady": false,
+  "qualifications": [
+    "This is an actual current local byte audit, not a production health check or a new application test run.",
+    "The reused read-only audit script prints a historical hardcoded date; this record separately identifies the current 2026-11-17 execution.",
+    "All remaining requirements retain their full scope. Local harness, manifest or green tests are not substituted for deployment or native Agent acceptance."
+  ],
+  "remainingDeliveryGates": [
+    {
+      "gate": "native diagnostic and copy compatibility",
+      "needs": "Fresh bounded native execution approval and successful attributable evidence; prior single attempt is consumed.",
+      "state": "pending"
+    },
+    {
+      "gate": "formal production package binding",
+      "needs": "Fresh production source, selected launcher policy, dependency/config hashes, ownership, capacity and unexpired compatibility proof.",
+      "state": "pending"
+    },
+    {
+      "gate": "maintenance and publication",
+      "needs": "Explicit exact maintenance scope, consistent backup, 55-second forward/120-second total recovery safeguards and no overwrite of new writes.",
+      "state": "pending"
+    },
+    {
+      "gate": "live application acceptance",
+      "needs": "Real Pocket ID/workspace isolation, Chinese/English UI/help, provider routing and bounded evidence-preserving research after publication.",
+      "state": "pending"
+    },
+    {
+      "gate": "quiet native external Agents",
+      "needs": "Approved independent task destination for Xuanji; separate Suhua account/native execution and evidence acceptance. No daily-chat fallback or generic-worker substitution.",
+      "state": "pending"
+    },
+    {
+      "gate": "mixed models and physical nodes",
+      "needs": "User-selected local/cloud APIs and Windows/Mac/Spark node acceptance with explicit permissions/budgets. API inference is not computer execution.",
+      "state": "pending"
+    }
+  ],
+  "schemaVersion": 1,
+  "scope": "current-local-delivery-binding-audit-without-rerunning-tests",
+  "scopeEffects": {
+    "businessGrantChanges": false,
+    "credentialReadOrChanges": false,
+    "externalAgentMessages": 0,
+    "frozenCandidateChanges": false,
+    "nativeBusOrLibrariesLoaded": false,
+    "newLinuxUnits": 0,
+    "productSourceChanges": false,
+    "productTestsExecuted": 0,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "sshConnections": 0,
+    "vpsRequests": 0
+  },
+  "separateOperationalCandidate": {
+    "inactiveCandidateApproved": false,
+    "integrationTestsPreviouslyExecuted": 37,
+    "localEvidenceReference": "2026-11-17-startup-state-and-capability-provenance-local.json",
+    "nativeRetestPending": true,
+    "newManagerTestsPreviouslyExecuted": 10,
+    "originalGuardTestsPreviouslyExecuted": 31,
+    "productOrFrozenControllerBytesOverwritten": false,
+    "theseTestsRerunThisAudit": false
+  },
+  "summary": "当前66个产品文件和冻结包内8个发布控制文件完整有效；新诊断修正未混入产品发布包。生产绑定与原生验收仍未完成。"
+}
