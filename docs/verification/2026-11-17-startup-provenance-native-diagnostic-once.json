@@ -1,0 +1,167 @@
+{
+  "allowance": {
+    "additionalConnections": 0,
+    "automaticRetry": false,
+    "localEnvelopeSeconds": 450,
+    "maximumSetupUnits": 1,
+    "maximumSshConnections": 1,
+    "setupUnitCreated": true,
+    "usedSshConnections": 1
+  },
+  "capabilities": {
+    "boundingHex": "0xeb",
+    "capabilityNameReference": "https://raw.githubusercontent.com/torvalds/linux/master/include/uapi/linux/capability.h",
+    "differentFields": [
+      "CapEff",
+      "CapPrm"
+    ],
+    "effectiveAndPermittedMismatchProven": true,
+    "expected": {
+      "CapAmb": 0,
+      "CapBnd": 235,
+      "CapEff": 235,
+      "CapInh": 0,
+      "CapPrm": 235
+    },
+    "expectedEffectiveAndPermittedHex": "0xeb",
+    "formatValid": true,
+    "missingBit": 7,
+    "missingCapabilityName": "CAP_SETUID",
+    "missingMaskHex": "0x80",
+    "observed": {
+      "CapAmb": 0,
+      "CapBnd": 235,
+      "CapEff": 107,
+      "CapInh": 0,
+      "CapPrm": 107
+    },
+    "observedEffectiveAndPermittedHex": "0x6b",
+    "targetExecutableIdentityAndExecStageCaptured": false,
+    "whyCapabilityIsMissingConfirmed": false
+  },
+  "capturedBeforeExternalStop": {
+    "journalErrorRows": 0,
+    "managerStderrBytes": 528,
+    "postStopLogsCollected": false,
+    "setupStderrBytes": 0,
+    "setupStdoutBytes": 0,
+    "terminalStateLogsProvenEmpty": false
+  },
+  "date": "2026-11-17",
+  "diagnosticEvidenceCollected": true,
+  "effects": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "dnsChanges": false,
+    "existingServicesModified": false,
+    "externalAgentCalls": 0,
+    "observerOrBusinessPhaseStarted": false,
+    "oldLackModified": false,
+    "productionPublished": false,
+    "publicPortChanges": false,
+    "realModelCalls": 0,
+    "relayChanges": false
+  },
+  "evidenceAuditAccepted": true,
+  "execution": {
+    "cleanupErrors": [],
+    "diagnosticCollected": true,
+    "driverError": {
+      "code": "bridge_driver_transport_receipt",
+      "type": "RuntimeError"
+    },
+    "driverSeconds": 9.894684799946845,
+    "externalOwnUnitCleanupConfirmed": true,
+    "localOwnedProcessExitCode": 1,
+    "localTotalSeconds": 10.465497699915431,
+    "managerInternalCleanupConfirmed": false,
+    "managerInternalCleanupError": {
+      "code": "root_dispatch_kernel_caps",
+      "type": "RuntimeError"
+    },
+    "managerPrimaryError": {
+      "code": "root_dispatch_kernel_caps",
+      "type": "RuntimeError"
+    },
+    "setupCompleted": false,
+    "simulation": false
+  },
+  "limitations": [
+    "Diagnostic collection succeeded but setup failed; no native compatibility or production acceptance is claimed.",
+    "Target mask mismatch is confirmed; final executable identity, credential-transition stage and mechanism causing the missing bit remain unverified.",
+    "The missing bit is identified from the Linux kernel UAPI header, not from assumptions about the VPS implementation.",
+    "Internal manager cleanup failed; independent bound own-unit cleanup succeeded and does not erase that failure.",
+    "Output/journal snapshot preceded external stop and is not evidence of post-stop log state.",
+    "One SSH allowance is fully consumed; no retry or additional remote action occurred.",
+    "Private operational sources, approvals, raw artifacts and logs remain local."
+  ],
+  "localAndTransportCleanup": {
+    "allSixPhaseExitReceiptsAndTransportHashesAudited": true,
+    "ownedLocalChildReaped": true,
+    "sdkThreadExitConfirmed": true,
+    "transportCleanupConfirmed": true
+  },
+  "nativeCompatibilityVerified": false,
+  "ownUnitCleanup": {
+    "activeState": "failed",
+    "cleanupSeconds": 0.05142669379711151,
+    "conditionalStopAttempted": true,
+    "execMainCode": 2,
+    "execMainStatus": 9,
+    "newUnitsCreatedByCleanup": 0,
+    "processCount": 0,
+    "result": "signal",
+    "scopeEmptyConfirmed": true,
+    "subState": "failed",
+    "unitExitedConfirmed": true
+  },
+  "productionReady": false,
+  "proofCreated": false,
+  "protectedServices": {
+    "allActiveBeforeAndAfter": true,
+    "continuousHealthBeyondObservationWindowProven": false,
+    "count": 4,
+    "exactBeforeAfterIdentityAndRestartRecordsMatch": true,
+    "existingServiceStopOrRestartPerformed": false
+  },
+  "requestedResourcePolicy": {
+    "allLiveResourcePropertiesIndependentlyVerified": false,
+    "cpuPercentOfOneCore": 20,
+    "cpuWeight": 10,
+    "memoryMiB": 192,
+    "nice": 10,
+    "originalIdentityNnpAndCapabilityChecksPreserved": true,
+    "privateNetwork": true,
+    "setupSeconds": 90,
+    "swapAllowed": false,
+    "tasksMax": 32
+  },
+  "schemaVersion": 1,
+  "scope": "single-approved-linux-startup-and-target-provenance-diagnostic",
+  "setupPassed": false,
+  "sourceBinding": {
+    "driverSha256": "ba3255001b5b81adf6d8708d1b2a02d1f7491994b9bc59f53c119619cd3b6384",
+    "entrySha256": "80ada5c8774385efdf3e3d10fb6e44d51bebecbcfd170177b8c526b746e65d66",
+    "evidenceAuditSha256": "a8faf8ce8b151821f87974e4afb04454a165ddf8ff8acfec06d4a5f250f41acd",
+    "packetSha256": "24b7ff7fe917a879b3e446faf88d2cfcbba5ec6ba18562535e132e91d17d3377",
+    "priorFrozenCandidateModified": false
+  },
+  "startupAndProvenance": {
+    "capabilityWriteAttempts": 1,
+    "completeLiveWitnessVerified": false,
+    "firstWaitState": {
+      "activeState": "activating",
+      "subState": "start"
+    },
+    "nativeOrProductionAuthorityFromEvidence": false,
+    "selectedCapabilitySource": "target",
+    "selfTraceAttempted": false,
+    "singleFrameMaximum": 1,
+    "sourceReceiptManifestAndStderrHashSizeBound": true,
+    "startingSamples": 1,
+    "targetFrameBytes": 528,
+    "targetFrameSha256": "3ad95fbeb34996ef7fcf974553e62037e875e89733f17c1f0142ae8b8c2c30c1",
+    "targetTraceWritten": true
+  },
+  "summary": "新启动状态等待与目标采样生效；已证实目标进程Eff/Prm为0x6b、Bnd为0xeb，缺少CAP_SETUID这一位。准备未通过，未重试；临时单元及连接已清理，四项现有服务前后记录一致。缺位原因仍未知。"
+}
