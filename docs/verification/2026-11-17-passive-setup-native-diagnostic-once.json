@@ -73,6 +73,18 @@
     "transportCleanupConfirmed": true,
     "transportEvidenceHashesVerified": true
   },
+  "localSourceReview": {
+    "actualCapabilityErrorOriginKnown": false,
+    "actualFirstObservedStateKnown": false,
+    "confirmedControlFlowGap": "A first activating/start row is rejected immediately as missing_live, even before the original startup deadline.",
+    "confirmedTraceCoverageGap": "A separate target snapshot can raise the same capability error outside the self-kernel passive Trace.",
+    "independentReviewer": "Godel",
+    "nativeFailureRootCauseConfirmed": false,
+    "nextStep": "Local-only reproduction of startup-state handling and passive evidence coverage; no native retry or permission/capability relaxation.",
+    "passiveWriterFailureExcluded": false,
+    "readOnly": true,
+    "sourceModified": false
+  },
   "nativeCompatibilityVerified": false,
   "ownUnitCleanup": {
     "activeState": "failed",
