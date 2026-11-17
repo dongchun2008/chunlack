@@ -101,6 +101,26 @@
     "sdkThreadExitConfirmed": true,
     "transportCleanupConfirmed": true
   },
+  "localIndependentReview": {
+    "capabilityRelaxationOrIncreaseAuthorized": false,
+    "failureBeforeCompleteProfileAndLiveScopeValidation": true,
+    "firstStartingRowNotTakenAsFullSnapshotState": true,
+    "fullManagerStateRowAtCapabilitySnapshotSaved": false,
+    "nativeTestsOrNetworkPerformedByReviewer": false,
+    "newNativeGrantExists": false,
+    "nextDiagnosticEvidenceNeeded": [
+      "target executable identity",
+      "PID/kernel starttime",
+      "capability-read monotonic time",
+      "same-point InvocationID/MainPID/ExecMainPID/ActiveState/SubState/unit start time"
+    ],
+    "noCmdlineEnvironmentOrRawStatusBodyNeeded": true,
+    "profileDeclarationDoesNotProveObservedExecutableIdentity": true,
+    "profileDeclaresTypeExecPythonNnpAndBounding235": true,
+    "readOnly": true,
+    "targetMaskReceiptBindingConfirmed": true,
+    "underlyingMechanismStillUnknown": true
+  },
   "nativeCompatibilityVerified": false,
   "ownUnitCleanup": {
     "activeState": "failed",
