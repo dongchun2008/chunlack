@@ -1,0 +1,130 @@
+{
+  "budgetContract": {
+    "connectionPhaseMaximumSeconds": 4,
+    "insufficientStartupOrConnectionBudgetStopsBeforeQuery": true,
+    "legacyInnerReserveSeconds": 4,
+    "legacyReserveCreditedOnlyAgainstAlreadyReservedOuterPool": true,
+    "outerCleanupAndReceiptReserveSeconds": 8,
+    "outerReserveAfterConnectionSeconds": 30,
+    "phaseEndpointsUnchanged": true,
+    "queryAndReceiptPhaseMaximumSeconds": 22,
+    "startupConsumesLocalBudget": true
+  },
+  "closedFindings": [
+    "P1 frozen transport legacy phase reserve exhausted connection before socket creation; CoveredStage preserves actual phase endpoints and outer reserves without double subtraction.",
+    "P2 root identity resampled after approval admitted a replacement directory; original approved identity now carried to held-root admission.",
+    "Additional reproduced boundary: boolean false cannot substitute for integer exit status zero."
+  ],
+  "date": "2026-11-18",
+  "effects": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "dnsOrPortChanges": false,
+    "externalAgentCalls": 0,
+    "newLinuxUnits": 0,
+    "productCodeChanged": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnections": 0
+  },
+  "implementation": {
+    "actualEffectivePrivilegeFieldsSampled": false,
+    "claimBeforeSdk": true,
+    "combinedTransportOutputBytes": 65536,
+    "defaultApprovalFalse": true,
+    "fixedRemoteReaderUnchanged": true,
+    "localEnvelopeSeconds": 35,
+    "maximumNewUnits": 0,
+    "maximumSshAttempts": 1,
+    "noAutomaticRetry": true,
+    "remoteHardTimeoutSeconds": 20,
+    "requestedRemoteIdentityPrefixMatchesFrozenEncoder": true,
+    "reusedPinnedHeldDirectoryBackend": true,
+    "reusedPinnedLocalFileReader": true,
+    "reusedPinnedOwnedProcessRunner": true,
+    "reusedPinnedSshTransportAndScheduler": true,
+    "targetFileMaximumBytes": 16384,
+    "targetLeaf": "command-0.stderr"
+  },
+  "inactivePackage": {
+    "actualSavedEntryRejected": true,
+    "attemptFileCreated": false,
+    "boundFiles": 10,
+    "gateSeconds": 0.536440399941057,
+    "nativeExecutionAuthorized": false,
+    "ownedLocalChildReaped": true,
+    "savedFiles": 12,
+    "sourceSlots": 9,
+    "transportCaptureCreated": false,
+    "userApproved": false
+  },
+  "independentReview": {
+    "nativeApprovalGranted": false,
+    "remainingConfirmedP1P2": 0,
+    "reviewer": "McClintock",
+    "reviewerRanTestsNetworkOrNative": false,
+    "scope": "fresh-context source review and targeted post-fix recheck"
+  },
+  "limitations": [
+    "56 is this scoped local integration suite, not a new full product regression or a real SSH connection.",
+    "Actual Linux file collection, runtime timing and effective privilege fields remain unverified.",
+    "The proposed zero-unit query is ordinary low-priority SSH management overhead, not proof of a 192MiB/20-percent setup cgroup.",
+    "A successful fixed-file receipt does not identify the failing command or prove a cause when that first stderr is empty.",
+    "No fresh remote grant exists, and prior one-shot SSH allowances were not reused."
+  ],
+  "localVerification": {
+    "allSourcePinsUnchanged": true,
+    "count": 56,
+    "exitCode": 0,
+    "reportedTestSeconds": 12.616,
+    "reviewedSourceCount": 16,
+    "testFileCounts": {
+      "test_collect.py": 12,
+      "test_driver.py": 18,
+      "test_entry.py": 5,
+      "test_group.py": 6,
+      "test_remote.py": 10,
+      "test_transport_contract.py": 5
+    },
+    "testStderrSha256": "8ab235e7183f63ad1db5de9351632cef24a69dfe89b5fa98d582c430a46ee9b9"
+  },
+  "nativeCompatibilityVerified": false,
+  "nextProposedScope": {
+    "approved": false,
+    "combinedOutputMaximumBytes": 65536,
+    "failureStopsWithoutRetry": true,
+    "fixedFirstCommandStderrOnly": true,
+    "localSecondsIncludingSdkCloseAndReceipt": 35,
+    "maximumNewUnits": 0,
+    "maximumSshConnections": 1,
+    "privateBodyMaximumBytes": 16384,
+    "productionAllowed": false,
+    "remoteSeconds": 20,
+    "remoteWrites": false,
+    "unitGenerationCgroupAndFourServiceChecks": true
+  },
+  "productionDeliveryComplete": false,
+  "productionReady": false,
+  "regressionCoverage": [
+    "positive and failed SDK paths with explicit fakes",
+    "real frozen Session.connect/execute methods with fake socket/SDK/channel, including late-phase reply",
+    "real host-key mismatch rejects before credential access",
+    "exact approved-directory A to B replacement refuses before marker or SDK",
+    "replay marker rejects second attempt without retry",
+    "false approval, source drift, unknown fields, authority forgery and malformed file digest rejection",
+    "combined output bound and partial transport preservation without masking original failure",
+    "SSH close, SDK join and held-directory close acceptance boundaries",
+    "actual owned-child inactive entry refusal and exact two-literal 450 to 35 entry budget change"
+  ],
+  "schemaVersion": 1,
+  "scope": "local-single-use-first-command-stderr-ssh-entry-integration",
+  "sourceBinding": {
+    "bindingSha256": "1c62a86dfaa8c4bc59297ee1c17699b68a8a13b76a8f9aa2e2cfc732d2ebc905",
+    "driverSha256": "9a9dbc56bc38b356535c92b7ca6355a225abc635493216d1182d87f54691f224",
+    "entrySha256": "91118887db983b4fa90858ebc2368969195671cf29cac8ab64c3464df211d953",
+    "heldBackendSha256": "01bba8e25b3e3c2473b8172cd39ec0cc1b84ec486891c3fe1f27a08774d083a6",
+    "remoteReaderSha256": "d7c747265835ecca6ebe083c6a8c7dab666daf1b67cc86c8e936cc7b6dde3de8"
+  },
+  "status": "locally-verified-inactive-native-unverified"
+}
