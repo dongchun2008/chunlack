@@ -1,0 +1,77 @@
+{
+  "closedIndependentFinding": {
+    "confirmedFindingFixed": "Frozen cgroup reader stopped closing on the first close error; new helper attempts every owned FD close and preserves primary/read/close failures.",
+    "mode": "read-only independent static review",
+    "nativeReadyClaimed": false,
+    "remainingConfirmedP1P2": 0,
+    "reviewer": "Godel",
+    "reviewerRanTestsOrNativeActions": false
+  },
+  "coverage": [
+    "one exact command-0.stderr leaf, regular root-owned 0600 single link, at most 16384 bytes",
+    "receiver-bound root/captures/commands directory device and inode checks",
+    "held-FD and path alias stability; reject symlinks, drift, over-size and foreign permissions",
+    "attempt closure of every owned directory/file descriptor and retain combined read/close failures",
+    "exact previously failed unit description, invocation, exec PID/start; reject live or replaced unit before file reading",
+    "empty owned cgroup checks before and after; four active protected service records unchanged",
+    "fixed show-only command set in actual main over explicit runner/read doubles",
+    "shared absolute work deadline, safe error summaries, false approval and tampered-source rejection"
+  ],
+  "date": "2026-11-18",
+  "effects": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "dnsOrPortChanges": false,
+    "externalAgentCalls": 0,
+    "newLinuxUnits": 0,
+    "productCodeChanged": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnections": 0
+  },
+  "limitations": [
+    "28 is this local diagnostic component suite, not a new full product regression.",
+    "Memory filesystem/runner doubles do not establish native kernel behavior.",
+    "The preserved failed run command stderr has not been read; command failure cause is still unknown.",
+    "Empty or absent first-command stderr cannot justify expanded collection or a speculative security/mount change."
+  ],
+  "limitsAndMissingWork": {
+    "blockingSyscallsBoundedByCooperativeTickAlone": false,
+    "freshRemoteApprovalReceived": false,
+    "local35SecondOuterWatchdogConnected": false,
+    "nativeBehaviorVerified": false,
+    "productionReady": false,
+    "remote20SecondHardWrapperConnected": false,
+    "sdkCallerImplemented": false
+  },
+  "localVerification": {
+    "count": 28,
+    "exitCode": 0,
+    "sourcePinsUnchanged": true,
+    "sourceSha256": {
+      "remote.py": "d7c747265835ecca6ebe083c6a8c7dab666daf1b67cc86c8e936cc7b6dde3de8",
+      "test_collect.py": "dcc119a9847e1704ed8a422dcaef516b2585c135ca80aacbe3b4f8bced4410ca",
+      "test_group.py": "d6e7c3ac4e96da8e4ac0258e51f8fa4979fedd64f769e233370055435a180133",
+      "test_remote.py": "a4277093adc9a4c75f7a90650aefbd158f26b06bddc09341798dd096b882f458"
+    },
+    "testsStderrSha256": "eda27e99b14b1d008ed83ceacfaca4848bf0062e72781071f40d6e52a523b6fb"
+  },
+  "nextLocalStep": "Integrate the reviewed component with the existing single-use SSH transport and owned-process runner, prove the remote20/local35 envelope with bounded simulations and a false-approval actual entry refusal; no remote operation is authorized by this record.",
+  "offlineTransportRendering": {
+    "commandNotExecuted": true,
+    "frozenRendererAccepted": true,
+    "newLinuxUnits": 0,
+    "renderedCommandUtf8Bytes": 39761,
+    "sshConnections": 0
+  },
+  "preparedInput": {
+    "approved": false,
+    "authorized": false,
+    "boundToSavedFailedRunOnly": true,
+    "rawIdentifiersAndMetadataKeptPrivate": true
+  },
+  "schemaVersion": 1,
+  "scope": "local-first-command-stderr-reader-component-only",
+  "status": "component-verified-caller-pending-native-unverified"
+}
