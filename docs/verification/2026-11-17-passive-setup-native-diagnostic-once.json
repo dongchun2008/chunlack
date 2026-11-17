@@ -1,0 +1,121 @@
+{
+  "allowance": {
+    "additionalConnections": 0,
+    "automaticRetry": false,
+    "localEnvelopeSeconds": 450,
+    "maximumSetupUnits": 1,
+    "maximumSshConnections": 1,
+    "setupUnitCreated": true,
+    "usedSshConnections": 1
+  },
+  "capturedBeforeExternalStop": {
+    "journalErrorRows": 0,
+    "managerStderrBytes": 0,
+    "postStopLogsCollected": false,
+    "setupStderrBytes": 0,
+    "setupStdoutBytes": 0,
+    "terminalStateLogsProvenEmpty": false,
+    "unitInvocationUnchangedDuringRead": true
+  },
+  "date": "2026-11-17",
+  "diagnosticPassed": false,
+  "effects": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "dnsChanges": false,
+    "existingServicesModified": false,
+    "externalAgentCalls": 0,
+    "observerOrBusinessPhaseStarted": false,
+    "oldLackModified": false,
+    "productionPublished": false,
+    "publicPortChanges": false,
+    "realModelCalls": 0,
+    "relayChanges": false
+  },
+  "evidenceAuditAccepted": true,
+  "execution": {
+    "actualCapabilityValuesKnown": false,
+    "capabilitySampleCount": 0,
+    "cleanupErrors": [],
+    "diagnosticCollected": false,
+    "driverError": {
+      "code": "bridge_driver_transport_receipt",
+      "type": "RuntimeError"
+    },
+    "driverSeconds": 11.52707170008216,
+    "externalOwnUnitCleanupConfirmed": true,
+    "localOwnedProcessExitCode": 1,
+    "localTotalSeconds": 11.975534599972889,
+    "managerInternalCleanupConfirmed": false,
+    "managerInternalCleanupError": {
+      "code": "root_dispatch_kernel_caps",
+      "type": "RuntimeError"
+    },
+    "managerPrimaryError": {
+      "code": "bridge_setup_manager_missing_live",
+      "type": "RuntimeError"
+    },
+    "setupCompleted": false,
+    "simulation": false
+  },
+  "limitations": [
+    "The original manager cleanup error is not erased by successful external cleanup.",
+    "No capability sample was captured; the actual capability mismatch and failure origin remain unknown.",
+    "Output and journal were read before the conditional external stop; they do not prove post-stop log state.",
+    "Service protection evidence covers the before/after observation interval, not an ongoing availability guarantee.",
+    "The single SSH allowance is consumed. No retry, new unit or follow-up SSH was performed.",
+    "Private operational sources, approvals, artifacts and raw logs remain local."
+  ],
+  "localAndTransportCleanup": {
+    "ownedLocalChildReaped": true,
+    "sdkThreadExitConfirmed": true,
+    "sixPhaseExitReceiptsVerified": true,
+    "transportCleanupConfirmed": true,
+    "transportEvidenceHashesVerified": true
+  },
+  "nativeCompatibilityVerified": false,
+  "ownUnitCleanup": {
+    "activeState": "failed",
+    "cleanupSeconds": 0.10968366730958223,
+    "conditionalStopAttempted": true,
+    "execMainCode": 2,
+    "execMainStatus": 9,
+    "newUnitsCreatedByCleanup": 0,
+    "processCount": 0,
+    "result": "signal",
+    "scopeEmptyConfirmed": true,
+    "subState": "failed",
+    "unitExitedConfirmed": true
+  },
+  "productionReady": false,
+  "proofCreated": false,
+  "protectedServices": {
+    "allActiveBeforeAndAfter": true,
+    "continuousHealthBeyondObservationWindowProven": false,
+    "count": 4,
+    "exactBeforeAfterIdentityAndRestartRecordsMatch": true,
+    "existingServiceStopOrRestartPerformed": false
+  },
+  "requestedResourcePolicy": {
+    "allLiveResourcePropertiesIndependentlyVerified": false,
+    "cpuPercentOfOneCore": 20,
+    "cpuWeight": 10,
+    "memoryMiB": 192,
+    "nice": 10,
+    "originalIdentityNnpAndCapabilityChecksPreserved": true,
+    "privateNetwork": true,
+    "setupSeconds": 90,
+    "swapAllowed": false,
+    "tasksMax": 32
+  },
+  "schemaVersion": 1,
+  "scope": "single-approved-restricted-linux-setup-diagnostic",
+  "sourceBinding": {
+    "driverSha256": "5a085cd394eceb8a310c5638539e40253295e2b94e952c318d4b9e64eaf3bcbc",
+    "entrySha256": "80ada5c8774385efdf3e3d10fb6e44d51bebecbcfd170177b8c526b746e65d66",
+    "evidenceAuditSha256": "fa3deaca4a9d20f640239a6fad58c4f5decbf7e3e96c0f7cd9d5a748735bcdfe",
+    "packetSha256": "9d9aac31447c9f6f94bdf0111f8663a18777f9eb3572ea8efd22a78c0d006a3c",
+    "priorFrozenCandidateModified": false
+  },
+  "summary": "单次原生诊断失败，已停止且未重试；临时单元已受限停止并确认进程清空，四项现有服务前后保持一致。未采到有效能力字段。"
+}
