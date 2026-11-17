@@ -1,0 +1,101 @@
+{
+  "accepted": true,
+  "date": "2026-11-17",
+  "effects": {
+    "agentChanges": false,
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "externalAgentCalls": 0,
+    "newLinuxUnits": 0,
+    "productSourceChanges": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnected": false
+  },
+  "executionBoundary": {
+    "databaseCopyReachable": false,
+    "diagnosticDoesNotAuthorizeExecution": true,
+    "hostOrBusinessLaunchReachable": false,
+    "nativeOrProductionAuthorityFromSamples": false,
+    "observerLaunchReachable": false,
+    "originalPolicyAndTransportLimitPreserved": true,
+    "primaryErrorAndCleanupErrorsSeparate": true,
+    "privateTransportSavedBeforeAcceptance": true,
+    "proofGenerationReachable": false,
+    "reachableRemoteSources": [
+      "preflight",
+      "receiver",
+      "setup-manager",
+      "fixed-own-output-reader",
+      "fixed-own-unit-cleanup"
+    ]
+  },
+  "limitations": [
+    "Actual Linux capability values and the root_dispatch_kernel_caps cause remain unverified.",
+    "Passive synchronous writes rely on the existing manager alarm, setup unit timeout and outer supervisor; native watchdog effectiveness was not tested.",
+    "This is local operational preparation, not product-wide regression or native compatibility, deployment or delivery acceptance.",
+    "Private operational sources, inactive package and raw evidence remain local; only this sanitized record is synchronized."
+  ],
+  "nativeCompatibilityVerified": false,
+  "package": {
+    "approvalReferencePresent": false,
+    "archiveManifestFiles": 169,
+    "archiveMembers": 170,
+    "attemptCreated": false,
+    "boundFiles": 16,
+    "bundleSha256": "7b204f579086ef2c7c7269fe7e257b02f655af1b8fc47c4a2178a903350700ae",
+    "driverSha256": "5a085cd394eceb8a310c5638539e40253295e2b94e952c318d4b9e64eaf3bcbc",
+    "entrySha256": "80ada5c8774385efdf3e3d10fb6e44d51bebecbcfd170177b8c526b746e65d66",
+    "hostSourceFiles": 161,
+    "packetBytes": 21585920,
+    "packetSha256": "d8fb0fd0e983ed493be9a4f1047375a0450c7df30e5086d9c1e0ff79d07b5139",
+    "savedFiles": 18,
+    "userApproved": false
+  },
+  "productionReady": false,
+  "proofCreated": false,
+  "proposedFutureDiagnosticNotAuthorized": {
+    "additionalFinalPreflightSeconds": 20,
+    "automaticRetry": false,
+    "cpuPercentOfOneCore": 20,
+    "cpuWeight": 10,
+    "existingCapabilityAndIdentityChecksPreserved": true,
+    "localEnvelopeSeconds": 450,
+    "maximumSetupUnits": 1,
+    "maximumSshAttempts": 1,
+    "memoryMiB": 192,
+    "nice": 10,
+    "privateNetwork": true,
+    "remotePhaseSeconds": {
+      "fixed_logs.py": 20,
+      "own_cleanup.py": 20,
+      "preflight.py": 20,
+      "receiver.py": 60,
+      "setup_manager.py": 140
+    },
+    "setupUnitSeconds": 90,
+    "swapAllowed": false,
+    "tasksMax": 32
+  },
+  "schemaVersion": 1,
+  "scope": "local-passive-setup-diagnostic-package-only",
+  "summary": "本地诊断入口、完整组包与相关回归通过；未进行原生诊断或生产发布。",
+  "verification": {
+    "independentReview": "Two confirmed findings fixed and statically re-reviewed; reviewer did not execute tests or network.",
+    "managerRenderedCommandBytes": 39250,
+    "optimizedPythonNegativeTests": 2,
+    "ownLocalChildCleanupVerified": true,
+    "priorFrozenDriverAndEntryUnchanged": true,
+    "realSourceRendererCases": 5,
+    "rendererBootstrapLimitBytes": 65536,
+    "savedInactiveEntryRefusalVerified": true,
+    "sourcePinsUnchanged": true,
+    "tests": {
+      "accepted": true,
+      "count": 28,
+      "exitCode": 0,
+      "seconds": 5.190246699959971
+    }
+  }
+}
