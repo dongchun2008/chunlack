@@ -1,0 +1,66 @@
+{
+  "boundaries": {
+    "browsersOrAccountsOperated": false,
+    "connectionsSubscriptionsTasksOrGrantsCreated": false,
+    "credentialsRead": false,
+    "messagesSentToExternalAgent": 0,
+    "modelCalls": 0,
+    "newLinuxUnits": 0,
+    "productCodeChanged": false,
+    "productionPublished": false,
+    "relayChanged": false,
+    "testsRerun": false,
+    "vpsConnections": 0
+  },
+  "currentLocalImplementation": {
+    "actualRuntimeOrAccountTestPerformed": false,
+    "exactTaskArgumentsWhitelistInspected": true,
+    "runtimePublishesAtMostOneDeliveryPerFlush": true,
+    "sourceSha256": {
+      "docs/superpowers/specs/2026-10-21-native-agent-conversation-isolation-design.md": "6687d7776a69769a7987542256041428b3391e08eda15071a85c84ad2e76c18a",
+      "integrations/mcp/events.cjs": "679fb62b8a4686cbfe375772f05e4db29a9ff81f1c2dda6f627312d13b27a636",
+      "integrations/mcp/runtime.cjs": "614dd4fb4d6be2c3538095e3dd3f811abfec9f71e4908c407d5bc60f0a1a5d02"
+    },
+    "subscriptionBoundToExactTaskWorkspaceNodeAndGrant": true,
+    "verifiedIndependentNativeDestinationImplemented": false
+  },
+  "date": "2026-11-18",
+  "decision": {
+    "genericWorkerMaySubstituteForNativeAgent": false,
+    "newDispatcherOrDatabaseMigrationJustifiedNow": false,
+    "nextFeasibilityEvidenceRequired": [
+      "owner-confirmed separate native destination",
+      "same native Agent computer/browser capability in that destination",
+      "supported connector/task access in that destination",
+      "subscription actually created there if events are chosen",
+      "task and result persistence plus daily conversation untouched"
+    ],
+    "reason": "The accepted design requires vendor-route feasibility first. Callback control and thread labels cannot prove native destination identity or computer authority.",
+    "silentFallbackToDailyConversationAllowed": false
+  },
+  "officialSources": [
+    {
+      "limit": "This does not establish account permissions, an approved destination, execution completion or computer access.",
+      "observed": "ChatGPT supplies callback URL and signing secret; the event arrives in the subscribing chat. The inspected subscription interface supplies no native conversation selector.",
+      "url": "https://developers.openai.com/plugins/build/mcp-events"
+    },
+    {
+      "limit": "Separate visibility does not prove strict memory isolation or same-native-Agent computer/plugin inheritance.",
+      "observed": "A dot can create separate visible cloud threads with work-specific context and coordinate them; relevant memory and notes can cross conversation boundaries.",
+      "url": "https://learn.chatgpt.com/docs/dots/tasks-and-memory"
+    },
+    {
+      "limit": "The inspected page does not establish an externally selectable task destination with verified native execution authority.",
+      "observed": "Separate cloud threads and the dot cloud computer are documented capabilities.",
+      "url": "https://learn.chatgpt.com/docs/dots/computers-and-apps"
+    }
+  ],
+  "pendingNativeSetupCandidate": {
+    "newRemoteApprovalReceived": false,
+    "priorSingleUseGrantReused": false,
+    "record": "2026-11-18-root-setup-credential-candidate-local.json"
+  },
+  "productionDeliveryComplete": false,
+  "schemaVersion": 1,
+  "scope": "local-source-and-public-official-documentation-refresh-only"
+}
