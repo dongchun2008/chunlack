@@ -1,0 +1,159 @@
+{
+  "accepted": true,
+  "candidate": {
+    "approvalReferencePresent": false,
+    "archiveMembers": 170,
+    "attemptCreated": false,
+    "boundFiles": 16,
+    "driverSha256": "d8219608759f58dffad6a109e9fe1db847a75a3d26bff8d689cabe67eb9655bb",
+    "entrySha256": "80ada5c8774385efdf3e3d10fb6e44d51bebecbcfd170177b8c526b746e65d66",
+    "managerSha256": "66bb3d1b9ed6d3ee4d7ca8c1bf63db3b7a47abfe18ad45a42039cdd6d98f7505",
+    "manifestFiles": 169,
+    "packetSha256": "c2b6a8ac54009efddcf8df3b8b861db0ef5f9a5dc87dcbe9cf0367d9b59a09dc",
+    "savedFiles": 18,
+    "userApproved": false
+  },
+  "date": "2026-11-17",
+  "diagnosticDesign": {
+    "cancellationPreservesExceptionAndSkipsAfterProbe": true,
+    "executableMetadata": [
+      "device",
+      "inode",
+      "mode",
+      "UID",
+      "GID"
+    ],
+    "expectedInterpreter": "/usr/bin/python3",
+    "fixedPaths": [
+      "/proc/<bound-pid>/stat",
+      "/proc/<bound-pid>/exe",
+      "/usr/bin/python3"
+    ],
+    "identityEvidenceNeverAuthorizesExecution": true,
+    "laterFailureCannotInheritFirstSnapshotIdentity": true,
+    "noAdditionalStatusReadsOrBusCommands": true,
+    "noCmdlineEnvironmentReadlinkExecutableBytesOrRawStatusExport": true,
+    "observationErrorsDoNotReplaceOriginalGuardError": true,
+    "procStatExportedFields": [
+      "PID",
+      "kernel starttime ticks"
+    ],
+    "procStatMaximumBytes": 8192,
+    "reusesExistingUnitRowsAndBusCommands": true,
+    "snapshotMonotonicBrackets": true,
+    "snapshotOrdinal": 1,
+    "strictDecoderRecomputesEndpointStabilityAndFailureCorrelation": true,
+    "unavailableOrDriftingIdentityCannotBeCalledBound": true,
+    "unitFields": [
+      "InvocationID",
+      "MainPID",
+      "ExecMainPID",
+      "ActiveState",
+      "SubState",
+      "unit start monotonic time",
+      "observation time upper bound",
+      "expected cgroup match"
+    ]
+  },
+  "effectsThisLocalPhase": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "dnsChanges": false,
+    "externalAgentCalls": 0,
+    "newLinuxUnits": 0,
+    "portChanges": false,
+    "productSourceChanges": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "sshConnections": 0,
+    "vpsRequests": 0
+  },
+  "limitations": [
+    "Endpoint inode/PID metadata equality does not prove an atomic or continuous process history and does not exclude ABA.",
+    "Matching the configured interpreter does not prove script/import/credential readiness or authorize any task.",
+    "Only the first snapshot is bracketed; failure correlation is separately derived and false for later snapshot failures.",
+    "Metadata access may fail under the unchanged capability policy; denied or missing data stays unknown, without privilege escalation.",
+    "Local doubles and source-bound inactive-package checks are not Linux/native or production acceptance.",
+    "The previous native target CAP_SETUID mismatch remains a confirmed guard failure with an unverified underlying cause.",
+    "Private source, synthetic fixtures, approvals, raw evidence and inactive package remain local; only this sanitized record is synchronized."
+  ],
+  "nativeCompatibilityVerified": false,
+  "nativeContext": {
+    "priorDiagnosticEvidenceCollected": true,
+    "priorNativeRecord": "2026-11-17-startup-provenance-native-diagnostic-once.json",
+    "priorSetupPassed": false,
+    "priorSingleSshAllowanceMaximum": 1,
+    "priorSingleSshAllowanceUsed": 1,
+    "thisPhaseNativeExecuted": false,
+    "underlyingCapabilityCauseKnown": false
+  },
+  "productionReady": false,
+  "proofCreated": false,
+  "proposedFutureScopeNotAuthorized": {
+    "automaticRetry": false,
+    "cpuWeight": 10,
+    "localSeconds": 450,
+    "maximumSetupUnits": 1,
+    "maximumSshAttempts": 1,
+    "nice": 10,
+    "observerOrBusinessLaunchAllowed": false,
+    "privateNetwork": true,
+    "sameConnectionPreflightEvidenceOwnUnitCleanupAndFinalBaseline": true,
+    "setupCpuPercentOfOneCore": 20,
+    "setupMemoryMiB": 192,
+    "setupTasksMax": 32,
+    "setupUnitSeconds": 90,
+    "swapAllowed": false
+  },
+  "schemaVersion": 1,
+  "scope": "local-target-execution-identity-diagnostic-preparation",
+  "summary": "本地补齐首次目标快照的执行身份、PID/starttime、时钟括号与单元代次取证；47项入口集成、19项身份/启动及31项原安全回归通过。新包未授权，未运行原生诊断。",
+  "unchanged": {
+    "callLimitsAndTimeBudgets": true,
+    "capabilityUidNnpCgroupResourceAndLifecycleGuards": true,
+    "passiveTraceBytesAndSharedSingleFrameBudget": true,
+    "previousFrozenSources": true,
+    "productSources": true,
+    "receiverSource": true,
+    "setupProfile": true,
+    "setupSource": true,
+    "transportAndBootstrapLimit": true
+  },
+  "verification": {
+    "allFiveFullSourceRendererCasesRetained": true,
+    "allSavedCandidateHashesRechecked": true,
+    "completeActualProducerRecordToStrictDecoderRoundtripWithExplicitDoubles": true,
+    "entryIntegration": {
+      "accepted": true,
+      "count": 47,
+      "exitCode": 0,
+      "seconds": 5.168182500055991
+    },
+    "independentStaticReviewCompleted": true,
+    "optimizedPythonGateTestsRetained": true,
+    "originalGuardRejectedCapsEvenWhenIdentityRecordComplete": true,
+    "ownedLocalChildCleanupVerified": true,
+    "pidReuseAndExecChangeCasesCovered": true,
+    "producerGroups": [
+      {
+        "count": 19,
+        "existingStartupCases": 10,
+        "exitCode": 0,
+        "name": "identity-and-existing-startup-regressions",
+        "newIdentityCases": 9,
+        "seconds": 14.717
+      },
+      {
+        "count": 31,
+        "exitCode": 0,
+        "name": "unchanged-original-manager-guard-regressions",
+        "seconds": 34.404
+      }
+    ],
+    "readDenialAndUnknownMetadataRemainUnknown": true,
+    "reviewerExecutedTestsOrNetwork": false,
+    "savedInactiveEntryRefusedBeforeSdkAndAttempt": true,
+    "sourceChangeAllowlistAndOldFixturesPreserved": true
+  }
+}
