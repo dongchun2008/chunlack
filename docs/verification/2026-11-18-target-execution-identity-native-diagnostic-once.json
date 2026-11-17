@@ -88,7 +88,8 @@
     "Setup output and journal were read before external stop; empty snapshots do not establish post-stop log state.",
     "Protected service evidence is an observed before/after interval, not a guarantee of continuous availability or Relay traffic.",
     "The one SSH allowance is fully consumed; no retries or additional remote actions were performed.",
-    "Private process identifiers, inode values, source, approval artifacts and raw outputs remain local."
+    "Private process identifiers, inode values, source, approval artifacts and raw outputs remain local.",
+    "A saved historical positive diagnostic used a different execution flag set and payload; it does not establish current causal behavior or authorize adding that flag."
   ],
   "localAndTransportCleanup": {
     "allSixPhaseTransportHashesAndExitReceiptsAudited": true,
@@ -176,5 +177,22 @@
     "targetFrameSha256": "3ad95fbeb34996ef7fcf974553e62037e875e89733f17c1f0142ae8b8c2c30c1",
     "targetReceiptWritten": true
   },
-  "summary": "已取得与首次能力异常关联的执行身份记录：两个采样端点均匹配配置中的Python inode，PID/starttime及单元代次一致，Eff/Prm仍为0x6b、Bnd为0xeb。准备未通过，已受限清理且未重试；缺位机制仍未知。"
+  "summary": "已取得与首次能力异常关联的执行身份记录：两个采样端点均匹配配置中的Python inode，PID/starttime及单元代次一致，Eff/Prm仍为0x6b、Bnd为0xeb。准备未通过，已受限清理且未重试；缺位机制仍未知。",
+  "localSourceComparison": {
+    "historicalSavedAcceptanceDateUtc": "2026-10-29T23:38:18.048Z",
+    "historicalDiagnosticAccepted": true,
+    "historicalExecStartExFlags": [
+      "no-setuid",
+      "no-env-expand"
+    ],
+    "currentFrozenExecStartExFlags": [
+      "no-env-expand"
+    ],
+    "differenceConfirmedByReadOnlyIndependentReview": true,
+    "singleVariableNativeComparisonPerformed": false,
+    "missingFlagProvenCause": false,
+    "currentProfileOrFlagsChanged": false,
+    "additionalSshOrUnitsUsed": 0,
+    "conclusion": "The historical positive diagnostic used no-setuid as well as no-env-expand. The current frozen setup uses only no-env-expand. Payload, properties and execution date differ; this is a candidate lead, not a demonstrated cause or an approved fix."
+  }
 }
