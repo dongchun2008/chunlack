@@ -1,0 +1,75 @@
+{
+  "authorization": {
+    "allowanceExhausted": true,
+    "automaticRetry": false,
+    "localMaximumSeconds": 35,
+    "newLinuxUnits": 0,
+    "remoteMaximumSeconds": 20,
+    "sshConnectionsApproved": 1,
+    "sshConnectionsUsed": 1
+  },
+  "date": "2026-11-19",
+  "evidence": {
+    "bytes": 118,
+    "fixedLeaf": "command-0.stderr",
+    "rawPrivateOnly": true,
+    "recognizedClasses": [
+      "systemd-runtime-detection-failed",
+      "bus-host-down"
+    ],
+    "sha256": "5aa1f455d5a9163b8ecbad00f3a5e89a62b2d5414d6150d481692269cbf53caa",
+    "unchangedFromPreviousCapture": true
+  },
+  "limits": [
+    "Service-state snapshots do not prove continuous traffic.",
+    "Unchanged old error evidence does not verify the local runtime-marker correction.",
+    "No native preparation unit, release rehearsal or production acceptance was performed.",
+    "This separate one-shot readonly allowance is exhausted; it does not approve a native unit."
+  ],
+  "observed": {
+    "assemblyPinsVerified": 9,
+    "callerElapsedSeconds": 2.0913424999453127,
+    "captureErrors": [],
+    "cleanupErrors": [],
+    "heldDirectoryClosed": true,
+    "localReceiptChecksPassed": 18,
+    "ownedChildReaped": true,
+    "primaryError": null,
+    "remoteElapsedSeconds": 0.05653241649270058,
+    "sdkThreadExited": true,
+    "sourcePinsVerified": 16,
+    "sshClosed": true,
+    "wrapperElapsedSeconds": 2.129594999947585
+  },
+  "productionDeliveryComplete": false,
+  "protection": {
+    "businessGrantChanges": false,
+    "comparedFields": [
+      "Id",
+      "ActiveState",
+      "MainPID",
+      "NRestarts"
+    ],
+    "credentialChanges": false,
+    "dnsOrPortChanges": false,
+    "exclusiveCgroupEmpty": true,
+    "externalAgentCalls": 0,
+    "failedUnitGenerationUnchanged": true,
+    "failedUnitStopped": true,
+    "fourDeclaredServiceRecordsUnchanged": true,
+    "fourDeclaredServicesActiveBeforeAndAfter": true,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "remoteWrites": 0,
+    "unitStartsOrStops": 0
+  },
+  "schemaVersion": 1,
+  "scope": "new-single-use-fixed-stderr-readonly-refresh",
+  "sdkDiagnostics": {
+    "classifiedHarmless": false,
+    "errorCountBoundedAt65": 1,
+    "socket10038Observed": true
+  },
+  "status": "capture-and-local-receipt-audit-passed"
+}
