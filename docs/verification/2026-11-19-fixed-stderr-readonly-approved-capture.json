@@ -1,0 +1,81 @@
+{
+  "authorization": {
+    "allowanceExhausted": true,
+    "automaticRetry": false,
+    "localMaximumSeconds": 35,
+    "newLinuxUnits": 0,
+    "remoteMaximumSeconds": 20,
+    "sshConnectionsApproved": 1,
+    "sshConnectionsUsed": 1
+  },
+  "date": "2026-11-19",
+  "evidence": {
+    "bytes": 118,
+    "fixedLeaf": "command-0.stderr",
+    "rawPrivateOnly": true,
+    "recognizedClasses": [
+      "systemd-runtime-detection-failed",
+      "bus-host-down"
+    ],
+    "sha256": "5aa1f455d5a9163b8ecbad00f3a5e89a62b2d5414d6150d481692269cbf53caa",
+    "unchangedFromPreviousCapture": true
+  },
+  "limits": [
+    "Service snapshots do not prove uninterrupted traffic.",
+    "Unchanged historical stderr does not validate a runtime correction.",
+    "No new unit, native integration, production release or model call was performed.",
+    "Single-use SSH allowance exhausted; no retries or additional remote actions."
+  ],
+  "observed": {
+    "assemblyPinsVerified": 9,
+    "callerElapsedSeconds": 2.482745600049384,
+    "captureErrors": [],
+    "cleanupErrors": [],
+    "heldDirectoryClosed": true,
+    "localReceiptChecksPassed": 18,
+    "ownedChildReaped": true,
+    "primaryError": null,
+    "remoteElapsedSeconds": 0.05511931609362364,
+    "sdkThreadExited": true,
+    "sourcePinsVerified": 16,
+    "sshClosed": true,
+    "wrapperElapsedSeconds": 2.527516399975866
+  },
+  "offlineAuditCorrection": {
+    "additionalSshConnections": 0,
+    "finalChannelCloseReceiptChecked": true,
+    "initialFailurePreserved": true,
+    "reason": "query observation precedes final channel close"
+  },
+  "productionDeliveryComplete": false,
+  "protection": {
+    "businessGrantChanges": false,
+    "comparedFields": [
+      "Id",
+      "ActiveState",
+      "MainPID",
+      "NRestarts"
+    ],
+    "credentialChanges": false,
+    "dnsOrPortChanges": false,
+    "exclusiveCgroupEmpty": true,
+    "externalAgentCalls": 0,
+    "failedUnitGenerationUnchanged": true,
+    "failedUnitStopped": true,
+    "fourDeclaredServiceRecordsUnchanged": true,
+    "fourDeclaredServicesActiveBeforeAndAfter": true,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "remoteWrites": 0,
+    "unitStartsOrStops": 0
+  },
+  "schemaVersion": 1,
+  "scope": "approved-single-use-fixed-stderr-readonly-capture",
+  "sdkDiagnostics": {
+    "classifiedHarmless": false,
+    "errorCountBoundedAt65": 1,
+    "socket10038Observed": true
+  },
+  "status": "capture-and-offline-receipt-audit-passed"
+}
