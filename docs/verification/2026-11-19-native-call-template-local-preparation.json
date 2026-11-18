@@ -1,0 +1,74 @@
+{
+  "actions": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "externalAgentCalls": 0,
+    "modelCalls": 0,
+    "newLinuxUnits": 0,
+    "productChanges": false,
+    "productionPublished": false,
+    "relayChanges": false,
+    "vpsConnections": 0
+  },
+  "date": "2026-11-19",
+  "diagnosticDriverSha256": "4f7f9a261dbd41896ab00f1d556fd01cb872d6f8cf173d148c2026b20f66ed76",
+  "limits": [
+    "This is an inactive local call template, not a new native attempt, approval, root-cause fix or production release.",
+    "The previous single SSH/setup allowance remains exhausted; the current source and prior16 tests do not grant more remote execution.",
+    "After a fresh user grant, new exclusive execution inputs and exact consent/root bindings remain required; historical false-approved or failed packages are not activated.",
+    "Full production delivery and native cgroup cause remain unverified."
+  ],
+  "oldCallSha256": "f345f85c7570b08cfcb0b6860e79f800279fa99982ee35c2be0478ee42621973",
+  "onlyDelta": "one diagnostic driver SHA literal; all other original call bytes unchanged",
+  "pendingCriticalScope": {
+    "automaticRetry": false,
+    "controllerCapabilities": 235,
+    "cpuWeight": 10,
+    "freshApprovalRequired": true,
+    "localTotalSeconds": 450,
+    "managementOverheadOutsideUnitLimits": true,
+    "maximumSetupUnits": 1,
+    "maximumSshConnections": 1,
+    "memoryMiB": 192,
+    "nice": 10,
+    "noNewPrivileges": true,
+    "privateNetwork": true,
+    "productionPublication": false,
+    "setupRuntimeSeconds": 90,
+    "singleCoreCpuPercent": 20,
+    "swapBytes": 0,
+    "tasksMax": 32
+  },
+  "preserved": [
+    "Original built approval/root/binding and saved-file checks.",
+    "Fixed reviewed entry and owned subprocess runner.",
+    "Exclusive single invocation marker and no retry.",
+    "Hard450-second envelope through reads, receipts and final output;15-second reserve.",
+    "No inherited old execution parent or activation inputs."
+  ],
+  "productionDeliveryComplete": false,
+  "review": {
+    "confirmedRemainingP1P2": [],
+    "freshRemoteAuthorizationCreated": false,
+    "kind": "independent static exact-delta review",
+    "oldCallSha256": "f345f85c7570b08cfcb0b6860e79f800279fa99982ee35c2be0478ee42621973",
+    "onlyDelta": "one driver SHA literal",
+    "reviewerConnectedVps": false,
+    "reviewerExecutedTemplate": false,
+    "reviewerRanTests": false,
+    "templateSha256": "5c030ca44181b811233cf4a84a2e357221a8489a360d3d69273caba11a0c03dd"
+  },
+  "schemaVersion": 1,
+  "scope": "inactive-single-native-call-template-local-preparation",
+  "status": "exact-delta-and-independent-static-review-passed",
+  "templateSha256": "5c030ca44181b811233cf4a84a2e357221a8489a360d3d69273caba11a0c03dd",
+  "verification": {
+    "candidateImplementationPinsUnchanged": true,
+    "consentPresent": false,
+    "invocationPresent": false,
+    "newOrRepeatedTests": 0,
+    "newPackageAssemblies": 0,
+    "preparedInputPresent": false,
+    "templateExecuted": false
+  }
+}
