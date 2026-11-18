@@ -1,0 +1,71 @@
+{
+  "boundaries": {
+    "actualManagerCommands": 0,
+    "credentialChanges": false,
+    "dnsOrPortChanges": false,
+    "externalAgentCalls": 0,
+    "grantChanges": false,
+    "nativeSocketsUsed": 0,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "remoteWrites": 0,
+    "vpsConnections": 0
+  },
+  "date": "2026-11-19",
+  "implementation": {
+    "ackMeansReferenceReceivedOnly": true,
+    "derivedImporterChangedFunctions": [
+      "Bridge.adopt"
+    ],
+    "failurePoisonsSender": true,
+    "liveAndUnlinkedOriginalReferencesCovered": true,
+    "maximumAckReceivesPerRole": 1,
+    "maximumSendAttemptsPerRole": 1,
+    "originalReferenceRetiredAfterFrozenOutcome": true,
+    "parentTransferredAfterObservedChildren": true,
+    "receiverAndImporterDoNotMintOrigin": true,
+    "roleFrozenBeforeTransportCallbacks": true,
+    "socketAndEndpointAuthenticationRemainCallerResponsibilities": true,
+    "trustedCreatorLedgerStillPrerequisite": true,
+    "unchangedPreviousSourceCount": 7,
+    "unknownAckDoesNotPermitRetry": true
+  },
+  "productionDeliveryComplete": false,
+  "remaining": [
+    "Authentic creator launch provenance, original capture and creator sealing",
+    "Persistent coordinator and full-runner source/deadline binding",
+    "Native Linux protocol and whole-chain isolated acceptance",
+    "Controlled production publication and original user-facing delivery acceptance"
+  ],
+  "schemaVersion": 1,
+  "scope": "local-original-reference-sender-and-paired-handoff",
+  "sourcePins": {
+    "PLAN.md": "70ddc42547cff3232f9222904fe1962236b3fba929cf7dea1eb795b8f90d9782",
+    "bridge_import.py": "663a31d9a7a35bb4237d7a745a6cfc0699934c62cd9ef33c882f3065e46912ce",
+    "sender.py": "abe6962748f51b5ad1235315b83d41f3b23c7c5e0a9a2f77015026c0f135deae",
+    "test_import_contract.py": "46dc75d1a27eda5f535ed9048138c117aa5044e0bba67bf27f67f064905eb217",
+    "test_sender.py": "a324314c588f17a94f0fa118aa0dcf9419a17377e9fa2ac278cbffb55fed7f95"
+  },
+  "status": "local-only-passed-not-native-accepted",
+  "verification": {
+    "actualPinnedReaderStoreManagerEngineUsed": true,
+    "countsNotAddedTogether": true,
+    "filesystemChannelsAndCommandsSimulated": true,
+    "finalFourTestOnlyCasesNotSeparatelyReviewed": true,
+    "implementationReviewHashesMatchedFinal": true,
+    "independentStaticReview": "no confirmed P1 or P2 in reviewed implementation",
+    "logSha256": "8e06dd5d939ca5b06a01d203fc8efe437d2de5fecc3814420e91264fb67973e6",
+    "nestedOriginalBridgeCompatibilityTests": 18,
+    "networkAndNativeCommandExecutionForbiddenInJoinedTests": true,
+    "outerSeconds": 5.417295000050217,
+    "outerTestsPassed": 28,
+    "pairedModes": [
+      "live six roles then six mocked stop submissions",
+      "all six original groups unlinked then zero stop submissions"
+    ],
+    "reportedSeconds": 5.095,
+    "wholeProductRegressionRerun": false
+  }
+}
