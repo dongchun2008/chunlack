@@ -1,0 +1,68 @@
+{
+  "actions": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "externalAgentCalls": 0,
+    "nativeSocketsOrManagerCommands": 0,
+    "newLinuxUnits": 0,
+    "productFilesEditedByThisStage": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-19",
+  "dependencySha256": {
+    "core": "9e2a3c4861c14b77970d5bcf2b9bc02470fd1644b826847a1b1720ef9f525910",
+    "exchange": "879541f91f5068cf12f8ba6bfd831a8e0f3620cbf07c77774ae15768ab85be35",
+    "fixture": "2dea8578b80b2f8998d9f3931063b0e9208ff8f7bba09263868327f68290c3b7",
+    "producer": "61046a26cc2a3be95b50513117036b4665a6199166cc34c61dcf6b381aca6bce",
+    "proposal": "da73cff3485a714f99b1a180444926df2a0554e3ff81d3244004cc48719bf396",
+    "receiver": "0afef264fc6985aac8d4008f3e2e57721e5013e74ffc7262236d2fecaed063d1",
+    "store": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd"
+  },
+  "implementationSha256": {
+    "publish.py": "45e1c2530108c96eaaf05b4e8e22c8ce54271cee41d7935139809ad40a2b29ec"
+  },
+  "limits": [
+    "Explicit memory filesystem, bus, identity and channel doubles; no native socket or kernel acceptance.",
+    "ACK proves historical receipt of a reference only, not endpoint authentication, a currently live remote lease, source validation or complete creator sealing.",
+    "Caller must authenticate destination/prelude/process and owns unprepared Origins and borrowed sockets.",
+    "Controller and worker capture/handoff, full registry sealing and persistent authenticated coordinator remain incomplete.",
+    "This component does not establish the complete 950s runtime, native release rehearsal or production delivery.",
+    "Historical 26-case pre-repair pass is retained separately and is not final acceptance."
+  ],
+  "productionDeliveryComplete": false,
+  "review": {
+    "confirmedRemainingP1P2": [],
+    "implementationMatchesReviewedPins": true,
+    "initialConfirmedP2": 1,
+    "redReproducedAndFixed": 1,
+    "reviewerRanTests": false,
+    "type": "independent static narrow FD-handoff review"
+  },
+  "schemaVersion": 1,
+  "scope": "local-ordered-observer-parent-host-reference-handoff",
+  "status": "local-regressions-and-independent-static-review-passed",
+  "tests": {
+    "exitCode": 0,
+    "failed": 0,
+    "outerSeconds": 65.60413459991105,
+    "passed": 28,
+    "skipped": 0,
+    "stderrSha256": "a9804d9f28ec0c6f153e7d39f3d35dd27b896f6bb71d9684da8e932102e1e486"
+  },
+  "verifiedLocally": [
+    "Exact actual actor factory and prior opaque parent/host Origins feed the existing Proposal, exchange and Receiver.",
+    "Host admission requires successful parent reference ACK and completed sender cleanup from the same source owner.",
+    "Role, source, request, job, witness and retained parent identity are clamped to original capture; slice process evidence is not invented.",
+    "Destination challenge and peer, clock function and retention deadline cannot be mixed between roles.",
+    "Host cannot refresh the first absolute delivery deadline; logical delivery window is at most 20s including cleanup reserves.",
+    "Origin and Store clock observations join the Hub watermark; claim, close and ACK regressions reject backward time without changing trusted clock functions.",
+    "Cancellation during opaque claim recognizes the exact ticket owner and retires its reference.",
+    "Cancellation during send or ACK never records a successful parent handoff.",
+    "New late ACK descriptors are registered and retired; uncertainty invalidates cached successful close without retry after FD-number reuse.",
+    "Both original objects can be delivered after unlink; transferred receiver leases and borrowed sockets remain caller-owned.",
+    "Wrong or lost ACK and duplicate sends are terminal; dictionaries and foreign module Origins cannot authorize delivery."
+  ]
+}
