@@ -1,0 +1,79 @@
+{
+  "actions": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "externalAgentCalls": 0,
+    "nativeSocketsOrManagerCommands": 0,
+    "newLinuxUnits": 0,
+    "productFilesEditedByThisStage": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-19",
+  "dependencySha256": {
+    "actualFrozenHostCreator": "c49a1e890bdc31fb9338c0086b7bc2f2c9a26cac83c26dc13c27352680af37f8",
+    "core": "9e2a3c4861c14b77970d5bcf2b9bc02470fd1644b826847a1b1720ef9f525910",
+    "explicitSimulationFixture": "f7cef5028300c31dd8ce1812b825dcd52276a0cd1687b634201ff53089f6f139",
+    "parentReferenceHelpers": "61046a26cc2a3be95b50513117036b4665a6199166cc34c61dcf6b381aca6bce",
+    "store": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd"
+  },
+  "implementationSha256": {
+    "producer.py": "5cf635a47d09f701878cf9190098515fb03df0ad16c0122c2b4644ad2d15da7e"
+  },
+  "limits": [
+    "All execution in this record is local simulation; no Linux kernel, native socket, systemd or VPS acceptance is established.",
+    "This narrowly establishes source-bound capture and retention, not endpoint authentication, full report validation, provenance registry sealing or a persistent authenticated coordinator.",
+    "Original kernel checks are preserved; Groups, target exe/stat and script-ready evidence are not invented.",
+    "Control publication/handoff, worker source capture/handoff and complete six-role/global 950-second integration remain incomplete.",
+    "Bilingual/multiuser production delivery, mixed-provider research, quiet Xuanji, Muse SuHua and physical node acceptance remain separate incomplete gates.",
+    "Private implementation, raw fixtures and failed diagnostics remain local; only this sanitized record is intended for repository synchronization."
+  ],
+  "productionDeliveryComplete": false,
+  "review": {
+    "authorFinalExecutionConfirmed": true,
+    "confirmedRemainingP1P2": [],
+    "initialReviewerP2": "unit name not bound to actual launch target",
+    "kind": "two independent static narrow source/FD lifecycle reviews",
+    "redReproducedFixed": [
+      "cleanup fallback issued provenance after ACK alone",
+      "pre-stage canonical launch target drift",
+      "pre-stage upstream request drift"
+    ],
+    "reviewedFixtureSha256": "f7cef5028300c31dd8ce1812b825dcd52276a0cd1687b634201ff53089f6f139",
+    "reviewedImplementationSha256": "5cf635a47d09f701878cf9190098515fb03df0ad16c0122c2b4644ad2d15da7e",
+    "reviewersReranFinalTests": false,
+    "sourcePrerequisites": [
+      "trusted source and request entry",
+      "exclusive lifecycle ownership",
+      "stable static BASE"
+    ]
+  },
+  "schemaVersion": 1,
+  "scope": "local-actual-host-control-creator-origin",
+  "status": "local-regressions-and-independent-static-review-passed",
+  "tests": {
+    "exitCode": 0,
+    "failed": 0,
+    "outerLimitSeconds": 90,
+    "outerSeconds": 76.39776240009815,
+    "passed": 28,
+    "reportedSeconds": 76.078,
+    "skipped": 0,
+    "sourceUnchanged": true,
+    "stderrSha256": "b40e8496fd7bd7f2dd4507059dcd0cf6575666f071712a03fb2580c86d60669b"
+  },
+  "verifiedLocally": [
+    "Original current constructor, protected/source closure, admission, SelfKernel, ParentGate, Stage, start, bind, stop and close execute over explicit memory filesystem/bus/OS doubles.",
+    "Original method code equality is checked; native process, socket and filesystem entry points have tripwires.",
+    "Creator binding precedes original staging and repeats before dispatch/capture, binding immutable upstream request, request SHA, tag/nonce and canonical root/host/parent names.",
+    "Complete staged request metadata and raw request digest/length, exact launch argv, exclusive held-directory reservation and exact job ACK bind capture.",
+    "ACK alone and cleanup fallback never issue an Origin; failed original guards cannot be promoted during cleanup.",
+    "Original owned raw control directory descriptor is duplicated, followed by original manager generation recheck before capture.",
+    "Parent anchor is duplicated from the admitted reference without reopening a dynamic path; parent identity is checked before and after child lookup.",
+    "Parent alias replacement and linked child under unlinked parent are rejected; both-unlinked retention works without extending Host execution deadline.",
+    "Duplicate failure closes partial references; unknown close is sticky and not retried after descriptor-number reuse.",
+    "Internal box closes its retained reference; external box transfer preserves explicit ownership; native default and simulated native promotion are rejected."
+  ]
+}
