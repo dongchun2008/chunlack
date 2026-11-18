@@ -1,0 +1,121 @@
+{
+  "actions": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "externalAgentCalls": 0,
+    "nativeSocketsOrManagerCommands": 0,
+    "newLinuxUnits": 0,
+    "productFilesEditedByThisStage": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnections": 0
+  },
+  "date": "2026-11-19",
+  "finding": {
+    "after": "Only six exact private transport receipt filenames allow up to 786432 bytes, for both write and byte-verified readback.",
+    "before": "A permitted 98304-byte stream exceeds the old 131072-byte JSON writer limit after base64 and framing.",
+    "failureStillRejected": true,
+    "fullCapturedBytesPreserved": true,
+    "noTruncationOrRetryAdded": true,
+    "ordinaryFileLimitUnchanged": 131072,
+    "severity": "P2",
+    "transportCapturePerStreamLimitUnchanged": 262144
+  },
+  "historicalAudit": {
+    "historicalCandidateNotModified": true,
+    "historicalTestsPassed": 46,
+    "historicalTestsRerun": false,
+    "packetMembers": 170,
+    "unchangedAssemblySources": 18,
+    "unchangedLocalSources": 11,
+    "unchangedSavedFiles": 18
+  },
+  "implementationSha256": {
+    "assembler": "a171db5f4a1995daed98744e733cd2d6f71023b7b22761a93947f164903b060f",
+    "driver": "bba5a63aff178f64f26f6b6f7d119af19df160b45f12d94c26d5a2a708561df3",
+    "embeddedWriter": "87028130fb80fdf9cc31b65c01ca92d1080b0c4481b5bcbc47373a1feabad87e"
+  },
+  "limits": [
+    "This is local preparation and review, not a successful native setup, compatibility run or production publication.",
+    "The last fixed stderr capture showed systemd runtime detection failure and bus host-down. The nested empty read-only marker remains a hypothesis until native verification.",
+    "The 66-file product delivery and private bootstrap are separate artifacts. Setup diagnostics do not waive product release, compatibility, backup or maintenance gates.",
+    "Original identity-fixture and integration-fixture mistakes were corrected locally; earlier failed runs are not counted as passing. The false-package checker was corrected to the actual approval_reference rejection.",
+    "Full multiuser/bilingual mixed-provider research, quiet Xuanji, Muse SuHua and physical-node acceptance remain incomplete.",
+    "Historical 46 product-independent diagnostic tests were reused as historical evidence only, not rerun or added to the 12 new tests.",
+    "The last single-use readonly SSH allowance is exhausted. No new remote allowance is inferred from this record or local package."
+  ],
+  "nextProposedScope": {
+    "automaticRetry": false,
+    "controllerCapabilities": 235,
+    "controllerGid": 0,
+    "controllerUid": 0,
+    "cpuWeight": 10,
+    "databaseCopies": false,
+    "freshExplicitApprovalRequired": true,
+    "lackOrCaddyStartup": false,
+    "localTotalSeconds": 450,
+    "managementOverheadOutsideUnitLimits": true,
+    "memoryMiB": 192,
+    "newExclusiveDirectoryAndApprovalReferenceRequired": true,
+    "nice": 10,
+    "noNewPrivileges": true,
+    "privateNetwork": true,
+    "sameConnectionPreflightEvidenceOwnCleanupAndFourServiceBaselines": true,
+    "setupUnits": 1,
+    "singleCoreCpuPercent": 20,
+    "sshConnections": 1,
+    "swapBytes": 0,
+    "tasksMax": 32,
+    "unitRuntimeSeconds": 90,
+    "unitStartupSeconds": 5,
+    "unitStopSeconds": 1,
+    "watchOrHostControlWorkerLaunch": false
+  },
+  "packageAudit": {
+    "approvalEnabled": false,
+    "assemblySources": 18,
+    "attemptAbsent": true,
+    "bindingFiles": 16,
+    "changedSlots": [
+      "driver.py"
+    ],
+    "falseApprovalRejectedBeforeAttempt": true,
+    "savedFiles": 18,
+    "sourcePinsUnchangedAfterAssembly": true
+  },
+  "productionDeliveryComplete": false,
+  "review": {
+    "confirmedRemainingP1P2": [],
+    "kind": "independent scoped static review",
+    "nativeExecutionVerified": false,
+    "reviewedSha256": {
+      "build_local.py": "54b9089a682f5b8a5e29d59a33ff317ca266ca387bd363ae9cfec1f61ffd891b",
+      "bundle.py": "a171db5f4a1995daed98744e733cd2d6f71023b7b22761a93947f164903b060f",
+      "check_package.py": "18d8cece44bfca74ee3fbbe1ca64041b0bfda73548b354ab08965877d7ba2118",
+      "driver.py": "bba5a63aff178f64f26f6b6f7d119af19df160b45f12d94c26d5a2a708561df3",
+      "held_writer.py": "87028130fb80fdf9cc31b65c01ca92d1080b0c4481b5bcbc47373a1feabad87e",
+      "test_receipt.py": "c4397f4ee1c82f6125347251e7db6176aedebef7d725f6f01ddafaab02b162e5"
+    },
+    "reviewerRanTests": false
+  },
+  "schemaVersion": 1,
+  "scope": "local-bootstrap-readiness-and-private-transport-receipt-fix",
+  "status": "targeted-local-tests-package-audit-and-scoped-review-passed",
+  "tests": {
+    "cases": [
+      "Reproduce old 98304-byte failure without reclassifying it as success.",
+      "Save each full maximum stdout/stderr and verify base64, size and SHA for all six exact phase names.",
+      "Check storage boundary and one-over rejection; preserve ordinary receipt limit and reject unlisted names.",
+      "Keep per-stream capture limit and exclusive-create refusal.",
+      "Prove driver AST identical except embedded backend constants and backend AST identical outside writer.",
+      "Exercise actual driver phase invocation with malformed returned output and partial transport exception; preserve raw receipt, fail and close."
+    ],
+    "exitCode": 0,
+    "failed": 0,
+    "passed": 12,
+    "reportedSeconds": 0.781,
+    "skipped": 0,
+    "stderrSha256": "203d4d97398892815ba584a1058cb2e3cf6cd3bc6fc0cd7c5dabcbf3f64b31aa"
+  }
+}
