@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-18",
+  "scope": "single-use-fixed-first-command-stderr-readonly-capture",
+  "status": "readonly-capture-accepted-setup-correction-not-yet-verified",
+  "authorization": {
+    "sshConnectionsApproved": 1,
+    "sshConnectionsUsed": 1,
+    "remoteMaximumSeconds": 20,
+    "localMaximumSeconds": 35,
+    "newLinuxUnits": 0,
+    "automaticRetry": false,
+    "allowanceExhausted": true
+  },
+  "observed": {
+    "accepted": true,
+    "wrapperElapsedSeconds": 3.8410772000206634,
+    "callerElapsedSeconds": 3.5094329999992624,
+    "remoteElapsedSeconds": 0.05696268565952778,
+    "ownedLocalChildExitCode": 0,
+    "ownedLocalChildReaped": true,
+    "sshCloseConfirmed": true,
+    "sdkThreadExitConfirmed": true,
+    "heldDirectoryCloseConfirmed": true,
+    "primaryError": null,
+    "cleanupErrors": [],
+    "captureErrors": []
+  },
+  "evidence": {
+    "fixedLeaf": "command-0.stderr",
+    "bytes": 118,
+    "sha256": "5aa1f455d5a9163b8ecbad00f3a5e89a62b2d5414d6150d481692269cbf53caa",
+    "rawBodyPrivateOnly": true,
+    "recognizedClasses": [
+      "systemd-runtime-detection-failed",
+      "bus-host-down"
+    ],
+    "privateAuditChecks": 18,
+    "privateAuditAccepted": true,
+    "sourceAndBindingPinsMatch": true
+  },
+  "protection": {
+    "failedUnitGenerationUnchanged": true,
+    "failedUnitStopped": true,
+    "exclusiveCgroupEmpty": true,
+    "fourDeclaredServicesActiveBeforeAndAfter": true,
+    "fourDeclaredServiceRecordsUnchanged": true,
+    "serviceFieldsCompared": [
+      "Id",
+      "ActiveState",
+      "MainPID",
+      "NRestarts"
+    ],
+    "remoteWrites": 0,
+    "unitStartsOrStops": 0,
+    "productionPublished": false,
+    "productCodeChanged": false,
+    "credentialChanges": false,
+    "businessGrantChanges": false,
+    "relayChanges": false,
+    "dnsOrPortChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0
+  },
+  "interpretation": {
+    "directlyEstablished": "The first setup systemctl command was rejected by the systemd runtime detection check inside its isolated environment.",
+    "sourceBackedExplanation": "Upstream systemd v255 sd_booted checks the existence of /run/systemd/system. The system bus helper emits the observed detection error before connecting to the bus when this check fails. The frozen setup profile mounts a private /run and does not provide that marker.",
+    "inferenceLimit": "The marker was not directly inspected in the namespace by this capture. Upstream v255 behavior is supporting source evidence, not a fresh verification of the installed build.",
+    "sources": [
+      "https://raw.githubusercontent.com/systemd/systemd/v255/src/libsystemd/sd-daemon/sd-daemon.c",
+      "https://raw.githubusercontent.com/systemd/systemd/v255/src/shared/bus-util.c"
+    ]
+  },
+  "diagnostics": {
+    "sdkSocketDiagnosticCode": 10038,
+    "sdkSocketDiagnosticClassification": "unclassified; retained separately from explicit successful cleanup receipts"
+  },
+  "nextLocalInvestigation": {
+    "preferredCandidate": "Evaluate a fixed empty runtime marker only after proving the private mount origin and holding and rechecking parent directory descriptors; retain all existing bus, identity and mount guards.",
+    "nativeFixVerified": false,
+    "newRemoteActionAuthorized": false
+  },
+  "limitations": [
+    "This capture is not a successful setup, release rehearsal or production acceptance.",
+    "Four service status records do not prove uninterrupted traffic or compare full invocation and start-time records.",
+    "The zero-unit low-priority SSH query is not evidence of a 192MiB or 20-percent setup cgroup.",
+    "The error does not establish that host PID1 is not systemd or that the host system bus is down.",
+    "A runtime marker alone does not establish bus connectivity or later setup success."
+  ],
+  "productionDeliveryComplete": false
+}
