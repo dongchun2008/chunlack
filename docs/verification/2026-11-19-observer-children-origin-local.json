@@ -1,0 +1,74 @@
+{
+  "actions": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "externalAgentCalls": 0,
+    "nativeSocketsOrManagerCommands": 0,
+    "newLinuxUnits": 0,
+    "productFilesEditedByThisStage": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-19",
+  "implementationSha256": {
+    "fixture.py": "2dea8578b80b2f8998d9f3931063b0e9208ff8f7bba09263868327f68290c3b7",
+    "producer.py": "61046a26cc2a3be95b50513117036b4665a6199166cc34c61dcf6b381aca6bce"
+  },
+  "limits": [
+    "Filesystem, process identity, bus and Runner are explicit doubles. These are local simulation results, not native kernel acceptance.",
+    "Memory fixture starts from prior installed layout and binds current frozen archive bytes in memory; no VPS files are modified.",
+    "This stage covers capture and retained FD lifetime only. Parent/host publication and handoff remain to be integrated.",
+    "Full report/validate_host, normal-exit acceptance and complete global budget are not established.",
+    "Controller and worker creators, incremental registry/sealing, authenticated coordinator and complete native package remain unfinished.",
+    "Trusted root, exclusive legitimate fresh-tag lifecycle and stable preexisting ancestor are prerequisites.",
+    "Retention does not extend the original actor540s or host420s lifetime.",
+    "No production delivery claim."
+  ],
+  "productionDeliveryComplete": false,
+  "review": {
+    "confirmedRemainingP1P2": [],
+    "implementationMatchesReviewedPins": true,
+    "initialConfirmedP2": 1,
+    "lastTestOnlyCodePreservationCaseNotIndependentlyReviewed": true,
+    "redReproducedAndFixed": 1,
+    "reviewerRanTests": false,
+    "type": "independent static capture/retention and fixture review"
+  },
+  "schemaVersion": 1,
+  "scope": "local-actual-observer-parent-host-origin-capture-and-retention",
+  "sourceClosure": {
+    "currentActorSha256": "a74b122b6517a3065c7d60effa194ef4d2c0a5a48411aab1c7156d199d8b7d74",
+    "observerAssetsSha256": "fb3a7e69772b9f01b733a17c259674de2eeead8541ca7bb2661130d5c58b46e7",
+    "originalNestedOpsMethodsPreserved": 26,
+    "sharedOriginSha256": "9e2a3c4861c14b77970d5bcf2b9bc02470fd1644b826847a1b1720ef9f525910",
+    "storeSha256": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd"
+  },
+  "status": "local-regressions-and-independent-static-review-passed",
+  "tests": {
+    "exitCode": 0,
+    "failed": 0,
+    "groups": {
+      "captureAndLifetime": 16,
+      "factoryAndHelpers": 6,
+      "originalFactoryEnvironment": 4
+    },
+    "outerSeconds": 46.31156559998635,
+    "passed": 26,
+    "skipped": 0,
+    "stderrSha256": "71586b87014afa44e6d4e8548beafd4803125077d9c9453902e2d521633cd338"
+  },
+  "verifiedLocally": [
+    "Exact frozen current actor factory executes original protected source, namespace, own-kernel, baseline and mount guards over explicit memory-backed boundaries.",
+    "Original nested Ops method code remains equal to the exact source; new behavior is supplied by wrapper hooks.",
+    "Parent origin is issued after complete original parent creation, Scope limits, ParentGate and initial counters. No PID or process-start fields are invented for the slice.",
+    "Host binds its own distinct request hash and requires a captured parent origin.",
+    "Host anchor duplicates the original parent Scope FD without reopening its dynamic path.",
+    "Original host peer guards remain active; the wrapper additionally checks host Scope limits before capture.",
+    "Host reference checks the dynamic parent before and after child validation, rejecting replaced aliases and linked-child/unlinked-parent mismatch.",
+    "Bad ACK, changed requests, invalid capabilities, invalid limits and duplicate failures cannot issue the affected origin.",
+    "Both unlinked retained objects remain usable under the explicit retention lease after the source deadline without extending source execution.",
+    "Internal holders close references; external holders own their lifetime; unknown close remains cached before FD-number reuse."
+  ]
+}
