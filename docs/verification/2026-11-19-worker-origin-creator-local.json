@@ -1,0 +1,103 @@
+{
+  "actions": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "externalAgentCalls": 0,
+    "nativeSocketsOrManagerCommands": 0,
+    "newLinuxUnits": 0,
+    "productFilesEditedByThisStage": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-19",
+  "dependencySha256": {
+    "actualFrozenDispatch": "d5ebf41265875f9c24eb464b9053614223133d9092cf1e8b168554b7b47113ba",
+    "core": "9e2a3c4861c14b77970d5bcf2b9bc02470fd1644b826847a1b1720ef9f525910",
+    "parentReferenceHelpers": "61046a26cc2a3be95b50513117036b4665a6199166cc34c61dcf6b381aca6bce",
+    "simulationFixture": "efbec5d8069ff187347983dd9061aba29972b0139680f639ee408101200b831f",
+    "store": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd"
+  },
+  "implementationSha256": {
+    "producer.py": "26322e8d445c42ade44c1d6abbe0cc3098185e083b0c00142cf55f5a136d5079"
+  },
+  "limits": [
+    "All execution in this record is local simulation. No Linux kernel, native manager, worker program, model or external Agent was executed.",
+    "Capsule/context are synthetic prepared inputs bound to the actual catalog. RootNativeOps.prepare, real business execution and successful report validation are not established.",
+    "The original simulated Controller intentionally reports work_failed after first capture and then verifies its owned stop/empty/close paths; capture is not business completion.",
+    "Manager User/Group policy and original creator checks are preserved. Worker target-kernel capabilities/NNP, exe/stat, script readiness and source/process authentication are not inferred.",
+    "Worker reference handoff, complete creator registry sealing, authenticated persistent coordinator and global 950-second native integration remain incomplete.",
+    "Fresh compatibility/consistent backup and 55/120 production maintenance, bilingual/multiuser mixed-provider research, quiet Xuanji, Muse SuHua and physical nodes remain separate delivery gates.",
+    "No prior product test totals are added or rerun here. Private implementation, raw fixtures and diagnostics remain local."
+  ],
+  "productionDeliveryComplete": false,
+  "review": {
+    "confirmedRemainingP1P2": [],
+    "kind": "independent static original-source capture/FD lifecycle review",
+    "limitations": [
+      "target-kernel identity and script readiness not established",
+      "full RootNativeOps.prepare not executed by these fixtures",
+      "no native or full report acceptance"
+    ],
+    "prerequisites": [
+      "trusted Root runtime entry",
+      "authenticated source process",
+      "exclusive privileged lifecycle ownership",
+      "protected runtime mounts and trusted results binding"
+    ],
+    "reviewedSha256": {
+      "PLAN.md": "c46ea02252dc68a764c36bbb3e7b41551324e3d4711e8074687105404eb6929c",
+      "fixture.py": "efbec5d8069ff187347983dd9061aba29972b0139680f639ee408101200b831f",
+      "producer.py": "26322e8d445c42ade44c1d6abbe0cc3098185e083b0c00142cf55f5a136d5079",
+      "test_factory.py": "5035454ad0b6cc93805c3b63c7c6c4c875c9f503f13f06612c2ad8d49d0e24b0",
+      "test_fixture.py": "8c98d89503699f6397ff4b85036aa9f293c4481785c7b193deb76f88f8e7e501",
+      "test_origins.py": "9e3411b15d84369af4a2d5d08e6bbc80dd196cbe244b650a13a3504560f38995"
+    },
+    "reviewerRanTests": false
+  },
+  "schemaVersion": 1,
+  "scope": "local-actual-control-worker-creator-origin",
+  "status": "local-regressions-and-scoped-static-review-passed",
+  "tests": {
+    "batches": [
+      {
+        "count": 15,
+        "exitCode": 0,
+        "index": 0,
+        "outerLimitSeconds": 90,
+        "outerSeconds": 23.301964200101793,
+        "stderrSha256": "0a616cfbe5e6fb6d8aeb16695d235578dd40cb7266fcd72e37de2e1d9073b37c"
+      },
+      {
+        "count": 15,
+        "exitCode": 0,
+        "index": 1,
+        "outerLimitSeconds": 90,
+        "outerSeconds": 56.44297410000581,
+        "stderrSha256": "5651b5dd8bfc5612a7ed7463f60993ec2a26c3722eadcd705336721fc24eac39"
+      }
+    ],
+    "exitCode": 0,
+    "failed": 0,
+    "outerSeconds": 79.74690539995208,
+    "passed": 30,
+    "skipped": 0,
+    "sourcePinsMatchReview": true,
+    "sourceUnchanged": true
+  },
+  "verifiedLocally": [
+    "The current frozen dispatch.make factory executes original protected source/catalog readers, RootGuard, Controller, CheckedCommands, Commands and Observation over explicit memory OS/bus/Runner doubles.",
+    "Original Session, Commands and Observation method code equality is checked; actual native filesystem/process/socket entry points have tripwires.",
+    "Native default, simulated native promotion, per-call clock replacement, nonboolean authorization, foreign capture-box metadata and source/dependency drift are rejected.",
+    "Original source-relative readers keep the original protected Root mount path; simulation resolves descriptor-relative paths before applying narrow commands/results leaf binds.",
+    "Reservation and dispatch occur only inside original Session/Controller.run after the original RootGuard launch gate; exact proposal, capsule/context digest and length, catalog/source map, control-request identity and argv bind capture.",
+    "Original admitted ParentGate descriptor is duplicated; a root-only held results directory contains an exclusive reservation ticket.",
+    "Worker scope is duplicated from actual Observation.owned, not a fabricated C5 ledger, after original live capture and strict ACK.",
+    "Post-duplicate original worker inspection and creator manager/kernel/parent checks reject worker or creator generation changes.",
+    "Only the original main work deadline permits capture; cleanup fallback observation after a bad ACK safely stops the owned unit without issuing provenance.",
+    "Root capability failure, proposal mutation, ticket collision and duplicate failure cannot create a valid Origin; generation drift cannot stop a foreign worker generation.",
+    "Parent alias races and linked worker under unlinked parent are rejected; both-unlinked retained references do not extend original execution deadlines.",
+    "Internal box acceptance is asserted before its retained scope closes; unknown close stays cached and is not retried after descriptor-number reuse; original run cannot replay dispatch."
+  ]
+}
