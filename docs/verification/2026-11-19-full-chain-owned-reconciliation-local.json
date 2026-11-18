@@ -1,0 +1,91 @@
+{
+  "date": "2026-11-19",
+  "implementation": {
+    "allObjectsAndHierarchicalGroupsRecheckedAtEnd": true,
+    "automaticRetry": false,
+    "closedObjectCount": 6,
+    "decisionDeadlineMaximumSeconds": 20,
+    "handleCloseAndFinalDeadlineRequired": true,
+    "leafAndParentHeldIdentityRequired": true,
+    "nativeAuthorityAlwaysFalse": true,
+    "neverDispatchedRequiresQuiescentCreatorsAndAnchoredAbsence": true,
+    "objects": [
+      "setup-service",
+      "observer-service",
+      "shared-slice",
+      "host-service",
+      "control-service",
+      "business-prepare-service"
+    ],
+    "reservedCloseSeconds": 2,
+    "simulationAlwaysTrue": true,
+    "stopAttemptMarkedBeforeCallback": true,
+    "targetGenerationRecheckedImmediatelyBeforeStop": true,
+    "trustedLedgerRequiresDispatchSealed": true,
+    "twoCompleteAdmissionsBeforeFirstStop": true,
+    "typedStopAcknowledgementNotTreatedAsCleanupProof": true,
+    "unknownOriginRefusesAllStops": true
+  },
+  "limits": [
+    "All manager and group observations in this engine test are synthetic; no kernel cleanup effect is proven.",
+    "Callbacks must be source-bound native adapters with real held descriptors and enforce the passed shared deadline internally.",
+    "Historical command stdout is only an origin candidate; it lacks complete execution and guard-success provenance.",
+    "Fresh show, a matching tag or Description alone cannot create stop permission.",
+    "The native adapter and reliable generation-ledger acquisition remain incomplete.",
+    "Manager inspection followed by StopUnit is not atomic; serialized creator ownership and adapter generation checks remain required.",
+    "This component does not replace full-runner proof, service-baseline, SSH/thread and held-directory finalization.",
+    "No new executable SSH entry or approval was created or activated."
+  ],
+  "productionDeliveryComplete": false,
+  "protection": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "dnsOrPortChanges": false,
+    "externalAgentCalls": 0,
+    "newLinuxUnits": 0,
+    "productCodeChanged": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnections": 0
+  },
+  "schemaVersion": 1,
+  "scope": "local-full-chain-exact-owned-reconciliation-engine",
+  "sourceContract": {
+    "actualFrozenPureUnitProposalsCompared": 6,
+    "dependencyBytesHashVerifiedAndLoadedFromMemory": true,
+    "fields": [
+      "unit-name",
+      "description",
+      "uid",
+      "gid",
+      "slice-or-group-path",
+      "RemainAfterExit"
+    ],
+    "parentProcessFieldsExplicitlyNotApplicable": true,
+    "parentServicePidOrStartNotFabricated": true,
+    "provenDisappearanceDoesNotAbandonRemainingCleanup": true,
+    "sameGenerationActiveExitedEmptyScopeCanBeDeactivated": true
+  },
+  "sourcePins": {
+    "PLAN.md": "c8a168c34e16ce29e6811ff0c6252b8dc0ec577520d6c1b0ed8d769ec2fdeaf2",
+    "reconcile.py": "a1c8671a04934ddbd0c0cf61aab851b520f2e823d00a2eeb713bb3a33bf1a8f2",
+    "test_reconcile.py": "5f7138302b9ad72170e9a574a10b0dcd75005f65c242bce33d1c0fb8ede4c430",
+    "test_source_contract.py": "3c4ceac492404f1218c724eb9910602b50fb44d6be2fe8e4bcb32f70c7dadfc0"
+  },
+  "status": "local-regression-and-static-review-passed-native-adapter-pending",
+  "verification": {
+    "additionalActualProfileMismatchReproducedAndRepaired": 1,
+    "independentStaticReviewers": 2,
+    "initialFailuresPreserved": true,
+    "localTestsFailed": 0,
+    "localTestsPassed": 46,
+    "outerSeconds": 0.898444699938409,
+    "previousProofLinkAndFrozenInvocationPinsUnchanged": true,
+    "remainingConfirmedP1P2InComponent": 0,
+    "reportedSeconds": 0.564,
+    "reviewFindingsReproducedAndRepaired": 4,
+    "reviewersRanTests": false,
+    "testLogSha256": "cc6ec6d604403720a231c7dacd4b60be4ecbc9a5d7ddef20b0d180c12f7c10f4"
+  }
+}
