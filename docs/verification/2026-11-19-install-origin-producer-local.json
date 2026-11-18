@@ -1,0 +1,75 @@
+{
+  "assumptionsAndLimits": [
+    "All legitimate privileged creators for the fresh tag/unit honor the exclusive lifecycle reservation. The ticket file does not exclude every host-root program.",
+    "If another privileged controller may replace the unit, first-origin minting needs stronger correlation/attestation and must not proceed on this assumption.",
+    "The fixed cgroup ancestor must preexist and remain identity-stable; native preflight must verify this.",
+    "The aligned historical fixture package exercised here has the same 33 Native method ASTs as the current manager; this does not prove the current complete package or native environment.",
+    "Any explicit retention deadline must be bound to the existing full-runner global deadline; it cannot reset that deadline."
+  ],
+  "boundaries": {
+    "actualManagerCommands": 0,
+    "credentialChanges": false,
+    "dnsOrPortChanges": false,
+    "externalAgentCalls": 0,
+    "grantChanges": false,
+    "nativeSocketsUsed": 0,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "remoteWrites": 0,
+    "vpsConnections": 0
+  },
+  "date": "2026-11-19",
+  "implementation": {
+    "additionalStableInterpreterBindingRequired": true,
+    "configAndRequestFrozenAtReservation": true,
+    "descriptorRetentionDoesNotExtendSourceExecution": true,
+    "duplicatesOriginalScopeDescriptorDoesNotReopenUnitPath": true,
+    "explicitDescriptorRetentionCeilingSeconds": 950,
+    "fixtureSourceCannotActivateNative": true,
+    "hooksActualFrozenSupervisorMethods": true,
+    "jobAckAloneDoesNotMintOrigin": true,
+    "metadataViewsAreNotAuthority": true,
+    "nativeDefaultDenied": true,
+    "nativeInjectedClockDenied": true,
+    "originRequiresFirstCompleteOriginalLiveGuard": true,
+    "originalReferenceOwnedAcrossSourceCleanup": true,
+    "producerRole": "install",
+    "sourceSupervisorSeconds": 120,
+    "sourceUnitSeconds": 90,
+    "ticketUsesExclusiveWriteUnderHeldPrivateRoot": true
+  },
+  "productionDeliveryComplete": false,
+  "remaining": [
+    "Source-role sender and registry integration for install",
+    "Equivalent capture contracts for remaining five objects and explicit creator sealing",
+    "Closed persistent-coordinator package and shared deadline binding",
+    "Native isolated acceptance then controlled release and original user-facing delivery acceptance"
+  ],
+  "schemaVersion": 1,
+  "scope": "source-bound-install-origin-producer-local",
+  "sourcePins": {
+    "PLAN.md": "a843580361a6f258649133c0ce828627eaabe700b1241862480dd440c6e33694",
+    "producer.py": "52c5ec318634a02f42cda4e78f58b1fda7889c8277efdea7f4532c9cfb5afa80",
+    "test_producer.py": "bf903aaa2011f3f80a1c63b6f81c14bef2bc7d093dae183966901da37097b904"
+  },
+  "status": "local-integration-passed-native-not-accepted",
+  "verification": {
+    "actualOriginalSupervisorExecutedAgainstExplicitMemoryFsAndBus": true,
+    "addedManagerCommandCountInComparedFixture": 0,
+    "alignedFixtureManagerSha256": "66bb3d1b9ed6d3ee4d7ca8c1bf63db3b7a47abfe18ad45a42039cdd6d98f7505",
+    "currentFrozenManagerSha256": "b43f695e6d637c1f79cdff23136159da19e7c5232df69d9b92e55631f9bf40d2",
+    "exitCode": 0,
+    "lastTwoTestOnlyCasesNotIndependentlyReviewed": true,
+    "nativeMethodAstsIdentical": 33,
+    "outerSeconds": 14.714305100031197,
+    "reportedSeconds": 14.388,
+    "reviewedImplementationMatchesFinal": true,
+    "staticReviewFindingReproducedAndFixed": "native clock injection",
+    "testLogSha256": "cc802a00ab81c1d5f3342b7871907780c208550a361e78758db355d3984663a6",
+    "testsFailed": 0,
+    "testsPassed": 30,
+    "wholeProductRegressionRerun": false
+  }
+}
