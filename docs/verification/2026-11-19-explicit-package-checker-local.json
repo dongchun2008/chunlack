@@ -1,0 +1,87 @@
+{
+  "actions": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "externalAgentCalls": 0,
+    "modelCalls": 0,
+    "newLinuxUnits": 0,
+    "productChanges": false,
+    "productionPublished": false,
+    "relayChanges": false,
+    "vpsConnections": 0
+  },
+  "actualLocalAssembly": {
+    "approvalEnabled": false,
+    "assemblySources": 18,
+    "attemptAbsent": true,
+    "bindingFiles": 16,
+    "changedSlots": [
+      "driver.py"
+    ],
+    "falseApprovalRejectedBeforeAttempt": true,
+    "interpreterMode": "-O -B",
+    "savedFiles": 18,
+    "sdkImported": false
+  },
+  "date": "2026-11-19",
+  "finding": {
+    "affected": "local package-checker acceptance only",
+    "after": "A new checker uses explicit RuntimeError guards for every former assert; historical checker and records remain preserved.",
+    "before": "Python optimization could remove assert-based acceptance checks and permit a false-positive local evidence record.",
+    "priorActualRunUsedOptimization": false,
+    "runtimeAuthorizationChanged": false,
+    "severity": "P2"
+  },
+  "limits": [
+    "Four new regression tests and nine interpreter subprocess cases are separate counts, not thirteen tests.",
+    "The earlier twelve receipt tests and historical forty-six tests were not rerun.",
+    "Synthetic negative fixtures and the real optimized false-approved package are local evidence only; no native validation or production acceptance.",
+    "The previously requested one-SSH/one-setup-unit native trial still requires fresh explicit approval. No earlier consumed allowance is reused."
+  ],
+  "productionDeliveryComplete": false,
+  "review": {
+    "confirmedRemainingP1P2": [],
+    "equivalentExplicitConditions": 13,
+    "kind": "independent static optimized-mode checker equivalence review",
+    "originalAssertConditions": 13,
+    "reviewedSha256": {
+      "check_package_explicit.py": "ea51f1d4194e9d371adb9a00e96398a4ec95553d8ad5f1446c5517cafd438f23",
+      "test_explicit_gate.py": "5dadf5e335854d6519f896685a8fd4f374d2d2b3274a086a5c481cc471fcfde0"
+    },
+    "reviewerRanNative": false,
+    "reviewerRanTests": false,
+    "scope": "New checker only; no retroactive endorsement of historical checker records."
+  },
+  "schemaVersion": 1,
+  "scope": "local-inactive-package-checker-optimization-mode-fix",
+  "sourceSha256": {
+    "check_package_explicit.py": "ea51f1d4194e9d371adb9a00e96398a4ec95553d8ad5f1446c5517cafd438f23",
+    "test_explicit_gate.py": "5dadf5e335854d6519f896685a8fd4f374d2d2b3274a086a5c481cc471fcfde0"
+  },
+  "status": "targeted-regression-optimized-assembly-and-static-review-passed",
+  "tests": {
+    "exitCode": 0,
+    "failed": 0,
+    "interpreterModes": [
+      "default",
+      "-O",
+      "-OO"
+    ],
+    "passed": 4,
+    "reportedSeconds": 1.694,
+    "skipped": 0,
+    "stderrSha256": "9d9ca42da0c4fe5ebc4b9bbbad2079fc3ff231392aa30a3de6b410a69203365c",
+    "subprocessCases": 9,
+    "verified": [
+      "Unexpected manager hash or source-name changes reject before assembly in all modes.",
+      "A driver-only change reaches the deliberately failing synthetic assembler in all modes.",
+      "No assert statements remain in the new package checker."
+    ]
+  },
+  "unchanged": [
+    "diagnostic driver",
+    "embedded receipt writer",
+    "assembler",
+    "runtime permissions and limits"
+  ]
+}
