@@ -1,0 +1,69 @@
+{
+  "actions": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "dnsOrPortChanges": false,
+    "externalAgentCalls": 0,
+    "nativeSocketsOrManagerCommands": 0,
+    "newLinuxUnits": 0,
+    "productCodeChanged": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-19",
+  "implementationSha256": {
+    "exchange.py": "879541f91f5068cf12f8ba6bfd831a8e0f3620cbf07c77774ae15768ab85be35",
+    "producer.py": "9e2a3c4861c14b77970d5bcf2b9bc02470fd1644b826847a1b1720ef9f525910",
+    "publish.py": "da73cff3485a714f99b1a180444926df2a0554e3ff81d3244004cc48719bf396",
+    "sender.py": "870cd902ab775613f460077577990aadadc06cc6b92476f8907e233272f4356e"
+  },
+  "limits": [
+    "Tests use explicit filesystem, bus and socket doubles; descriptor passing is not native Linux acceptance.",
+    "ACK confirms receipt of a reference only; it does not authenticate source, prove unit exit or establish cleanup.",
+    "Caller must independently authenticate the prelude, peer, source and process.",
+    "Only the install creator is connected; other five creators and complete incremental registry remain unfinished.",
+    "Per-operation maximum is 20 seconds including 2 seconds of cleanup; this does not prove the complete global runtime budget.",
+    "No production or whole-platform delivery claim."
+  ],
+  "productionDeliveryComplete": false,
+  "regressionsPreserved": {
+    "failuresRetainedPrivately": true,
+    "nestedCountsNotAddedToTopLevel": true,
+    "originalFrozenFilesOverwritten": false,
+    "originalProducerCases": 30,
+    "originalSenderCases": 26
+  },
+  "review": {
+    "confirmedRemainingP1P2": [],
+    "reviewedImplementationMatchesFinalPins": true,
+    "reviewerRanTests": false,
+    "type": "independent static review"
+  },
+  "schemaVersion": 1,
+  "scope": "local-install-origin-handoff-integration",
+  "status": "local-regression-and-independent-static-review-passed",
+  "tests": {
+    "elapsedSeconds": 30.92156759998761,
+    "exitCode": 0,
+    "failures": 0,
+    "nestedCountsNotAddedToTopLevel": true,
+    "nestedOriginalProducerCases": 30,
+    "nestedOriginalSenderCases": 26,
+    "skipped": 0,
+    "stderrSha256": "c2345748540a067e810aa0f1c900ee8f8aaf9887be8445484d64734ebb5423b7",
+    "topLevelPassed": 22
+  },
+  "verifiedLocally": [
+    "Original install supervisor produces an opaque Origin in the same source-pinned module as its transfer Kit.",
+    "One opaque claim freezes ordinary reads and duplicate transfer claims before exchange.",
+    "Original descriptor can be transferred after unlink without fabricating a fully sealed six-role ledger.",
+    "A common frame/ACK exchange is reused by the derived existing sender.",
+    "Lost, wrong or late ACK never authorizes resend or reactivation.",
+    "Cancellation before send, during send and during ACK cannot report success.",
+    "Late received descriptors are registered before validation and attempted cleanup; close uncertainty remains sticky.",
+    "Borrowed channel ownership stays with its caller.",
+    "Producer changes are AST-checked to leave Trace and Native guards unchanged."
+  ]
+}
