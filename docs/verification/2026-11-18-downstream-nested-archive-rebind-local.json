@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-18",
+  "scope": "local-downstream-nested-archive-and-source-digest-rebind",
+  "status": "local-archive-closure-verified-outer-invocation-integration-pending",
+  "implementation": {
+    "pureFixedInputTransformer": true,
+    "pinnedExistingArchiveParserReused": true,
+    "nativeOrSdkExecutionInBuilder": false,
+    "exactLayerMemberCounts": {
+      "payload": 156,
+      "host": 161,
+      "observerAssets": 6,
+      "carrier": 170
+    },
+    "exactChangedMemberCounts": {
+      "payload": 1,
+      "host": 4,
+      "observerAssets": 5,
+      "carrier": 12
+    },
+    "reboundEdges": [
+      "root profile and duplicated payload copies",
+      "payload archive to host staging",
+      "host archive to outer helper and observer actor",
+      "helper source to scope and watch",
+      "observer profile and actor to watch",
+      "nested archives and helper archive to package and bootstrap",
+      "watch and bootstrap to setup, receiver, manager and driver"
+    ],
+    "unchanged": [
+      "worker archive and catalog",
+      "private and configuration bytes",
+      "archive member metadata",
+      "generic size limits and execution policies"
+    ],
+    "nativeAuthorityGranted": false
+  },
+  "localVerification": {
+    "passed": 14,
+    "failures": 0,
+    "reportedSeconds": 17.495,
+    "outerRunSeconds": 17.878183600027114,
+    "outerLimitSeconds": 90,
+    "stderrSha256": "e1c007a48ec1dac7ad7c17997d1cab45d971b3d830f2fdc721c992cd7f5f32c7",
+    "coverage": [
+      "actual rebound receiver accepts the complete generated carrier",
+      "rehashed old direct profile, watch, helpers and asset archive refused",
+      "old inner payload refused even after outer manifests are recomputed",
+      "actual inner staging and outer-helper digest guards",
+      "active hash and size fields across ten generated modules",
+      "deterministic recipe and archive metadata preservation",
+      "unreviewed base or source bytes refused",
+      "existing setup flow consumes rebound packet with explicit memory and manager doubles"
+    ],
+    "fullProductSuiteRerun": false,
+    "currentSetupSuiteRerun": false,
+    "nativeExecutionTested": false
+  },
+  "review": {
+    "scope": "independent static source, hash and test-source review",
+    "remainingConfirmedP1P2": 0,
+    "closedFinding": "Observer actor retained the old host digest; reproduced locally and corrected with watch-pin propagation.",
+    "reviewerRanTestsOrNative": false,
+    "reviewedAssemblerSha256": "22d92ae916f1895e8e714434a8eba43f213bc313aee61e8a32979a3b24f0437e"
+  },
+  "artifacts": {
+    "privateFiles": 13,
+    "totalBytes": 48569576,
+    "exclusiveNewDirectory": true,
+    "allBytesReadbackVerified": true,
+    "approvalOrInvocationBindingCreated": false,
+    "outerInvocationIntegrated": false
+  },
+  "protection": {
+    "currentReviewedSetupCandidateUnchanged": true,
+    "pendingNativeApprovalUnchanged": true,
+    "oldFailureEvidencePreserved": true,
+    "frozenInputsUnchanged": true,
+    "vpsConnections": 0,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "existingServiceChanges": false,
+    "credentialChanges": false,
+    "businessGrantChanges": false,
+    "relayChanges": false,
+    "dnsOrPortChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "implementationUploaded": false
+  },
+  "limitations": [
+    "The setup-flow test uses explicit memory and manager doubles; it is not a Linux or production test.",
+    "Complete outer invocation integration, actual mounts, credentials, StopPost and whole-chain success or rollback remain unverified.",
+    "The generated private artifacts have no execution authority and do not replace the current separately reviewed setup candidate.",
+    "The previously requested single native diagnostic still needs an explicit reply; no remote allowance was inferred or reused."
+  ],
+  "nextLocalStep": "Bind the saved artifacts into a separately reviewed, default-inactive invocation adapter while retaining fixed source hashes, one-shot admission and existing budgets.",
+  "productionReady": false,
+  "productionDeliveryComplete": false
+}
