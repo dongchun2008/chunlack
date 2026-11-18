@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-18",
+  "scope": "local-private-runtime-marker-candidate-and-execution-path-audit",
+  "status": "marker-regression-passed-inherited-replay-defect-reproduced-native-blocked",
+  "candidate": {
+    "semanticChange": "Request one additional private, empty, read-only tmpfs at /run/systemd/system using the existing systemd TemporaryFileSystem property.",
+    "markerMountOptions": "ro,nosuid,nodev,noexec,size=4096,nr_inodes=16,mode=0755",
+    "hostRuntimeDirectoryExposed": false,
+    "applicationMkdirAdded": false,
+    "setupAndReceiverChanges": "Only fixed source digest literals changed.",
+    "existingIdentityCapabilitiesNnpBusBindingsAndIsolationGuardsRetained": true,
+    "requestedPreparationLimitsUnchanged": {
+      "seconds": 90,
+      "memoryMiB": 192,
+      "cpuPercent": 20,
+      "tasks": 32,
+      "swapBytes": 0
+    },
+    "nativeMarkerMountOrFlagsVerified": false,
+    "sources": [
+      "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/namespace.c",
+      "https://raw.githubusercontent.com/systemd/systemd/v255/man/systemd.exec.xml"
+    ]
+  },
+  "localEvidence": {
+    "profileRedGreen": {
+      "initialTests": 6,
+      "initialFailures": 4,
+      "afterFixPassed": 6
+    },
+    "digestBindingRedGreen": {
+      "initialTests": 2,
+      "initialFailures": 2,
+      "afterFixPassed": 2
+    },
+    "scopedRegressionBeforeReplayTest": {
+      "passed": 37,
+      "failures": 0,
+      "seconds": 47.962,
+      "testLogSha256": "721802cf03315e17e191fa2af580937ad6237bc4cc443878838dd0886b6caa6e"
+    },
+    "coverage": [
+      "fixed tmpfs request and exact D-Bus encoding",
+      "missing, writable, unbounded, retargeted and duplicate marker requests rejected",
+      "host runtime bind addition rejected",
+      "complete source digest propagation",
+      "rehashed manifest cannot downgrade or change runtime sources",
+      "unchanged profile and setup guards with explicit memory and manager doubles",
+      "real inactive assembly, packet validation, false approval and owned-child refusal"
+    ],
+    "inactivePackage": {
+      "boundFiles": 16,
+      "savedFiles": 18,
+      "packetMembers": 170,
+      "userApproved": false,
+      "savedEntryRefusedBeforeAttempt": true,
+      "ownedLocalChildReaped": true,
+      "eligibleForNativeExecution": false
+    },
+    "allLocalTestsPassing": false,
+    "newReplayRegression": {
+      "tests": 1,
+      "failures": 1,
+      "expectedSecurityBehaviorNotYetImplemented": true,
+      "explicitFakeFactoryAdmissions": 1,
+      "realSdkOrSshAdmissions": 0,
+      "networkAndProcessCreationForbidden": true,
+      "originalConsumedMarkerPreserved": true
+    }
+  },
+  "review": {
+    "scope": "independent read-only source and digest review",
+    "newConfirmedP1P2InMarkerProfileSetupReceiverAndBundle": 0,
+    "confirmedInheritedExecutionDefects": 1,
+    "severity": "P2",
+    "finding": "After approval is checked against original directory A, the inherited driver creates its exclusive attempt marker by pathname. Replacing A with B after prepare returns admits a fresh marker and reaches a fake session factory despite the consumed marker preserved in A.",
+    "deterministicallyReproduced": true,
+    "reviewersRanTestsOrNative": false,
+    "fixPending": "Carry the original admitted directory identity into a held parent descriptor; anchor attempt and evidence writes, and settle all cleanup before reporting final success."
+  },
+  "limitations": [
+    "37 passing scoped tests precede the additional failing replay regression; the candidate is not fully green.",
+    "Neither a request encoding nor explicit memory doubles establish actual Linux mounts or bus connectivity.",
+    "The saved inactive package remains pre-fix evidence and must not be activated.",
+    "A downstream frozen controller also uses a private runtime directory and systemctl; it still needs equivalent compatibility evaluation before whole-chain acceptance."
+  ],
+  "effects": {
+    "vpsConnections": 0,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "existingServiceChanges": false,
+    "productCodeChanged": false,
+    "credentialChanges": false,
+    "businessGrantChanges": false,
+    "relayChanges": false,
+    "dnsOrPortChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "implementationUploaded": false
+  },
+  "nextStep": "Local-only repair and regression of the reproduced held-directory replay boundary, then exact-source independent review before requesting another critical native operation.",
+  "productionReady": false,
+  "productionDeliveryComplete": false
+}
