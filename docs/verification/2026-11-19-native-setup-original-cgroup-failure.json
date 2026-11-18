@@ -1,0 +1,206 @@
+{
+  "actions": {
+    "automaticRetry": false,
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "databaseQueries": 0,
+    "dnsChanges": false,
+    "existingServicesStartedOrStoppedByThisDiagnostic": false,
+    "externalAgentCalls": 0,
+    "extraSshConnections": 0,
+    "modelCalls": 0,
+    "productionPublished": false,
+    "publicPortChanges": false,
+    "relayChanges": false
+  },
+  "allowance": {
+    "automaticRetry": false,
+    "maximumSetupUnits": 1,
+    "maximumSshAttempts": 1,
+    "setupUnitsStarted": 1,
+    "sshAttemptsUsed": 1
+  },
+  "budgets": {
+    "configuredLimitsAreNotMeasuredPeaks": true,
+    "controllerCapabilities": 235,
+    "cpuWeight": 10,
+    "driverReportedSeconds": 21.363687200006098,
+    "localLimitSeconds": 450,
+    "localReportedSeconds": 21.565682300017215,
+    "managementOverheadOutsideUnitLimits": true,
+    "memoryMiB": 192,
+    "nice": 10,
+    "noNewPrivileges": true,
+    "privateNetwork": true,
+    "singleCoreCpuPercent": 20,
+    "swapBytes": 0,
+    "tasksMax": 32,
+    "unitRuntimeSeconds": 90,
+    "unitStartupSeconds": 5,
+    "unitStopSeconds": 1
+  },
+  "date": "2026-11-19",
+  "evidenceReview": {
+    "actualHeldLinkCountAvailable": false,
+    "boundFilesHashVerified": 16,
+    "driverSecondsVerified": 21.363687200006098,
+    "fixedLogErrorVerified": "own_cleanup_unit_origin",
+    "fourServiceSnapshotsMatch": true,
+    "kind": "independent offline native receipt and pinned control-flow audit",
+    "laterAbsenceDoesNotRetroactivelyRepairManagerFailure": true,
+    "managerErrorVerified": "outer_scope_missing_unproven",
+    "managerNormalExitIsNotSetupAcceptance": true,
+    "nativeAttemptOutcome": "failed",
+    "nativeCompatibilityProven": false,
+    "productionReadinessProven": false,
+    "reviewerConnectedVps": false,
+    "reviewerRanNative": false,
+    "reviewerRanTests": false,
+    "socket10038NotClassifiedHarmless": true,
+    "wrapperSecondsVerified": 21.565682300017215
+  },
+  "finalCleanup": {
+    "additionalStopAttempted": false,
+    "diagnosticDriverExitCode": 1,
+    "fixedCgroupAbsentConfirmed": true,
+    "heldLocalDirectoryClosed": true,
+    "ownUnitExitedConfirmed": true,
+    "ownedLocalChildReaped": true,
+    "protectedServiceBaselinesMatch": true,
+    "protectedServicesCompared": 4,
+    "sdkThreadExited": true,
+    "sshTransportClosed": true,
+    "unitState": "not-found/inactive/dead",
+    "wrapperExitObservedByCaller": 0
+  },
+  "limits": [
+    "The diagnostic failed. A normal process exit does not replace a validated setup result or manager empty/cleanup proof.",
+    "The retained cgroup helper rejects a missing pathname when its held descriptor does not satisfy st_nlink==0. The receipt does not contain the actual link count or underlying alias-read metadata.",
+    "No claim is made that a missing cgroup is safely empty, nor that the systemd marker mount/bus hypothesis is independently proven.",
+    "The fixed log fetch failed its original unit-origin check after unload; actual setup.stdout/setup.stderr contents were not obtained.",
+    "Later own-unit absence and transport cleanup do not retroactively change the earlier manager failure.",
+    "Four matching service snapshots prove matching sampled identities/state, not uninterrupted Relay traffic or full service availability.",
+    "SDK socket error 10038 was observed and is not classified harmless.",
+    "The wrapper returned within its envelope; configured limits are not measured CPU/memory peak or load-test results.",
+    "The single SSH allowance is exhausted. No reconnection, native retry or second unit is authorized by this record."
+  ],
+  "localPreparation": {
+    "candidateValidatedAgainstOriginalReturnedPackage": true,
+    "entryReserveSeconds": 15,
+    "hardDeadlineIncludesInputReadsReceiptsAndFinalOutput": true,
+    "newBoundaryTestsFailed": 0,
+    "newBoundaryTestsPassed": 9,
+    "reportedSeconds": 5.602,
+    "review": {
+      "confirmedRemainingP1P2": [],
+      "nativeReadinessVerified": false,
+      "reviewedSha256": {
+        "execute_once.py": "f345f85c7570b08cfcb0b6860e79f800279fa99982ee35c2be0478ee42621973",
+        "prepare_local.py": "c79bba185a9ec60d68883b911464d77c39d06e29c03894bc7f6004a15a02e055",
+        "test_local_boundaries.py": "85bffcae8586d7ecbecb9cb8b7fdedd6e65b2e2a50045c86e49e097be57b9d48"
+      },
+      "reviewerRanNative": false,
+      "reviewerRanTests": false,
+      "scope": "single approved setup diagnostic invocation only",
+      "testsPassedByAuthor": 9,
+      "twoPriorFindingsClosed": true
+    },
+    "stderrSha256": "31832079cbe41c4cbba53200e0f30804043aeafa1938828d8269b33e4a9985d0"
+  },
+  "nativeAcceptancePassed": false,
+  "nativeEvidence": {
+    "driverCleanupErrors": [
+      {
+        "code": "bridge_driver_transport_receipt",
+        "type": "RuntimeError"
+      }
+    ],
+    "driverPrimaryError": {
+      "code": "bridge_driver_transport_receipt",
+      "type": "RuntimeError"
+    },
+    "fixedLogFetchError": {
+      "code": "own_cleanup_unit_origin",
+      "type": "RuntimeError"
+    },
+    "fixedSetupLogContentsObtained": false,
+    "interpreterIdentityBound": true,
+    "interpreterIdentityStable": true,
+    "liveGenerationWitnessed": true,
+    "managerCleanupConfirmed": false,
+    "managerCleanupError": {
+      "code": "outer_scope_missing_unproven",
+      "type": "RuntimeError"
+    },
+    "managerPrimaryError": {
+      "code": "outer_scope_missing_unproven",
+      "type": "RuntimeError"
+    },
+    "managerRecordedNormalProcessExit": true,
+    "managerScopeEmptyConfirmed": false,
+    "unitReachedRunning": true,
+    "validatedSetupResultObtained": false
+  },
+  "nextLocalWork": "Diagnose the original missing-alias/held-cgroup proof contract and add bounded metadata evidence without weakening rejection; any new remote execution requires fresh authorization.",
+  "privateEvidenceUploaded": false,
+  "productionDeliveryComplete": false,
+  "schemaVersion": 1,
+  "scope": "single-approved-native-setup-diagnostic",
+  "status": "failed-after-observed-normal-process-exit-no-retry",
+  "transportReceipts": [
+    {
+      "exitCode": 0,
+      "outputLimitExceeded": false,
+      "phase": "before",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 2101,
+      "stdoutSha256": "f1b8766fb48eedf9ee1a003a6a9bbfaddc7455cd5d5b704e17d371210c38ef84"
+    },
+    {
+      "exitCode": 0,
+      "outputLimitExceeded": false,
+      "phase": "receiver",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 1164,
+      "stdoutSha256": "2a85ecc8f896b3473e926273fa3b9cc8c22d4c75a09fbf15edcd3ed54fb24120"
+    },
+    {
+      "exitCode": 1,
+      "outputLimitExceeded": false,
+      "phase": "setup",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 2811,
+      "stdoutSha256": "70d856e93eb2510df23c84fecea58f800b07a7a287fd4c5bbbe24c5dbabd2dfd"
+    },
+    {
+      "exitCode": 1,
+      "outputLimitExceeded": false,
+      "phase": "logs",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 316,
+      "stdoutSha256": "80936914b976e69a33cf4d3480d0ee8da0c3bf2c039e402ced0ff4376b9d20cd"
+    },
+    {
+      "exitCode": 0,
+      "outputLimitExceeded": false,
+      "phase": "cleanup",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 366,
+      "stdoutSha256": "2302db0f3a282d1ec79466b8755ee057188a66f9a2c56a4d66c6a5c718a0ffd4"
+    },
+    {
+      "exitCode": 0,
+      "outputLimitExceeded": false,
+      "phase": "after",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 2101,
+      "stdoutSha256": "200d57b0b5f9ae2792933aebb8583b96fe8a984485c930ad7c39c7dbd6eb0436"
+    }
+  ]
+}
