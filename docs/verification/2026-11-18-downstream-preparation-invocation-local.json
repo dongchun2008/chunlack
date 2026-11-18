@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-18",
+  "scope": "local-default-inactive-downstream-preparation-invocation",
+  "status": "local-invocation-regression-and-review-passed-native-unverified",
+  "derivation": {
+    "fixedSavedArtifacts": 13,
+    "preparedFiles": 11,
+    "preparedPythonSources": 7,
+    "adjacentFixedAssets": 4,
+    "packetProducerFunctionAstsUnchanged": true,
+    "packetProducerGenericLimitsUnchanged": true,
+    "changes": "Five digests, two helper pins and four adjacent fixed paths in the producer; the driver rebinds only its exact packet-source digest.",
+    "pinnedAssemblyBackendReused": true,
+    "assemblySourceSlots": 18,
+    "exactChangedSourceSlots": 8,
+    "exactChangedFixedPins": 2
+  },
+  "verification": {
+    "passed": 27,
+    "failures": 0,
+    "reportedSeconds": 9.89,
+    "outerRunSeconds": 10.185502599924803,
+    "outerLimitSeconds": 90,
+    "stderrSha256": "7e431740010f90f0a524865856c8d0535dae738e0b3e2cf21063bf7a17595b43",
+    "coverage": [
+      "regenerated full carrier accepted by the actual rebound receiver",
+      "unreviewed artifact or producer bytes refused",
+      "old watcher and producer pin rejection",
+      "mixed adjacent assets refused before output directory creation",
+      "exact source-slot and fixed-pin differences",
+      "inherited real package and inactive-entry checks",
+      "directory replacement replay refusal",
+      "held-parent close, provisional evidence failure and final deadline checks",
+      "structured CLI errors preserve execution and cleanup codes without private bodies"
+    ],
+    "fullProductSuiteRerun": false,
+    "nativeExecutionTested": false
+  },
+  "review": {
+    "scope": "independent static source, diff, hash and test-source review",
+    "remainingConfirmedP1P2": 0,
+    "reviewerRanTestsOrNative": false,
+    "reviewedDerivationSha256": "44f8b65eafc48db83020aa47acad3d09e8b73dbff29b9499849319f35506677b"
+  },
+  "savedCandidate": {
+    "boundFiles": 16,
+    "savedFiles": 18,
+    "packetMembers": 170,
+    "defaultUserApproved": false,
+    "maximumUnitsIfSeparatelyApproved": 1,
+    "localEnvelopeSeconds": 450,
+    "actualSavedEntryRefusedBeforeAttempt": true,
+    "ownedLocalChildReaped": true,
+    "entryGateSeconds": 0.40751609997823834,
+    "allSourceAndAssetPinsUnchanged": true
+  },
+  "protection": {
+    "currentPreviouslyReviewedCandidateUnchanged": true,
+    "pendingNativeApprovalUnchanged": true,
+    "frozenInputsAndOldFailuresPreserved": true,
+    "vpsConnections": 0,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "existingServiceChanges": false,
+    "credentialChanges": false,
+    "businessGrantChanges": false,
+    "relayChanges": false,
+    "dnsOrPortChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "implementationUploaded": false
+  },
+  "limitations": [
+    "This is a preparation diagnostic invocation; full watcher and whole-chain success or rollback execution is not integrated.",
+    "No Linux mount, resource, execution identity or production compatibility claim follows from the local checks.",
+    "The new saved package remains unapproved and cannot substitute for the separately pending diagnostic scope.",
+    "Local source and artifact data are private; only this sanitized verification record is synchronized."
+  ],
+  "nextLocalStep": "Integrate the full watcher lifecycle and its cleanup and evidence handling into a separate default-inactive runner, retaining the reviewed packet and held-directory safeguards.",
+  "productionReady": false,
+  "productionDeliveryComplete": false
+}
