@@ -1,0 +1,83 @@
+{
+  "actions": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "dnsOrPortChanges": false,
+    "externalAgentCalls": 0,
+    "nativeSocketsOrManagerCommands": 0,
+    "newLinuxUnits": 0,
+    "productCodeChanged": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-19",
+  "dependencySha256": {
+    "commonExchange": "879541f91f5068cf12f8ba6bfd831a8e0f3620cbf07c77774ae15768ab85be35",
+    "currentWatch": "b5737823a3b0a106efd37001e6a049a7654eefd2088bbc1ba6ae39abdf6dadf5",
+    "fixtureWatch": "8037db55bdcd5981b59de7091aa1fecd1cc1fad2ab453750799ada559cde872f",
+    "originalPublisher": "da73cff3485a714f99b1a180444926df2a0554e3ff81d3244004cc48719bf396",
+    "receiver": "0afef264fc6985aac8d4008f3e2e57721e5013e74ffc7262236d2fecaed063d1",
+    "sharedOrigin": "9e2a3c4861c14b77970d5bcf2b9bc02470fd1644b826847a1b1720ef9f525910",
+    "store": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd"
+  },
+  "implementationSha256": {
+    "producer.py": "5c6aaae542405ca28bc17a7f764be06f644856eee057f7e1e13a10552d44e61b",
+    "publish.py": "bd9f7ed282ca2fb694fb3e54954ae5fd2fd54fea4a2cbcb34bbeedb7e042271b"
+  },
+  "limitations": [
+    "Explicit in-memory filesystem, bus and channel doubles; no native Linux descriptor-passing or manager acceptance.",
+    "Fixture and current source have the same 22 Native method ASTs but different package globals and byte hashes.",
+    "Original watch guards do not include the install interpreter identity evidence; no equivalent interpreter proof is claimed.",
+    "Trusted root, exclusive legitimate fresh-tag lifecycle and stable preexisting ancestor remain prerequisites.",
+    "Retention cannot extend the original 600-second supervisor or 540-second observe unit.",
+    "Endpoint/source/process authentication and full global deadline integration remain separate requirements.",
+    "Install and observe creator paths now have local evidence; parent, host, control and worker producers and full creator sealing remain incomplete."
+  ],
+  "originalNativeMethodsAstIdentical": 22,
+  "productionDeliveryComplete": false,
+  "review": {
+    "confirmedRemainingP1P2": [],
+    "implementationMatchesReviewedPins": true,
+    "initialConfirmedP2": 2,
+    "kind": "independent static producer and joined publisher review",
+    "redReproducedAndFixed": 2,
+    "reviewerRanTests": false
+  },
+  "schemaVersion": 1,
+  "scope": "local-observe-origin-capture-and-handoff",
+  "status": "local-regressions-and-independent-static-review-passed",
+  "tests": {
+    "handoffCases": 3,
+    "implementationUnchangedBetweenRuns": true,
+    "logicalCases": 25,
+    "mergedRun": {
+      "elapsedSeconds": 76.04420150001533,
+      "exitCode": 0,
+      "passed": 25,
+      "stderrSha256": "96dec3b6b1a13c2d4ff35235b3863f108404d5682bf5c807cd3b00ef3a15fbab"
+    },
+    "onlyChangedTestMethod": "test_partial_metadata_is_not_acceptable_as_an_origin",
+    "repeatedCasesNotAddedToLogicalCount": true,
+    "sourceProducerCases": 22,
+    "sourceTestsUnchangedBetweenRuns": true,
+    "strengthenedMetadataTestGroup": {
+      "elapsedSeconds": 9.823771000024863,
+      "exitCode": 0,
+      "passed": 3,
+      "stderrSha256": "833eca3bf3d8ded2b2b0b2392e1e332ea630129fa9c8cb2f2914211bf165ca8b"
+    }
+  },
+  "verifiedLocally": [
+    "Exact source-bound watch supervisor supplies observe Origin after the original peer, generation, Scope and resource checks return.",
+    "Fresh reservation, frozen request and actual dispatch arguments precede a single original StartTransientUnit attempt.",
+    "ACK alone cannot create provenance; malformed ACK and any failed original bind guard remain uncertain.",
+    "Retained reference duplicates the original Scope descriptor under the existing guard and registers it before validation.",
+    "Every partial Scope keeps a closer across cleanup rebind; all arenas get close attempts.",
+    "Opaque Origin and views are separated; dictionary input is rejected through a fresh Kit opaque-origin check.",
+    "Reference handoff reuses the existing Proposal, exchange, Receiver and Store; wrong role is not relabelled install.",
+    "ACK loss closes sender resources and never permits resend.",
+    "Retained unlinked reference stays usable without reopening; uncertain close remains cached before FD-number reuse."
+  ]
+}
