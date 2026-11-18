@@ -1,0 +1,98 @@
+{
+  "date": "2026-11-19",
+  "implementation": {
+    "actualSubmissionAndVerifiedClosureRecordedSeparately": true,
+    "alreadyClosedReceiptHasNoExitStatusAndNoStopSubmission": true,
+    "closedTargetObjects": 6,
+    "commandMaximumCount": 64,
+    "defaultNativeConstructionDenied": true,
+    "derivedEngineChangedOnlyRunReceiptHandlingAndResultLists": true,
+    "engineIndependentlyChecksAlreadyClosedReceipt": true,
+    "explicitNoPendingJobRendererHandled": true,
+    "explicitNotFoundDefaultsNotTreatedAsLoadedPidEvidence": true,
+    "immediateGenerationGroupGenerationChecks": true,
+    "injectedRunnerCannotBePromotedToNative": true,
+    "jobSubmissionNotCleanupProof": true,
+    "lowLevelCommandEntryAlsoRestricted": true,
+    "missingLoadedPropertiesAndJobRefused": true,
+    "nativeRunnerSourceCompiledButNotInstantiated": true,
+    "nonRunEngineFunctionsUnchanged": true,
+    "oldFrozenEngineUnchanged": true,
+    "oneUseStopTicketAndOneDecisionPerRole": true,
+    "onlyExactShowAndStopCommandGrammar": true,
+    "perCommandMaximumSeconds": 5,
+    "sharedPortMaximumSeconds": 20,
+    "stickyResourceUncertaintyAndBoundedClose": true
+  },
+  "limits": [
+    "All manager and group operations in these tests use injected doubles; no kernel cleanup effect is proven.",
+    "The official source version supports the parser contract; the installed VPS version was not freshly checked.",
+    "An authentic original generation ledger and a source-bound provider retaining real parent/group descriptors are still required.",
+    "The native caller must retain kernel identity, capability, namespace, resource and permission admission.",
+    "Manager query and StopUnit are not atomic; serialized creator ownership remains required.",
+    "No SSH or executable native entry was constructed or activated.",
+    "Full-runner proof, service-baseline, transport/thread and held-directory finalization remain incomplete."
+  ],
+  "productionDeliveryComplete": false,
+  "protection": {
+    "actualManagerCommands": 0,
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "dnsOrPortChanges": false,
+    "externalAgentCalls": 0,
+    "nativeFactoryActivated": false,
+    "newLinuxUnits": 0,
+    "productCodeChanged": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnections": 0
+  },
+  "schemaVersion": 1,
+  "scope": "local-source-bound-manager-port-and-derived-engine",
+  "sourcePins": {
+    "PLAN.md": "58ba7ce4f0f8da71c84cce9c52a11bba8bcdfd3bf8f099c571dff5844cc3dc20",
+    "engine.py": "a0ca7208319539bddc8cc01096a3ae1895018a9232a45bd25a66431fad77a5bd",
+    "port.py": "27075aeef1937f92389afa3549dbc85629afb74994d87531d9e2b9ce61c43a4a",
+    "test_port.py": "c67ca68ff1e6311d5fe6b5f971ba15d3c6d6fc465538be4c35e1456c2f10795d"
+  },
+  "status": "local-regression-compatibility-and-static-review-passed-native-provider-pending",
+  "supportingReferences": [
+    {
+      "claim": "In systemd v255 the CLI renders no pending Job as an empty value and a pending job as a positive integer.",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v255/src/systemctl/systemctl-show.c"
+    },
+    {
+      "claim": "Description uses unit_description, which falls back to the unit id when no description is set.",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/dbus-unit.c"
+    },
+    {
+      "claim": "unit_description returns the configured description or unit id.",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/unit.c"
+    }
+  ],
+  "verification": {
+    "confirmedHandoffFindingReproducedAndRepaired": true,
+    "fourTemporalHandoffCasesCovered": true,
+    "independentStaticReviewers": 2,
+    "notAFullProductRegression": true,
+    "originalEngineSuiteAgainstDerivedImplementation": {
+      "failed": 0,
+      "logSha256": "03b09d04bc8a0ffecb6b5af1500796ce9310528650ccd9068b8393cc2c2492c8",
+      "outerSeconds": 0.39975950005464256,
+      "passed": 46,
+      "reportedSeconds": 0.122
+    },
+    "portProtocolTests": {
+      "failed": 0,
+      "logSha256": "a4a13d51125ed44eb32b9012a0d1de58269b16d583383737267a0ea10bd272e5",
+      "outerSeconds": 2.3541305999970064,
+      "passed": 34,
+      "reportedSeconds": 2.065
+    },
+    "previousEngineProofLinkInvocationSourcePinsUnchanged": true,
+    "redAndIntermediateEvidencePreserved": true,
+    "remainingConfirmedP1P2InComponent": 0,
+    "reviewersRanTests": false
+  }
+}
