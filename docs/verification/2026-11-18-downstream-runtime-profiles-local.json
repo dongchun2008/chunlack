@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-18",
+  "scope": "local-downstream-runtime-profile-audit-and-isolated-candidate",
+  "status": "three-profile-local-regression-passed-full-archive-rebind-pending",
+  "provenance": {
+    "actualSavedPacketInspected": true,
+    "packetHashVerified": true,
+    "nestedAssetAndHostHashesVerified": true,
+    "packetMembers": 170,
+    "assetMembers": 6,
+    "hostMembers": 161,
+    "profileBytesMatchFrozenSources": true
+  },
+  "finding": "The archived root controller, host launcher and observer each request a private runtime filesystem without the systemd runtime marker and retain the older root execution flags. This is source and request evidence; the consequences in those native roles have not been tested.",
+  "candidate": {
+    "separateLocalDirectory": true,
+    "roles": [
+      "root-controller",
+      "host-launcher",
+      "observer"
+    ],
+    "marker": {
+      "path": "/run/systemd/system",
+      "options": "ro,nosuid,nodev,noexec,size=4096,nr_inodes=16,mode=0755"
+    },
+    "rootExecFlags": [
+      "no-setuid",
+      "no-env-expand"
+    ],
+    "rootStopPostFlagsAlsoAligned": true,
+    "transitiveParentSourceDigestsRebound": true,
+    "originalFixedCodecUnchanged": true,
+    "allOtherRequestFieldsAndBudgetsEqualFrozenProfiles": true
+  },
+  "localVerification": {
+    "initialTests": 12,
+    "initialFailures": 12,
+    "finalPassed": 14,
+    "finalFailures": 0,
+    "reportedSeconds": 0.728,
+    "stderrSha256": "e75f7da442ee6165ebf93fc919c1b4899f58ee628b7165bd33c628a3dd22a137",
+    "localPythonSources": 6,
+    "coverage": [
+      "three actual request constructors and fixed codecs",
+      "exact request difference limited to marker and root execution flags",
+      "missing or writable marker, host runtime bind and expanded permissions rejected",
+      "unchanged identity, capabilities, no-new-privileges and resource requests",
+      "stale parent profile references refused",
+      "codec digest drift refused before execution"
+    ]
+  },
+  "review": {
+    "scope": "independent static source, hash and test-source review of three profiles",
+    "remainingConfirmedP1P2": 0,
+    "reviewerRanTestsOrNative": false
+  },
+  "integrationImpact": {
+    "fullArchiveRebuilt": false,
+    "workerAndProductChanges": false,
+    "exactHostAndDirectCarrierCopiesMustMatch": true,
+    "observerProfileDigestAlsoReferencedByWatch": true,
+    "strictWatchPinsAndNestedAssetAndBootstrapDigestsStillNeedRebinding": true,
+    "genericSizeOrSecurityLimitsMayNotBeRelaxed": true
+  },
+  "protection": {
+    "currentReviewedSetupCandidateUnchanged": true,
+    "currentSetupRegressionNotRerun": true,
+    "pendingNativeApprovalUnchanged": true,
+    "oldFailuresAndFrozenSourcesPreserved": true,
+    "vpsConnections": 0,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "existingServiceChanges": false,
+    "credentialChanges": false,
+    "businessGrantChanges": false,
+    "relayChanges": false,
+    "dnsOrPortChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "implementationUploaded": false
+  },
+  "limitations": [
+    "These 14 tests cover the separate downstream profile candidate, not complete packaging or the full product suite.",
+    "Actual marker mounts, execution credential effects and StopPost behavior remain unverified.",
+    "The separate profile candidate is not native-eligible and does not replace the reviewed setup-only candidate.",
+    "No new remote authorization is inferred from the continuing goal or earlier consumed allowances."
+  ],
+  "nextLocalStep": "Construct a strict, separately reviewed archive and source-digest overlay with exact differences and rejection of mixed or downgraded assets; keep the current setup-only candidate frozen.",
+  "productionReady": false,
+  "productionDeliveryComplete": false
+}
