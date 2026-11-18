@@ -1,0 +1,100 @@
+{
+  "actions": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "externalAgentCalls": 0,
+    "nativeSocketsOrManagerCommands": 0,
+    "newLinuxUnits": 0,
+    "productFilesEditedByThisStage": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-19",
+  "dependencies": {
+    "controlSource": "5cf635a47d09f701878cf9190098515fb03df0ad16c0122c2b4644ad2d15da7e",
+    "exchange": "879541f91f5068cf12f8ba6bfd831a8e0f3620cbf07c77774ae15768ab85be35",
+    "proposal": "da73cff3485a714f99b1a180444926df2a0554e3ff81d3244004cc48719bf396",
+    "receiver": "0afef264fc6985aac8d4008f3e2e57721e5013e74ffc7262236d2fecaed063d1",
+    "simulationFixture": "2602e84358c7e34d3c0c30fa43e8cda96cfc5b4fe9ce77f32d384e8b2e8d666f",
+    "upstreamHub": "45e1c2530108c96eaaf05b4e8e22c8ce54271cee41d7935139809ad40a2b29ec"
+  },
+  "implementationSha256": {
+    "publish.py": "5e3b01ad586d64e45dfcfc7c95b57cf73b5d49a074324060b8c2bd3d8d04528c"
+  },
+  "limits": [
+    "All execution here is explicit local VFS, identity, bus and channel simulation. No Linux kernel, native socket, actual manager or production acceptance is established.",
+    "Host linkage is PID/request/parent correlation. This layer does not independently establish the Host process generation or authenticate a source process or destination.",
+    "The clock repair applies to the composed upstream instance here. Frozen upstream Hub 45e is unchanged and its standalone entry is not repaired by this record.",
+    "Historical pre-repair 24/24 results are retained but do not constitute final acceptance. Three later red reproductions proved the clock gap before repair.",
+    "ACK proves historical receipt of a reference only, not a currently live remote lease, complete report validation or creator registry sealing.",
+    "Worker capture/handoff, full authenticated coordinator, complete six-role native package and global 950-second integration remain incomplete.",
+    "Fresh copy compatibility, consistent backup, 55/120 production maintenance, bilingual/multiuser mixed-provider research, quiet Xuanji, Muse SuHua and physical nodes remain separate delivery gates.",
+    "This record does not rerun or add prior product test totals. Private implementation, fixtures and raw diagnostics remain local."
+  ],
+  "productionDeliveryComplete": false,
+  "review": {
+    "confirmedRemainingP1P2": [],
+    "generationLimit": "Host linkage is PID/request/parent correlation; this layer does not independently establish the Host process generation.",
+    "initialConfirmedP2": 1,
+    "kind": "independent static source/FD lifecycle review after deterministic clock regression repair",
+    "prerequisites": [
+      "trusted source and request entry",
+      "authenticated source/process and destination outside this component",
+      "exclusive privileged lifecycle ownership",
+      "stable static BASE"
+    ],
+    "redReproducedAndFixed": "per-observation merge of admitted Origin/Store clock watermarks; three reproductions reject before send",
+    "reviewedSha256": {
+      "PLAN.md": "6c85382eb6517e524bd23fda4e01bd7a3bc9a74b808e3bc6a59c746c15118a68",
+      "fixture.py": "2602e84358c7e34d3c0c30fa43e8cda96cfc5b4fe9ce77f32d384e8b2e8d666f",
+      "publish.py": "5e3b01ad586d64e45dfcfc7c95b57cf73b5d49a074324060b8c2bd3d8d04528c",
+      "test_handoff.py": "3a107f7ffc7e86496fc78efa936ec292e697fb40a3c43f153b0f72707ec92400"
+    },
+    "reviewerRanTests": false
+  },
+  "schemaVersion": 1,
+  "scope": "local-actual-upstream-host-control-reference-handoff",
+  "status": "local-regressions-and-scoped-static-review-passed",
+  "tests": {
+    "batches": [
+      {
+        "count": 14,
+        "exitCode": 0,
+        "index": 0,
+        "outerLimitSeconds": 90,
+        "outerSeconds": 81.65416729997378,
+        "stderrSha256": "eea349c6ea21a277c7f1042e6dd0eb26d7458d9a907ce6277525094e6caf4fd5"
+      },
+      {
+        "count": 13,
+        "exitCode": 0,
+        "index": 1,
+        "outerLimitSeconds": 90,
+        "outerSeconds": 49.87490749999415,
+        "stderrSha256": "a9d037b1bb119e50b86723e15d02fed2c5b52aa1c1699792a8167ae68f7da9ce"
+      }
+    ],
+    "exitCode": 0,
+    "failed": 0,
+    "outerSeconds": 131.53038190002553,
+    "passed": 27,
+    "runMode": "two serial local batches; no automatic retry",
+    "skipped": 0,
+    "sourcePinsMatchReview": true,
+    "sourceUnchanged": true
+  },
+  "verifiedLocally": [
+    "The actual instrumented observer creates parent and Host Origins on one memory filesystem; its exact staged Host request feeds the actual instrumented Host/control creator in the same operations and clock namespace.",
+    "Control cannot be claimed before successful original upstream parent and Host reference ACK and sender cleanup.",
+    "Admission binds exact source/request/argv/job/tag/nonce, original control generation, parent identity, upstream operations/clock/retention and destination peer/challenge.",
+    "The control hop has a new one-shot window of at most 20 seconds within unchanged global retention; completed upstream delivery cannot be refreshed and source execution deadlines are not extended.",
+    "Original retained control FD is used after source cleanup and unlink without consulting an obsolete dynamic scope adapter or reopening its path.",
+    "Cancellation before delivery or during opaque claim, send or ACK cannot record a successful control receipt.",
+    "Wrong or lost ACK is terminal; source-close errors are sticky and unknown descriptors are not retried after descriptor-number reuse.",
+    "Late ACK descriptors after cancellation are retired once, and late close uncertainty invalidates cached successful close.",
+    "Each upstream/control observation first merges all admitted Origin/Store watermarks; deterministic rollback after transfer validation is rejected before send, including the upstream parent path.",
+    "Caller retains ownership of unprepared Origins and borrowed channels; receiver leases remain independently owned after sender shutdown."
+  ]
+}
