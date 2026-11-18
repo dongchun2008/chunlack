@@ -1,0 +1,64 @@
+{
+  "date": "2026-11-18",
+  "implementation": {
+    "actualNewSavedPacketParsed": true,
+    "allScopeReconciliationStillRequired": true,
+    "automaticRetry": false,
+    "boundedReceiptsDeepCopiedBeforeSaver": true,
+    "carrierExactProducerPinRebound": true,
+    "carrierParserAndChecksUnchanged": true,
+    "dispatchMarkedPossiblyExecutedBeforeInvoke": true,
+    "originalJobAndFullProofValidatorsCalled": true,
+    "packetDigestBoundToCaller": true,
+    "proofFrameMaximumBytes": 32768,
+    "proofReaderMaximumSeconds": 20,
+    "readerOverMemoryFilesystemExercised": true,
+    "sourcePinsBoundBeforeDispatch": 6,
+    "unknownWatcherPreventsProofRead": true,
+    "watchFrameMaximumBytes": 16384,
+    "watcherMaximumSeconds": 620
+  },
+  "limits": [
+    "Runtime artifacts and filesystem are synthetic; this is local protocol evidence, not Linux execution.",
+    "No full-chain SSH entry or approval was created or activated by this component.",
+    "The future invoke port must enforce pinned source rendering, typed successful transport receipts and the shared total deadline.",
+    "A positive stage result retains nativeCompatibilityVerified, productionReady, proofCreated and allOwnedScopesEmpty as false.",
+    "Normal watcher output does not independently prove all downstream generations and scopes stopped.",
+    "Full-runner ownership reconciliation, service checks and SSH/thread/held-directory closure remain necessary.",
+    "The earlier one-shot readonly allowance is exhausted; pending single-setup permission cannot be reused for a different full-chain scope."
+  ],
+  "productionDeliveryComplete": false,
+  "protection": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "dnsOrPortChanges": false,
+    "externalAgentCalls": 0,
+    "newLinuxUnits": 0,
+    "productCodeChanged": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnections": 0
+  },
+  "schemaVersion": 1,
+  "scope": "local-post-setup-watcher-independent-proof-link",
+  "sourcePins": {
+    "carrier.py": "75c9bba3af74faacda8c8480a9ac57fda197a22dbb803b73455b6fafb52867bd",
+    "link.py": "29e8f430ff366c53a078a5fbe970ef418129086847aa651bf8b743b690693b20",
+    "test_link.py": "ed4d996953a134d72edc14979ab093fa93a44bf307533ac877e24ee303ffb273"
+  },
+  "status": "local-component-regression-and-static-review-passed-not-full-runner",
+  "verification": {
+    "confirmedFindingReproducedAndRepaired": "Saver mutation could alter proof or validator result; three red regressions now pass using independent receipt snapshots.",
+    "initialFailuresPreserved": true,
+    "localTestsFailed": 0,
+    "localTestsPassed": 23,
+    "outerSeconds": 6.4392870999872684,
+    "priorFrozenInvocationSourceAndPreparedAssetPinsUnchanged": true,
+    "remainingConfirmedP1P2InComponent": 0,
+    "reportedSeconds": 6.149,
+    "reviewersRanTests": false,
+    "staticIndependentReviewers": 2,
+    "testLogSha256": "9e0948bf0566d69673c2f6e55b1631d225cf9e6500f37ea31b6eb548fb765243"
+  }
+}
