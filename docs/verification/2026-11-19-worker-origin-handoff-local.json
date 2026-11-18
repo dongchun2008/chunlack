@@ -1,0 +1,100 @@
+{
+  "actions": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "externalAgentCalls": 0,
+    "nativeSocketsOrManagerCommands": 0,
+    "newLinuxUnits": 0,
+    "productFilesEditedByThisStage": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnected": false
+  },
+  "date": "2026-11-19",
+  "dependencySha256": {
+    "controlBridge": "5e3b01ad586d64e45dfcfc7c95b57cf73b5d49a074324060b8c2bd3d8d04528c",
+    "exchange": "879541f91f5068cf12f8ba6bfd831a8e0f3620cbf07c77774ae15768ab85be35",
+    "proposal": "da73cff3485a714f99b1a180444926df2a0554e3ff81d3244004cc48719bf396",
+    "receiver": "0afef264fc6985aac8d4008f3e2e57721e5013e74ffc7262236d2fecaed063d1",
+    "simulationFixture": "da91ef04c537b60c248875b0deea6f5fe8976375cada10a77f2ac3600a157864",
+    "workerSource": "26322e8d445c42ade44c1d6abbe0cc3098185e083b0c00142cf55f5a136d5079"
+  },
+  "implementationSha256": {
+    "publish.py": "ffd2c691e9f2b4d56a814253d9ad47d31cc0f2a3ca623d0c1191cb4fe1970704"
+  },
+  "limits": [
+    "All execution here is explicit local VFS/bus/identity/channel simulation. No Linux kernel, native manager, socket listener, model or external Agent was executed.",
+    "Prepared worker capsule/context are synthetic actual-catalog-bound inputs; the original simulated worker Controller intentionally fails business after capture. No real worker program, RootNativeOps.prepare or successful report validation is established.",
+    "ACK proves historical reference receipt only, not an active remote lease, source/process authentication, complete creator registry sealing or business completion.",
+    "This composes parent/Host/control/worker partial reference delivery. Install/observe integration, complete six-role authenticated coordinator and global 950-second native validation remain incomplete.",
+    "Trusted mounts, lifecycle exclusivity, independent process generations and target-kernel/exe/stat/script-readiness evidence still need their own native proof.",
+    "Fresh compatibility/consistent backup and 55/120 production maintenance, bilingual/multiuser mixed-provider research, quiet Xuanji, Muse SuHua and physical nodes remain separate delivery gates.",
+    "Prior product test totals are not added or rerun. Private implementation, fixtures and raw diagnostics remain local."
+  ],
+  "productionDeliveryComplete": false,
+  "review": {
+    "confirmedRemainingP1P2": [],
+    "kind": "independent narrow static source/FD-hop review",
+    "limitations": [
+      "simulated PID adoption does not prove native cross-process continuity",
+      "complete creator registry sealing and full native acceptance not established"
+    ],
+    "prerequisites": [
+      "authenticated source process and destination outside this component",
+      "trusted root runtime mounts",
+      "exclusive privileged lifecycle ownership"
+    ],
+    "reviewedImplementationSha256": "ffd2c691e9f2b4d56a814253d9ad47d31cc0f2a3ca623d0c1191cb4fe1970704",
+    "reviewedSha256": {
+      "PLAN.md": "e6e488a906ef1328cdd520375770c8e2559276c40d819ecd53221c46e032233d",
+      "fixture.py": "da91ef04c537b60c248875b0deea6f5fe8976375cada10a77f2ac3600a157864",
+      "publish.py": "ffd2c691e9f2b4d56a814253d9ad47d31cc0f2a3ca623d0c1191cb4fe1970704",
+      "test_fixture.py": "7a2a50143cf83d22428ad9cb6048ef6f7d55831abe09e996cdb0e4c8757a125b",
+      "test_handoff.py": "dfb1323cf7bae9e3ec2ed57ed72fb272a6262f6108cb7cfe9d53e2294dab33e3"
+    },
+    "reviewerRanTests": false
+  },
+  "schemaVersion": 1,
+  "scope": "local-parent-host-control-worker-reference-hop",
+  "status": "local-regressions-and-scoped-static-review-passed",
+  "tests": {
+    "batches": [
+      {
+        "count": 16,
+        "exitCode": 0,
+        "index": 0,
+        "outerLimitSeconds": 90,
+        "outerSeconds": 66.3802730999887,
+        "stderrSha256": "8b070e920329ecde7ce43c24a7c2cb5d92c576f1dbf692e866559690d4b03161"
+      },
+      {
+        "count": 15,
+        "exitCode": 0,
+        "index": 1,
+        "outerLimitSeconds": 90,
+        "outerSeconds": 58.84187539992854,
+        "stderrSha256": "a953f4cb2cf4b8056f29675823ab6a8fe1e8e0a1081815a9da9a15401578e991"
+      }
+    ],
+    "exitCode": 0,
+    "failed": 0,
+    "implementationMatchesReview": true,
+    "outerSeconds": 125.22416480001993,
+    "passed": 31,
+    "skipped": 0,
+    "sourceUnchanged": true
+  },
+  "verifiedLocally": [
+    "Actual instrumented observer and Host/control creators issue upstream Origins on one memory filesystem; actual parent/Host/control reference ACKs precede deferred Root adoption and actual worker capture.",
+    "Deferred simulated Host-to-Root adoption does not create an ACK or repeat bootstrap; early adoption is rejected by the original Host PID guard.",
+    "Worker admission requires successful actual upstream control ACK and source cleanup, an exact opaque worker-kit Origin and matching control generation, control request SHA and parent identity.",
+    "Checked proposal SHA, capsule/context/catalog, argv/job, worker generation, source operations/clock/retention and destination peer/challenge are clamped to captured evidence.",
+    "Each new hop is at most 20 seconds within unchanged absolute retention; completed upstream hops and source execution deadlines are not refreshed.",
+    "Composed observations merge worker and upstream Origin/Store watermarks before accepting sampled time; transfer-clock rollback rejects before send.",
+    "Cancellation before send or during opaque claim, send or ACK cannot record a successful worker receipt and closes only its exact owned source reference.",
+    "Wrong/lost ACK is terminal; late descriptors are retired once or poison cached close; unknown descriptors are not retried after numeric FD reuse.",
+    "Both-unlinked parent/worker references can be delivered without reopening a dynamic scope or using the closed original Observation FD.",
+    "Moved Receiver leases remain caller-owned after sender shutdown; borrowed channels and unprepared Origins remain caller-owned."
+  ]
+}
