@@ -1,0 +1,83 @@
+{
+  "date": "2026-11-19",
+  "dependencyPins": {
+    "engineSha256": "a0ca7208319539bddc8cc01096a3ae1895018a9232a45bd25a66431fad77a5bd",
+    "storeSha256": "c5b604454d64fad037d8fb13836d58dd1bc25f27a877612606bf9f93d1c60bdd"
+  },
+  "implementation": {
+    "automaticReadTimeAdoptionForbidden": true,
+    "captureClampedByOriginalLedgerAndTwoManagerRows": true,
+    "engineAndStoreBytesPinnedBeforeCompilation": true,
+    "exactReviewedStoreReused": true,
+    "finalDynamicParentAndLeafAliasChecks": true,
+    "firstCloseFailureCannotBeErasedByNewDeadline": true,
+    "linkedGroupReadsBoundedEventsProcessesFinalEvents": true,
+    "maximumLeafBytes": 4096,
+    "nativeReadConstructionDefaultsDenied": true,
+    "neverDispatchedUsesAnchoredAbsenceWithoutInventedCounters": true,
+    "noCommandOrRemoteEntry": true,
+    "observedGroupRequiresCapturedOriginalDescriptor": true,
+    "originalSharedParentRequiredForInnerGroupCapture": true,
+    "removedGroupRequiresOriginalIdentityUnlinkAndMissingAlias": true,
+    "staticAncestorsAndDynamicGroupLeasesSeparated": true,
+    "unknownCloseNeverRetriedOnPossiblyReusedDescriptor": true,
+    "zeroVirtualFileSizeSupported": true
+  },
+  "limits": [
+    "The filesystem and descriptors in these tests are modeled in memory, not real Linux kernel cgroups.",
+    "Equal event endpoints do not establish that no state changed between them.",
+    "The provider consumes a source-trusted original ledger; it does not authenticate historical command stdout.",
+    "An already-vanished observed group without a retained descriptor remains unknown.",
+    "Authentic origin creation and descriptor handoff for non-overlapping controller lifetimes remain incomplete.",
+    "The native caller must retain original kernel identity, capability, namespace, resource and ownership admission.",
+    "The twenty-second manager port must not be treated as the entire long-lived observation owner.",
+    "The full-runner source closure, shared budget, proof, service-baseline and transport/directory finalization remain incomplete.",
+    "No native or SSH execution entry was activated."
+  ],
+  "productionDeliveryComplete": false,
+  "protection": {
+    "actualManagerCommands": 0,
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "dnsOrPortChanges": false,
+    "externalAgentCalls": 0,
+    "nativeFactoryActivated": false,
+    "newLinuxUnits": 0,
+    "productCodeChanged": false,
+    "productionPublished": false,
+    "realCgroupFileOpens": 0,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnections": 0
+  },
+  "schemaVersion": 1,
+  "scope": "local-readonly-held-group-provider",
+  "sourcePins": {
+    "PLAN.md": "f956ecebed84b48b92dd7118717b219e6e49bcebac8c9d049634b0552831a3ce",
+    "groups.py": "74e8ced3f80e2ce9f6bfd1a531dcc934c502c7894e705d60ce8b0d2fb8aaa13d",
+    "test_groups.py": "618f53b24aea87239c33e589f026eea866212ae9f7a6f72596b2c1d682d757c5"
+  },
+  "status": "local-regression-and-static-review-passed-authentic-origin-handoff-pending",
+  "verification": {
+    "actualPinnedStoreExecutedAgainstMemoryOperations": true,
+    "allModeledDescriptorsClosedInSuccessfulJoinedCase": true,
+    "closeDeadlineLaunderingReproducedAndRepaired": true,
+    "constructorAndLeafFailureClosureChecked": true,
+    "fixtureModelsDescriptorNumberReuse": true,
+    "fixtureModelsRetainedDirectoryObjectsAndAliasReplacement": true,
+    "fullProductTestsNotRerun": true,
+    "localTestsFailed": 0,
+    "localTestsPassed": 30,
+    "managerAndDerivedEngineJoinedWithMemoryGroupProvider": true,
+    "missingChildFinalParentRaceReproducedAndRepaired": true,
+    "observedChildFinalParentRaceReproducedAndRepaired": true,
+    "outerSeconds": 1.7409545000409707,
+    "previousManagerEngineAndProofLinkSourcePinsUnchanged": true,
+    "redAndIntermediateEvidencePreserved": true,
+    "remainingConfirmedP1P2InComponent": 0,
+    "reportedSeconds": 1.436,
+    "reviewersRanTests": false,
+    "staticIndependentReviewers": 2,
+    "testLogSha256": "0105fd994db6b76333bcba8fc4d758a42548940e742a305530c01c5a0cea3faf"
+  }
+}
