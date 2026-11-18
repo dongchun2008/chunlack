@@ -1,0 +1,66 @@
+{
+  "boundaries": {
+    "actualManagerCommands": 0,
+    "credentialChanges": false,
+    "dnsOrPortChanges": false,
+    "externalAgentCalls": 0,
+    "grantChanges": false,
+    "nativeSocketsUsed": 0,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "vpsConnections": 0
+  },
+  "date": "2026-11-19",
+  "implementation": {
+    "absoluteLifetimeMaximumSeconds": 950,
+    "ancillaryIntegerCapacity": 9,
+    "frameBytesMaximum": 8192,
+    "matchingMetadataDoesNotMintOrigin": true,
+    "originalCgroupPathReopenedDuringImport": false,
+    "previousFiveSourcePinsUnchanged": true,
+    "receiverIssuesMaximumPerRole": 1,
+    "singleReceiveAttempt": true,
+    "socketOwnershipRemainsWithCaller": true,
+    "sourceBoundProviderImport": true,
+    "sourcePins": {
+      "PLAN.md": "e553fe3acdcb9a460c60d3e509841968760161fedebf51d136d1f2b2dff5761c",
+      "bridge.py": "77999e415cdde35f9a035e110e254b3cccdefa348476f0239007277658e89458",
+      "handoff.py": "0afef264fc6985aac8d4008f3e2e57721e5013e74ffc7262236d2fecaed063d1",
+      "test_bridge.py": "9cdd9fcc4a4a87e14fa3cdf023de42614b64f95c78ff5b10202f5dc5092ab181",
+      "test_handoff.py": "6f35ea6b0a6b9af9ee1c6547cf6fbee5bfc01895e828b94b96419256837c94a6"
+    }
+  },
+  "primaryReferences": [
+    "https://raw.githubusercontent.com/torvalds/linux/v6.8/net/socket.c",
+    "https://raw.githubusercontent.com/torvalds/linux/v6.8/include/linux/socket.h"
+  ],
+  "productionDeliveryComplete": false,
+  "remaining": [
+    "Authentic source-bound producer capture and sealed creator origin ledger",
+    "Sender escrow and acknowledgement-loss handling",
+    "Full-runner budget and native Linux handoff validation",
+    "Production release and original multilingual, multi-user, mixed-model, research and external-Agent acceptance"
+  ],
+  "schemaVersion": 1,
+  "scope": "local-receiving-fd-handoff-and-held-provider-import",
+  "status": "local-regressions-passed-not-native-accepted",
+  "verification": {
+    "actualManagerAndReconciliationEngineJoined": true,
+    "actualPinnedStoreExecutedAgainstInodeMemoryFilesystem": true,
+    "fullProductRegressionRerun": false,
+    "localTestsFailed": 0,
+    "localTestsPassed": 45,
+    "managerCommandsUseDoubles": true,
+    "networkAndProcessExecutionForbiddenInJoinedTest": true,
+    "outerSeconds": 1.9966620000777766,
+    "reportedSeconds": 1.672,
+    "reviewFindingsReproducedAndFixed": [
+      "SCM_PIDFD descriptor must be tracked and closed on rejection",
+      "freeze bridge input and close static descriptors if final construction fails"
+    ],
+    "staticReviewers": 2,
+    "testLogSha256": "503b0f3557fdf24a406f6c2d7f89a87a2fe960241d0e1f7ba098772dc6b97f4b"
+  }
+}
