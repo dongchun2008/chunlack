@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-18",
+  "scope": "local-held-directory-replay-repair-and-runtime-marker-candidate",
+  "status": "scoped-local-regression-and-review-passed-inactive-native-unverified",
+  "supersedesCurrentCandidateStatusIn": "docs/verification/2026-11-18-runtime-marker-local-candidate-audit.json",
+  "changes": {
+    "approvalIdentity": "Initial directory identity is captured before input reads, used for approval comparison and carried unchanged into the held-parent guard.",
+    "anchoredWrites": "The exclusive attempt and all phase receipts are written through the already-reviewed held-parent implementation.",
+    "cleanup": "Execution, provisional-receipt and directory-close errors are preserved separately; any uncertain cleanup or final deadline failure prevents acceptance.",
+    "finalReceipt": "The on-disk pre-close outcome is explicitly provisional and cannot claim final completion. The bounded final CLI result is emitted after directory cleanup.",
+    "compatibility": "Prepared inputs retain three-value unpacking. The CLI error response explicitly retains false production and native-compatibility flags.",
+    "sourceClosure": "Four fixed assembly slots change: driver, setup profile, setup and receiver. The latter two retain their executable logic and change fixed digest literals only.",
+    "businessPolicyAstComparison": "Original execution-policy body retained apart from prepared-input forwarding and moving final receipt ownership into the held-close wrapper."
+  },
+  "localVerification": {
+    "passed": 46,
+    "failures": 0,
+    "reportedSeconds": 37.627,
+    "outerRunSeconds": 38.352845199988224,
+    "stderrSha256": "62166f7416f7b84f3c456ac71ae9372a845269536388fd5e4368ae7c026acea6",
+    "replayRegression": {
+      "previouslyFailed": true,
+      "nowPassed": true,
+      "replacementDirectoryUntouched": true,
+      "originalConsumedMarkerPreserved": true,
+      "refusedBeforeInjectedSessionFactory": true
+    },
+    "coverage": [
+      "directory substitution after approval admission",
+      "actual parent descriptor closure before final acceptance",
+      "close failure and provisional receipt failure prevent success",
+      "execution and close errors remain distinguishable at the CLI",
+      "final clock expiry refuses success",
+      "embedded held-parent digest drift refusal",
+      "bounded nested error formatting without exception bodies",
+      "private marker mount request and D-Bus encoding",
+      "rehashed packet downgrade refusal",
+      "unchanged setup guards using explicit memory and manager doubles",
+      "actual inactive saved entry refusal and owned process cleanup"
+    ],
+    "earlierFailedRunsPreserved": true,
+    "cliCompatibilityFailureCorrected": true,
+    "productFullSuiteRerun": false
+  },
+  "review": {
+    "scope": "independent source, diff, hash and test-source review",
+    "reviewerRanTestsOrNative": false,
+    "remainingConfirmedP1P2": 0,
+    "inheritedReplayFindingClosed": true,
+    "reviewedDriverSha256": "2a8c1c77656b638567d7ff8dbf97296373bad4a56f0127169fa41279132ed7f3"
+  },
+  "sourceBinding": {
+    "localPythonSources": 11,
+    "assemblySourceSlots": 18,
+    "exactAssemblyDifferenceCount": 4,
+    "allOtherAssemblyPinsMatchFrozenReview": true,
+    "allPinsUnchangedAfterSavedEntryCheck": true
+  },
+  "inactivePackage": {
+    "boundFiles": 16,
+    "savedFiles": 18,
+    "packetMembers": 170,
+    "userApproved": false,
+    "refusedBeforeAttempt": true,
+    "ownedChildReaped": true,
+    "entryCheckSeconds": 4.51199320005253
+  },
+  "limitations": [
+    "46 is the scoped private candidate suite, not a new complete product regression.",
+    "Actual Linux tmpfs mounts, read-only flags, bus reachability and effective resource restrictions remain unverified.",
+    "A downstream frozen controller has a similar private runtime-directory compatibility boundary that still needs evaluation before whole-chain acceptance.",
+    "Earlier failed evidence and the pre-fix inactive package are retained; they are not executable candidates."
+  ],
+  "effects": {
+    "vpsConnections": 0,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "existingServiceChanges": false,
+    "productCodeChanged": false,
+    "credentialChanges": false,
+    "businessGrantChanges": false,
+    "relayChanges": false,
+    "dnsOrPortChanges": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "implementationUploaded": false
+  },
+  "nextNativeScope": {
+    "approved": false,
+    "maximumSshConnections": 1,
+    "maximumPreparationUnits": 1,
+    "unitSeconds": 90,
+    "localTotalSeconds": 450,
+    "memoryMiB": 192,
+    "cpuPercent": 20,
+    "tasks": 32,
+    "swapBytes": 0,
+    "nice": 10,
+    "cpuWeight": 10,
+    "isolatedNetwork": true,
+    "failureStopsWithoutAutomaticRetry": true,
+    "sameConnectionEvidenceCleanupAndServiceRecheck": true,
+    "productionAllowed": false
+  },
+  "productionReady": false,
+  "productionDeliveryComplete": false
+}
