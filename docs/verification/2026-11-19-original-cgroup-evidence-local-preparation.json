@@ -1,0 +1,125 @@
+{
+  "actions": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "externalAgentCalls": 0,
+    "modelCalls": 0,
+    "nativeKernelCalls": 0,
+    "newLinuxUnits": 0,
+    "productChanges": false,
+    "productionPublished": false,
+    "relayChanges": false,
+    "vpsConnections": 0
+  },
+  "date": "2026-11-19",
+  "frozenScopeSha256": "3730bfbe3ec832300d20e54df1f43cebe1f7fe4248a9db7894f2cb911457e70e",
+  "implementationSha256": {
+    "bundle.py": "a6a1b5cf0e6ded22f0a192d5b8b229a822487388c5b54d1d9781d3962a06e205",
+    "check_inactive.py": "090540721075a9d43aafe67ce6381a4e5dab55d7da01d64799123b604b3e8801",
+    "driver.py": "4f7f9a261dbd41896ab00f1d556fd01cb872d6f8cf173d148c2026b20f66ed76",
+    "setup_manager.py": "2d0e8de561d185c76767da8f9bc2c15d7e7dd201a24692ab4a3bdb3e461fc928"
+  },
+  "implemented": [
+    "Keep original Scope._empty bytes and guards. A private InstallScope wrapper catches and rethrows the same original exception.",
+    "Capture original frame locals only for the exact pinned method code and exact scope instance; retain at most two metadata entries and no frame or FD ownership.",
+    "Distinguish held-fstat-before-alias metadata from one later read-only fstat of the same still-owned descriptor. Even a later zero link count never repairs the original rejection.",
+    "Label parent identity as registered/cached rather than a newly observed parent identity.",
+    "Preopen stderr alongside stdout using original empty root-owned0600/NOFOLLOW/inode/alias checks and Store ownership.",
+    "After original same-generation normal-exit checks, take one bounded raw output snapshot before original empty/output/result-promotion checks.",
+    "Two output streams combined are at most16384 raw bytes, complete or explicit capture failure; capture/recording errors remain separate from original primary/cleanup errors.",
+    "Strict diagnostic parsing preserves typed errno and bounded exception groups, rejects unknown fields/hash/base64/generation/flag contradictions, and accepts legacy evidence.",
+    "Manager frames use their existing32768-byte maximum; all other generic phase response limits remain16384 bytes.",
+    "Original lifecycle/authentication/cleanup methods and wait logic apart from the passive snapshot call are checked by AST equality."
+  ],
+  "limits": [
+    "This does not fix or prove the native cgroup root cause. Local fixtures do not establish kernfs link-count semantics.",
+    "The real failure establishes an earlier held sample with a nonzero link count followed by a missing alias, not a post-deletion link-count measurement.",
+    "Simulated outputs saying completed:true remain non-authoritative when the original empty proof fails.",
+    "The additional fstat is passive forensic evidence only, not an empty-scope or authorization decision.",
+    "The old posthoc logger and its loaded-unit origin checks remain unchanged; no later reader bypass is added.",
+    "Earlier tests and the prior21.57s failed native attempt are retained as separate evidence, not rerun or added to these16 tests.",
+    "Prior native SSH1/1 and setup-unit1/1 allowances remain exhausted; this package has no active approval or native launch.",
+    "Production binding/compatibility/backup/maintenance and actual bilingual/multiuser mixed-provider and named-Agent/device acceptance remain incomplete."
+  ],
+  "localEntry": {
+    "argvUtf16Units": 26127,
+    "childExitCode": 1,
+    "existingReviewedEntryUsed": true,
+    "falseApprovedOnly": true,
+    "localLimitSeconds": 10,
+    "ownedChildReaped": true,
+    "reportedSeconds": 0.4076030000578612,
+    "sdkOrSshStarted": false
+  },
+  "localPackage": {
+    "approvalEnabled": false,
+    "assemblySources": 18,
+    "attemptAbsent": true,
+    "bindingFiles": 16,
+    "changedSourceSlots": [
+      "driver.py",
+      "setup_manager.py"
+    ],
+    "falseApprovalRejectedBeforeAttempt": true,
+    "fullManagerConfigWireBytes": 45838,
+    "maximumWidthMetadataUsed": true,
+    "savedFiles": 18,
+    "wireLimitBytes": 65536
+  },
+  "nextCriticalScope": {
+    "automaticRetry": false,
+    "combinedRawSnapshotMaximumBytes": 16384,
+    "controllerCapabilities": 235,
+    "cpuWeight": 10,
+    "databaseQueries": false,
+    "existingServiceChanges": false,
+    "freshAuthorizationRequired": true,
+    "localTotalSeconds": 450,
+    "managementOverheadOutsideUnitLimits": true,
+    "maximumAdditionalFollowupFstats": 2,
+    "memoryMiB": 192,
+    "modelOrExternalAgentCalls": false,
+    "nice": 10,
+    "noNewPrivileges": true,
+    "privateNetwork": true,
+    "productionPublication": false,
+    "sameConnectionPreflightEvidenceOwnCleanupAndFourServiceBaselines": true,
+    "setupRuntimeSeconds": 90,
+    "setupUnitsMaximum": 1,
+    "singleCoreCpuPercent": 20,
+    "sshConnectionsMaximum": 1,
+    "swapBytes": 0,
+    "tasksMax": 32
+  },
+  "productionDeliveryComplete": false,
+  "review": {
+    "confirmedRemainingP1P2": [],
+    "implementationSha256": {
+      "bundle.py": "a6a1b5cf0e6ded22f0a192d5b8b229a822487388c5b54d1d9781d3962a06e205",
+      "check_inactive.py": "090540721075a9d43aafe67ce6381a4e5dab55d7da01d64799123b604b3e8801",
+      "driver.py": "4f7f9a261dbd41896ab00f1d556fd01cb872d6f8cf173d148c2026b20f66ed76",
+      "setup_manager.py": "2d0e8de561d185c76767da8f9bc2c15d7e7dd201a24692ab4a3bdb3e461fc928"
+    },
+    "kind": "two independent scoped static reviews and final test-source review",
+    "nativeCompatibilityVerified": false,
+    "priorSchemaP2ReproducedAndClosed": true,
+    "reviewerRanAssembly": false,
+    "reviewerRanNative": false,
+    "reviewerRanTests": false,
+    "testSha256": "3879cbecb60219e6da3b2ec2b54e002a630317828d0b7fc7855c7d782ea21526"
+  },
+  "schemaVersion": 1,
+  "scope": "local-preparation-for-original-cgroup-failure-evidence",
+  "status": "targeted-tests-review-inactive-package-and-entry-rejection-passed",
+  "testSha256": "3879cbecb60219e6da3b2ec2b54e002a630317828d0b7fc7855c7d782ea21526",
+  "tests": {
+    "exitCode": 0,
+    "explicitFilesystemAndManagerDoubles": true,
+    "failed": 0,
+    "passed": 16,
+    "realKernelOrManagerExecuted": false,
+    "reportedSeconds": 7.426,
+    "skipped": 0,
+    "stderrSha256": "58261515794feb5e8835d420c761c0b3a0bca0be4f4a2f85af3c3cde48efccec"
+  }
+}
