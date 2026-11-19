@@ -1,0 +1,109 @@
+{
+  "date": "2026-11-19",
+  "limitations": [
+    "Historical expected hashes are rejection baselines, not fresh observations.",
+    "Separate observations are not one cross-command or application-consistent snapshot.",
+    "Capacity excludes actual candidate allocation and does not prove a backup exists.",
+    "These observers do not read the authority database or create compatibility proof.",
+    "Caddy adapt performs bounded configuration conversion only; it starts no listener.",
+    "No SSH wrapper, binding/approval file or active authorization is packaged.",
+    "Original held-cgroup diagnostic remains failed and is not accepted by this local audit.",
+    "A private diagnostic bridge is not substituted for actual formal release gates.",
+    "Typed candidate20percent is not a measurement of the deployed service or launcher.",
+    "This preparation grants no new remote allowance; prior single-use grants remain consumed."
+  ],
+  "productionDeliveryComplete": false,
+  "proposedNextApproval": {
+    "agentCalls": 0,
+    "automaticRetry": false,
+    "credentialValuesReturned": false,
+    "databaseBodiesRead": false,
+    "failureStopsSequence": true,
+    "localSecondsPerAttempt": 35,
+    "maximumLinuxUnits": 0,
+    "maximumSshAttempts": 2,
+    "modelCalls": 0,
+    "remoteSecondsPerAttempt": 20,
+    "remoteWrites": false,
+    "serial": true,
+    "serviceChanges": false
+  },
+  "pureCheckBreakdown": {
+    "clockBoundaries": 4,
+    "invalidBundles": 3,
+    "notTwelveIndependentTestsOrFullRegression": true,
+    "positiveGroups": 5
+  },
+  "pureFormalRequestChecks": {
+    "actualSystemdPolicyOrRuntimeVerified": false,
+    "checksPassed": 12,
+    "controllerMemoryMiB": 192,
+    "formalLaunchFunctionCalled": false,
+    "forwardSeconds": 55,
+    "freshCompatibilityProved": false,
+    "productionBundleLoaded": false,
+    "scope": "pure-frozen-formal-request-and-window-functions-only",
+    "totalRecoverySeconds": 120,
+    "typedControllerCpuPercent": 20
+  },
+  "readonlyMaterials": {
+    "activationAuthorized": false,
+    "archiveSha256": "c3fe6de40f7cb85d35338e67bb8740c4a46357d497e983b33d6a6f28cf60dbf9",
+    "members": 5,
+    "profiles": {
+      "data-capacity": {
+        "collectorSha256": "a78f4d8be5f66df779f76c4a5b0e0a440aed8ae76cc1cc571bcc011adcb5bc6c",
+        "packetSha256": "010d709aa53aa900c1f81e6f95b730860b7e72c4142071f2860c106cbbf6981e",
+        "sourceCount": 3
+      },
+      "source-inputs": {
+        "collectorSha256": "583555ef57ac468ae0e2fbbdf6065f969cc72749e567b27a739b92bd8a3d245f",
+        "packetSha256": "013ce15aa8d6a2fd22990c03992c3f9fd230665aa3789c6eaf15dc8853d08e64",
+        "sourceCount": 9
+      }
+    },
+    "rawPacketsUploaded": false,
+    "remoteObserversChanged": false,
+    "sourceClosureCount": 12,
+    "sshRunnersOrApprovalFilesPackaged": false
+  },
+  "remainingAfterObservation": [
+    "current authority fingerprint and real candidate allocation",
+    "authentic fresh previous/candidate database-copy compatibility",
+    "sealed inactive formal settings and explicit maintenance approval",
+    "consistent stopped-application backup;55s forward/120s recovery;new writes preserved",
+    "actual UI/login/workspace/provider/research and named external Agent acceptance"
+  ],
+  "review": {
+    "blockingFindings": [],
+    "kind": "independent static local review",
+    "reviewerConnectedVps": false,
+    "reviewerRanTests": false
+  },
+  "schemaVersion": 1,
+  "scope": {
+    "credentialContentsRead": false,
+    "externalAgentCalls": 0,
+    "frozenCandidateChanged": false,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "productCodeChanged": false,
+    "productTestsRerun": false,
+    "productionPublished": false,
+    "productionServicesStartedOrStopped": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "sshConnections": 0
+  },
+  "sourceAudit": {
+    "currentProductEqualsFrozen": 66,
+    "payloadFiles": 75,
+    "productFiles": 66,
+    "sourceArchiveBytes": 1310720,
+    "sourceArchiveMembers": 76,
+    "sourceArchiveSha256": "f3c66b71ab5c42766ab2c75d907f35d8777ac29ea027ec54e40090c12184dd1a",
+    "sourceManifestSha256": "ae7c5db14c5e4ba9886b7ea878a417f53648c3cc1e11aa558db1c81fdadd02ef"
+  },
+  "stage": "formal-product-delivery-prerequisites-local-preparation",
+  "status": "materials-prepared-inactive-not-production-ready"
+}
