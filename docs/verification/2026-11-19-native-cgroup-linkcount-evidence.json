@@ -1,0 +1,229 @@
+{
+  "actions": {
+    "businessGrantChanges": false,
+    "credentialChanges": false,
+    "databaseQueries": 0,
+    "dnsChanges": false,
+    "existingServicesStartedOrStoppedByThisDiagnostic": false,
+    "externalAgentCalls": 0,
+    "extraSshConnections": 0,
+    "modelCalls": 0,
+    "productionPublished": false,
+    "publicPortChanges": false,
+    "relayChanges": false
+  },
+  "allowance": {
+    "automaticRetry": false,
+    "maximumSetupUnits": 1,
+    "maximumSshAttempts": 1,
+    "setupUnitsStarted": 1,
+    "sshAttemptsUsed": 1
+  },
+  "budgets": {
+    "configuredLimitsAreNotMeasuredPeaks": true,
+    "controllerCapabilities": 235,
+    "cpuWeight": 10,
+    "driverReportedSeconds": 20.668404800002463,
+    "localLimitSeconds": 450,
+    "localReportedSeconds": 20.82170720002614,
+    "managementOverheadOutsideUnitLimits": true,
+    "memoryMiB": 192,
+    "nice": 10,
+    "noNewPrivileges": true,
+    "privateNetwork": true,
+    "setupRuntimeSeconds": 90,
+    "singleCoreCpuPercent": 20,
+    "swapBytes": 0,
+    "tasksMax": 32
+  },
+  "date": "2026-11-19",
+  "evidenceReview": {
+    "aliasErrno": 2,
+    "driverSecondsVerified": 20.668404800002463,
+    "fourServiceSnapshotsMatchAndActive": true,
+    "heldAndFollowupIdentitiesMatchAcrossTwoFailures": true,
+    "heldAndFollowupLinkCounts": [
+      2,
+      2
+    ],
+    "kind": "independent offline native receipt and original-parser audit",
+    "managerAndDriverAndCallPinsMatch": true,
+    "managerSuccessNotPromoted": true,
+    "nativeAttemptOutcome": "failed",
+    "nativeCompatibilityVerified": false,
+    "originalSetupSchemaAndRequestBindingVerifiedOffline": true,
+    "rawStderrBytesVerified": 0,
+    "rawStdoutBytesVerified": 648,
+    "reviewerConnectedVps": false,
+    "reviewerRanNative": false,
+    "reviewerRanTests": false,
+    "transportReceiptsVerified": 6,
+    "wrapperSecondsVerified": 20.82170720002614
+  },
+  "finalCleanup": {
+    "additionalStopAttempted": false,
+    "diagnosticDriverExitCode": 1,
+    "fixedCgroupAbsentConfirmed": true,
+    "fourServiceSnapshotFieldsMatch": true,
+    "heldLocalDirectoryClosed": true,
+    "ownUnitExitedConfirmed": true,
+    "ownedLocalChildReaped": true,
+    "sdkThreadExited": true,
+    "sshTransportClosed": true,
+    "wrapperExitObservedByCaller": 0
+  },
+  "formalDeliveryDependencyAudit": {
+    "controllersExecuted": false,
+    "limits": [
+      "This is a local frozen-source audit, not a current production snapshot or permission to release.",
+      "If an auxiliary diagnostic implementation is chosen for a required proof, its own guards must pass; no failed diagnostic is counted as that proof."
+    ],
+    "missingMandatoryProductionEvidence": [
+      "fresh current source/dependency/configuration/authority/ownership bindings and actual resource policy",
+      "complete backup capacity and real candidate allocation",
+      "fresh authentic previous/candidate database compatibility report",
+      "sealed inactive formal settings and proof",
+      "explicit maintenance with consistent backup and55/120 recovery restrictions",
+      "actual production bilingual/multiuser/model/research acceptance and remaining named-Agent/device acceptance"
+    ],
+    "payloadFilesVerified": 75,
+    "payloadManifestSha256": "ae7c5db14c5e4ba9886b7ea878a417f53648c3cc1e11aa558db1c81fdadd02ef",
+    "privateScope3730RequiredByThisPayload": false,
+    "privateSixRoleBridgeRequiredByThisPayload": false,
+    "productFilesVerified": 66,
+    "productionBindingsFreshlyVerified": false,
+    "route": [
+      "formal launcher",
+      "formal entry",
+      "i18n release gate",
+      "pinned original release/readonly controllers"
+    ],
+    "routeSha256": {
+      "assemble": "2281504b4ac72fcaa680055cd81b266974c936fbfc1f56c571e0f43bfdcf2113",
+      "entry": "90b4e09c06eaa757f93a7edc5fb6d5031b0ddff2dd1b98890adedf3b53dc8226",
+      "gate": "95ab206d9f0dcf1bbcb208e600e7c24a94de4218a1025738a1844e67d8cb7af3",
+      "launcher": "755a8e97bdb486025e06ae8a96cd1b36c54fb34741c057b461a167263ddb7fbd"
+    },
+    "safetyGateRemovedOrBypassed": false
+  },
+  "limits": [
+    "The overall diagnostic remains failed. Offline validation of the captured setup frame does not repair the manager original held-scope proof.",
+    "Two before/after samples report the same identity and link count2; this does not by itself prove safe emptiness, the exact unlink instant, or a particular host kernel build.",
+    "Registered parent metadata is not a fresh parent fstat. No wrong-parent or malicious-race claim is established.",
+    "A replacement proof must preserve original descriptor/unit generation and distinguish true removal from rename, replacement, permission errors and live/populated scopes.",
+    "Later not-found/cgroup absence and matching service snapshots do not retroactively establish manager success or continuous Relay traffic.",
+    "Old diagnosticCollected counts capability failure samples only; captured output and scope evidence are verified separately.",
+    "SDK socket10038 remains recorded and is not classified harmless.",
+    "The SSH1/1 and setup1/1 allowance is consumed; no reconnection or automatic retry is authorized."
+  ],
+  "nativeAcceptancePassed": false,
+  "nativeEvidence": {
+    "aliasErrnos": [
+      2,
+      2
+    ],
+    "authorizesEmptyFromDiagnostic": false,
+    "fixedLeafMatchesBoundUnit": true,
+    "followupLinkCounts": [
+      2,
+      2
+    ],
+    "followupStatErrors": false,
+    "heldBeforeAliasLinkCounts": [
+      2,
+      2
+    ],
+    "managerCleanupError": {
+      "code": "outer_scope_missing_unproven",
+      "type": "RuntimeError"
+    },
+    "managerNormalProcessExitVerified": true,
+    "managerPrimaryError": {
+      "code": "outer_scope_missing_unproven",
+      "type": "RuntimeError"
+    },
+    "omittedRecords": 0,
+    "originalHeldIdentityStableAcrossTwoFailures": true,
+    "parentIdentityIsRegisteredOnly": true,
+    "records": 2,
+    "unitGenerationWitnessed": true
+  },
+  "nextLocalPriority": "Prepare the existing formal 66-file release route and its true source/configuration/compatibility/backup/recovery gates; do not add the optional diagnostic bridge as a universal release prerequisite.",
+  "outputEvidence": {
+    "hashesAndBase64Verified": true,
+    "offlineFrameCleanupConfirmed": true,
+    "offlineFrameCompleted": true,
+    "offlineFrameErrors": null,
+    "offlineOriginalParserAndRequestBindingVerified": true,
+    "setupResultPromotedIntoManagerSuccess": false,
+    "stderrBytes": 0,
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdoutBytes": 648,
+    "stdoutSha256": "82a7ece55636fa585e1fc6c6992d8eafd229459e2999eb3b45d7ffe950030bdc"
+  },
+  "privateRawEvidenceUploaded": false,
+  "productionDeliveryComplete": false,
+  "researchContext": {
+    "exactVpsKernelBuildVerified": false,
+    "inference": "A generic st_nlink==0-only disappearance proof is not portable to these kernfs directory semantics; observed link count two is consistent with them.",
+    "sourceFact": "These upstream kernfs versions refresh directory link count from subdirectory count plus two.",
+    "upstreamSources": [
+      "https://raw.githubusercontent.com/torvalds/linux/v5.15/fs/kernfs/inode.c",
+      "https://raw.githubusercontent.com/torvalds/linux/v6.8/fs/kernfs/inode.c",
+      "https://docs.kernel.org/admin-guide/cgroup-v2.html"
+    ]
+  },
+  "schemaVersion": 1,
+  "scope": "single-approved-native-held-cgroup-linkcount-forensics",
+  "status": "evidence-obtained-original-manager-proof-still-failed",
+  "transportReceipts": [
+    {
+      "exitCode": 0,
+      "phase": "before",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 2101,
+      "stdoutSha256": "ff6cd1495a268e6b0f10501399341d6411d7146defd31341c0cf93782aa0a83f"
+    },
+    {
+      "exitCode": 0,
+      "phase": "receiver",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 1164,
+      "stdoutSha256": "e27f00fa83eb60952117b8f36f17309a8aa0b15b6f10780ec70fc332368d7ea8"
+    },
+    {
+      "exitCode": 1,
+      "phase": "setup",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 5267,
+      "stdoutSha256": "7b282c032bf6ff7d0e5b238171dbd7489d171a509680d99f56fde5bcacdc8170"
+    },
+    {
+      "exitCode": 1,
+      "phase": "logs",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 318,
+      "stdoutSha256": "0fe0fd653da178e8874e304fa18503dd45f1c1251d5009e9413b0dca0085c35d"
+    },
+    {
+      "exitCode": 0,
+      "phase": "cleanup",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 366,
+      "stdoutSha256": "9eacd3c5cf23eea566d98541eef3067ae69880e37dcc671dd2d361a31d0ef91b"
+    },
+    {
+      "exitCode": 0,
+      "phase": "after",
+      "stderrBytes": 0,
+      "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdoutBytes": 2101,
+      "stdoutSha256": "6cd2918019eafb3d50cf65dcc483eb35e6dd89ef4a44e27bd6d7ffccbc8dca08"
+    }
+  ]
+}
