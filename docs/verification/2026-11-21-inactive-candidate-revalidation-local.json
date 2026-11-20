@@ -1,0 +1,128 @@
+{
+  "date": "2026-11-21",
+  "implementation": {
+    "activationOrAttemptPathsSampledTwice": 8,
+    "existingOrDanglingActivationArtifactsRefused": true,
+    "failureCreatesOrRepairsCandidate": false,
+    "fixedHistoricalCandidateOnly": true,
+    "fixedOriginalHelperSources": 5,
+    "liveConfigurationHashesAndServiceSnapshotsChecked": true,
+    "originalCopyHelperSha256": "694b9fab5cd0459edf1332ef88a9c09b5878a4ea12ac803e57aada95d5e3fd9a",
+    "originalMetadataAndCapacityAndCopyGuardsChanged": false,
+    "privateScope3730Required": false,
+    "transportVerifiedClaimFromPureReceiver": false
+  },
+  "limitations": [
+    "This is an assessment of the successful inactive candidate, never reuse of an old failed directory.",
+    "Current existence, content, ownership, allocation and activation markers still require new readonly evidence.",
+    "Eight activation/attempt paths are checked twice; missing slots are samples, not a temporal immutability proof.",
+    "Full existing reservation/capacity/configuration/source/copy-request guards remain unchanged.",
+    "Stage metadata does not replace full executable/dependency fingerprints before any future boot.",
+    "Current authority and genuine database-copy boots remain unverified; no proof or settings is created.",
+    "The original copy request remains inactive; failure never creates, repairs or deletes a candidate root.",
+    "Pure local receiver validation does not attest SSH transport or end-to-end native execution.",
+    "Receiver requires existing pinned local reference modules; the archive is not a standalone end-user installer.",
+    "Full successful main-to-original-capture-to-original-metadata-to-actual-transport chain remains untested.",
+    "Pure renderer validation is not actual SSH or a historical A2 child-process proof.",
+    "This review permits local preparation only, not a remote operation or publication."
+  ],
+  "localVerification": {
+    "fullProductSuiteRepeated": false,
+    "independentStaticReviewNoConfirmedP1P2": true,
+    "newBridgeReceiverPacketGroup": {
+      "completeOutputSha256": "df6dedc92d5b34b0ceef01d270d44206947563a5c959e44ce4face3e841ede92",
+      "exitCode": 0,
+      "reportedSeconds": 1.415,
+      "tests": 25,
+      "toolWallSeconds": 2.1583883
+    },
+    "optimizedModePacketSupplement": {
+      "completeOutputSha256": "1ecc535bf7d346b34deb839ac20a86f3f9b57847a84e7b12a834c6ada6854875",
+      "exitCode": 0,
+      "reportedSeconds": 0.193,
+      "tests": 8,
+      "toolWallSeconds": 0.8315374
+    },
+    "remoteChainEndToEndVerified": false,
+    "reviewerRanTests": false,
+    "unchangedFullCapacityCopyBindingGroup": {
+      "completeOutputSha256": "23c05084001cdb5431da7eee082c0a85f657a4a4e468a71c2dd2a6d562c91c0a",
+      "exitCode": 0,
+      "reportedSeconds": 2.939,
+      "tests": 16,
+      "toolWallSeconds": 3.7094855
+    }
+  },
+  "nativeExecutionAuthorized": false,
+  "origin": {
+    "candidateBindingSha256": "d6917469af4cace34d64ac4e1ebb522a5fd4f9b25e063ddd9f806ae43b070cbe",
+    "candidateHistoricallyPreparedSuccessfully": true,
+    "currentCandidateStateVerified": false,
+    "historicalAllocationBytesNotCurrent": 55582720,
+    "newReadonlyObservationRecordSha256": "2fa51c90c44e4ad26b31161b912cc0a13194de54b06244c1afbcbf599d1e9856",
+    "oldCompatibilityProofReused": false,
+    "sourcePayloadManifestSha256": "34d89378f273c4fd34af080c2f25bd695e2b35002fb86ad623f29018607bd3d3",
+    "successfulPreparationRecordSha256": "25a4dcee9b9a2e6fd450ca7c6ef57ecf9d4aa2780e0fdf43edd49104f4c73861"
+  },
+  "preparedPackage": {
+    "archiveBytes": 81920,
+    "archiveMembers": 4,
+    "archiveSha256": "cb953bc39499a06e7028d11e0cd89e4c407cb3f15658d728f6d4706cc76ab2a3",
+    "collectorSha256": "8553969ca0da87ac21d40827a96e898d08b121f7d350fbab2a7c5a01d4044986",
+    "originalCopyBindingSha256": "399352c8838e05c828af727aae59e61c65de60d09880b6de85888d0a8240aa2b",
+    "packetSha256": "bc9fd0756d6515494c10b24259a985879afe9a6b924a5105bea583978719050b",
+    "receiverSha256": "f89524ea738f6aacdadaee7e3e3191d50d5f95af246afbcabcd64f37d6fd8d45",
+    "sourceClosure": {
+      "api": "b71cdcb41294d8fc5e5e6fe093b8d9f0d3423d5fce127333db20a8d212fc11db",
+      "capacity": "41e6bfdf95dd5880194bc7b5185ea56bfe6506fe08f9d77c3eeb3836ecaa9b79",
+      "collector": "fb7a357ad5570c968692a6aaad50dd1ba14bf74b9ed63dca768a272304b36c39",
+      "metadata": "f5b1262ac3f5b04d02cf3e3fff4f4386b5669771809da3c8fd07179ac3b70eef",
+      "sizing": "d401251ae189eefa2f27357f7c109e5175a88ab9cad7902eaf3cf9f3eb248259"
+    }
+  },
+  "productionDeliveryComplete": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "proposedNextScopeNotGranted": {
+    "automaticRetry": false,
+    "credentialChanges": false,
+    "databaseQueries": 0,
+    "failureStops": true,
+    "grantChanges": false,
+    "localSeconds": 35,
+    "maximumSshAttempts": 1,
+    "maximumUnits": 0,
+    "privateMaterialBodiesSavedLocallyOnly": true,
+    "privateMaterialFiles": 5,
+    "productionPublication": false,
+    "relayChanges": false,
+    "remoteSeconds": 20,
+    "remoteWrites": false,
+    "runtimeEnvBodyReturned": false
+  },
+  "remaining": [
+    "Real readonly revalidation of the successful inactive candidate.",
+    "Current authority plus real candidate/previous database-copy boots and exact-bound fresh proof.",
+    "Sealed inactive formal bundle and explicit maintenance, consistent backup and55/120 recovery.",
+    "Actual product, quiet external-Agent and required-node acceptance."
+  ],
+  "schemaVersion": 1,
+  "scope": {
+    "businessDatabaseRead": false,
+    "credentialContentsRead": false,
+    "credentialsChanged": false,
+    "existingServicesStartedOrStopped": false,
+    "externalAgentCalls": 0,
+    "frozenCandidatesModified": false,
+    "grantsChanged": false,
+    "newLinuxUnits": 0,
+    "privateSourcesOrPacketsUploaded": false,
+    "productCodeChanged": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "sshAttempts": 0
+  },
+  "stage": "successful-inactive-candidate-revalidation-local-preparation",
+  "status": "local-tests-and-static-review-passed-no-remote-operation"
+}
