@@ -1,0 +1,154 @@
+{
+  "actions": {
+    "authorityDatabaseRead": false,
+    "credentialChanges": false,
+    "credentialValuesReturned": false,
+    "dnsChanged": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "productCodeChanged": false,
+    "productionPublished": false,
+    "productionServicesStartedOrStopped": false,
+    "publicPortsChanged": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "remoteFilesWritten": false
+  },
+  "allowance": {
+    "allowanceExhausted": true,
+    "automaticRetry": false,
+    "linuxUnitsCreated": 0,
+    "localSecondsPerAttempt": 35,
+    "maximumLinuxUnits": 0,
+    "maximumSshAttempts": 2,
+    "remoteSecondsPerAttempt": 20,
+    "serial": true,
+    "sshAttemptsUsed": 2
+  },
+  "capacityObservation": {
+    "actualCandidateAllocationBound": null,
+    "applicationConsistentSnapshot": false,
+    "backupCreated": false,
+    "backupFilesystemAvailableBytes": 28052766720,
+    "backupFilesystemAvailableGiB": 26.126174926757812,
+    "conditionalCapacityModel": {
+      "backupFreeAboveThatMinimum": true,
+      "candidateAllocationBoundKnown": false,
+      "candidateFilesystemPlacementVerified": false,
+      "minimumRequiredBeforeCandidateBytes": 536870912,
+      "notACompleteReleaseCapacityDecision": true,
+      "requiredBytesFormula": "max(512MiB,2*dataAndIngressCopyModelBytes+candidateAllocationBound+256MiB)"
+    },
+    "coverageCompleteWithinFixedPolicy": true,
+    "dataAndIngressCopyModelBytes": 27873280,
+    "dataFiles": 558,
+    "directories": 865,
+    "filesIncludingIngress": 559,
+    "logicalBytesIncludingIngress": 16325920,
+    "measurementSeconds": 0.6617901725694537,
+    "metadataOnly": true,
+    "releaseCapacityAccepted": false,
+    "twoEqualMetadataTraversalsRequiredByReader": true
+  },
+  "date": "2026-11-21",
+  "existingCandidateProducerBinding": {
+    "authorityAttested": false,
+    "candidateAllocationAttested": false,
+    "compatibilityAttested": false,
+    "kind": "existing-producer-expectations-bound-to-fresh-readonly-observation",
+    "matchedComponents": {
+      "completePreviousCode": true,
+      "configuration": true,
+      "dependencies": true,
+      "ingressMaterials": true,
+      "runtime": true
+    },
+    "producerExecuted": false,
+    "productionReady": false
+  },
+  "limits": [
+    "These are two separate readonly observations, not an application-consistent global snapshot.",
+    "Complete metadata coverage is not a created or restored backup.",
+    "The projected component retains nativeExecutionVerified=false; actual invocation is attested by separate saved transport receipts.",
+    "Local child stderr counts are retained, but raw child stderr is unavailable; its contents and harmlessness are not inferred.",
+    "Terminal results were retained after tool return, not through an automatic raw terminal recorder.",
+    "The former cgroup diagnostic failure remains unchanged; no failed proof is promoted here.",
+    "Existing no-database observers were used unchanged; no assertion of production enablement follows."
+  ],
+  "productionDeliveryComplete": false,
+  "productionReady": false,
+  "protectedBaselines": {
+    "configurationHashesMatchWithinEach": true,
+    "continuousRelayTrafficMeasured": false,
+    "fourServicesActiveBeforeAndAfterBoth": true,
+    "serviceSnapshotFieldsMatchWithinEach": true,
+    "sourceAfterMatchesCapacityBefore": true
+  },
+  "remaining": [
+    "Actual candidate allocation and per-filesystem capacity/ownership protection.",
+    "Current authority fingerprint without changing any grant.",
+    "Authentic candidate/previous database-copy boots and exact-bound fresh compatibility proof.",
+    "Sealed inactive formal settings followed by explicitly authorized maintenance.",
+    "Consistent stopped-application backup;55s forward/120s total recovery;new writes and locks protected.",
+    "Real UI/PocketID/workspace/provider/research acceptance and independent named Agent onboarding."
+  ],
+  "review": {
+    "blockingFindings": [],
+    "kind": "independent offline receipt audit",
+    "localHelperFinding": {
+      "finding": "optimized Python removes assertions from local one-off helpers",
+      "greenSubcasesPassed": 3,
+      "newRemoteExecutionsForFix": 0,
+      "normalInterpreterUsedForActualObservations": true,
+      "originalExecutedSourcesPreserved": true,
+      "postFixReviewerReRun": false,
+      "redSubcasesFailed": 3,
+      "resolutionByMainAgent": "unconditional optimized-mode rejection before artifact access",
+      "severity": "P2 reuse boundary",
+      "testMethods": 1
+    },
+    "reviewerConnectedVps": false,
+    "reviewerRanTests": false
+  },
+  "schemaVersion": 1,
+  "sourceObservation": {
+    "businessDatabasesRead": false,
+    "completePreviousInventoryMatchesExpected": true,
+    "configurationHashesMatched": 3,
+    "dependencyFingerprint": {
+      "bytes": 38850588,
+      "files": 4462,
+      "sha256": "5d1e5e56e0ce865a41e881262d72ee711225fb3940b9556416a30cf6dcc639a0"
+    },
+    "newCompatibilityProofCreated": false,
+    "previousProductFiles": 57,
+    "readonlyCaddyAdaptationsPassed": 2,
+    "runtimeHashesMatchExpected": true
+  },
+  "stage": "formal-delivery-production-inputs-and-complete-capacity-readonly",
+  "status": "both-readonly-observations-passed-no-publication",
+  "timingAndTransport": {
+    "data-capacity": {
+      "childStderrByteCount": 60,
+      "childStderrRawRetained": false,
+      "collectorSha256": "a78f4d8be5f66df779f76c4a5b0e0a440aed8ae76cc1cc571bcc011adcb5bc6c",
+      "outerMilliseconds": 3104.0003,
+      "remoteReceiptSha256": "c3b981a6395d425f3dcb1d7ba8cba9527ead6e142ae3b55e6fa8d5ecd9193f45",
+      "remoteStderrBytes": 0,
+      "remoteStdoutBytes": 3421,
+      "sshCleanupConfirmed": true,
+      "toolWallSeconds": 3.7611096
+    },
+    "source-inputs": {
+      "childStderrByteCount": 60,
+      "childStderrRawRetained": false,
+      "collectorSha256": "583555ef57ac468ae0e2fbbdf6065f969cc72749e567b27a739b92bd8a3d245f",
+      "outerMilliseconds": 5949.9534,
+      "remoteReceiptSha256": "eff11f4355bcea8b993ce21341dab6172c94e12d4faaa58e6b6fab523820b5ba",
+      "remoteStderrBytes": 0,
+      "remoteStdoutBytes": 9344,
+      "sshCleanupConfirmed": true,
+      "toolWallSeconds": 8.0040189
+    }
+  }
+}
