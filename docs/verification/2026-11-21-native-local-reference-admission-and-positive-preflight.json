@@ -1,0 +1,152 @@
+{
+  "actualInvocation": {
+    "attemptCreated": false,
+    "cause": "Assembler emitted a 260-character operational approval reference; existing driver limit is 256.",
+    "errorCode": "bridge_driver_approval_reference",
+    "failedLocalReplacementAndCandidatePreserved": true,
+    "globalAllowanceLedgerCreated": false,
+    "localElapsedSeconds": 0.23266700003296137,
+    "localProcessExitCode": 1,
+    "nativeDiagnosticStarted": false,
+    "nativeRetried": false,
+    "newSshAttempts": 0,
+    "newTemporaryUnits": 0,
+    "originalFalseApprovalPreserved": true,
+    "sdkOrCredentialLoadingReached": false
+  },
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsOrPublicPortsChanged": false,
+    "existingServiceChanges": false,
+    "externalAgentCalls": 0,
+    "privateSourcesOrRawBodiesUploaded": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "remoteConnectionMade": false,
+    "remoteServiceHealthReverified": false,
+    "remoteWrites": 0
+  },
+  "date": "2026-11-21",
+  "evidenceSha256": {
+    "actualUserGrant": "3ce70895dd100db9b0590fa0cc378fd87fc614eff1e541cbf241cb82f39dd9d4",
+    "admissionTests": "1e68fcf479522e6f3639e8ac7fece30b00ee11441814673a022dc5338cf2d1e1",
+    "coordinator": "c23dffefa8e29206e6f106269c6c81b0bbc8c76fd9f4deffc958bf1c5c906d1c",
+    "localFailure": "03164e2eec27f72583537190c4809407be0052e218678fd8d3c03495d1b7ada3",
+    "localNegativeEntry": "0aed2aeec81db9ee8b73610956578cb02d9a2a00c9440967fa2c834d9797d7e8",
+    "nextInactiveCandidate": "926d6c995fc11701954954f7783eb848a913bd10c0b88f1740062f542d24d728",
+    "nextPrechecks": "205d2d7ec467ecc4c325e850ea8165d2e575f85e9feab30bd02524eda766c105",
+    "offlinePrepareDiagnosis": "3cbd43e81da7365c5be80b950f5c798febcff2230b1ba295032109cd75185e74",
+    "physicalAdmission": "f0ed17fb27d3e084480e1abd9ec84149f4806e59641aaf11c19a1748539c4913",
+    "referenceTests": "8cd7f58ebc4a43e51b76fda045fc0c099a945d834bf3583fe61ca33951655ff6"
+  },
+  "limits": [
+    "This attempt never reached SSH or Linux; no native compatibility evidence was created.",
+    "Local positive and negative admission checks do not prove remote lifecycle or production readiness.",
+    "The old failed local candidate must not be reused or reset.",
+    "No current remote health claim is made without a remote observation."
+  ],
+  "localVerification": {
+    "actualTestProcessExitCodes": [
+      0,
+      0
+    ],
+    "admissionUnitTests": 8,
+    "completeRealInputCount": 13,
+    "directoryIdentityChangeRejected": true,
+    "errors": 0,
+    "failures": 0,
+    "newlinesRejected": true,
+    "noProductOrDeployedControllerCodeChanged": true,
+    "physicalCase": {
+      "actualMoveExclusiveCreateWriteReadbackAndPrepareVerified": true,
+      "actualPinnedWriterAndPrepareUsed": true,
+      "businessGrantsChanged": false,
+      "newSshAttempts": 0,
+      "newTemporaryUnits": 0,
+      "noReadOverrides": true,
+      "savedFiles": 15,
+      "sourceInputs": 13,
+      "syntheticLocalOperationalApprovalRestoredFalse": true
+    },
+    "pureReferenceGuard": {
+      "badIdsDatesDuplicateAndNonliteralAssignmentsRefused": true,
+      "failedActualCoordinatorSourceRejectedBeforeLaunch": true,
+      "maximumQuestionIdLengthTested": 80,
+      "newNativeCoordinatorNotGenerated": true,
+      "noSilentTruncation": true,
+      "shortQuestionIdReferenceConstructed": true,
+      "sourceHashes": {
+        "reference_contract.py": "e57d9055513b4f0f6c15162bbdeaba669e7970cf1adb8c5f610e86890775ccad",
+        "test_reference_contract.py": "8081eb7259964106ad6f194f0ac515b7b19d588bb973441d02bed82ac8d13880"
+      }
+    },
+    "referenceAssemblerUnitTests": 4,
+    "referenceLengthsAccepted": [
+      1,
+      255,
+      256
+    ],
+    "referenceLengthsRejected": [
+      0,
+      257,
+      260
+    ],
+    "scopeExpansionRejected": true,
+    "wrongApprovalHashRejected": true
+  },
+  "nextDecision": {
+    "automaticRestartAllowed": false,
+    "freshExecutionWindowConfirmationRequired": true,
+    "independentReviewCompleted": false,
+    "oldAllowancesReset": false,
+    "reason": "Honor explicit fail-stop/no-retry after the failed local execution window.",
+    "sshAllowancePreviouslyClaimed": false
+  },
+  "nextInactiveCandidate": {
+    "all15DigestsUnchanged": true,
+    "approvalReferenceCreated": false,
+    "attemptCreated": false,
+    "bindingSha256": "a825b952b8b9972136065cf1286f5932673f0f9e141a8e40ce233214898551be",
+    "boundFiles": 13,
+    "carrierMembers": 170,
+    "files": 15,
+    "futureChildInheritanceVerified": true,
+    "nativeCompatibilityVerified": false,
+    "negativeOwnedEntryActualExitCode": 1,
+    "packetSha256": "086983bf124e46fb7de532fc0ad9007079eb7ddf66e8e9a5f1f7f7e88f366fbe",
+    "positivePrepareProspectiveMetadataSimulationOnly": true,
+    "positivePrepareRealInputCount": 13,
+    "privateAclCheckedItems": 17,
+    "privatePrincipals": "current user and SYSTEM only",
+    "productionReady": false,
+    "proofCreated": false,
+    "userApproved": false
+  },
+  "preInvocationLocalCheck": {
+    "accepted": true,
+    "expectedOwnedChildExitCode": 1,
+    "sharedInitialClockValidated": true
+  },
+  "schemaVersion": 1,
+  "scope": "new-window-local-approval-reference-rejection-and-complete-local-admission-checks",
+  "status": "failed-before-ssh-local-complete-prepare-checks-now-passed",
+  "userScope": {
+    "automaticRetry": false,
+    "independentObserverMiB": 96,
+    "independentReviewPassed": false,
+    "localSeconds": 950,
+    "managementOverheadPreviouslyDisclosed": true,
+    "maximumSshAttempts": 1,
+    "maximumTemporaryUnitObjects": 6,
+    "observerSingleCoreCpuPercent": 10,
+    "observerTasks": 16,
+    "privateNetworks": true,
+    "productionAllowed": false,
+    "sharedSingleCoreCpuPercent": 20,
+    "sharedTasks": 32,
+    "sharedWorkMiB": 192,
+    "zeroSwap": true
+  }
+}
