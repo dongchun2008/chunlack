@@ -1,0 +1,161 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsOrPublicPortsChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "privateSourcesOrRawBodiesUploaded": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "date": "2026-11-21",
+  "inactivePackage": {
+    "approvalReferenceCreated": false,
+    "attemptCreated": false,
+    "bindingSha256": "83fc0fe931507a9181fad4f79b0a17b502034f50c966b926c83bacaec9c0cd7c",
+    "boundFiles": 13,
+    "carrierMembers": 170,
+    "driverSha256": "185a4a5966e49f63a90276d3ac58c5d2f2606a91f1c072f65ffe53122fa41819",
+    "files": 15,
+    "nativeCompatibilityVerified": false,
+    "nativeExecutionVerified": false,
+    "packetSha256": "1335d22a6b8d34f4826c36b5fbb9f33055ebf4f990cc281870bb497dc8b0dcad",
+    "productionReady": false,
+    "proofCreated": false,
+    "realLocalOwnedChildRefusedUnapprovedPackageBeforeSdkOrSsh": true,
+    "syntheticCorrelationOnlyMustNotBeUsedForNativeExecution": true,
+    "userApproved": false
+  },
+  "independentReview": {
+    "newIndependentReviewCompleted": false
+  },
+  "integration": {
+    "evidenceResultNeverNativeSuccessOrBusinessAuthorization": true,
+    "extraAuthorityFieldsRejected": true,
+    "fixedLogsOnly": [
+      "setup.stdout",
+      "setup.stderr"
+    ],
+    "incrementalBoundSourceSlotChanged": [
+      "driver.py"
+    ],
+    "maximumBytesPerFixedLog": 8192,
+    "maximumCombinedOutputBytes": 65536,
+    "maximumOptionalEvidenceAttempts": 1,
+    "maximumOptionalRemoteSeconds": 20,
+    "minimumRemainingAtAdmissionAndRenderSeconds": 85,
+    "missingOversizedOrUnavailableEvidenceExplicitlyMarked": true,
+    "noEvidenceForPreSetupOrSuccessfulSetupOrLaterWatchFailure": true,
+    "oldApprovalWithoutExplicitEvidenceDescriptorRejected": true,
+    "originalCleanupReserveSeconds": 15,
+    "originalNormalPhaseBudgetsSeconds": [
+      20,
+      60,
+      140,
+      620,
+      25
+    ],
+    "originalProofReaderAndValidatorUnchanged": true,
+    "originalTotalSeconds": 950,
+    "parentKnownProfileIntegrationRetained": true,
+    "previousAbsenceAndHeldGroupFixesRetained": true,
+    "primaryEvidenceBaselineRestoreAndCloseErrorsRemainSeparate": true,
+    "rawContentPrivateOnly": true,
+    "remainingAfterOptionalTransferReserveSeconds": 50,
+    "sameExistingSessionOnly": true,
+    "setupContextFrozenAndRecheckedAtRendering": true,
+    "trigger": "attempted setup-manager call without validated successful setup response",
+    "unitDescriptionGenerationRootAndDirectoryIdentityBound": true
+  },
+  "limitations": [
+    "These 46 scoped local tests are not a full product regression or native acceptance.",
+    "The new failure hook has not been exercised against VPS systemd in this task.",
+    "No new independent review pass is claimed.",
+    "Full production delivery remains incomplete; a fresh remote execution window requires separate confirmation."
+  ],
+  "priorEvidence": [
+    "docs/verification/2026-11-21-known-setup-profile-genuine-carrier-local-merge.json",
+    "docs/verification/2026-11-21-install-unit-readonly-state-and-failure-capture.json"
+  ],
+  "retainedFailureHistory": [
+    "Initial regression reproduced the missing same-session evidence hook.",
+    "Initial derivation rejected a non-unique indentation anchor; newline anchoring corrected it.",
+    "A negative regression reproduced ignored extra authority fields; exact reply fields are now enforced.",
+    "A negative regression reproduced absent capture-completeness reporting; missing evidence is now explicit.",
+    "Earlier failed native setup remains failed; no local result rewrites it as native acceptance."
+  ],
+  "schemaVersion": 1,
+  "scope": "local-same-connection-install-failure-evidence-integration",
+  "status": "46-scoped-local-tests-passed-inactive-not-native-accepted",
+  "verification": {
+    "actualRunnerExitCode": 0,
+    "all15SavedPackageDigestsRechecked": true,
+    "allTerminalAndPhaseReceiptDigestsRechecked": true,
+    "automaticRetry": false,
+    "contractComposition": {
+      "newCases": 9,
+      "originalCollectorCasesReusedUnchanged": 12
+    },
+    "derivedDriverSha256": "185a4a5966e49f63a90276d3ac58c5d2f2606a91f1c072f65ffe53122fa41819",
+    "errors": 0,
+    "failures": 0,
+    "localSourceSha256": {
+      "candidate.py": "28784880cd2c926ef62e46312232181d1117b7e2f41c835146e09fa3cfdf6321",
+      "failure_support.py": "3b0972268a33dffd967fa04f567fd95ffa7b39aeedcad0362bcd2a44670b4fa1",
+      "reader_binding.py": "061f7ef892c9abb1b0987055d6bedf855f8324417031d5bb2fb66f93d0b944f2",
+      "test_contract.py": "1d412357b6d680ae581fa749eacedab5a8a3e679474de1ee9d57b70cafae08a2",
+      "test_flow.py": "3eb71e2e76637eddd15999ff75182e72326fb1b3ccd2f955d6b92c45195e7660",
+      "test_package.py": "90cda865379f92c3c78231658135a6ce0ddeba10f63e50995a483dfacead889f",
+      "test_preserved_budget.py": "f0df3cc195566492d2d6ec702f5bc4283cd948978fc10fae22d2f1b6a50ea81d"
+    },
+    "originalBudgetCasesReusedUnchanged": 2,
+    "perPhaseOuterLimitSeconds": 90,
+    "privateArtifactAclVerified": true,
+    "sameDerivedDriverAcrossAllPhases": true,
+    "serialPhases": [
+      {
+        "errors": 0,
+        "exitCode": 0,
+        "failures": 0,
+        "file": "test_flow.py",
+        "receiptSha256": "b7890b8688652052c5ffa6d32240b673ed4922f8258a4a47ed0a00cb3d8fc120",
+        "seconds": 12.225864799926057,
+        "tests": 15
+      },
+      {
+        "errors": 0,
+        "exitCode": 0,
+        "failures": 0,
+        "file": "test_contract.py",
+        "receiptSha256": "a5c418529019a15ce9ca8e4f4375b428bc665dfb8e613b454876727985371d46",
+        "seconds": 0.7798800999298692,
+        "tests": 21
+      },
+      {
+        "errors": 0,
+        "exitCode": 0,
+        "failures": 0,
+        "file": "test_package.py",
+        "receiptSha256": "dccf4bfc7cbfe019ed183e5b4d4bdc1eca72af08426e968f42f6e55408693c17",
+        "seconds": 22.444102699984796,
+        "tests": 8
+      },
+      {
+        "errors": 0,
+        "exitCode": 0,
+        "failures": 0,
+        "file": "test_preserved_budget.py",
+        "receiptSha256": "5b00dab7b3436329b5cc991097b46339bec9c40a20716bf1ae159b090a0cfe5c",
+        "seconds": 7.24489159998484,
+        "tests": 2
+      }
+    ],
+    "sourceInputsUnchanged": true,
+    "terminalReceiptSha256": "571a72a2cf3b4765c14aead346e0e9a23a4c0ed756171b7bfc5dcd8a76757b3f",
+    "tests": 46
+  }
+}
