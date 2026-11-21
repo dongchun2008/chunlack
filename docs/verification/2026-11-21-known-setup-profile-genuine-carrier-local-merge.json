@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-21",
+  "scope": "local-integration-of-previous-setup-credential-source-fix-into-genuine-proof-carrier",
+  "status": "local-scoped-tests-passed-inactive-not-native-accepted",
+  "priorFailureEvidence": "docs/verification/2026-11-21-install-unit-readonly-state-and-failure-capture.json",
+  "change": {
+    "exactCarrierSourceSlotsChanged": [
+      "receiver.py",
+      "setup.py",
+      "setup_profile.py"
+    ],
+    "priorReviewedSourceSha256": {
+      "setup_profile.py": "40b042eb47e53e55b6ad71aade0cd91e905a55615a57bf0094304d90d6cfb09a",
+      "setup.py": "822813a4e262483907aed9824c02973fe550861595b9411cbdc12e122159910b",
+      "receiver.py": "f10d795da7020afba3b6c4dd6fc9e1b1ba9a49325c0fb520de646851d3f2e4ef"
+    },
+    "previousCandidateRecord": "docs/verification/2026-11-18-root-setup-credential-candidate-local.json",
+    "onlyUnitPropertyDifference": "ExecStartEx command flags",
+    "oldFlags": [
+      "no-env-expand"
+    ],
+    "restoredFlags": [
+      "no-setuid",
+      "no-env-expand"
+    ],
+    "allOtherUnitPropertiesExactlyEqual": true,
+    "capabilityBoundingSetUnchanged": 235,
+    "ambientCapabilitiesUnchanged": 0,
+    "noNewPrivilegesUnchanged": true,
+    "rootUserGroupAndBusinessIdentityUnchanged": true,
+    "noCapabilityGuardRelaxation": true,
+    "hostAssetsAndManagerExactlyUnchanged": true,
+    "originalBudgetAwareProofDriverAndReadersUnchanged": true,
+    "previousAbsenceFixRetained": true,
+    "setupProfileAndReceiverDigestClosureVerified": true,
+    "frozenOrDeployedSourcesOverwritten": false,
+    "causalNativeEffectOfFlagChangeProven": false
+  },
+  "verification": {
+    "localTests": 8,
+    "failures": 0,
+    "errors": 0,
+    "actualExitCode": 0,
+    "seconds": 21.44395790004637,
+    "sourceHashes": {
+      "candidate.py": "9c99b6ed98b24cc9f5e6ba66ee05eccb9a032200068a2b2a787b72d875cbf859",
+      "test_merge.py": "7d3a5bf304d091407b6088d679ba4a0e4b6c2ef5e1a85b9540b4d0bec0cce970"
+    },
+    "testReceiptSha256": "90e63ec569228c3474182ecd030b72ed27d623d66add01c6e1432a2c9137d2e4",
+    "positivePrepareRealInputCount": 13,
+    "prospectiveMetadataSimulationOnly": true,
+    "negativeOwnedEntryExitCode": 1,
+    "noAttemptCreated": true,
+    "all15SavedDigestsRechecked": true,
+    "privateAclItemsChecked": 20
+  },
+  "inactivePackage": {
+    "files": 15,
+    "boundFiles": 13,
+    "carrierMembers": 170,
+    "bindingSha256": "6700260d4677cc0faaaf9fe16ce5c409bf688e8f952a3daa9fa0b949966a0c26",
+    "packetSha256": "1335d22a6b8d34f4826c36b5fbb9f33055ebf4f990cc281870bb497dc8b0dcad",
+    "userApproved": false,
+    "approvalReferenceCreated": false,
+    "attemptCreated": false,
+    "syntheticTestTagNotNativeExecutionCandidate": true,
+    "nativeCompatibilityVerified": false,
+    "proofCreated": false,
+    "productionReady": false
+  },
+  "independentReview": {
+    "newAdapterReviewCompleted": false,
+    "priorSourceFixReviewDoesNotProveNewAdapterReview": true
+  },
+  "boundaries": {
+    "additionalSshAttempts": 0,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "existingServicesChanged": false,
+    "credentialsChanged": false,
+    "businessAuthorizationChanged": false,
+    "relayChanged": false,
+    "dnsOrPublicPortsChanged": false,
+    "realModelCalls": 0,
+    "externalAgentCalls": 0,
+    "privateSourcesOrRawBodiesUploaded": false
+  },
+  "nextLocalPreparation": [
+    "Integrate bounded same-connection failure capture before another native execution proposal.",
+    "Keep full-phase and cleanup budgets and preserve exact unit/root/generation bindings.",
+    "Freeze a fresh inactive execution package and validate its positive admission before requesting a new remote window."
+  ],
+  "limits": [
+    "Eight scoped integration tests are not a full product regression or native acceptance.",
+    "Historical capability-check success is not a new single-variable native causal test.",
+    "The current successful readonly observation showed no active processes in the fixed failed installation unit, not a successful full lifecycle.",
+    "No further SSH or native units are authorized by this local work."
+  ]
+}
