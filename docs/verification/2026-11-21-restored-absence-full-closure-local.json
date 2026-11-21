@@ -1,0 +1,121 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsOrPublicPortsChanged": false,
+    "existingServiceChanges": false,
+    "externalAgentCalls": 0,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "date": "2026-11-21",
+  "independentReview": {
+    "completed": false,
+    "newReviewPassClaimed": false,
+    "priorKnownFixReviewDoesNotProveNewAdapterReview": true,
+    "reason": "Delegated review tool previously refused; no retry or bypass performed."
+  },
+  "limits": [
+    "No native compatibility or production readiness is established by this local package.",
+    "Independent review has no new result; a local check is not an independent review.",
+    "No new remote execution is authorized by the old spent allowance.",
+    "Private source, nonce, configuration, raw captures and local paths are not included."
+  ],
+  "nextNativeScope": {
+    "additionalLowPrioritySshManagementOverhead": true,
+    "approved": false,
+    "automaticRetry": false,
+    "combinedWorkAndObserverMiB": 288,
+    "combinedWorkAndObserverSingleCoreCpuPercent": 30,
+    "combinedWorkAndObserverTasks": 48,
+    "freshExplicitGrantRequired": true,
+    "independentObserverMiB": 96,
+    "independentObserverSingleCoreCpuPercent": 10,
+    "independentObserverTasks": 16,
+    "installMiB": 192,
+    "installSingleCoreCpuPercent": 20,
+    "installTasks": 32,
+    "localSeconds": 950,
+    "maximumSshAttempts": 1,
+    "maximumTemporaryUnitObjects": 6,
+    "privateNetworks": true,
+    "productionPublicationAllowed": false,
+    "sharedWorkMiB": 192,
+    "sharedWorkSingleCoreCpuPercent": 20,
+    "sharedWorkTasks": 32,
+    "zeroSwap": true
+  },
+  "ownedEntryNegative": {
+    "attemptCreated": false,
+    "exitCode": 1,
+    "ownedChildReturned": true,
+    "savedBytesUnchanged": true,
+    "sdkOrSshStarted": false,
+    "seconds": 1.1769180999835953
+  },
+  "prepared": {
+    "approvalReferenceCreated": false,
+    "attemptCreated": false,
+    "bindingSha256": "6a3e413267a06b88769c225bdf728233e679c48c4baa3f6a7914e9dfdef9cffa",
+    "boundFiles": 13,
+    "carrierMembers": 170,
+    "files": 15,
+    "freshExclusiveTagAndNonce": true,
+    "packetSha256": "280c964420148bd370eb7024848b99b5acc245b0c3843fcfa5c5d0cd339c2aec",
+    "rootIdentityAndAll15DigestsRecheckedAfterAclChange": true,
+    "userApproved": false
+  },
+  "previousNativeAttempt": {
+    "allowanceConsumed": true,
+    "publishedRecordCommit": "df255c5a4b2879294bc8192a5b898ad9f04bb3a2",
+    "result": "failed-before-unit-start",
+    "reused": false
+  },
+  "privateAcl": {
+    "checkedItems": 16,
+    "existingOrFailureDirectoryPermissionsChanged": false,
+    "finalMethod": "icacls DACL only; all read back",
+    "initialSetAclOperationsRefused": 2,
+    "principals": "current user and SYSTEM only",
+    "unexpectedRules": 0
+  },
+  "schemaVersion": 1,
+  "scope": "inactive-absence-restoration-full-closure-and-fresh-local-candidate",
+  "status": "local-verified-native-not-authorized",
+  "verification": {
+    "actualProcessExitCode": 0,
+    "allProofRouteSourcesUnchanged": true,
+    "errors": 0,
+    "exactCarrierSourceDifference": [
+      "setup_manager.py"
+    ],
+    "failures": 0,
+    "firstFailedFixturePreserved": true,
+    "fixtureCorrection": "Read tag and nonce from binding.json, then validate approval binding hash and local directory identity.",
+    "onlyPreviouslyFixedShowMethodRestored": true,
+    "otherManagerMethodsUnchangedPreviouslyChecked": true,
+    "receipts": [
+      {
+        "accepted": false,
+        "errors": 1,
+        "failures": 0,
+        "sha256": "a189f7a1655212ebcc2910e8acee25ab6e4447a2ea2fd8c9494185a0aa35fb90",
+        "tests": 6
+      },
+      {
+        "accepted": true,
+        "errors": 0,
+        "failures": 0,
+        "sha256": "3c15e1a7736f2bcc1afd5c98af621a682a7842e12cecd058ce6245ec1a68b18b",
+        "tests": 6
+      }
+    ],
+    "sameInputHostAssetsRuntimeAndPacketIdentical": true,
+    "seconds": 28.834323900053278,
+    "sourceSha256": "816d4a55132b615176dca59471d8567c48efa7628ea82476380c719e449674ea",
+    "tests": 6
+  }
+}
