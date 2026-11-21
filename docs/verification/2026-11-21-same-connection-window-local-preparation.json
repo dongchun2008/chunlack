@@ -1,0 +1,50 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "externalAgentCalls": 0,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "privateSourcesOrRawBodiesUploaded": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "date": "2026-11-21",
+  "newArtifactVerification": {
+    "allSavedBytesUnchanged": true,
+    "approvalSha256": "01b1f47edc83956d0b03304a7d3a24e13ed04518deef13b4fbb158db1a822a08",
+    "attemptCreated": false,
+    "bindingSha256": "4926426649aa4a501d2d48e8d5aa61f26da61f0c22614d154954fb98f34e2bae",
+    "boundFiles": 13,
+    "derivedDriverSha256": "185a4a5966e49f63a90276d3ac58c5d2f2606a91f1c072f65ffe53122fa41819",
+    "diskUserApproved": false,
+    "files": 15,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "originalRegressionRepeated": false,
+    "ownedLocalChildExitCode": 1,
+    "ownedLocalChildRefusedBeforeAttempt": true,
+    "packetMembers": 170,
+    "productionPublished": false,
+    "prospectiveAdmissionInMemoryOnly": true,
+    "verified": true
+  },
+  "newIndependentReviewCompleted": false,
+  "original46TestsRepeated": false,
+  "plan": "docs/plans/2026-11-21-same-connection-native-validation-window.zh-CN.md",
+  "priorLocalRegression": "docs/verification/2026-11-21-same-connection-install-failure-evidence-local.json",
+  "privateCandidateAclVerified": true,
+  "proposedWindowOnly": {
+    "automaticRetry": false,
+    "failureReadIncludedInTotalBudget": true,
+    "maximumLocalSeconds": 950,
+    "maximumSshAttempts": 1,
+    "maximumUnitObjects": 6,
+    "requiresFreshUserApproval": true,
+    "sameConnectionFailureReadMaximumCombinedBytes": 65536,
+    "sameConnectionFailureReadMaximumSeconds": 20
+  },
+  "schemaVersion": 1,
+  "status": "fresh-local-candidate-prepared-remote-window-not-authorized"
+}
