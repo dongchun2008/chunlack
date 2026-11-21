@@ -1,0 +1,47 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsReadOrChanged": false,
+    "newExecutionApproval": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "productionPublished": false,
+    "productionServicesChanged": false,
+    "relayChanged": false
+  },
+  "date": "2026-11-21",
+  "nativeCompatibilityVerified": false,
+  "pendingGate": "Fresh approval for previously proposed one-SSH six-object native scope; prior automatic goal continuation is not new remote scope",
+  "productionReady": false,
+  "proofCreated": false,
+  "schemaVersion": 1,
+  "scope": "actual-owned-parent-entry-negative-local-integration",
+  "sourceHashes": {
+    "driverSha256": "a49167edc70a5df3705d5349432eb8f7204bd295f2b2d32b0b28f5e9833874d7",
+    "entrySha256": "6ddf18cee050dee55562df299232c508401298fd9024fda77091335c0d60bf7b",
+    "processSourceSha256": "07e7ed3bf0174221a8a94faf4f11097f54fda1b6b73d9705261c0430efe67973"
+  },
+  "status": "passed-expected-unauthorized-exit-no-native-action",
+  "verification": {
+    "actualChildExitCode": 1,
+    "actualParentApi": "unchanged advanced entry.run with unchanged pinned owned-process runner",
+    "attemptFileCreated": false,
+    "childCount": 1,
+    "childReaped": true,
+    "executionLogicTimeoutOrCleanupNotModified": true,
+    "expectedChildExitCode": 1,
+    "initialSourceCaptureOutsideMeasuredRun": true,
+    "maximumSeconds": 10,
+    "observedEntryRunAndGuardWaitSeconds": 2.1083590999478474,
+    "ownedGuardCount": 1,
+    "ownedGuardThreadsExited": true,
+    "ownedPipesClosed": true,
+    "passiveObserversOnly": true,
+    "preparedBytesUnchanged": true,
+    "preparedFileDigestsRechecked": 15,
+    "prior43RegressionTestsRerun": false,
+    "receiptSha256": "ab8cf2b06dcf0ef97165810b4c82880e5a7f2a173a0b6a93a81dcec216f33120",
+    "stderrBytes": 0,
+    "stdoutBytes": 179
+  }
+}
