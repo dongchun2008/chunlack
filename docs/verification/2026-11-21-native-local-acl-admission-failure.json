@@ -1,0 +1,115 @@
+{
+  "actualInvocation": {
+    "attemptFileCreated": false,
+    "capturedEntryExecutionReached": false,
+    "elapsedSeconds": 0.26286480005364865,
+    "failedCandidateAndLocalEvidencePreserved": true,
+    "failureLineInCapturedStack": 694,
+    "failureStage": "Local operational approval exclusive-create completed but bounded readback could not reopen the new file.",
+    "failureType": "PermissionError",
+    "falseApprovalOriginalPreserved": true,
+    "globalAllowanceLedgerCreated": false,
+    "nativeDiagnosticStarted": false,
+    "nativeRetried": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "replacementApprovalReadbackVerified": false,
+    "sdkOrCredentialLoadingReached": false,
+    "sshAllowanceClaimed": false,
+    "terminalExitCode": 1
+  },
+  "authorizedScope": {
+    "automaticRetry": false,
+    "independentReviewPassImplied": false,
+    "localTotalLimitSeconds": 950,
+    "maximumSshAttempts": 1,
+    "maximumTemporaryUnitObjects": 6,
+    "productionAllowed": false
+  },
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "currentRemoteServiceHealthReverified": false,
+    "dnsOrPublicPortsChanged": false,
+    "existingServicesStoppedOrRestarted": false,
+    "externalAgentCalls": 0,
+    "privateSourcesOrRawBodiesUploaded": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "remoteConnectionMade": false,
+    "remoteWrites": 0
+  },
+  "date": "2026-11-21",
+  "diagnosis": {
+    "actualPinnedWriterReproducesPermissionError": true,
+    "badFixture": {
+      "errno": 13,
+      "errorType": "PermissionError",
+      "roundtrip": false
+    },
+    "cause": "The current user had direct directory access but lacked inheritable child-file access; the newly created approval file inherited SYSTEM access only.",
+    "fix": "Use current-user and SYSTEM inheritable full-control entries on new local directories; file entries use direct full control.",
+    "fixedFixture": {
+      "errorType": null,
+      "roundtrip": true
+    },
+    "initialLocalVerifyCommandPermissionDeniedBeforeInterpreter": true,
+    "localOnlyInitialFixtureGrantErrorPreserved": true,
+    "noProductOrFrozenControllerCodeChanged": true,
+    "probeDataSyntheticAndFalseApproved": true
+  },
+  "evidenceSha256": {
+    "actualInactiveApprovalRoundtrip": "3c586a5ed809827de395c32f8dca952942dc2d29edce51097891637c8543a276",
+    "actualUserGrant": "4d911f0e1aeaee1964330f73dfd73d49710892311c8c5bf9cde3c731822888e5",
+    "coordinator": "53851545c468f471d79a73e1d5545c2b187bcc2e0c0725deb4202fb0da38ccdf",
+    "localInvocationFailure": "17415f5a09b840a011679c64dfe888d739b71cb77a43bada39683175a0482dcd",
+    "newInactiveCandidate": "d76c2bc50f2b2867ed2648342ad7a3e1eb6d7734f11d50f893e85cfa3dba170e",
+    "preInvocationVerifyOnly": "fd02f28feb97ad3a796bd734848b7b40294ce1a78ad7124979254f246bcf33e3",
+    "syntheticAclReplay": "5779bcb53d9c47103b2a9c69939b3d531c5c12dc6b35d5d7b90ac08d921a3891"
+  },
+  "limits": [
+    "No native runtime acceptance occurred in this attempt.",
+    "Local ACL roundtrips do not prove Linux lifecycle, compatibility or production readiness.",
+    "Existing remote service health was not probed because no SSH connection was made.",
+    "The old failed candidate must not be reused or silently reset."
+  ],
+  "newInactiveCandidate": {
+    "actualRenameExclusiveCreateReadbackVerified": true,
+    "all15SavedDigestsRechecked": true,
+    "attemptCreated": false,
+    "bindingSha256": "aa3c04276c644e56b08242a607bda9131542e28b4bae862b26f6011348c8455b",
+    "boundFiles": 13,
+    "carrierMembers": 170,
+    "falseApprovalStayedFalseDuringRoundtrip": true,
+    "files": 15,
+    "futureChildInheritanceVerified": true,
+    "nativeCompatibilityVerified": false,
+    "negativeOwnedEntryExitCode": 1,
+    "noSdkOrSshFromFalseApproval": true,
+    "packetSha256": "9fcf1a33163b569146546b057d7ccd33557d431a19701f176d38b199edd19271",
+    "privatePrincipalCheckItems": 16,
+    "privatePrincipals": "current user and SYSTEM only",
+    "productionReady": false,
+    "proofCreated": false,
+    "roundtripElapsedSeconds": 0.4138606999767944,
+    "roundtripOriginalBytesPreserved": true,
+    "userApproved": false
+  },
+  "nextStep": {
+    "automaticRestartAllowed": false,
+    "freshExecutionWindowAutomaticallyAssumed": false,
+    "independentReviewCompleted": false,
+    "reason": "Honor the explicit fail-stop/no-retry condition after a failed local invocation; no SSH allowance was claimed.",
+    "userContinuationDecisionRequired": true
+  },
+  "preInvocationLocalCheck": {
+    "accepted": true,
+    "childExitCode": 1,
+    "seconds": 2.2659630000125617,
+    "sharedInitialClockValidated": true
+  },
+  "schemaVersion": 1,
+  "scope": "approved-native-coordinator-local-admission-failure-and-acl-lifecycle-replay",
+  "status": "stopped-before-ssh-new-inactive-candidate-prepared"
+}
