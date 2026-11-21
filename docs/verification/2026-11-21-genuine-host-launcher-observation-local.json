@@ -1,0 +1,92 @@
+{
+  "actions": {
+    "actualSystemBusCalls": 0,
+    "businessDatabaseQueries": 0,
+    "credentialChanges": false,
+    "dnsChanges": false,
+    "existingServicesStartedOrStopped": false,
+    "externalAgentCalls": 0,
+    "grantChanges": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "portChanges": false,
+    "productCodeChanges": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false
+  },
+  "date": "2026-11-21",
+  "inputs": {
+    "containsExecutionRequest": false,
+    "freshnessReset": false,
+    "inputIndexSha256": "ecfe23e369ac8dcb64c53c91a112086112d86f6bfd315e85e2d5cff78ede47b1",
+    "legacyPrivateArchiveRead": false,
+    "observedAtMsUnchanged": 1795219870753,
+    "privateBodiesUploaded": false
+  },
+  "limits": [
+    "The15 focused outer tests are not the full product regression or native acceptance; ten legacy cases are not extra new unique cases.",
+    "Source constructor UID/platform/readonly checks use explicit local doubles, not observed Linux facts.",
+    "Proof context is correlation/input binding only; it is not a report, permission or kernel/lifecycle proof.",
+    "90 seconds bounds the replay child, not build and final disk writes.",
+    "The full external launch/observation/cleanup envelope is not yet bound to this new host archive.",
+    "Existing root cgroup and manager checks remain unchanged and require actual native verification; the optional failed Scope3730 framework is not a universal release prerequisite.",
+    "Actual capacity/source/runtime/dependency/configuration/authority and compatibility freshness require future approved native checks."
+  ],
+  "nativeCompatibilityVerified": false,
+  "nativeRuntimeVerified": false,
+  "packages": {
+    "capturedProgramDirectoryHasNoFallback": true,
+    "catalogSha256": "abd3a0c00e5586713375039e4d1738476d27fcdfb21d6a6802ea33b009e087a6",
+    "hostArchiveSha256": "b50ebde560c3b5e045f95149f8960b2b8de6a65f6b226dc85ebbb430e8f989eb",
+    "hostFiles": 161,
+    "nativeProfileEntryProgramsUnchanged": true,
+    "originalPackageBuilderUsed": true,
+    "rootPayloadFiles": 156,
+    "rootPayloadSha256": "67343f896c63abba6752292d4e40297c361789c226e3a11cf0ab966036c7c8b6",
+    "stagingFunctionsAndClassesUnchanged": true,
+    "stagingLiteralDigestChanges": 2
+  },
+  "productionDeliveryComplete": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "review": {
+    "blockingFindings": [],
+    "kind": "independent static local source and evidence review; no reviewer execution or network"
+  },
+  "schemaVersion": 1,
+  "settingsSealed": false,
+  "sourceBindings": {
+    "host": "682c379ed017c1e9b76a93848447421aba6d8741e9f6f9113d33412e46826110",
+    "test_host": "c3e577f12785a5c0bb5e5526ded3edc79b1048afcabd3cad84aa42bf16d69727",
+    "verify_local": "3cd42ba10328e093e94a156c11dfedaabfb7187c977d070f1074bab8e5ecae90"
+  },
+  "stage": "genuine-host-launcher-and-proof-context-local-binding",
+  "status": "local-package-and-saved-replay-passed-no-native-launch",
+  "verification": {
+    "actualFullNativeProofValidated": false,
+    "actualProcessesLaunchedByConstructor": false,
+    "focusedOuterTestsFailed": 0,
+    "focusedOuterTestsPassed": 15,
+    "kernelGuardCreated": false,
+    "lateCallerStagingMutationRedThenGreen": true,
+    "missingReportRefused": true,
+    "originalRawInputValidatorCalled": true,
+    "originalStagingAssertionsPreserved": true,
+    "originalStagingCasesAlsoNestedInOuterSuite": true,
+    "originalStagingCasesRepeatedInSavedReplayNotAdditionalUniqueTests": true,
+    "originalStagingSuiteTests": 10,
+    "privateComparisonFailuresDoNotPrintBodies": true,
+    "proofContextJobSourceBindings": 22,
+    "proofContextOriginalValidatorSources": 4,
+    "proofContextPrivateMaterials": 5,
+    "proofContextStructuralValidatorPassed": true,
+    "protectedLocalSourceReads": 12,
+    "savedReplayChildExitCode": 0,
+    "savedReplayChildSeconds": 10.983002599910833,
+    "savedReplayStderrBytes": 0,
+    "sourceConstructorWithExplicitPosixDoubles": true,
+    "stageLoaderAndProgramFacadeShareCapturedByteSnapshot": true,
+    "testReportedSeconds": 23.317
+  }
+}
