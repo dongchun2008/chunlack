@@ -1,0 +1,132 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsOrPortsChanged": false,
+    "externalAgentCalls": 0,
+    "newLinuxUnits": 0,
+    "newSshConnections": 0,
+    "privateSourceOrMaterialsIntendedForGithub": false,
+    "productionServicesChanged": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "spentRemoteAuthorityRenewed": false,
+    "systemBusConnected": false
+  },
+  "candidateChange": {
+    "fixedPathsOnly": true,
+    "freshnessReset": false,
+    "frozenOriginalsOverwritten": false,
+    "hostFiles": 161,
+    "hostSupportPinChangedFiles": 4,
+    "launcherChangedFiles": 2,
+    "originalDirectoryIdentitiesRequired": true,
+    "originalNormalExitFramesAndRawProofValidatorRetained": true,
+    "originalObservedAtMs": 1795219870753,
+    "ownedOpenFdAndParentRequired": true,
+    "positiveLinksRequireTwoExactDeletedFdPaths": true,
+    "productFilesPreserved": 66,
+    "removalDoesNotImplyNormalExit": true,
+    "repeatedAliasAbsenceRequired": true,
+    "rootPayloadFiles": 156,
+    "sharedRemovalHelper": true,
+    "unknownHandlesAndClockExpiryRejected": true,
+    "workerChangedFiles": 2,
+    "workerFiles": 200,
+    "zeroLinkCompatibilityRetained": true
+  },
+  "date": "2026-11-21",
+  "historicalBasis": {
+    "aliasErrno": 2,
+    "currentVpsKernelOrStateRefreshed": false,
+    "heldIdentityStable": true,
+    "heldLinkCounts": [
+      2,
+      2
+    ],
+    "record": "2026-11-19-native-cgroup-linkcount-evidence.json"
+  },
+  "independentStaticReview": {
+    "blockingFindings": 0,
+    "nativeVerificationClaimed": false,
+    "notChecked": [
+      "target Linux behavior",
+      "upstream kernel source by reviewer",
+      "individual ACLs by reviewer"
+    ],
+    "receiptSha256": "8249f171f47654521af70d834a1b450895aa711f79b9658ed72f67bacf2a275b",
+    "scope": [
+      "helper under original caller preconditions",
+      "canonical package closure",
+      "runner completion semantics"
+    ],
+    "sourceHashBindingByCoordinator": true
+  },
+  "localVerification": {
+    "actualExitCode": 0,
+    "elapsedSeconds": 16.00530159997288,
+    "errors": 0,
+    "failures": 0,
+    "nestedCountsNotIndependentNativeAcceptance": true,
+    "nestedSuites": {
+      "currentCliRemovalTestsAgainstCandidate": 5,
+      "originalStageTests": 10,
+      "unchangedOriginalObserverTests": 18
+    },
+    "outerTests": 29,
+    "receiptSha256": "75668ff3798bf13342fc59d5370bf67f531892c3a8e202db977edc15612b7c81",
+    "savedReplay": {
+      "actualExitCode": 0,
+      "boundJobSources": 22,
+      "childTimeoutSeconds": 90,
+      "correlationMetadataSyntheticOnly": true,
+      "elapsedSeconds": 27.746139000053518,
+      "missingProofRejected": true,
+      "packagingOutsideChildDeadline": true,
+      "privateMaterialsBound": 5,
+      "receiptSha256": "6891241c6bb1941153a75a14f26c6271db8d307c1aebd239ab1fa8f610eeef01",
+      "savedArchiveHashRecheckedAfterLocalDaclUpdate": true,
+      "sourceConstructorProtectedReads": 12,
+      "stderrBytes": 0,
+      "stdoutBytes": 1031
+    },
+    "skipped": 0,
+    "sourceDrift": false
+  },
+  "nativeCompatibilityVerified": false,
+  "nativeExecutionAuthorized": false,
+  "nativeRuntimeVerified": false,
+  "packageHashes": {
+    "catalogSha256": "910c1ff0c81eef41dfba9424a6429aa60de3a083150716452854740842dfb267",
+    "hostArchiveSha256": "94b8eab6809740e91e0d47b368177e2226c9606f662c7e0b1421435f7125e91e",
+    "rootPayloadSha256": "e2c870b6d443ba554c34048fe2ff314655ddba0c848de6c44540706b6c5a90f4"
+  },
+  "primarySourceBasis": {
+    "exactVpsKernelMatchClaimed": false,
+    "kernelTag": "v6.6",
+    "references": [
+      "https://github.com/torvalds/linux/blob/v6.6/fs/kernfs/inode.c#L156-L170",
+      "https://github.com/torvalds/linux/blob/v6.6/fs/d_path.c#L234-L277",
+      "https://github.com/torvalds/linux/blob/v6.6/fs/proc/fd.c#L160-L179"
+    ]
+  },
+  "productionPublished": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "remaining": [
+    "Local outer launch/observation/cleanup admission integration against this exact package",
+    "Fresh separately approved bounded Linux validation of deleted-path semantics and normal-exit evidence",
+    "Fresh compatibility proof and production maintenance gates",
+    "Live product and quiet external-Agent acceptance"
+  ],
+  "schemaVersion": 1,
+  "scope": "genuine-held-cgroup-removal-local-inactive-candidate",
+  "sourceHashes": {
+    "candidate.py": "f9f3169651aa8d5bd7564dbf090aa5666c90ad341800550b990fa5481cd92d6c",
+    "removal_fragment.py": "9be7c2fe69f4a40bb5dea183abbe5782bd0d15b8ebf711b50694abbaa5d4c1c8",
+    "replay_local.py": "7d181572721a7dc0eed3b740bc2c9a7955dfdd2caaa6f245b57e5eaa94db168b",
+    "test_package.py": "1b5082ddcf67c7f7539da92d952e0a8b97b3593c5b314a845753e3036a108df2",
+    "test_removal.py": "60be782370d381ca81d808f63b7cda42e05fcba3a0c939c8060c11632ec6969e"
+  },
+  "status": "local-tests-and-canonical-saved-replay-passed-native-effect-unverified"
+}
