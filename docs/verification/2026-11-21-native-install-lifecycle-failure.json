@@ -1,0 +1,111 @@
+{
+  "actualNative": {
+    "coordinatorExitCode": 1,
+    "driverElapsedSeconds": 8.782621499965899,
+    "driverErrorCode": "bridge_driver_transport_receipt",
+    "elapsedSeconds": 8.848090299987234,
+    "failedPhase": "setup-manager-install-unit-lifecycle",
+    "fourProtectedServiceBaselineUnchanged": true,
+    "installStartRequestReached": true,
+    "localCleanupErrors": [],
+    "localOwnedCoordinatorChildReturned": true,
+    "localSdkThreadExitConfirmed": true,
+    "nativeCompatibilityVerified": false,
+    "nativeRetried": false,
+    "newSshAttempts": 1,
+    "productionReady": false,
+    "proofCreated": false,
+    "remoteCleanupErrorCode": "root_dispatch_kernel_caps",
+    "remoteOwnedCgroupEmptyConfirmed": false,
+    "remoteOwnedUnitCleanupConfirmed": false,
+    "remotePrimaryErrorCode": "bridge_setup_manager_missing_live",
+    "remoteSetupExitCode": 1,
+    "sdkSocket10038Observed": true,
+    "sdkWarningClassifiedHarmless": false,
+    "setupNormalExitVerified": false,
+    "sshAllowanceConsumed": true,
+    "sshTransportCleanupConfirmed": true,
+    "successfulPhases": [
+      "before",
+      "receiver",
+      "after"
+    ],
+    "totalCreatedTemporaryUnitCountIndependentlyVerified": false
+  },
+  "authorization": {
+    "automaticRetry": false,
+    "independentReviewPassed": false,
+    "localTotalLimitSeconds": 950,
+    "maximumSshAttempts": 1,
+    "maximumTemporaryUnitObjects": 6,
+    "productionAllowed": false
+  },
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsOrPublicPortsChanged": false,
+    "existingServicesStoppedOrRestarted": false,
+    "externalAgentCalls": 0,
+    "failureDirectoriesOrLocksDeleted": false,
+    "privateSourcesOrRawBodiesUploaded": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "date": "2026-11-21",
+  "evidenceSha256": {
+    "actualUserGrant": "8cd85ae84687236a1d5d43bf4d2029b58d5ff86a1aae32a1e8ef5cf4a351b48d",
+    "after": "a31db1802a3d0934e20e53a7569d00f1bba69a99f0cdd8bd0a3bb3107157e3d4",
+    "before": "0d33d9973c0ba6c9902c0a2f4c0b30c14663b3b50fdabde6757084f3264e335a",
+    "coordinator": "ecc995d9201fd05eda5e53452ebe7e0c79a9c9c0f25cecb0112f33699baa0568",
+    "driverOutcome": "1324e5c19989aafa7c012505a60a59837f063a9d29f584564ad516e56b9f8a9f",
+    "localNegativeEntry": "02a43aff39c166e9704b8265cc1d30653423ba6b881e787c087c57ff4952af0f",
+    "referenceGuard": "e57d9055513b4f0f6c15162bbdeaba669e7970cf1adb8c5f610e86890775ccad",
+    "setupTransport": "36b3f50256e73989cd477db37f601a73ad08634a18f20ba444d7e5e74794b0f1",
+    "terminal": "61b766aed480918f970ccb5de1b175c4c75d94d3aa24ad8c9519c52e2ffe8946"
+  },
+  "followupPrepared": {
+    "approved": false,
+    "automaticRetry": false,
+    "fixedDescriptionAndCgroupBound": true,
+    "localSeconds": 35,
+    "maximumBytesPerCapture": 8192,
+    "maximumNewUnits": 0,
+    "maximumOutputBytes": 65536,
+    "maximumSshAttempts": 1,
+    "noBusinessDatabaseOrCredentialReads": true,
+    "noStartStopOrReset": true,
+    "rawBodiesPrivateLocalOnly": true,
+    "receiverRootAndCaptureInodesAvailable": true,
+    "remoteSeconds": 20,
+    "scope": "same fixed install-unit state plus its setup.stdout/setup.stderr and four protected-service baselines"
+  },
+  "interpretation": {
+    "additionalSshQueryPerformed": false,
+    "cleanupErrorMeaning": "A kernel capability check prevented complete owned-unit cleanup evidence; transport closure does not prove remote unit or cgroup cleanup.",
+    "missingLiveMeaning": "No accepted running-generation sample was established before an unexpected state; the exact service transition and exit cause are not present in this receipt.",
+    "rootCauseConfirmed": false,
+    "speculativeRuntimePolicyFixApplied": false
+  },
+  "limits": [
+    "The single SSH allowance is consumed; no additional remote access is inferred.",
+    "Remote installation-unit state and cleanup remain unknown until a separately approved observation.",
+    "Four unchanged protected-service baselines are not complete native or production acceptance.",
+    "No native compatibility proof or production publication occurred."
+  ],
+  "localAdmission": {
+    "falseApprovalOwnedEntryExitCode": 1,
+    "futureChildInheritanceVerified": true,
+    "localVerifyOnlyAccepted": true,
+    "onlyDeclaredConstantRebindings": true,
+    "privateAclItemsChecked": 21,
+    "privatePrincipals": "current user and SYSTEM only",
+    "prospectivePositivePrepareRealInputCount": 13,
+    "referenceLength": 151,
+    "referenceMaximum": 256,
+    "referenceValidatedBeforeAnyOutputWrite": true
+  },
+  "schemaVersion": 1,
+  "scope": "single-native-whole-chain-window-after-complete-local-admission-checks",
+  "status": "native-setup-lifecycle-failed-owned-unit-cleanup-unconfirmed"
+}
