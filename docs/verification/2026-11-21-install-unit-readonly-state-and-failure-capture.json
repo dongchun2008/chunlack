@@ -1,0 +1,138 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "businessDatabaseOrServiceCredentialBodiesRead": false,
+    "credentialsChanged": false,
+    "dnsOrPublicPortsChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "failureDirectoriesOrLocksDeleted": false,
+    "privateSourcesOrRawBodiesUploaded": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "capturedLogs": {
+    "setup.stderr": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "status": "read"
+    },
+    "setup.stdout": {
+      "bytes": 472,
+      "sha256": "768515abfb05e9dc357310813f4a76a13814f05e5fda3aaa72ceb589d03d7a57",
+      "status": "read"
+    }
+  },
+  "childFailure": {
+    "capabilityMaskAtFailureCaptured": false,
+    "cleanupConfirmed": true,
+    "cleanupError": null,
+    "completed": false,
+    "exactKernelCauseConfirmed": false,
+    "nativeCompatibilityVerified": false,
+    "primaryErrorCode": "root_dispatch_kernel_caps",
+    "productionReady": false,
+    "proofCreated": false
+  },
+  "cleanup": {
+    "localCleanupErrors": [],
+    "remoteCliCleanupErrors": [],
+    "sdkSocket10038Observed": true,
+    "sdkThreadExitConfirmed": true,
+    "sdkWarningClassifiedHarmless": false,
+    "sshHandlesClosed": true
+  },
+  "date": "2026-11-21",
+  "evidenceSha256": {
+    "collector": "b618a3f0e696345da3df50e60af1f7bada4c35affc0c3d7a757314bead3eb4ce",
+    "consent": "172d28e6491d347a4ae9e1e49bc678dad0e89993564dc8e673e9552a0ac14d23",
+    "localStaticProfileAudit": "3c08c5069a10348e4ac749f15e26503a4ad69fd3d651f65f39168b5224a151a0",
+    "proposal": "065e8da862ba3f5aa16240cd3b7037b485d2e442aa57eac1089b387e44664c4e",
+    "rawRemoteStdout": "15abdfc8e5d6f46b00075552ee832a9b5a416ef81046bb69e168cf4ffb31e3d9",
+    "runner": "d2a9700fef8fd92582763c43f7d60d833cc1e849e377ab37138ccc98706a4171",
+    "terminal": "ba371851806851d3b2500e44cec458e00251fe039499fbe4084349d3e2b24e26"
+  },
+  "execution": {
+    "actualLocalSeconds": 2.0190068000229076,
+    "actualOutputBytes": 2217,
+    "actualSshAttempts": 1,
+    "automaticRetry": false,
+    "localExitCode": 0,
+    "localLimitSeconds": 35,
+    "maximumOutputBytes": 65536,
+    "maximumSshAttempts": 1,
+    "newLinuxUnits": 0,
+    "privateLocalEvidenceOnly": true,
+    "remoteExitCode": 0,
+    "remoteLimitSeconds": 20,
+    "remoteWrites": 0,
+    "sourceAndProposalBindingsVerified": true,
+    "unitStartStopOrResetActions": 0
+  },
+  "limits": [
+    "No active owned processes were observed in this fixed query; this is not successful native lifecycle acceptance.",
+    "The earlier manager cleanup error is preserved separately from this later empty-state observation.",
+    "No raw capability fields at the failure instant were captured; the precise kernel-capability cause remains unproven.",
+    "The single approved query allowance is consumed; no more remote calls are inferred.",
+    "Native compatibility proof, controlled production publication and full delivery remain incomplete."
+  ],
+  "localStaticFollowup": {
+    "currentProductOrProductionConfigChanged": false,
+    "currentRuntimeProfileUsesOldNoEnvExpandOnlyFlag": true,
+    "exactRequestPropertyDifference": [
+      "ExecStartEx"
+    ],
+    "nativeCausalityOfFlagDifferenceProven": false,
+    "previousCandidateRecord": "docs/verification/2026-11-18-root-setup-credential-candidate-local.json",
+    "previousNativeEvidence": "docs/verification/2026-11-18-root-setup-credential-native-diagnostic-once.json",
+    "previouslyTestedSetupCredentialCandidateAddsNoSetuid": true,
+    "profileOmissionConfirmedBySourceComparison": true,
+    "runtimeGuardsRelaxed": false
+  },
+  "ownedUnitObservation": {
+    "activeState": "failed",
+    "controlPid": 0,
+    "currentCgroupStatus": "absent",
+    "currentSampledPidCount": 0,
+    "execMainCode": 1,
+    "execMainStatus": 1,
+    "failedUnitRecordPreserved": true,
+    "historicalExecMainPidNonzero": true,
+    "historicalExecMainPidNotTreatedAsLivePid": true,
+    "identityAndDescriptionBound": true,
+    "mainPid": 0,
+    "noActiveOwnedProcessesObserved": true,
+    "normalLifecycleAcceptance": false,
+    "originalManagerCleanupFailureNotRewrittenAsSuccess": true,
+    "restarts": 0,
+    "subState": "failed",
+    "twoUnitSnapshotsSameGeneration": true,
+    "unitExecutionSeconds": 2.805702
+  },
+  "protectedServices": {
+    "allActiveAtChecks": true,
+    "beforeAfterUnchanged": true,
+    "comparisonPerformedByPinnedRemoteCollector": true,
+    "fourServicesComparedBeforeAfter": true,
+    "rawServiceRowsReturned": false,
+    "uninterruptedTrafficOrRelayQualityProven": false
+  },
+  "schemaVersion": 1,
+  "scope": "one-fixed-install-unit-readonly-state-and-two-captures",
+  "status": "read-only-query-passed-no-current-owned-processes-observed",
+  "verification": {
+    "actualFinalLocalTestExitCode": 0,
+    "collectorConstantOnlyBinding": true,
+    "errors": 0,
+    "failures": 0,
+    "futureEvidenceInheritanceVerified": true,
+    "localAssemblyEncodingCorrectedBeforeSsh": true,
+    "localCheckPassedBeforeSsh": true,
+    "localSimulationTests": 12,
+    "privateAclItemsChecked": 11,
+    "privatePrincipals": "current user and SYSTEM only",
+    "testReceiptNameCollisionCorrectedBeforeSsh": true,
+    "testReceiptOriginalPreserved": true
+  }
+}
