@@ -1,0 +1,132 @@
+{
+  "actions": {
+    "businessDatabaseQueries": 0,
+    "credentialChanges": false,
+    "dnsChanges": false,
+    "externalAgentCalls": 0,
+    "grantsChanged": false,
+    "privateBodiesOrSourcesUploaded": false,
+    "productCodeChanged": false,
+    "productionPublished": false,
+    "productionServicesStartedOrStopped": false,
+    "publicPortChanges": false,
+    "realModelCalls": 0,
+    "relayChanges": false,
+    "remoteWrites": 0
+  },
+  "allowance": {
+    "allowanceExhausted": true,
+    "automaticRetry": false,
+    "linuxUnitsUsed": 0,
+    "localSeconds": 35,
+    "maximumLinuxUnits": 0,
+    "maximumSshAttempts": 1,
+    "remoteSeconds": 20,
+    "sshAttemptsUsed": 1
+  },
+  "date": "2026-11-21",
+  "execution": {
+    "localChildStderrBytes": 60,
+    "localChildStderrRawRetained": false,
+    "outerExitCode": 0,
+    "outerMilliseconds": 6096.2618999999995,
+    "remoteStderrBytes": 0,
+    "remoteStdoutBytes": 52504,
+    "remoteStdoutSha256": "d6506b965287751e9abcc966ecf12b7c2dd53a517fb78ef3b381847a1804345c",
+    "sshCleanupConfirmed": true,
+    "terminalCaptureOrigin": "exact exec_command return saved automatically after completion; not raw inner Python stderr",
+    "toolWallSeconds": 6.7434927
+  },
+  "limits": [
+    "Current ACLs do not retrospectively prove no reads during the coordinator's earlier inheritance window.",
+    "Exec return was saved automatically but inner Python stderr raw bytes were not retained.",
+    "Remote stderr is zero; local child stderr60B remains unknown, not classified harmless.",
+    "Metadata and absence samples do not prove full sources, continuous unused state, backup or real boot compatibility.",
+    "Capacity was checked in this observation; it must be revalidated before a future native stage, not refreshed by packaging.",
+    "Required512MiB and observed free bytes are an estimate including copies/reserve and prepared allocation, not an existing backup.",
+    "Current authority and full executable/dependency source checks remain necessary before boot.",
+    "A successful readonly query and inactive input index do not create any compatibility proof or maintenance permission."
+  ],
+  "localPrivacy": {
+    "localCheckCommandCorrectionOnly": true,
+    "newEvidenceCoordinatorAclRestricted": true,
+    "privateMaterialFilesChecked": 5,
+    "projectCredentialOrRemoteAclsChanged": false
+  },
+  "nextLocalInputs": {
+    "actualCapturedMaterialReferences": 5,
+    "candidateProductFiles": 66,
+    "existingSourceOverlaySha256": "64fd9165fd0a41766ddbef80187f4782871acbd44340131b0bf860bfcbce6e5e",
+    "failedA4PlanningReplayInvoked": false,
+    "freshnessReset": false,
+    "indexSha256": "ecfe23e369ac8dcb64c53c91a112086112d86f6bfd315e85e2d5cff78ede47b1",
+    "nativeLauncherPrepared": false,
+    "newLinuxUnitsAuthorized": 0,
+    "newSshAttemptsAuthorized": 0,
+    "observationTimeUnchanged": true,
+    "previousProductFiles": 57
+  },
+  "observation": {
+    "activationOrAttemptPathsAbsentAtTwoSamples": 8,
+    "capacity": {
+      "actualCandidateAllocationBound": 55582720,
+      "actualPreparedFootprintBytes": 57425920,
+      "capacityBindingSha256": "5e34a3d0b0e7c2bb95e9e7143879a5effc3cc0051a13bd17984181c412aca1a4",
+      "copyCount": 2,
+      "dataAndIngressCopyModelBytes": 27877376,
+      "dataMetadataFingerprint": "215e3d9a8f70bc8f25887162edaf4287063d0ae7ce9b965b23b6bbd03abff449",
+      "estimatedSpaceSufficient": true,
+      "measuredDataAtMs": 1795219870753,
+      "minimumFreeBytesObserved": 28051623936,
+      "minimumFreeInodesObserved": 2249242,
+      "nativeExecutionVerified": false,
+      "preparedMetadataFingerprint": "520e94db2accb23a2ab614ff9cb2ddb331d812a90f1d493a5de7c8d5ea452d23",
+      "productionReady": false,
+      "releaseCapacityAccepted": false,
+      "requiredFreeBytes": 536870912,
+      "requiredFreeInodes": 3104,
+      "reservationSha256": "5932a04edb8e0a5627140bbe2c8a3baf26ff8930eeda3734e9be490579fca126",
+      "reserveBytes": 268435456,
+      "sourceControlResultsAllocationBytes": 1843200,
+      "sourceManifestSha256": "34d89378f273c4fd34af080c2f25bd695e2b35002fb86ad623f29018607bd3d3",
+      "status": "capacity-inputs-bound-only",
+      "tag": "2b83a54d91ef",
+      "workerReceiptSha256": "cf2c625ba1c5b52b2653d63de2b6ed7d670bc2ff5d7c456c07b7d088459ebe7c"
+    },
+    "copyRequestAuthorized": false,
+    "fourServiceSnapshotFieldsMatchAndActive": true,
+    "nativeTransportVerifiedSeparately": true,
+    "originalFullCapacityAndCopyRequestValidatorsApplied": true,
+    "privateMaterialBodiesSavedLocallyOnly": true,
+    "privateMaterialFiles": 5,
+    "pureReceiverTransportVerified": false,
+    "reservationBoundToSuccessfulPreparation": true,
+    "threeConfigurationHashesMatchExpected": true
+  },
+  "productionDeliveryComplete": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "remaining": [
+    "Connect the existing config-preserving candidate/previous boot and full proof validator to these genuine inputs locally.",
+    "New explicitly authorized native copy stage with kernel-readonly source DATA, nonroot business identity and original limits.",
+    "Fresh exact-bound real database-copy compatibility, sealed settings, maintenance, consistent backup and55/120 recovery.",
+    "Actual production and independent named-Agent acceptance."
+  ],
+  "review": {
+    "blockingFindings": [],
+    "kind": "independent offline evidence audit",
+    "reviewerConnectedNetwork": false,
+    "reviewerRanProgramsOrTests": false
+  },
+  "schemaVersion": 1,
+  "settingsSealed": false,
+  "sourceBindings": {
+    "archiveSha256": "cb953bc39499a06e7028d11e0cd89e4c407cb3f15658d728f6d4706cc76ab2a3",
+    "collectorSha256": "8553969ca0da87ac21d40827a96e898d08b121f7d350fbab2a7c5a01d4044986",
+    "packetSha256": "bc9fd0756d6515494c10b24259a985879afe9a6b924a5105bea583978719050b",
+    "receiverSha256": "f89524ea738f6aacdadaee7e3e3191d50d5f95af246afbcabcd64f37d6fd8d45",
+    "sharedRuntimeChanged": false
+  },
+  "stage": "successful-inactive-candidate-actual-readonly-revalidation",
+  "status": "readonly-materials-and-capacity-input-validation-passed-no-publication"
+}
