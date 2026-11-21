@@ -1,0 +1,60 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsReadOrChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "newIndependentReviewCompleted": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "change": {
+    "bothHistoricalBodiesPreservedSeparatelyWithoutRewriting": true,
+    "currentStatusAddedBeforeHistoricalSnapshots": true,
+    "document": "docs/MUSE_DOTS_INTEGRATION.zh-CN.md",
+    "githubBaseBlobSha": "37114403d57ce666f5045585c311957ba1661deb",
+    "githubUploadUsesFetchedRemoteBase": true,
+    "localAfterSha256": "9b5646e222562e16fc83fb58a78b06315256ef8008399a5606d48dc90278bcba",
+    "localAndRemoteHistoricalBodiesDiffer": true,
+    "localBeforeSha256": "3c0462b61c5a14ebcb5f88ed0bf19dc65a0ce008e6f2acebddc40851304e9240",
+    "localPreservedHistorySha256": "75276e474ce61327a6fda1ee8b652a1fc90614910768328e84f02ef62ef2d7a5",
+    "museSuhuaTreatedAsNewIndependentObject": true,
+    "noNewVendorApiOrAccountCapabilityClaimed": true,
+    "oldMuseIdentityAndGrantsNotInherited": true,
+    "quietNativeDestinationRequiredBeforeNewXuanjiPilot": true,
+    "remoteBeforeSha256": "41e988b1f230b4c59b06a87e56779560290705a2d2fba3d452b02a0b5e03dec5",
+    "remotePreservedHistorySha256": "3b1863347d8156a44ab2550f427610c0245d0ba92484dbb0d1b0a1e47d0c2a2b",
+    "remoteUploadSha256": "b8efa2047e034c8708464e0363c06b49ae6fed8eaa0876c6a31a64a82f0b6e32",
+    "sharedNewPrefixSha256": "cc231710e6968c135be30d92f0f48107f09fcc327d8f639986dffe96185ca8dc",
+    "unknownKeyRequirementExplicit": true
+  },
+  "date": "2026-11-21",
+  "localAuditPreparationNotes": [
+    "Initial static audit used PUBLIC_HTML instead of recorded INDEX_HTML and stopped before documentation mutation; corrected to the actual recorded literal name, then completed the 66-file audit."
+  ],
+  "remainingDeliveryGates": [
+    "Fresh authorized native isolation validation; pending question is unanswered.",
+    "Production-bound candidate, current preflight, compatibility, consistent backup and separately approved maintenance.",
+    "Human OIDC and bilingual UI/help production verification, strict bounded real research.",
+    "Actual mixed-provider/multi-user/device acceptance within separately authorized budgets.",
+    "Native quiet Xuanji destination feasibility and independent Suhua connector/computer/result acceptance."
+  ],
+  "schemaVersion": 1,
+  "status": "documentation-guidance-corrected-production-delivery-incomplete",
+  "verification": {
+    "brokenLinks": 0,
+    "currentEmbeddedLiteralsReadByAstWithoutExecution": 3,
+    "currentProductFilesMatchRecordedManifest": 66,
+    "documentationOnlyNoBusinessCodeChanges": true,
+    "frozenBilingualHelpBytesUnchanged": true,
+    "historical66FileManifestSha256": "c0ca08d6f03e1e6af3b46259a031239a24c6c89c8f5a4e22102ea8208f9b4c15",
+    "newRelativeLinksChecked": 4,
+    "productRuntimeGenerated": false,
+    "productTestsRepeated": false,
+    "unrelatedExistingContextAndResearchEditsPreserved": true
+  }
+}
