@@ -1,0 +1,94 @@
+{
+  "actions": {
+    "credentialChanges": false,
+    "dnsChanges": false,
+    "existingServicesStartedOrStopped": false,
+    "externalAgentCalls": 0,
+    "grantChanges": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "portChanges": false,
+    "productCodeChanges": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false
+  },
+  "date": "2026-11-21",
+  "inputs": {
+    "freshnessReset": false,
+    "indexSha256": "ecfe23e369ac8dcb64c53c91a112086112d86f6bfd315e85e2d5cff78ede47b1",
+    "legacyPrivateInputsReused": false,
+    "observedAtMsUnchanged": 1795219870753,
+    "privateBodiesUploaded": false,
+    "privateMaterials": 5
+  },
+  "limits": [
+    "Local focused regressions are not full product or production acceptance.",
+    "90 seconds bounds the replay child only, not package build/final disk writes; timeout branch retains partial output counts only.",
+    "The retained first-failure latest pointer is not final evidence; the final tool terminal and per-run index select the accepted artifact.",
+    "Trusted-source audit hooks are not a kernel security sandbox for arbitrary code.",
+    "Synthetic CLI/kernel-context/capsule observations cannot prove native identity, resource limits, actual boots or compatibility.",
+    "A concrete bounded launcher/observer must consume these new digests; old hard-coded bridge input bindings are not current.",
+    "Actual capacity/source/runtime/dependency/configuration/authority and proof freshness require future approved native validation."
+  ],
+  "nativeCompatibilityVerified": false,
+  "packages": {
+    "catalogSha256": "abd3a0c00e5586713375039e4d1738476d27fcdfb21d6a6802ea33b009e087a6",
+    "hostSupportDigestRebindings": 4,
+    "originalPhysicalRootMappingPreserved": true,
+    "originalReferenceAdditionsPreserved": 7,
+    "originalReferenceSafetyChangesPreserved": 7,
+    "rootPayloadFiles": 156,
+    "rootPayloadSha256": "67343f896c63abba6752292d4e40297c361789c226e3a11cf0ab966036c7c8b6",
+    "workerArchiveSha256": "ab47222f1126294aa136156504e21dc43d50d0767f0e13210acaf767ca3517a5",
+    "workerFiles": 200,
+    "workerSourceChangedByInputBinding": false
+  },
+  "productionDeliveryComplete": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "retainedFailure": {
+    "failedArtifactPreserved": true,
+    "firstReplayAccepted": false,
+    "firstReplayFailure": "old synthetic fixture used shared cgroup rather than declared per-task slice",
+    "workerGroupGuardChanged": false
+  },
+  "review": {
+    "blockingFindings": [],
+    "kind": "independent static review; no reviewer execution, writes or network"
+  },
+  "schemaVersion": 1,
+  "settingsSealed": false,
+  "sourceBindings": {
+    "leaf": "f14960ec72a6f271362abc2e560f9484af2b4ab8b6ad81bb061c9de99afc5608",
+    "replay": "845108517c60bd0e14378adbd27f61bc2a3d1a1b14e304d7d98211cf69504bb1",
+    "test_leaf": "eb4de29b68a67c060e1295b930613e721dd1d13fabe0954cb85297f169955161"
+  },
+  "stage": "genuine-inputs-retained-cli-and-root-local-integration",
+  "status": "local-saved-replay-passed-native-runtime-not-verified",
+  "verification": {
+    "actualApplicationBoots": 0,
+    "buildAndChildShareCapturedSources": true,
+    "businessDatabaseQueries": 0,
+    "childSourceDigestBoundOutsideInputPacket": true,
+    "closedSourceFilesRead": 29,
+    "declaredAggregateSliceUsedBySyntheticFixture": true,
+    "focusedTestsFailed": 0,
+    "focusedTestsPassed": 17,
+    "invalidOrOver90SecondReplayChildBudgetRefused": true,
+    "originalFullSyntheticProofValidatorUsed": true,
+    "originalRawInputReconstructionCalled": true,
+    "readNamesSha256": "7f1a6b72ca598e740a0f8a81c900208062aaaf80cb9ea7797a532ce4a0492c70",
+    "replayChildSeconds": 3.9193239000160247,
+    "replayStderrBytes": 0,
+    "replayToolExitCode": 0,
+    "replayToolWallSeconds": 5.8180612,
+    "retainedCLIControllerReplayed": true,
+    "rootPayloadRevalidatedAgainstOriginalBuilderBeforeSupportCompile": true,
+    "selfConsistentRootTamperingRejected": true,
+    "syntheticCapsuleProtocolPassed": true,
+    "syntheticContextAndLifecycleOnly": true,
+    "testToolExitCode": 0,
+    "testToolWallSeconds": 7.2509544
+  }
+}
