@@ -1,0 +1,219 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsOrPublicPortsChanged": false,
+    "externalAgentCalls": 0,
+    "frozenOriginalsOverwritten": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "productionServiceChanges": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "spentRemoteAuthorityRenewed": false,
+    "systemBusConnected": false
+  },
+  "changes": {
+    "arbitraryExceptionBodiesExcluded": true,
+    "boundedKnownErrorCodeTranslation": true,
+    "carrierMembers": 170,
+    "exactBoundRoles": [
+      "parent",
+      "host",
+      "control",
+      "prepare",
+      "observe",
+      "install"
+    ],
+    "finalBoundInputs": 13,
+    "finalSavedFiles": 15,
+    "freshnessReset": false,
+    "genuineHostWorkerRootCounts": [
+      200,
+      156,
+      161
+    ],
+    "observerAssets": 6,
+    "observerBundleMembers": 7,
+    "originalAdvancedEntrySha256": "6ddf18cee050dee55562df299232c508401298fd9024fda77091335c0d60bf7b",
+    "originalCaptureTimeUnchangedMs": 1795219870753,
+    "originalLiveIdentityAndFdOwnershipChecksRetained": true,
+    "originalProofValidatorSha256": "e8660d7a97ba5580daeae702c6957a3a79f77fd7697374507ce5665a086807f7",
+    "originalRawReaderSha256": "0ec80238ee5d4689326274c760d945222e21f6ac6c7c5c2f8ae314c4d7439595",
+    "productFilesPreserved": 66,
+    "repeatedExactKernelDeletedMarkerAndAliasAbsence": true,
+    "sharedHeldCgroupRemovalHelper": true
+  },
+  "date": "2026-11-21",
+  "independentReview": {
+    "closureByImplementerWithFinalRegressions": true,
+    "fix": "selected existing proof-budget driver; two deterministic RED-to-GREEN boundary cases",
+    "issue": "full fixed remote phase could start on a shortened local stage",
+    "oneP2Found": true,
+    "receiptSha256": "fef7ab8aae9eb3de632b388dfe2650a96f2ed97e575cc3a02d833292eab2ea0a",
+    "remainingBlockingFindingsAfterImplementerFix": 0,
+    "secondReviewClaimed": false,
+    "selectedOriginalDriverSha256": "6d411d3f86a28f5d546793741466e459fe373fcdfe93c44a3b24ee6d41ae6200"
+  },
+  "nativeCompatibilityVerified": false,
+  "nativeRuntimeVerified": false,
+  "nextNativeProposal": {
+    "additionalLowPrioritySshManagementOverhead": true,
+    "aggregateWorkload": {
+      "memoryMiB": 192,
+      "singleCoreCpuPercent": 20,
+      "tasks": 32
+    },
+    "approved": false,
+    "automaticRetry": false,
+    "basicPreflightNotFullDependencyOrReleaseApproval": true,
+    "combinedWorkloadObserver": {
+      "memoryMiB": 288,
+      "singleCoreCpuPercent": 30,
+      "tasks": 48
+    },
+    "crossDatabaseApplicationConsistencyClaimed": false,
+    "failureStopsFurtherPhases": true,
+    "independentObserver": {
+      "memoryMiB": 96,
+      "runtimeSeconds": 540,
+      "singleCoreCpuPercent": 10,
+      "tasks": 16
+    },
+    "install": {
+      "memoryMiB": 192,
+      "runtimeSeconds": 90,
+      "singleCoreCpuPercent": 20,
+      "tasks": 32
+    },
+    "localHardSeconds": 950,
+    "maximumSshAttempts": 1,
+    "maximumTemporaryUnitObjects": 6,
+    "phaseCapsSeconds": {
+      "preflight": 20,
+      "proofReader": 25,
+      "receiver": 60,
+      "setupManager": 140,
+      "watch": 620
+    },
+    "privateUnitNetworks": true,
+    "productionPublicationAllowed": false,
+    "sourceDatabasesReadonlyPerDatabaseCopiesOnly": true,
+    "zeroSwap": true
+  },
+  "prepared": {
+    "approvalReferenceCreated": false,
+    "bindingSha256": "7cf1b59df726afa9ac66d3bd15bb2319f935a6f6f13a4df67808fc4b1c254574",
+    "boundFiles": 13,
+    "bundleSha256": "13adefc70520fc92410fac87ae2f06226090167f5d233655c6d0952a75ba3e4d",
+    "carrierMembers": 170,
+    "files": 15,
+    "fullPhaseBudgetRequired": true,
+    "olderPreparedBundleSupersededAndPreserved": true,
+    "original950SecondLimitRetained": true,
+    "packetSha256": "2751617b7b837feaeea3b47743f8c052d6db285b92a3b0de066f91a433120a10",
+    "privateAclExpectedPrincipalsOnly": true,
+    "privateAclFilesChecked": 15,
+    "privateSourcesOrMaterialsUploaded": false,
+    "receiptSha256": "9472c67867b59248082194231dd9a9cf20f8842db0d6fc51a84bf713feb509d7",
+    "sourceInputs": 15,
+    "userApproved": false
+  },
+  "productionPublished": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "remaining": [
+    "Fresh explicit scope and Linux native validation",
+    "Current source/config/dependency and compatibility-proof gates",
+    "Consistent production backup and controlled maintenance",
+    "Live bilingual/multi-user/model/research acceptance",
+    "Quiet external-Agent and device integration acceptance",
+    "Full production delivery completion audit"
+  ],
+  "schemaVersion": 1,
+  "scope": "genuine-outer-proof-budget-local-inactive-integration",
+  "sourceHashes": {
+    "candidate.py": "f5ef9815747ae6ecd364f03a637a0c9dd859d6adbb8b423b3205cb1296c89093",
+    "proof_route.py": "0234d7e9ae8322e3c00c69a46d20235d07dec58c731556b5c96416578702cdf2",
+    "run_tests.py": "7a935458aa8e0f87b14330461014acd544376bced7d62b58c171e93300e1b189",
+    "test_carrier.py": "9cc8c972439fcb3076f670010ce825dd0c6700e045516fc0db76b123cf6bab87",
+    "test_closure.py": "ed555c3fbbe9fe4500309d30d8be39fe16fa46c846ef87d2a2e4ea170c21fd82",
+    "test_inactive.py": "142a7fcd5ba8abc7c15a92ab6de026727f264c9b7c5bc8c889f221ec112d23eb",
+    "test_outer.py": "45b254d2631bef748acd3ba70eec3b3afcef05cf707512eae2027b2b8980479e",
+    "test_phase_budget.py": "a201cb172e507ab85e7da137613c520de52311e83a4710b18763eaa595e49557",
+    "test_proof.py": "98b5a5b1485182efd31d3fc2cc46159fad146f99ad33ce212cb06173598cb33a"
+  },
+  "status": "local-integration-tested-native-scope-awaits-fresh-approval",
+  "verification": {
+    "actualHostConstructorProtectedReads": 12,
+    "advancedCapturedEntryNegative": {
+      "actualExitCode": 1,
+      "all15PreparedFileDigestsRechecked": true,
+      "attemptFileCreated": false,
+      "missingAuthorizationRefusedBeforeSdk": true,
+      "receiptSha256": "9c0d47b05c973daa17275cbcea0a3820a3d10100e48856e5a6007c3d51a0960e",
+      "stderrBytes": 0
+    },
+    "automaticRetry": false,
+    "correlationMetadataSyntheticOnly": true,
+    "elapsedSeconds": 74.8761097000679,
+    "errors": 0,
+    "failures": 0,
+    "missingProofRefused": true,
+    "nestedCountsNotIndependentNativeAcceptance": true,
+    "nestedUnchangedAssertions": {
+      "hostRemoval": 5,
+      "originalScope": 12,
+      "originalStage": 10,
+      "sharedCliRemoval": 17
+    },
+    "outerTests": 43,
+    "phases": [
+      {
+        "actualExitCode": 0,
+        "childTimeoutSeconds": 90,
+        "elapsedSeconds": 2.5962409999920055,
+        "file": "test_outer.py",
+        "tests": 7
+      },
+      {
+        "actualExitCode": 0,
+        "childTimeoutSeconds": 90,
+        "elapsedSeconds": 22.136932399938814,
+        "file": "test_closure.py",
+        "tests": 11
+      },
+      {
+        "actualExitCode": 0,
+        "childTimeoutSeconds": 90,
+        "elapsedSeconds": 9.322563600027934,
+        "file": "test_carrier.py",
+        "tests": 9
+      },
+      {
+        "actualExitCode": 0,
+        "childTimeoutSeconds": 90,
+        "elapsedSeconds": 15.088531899964437,
+        "file": "test_inactive.py",
+        "tests": 6
+      },
+      {
+        "actualExitCode": 0,
+        "childTimeoutSeconds": 90,
+        "elapsedSeconds": 16.24163810000755,
+        "file": "test_proof.py",
+        "tests": 8
+      },
+      {
+        "actualExitCode": 0,
+        "childTimeoutSeconds": 90,
+        "elapsedSeconds": 9.481271900003776,
+        "file": "test_phase_budget.py",
+        "tests": 2
+      }
+    ],
+    "receiptSha256": "1042a26af28931bd58d0a1b8c3ea6104b442b386996cace3c07b4576b29260b8",
+    "skipped": 0,
+    "sourceHashesUnchanged": true
+  }
+}
