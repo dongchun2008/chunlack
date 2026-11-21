@@ -1,0 +1,98 @@
+{
+  "actions": {
+    "credentialChanges": false,
+    "dnsChanges": false,
+    "existingServicesStartedOrStopped": false,
+    "externalAgentCalls": 0,
+    "grantChanges": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "portChanges": false,
+    "productCodeChanges": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanges": false
+  },
+  "date": "2026-11-21",
+  "genuineInputs": {
+    "failedA4PlanningReplayInvoked": false,
+    "freshnessReset": false,
+    "indexSha256": "ecfe23e369ac8dcb64c53c91a112086112d86f6bfd315e85e2d5cff78ede47b1",
+    "legacyInputLoaderInvoked": false,
+    "observationAtMsUnchanged": 1795219870753,
+    "originalInputValidatorCalled": true,
+    "privateBodiesPublished": false,
+    "privateMaterialFiles": 5,
+    "requestChangedKeys": []
+  },
+  "limits": [
+    "Focused local tests are not the complete product regression or live acceptance.",
+    "Trusted-source audit instrumentation is not a kernel sandbox for arbitrary code.",
+    "Synthetic manager/terminal fixtures do not create native compatibility proof.",
+    "The193-file source package still needs the existing200-file CLI leaf and root/catalog binding integration.",
+    "Capacity, source, dependencies, configuration, authority and native lifecycle must be freshly verified before native boot.",
+    "No proof, sealed settings, backup, maintenance or publication was created."
+  ],
+  "nativeCompatibilityVerified": false,
+  "nextExistingLeaf": {
+    "addedFiles": 7,
+    "existingSafetyChangesToPreserve": 7,
+    "integratedThisStage": false,
+    "newNativePermissionCreated": false,
+    "referenceArchiveSha256": "4b04c316bda891f9e3a0d9dd34253323514555f7168f8e0b4d142ef1dd733257",
+    "referenceFiles": 200,
+    "removedFiles": 0
+  },
+  "package": {
+    "archiveSha256": "8031264bc25493ab8a4994a0d361afe7da5f8cc5e2d5cc44908fa690f0e2c3b3",
+    "candidateProductFiles": 66,
+    "catalogSha256": "a74b7f697e8aead4a36e1fa6e5bfdf9834144aa5cc3b49109446f5657d72e656",
+    "deterministicPackingChecked": true,
+    "files": 193,
+    "nativeLaunchReady": false,
+    "original193HierarchyAndOwnerGuardsPreserved": true,
+    "previousProductFiles": 57
+  },
+  "productionDeliveryComplete": false,
+  "productionReady": false,
+  "proofCreated": false,
+  "review": {
+    "actualInitialSourceReplacementObserved": false,
+    "blockingFindings": [],
+    "initialP2": "path-based second reads were not bound at execution and result hashes were not checked",
+    "initialWeakerReplayPreserved": true,
+    "kind": "independent static review; no reviewer execution/network/writes",
+    "pathAliasAndPreciseRefusalCodeRegression": true,
+    "sourceBindingP2Resolved": true,
+    "threeNewRegressionsRedThenGreen": true
+  },
+  "schemaVersion": 1,
+  "settingsSealed": false,
+  "sourceBindings": {
+    "adapter.py": "9c21d84101909cd7e51923739e3c919d5f9aa11bead548233b826a821ccd80f1",
+    "compare_leaf.py": "ab96b1db376c48ef53bed7d13574af3425a63803027af92600af5be02549f309",
+    "test_adapter.py": "496bc6f16f2351ee7964ada2784cd772e4e4e0eec3eff72186eaf7923725b2a0",
+    "verify_local.py": "bb417a2fcaa580b74eeb9b5962c55f223ca62ff20acad5e737f9c3498e574470"
+  },
+  "stage": "genuine-captured-copy-inputs-local-closed-replay",
+  "status": "local-source-bound-replay-passed-not-native-ready",
+  "verification": {
+    "actualApplicationBoots": 0,
+    "bundleBytesPinnedBeforeCompile": true,
+    "businessDatabaseQueries": 0,
+    "closedReplayExitCode": 0,
+    "closedReplaySeconds": 2.416904399986379,
+    "closedReplayStderrBytes": 0,
+    "closedSourceFilesRead": 23,
+    "focusedTestsFailed": 0,
+    "focusedTestsPassed": 15,
+    "originalGuardDeniedWriteProcessDatabaseLibraryNetwork": true,
+    "replyArchiveCatalogAndFileCountChecked": true,
+    "sourceReadsNameSha256": "09fc48b920c81ec94f0bd29224a54c7647b8c4ffed92443038ae4e8782911a4e",
+    "syntheticTerminalAndManagerOnly": true,
+    "testToolExitCode": 0,
+    "testToolWallSeconds": 8.2615479,
+    "transitiveCompileDriftRejected": true,
+    "verifierBytesBoundAtExecution": true
+  }
+}
