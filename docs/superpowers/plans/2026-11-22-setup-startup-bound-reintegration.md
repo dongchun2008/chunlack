@@ -23,3 +23,13 @@ The new local candidate remains unapproved and unattempted. A separate random-ta
 ## Next key decision
 
 No SSH or Linux unit was used during this work. The previous native grant is consumed. After local readiness, request a fresh bounded native window using the same one-SSH/max-six-unit/950-second limits, resource and identity checks, isolated network, copies/synthetic model behavior, fail-stop/no-retry and same-connection failure evidence. No publication or existing-service, credential, business authorization, DNS, public-port or Relay change is included. No new independent review pass is claimed. Neither this local suite nor restoration of an older tested path establishes boot-marker effectiveness, actual native success or full production delivery.
+
+## Later approved native execution: stopped at command-size admission
+
+The user subsequently approved one new native window. It ended once with exit 1 after 6.0680758 seconds at the unchanged `ssh_command_size` guard. The SSH allowance is consumed 1/1; no retry occurred. Before/receiver/after phases completed, the setup transport sent zero bytes and had no manager reply, and same-connection evidence observed the fixed install unit absent, with zero sampled processes. Four protected service baselines were identical; transport and SDK cleanup were confirmed. No publication or existing-service change occurred. See [the fixed native result](../../verification/2026-11-22-startup-bound-native-command-size-failure.json).
+
+Offline use of the actual renderer/config reproduced a 67,834-byte bootstrap exceeding its 65,536-byte limit. This is a proven command-admission failure, not evidence about the restored manager's runtime or the earlier native startup failure.
+
+An in-memory formatting feasibility check retained AST, executable bytecode, constants, exception tables, instruction line ranges, class first-line metadata and docstrings while reducing indentation and removing comments. Diagnostic column positions changed. The actual frozen renderer accepted this source and maximum legal metadata for the setup-manager config. This feasibility check is not a new regression suite, integrated carrier or native acceptance. Dropping non-significant newlines was rejected because it changed Python 3.13 class metadata; comment removal alone did not fit. No original source/package was overwritten and the 65,536-byte guard was not raised or bypassed.
+
+Next local phase: implement the exact formatting operation with boundary regressions, bind it into a new candidate, and enforce real and maximum-metadata encoded-size admission before any future SSH. Check all affected phase commands and preserve prior semantics/budgets; no new native run is authorized by these notes.
