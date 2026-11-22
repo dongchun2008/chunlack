@@ -1,0 +1,144 @@
+{
+  "approvedWindow": {
+    "automaticRetry": false,
+    "cpuWeight": 10,
+    "maximumLocalSeconds": 950,
+    "maximumSshAttempts": 1,
+    "maximumUnitObjects": 6,
+    "nice": 10,
+    "observerCpuPercentOfOneCore": 10,
+    "observerMemoryMiB": 96,
+    "observerTasksMax": 16,
+    "privateNetworkRequired": true,
+    "productionAllowed": false,
+    "swapAllowed": false,
+    "workGroupCpuPercentOfOneCore": 20,
+    "workGroupMemoryMiB": 192,
+    "workGroupTasksMax": 32
+  },
+  "bindings": {
+    "coordinatorSha256": "76eb61e9f022901b17c1d4571bb80b99a0ca72ad360cfddafc283409b14815ee",
+    "driverSha256": "08e12be21a8dc19df8d8e991649a8e76f96edbec088c4728a9715437a7bdc2b1",
+    "evidenceReplySha256": "5e89ea8c1e59ef9636a3bb92701e90a9676cabdcb77ca20cbdd4d689ebbc2eba",
+    "lengthReproductionReceiptSha256": "61f7d6733feda3a7755f04e6fc2ee1df7ad30447d461519940504b353646e998",
+    "outcomeReceiptSha256": "82b2e16100792e60e740de4c83b11e95d046a5863a8a4be681d9d4077ff31109",
+    "terminalReceiptSha256": "d19a84ec3bea4ccc53c5b199ac1eaff4888899491451609a5c7fb1517e288494"
+  },
+  "boundaries": {
+    "automaticRetry": false,
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "productionPublished": false,
+    "publicPortsChanged": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "date": "2026-11-22",
+  "execution": {
+    "cleanupErrors": [],
+    "completedPhases": [
+      "after",
+      "before",
+      "receiver"
+    ],
+    "elapsedSeconds": 6.068075800081715,
+    "emptyCgroupObserved": true,
+    "fixedInstallUnitObservedAbsent": true,
+    "managerReceiptAvailable": false,
+    "managerStderrBytes": 0,
+    "managerStdoutBytes": 0,
+    "managerTransportBytesSent": 0,
+    "ownedProcessExitCode": 1,
+    "postFailureState": {
+      "ActiveState": "inactive",
+      "ControlPID": "0",
+      "ExecMainCode": "0",
+      "ExecMainStatus": "0",
+      "LoadState": "not-found",
+      "MainPID": "0",
+      "Result": "success",
+      "SubState": "dead"
+    },
+    "primaryError": {
+      "code": "ssh_command_size",
+      "type": "ValueError"
+    },
+    "protectedFourServicesUnchanged": true,
+    "sampledPidCount": 0,
+    "sdkDiagnostics": {
+      "classifiedHarmless": false,
+      "events": [
+        {
+          "level": 40,
+          "socket10038Observed": true
+        }
+      ],
+      "omitted": 0,
+      "rawMessagesRecorded": false
+    },
+    "sdkThreadExitConfirmed": true,
+    "sharedParentChildDeadlineVerified": true,
+    "sshAllowanceConsumed": 1,
+    "sshAllowanceMaximum": 1,
+    "totalCreatedUnitObjectCountIndependentlyVerified": false,
+    "transportCleanupConfirmed": true
+  },
+  "limitations": [
+    "Neither restored startup handling nor boot-marker behavior was exercised by a manager that never produced an execution receipt.",
+    "No compatibility, temporary switching, rollback or production acceptance was obtained.",
+    "No new independent review pass is claimed; all raw evidence and identities remain private."
+  ],
+  "nextLocalAction": "Evaluate AST-identical formatting reduction and mandatory actual/worst-case renderer-size admission before proposing any new native window; retain the 65536-byte limit and original budgets.",
+  "offlineFormattingFeasibility": {
+    "actualCommandBytesIncludingShell": 65085,
+    "actualUnmodifiedRendererAccepted": true,
+    "astIdentical": true,
+    "bytecodeConstantsAndExceptionTablesIdentical": true,
+    "carrierIntegrated": false,
+    "classFirstLineMetadataRetained": true,
+    "columnPositionsChangedOnly": true,
+    "docstringsRetained": true,
+    "formattedSourceBytes": 34943,
+    "formattedSourceSha256": "2f4801fce797a306d20a5df96881ebcfc6229459d43cd3ad14383b32ba99e05f",
+    "instructionLineRangesIdentical": true,
+    "maximumLegalMetadataRendererAccepted": true,
+    "maximumMetadataCommandBytesIncludingShell": 65241,
+    "nativeVerified": false,
+    "nonSignificantNewlinesRetained": true,
+    "oldSourceBytes": 37077,
+    "originalBootstrapLimitUnchanged": 65536,
+    "receiptSha256": "af2c41bf3c5197ed0ddd87cde6f41d80525c4c8f01ef5b0c84347174bcdaabc4",
+    "regressionSuite": false,
+    "sourceWrittenToFrozenOrUsedPackage": false
+  },
+  "offlineRootCauseReproduction": {
+    "actualFrozenRendererUsed": true,
+    "bootstrapBytes": 67834,
+    "configBytes": 13563,
+    "guardUnmodified": true,
+    "managerSourceBytes": 37077,
+    "maximumBootstrapBytes": 65536,
+    "newSshAttempts": 0
+  },
+  "sameConnectionFailureEvidence": {
+    "accepted": true,
+    "additionalSshConnections": 0,
+    "bothCapturesEmpty": true,
+    "capturesComplete": true,
+    "combinedBytes": 2164,
+    "generationStable": true,
+    "maximumCombinedBytes": 65536,
+    "maximumRemoteSeconds": 20,
+    "newLinuxUnits": 0,
+    "offlineExactReplayPassed": true,
+    "remoteSeconds": 0.07281866017729044,
+    "remoteWrites": 0,
+    "unitActions": 0
+  },
+  "schemaVersion": 1,
+  "status": "native-window-stopped-at-original-ssh-command-size-gate-manager-not-executed"
+}
