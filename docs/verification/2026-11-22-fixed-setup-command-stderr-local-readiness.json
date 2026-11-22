@@ -1,0 +1,104 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsReadOrChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "privateRawBodiesOrCorrelationIdentitiesUploaded": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "date": "2026-11-22",
+  "derivation": {
+    "original35SecondTotalAndCloseBudgetsRetained": true,
+    "otherInspectorMethodsAstUnchanged": true,
+    "pendingExecutionDirectorySeparateFromNegativeTestArtifacts": true,
+    "privateImplementationNotUploaded": true,
+    "readerTopLevelChanges": [
+      "validate_unit",
+      "Inspector.logs",
+      "collect",
+      "main scope literal"
+    ],
+    "wrapperMainAstUnchangedExceptApprovedReferenceExpression": true,
+    "wrapperPrepareScopeUpdated": true
+  },
+  "limitations": [
+    "These 34 scoped local tests are simulations and local admission checks, not Linux native acceptance or full product regression.",
+    "No command stderr has been read from VPS in this stage; the actual nonzero command cause is still unknown.",
+    "The last approved one-shot native window remains consumed; a fresh readonly grant is required.",
+    "No new independent review pass is claimed."
+  ],
+  "nativeFailureRecord": "docs/verification/2026-11-22-native-setup-failure-same-connection-evidence.json",
+  "readerPolicy": {
+    "allOwnedCaptureDescriptorsAttemptedOnFailure": true,
+    "combinedOutputAndSingleChannelGuardsRetained": true,
+    "exactKnownGenerationAndStartBound": true,
+    "failedPostChecksWithholdAllRawCaptures": true,
+    "localSeconds": 35,
+    "lowPriorityNice": 10,
+    "maximumBytesPerFile": 2048,
+    "maximumCombinedReplyBytes": 65536,
+    "maximumFiles": 12,
+    "maximumNewSshAttempts": 1,
+    "maximumNewUnitObjects": 0,
+    "maximumRawCaptureBytes": 24576,
+    "missingAndTooLargeExplicit": true,
+    "noReconnectOrAutomaticRetry": true,
+    "noStartStopOrReset": true,
+    "noSymlinksAndOrdinarySingleLink0600RootFilesOnly": true,
+    "onlyFixedCommandStderr": true,
+    "primaryAndPostErrorsSeparated": true,
+    "remoteSeconds": 20,
+    "terminalEmptyScopeRequired": true,
+    "transferCaptureAndCommandDirectoryInodesBound": true,
+    "unitGroupAndFourServiceChecksBeforeAndAfterLogs": true
+  },
+  "retainedRedEvidence": [
+    "Wrong saved generation was accepted by the older non-generation-pinned collector; new fixed-anchor test failed before adaptation, then passed.",
+    "Older wrapper rejected the new proposal contract before reaching its pending-consent guard; adapted scope test now passes."
+  ],
+  "review": {
+    "authorReviewNotes": [
+      "Keep the future execution directory separate from actual false-gate test terminal output; the unused candidate has only four fixed inputs."
+    ],
+    "newIndependentReviewCompleted": false
+  },
+  "schemaVersion": 1,
+  "sourceAnalysis": {
+    "actualFailingIndexKnown": false,
+    "invokeMethodSites": [
+      "baseline",
+      "live",
+      "show"
+    ],
+    "possibleCommandIndices": {
+      "maximum": 11,
+      "minimum": 0
+    },
+    "processSourceSha256": "35489bcf3e648475a5b7dc54da9e55fcad6f2da9157e6f4b774da8b1128ea170",
+    "rootCauseProven": false,
+    "setupSourceSha256": "698dd2f5811f7df3426f6857602c4d9c5901d6749ad096028525fcba99b0a104"
+  },
+  "status": "local-fixed-command-stderr-reader-ready-new-ssh-not-authorized",
+  "verification": {
+    "accepted": true,
+    "approvalReferenceCreated": false,
+    "attemptCreated": false,
+    "currentSourceDigestsRechecked": true,
+    "pendingConsentRefusedAtActualUnusedPath": true,
+    "readerReceiptSha256": "4dc8b6ca782cca0bcf5ea5bf4350b4ae929530a959b5c2560a132df4c35fd47f",
+    "readerSourceSha256": "de83df93bed8444bb03eb5cc5c798931c7b766b068ed3847d34e788b6ff72789",
+    "readerTests": 22,
+    "scopedTests": 34,
+    "terminalCreated": false,
+    "userApproved": false,
+    "wrapperReceiptSha256": "27b61b01dcfc5ea0dd6723bb6d234ff2d168435524e5126bc2b2d55f77fb44b8",
+    "wrapperSourceSha256": "919fda691877e01bc52b88637b6c9e3215fb9a6f8c3b6a786eb530c2f6f1cbfc",
+    "wrapperTests": 12
+  }
+}
