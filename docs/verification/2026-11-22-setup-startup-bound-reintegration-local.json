@@ -1,0 +1,114 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsReadOrChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "oldFrozenAndUsedArtifactsOverwritten": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "change": {
+    "baseManagerSha256": "a3c2a110501c85049df526314d87386dab3582e29756980a4314a77821a9d481",
+    "candidateAdapterSha256": "6b876b3f375f5849b7ae44cd017b34adf5ff5e0bc3dde4703d9911e2dbe83ef1",
+    "carrierAdapterSha256": "9afae13c18733e81a625748325118fdec791e23b8abb8e8449e8d64c000a7db2",
+    "commandLimitsUnchanged": true,
+    "deriveFromCurrentAbsenceFix": true,
+    "diagnosticErrorDoesNotMaskPrimaryOrCleanup": true,
+    "diagnosticsUseExistingStateReadsOnly": true,
+    "driverPacketBusinessAndProofSourcesExactAgainstPreviousAcceptedLocalArtifact": true,
+    "existingStartupSourceSha256": "8c7b5aec2d9eb89dacbc5349364734fc2ba88a19af6a6a4854f62004349153c3",
+    "fullOlderCapabilityDiagnosticManagerCopiedBack": false,
+    "liveIdentityCapabilityResourceAndNormalExitChecksRetained": true,
+    "managerEnvelopeSeconds": 120,
+    "originalCleanupReservePreserved": true,
+    "reuseExistingPinnedStartupMethods": [
+      "same_startup",
+      "observe_wait",
+      "live",
+      "wait"
+    ],
+    "startupGenerationDriftRefused": true,
+    "startupSeconds": 5,
+    "terminalBeforeLiveStillRejected": true,
+    "twoBootMarkerProfilesRetained": true,
+    "unknownStatesRedacted": true,
+    "workSeconds": 105
+  },
+  "date": "2026-11-22",
+  "freshInactiveCandidate": {
+    "allSavedHashesRechecked": true,
+    "approvalReferenceCreated": false,
+    "attemptCreated": false,
+    "bindingSha256": "ceb7f7aecb3bdcfa033c2c6e4bc74afd9e5a889f6247ef6b62d2aab5a776b353",
+    "boundInputs": 13,
+    "driverSha256": "08e12be21a8dc19df8d8e991649a8e76f96edbec088c4728a9715437a7bdc2b1",
+    "files": 15,
+    "freshRandomCorrelation": true,
+    "nativePermissionGranted": false,
+    "packetMembers": 170,
+    "packetSha256": "4471eaffe2bd63fb6c7f771f65533fb5ba6c770dae7b29c4444aeae2d664981f",
+    "privateAclVerified": true,
+    "prospectiveAdmissionInMemoryOnly": true,
+    "sourceManagerSha256": "a13b0454843f40f62c6b8f3f6ec783c602ba54e002a5f96dc310b7d1f1e71aa6",
+    "userApproved": false
+  },
+  "limitations": [
+    "This reproduces and fixes a local startup-state rejection path; the missing first native observation prevents attributing the prior native failure to it.",
+    "No new Linux mount, capability, compatibility, success-switch, rollback or production acceptance occurred.",
+    "Prior one-shot SSH grant is consumed; any new native window needs fresh explicit scope.",
+    "Only sanitized records and plan are synchronized; private source, artifacts, identities and raw evidence remain local."
+  ],
+  "plan": "docs/superpowers/plans/2026-11-22-setup-startup-bound-reintegration.md",
+  "relatedNativeFailure": "docs/verification/2026-11-22-two-management-native-setup-failure.json",
+  "retainedFailures": [
+    "Original manager failed the initial activating/start regression.",
+    "Old carrier failed the corrected assertion requiring startup methods in the actual package.",
+    "An initial carrier test used the wrong source dictionary; its error is retained.",
+    "An initial comparison omitted two exact archive-size literal rebindings; final checks use canonical replacement inputs and full bytes."
+  ],
+  "review": {
+    "authorSourceBoundaryInspectionPerformed": true,
+    "newIndependentReviewCompleted": false
+  },
+  "schemaVersion": 1,
+  "status": "bounded-startup-reintegrated-local-51-checks-passed-native-unverified",
+  "verification": {
+    "canonicalExactManagerSourceBytesVerified": true,
+    "childRefusedBeforeSdkOrAttempt": true,
+    "errors": 0,
+    "failures": 0,
+    "fullProductRegressionRepeated": false,
+    "groups": [
+      {
+        "exitCode": 0,
+        "name": "startup",
+        "receiptSha256": "7cbe62819b13a66038f034814fdb31e9b60bbd103a2af29cb070d456d8bcf71b",
+        "seconds": 21.00748849986121,
+        "tests": 15
+      },
+      {
+        "exitCode": 0,
+        "name": "guards",
+        "receiptSha256": "f3bd00de04eb8bca4143e3e4d40ad6600ac850d2cf131effb0e0ecd7d63e9e8e",
+        "seconds": 66.74048779997975,
+        "tests": 31
+      },
+      {
+        "exitCode": 0,
+        "name": "carrier",
+        "receiptSha256": "d8b5b76452ffd0d7e185abf33c82a91e418d6775fa784273f3a53dcb753970c4",
+        "seconds": 20.660717899911106,
+        "tests": 5
+      }
+    ],
+    "originalFixtureSha256": "52e4a72f02d8a90ec2295478b83020bb213f9cc406635f6e0e0dbfe362c3a66c",
+    "ownedUnapprovedChildExitCode": 1,
+    "scopedLocalTests": 51,
+    "sourceHashesRechecked": true,
+    "wrongBoundManagerSourceRejected": true
+  }
+}
