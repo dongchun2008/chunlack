@@ -1,0 +1,155 @@
+{
+  "authorization": {
+    "automaticRetry": false,
+    "explicitUserApprovalReceived": true,
+    "localTotalLimitSeconds": 35,
+    "maximumBytesPerCapture": 2048,
+    "maximumFixedStderrFiles": 12,
+    "maximumNewUnitObjects": 0,
+    "maximumReplyBytes": 65536,
+    "maximumSshAttempts": 1,
+    "remoteLimitSeconds": 20,
+    "sourceQuestion": "call_0ae63bb8e53b4e1d801b2d0d296ae9a9",
+    "sshAllowanceConsumed": 1
+  },
+  "bindings": {
+    "collectorSha256": "de83df93bed8444bb03eb5cc5c798931c7b766b068ed3847d34e788b6ff72789",
+    "proposalSha256": "578825a2ead6854bf4d9f8b8fcf9f9f686377f3617ebafc592da4b5827ca2651",
+    "stdoutSha256": "1e51a0ad44fe6ab62f6592e45565a817b22688b16a6560aa9127995b06517ed0",
+    "terminalSha256": "516534265b2f77f5884aafa46ac33874d7aa638a30898240a257e3da7e36f516",
+    "wrapperSha256": "4e92bb919be8935d44bf9933c9829f43e475dd21f316fbe5ffea0fccbb8e0af6"
+  },
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsOrPublicPortsChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "privateRawBodiesOrCorrelationIdentitiesUploaded": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "captureMetadata": {
+    "command-0.stderr": {
+      "bytes": 118,
+      "sha256": "5aa1f455d5a9163b8ecbad00f3a5e89a62b2d5414d6150d481692269cbf53caa",
+      "status": "read"
+    },
+    "command-1.stderr": {
+      "status": "missing"
+    },
+    "command-10.stderr": {
+      "status": "missing"
+    },
+    "command-11.stderr": {
+      "status": "missing"
+    },
+    "command-2.stderr": {
+      "status": "missing"
+    },
+    "command-3.stderr": {
+      "status": "missing"
+    },
+    "command-4.stderr": {
+      "status": "missing"
+    },
+    "command-5.stderr": {
+      "status": "missing"
+    },
+    "command-6.stderr": {
+      "status": "missing"
+    },
+    "command-7.stderr": {
+      "status": "missing"
+    },
+    "command-8.stderr": {
+      "status": "missing"
+    },
+    "command-9.stderr": {
+      "status": "missing"
+    }
+  },
+  "date": "2026-11-22",
+  "diagnosis": {
+    "actualFailingCommandIndexConfirmed": 0,
+    "bootMarkerAbsentFromBoundProfile": true,
+    "boundProfileSha256": "40b042eb47e53e55b6ad71aade0cd91e905a55615a57bf0094304d90d6cfb09a",
+    "commandOperation": "show own install unit",
+    "commandTool": "systemctl",
+    "endToEndCompatibilityFixVerified": false,
+    "namespaceMarkerCauseSupportedByBoundProfileAndOfficialImplementation": true,
+    "nativeMarkerPathDirectlyInspected": false,
+    "privateRunTmpfsInBoundProfile": true,
+    "rawStderrBytes": 118,
+    "rawStderrSha256": "5aa1f455d5a9163b8ecbad00f3a5e89a62b2d5414d6150d481692269cbf53caa",
+    "reportedHostDownFromBootDetection": true,
+    "scopeQualification": "The exact command error is observed; the missing namespace marker is a source-supported inference, not a new direct mount/filesystem observation.",
+    "systemdBootMarkerPath": "/run/systemd/system/",
+    "systemdNotBootedDiagnosticExactTemplateMatched": true
+  },
+  "execution": {
+    "actualProcessExitCode": 0,
+    "fourProtectedServicesUnchangedFromValidatedCollector": true,
+    "localRunnerSeconds": 2.544201400014572,
+    "newLinuxUnits": 0,
+    "outputBytes": 2136,
+    "remoteCollectorSeconds": 0.08556303475052118,
+    "remoteWrites": 0,
+    "sameKnownUnitGenerationVerified": true,
+    "sampledPidCount": 0,
+    "sdkDiagnostics": {
+      "classifiedHarmless": false,
+      "errorCountBoundedAt65": 1,
+      "rawMessagesRecorded": false,
+      "socket10038Observed": true
+    },
+    "sdkThreadExitConfirmed": true,
+    "snapshotAcceptedNotNormalLifecycleAcceptance": true,
+    "sshCleanupConfirmed": true,
+    "stderrBytes": 0,
+    "toolObservedWallSeconds": 3.4315536,
+    "unitActions": 0,
+    "unitGroupEmptyObserved": true,
+    "unitState": {
+      "ActiveState": "failed",
+      "ControlPID": "0",
+      "ExecMainCode": "1",
+      "ExecMainStatus": "1",
+      "MainPID": "0",
+      "Result": "exit-code",
+      "SubState": "failed"
+    }
+  },
+  "limitations": [
+    "Readonly success does not establish a successful prepare/switch/rollback or production compatibility.",
+    "The host systemd version was not queried in this window; official implementation is supporting evidence, not a claim of the installed version.",
+    "No new independent review pass is claimed.",
+    "All raw stderr, exact unit identities and directory metadata remain private local artifacts."
+  ],
+  "localOfflineChecks": {
+    "activationOnlyChangedWrapperConsentHashAstConstant": true,
+    "exactKnownMessageCheckedWithoutPrintingRawText": true,
+    "localShellQuotingErrorsCorrectedWithScriptFiles": 2,
+    "originalReadQueryNotRetried": true,
+    "packetDigestCheckedBeforeProfileInspection": true
+  },
+  "nextLocalStep": "Design and test the smallest management-namespace boot-marker compatibility candidate while preserving private /run, existing control-socket bindings, capabilities, business isolation and budgets. No further SSH is authorized.",
+  "primaryReferences": [
+    {
+      "supports": "sd_booted checks for the systemd runtime marker directory.",
+      "url": "https://www.freedesktop.org/software/systemd/man/latest/sd_booted.html"
+    },
+    {
+      "supports": "The local systemd connection path returns EHOSTDOWN when its boot-detection check fails.",
+      "url": "https://github.com/systemd/systemd/blob/main/src/shared/bus-util.c"
+    }
+  ],
+  "relatedEvidence": [
+    "docs/verification/2026-11-22-native-setup-failure-same-connection-evidence.json",
+    "docs/verification/2026-11-22-fixed-setup-command-stderr-local-readiness.json"
+  ],
+  "schemaVersion": 1,
+  "status": "fixed-readonly-query-accepted-command-zero-boot-check-error-identified"
+}
