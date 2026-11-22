@@ -1,0 +1,44 @@
+{
+  "artifactSpecificVerification": {
+    "all15DigestsRechecked": true,
+    "approvalReferenceCreated": false,
+    "assemblyExitCode": 0,
+    "assemblySeconds": 12.558369499864057,
+    "attemptCreated": false,
+    "bindingSha256": "0903629205ae97a7a9cf3d703075273d9749a1f7c5190f5623cc2952f0e261f9",
+    "boundInputs": 13,
+    "candidateSourceSha256": "e4da46bdcdd5ffe2a7e39ee82e485d8a99742d9692b8252e3527e96e811da4f3",
+    "diskUserApproved": false,
+    "driverSha256": "08e12be21a8dc19df8d8e991649a8e76f96edbec088c4728a9715437a7bdc2b1",
+    "fileCount": 15,
+    "freshRandomCorrelation": true,
+    "packetMembers": 170,
+    "packetSha256": "955b2e2d52f54afdbe9e7ed3b618d79912480774fc811c9f656284cd9fc2190d",
+    "privateAclVerified": true,
+    "prospectiveAdmissionLocalMemoryOnly": true
+  },
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsReadOrChanged": false,
+    "externalAgentCalls": 0,
+    "nativeExecutionAuthorized": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "priorTestSuiteRepeated": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "date": "2026-11-22",
+  "limitations": [
+    "This artifact-specific check is not a new full regression suite or native/production acceptance.",
+    "A fresh explicit external execution grant is required under the latest local-only instruction.",
+    "No new independent review pass is claimed.",
+    "Full production delivery remains incomplete."
+  ],
+  "plan": "docs/superpowers/plans/2026-11-22-two-management-native-window.md",
+  "previousGoalTurn": "progress-local-18-tests-and-hash-closure-completed",
+  "relatedEvidence": "docs/verification/2026-11-22-two-management-boot-markers-local.json",
+  "schemaVersion": 1,
+  "status": "fresh-inactive-native-candidate-prepared-local-only-awaiting-key-approval"
+}
