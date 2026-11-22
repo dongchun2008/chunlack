@@ -1,0 +1,141 @@
+{
+  "approvedWindow": {
+    "automaticRetry": false,
+    "cpuWeight": 10,
+    "maximumLocalSeconds": 950,
+    "maximumSshAttempts": 1,
+    "maximumUnitObjects": 6,
+    "nice": 10,
+    "observerCpuPercentOfOneCore": 10,
+    "observerMemoryMiB": 96,
+    "observerTasksMax": 16,
+    "privateNetworkRequired": true,
+    "productionAllowed": false,
+    "swapAllowed": false,
+    "workGroupCpuPercentOfOneCore": 20,
+    "workGroupMemoryMiB": 192,
+    "workGroupTasksMax": 32
+  },
+  "bindings": {
+    "coordinatorSha256": "ef3eea76759eb60a6347f37a181cf83bc8d7d3b4245cb1addf7decdfc1589f8f",
+    "driverSha256": "08e12be21a8dc19df8d8e991649a8e76f96edbec088c4728a9715437a7bdc2b1",
+    "evidenceReplySha256": "b31b0c1b5094852ce3921651be81660c154b816c54a7e3a1c0477825b17f008b",
+    "managerReplySha256": "6d485d5fc3a69345c51d65fc631d6d37c40b20d4ceb43d4c4da968e5d174ef47",
+    "outcomeReceiptSha256": "c94a4660154b679d9b41e6a778151d50d6f714932754f44c0dd8a3f4019f5f77",
+    "terminalReceiptSha256": "aa21e757e51b22a3f8e99e7fe0d8ae8318f54db814f4b0241230835808ae27fc"
+  },
+  "boundaries": {
+    "automaticRetry": false,
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "productionPublished": false,
+    "publicPortsChanged": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "date": "2026-11-22",
+  "execution": {
+    "cgroupEmptyObserved": true,
+    "completedPhases": [
+      "after",
+      "before",
+      "receiver"
+    ],
+    "elapsedSeconds": 11.493320900015533,
+    "managerCleanupConfirmed": true,
+    "managerError": {
+      "code": "bridge_setup_manager_missing_live",
+      "type": "RuntimeError"
+    },
+    "managerScopeEmptyConfirmed": true,
+    "observedInstallUnitObjects": 1,
+    "outerError": {
+      "code": "bridge_driver_transport_receipt",
+      "type": "RuntimeError"
+    },
+    "ownedProcessExitCode": 1,
+    "postCleanupUnitState": {
+      "ActiveState": "failed",
+      "ControlPID": "0",
+      "ExecMainCode": "2",
+      "ExecMainStatus": "9",
+      "MainPID": "0",
+      "Result": "signal",
+      "SubState": "failed"
+    },
+    "protectedFourServicesBaselineEqual": true,
+    "sampledPidCount": 0,
+    "sdkDiagnostics": {
+      "classifiedHarmless": false,
+      "events": [
+        {
+          "level": 40,
+          "socket10038Observed": true
+        }
+      ],
+      "omitted": 0,
+      "rawMessagesRecorded": false
+    },
+    "sdkThreadExitConfirmed": true,
+    "setupNormalExitVerified": false,
+    "sharedParentChildDeadlineVerified": true,
+    "sshAllowanceConsumed": 1,
+    "sshAllowanceMaximum": 1,
+    "totalCreatedUnitObjectCountIndependentlyVerified": false,
+    "transportCleanupConfirmed": true
+  },
+  "limitations": [
+    "Empty setup streams and a post-cleanup signal do not establish why the first live observation was missed.",
+    "The first manager-observed unit row was not retained; startup transition and pre-cleanup termination are not yet distinguishable.",
+    "Neither boot-marker effectiveness, full native compatibility, successful switching nor rollback was accepted.",
+    "No new independent review pass is claimed; raw correlation values and evidence remain private."
+  ],
+  "localFirstObservationDiagnostics": {
+    "actualCapturedWaitAndStopMethodsUsed": true,
+    "actualFirstNativeRowKnown": false,
+    "coldStartFalseRejectionReproducedLocally": true,
+    "diagnosticPassIsNotNativeAcceptance": true,
+    "errors": 0,
+    "failures": 0,
+    "managerSourceSha256": "35dba01503962b9334de5a0ed580a0e928f85ba7544f753822bd3a26a61c5129",
+    "nativeRetried": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "receiptSha256": "ebd9a8b7d15ffbf191e251ed8644c773a6d03d6ed89eedf06e293970c9c8baa3",
+    "testSourceSha256": "302674843f275f4b10f6da0424e08281a1370ccc5d9581f166785e3b0af45c1c",
+    "tests": 4
+  },
+  "nextLocalAction": "Reproduce the actual manager first-observation state machine locally and distinguish startup-transition rejection from a terminal child failure before proposing any new native window.",
+  "sameConnectionFailureEvidence": {
+    "accepted": true,
+    "additionalSshConnections": 0,
+    "attempted": true,
+    "captures": {
+      "setup.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "read"
+      },
+      "setup.stdout": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "read"
+      }
+    },
+    "capturesComplete": true,
+    "combinedBytes": 1923,
+    "generationStable": true,
+    "maximumCombinedBytes": 65536,
+    "newLinuxUnits": 0,
+    "offlineReplayPassed": true,
+    "remoteSeconds": 0.07590181939303875,
+    "remoteWrites": 0,
+    "unitActions": 0
+  },
+  "schemaVersion": 1,
+  "status": "native-setup-failed-missing-live-same-connection-evidence-and-cleanup-verified"
+}
