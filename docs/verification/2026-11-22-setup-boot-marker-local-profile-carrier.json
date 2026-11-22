@@ -1,0 +1,87 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsReadOrChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "change": {
+    "baseDriverExactlyUnchanged": true,
+    "capabilitiesIdentityNnpAndResourceBudgetsExact": true,
+    "emptyReadOnlyPrivateTmpfs": true,
+    "frozenOrDeployedInputsOverwritten": false,
+    "markerOptions": "ro,nosuid,nodev,noexec,size=4096,nr_inodes=16,mode=0555",
+    "markerPath": "/run/systemd/system",
+    "noNewHostBind": true,
+    "onlySetupPropertyChanged": "TemporaryFileSystem",
+    "originalPrivateRunRetained": true,
+    "originalProofReaderAndValidatorUnchanged": true,
+    "sameConnectionHookExactlyUnchanged": true,
+    "setupAndReceiverDependentChangesAreHashLiteralsOnly": true
+  },
+  "date": "2026-11-22",
+  "downstreamAudit": {
+    "additionalManagementOnlyLocalWorkRequired": true,
+    "businessProfilesUnchanged": true,
+    "markerAbsentFromThatBoundProfile": true,
+    "newNativeWindowNotRequestedOrAuthorizedByThisStage": true,
+    "otherRootControlNamespaceUsesPrivateRunAndSystemctl": true
+  },
+  "inactivePackage": {
+    "approvalReferenceCreated": false,
+    "attemptCreated": false,
+    "bindingSha256": "a493b2b7f0d918986b1309e03c564caf82df76f67422dbd5a258bd3948bf8d9e",
+    "boundInputs": 13,
+    "files": 15,
+    "fullChainCandidateReady": false,
+    "nativeMountVerified": false,
+    "nativeSystemctlFixVerified": false,
+    "packetMembers": 170,
+    "packetSha256": "bf8a9e5f10553491936155351602482bde39aaccb1921a200c3c1df76c024a90",
+    "productionReady": false,
+    "syntheticTestCorrelationMustNotBeUsedNatively": true,
+    "userApproved": false
+  },
+  "limitations": [
+    "Fifteen local policy/integration tests are not a full product regression, Linux mount verification, or production acceptance.",
+    "The setup-only marker candidate is incomplete for the full chain while the downstream root-management namespace remains unadapted.",
+    "All raw code, artifacts and identities remain in local private storage; only sanitized progress and plan are synchronized."
+  ],
+  "plan": "docs/superpowers/plans/2026-11-22-setup-boot-marker-compatibility.md",
+  "relatedEvidence": "docs/verification/2026-11-22-setup-command-stderr-readonly-result.json",
+  "retainedFailures": [
+    "Original profile failed the marker-layout test before the new mount was added.",
+    "Original route failed the test proving the marker profile must reach the packet.",
+    "An erroneous driver-PINS rewrite assumption was rejected; inspection showed the driver bytes must stay unchanged.",
+    "The final carrier check requires exact old driver bytes; no integrity rule was relaxed."
+  ],
+  "review": {
+    "authorStaticInspectionPerformed": true,
+    "newIndependentReviewCompleted": false
+  },
+  "schemaVersion": 1,
+  "status": "setup-marker-profile-and-carrier-local-tests-passed-downstream-management-policy-pending",
+  "verification": {
+    "actualOwnedUnapprovedChildExitCode": 1,
+    "candidateProfileSha256": "205f07f72257dd549478d1e4cc4004c41b3d7b6abe2ec8aed13f229671d93668",
+    "carrierReceiptSha256": "6220bdfec955ec3ddfdee4ea0e7bf86db7a38398133be8b9ff817857c7865f00",
+    "carrierSourcesUnchangedSinceTest": true,
+    "carrierTests": 6,
+    "childRejectedBeforeSdkOrAttempt": true,
+    "currentPackageAll15DigestsRechecked": true,
+    "driverSha256": "185a4a5966e49f63a90276d3ac58c5d2f2606a91f1c072f65ffe53122fa41819",
+    "errors": 0,
+    "failures": 0,
+    "localScopedTests": 15,
+    "oldProfileSha256": "40b042eb47e53e55b6ad71aade0cd91e905a55615a57bf0094304d90d6cfb09a",
+    "positive13InputAdmissionLocalMemoryOnly": true,
+    "profileReceiptSha256": "3304e072ec16dc0322c49ec69d8d1590832f9987c4fddaba3c4fb6708ba87224",
+    "profileSourcesUnchangedSinceTest": true,
+    "profileTests": 9
+  }
+}
