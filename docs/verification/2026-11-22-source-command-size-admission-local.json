@@ -1,0 +1,173 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsReadOrChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "oldFrozenAndUsedArtifactsOverwritten": false,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "change": {
+    "actualFrozenDriverAndRendererUsed": true,
+    "allNewlinesStringsDocstringsAndAssertionsRetained": true,
+    "astExecutableBytecodeConstantsExceptionTablesNamesFlagsAndInstructionLinesIdentical": true,
+    "buildTimeOnly": true,
+    "classAndFunctionFirstLineMetadataRetained": true,
+    "commentsRemovedIndentationReduced": true,
+    "configShapesMatchFrozenDriverInvokeCalls": true,
+    "deployedControllerOrLauncherChanged": false,
+    "diagnosticColumnsMayChange": true,
+    "driverPacketBusinessAndProofSourcesExact": true,
+    "formatterInstalledOnVps": false,
+    "hashCheckedBeforeParse": true,
+    "identitiesCapabilitiesNnpResourceLimitsAndDeadlinesUnchanged": true,
+    "minimumAndMaximumLegalMetadataChecked": true,
+    "newFullRenderedCommandAdmissionLimitBytes": 65536,
+    "onlyManagerSourceAndDependentBindingChanged": true,
+    "originalBootstrapLimitBytes": 65536,
+    "receiverPacketStdinLimitBytes": 33554432,
+    "sourceManagerAfterBytes": 34943,
+    "sourceManagerBeforeBytes": 37077
+  },
+  "commandSizeAdmission": {
+    "executionAuthorized": false,
+    "fullCommandHeadroomAtMaximumLegalMetadataBytes": 54,
+    "longestFullCommandBytes": 65482,
+    "maximumCommandBytes": 65536,
+    "sourcePinsAndClosedConfigSchemasRequired": true,
+    "stages": {
+      "preflight": {
+        "maximumCommandBytes": 9065,
+        "minimumCommandBytes": 9065,
+        "sourceSha256": "81b94134fd94f0b77b3630bb702222f0d1fcfaaeb6f5958351b8062c623eba5d"
+      },
+      "proof_reader": {
+        "maximumCommandBytes": 21601,
+        "minimumCommandBytes": 21553,
+        "sourceSha256": "0ec80238ee5d4689326274c760d945222e21f6ac6c7c5c2f8ae314c4d7439595"
+      },
+      "receiver": {
+        "maximumCommandBytes": 19709,
+        "minimumCommandBytes": 19709,
+        "sourceSha256": "df50f30fc55a8cc883430fdd4ca085260a843adf6cd287b204109c37f75435fc"
+      },
+      "setup_failure": {
+        "maximumCommandBytes": 17877,
+        "minimumCommandBytes": 17649,
+        "sourceSha256": "a81c6ebe1041cc0a5e487590e846c4580648e3ed8f857fdf195c10598028b26d"
+      },
+      "setup_manager": {
+        "maximumCommandBytes": 65482,
+        "minimumCommandBytes": 65254,
+        "sourceSha256": "2f4801fce797a306d20a5df96881ebcfc6229459d43cd3ad14383b32ba99e05f"
+      },
+      "watch": {
+        "maximumCommandBytes": 48430,
+        "minimumCommandBytes": 48278,
+        "sourceSha256": "a3135cc8700174d678d09a3bbdff11f84cb3ddb7d297f2248315380b21155793"
+      }
+    }
+  },
+  "date": "2026-11-23",
+  "freshInactiveCandidate": {
+    "all15DigestsRechecked": true,
+    "approvalReferenceCreated": false,
+    "attemptCreated": false,
+    "bindingSha256": "777bff022f25805dbd862e73a3514f4a66d1adfad6f6964f797130b4111811bb",
+    "boundInputs": 13,
+    "driverSha256": "08e12be21a8dc19df8d8e991649a8e76f96edbec088c4728a9715437a7bdc2b1",
+    "files": 15,
+    "freshRandomCorrelation": true,
+    "managerSha256": "2f4801fce797a306d20a5df96881ebcfc6229459d43cd3ad14383b32ba99e05f",
+    "nativePermissionGranted": false,
+    "packetMembers": 170,
+    "packetSha256": "cf8e250307a2851b96d0bd6a84b499b17b3703f9a08aea17c89cf86ff8f95022",
+    "positive13InputAdmissionLocalMemoryOnly": true,
+    "privateAclVerified": true,
+    "userApproved": false
+  },
+  "limitations": [
+    "These are scoped local checks with explicit filesystem/bus doubles, not Linux or whole-product production acceptance.",
+    "Formatting equivalence is proved by the local interpreter; native execution remains to be verified.",
+    "The maximum-size proof applies to fixed source pins and the closed driver config schemas; future changes must be refused/revalidated.",
+    "Prior one-shot native allowance is consumed; no new SSH or unit creation is authorized by size admission.",
+    "Private sources, packages, correlation values and raw evidence remain local; only sanitized record and plan are synchronized."
+  ],
+  "phaseStartedLocalDate": "2026-11-22",
+  "plan": "docs/superpowers/plans/2026-11-22-source-command-size-admission.md",
+  "recordedAtUtc": "2026-11-22 16:00:44 UTC",
+  "relatedNativeFailure": "docs/verification/2026-11-22-startup-bound-native-command-size-failure.json",
+  "retainedFailures": [
+    "Original real source/config exceeded the unchanged renderer-size gate.",
+    "The first new size-admission stub rejected the all-stage acceptance test.",
+    "The original carrier lacked mandatory command-size admission.",
+    "One new carrier fixture looked for the external entry script among saved package files; final fixture uses its original fixed source hash and all six checks pass."
+  ],
+  "review": {
+    "authorSourceBoundaryInspectionPerformed": true,
+    "newIndependentReviewCompleted": false
+  },
+  "schemaVersion": 1,
+  "sourceBindings": {
+    "admission.py": "b3717335a5cc88fb1a83b5644695a9b19795b332ffb8b29a6f163f0b1d1e58f7",
+    "carrier_candidate.py": "9e09eca5a2907428489857732c1b66f58f8193b4b7ed161fc9cfee58846be6da",
+    "formatting.py": "5d754a66dd027073dfa519bfbe8a86303ba1f3bbca6197e76cf2471fcfb76d03",
+    "test_admission.py": "1367a5e4baba79027b16931dfec248f626e1f888c2e1a7fb63e6d6ba93e700b0",
+    "test_carrier.py": "c3c41712d9cb44805aad23e7c0cfff047c424a9ddd6359242429ef270ed6ac56",
+    "test_formatting.py": "42d70593579f3318ef299bf965ba455d0e99c45ed4232dde820ff737c123a752",
+    "test_manager_guards.py": "0fb5136f16f43b2be339b031461a1a029990ddd8a50d4e4118dc85211eb0287f"
+  },
+  "status": "local-compact-carrier-and-all-phase-command-size-admission-78-checks-passed-native-pending",
+  "timezone": "Asia/Shanghai",
+  "verification": {
+    "actualUnapprovedChildExitCode": 1,
+    "childRefusesBeforeSdkOrAttempt": true,
+    "errors": 0,
+    "failures": 0,
+    "finalArtifactAdmissionAfterPrivateAclCheckPassed": true,
+    "fullProductRegressionRepeated": false,
+    "groups": [
+      {
+        "name": "formatting",
+        "receiptSha256": "9d6f88703e8784f80a1f3a50ea5eecc415c406ae285cee9469d3f78b1608b4f9",
+        "seconds": 0.5089159000199288,
+        "tests": 16
+      },
+      {
+        "name": "admission",
+        "receiptSha256": "ad3ba74b0393a9238c823ae361990e4db97e65e2b2d7cd157631eec6b79a0aa2",
+        "seconds": 1.8119301998522133,
+        "tests": 10
+      },
+      {
+        "name": "carrier",
+        "receiptSha256": "d959f9bc8be28b202c27f79b25a080d3982df7c88c543cf5aae8117d0a45aa0a",
+        "seconds": 8.866490200161934,
+        "tests": 6
+      },
+      {
+        "name": "startup",
+        "receiptSha256": "e618343c6e4cd48f8e16b53db50b47320e295cf3e8a59ac0c3fada519578e283",
+        "seconds": 13.209595300024375,
+        "tests": 15
+      },
+      {
+        "name": "guards",
+        "receiptSha256": "35be206ae44df594332c7cbd26bae8ae703bd7619634e10f437c8f3a0c9616dd",
+        "seconds": 42.85199989983812,
+        "tests": 31
+      }
+    ],
+    "originalManagerFixturesAndAssertionsPreserved": true,
+    "platform": "win32",
+    "pythonVersion": "3.13.12",
+    "scopedLocalTests": 78,
+    "sourcesAndUpstreamFixtureHashesRechecked": true,
+    "wrongSourcesRaisedLimitsChangedBudgetsAndForgedArtifactReceiptsRefused": true
+  }
+}
