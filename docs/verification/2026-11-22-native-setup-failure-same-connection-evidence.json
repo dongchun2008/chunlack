@@ -1,0 +1,147 @@
+{
+  "approvedWindow": {
+    "automaticRetry": false,
+    "cpuWeight": 10,
+    "maximumLocalSeconds": 950,
+    "maximumSshAttempts": 1,
+    "maximumUnitObjects": 6,
+    "nice": 10,
+    "observerCpuPercentOfOneCore": 10,
+    "observerMemoryMiB": 96,
+    "observerTasksMax": 16,
+    "optionalFailureEvidenceIncluded": true,
+    "privateNetworkRequired": true,
+    "productionAllowed": false,
+    "source": "explicit user message on 2026-11-22",
+    "swapAllowed": false,
+    "workingGroupCpuPercentOfOneCore": 20,
+    "workingGroupMemoryMiB": 192,
+    "workingGroupTasksMax": 32
+  },
+  "approvedWindowPlan": "docs/plans/2026-11-21-same-connection-native-validation-window.zh-CN.md",
+  "bindings": {
+    "coordinatorSha256": "5183820f29bf794cf0ef8160c403ea4a854787616c902327bb218160418de1f6",
+    "driverSha256": "185a4a5966e49f63a90276d3ac58c5d2f2606a91f1c072f65ffe53122fa41819",
+    "evidenceReplySha256": "14b74201950f44a9596f11340cb368fa244700efbb4a9e5d9085fbb6cc67604f",
+    "managerReplySha256": "d4c9fbe35a5683d0cbed2583c030f942e9d04a54de183c51d8bc99d771011c32",
+    "outcomeReceiptSha256": "37f65b633ab09a9cb35a5fdab94f84ef9df3b5946d7dfbcfae7f8a3df5928d88",
+    "terminalReceiptSha256": "e22ba10e7fff3b2cff00d461b5c6560c4f1f72bc3affd4454c702173dda509a5"
+  },
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsOrPublicPortsChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "nativeCompatibilityVerified": false,
+    "privateSourcesRawBodiesOrCorrelationIdentitiesUploaded": false,
+    "productionPublished": false,
+    "productionReady": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "date": "2026-11-22",
+  "execution": {
+    "actualOwnedProcessExitCode": 1,
+    "cgroupEmptyObservedAfterFailure": true,
+    "elapsedSeconds": 21.608854899997823,
+    "managerCleanupConfirmed": true,
+    "managerError": {
+      "code": "bridge_setup_manager_normal_exit",
+      "type": "RuntimeError"
+    },
+    "managerScopeEmptyConfirmed": true,
+    "noAutomaticRetry": true,
+    "normalCompletedPhases": [
+      "after",
+      "before",
+      "receiver"
+    ],
+    "observedInstallUnitObjects": 1,
+    "outerError": {
+      "code": "bridge_driver_transport_receipt",
+      "type": "RuntimeError"
+    },
+    "postFailureUnitState": {
+      "ActiveState": "failed",
+      "ControlPID": "0",
+      "ExecMainCode": "1",
+      "ExecMainStatus": "1",
+      "MainPID": "0",
+      "Result": "exit-code",
+      "SubState": "failed"
+    },
+    "protectedFourServiceBaselinesEqual": true,
+    "rootCauseOfCommandNonzeroExitProven": false,
+    "sampledPidCountAfterFailure": 0,
+    "sdkErrorDiagnostics": {
+      "classifiedHarmless": false,
+      "events": [
+        {
+          "level": 40,
+          "socket10038Observed": true
+        }
+      ],
+      "omitted": 0,
+      "rawMessagesRecorded": false
+    },
+    "sdkThreadExitConfirmed": true,
+    "setupChildCleanupConfirmed": true,
+    "setupError": {
+      "code": "bridge_setup_command_exit",
+      "type": "RuntimeError"
+    },
+    "setupNormalExitVerified": false,
+    "sharedParentChildDeadlineVerified": true,
+    "sshAllowanceConsumed": 1,
+    "sshAllowanceMaximum": 1,
+    "totalCreatedUnitObjectCountIndependentlyVerified": false,
+    "transportCleanupConfirmed": true
+  },
+  "limitations": [
+    "A captured command nonzero exit is known; the failed command index and its root cause are not yet proven.",
+    "No compatibility, successful switch or rollback acceptance was obtained in this run.",
+    "Earlier failed native records remain unchanged; the new observation does not rewrite them.",
+    "Readonly evidence acceptance is separate from lifecycle or production acceptance.",
+    "No new independent review pass is claimed."
+  ],
+  "nextEvidenceNeeded": "Identify the nonzero setup command and its captured stderr; no remote reread is authorized by this consumed window.",
+  "priorLocalRecord": "docs/verification/2026-11-21-same-connection-install-failure-evidence-local.json",
+  "sameConnectionFailureEvidence": {
+    "acceptedAsReadonlyEvidence": true,
+    "actualCombinedOutputBytes": 2560,
+    "actualRemoteSeconds": 0.07560403272509575,
+    "attempted": true,
+    "boundToOriginalSetupContext": true,
+    "captureMetadata": {
+      "setup.stderr": {
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "status": "read"
+      },
+      "setup.stdout": {
+        "bytes": 472,
+        "sha256": "94982e239d73fdb1a5aa13907cc4f51c305443ef7e658eb9723a88f25a98e5dd",
+        "status": "read"
+      }
+    },
+    "capturesComplete": true,
+    "doesNotEstablishNormalLifecycleOrNativeCompatibility": true,
+    "generationStable": true,
+    "localCaptureErrors": [],
+    "maximumBytesPerFixedCapture": 8192,
+    "maximumCombinedOutputBytes": 65536,
+    "maximumRemoteSeconds": 20,
+    "missingEvidence": [],
+    "newLinuxUnits": 0,
+    "newSshConnection": false,
+    "offlineReplayOfExactFramePassed": true,
+    "originalPrimaryFailureRetained": true,
+    "remoteWrites": 0,
+    "transportRestoreError": null,
+    "unitActions": 0
+  },
+  "schemaVersion": 1,
+  "status": "native-preparation-failed-same-connection-evidence-accepted-not-production-ready"
+}
