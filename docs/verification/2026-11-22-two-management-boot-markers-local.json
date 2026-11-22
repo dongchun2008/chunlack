@@ -1,0 +1,87 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsReadOrChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "change": {
+    "businessAndOtherPreparationProfilesByteIdentical": true,
+    "capabilitiesIdentityNnpAndResourceBudgetsUnchanged": true,
+    "driverFixedDigestKeysChanged": [
+      "packet_source.py",
+      "watch.py"
+    ],
+    "driverLogicAstUnchanged": true,
+    "managementNamespacesWithMarker": 2,
+    "markerOptions": "ro,nosuid,nodev,noexec,size=4096,nr_inodes=16,mode=0555",
+    "markerPath": "/run/systemd/system",
+    "noNewHostBind": true,
+    "oldFrozenAndDeployedInputsOverwritten": false,
+    "originalPrivateRunRetained": true,
+    "otherChangedPythonPacketMembersAreHashLiteralsOnly": true,
+    "proofReaderAndValidatorUnchanged": true,
+    "rootManagementOnlyPropertyChanged": "TemporaryFileSystem",
+    "rootProfileAfter": "6dd37026bf65a8800f9dc633972f4659c4802f4e2d094f4a49da31bf82fdf547",
+    "rootProfileBefore": "229164e4118422fc312cfc656789fdafd6dcfe6a3990f669684c3d32b4cc9e2b",
+    "sameConnectionHookSourceUnchanged": true,
+    "workerFilesCatalogAndPrivateInputsUnchanged": true
+  },
+  "date": "2026-11-22",
+  "inactivePackage": {
+    "approvalReferenceCreated": false,
+    "attemptCreated": false,
+    "bindingSha256": "1dce09d14331b58bddf684a9ebc787bfbe73bcd23786e984359876b5676d0d74",
+    "boundInputs": 13,
+    "files": 15,
+    "nativeMountVerified": false,
+    "nativeSystemctlFixVerified": false,
+    "packetMembers": 170,
+    "packetSha256": "581aeabaec4e989353fffca303fd6fdeafd6d66bafcf501cb10099be1e14ca45",
+    "productionReady": false,
+    "syntheticTestCorrelationMustNotBeUsedNatively": true,
+    "userApproved": false
+  },
+  "limitations": [
+    "Eighteen scoped local checks are not a full product regression or Linux/production acceptance.",
+    "Actual nested mount ordering, boot detection and systemctl connectivity remain unverified.",
+    "Old single-use remote grants remain consumed; no new native execution is authorized by this record.",
+    "Only sanitized progress and plan are synchronized; private source, packet and raw evidence remain local."
+  ],
+  "plan": "docs/superpowers/plans/2026-11-22-setup-boot-marker-compatibility.md",
+  "relatedEvidence": "docs/verification/2026-11-22-setup-boot-marker-local-profile-carrier.json",
+  "retainedFailures": [
+    "Pinned original downstream profile failed the marker-layout regression before adaptation.",
+    "The intermediate adapter without leaf propagation failed the packet-propagation regression."
+  ],
+  "review": {
+    "authorStaticInspectionPerformed": true,
+    "newIndependentReviewCompleted": false
+  },
+  "schemaVersion": 1,
+  "status": "two-management-marker-local-policy-and-carrier-checks-passed-native-unverified",
+  "verification": {
+    "actualUnapprovedChildExitCode": 1,
+    "candidateSourceSha256": "e4da46bdcdd5ffe2a7e39ee82e485d8a99742d9692b8252e3527e96e811da4f3",
+    "canonicalProofAndPacketTamperingRejected": true,
+    "carrierAndSavedPackageTests": 8,
+    "currentPackageAll15DigestsRechecked": true,
+    "driverSha256": "08e12be21a8dc19df8d8e991649a8e76f96edbec088c4728a9715437a7bdc2b1",
+    "errors": 0,
+    "failures": 0,
+    "integrationReceiptSha256": "119e6b8f7b37d0b8ac7f3b93f29a1a07519e5baf7b79d4dd4d086321fc4cdfd0",
+    "integrationSeconds": 28.898525800090283,
+    "localScopedTests": 18,
+    "positive13InputAdmissionLocalMemoryOnly": true,
+    "profileReceiptSha256": "0ed61159e1c68cea5b35165f3f1222e53d00aa49eee8990f1c55d74ba482cdc2",
+    "profileSeconds": 0.8372674998827279,
+    "profileTests": 10,
+    "sourcesStillMatchBothReceipts": true,
+    "unapprovedChildRejectedBeforeAttemptOrSdk": true
+  }
+}
