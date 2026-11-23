@@ -1,0 +1,131 @@
+{
+  "approvedWindow": {
+    "automaticRetry": false,
+    "cpuWeight": 10,
+    "maximumLocalSeconds": 950,
+    "maximumSshAttempts": 1,
+    "maximumUnitObjects": 6,
+    "nice": 10,
+    "observerCpuPercentOfOneCore": 10,
+    "observerMemoryMiB": 96,
+    "observerTasksMax": 16,
+    "privateNetworkRequired": true,
+    "productionAllowed": false,
+    "swapAllowed": false,
+    "workGroupCpuPercentOfOneCore": 20,
+    "workGroupMemoryMiB": 192,
+    "workGroupTasksMax": 32
+  },
+  "bindings": {
+    "attempt.json": "e1cfb80f318f406cdb72070837aa67549d9faf342849282fe0631470f197d215",
+    "coordinatorSha256": "ab8714fc4bd5dbb1b5e542666d9fed4d5ea22145491f86857cf65a1616d21625",
+    "driverSha256": "eaf0c477f70372409549ec8396ba64120313cc7de6d846718365b0dced6fbb41",
+    "managerSha256": "a5ba9360d07385907dffc5875c0cd6ea04bfb6d696f1348ba020e0590e87f525",
+    "offlinePinReceiptSha256": "3931b4bb63098f19b84dcf07a63dea1cdf171156210ba892d6480f9313d4b55b",
+    "outcome.json": "c2ce8377b07b05f0c82a8e05201df775c06224e3ca19cbaefd1451125220da4f",
+    "packetSha256": "bf3096fd1058b305a7b6e9fa1a68192bed914793f8a3b76cfb692432407cf1a9",
+    "proposalSha256": "a6900ccfba665a2ac54f4640880ac6497c462231f8e7333489edc5d812f7dde0",
+    "setup.transport.private.json": "8c9f8cb0a17a90121385b58df7544d73eeebc6a18fcf21ac097127f2bd27e934",
+    "terminalReceiptSha256": "fd5ff3276fdc1dac237c9dcc53e85d5fdc5fb3e99fa62f73064235927ea1f945",
+    "watch.transport.private.json": "7600e87d057e95a3e8f2421252a783d7a0cf8e3644c0964595e5cc89ed0fb2b1"
+  },
+  "boundaries": {
+    "automaticRetry": false,
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "productionPublished": false,
+    "publicPortsChanged": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "date": "2026-11-23",
+  "execution": {
+    "automaticRetry": false,
+    "completedPhases": [
+      "after",
+      "before",
+      "receiver",
+      "setup"
+    ],
+    "elapsedSeconds": 20.40321939997375,
+    "ownedProcessExitCode": 1,
+    "primaryError": {
+      "code": "bridge_driver_transport_receipt",
+      "type": "RuntimeError"
+    },
+    "protectedFourServiceBaselinesEqual": true,
+    "sdkDiagnostics": {
+      "classifiedHarmless": false,
+      "events": [
+        {
+          "level": 40,
+          "socket10038Observed": true
+        }
+      ],
+      "omitted": 0,
+      "rawMessagesRecorded": false
+    },
+    "sdkThreadExitConfirmed": true,
+    "sharedParentChildDeadlineVerified": true,
+    "sshAllowanceConsumed": 1,
+    "sshAllowanceMaximum": 1,
+    "totalCreatedUnitObjectCountIndependentlyVerified": false,
+    "transportCleanupConfirmed": true,
+    "watchTransportChannelClosedObserved": false,
+    "watchTransportExitCode": 1
+  },
+  "limitations": [
+    "Preparation success is not database-copy compatibility, successful switching, rollback or production acceptance.",
+    "The watch reported cleanup origin unknown; final SSH/SDK closure does not prove its unit or cgroup absent.",
+    "Only retained local packet bytes were compared for the transitive hash mismatch; remote profile bytes were not re-read.",
+    "No fresh independent review pass is claimed. The one-shot SSH allowance is consumed and no remote retry was performed."
+  ],
+  "nativeSetupPartialEvidence": {
+    "childCleanupConfirmed": true,
+    "completed": true,
+    "firstWaitState": {
+      "activeState": "activating",
+      "subState": "start"
+    },
+    "liveGenerationWitnessed": true,
+    "managerCleanupConfirmed": true,
+    "retainedNormalExitVerified": true,
+    "setupScopeEmptyConfirmed": true,
+    "startingSamples": 1
+  },
+  "nextLocalAction": "In a new private candidate, repair the transitive profile/hash closure and add a package-level rejection regression before seeking any new native verification.",
+  "offlineDiagnosis": {
+    "hashMismatchReproducedWithoutExecution": true,
+    "launcherExpectedHostProfileSha256": "229164e4118422fc312cfc656789fdafd6dcfe6a3990f669684c3d32b4cc9e2b",
+    "launcherSha256": "37d0eb1654a7139546aa1108961f5a10c2eb80b4b43fff8f0b53d4537d7a9309",
+    "noCandidateModified": true,
+    "notACleanupOrUnitAbsenceProof": true,
+    "packagedHostProfileSha256": "6dd37026bf65a8800f9dc633972f4659c4802f4e2d094f4a49da31bf82fdf547",
+    "remoteFileBytesNotRequeried": true
+  },
+  "schemaVersion": 1,
+  "status": "native-setup-passed-watch-transitive-profile-pin-failed-no-production-acceptance",
+  "timezone": "Asia/Shanghai",
+  "watchPartialEvidence": {
+    "cleanupConfirmed": false,
+    "cleanupErrors": [
+      {
+        "code": "watch_cleanup_origin_unknown",
+        "type": "RuntimeError"
+      }
+    ],
+    "completed": false,
+    "innerResultValidated": false,
+    "lastPhase": "start",
+    "observerNormalExitVerified": false,
+    "primaryError": {
+      "code": "host_launch_root_profile_pin",
+      "type": "RuntimeError"
+    },
+    "unitAbsenceOrScopeEmptyIndependentlyConfirmed": false
+  }
+}
