@@ -1,0 +1,117 @@
+{
+  "artifactScope": {
+    "displayAssetsStaged": 7,
+    "displayOnlyStageNotFull66FileProductBuild": true,
+    "draftsAppliedToRepository": false,
+    "frozenNativeCandidateModified": false,
+    "frozenProductModified": false,
+    "newFormalProductHashBindingCreated": false,
+    "realGuidesModified": false,
+    "syntheticCanaries": 2
+  },
+  "bindings": {
+    "greenReceiptSha256": "e40fba2304da86081cf692cd935f4476e0f12aa92c9e2d0f5dd1bb69f46950b6",
+    "guides": [
+      {
+        "bytes": 24694,
+        "draftSha256": "25951b02a06a9c10fd78e134f15146582af8bc7fc9a19525b5136d3f196dcc38",
+        "frozenOriginalSha256": "34a0555416a5accf1be5d37bba34ee8e93b9f710b67d68557864876f61d1dc6c",
+        "locale": "zh-CN"
+      },
+      {
+        "bytes": 30848,
+        "draftSha256": "f0498faf658ca48cee3a59cc4e3f2a9b19f9743d39e9108725c7fb311591bf5e",
+        "frozenOriginalSha256": "ac7eb188ddc76435448135e05c9531eb876ecc328938d0601968d3e2bb4e500c",
+        "locale": "en"
+      }
+    ],
+    "inputSha256": "8564ffb1eaa60b2a3e4c353d8a9699360223846102e5d13b53605a1abcc9cb1a",
+    "pendingNativeProposalSha256": "dcf9896193ee89bebb514b3c20ebcaa74b6fd1cc515f320fa0d224b401ee3030",
+    "runnerSourceSha256": "a539ece37475c10be133789d55c6e64733cb00c227fa026e908c5680801351f7",
+    "sourceAuditSha256": "d53a016549d3bc7dfacce8a2fc33441b353a3bdf90dd069e7bbf571800233b56",
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdoutSha256": "d9a86a3d439bd4024c27d8b64418fdb032d8d6dd2d857771ffc4f86ae5643bd9",
+    "telemetrySha256": "ec5214040a1bfb44c53a802a97869803c94c8cc2458b663031f345b782c8264d",
+    "testSourceSha256": "5994c41b353907093c0f9283f921bad94116b735c52e9e17bca8fd25273c6b78"
+  },
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsReadOrChanged": false,
+    "dnsChanged": false,
+    "externalAgentCalls": 0,
+    "freshNativeGrantStillPending": true,
+    "fullDeliveryComplete": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "productionPublished": false,
+    "publicPortsChanged": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsRequests": 0
+  },
+  "date": "2026-11-23",
+  "initialFixtureFailure": {
+    "afterHookCheckedSocketCloseBeforeEventObserved": true,
+    "closeJoinMaximumMilliseconds": 2000,
+    "failureReportsNowRetained": true,
+    "fixedWithBoundedActualSocketCloseEventJoin": true,
+    "initialRunnerDidNotWriteStructuredResultAfterAssertion": true,
+    "intendedOldGuideMismatchAlsoObserved": true,
+    "original90SecondEnvelopeAndZeroSocketAssertionRetained": true,
+    "originalFixtureSha256": "0067a8321c6ef8405d0cb5607698ec00a003c1259f3da205d13b41ac1d3d6fbb",
+    "originalRunnerSha256": "3e089142da0ee74bb02736ae1ea623f4d76795dd2aa0381ea61d4aed21f2af8e",
+    "preserved": true
+  },
+  "intentionalRed": {
+    "cleanupConfirmed": true,
+    "expectedOldGuideMismatchObserved": true,
+    "functionalPassCount": 0,
+    "nodeExitCode": 1,
+    "notCountedAsPassingFunctionalTests": true,
+    "receiptSha256": "12040dd8244dad2ca6f3fc773d981cc448924434b554659ffe132ac5939261fc",
+    "selectedCases": 1
+  },
+  "limitations": [
+    "Actual HTTP and a unit DOM establish content-loading/controller behavior, not rendered browser or accessibility/layout acceptance.",
+    "No TLS, OIDC, workspace authorization, Linux runtime, current VPS or production acceptance is established.",
+    "This is local LACK help/draft isolation, not a proof of quiet dispatch into an independent native-dot conversation.",
+    "Final guide application still requires a new product hash binding and matching release validation; old candidate hashes/proofs cannot be silently reused.",
+    "No new independent review pass is claimed. Raw fixture sources, paths, staged guides and evidence remain private."
+  ],
+  "scope": "new local display-only integration of unapplied bilingual help drafts, while native grant remains pending",
+  "validation": {
+    "actualDisplayAssetHandlerAndHelpControllerUsed": true,
+    "allInputsByteIdenticalAfter": true,
+    "approvedDraftBytesAndUtf8Served": true,
+    "cancelled": 0,
+    "closeRemovesGuideFetching": true,
+    "controllerScopesClosed": true,
+    "currentLanguageGuideAndLabelsChecked": true,
+    "failed": 0,
+    "getHeadMetadataAndSingleNosniffChecked": true,
+    "httpStatusCounts": {
+      "200": 10,
+      "404": 4,
+      "405": 1
+    },
+    "javascriptHeapLimitMiB": 96,
+    "latePriorLanguageResponseRejected": true,
+    "localTotalLimitSeconds": 90,
+    "loginHelpDoesNotFetchWorkspaceGuideOrMutateState": true,
+    "loopbackOnly": true,
+    "noNewProductSuiteOrNativeTestsRerun": true,
+    "nodeVersion": "v24.22.1",
+    "nonHtmlUnitDomUsed": true,
+    "ordinaryLackDraftEvidenceAndHandlerPreserved": true,
+    "passed": 6,
+    "realLoopbackHttpUsed": true,
+    "remainingOwnedSockets": 0,
+    "seconds": 0.6199294000398368,
+    "serverClosed": true,
+    "singleNodeProcessVerified": true,
+    "skipped": 0,
+    "tests": 6,
+    "wholeProcessMemoryLimitClaimed": false,
+    "writeQueryTraversalAndCanaryReadRefused": true
+  }
+}
