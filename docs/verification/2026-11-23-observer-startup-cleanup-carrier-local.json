@@ -1,0 +1,171 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsReadOrChanged": false,
+    "dnsChanged": false,
+    "existingServicesTouched": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "productionPublished": false,
+    "publicPortsChanged": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "candidate": {
+    "admissionSha256": "db4d71c286852219b19136da486b66f89d468d55fe0141a5b8fb05a0b15f58ca",
+    "allSavedFilesReadBackAndHashVerified": true,
+    "attemptPresent": false,
+    "bindingSha256": "b1f559acacca9c89bae54052360080fb652109bb2eb74dd4223f8e16852fff61",
+    "boundFileCount": 13,
+    "builderSha256": "0a39d09f2ebe591179816f2c986a3f9738292380eb81ab73158d33f2c258402c",
+    "canonicalAssetsAndActualActorWatchValidated": true,
+    "cleanupDerivationSha256": "84685848f83fe3e9606b43db186ee2f850a42d7afac34dc3dd958c92a4d2452f",
+    "driverOnlyActualHelperDigestsChange": true,
+    "driverSha256": "eaf0c477f70372409549ec8396ba64120313cc7de6d846718365b0dced6fbb41",
+    "fileCount": 15,
+    "freshRootAndFifteenFilesUserSystemAclVerified": true,
+    "hostBusinessPayloadBytesUnchanged": true,
+    "managerOnlyTransitiveReferencesChangeWithEquivalentFormatter": true,
+    "managerSha256": "a5ba9360d07385907dffc5875c0cd6ea04bfb6d696f1348ba020e0590e87f525",
+    "nativeVerified": false,
+    "packetMembers": 170,
+    "productionReady": false,
+    "savedApprovalReferencePresent": false,
+    "savedUserApproved": false
+  },
+  "commandAdmission": {
+    "accepted": true,
+    "allOriginalSourceAndBudgetGuardsRetained": true,
+    "executionAuthorized": false,
+    "maximumCommandBytes": 65536,
+    "maximumSshAttempts": 0,
+    "nativeVerified": false,
+    "newLinuxUnits": 0,
+    "productionReady": false,
+    "receiverStdinMaximumBytes": 33554432,
+    "sourceManagerSha256": "a5ba9360d07385907dffc5875c0cd6ea04bfb6d696f1348ba020e0590e87f525",
+    "stages": {
+      "preflight": {
+        "maximumCommandBytes": 9065,
+        "minimumCommandBytes": 9065,
+        "sourceSha256": "81b94134fd94f0b77b3630bb702222f0d1fcfaaeb6f5958351b8062c623eba5d"
+      },
+      "proof_reader": {
+        "maximumCommandBytes": 21601,
+        "minimumCommandBytes": 21553,
+        "sourceSha256": "0ec80238ee5d4689326274c760d945222e21f6ac6c7c5c2f8ae314c4d7439595"
+      },
+      "receiver": {
+        "maximumCommandBytes": 19709,
+        "minimumCommandBytes": 19709,
+        "sourceSha256": "983509c13d48cf80571e8859d6b6c5c0f9bc79907c360d10986eef181cdda3c0"
+      },
+      "setup_failure": {
+        "maximumCommandBytes": 17877,
+        "minimumCommandBytes": 17649,
+        "sourceSha256": "a81c6ebe1041cc0a5e487590e846c4580648e3ed8f857fdf195c10598028b26d"
+      },
+      "setup_manager": {
+        "maximumCommandBytes": 65482,
+        "minimumCommandBytes": 65254,
+        "sourceSha256": "a5ba9360d07385907dffc5875c0cd6ea04bfb6d696f1348ba020e0590e87f525"
+      },
+      "watch": {
+        "maximumCommandBytes": 50354,
+        "minimumCommandBytes": 50202,
+        "sourceSha256": "e3fee49c803a8829dc73ea4be0378007a023540a4341115923a579e7eff307b9"
+      }
+    }
+  },
+  "correction": {
+    "cleanupWaitsOnlyForSameGenerationToReachActiveRunning": true,
+    "newSshOrNativeOperationInSourceDerivation": false,
+    "noWeakerPendingScopeBinding": true,
+    "originalEndDeadlinesCommandLimitsAndPollCadenceRetained": true,
+    "originalHeldScopeEmptyProofRequired": true,
+    "originalPeerKernelScopeBindingRequiredBeforeTaskStop": true,
+    "originalStopTargetsAndAuthorityRetained": true,
+    "otherInitStatementsAndUnchangedMethodsAstExact": true,
+    "primaryCleanupAndCloseErrorsPreservedSeparately": true,
+    "primaryFailureNotPromotedBySuccessfulCleanup": true,
+    "startupGenerationRetainedAcrossWaitAndCleanup": true,
+    "unknownOriginTerminalBeforeLiveReplacementAndDisappearanceRemainErrors": true
+  },
+  "date": "2026-11-23",
+  "limitations": [
+    "The missing raw row from the consumed native failure still prevents exact predicate attribution.",
+    "Cleanup deliberately refuses success if no same-generation running scope can be witnessed; it does not invent an empty-cgroup proof.",
+    "Synthetic peer/scope/clock fixtures exercise actual methods and ordering, not current Linux kernel or production service state.",
+    "Native SDK, SSH, actual service startup/cleanup, database compatibility, switch/rollback and production acceptance remain unverified for this candidate.",
+    "No new independent review pass or full-product regression is claimed; private source and raw evidence are excluded from GitHub synchronization."
+  ],
+  "localValidation": {
+    "failedGeneratorSourceSha256": "cc82dd55cc9e43f64fcb4bca2e87795384528f01be9df9706d9392d5723ab76c",
+    "generatorNowCapturesOriginalSegmentsBeforeInsertion": true,
+    "groups": [
+      {
+        "errors": 0,
+        "failed": 0,
+        "name": "cleanup-actual-run-wait-cleanup",
+        "passed": 15,
+        "receiptSha256": "9aa5aca21f5465ad98e7cdb0ed5f3ae00fcafde1a4a0d9c7175fd686cd686a25",
+        "seconds": 8.971594400005415
+      },
+      {
+        "errors": 0,
+        "failed": 0,
+        "name": "existing-startup-regressions-on-cleanup-source",
+        "passed": 13,
+        "receiptSha256": "7564a1c3a0750c88ef4c26eb71cf4173950780846306f1825118b52200e4d4f0",
+        "seconds": 18.084728199988604
+      },
+      {
+        "errors": 0,
+        "failed": 0,
+        "name": "closed-cleanup-carrier",
+        "passed": 9,
+        "receiptSha256": "2f1e64b2431a5a5a6ae7a056481b9c7091d0331fb5bab6f70439f431ecbba9ba",
+        "seconds": 51.31383269978687
+      }
+    ],
+    "initialGeneratorOldLineOffsetFailurePreserved": true,
+    "newFullRepositoryRun": false,
+    "newIndependentReviewPassClaimed": false,
+    "originalFailedGeneratorStructuredReceiptWasNotWritten": true,
+    "passed": 37,
+    "receiptWriterNowRetainsSourceDerivationErrorType": true,
+    "redCleanupReproductionRetained": true
+  },
+  "nextKeyDecision": "Fresh explicit native grant required: at most one SSH, six temporary unit objects and 950 seconds; original resource, stage and cleanup boundaries, fail-stop/no-retry/no-publication. Old grants are not reusable.",
+  "pendingNativeEntry": {
+    "actualChildRefusedBeforeSdkAndSsh": true,
+    "actualUnapprovedChildCode": "bridge_driver_approval_reference",
+    "actualUnapprovedChildExitCode": 1,
+    "approvalBytesUnchanged": true,
+    "executableCoordinatorWritten": false,
+    "freshUserGrantPending": true,
+    "onlyProspectiveConstantsChanged": [
+      "BASE",
+      "BINDING",
+      "DRIVER",
+      "PROPOSAL",
+      "REFERENCE",
+      "ROOT"
+    ],
+    "originalCoordinatorBodyAstUnchanged": true,
+    "positiveThirteenInputValidationInMemoryOnly": true,
+    "sharedParentChildClockValidated": true,
+    "validationReceiptSha256": "d95e64aae30d6883e09beb349d0e46f347598567bc270a79f4fbab72db1c4f49",
+    "verifyReceiptSha256": "32747dc90d4d7e012606602e77e03069025ead7f995e9a6fad1a5a9c810d920d"
+  },
+  "scope": "local interrupted-start cleanup and closed carrier; native grant pending; not published",
+  "sourceEvidence": {
+    "causeOfPriorNativeFailureClaimed": false,
+    "hostMissingBeforeHeldScopeCouldReturnWithoutCleanupError": true,
+    "hostPreviouslyAllowedStopWithoutLiveScopeBinding": true,
+    "reproducedWithActualMethodsLocally": true,
+    "watchPendingCleanupPreviouslyEnteredLiveGuardImmediately": true
+  }
+}
