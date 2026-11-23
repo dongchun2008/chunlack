@@ -1,0 +1,99 @@
+{
+  "actions": {
+    "existingUserChromeTabsUnchanged": true,
+    "livePocketIdMuseDotsAndVpsNotVisited": true,
+    "mockInferenceRequestCounterMeasured": false,
+    "noToolsOrAgentAdministrationPerformed": true,
+    "realModelCalls": 0,
+    "sendOrCollaborationButtonNotUsed": true,
+    "syntheticLocalSigninNotProductionIdentityProof": true,
+    "unsentSyntheticDraftOnly": true
+  },
+  "actualBrowserObservations": {
+    "anonymousLoginChineseToEnglishControls": true,
+    "chineseWorkspaceHelpAndFullGuideVisible": true,
+    "englishGuideCharacters": 30597,
+    "englishGuideClientWidth": 743,
+    "englishGuideContainsCurrentLanguageInstructions": true,
+    "englishGuideDoesNotContainChineseGuideHeading": true,
+    "englishGuideScrollWidth": 743,
+    "englishWorkspaceControlsAndFullGuideVisible": true,
+    "fixtureUserAInitiallyUsesOwnChineseDefault": true,
+    "fixtureUserAReloginRestoresEnglishAndOwnSingleWorkspace": true,
+    "fixtureUserBHasItsTwoSeededWorkspaceOptions": true,
+    "fixtureUserBUsesChineseRatherThanUserAEnglish": true,
+    "noHorizontalOverflowInObservedGuideViewport": true,
+    "noJavascriptDialogObservedInSeededCheck": true,
+    "ownedBrowserTabClosedAndIabTabInventoryEmpty": true,
+    "screenshotFilesExported": false,
+    "screenshotsDisplayedAsChatToolAttachments": true,
+    "screenshotsVisuallyInspected": 4,
+    "seededUnsafeLookingMessageCreatedZeroImagesAndZeroInlineOnerrorHandlers": true,
+    "signOutClearsSyntheticUnsentDraft": true,
+    "temporaryViewportOverrideUsed": false,
+    "unsentSyntheticDraftPreservedThroughHelpCloseAndLanguageSwitch": true
+  },
+  "bindings": {
+    "comparedProductManifestSha256": "4c47bc2174c73c9a6f7399da1f9eb14f4ebd907aacada8eeb8cb0e2d28abc6e7",
+    "observationReceiptSha256": "b554b0798066a4590a1ed1092205e91a52a62210d44b4ced440b2d25245d795b",
+    "pendingNativeProposalSha256": "57756a7025930e9976228612a8674d71e7f7c7ae2e9cd7dcce3cf70470396420",
+    "processAfterReceiptSha256": "4e931ce884162727c0812959e18c967ae7feeb5a38f19790bbfd95387227ba70",
+    "processBeforeReceiptSha256": "7c8feeb3ae4a659b96c8a82ea226d7f736edd3a3f444da5494ba74ef44da5a98"
+  },
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "pendingNativeCandidateUnchangedAndUnapproved": true,
+    "productionPublished": false,
+    "relayChanged": false
+  },
+  "cleanup": {
+    "observedFixtureExitCode": 0,
+    "ownedFixtureAndRuntimeChildPidAbsenceRechecked": true,
+    "ownedTabClosed": true,
+    "sameOwnedFixtureSessionReceivedStop": true,
+    "temporaryFixtureFilesRetained": true,
+    "viewportOverrideUsed": false
+  },
+  "date": "2026-11-23",
+  "limitations": [
+    "This browser run is separate from the prior35 canonical local tests; it is not a new aggregate unit-test count or a whole-repository rerun.",
+    "Only the observed default browser viewport was inspected; no new mobile/responsive breakpoint acceptance is claimed.",
+    "Four screenshots were inspected as chat tool attachments; no exported screenshot files or public screenshot artifacts are claimed.",
+    "Seeded unsafe-looking content was checked in this example only; no general security audit or fresh independent-review pass is claimed.",
+    "Real TLS/OIDC/model/vendor/device/load, native isolation chain and production acceptance remain incomplete. The older failed watch cleanup is still unconfirmed."
+  ],
+  "receiptDiagnosticCorrection": {
+    "browserOrTestsRerunForCorrection": false,
+    "guideCrLfCount": 1,
+    "initialFailedFinalizerSourceRetained": true,
+    "pythonUniversalNewlineCountMismatchCorrectedUsingOriginalUtf8Bytes": true,
+    "rawGuideUtf16UnitsMatchBrowser": 30597
+  },
+  "runtimeProvenance": {
+    "actualMaterializedProductFilesVerified": 65,
+    "agentsConfigured": 0,
+    "comparedAgainstIndependentUpdatedProductManifest": true,
+    "embeddingDisabled": true,
+    "httpCookieAndOriginMappingsAreFixtureOnly": true,
+    "notTlsOrOidcAcceptance": true,
+    "onlyConfiguredModelProviderIsLocalLoopbackMock": true,
+    "releaseOnlyCaddyTemplateNotUsedByThisHttpFixture": true,
+    "sourceHelperUnmodified": true,
+    "syntheticUsersAndWorkspacesOnly": true
+  },
+  "schemaVersion": 1,
+  "scope": "manual-real-browser-check-of-materialized-runtime-with-synthetic-local-accounts-and-model",
+  "sourceHashes": {
+    "scripts/materialize.py": "be486eaea0535cd6cd1c3049e1a2232c5454bd5d32cf8aede07aa2fb0f20b883",
+    "tests/helpers/browser-pilot-seed.cjs": "b8d8aa79f56d0d61dfeb76f4962b4102d50aa0a6db3b4c2cfe1cc2d58952908e",
+    "tests/helpers/workspace-browser-budget.cjs": "b0a0b9eadbb026b404122e40d31acc26ddc430899e18b41ca9384fc7ad340c5e",
+    "tests/helpers/workspace-browser-fixture.cjs": "be287bfe5f8e732e9fdfbf21a8581a85e0f41847aae7855dcb5e718ddf0d084d"
+  },
+  "status": "actual-local-browser-bilingual-display-and-preference-checks-passed",
+  "timezone": "Asia/Shanghai"
+}
