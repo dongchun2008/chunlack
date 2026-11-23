@@ -1,5 +1,8 @@
 # ChunLACK 交付状态与接入清单
 
+> 2026-11-23 已完成[固定提交的完整 Git 源码整合审计](verification/2026-11-23-source-branch-integration-audit.json)：开发分支 66 个产品文件与已验证副本逐字节一致。私有合并模拟保留主分支独有的 464 项路径变更，只在项目上下文和 Muse／dots 说明两份文档产生冲突；未创建实际合并或 PR。下一步可按[本地整合预览方案](superpowers/plans/2026-11-23-source-integration-preview.md)处理文档冲突；原生验收申请仍待确认。上述数字只对应审计记录中的固定提交。
+>
+
 > 2026-11-23 已补齐[本地真实浏览器显示检查](verification/2026-11-23-bilingual-real-browser-local.json)：中文／英文工作区、帮助及完整手册可见，草稿和账号语言偏好隔离得到实际观察；65 个运行文件与新产品副本一致。测试页已关闭，夹具及应用子进程已退出并复核。本轮使用合成账号、回环 HTTP 和模拟模型，不是 TLS／Pocket ID／真实模型、VPS 或生产验收；新的原生窗口申请仍待确认。
 >
 
