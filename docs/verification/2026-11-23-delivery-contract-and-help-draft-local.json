@@ -1,0 +1,222 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsReadOrChanged": false,
+    "dnsChanged": false,
+    "externalAgentCalls": 0,
+    "frozenCandidateChanged": false,
+    "frozenHelpChanged": false,
+    "fullDeliveryComplete": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "productCodeChanged": false,
+    "productionPublished": false,
+    "publicPortsChanged": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsRequests": 0
+  },
+  "conversationDesign": {
+    "currentVerifiedIndependentDestinationEstablishedByThisAudit": false,
+    "newDispatcherOrDatabaseMigrationAdded": false,
+    "path": "docs/superpowers/specs/2026-10-21-native-agent-conversation-isolation-design.md",
+    "sha256": "6687d7776a69769a7987542256041428b3391e08eda15071a85c84ad2e76c18a"
+  },
+  "date": "2026-11-23",
+  "evidenceReferences": [
+    {
+      "path": "docs/verification/2026-10-20-provider-workspace-routing-recheck.json",
+      "rerunThisStage": false,
+      "sha256": "88ef348a19fe8f38314d679636faedbf42015c662ffd89a9e4650286678d6322"
+    },
+    {
+      "path": "docs/verification/2026-10-21-native-dots-single-task-acceptance.json",
+      "rerunThisStage": false,
+      "sha256": "22a49ede9991911025bc81c4490a953d468ad5c6869772d1981a30e3dc6fb73e"
+    },
+    {
+      "path": "docs/verification/2026-10-23-real-research-rest-acceptance.json",
+      "rerunThisStage": false,
+      "sha256": "15354d46e6c7904d4f84b82e8cf97d4b0cdb957fab877fef118c7eb56f050845"
+    },
+    {
+      "path": "docs/verification/2026-10-24-research-code-release-production.json",
+      "rerunThisStage": false,
+      "sha256": "aff2d6ba8b8596394a118a08691e22b70b3ebee10e34b966b3be0d62c334d24f"
+    },
+    {
+      "path": "docs/verification/2026-10-25-interface-help-i18n-integration.json",
+      "rerunThisStage": false,
+      "sha256": "90c92a23b28196f3e70ab6bf78c739ef56708eedc3c37c4e92fa980b7a1d32b8"
+    },
+    {
+      "path": "docs/verification/2026-11-23-source-size-native-setup-pass-watch-absence-failure.json",
+      "rerunThisStage": false,
+      "sha256": "86f59f8d8dd52b3e7ff2bf543b1f2ca0ba8067e6d0487eef0ba2dece74e2b141"
+    },
+    {
+      "path": "docs/verification/2026-11-23-observer-startup-cleanup-carrier-local.json",
+      "rerunThisStage": false,
+      "sha256": "46d2d900e7544ffefcfde84f18b4ecf936f004a1ce1ff308debbd09f2ae871cc"
+    }
+  ],
+  "guideGap": {
+    "allOtherBytesPreservedByReversibleReplacement": true,
+    "implementationAnchors": [
+      {
+        "lineAnchors": [
+          50,
+          52
+        ],
+        "path": "identity/workspace-shell.js",
+        "sha256": "6594eed08e6313a00952ac6924bb4a5398c50bc8b157d4a64675af8521c67b92"
+      },
+      {
+        "lineAnchors": [
+          9,
+          52,
+          80
+        ],
+        "path": "identity/i18n.js",
+        "sha256": "df9031f79a01166ef6c8066cd8894b50bd3672953ecf64886294907680abe9a8"
+      },
+      {
+        "lineAnchors": [
+          37,
+          96,
+          230
+        ],
+        "path": "identity/help.js",
+        "sha256": "06b9466ebf1e3d5db14f79df625d3e8dad1fbd4382d4d95d28243926d5170241"
+      },
+      {
+        "lineAnchors": [
+          16,
+          17
+        ],
+        "path": "identity/help-assets.cjs",
+        "sha256": "786a2a20652bb41d3f5178a9ff7a30692b0ecbf5aeb9a905c3c6b15f0e474a56"
+      },
+      {
+        "lineAnchors": [
+          82,
+          82,
+          82
+        ],
+        "path": "integrations/mcp/events.cjs",
+        "sha256": "679fb62b8a4686cbfe375772f05e4db29a9ff81f1c2dda6f627312d13b27a636"
+      },
+      {
+        "lineAnchors": [
+          8,
+          8
+        ],
+        "path": "integrations/mcp/runtime.cjs",
+        "sha256": "614dd4fb4d6be2c3538095e3dd3f811abfec9f71e4908c407d5bc60f0a1a5d02"
+      }
+    ],
+    "linksAndCodeFencesPreserved": true,
+    "newRuntimeGuideFetchOrRenderedBrowserAcceptancePerformed": false,
+    "privatePatchSha256": "27451cc4d199da1bfcc4716ecb0e7c6854873fad8570a51c8d477a474644a3ad",
+    "privateUnappliedDrafts": [
+      {
+        "allOtherBytesPreservedByReverseCheck": true,
+        "codeFenceCountUnchanged": true,
+        "locale": "zh-CN",
+        "markdownLinksUnchanged": true,
+        "proposedBytes": 24694,
+        "proposedSha256": "25951b02a06a9c10fd78e134f15146582af8bc7fc9a19525b5136d3f196dcc38",
+        "replacementCount": 7,
+        "sourcePath": "docs/USER_GUIDE.zh-CN.md",
+        "sourceSha256": "34a0555416a5accf1be5d37bba34ee8e93b9f710b67d68557864876f61d1dc6c",
+        "withinExistingHelpByteLimit": true
+      },
+      {
+        "allOtherBytesPreservedByReverseCheck": true,
+        "codeFenceCountUnchanged": true,
+        "locale": "en",
+        "markdownLinksUnchanged": true,
+        "proposedBytes": 30848,
+        "proposedSha256": "f0498faf658ca48cee3a59cc4e3f2a9b19f9743d39e9108725c7fb311591bf5e",
+        "replacementCount": 7,
+        "sourcePath": "docs/USER_GUIDE.en.md",
+        "sourceSha256": "ac7eb188ddc76435448135e05c9531eb876ecc328938d0601968d3e2bb4e500c",
+        "withinExistingHelpByteLimit": true
+      }
+    ],
+    "productionStateSeparatedFromFeatureInstructions": true,
+    "proposedGuidesApplied": false,
+    "stalePlannedLanguageWordingConfirmedInBothFrozenGuides": true
+  },
+  "limitations": [
+    "File/hash equality establishes source identity, not current production state or feature acceptance.",
+    "Historical records were indexed and hashed, not rerun or promoted to current acceptance.",
+    "The guide drafts have direct byte/link/fence/size checks, not fresh rendered or deployed UI acceptance.",
+    "External native destinations, live account capabilities and all end-to-end integrations remain independently gated. No new independent review pass is claimed."
+  ],
+  "originalDeliveryRequirementsRetained": [
+    {
+      "availableEvidence": "frozen source and historical routing/real-model reports",
+      "remaining": "current real mixed-provider and policy-path acceptance; no new inference performed",
+      "requirement": "Provider-neutral local/cloud models, per-Agent mapping, retain Ollama"
+    },
+    {
+      "availableEvidence": "frozen source and historical local/isolated reports",
+      "remaining": "new production version and bounded end-to-end acceptance",
+      "requirement": "research sources, evidence, strict budget and late-callback isolation"
+    },
+    {
+      "availableEvidence": "frozen source and historical owner-login/isolated tests",
+      "remaining": "fresh production sign-in and multiple-real-user/workspace acceptance",
+      "requirement": "multiple real users and workspaces with Pocket ID"
+    },
+    {
+      "availableEvidence": "current source controls plus historical testing; stale frozen manual wording independently confirmed",
+      "remaining": "apply reviewed help corrections before final product freeze, rebind the changed payload and validate actual deployed UI/help",
+      "requirement": "Chinese/English interface and help"
+    },
+    {
+      "availableEvidence": "frozen 66-file product, private local gates and partial consumed native setup",
+      "remaining": "fresh authorized native chain, fresh production precheck, consistent backup, separately authorized publication and service coexistence acceptance",
+      "requirement": "lightweight deployment without disrupting existing services"
+    },
+    {
+      "availableEvidence": "historical manually triggered native task; independent-destination design still conditional",
+      "remaining": "prove a supported independent native destination and its own computer capability, then scoped end-to-end acceptance; no daily-chat fallback",
+      "requirement": "native Xuanji execution without daily-chat interference"
+    },
+    {
+      "availableEvidence": "shared connector/task foundation; no complete current-identity acceptance established",
+      "remaining": "verify the current identity and supported auth/trigger/result path, then scoped native task/evidence acceptance; no Laozhen identity inheritance",
+      "requirement": "Muse Suhua native execution"
+    },
+    {
+      "availableEvidence": "model-service/execution-node separation and generic SDK/protocol in source",
+      "remaining": "accept each requested actual device/node capability and any required real cloud/local model combination; a model endpoint or generic worker is not vendor-native acceptance",
+      "requirement": "Windows/Mac/Spark and other real nodes"
+    }
+  ],
+  "productSource": {
+    "archiveSha256": "a587528d28c998b175b26458cfb4d051beea5ccb52aa6e7bd4da393bdbbcadea",
+    "currentMatchesFrozen": 66,
+    "differences": [],
+    "embeddedLiteralsReadWithAstOnly": 3,
+    "filesChecked": 66,
+    "installerOrApplicationExecuted": false,
+    "installerSha256": "b4e27a5dc93f834ce258c81d21423f36ad2485e7db381371440bc913991568b9",
+    "payloadManifestSha256": "ae7c5db14c5e4ba9886b7ea878a417f53648c3cc1e11aa558db1c81fdadd02ef",
+    "productTestsExecutedThisStage": 0,
+    "sourceAuditReceiptSha256": "d53a016549d3bc7dfacce8a2fc33441b353a3bdf90dd069e7bbf571800233b56",
+    "sourceManifestSha256": "34d89378f273c4fd34af080c2f25bd695e2b35002fb86ad623f29018607bd3d3"
+  },
+  "releaseConsequences": {
+    "changedProductCannotReuseOldCandidateHashesOrUnmatchedCompatibilityProof": true,
+    "currentIsolatedCandidateNotAutomaticallyFinalProductionProduct": true,
+    "formalPublicationNeedsItsOwnAuthorizedScopeAndFreshEvidence": true,
+    "freshNativeGrantStillRequired": true,
+    "helpDraftApplicationMustCreateNewProductHashBinding": true,
+    "pendingIsolationCandidateAndProposalUnchanged": true,
+    "pendingProposalSha256": "dcf9896193ee89bebb514b3c20ebcaa74b6fd1cc515f320fa0d224b401ee3030"
+  },
+  "scope": "local delivery-contract and guide-source audit while fresh native grant is pending"
+}
