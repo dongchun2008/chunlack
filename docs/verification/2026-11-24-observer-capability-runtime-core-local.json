@@ -1,0 +1,90 @@
+{
+  "boundaries": {
+    "businessGrantsChanged": false,
+    "credentialsChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "vpsConnections": 0
+  },
+  "date": "2026-11-24",
+  "developmentFailuresRetainedInSessionEvidence": [
+    "Initial runtime input guard used CRLF file digests for canonical parsed JSON; corrected to distinct bindings without modifying source files.",
+    "Lost-start cleanup initially failed to retain generation binding after stop; the focused regression failed before the correction.",
+    "Windows mock initially lacked Linux open flags; flags are scoped only to the fixture.",
+    "Cgroup close failure initially hid its primary failure; both now survive in the regression."
+  ],
+  "fullDeliveryComplete": false,
+  "implementedBoundaries": [
+    "One fixed diagnostic request and argument map; drift rejected before operations.",
+    "Fast exit retained by systemd identity and exact journal invocation/PID validation.",
+    "Foreign unit, changed generation, malformed evidence and nonempty cgroup cannot be accepted.",
+    "Lost start reply still requires two same-generation ownership observations before stopping only that unit.",
+    "Primary, cleanup and final baseline errors remain separate; cgroup descriptor close errors retain the original error.",
+    "Each owned CLI helper has bounded streams and cleanup; unsupported executables rejected.",
+    "Capability mismatch remains data, with nativeCompatibilityVerified and productionReady always false.",
+    "Initial elapsed time is not reset at unit start, with a ten-second unit window and reserved cleanup."
+  ],
+  "incompleteWork": [
+    "Pinned local SSH client and executable entry have not been implemented.",
+    "The local 35-second deadline including SDK load, connection, transport close and persistence remains to be wired and tested.",
+    "Complete frozen source closure and no-approval-before-SDK execution gate remain to be integrated.",
+    "PDEATHSIG and native Linux process, mount, journal, cgroup and executable checks have not run on VPS."
+  ],
+  "preservedDiagnosticPolicy": {
+    "capabilityBoundingSet": 235,
+    "capabilityPolicyWeakened": false,
+    "cpuQuotaPerSecond": 100000,
+    "cpuWeight": 10,
+    "maximumNewUnitObjectsProposed": 1,
+    "memoryBytes": 100663296,
+    "nice": 10,
+    "originalMountTopologyClaimedIdentical": false,
+    "privateNetwork": true,
+    "tasks": 16,
+    "unitSecondsProposed": 10,
+    "zeroSwap": true
+  },
+  "readiness": {
+    "clientEntryReady": false,
+    "freshLinuxExecutionReady": false,
+    "independentReviewPassClaimed": false,
+    "nativeCompatibilityVerified": false,
+    "newExecutionWindowConsumed": false,
+    "newLinuxExecutionApprovedByThisRecord": false,
+    "productionReady": false
+  },
+  "scope": "local-observer-capability-runtime-core-and-linux-adapter-mocked-regression",
+  "sourceBinding": {
+    "exactArgumentsFileSha256": "cff0d3782aad3852fb3a5a68f1eb1292f931d020c207a9e1fe02e5807b1eac1f",
+    "exactRequestFileSha256": "6bf0f584edd0c036f61cb1b455daf0701eb26cac390f4560face963ed46f421f",
+    "oldInputFilesRewritten": false,
+    "parsedArgumentsCanonicalSha256": "60b19ecaf339293603244df81391ef01209d62f07c4c0fc6540ea21cec613e2a",
+    "parsedRequestCanonicalSha256": "00c40a3db6b7522f6fce797a5aadd701694d852997d5ce817d4ca08e633c4572",
+    "rawAndParsedBindingsRemainDistinct": true
+  },
+  "status": "core-and-adapter-implemented-client-entry-incomplete",
+  "verification": {
+    "errors": 0,
+    "failed": 0,
+    "fullProductSuiteRun": false,
+    "logSha256": "b9886269ba2b5ec96d4d044bdf6a0864cca658fce764c6c4614058846e55561c",
+    "passed": 29,
+    "realChildProcessCreationForbiddenDuringTestRun": true,
+    "realNetworkForbiddenDuringTestRun": true,
+    "receiptSha256": "0691a50347431cd3833469084df436642114538e2f1b6c54348a7ccc26787828",
+    "seconds": 0.05787409981712699,
+    "skipped": 0,
+    "sourceSha256": {
+      "native.py": "23bac7f6cc045fb6ff82060901711b43fb822546f298034ce3202cebc3cb232f",
+      "remote.py": "4e4beec8816627ca84fa98327f7f9749f9472623d5742bbb6d4bfb557459b885",
+      "test_native.py": "be28de63559228e7352fe416b1449475d461a103bdf19076867712ad5c79df2d",
+      "test_runtime.py": "702c71b6f88197cfdd7dca3ad46eb7c2d68fb1739820cc226c435dc67fc60b29"
+    },
+    "testSourceAndImplementationBytesStableAcrossRun": true,
+    "tests": 29
+  }
+}
