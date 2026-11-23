@@ -1,0 +1,147 @@
+{
+  "artifact": {
+    "archiveBytes": 1157120,
+    "archiveMembersIncludingManifest": 67,
+    "configurationOrBusinessDatabaseIncluded": false,
+    "exactArchiveReadbackVerified": true,
+    "finalReleasePackageBound": false,
+    "nativeOrReleaseProofAttached": false,
+    "productFiles": 66
+  },
+  "bindings": {
+    "baselineProductCheckSha256": "5bcd834158f2cea7e5d0b6fe15e5517042546a649e80c73e33e9d6a803a6c5ff",
+    "guideFeatureSynchronizationReceiptSha256": "60dbbfb74a6ecc87d2549f6987213e10541b628cc710b138be02bbbdcd1acb5a",
+    "guideSourceIntegrationReceiptSha256": "aa3dfb019e725940c85062f624993b43e9f5050d344183279849b028702efd97",
+    "installerSourceSha256": "b4e27a5dc93f834ce258c81d21423f36ad2485e7db381371440bc913991568b9",
+    "materializerSourceSha256": "be486eaea0535cd6cd1c3049e1a2232c5454bd5d32cf8aede07aa2fb0f20b883",
+    "pendingNativeProposalSha256": "57756a7025930e9976228612a8674d71e7f7c7ae2e9cd7dcce3cf70470396420",
+    "productArchiveSha256": "a4e92cc3c5d668a6f5176e45995ee3d0198cd043fbaa1fc5a41b43c7584debef",
+    "productManifestSha256": "4c47bc2174c73c9a6f7399da1f9eb14f4ebd907aacada8eeb8cb0e2d28abc6e7",
+    "sourceCopyReceiptSha256": "4e8b06e6d3f203c144ad5bacf325e3a25db0238f161eb8d3ed27bc86e8a7f1c0",
+    "tapLogSha256": "fc2f921d6f438e3e848ebe3bed5922a98ff3e6ccb9bbe7d27a28272e7f99cf06",
+    "updatedProductCheckSha256": "4285dfda4355a9d6af124dd33565f9c514fa0a27459447835cf6aa65c6b8813a"
+  },
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "pendingNativeApprovalStillFalse": true,
+    "pendingNativeCandidateAllBytesUnchanged": true,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "canonicalTestSourceHashes": {
+    "tests/i18n-assets.test.cjs": "c8c53c69ebf3fa823c61b39450e380fd369c9f6128fc21b5dc338817dc21411e",
+    "tests/i18n-help.test.cjs": "95ad7974dc28201bf0e1c1ab49bd6c731e016db36bed268b0dda1fc1b8423d18",
+    "tests/i18n-materialize.test.cjs": "aaf02edc3b81c29d6af2ab62d2e1fd2f28c4bef0ce1ed82c6320073f0b8dd74d"
+  },
+  "canonicalTests": {
+    "assertionsOrOriginalTimeoutsChanged": false,
+    "counts": {
+      "cancelled": 0,
+      "fail": 0,
+      "pass": 35,
+      "skipped": 0,
+      "tests": 35,
+      "todo": 0
+    },
+    "durationMs": 1396.0389,
+    "exactOriginalTestAndHelperBytes": true,
+    "processExitCode": 0,
+    "testFiles": [
+      "tests/i18n-materialize.test.cjs",
+      "tests/i18n-help.test.cjs",
+      "tests/i18n-assets.test.cjs"
+    ],
+    "wholeRepositorySuiteRerun": false
+  },
+  "date": "2026-11-23",
+  "guideSynchronization": {
+    "actualDevelopmentBranchGuideBlobsMatchedPriorLocalContentAfterLfComparison": true,
+    "branch": "cloud-agent-pilot-foundation",
+    "branchMerged": false,
+    "commit": "1ea71ce48d0a44abc6c79407eb4ed8d05ce49d6c",
+    "exactUtf8ReadbackVerified": true,
+    "guides": [
+      {
+        "path": "docs/USER_GUIDE.en.md",
+        "sha256": "f0498faf658ca48cee3a59cc4e3f2a9b19f9743d39e9108725c7fb311591bf5e"
+      },
+      {
+        "path": "docs/USER_GUIDE.zh-CN.md",
+        "sha256": "25951b02a06a9c10fd78e134f15146582af8bc7fc9a19525b5136d3f196dcc38"
+      }
+    ],
+    "mainBranchBaselineHadDifferentOldChineseGuideAndNoEnglishGuide": true,
+    "mainManualsChanged": false,
+    "productionPublished": false
+  },
+  "guides": [
+    {
+      "allOtherBytesPreservedByReverseCheck": true,
+      "locale": "en",
+      "proposedSha256": "f0498faf658ca48cee3a59cc4e3f2a9b19f9743d39e9108725c7fb311591bf5e",
+      "replacementCount": 7,
+      "sourceSha256": "ac7eb188ddc76435448135e05c9531eb876ecc328938d0601968d3e2bb4e500c"
+    },
+    {
+      "allOtherBytesPreservedByReverseCheck": true,
+      "locale": "zh-CN",
+      "proposedSha256": "25951b02a06a9c10fd78e134f15146582af8bc7fc9a19525b5136d3f196dcc38",
+      "replacementCount": 7,
+      "sourceSha256": "34a0555416a5accf1be5d37bba34ee8e93b9f710b67d68557864876f61d1dc6c"
+    }
+  ],
+  "limitations": [
+    "This is an independent local product copy, not the still-unapproved native framework package or a production release.",
+    "No rendered-browser, TLS, fresh OIDC login, native Linux, actual vendor/device/model or production acceptance was performed.",
+    "The changed product manifest/archive requires explicit final release binding and appropriate compatibility/deployment validation; old proofs were not reused.",
+    "The prior failed native window and its unconfirmed watch cleanup remain unchanged. No new independent-review pass is claimed.",
+    "Guides were synchronized only to the existing development branch; main guide/source integration and production enablement remain separate future work."
+  ],
+  "redGreen": {
+    "deltaFromFrozen": [
+      "identity/help/en.md",
+      "identity/help/zh-CN.md"
+    ],
+    "firstScopeCheckFailedOnReleaseTemplateMissing": true,
+    "initialFailedCheckerSourceRetained": true,
+    "materializerCodeChanged": false,
+    "materializerRuntimeFileCount": 65,
+    "newDesiredDifferences": [],
+    "newDesiredFileChecks": 66,
+    "oldMaterializationFailedDesiredGuideChecksumCheck": true,
+    "oldProductBytesMatchAllFrozenFiles": true,
+    "redDifferences": [
+      "identity/help/en.md",
+      "identity/help/zh-CN.md"
+    ],
+    "releaseMetadataExplicitlySupplemented": [
+      "deploy/public/Caddyfile.template"
+    ]
+  },
+  "schemaVersion": 1,
+  "sourceCopy": {
+    "applicationStarted": false,
+    "capturedFiles": 69,
+    "guideSourcesNowIntegratedIntoDevelopmentCheckout": true,
+    "legacyInstallerExecuted": false,
+    "onlyTwoGuideSourceFilesChanged": true,
+    "originalInstallerAndMaterializerSourceBytesUnchanged": true,
+    "productFileCount": 66,
+    "repositoryOriginalManualsUnchangedDuringIsolatedCopyPreparation": true,
+    "repositoryProductFilesNowMatchIndependentArtifact": 66
+  },
+  "status": "local-bilingual-guides-integrated-in-independent-product-copy",
+  "synchronizationDiagnostics": {
+    "mainManualOverwritePreventedByBaselineGate": true,
+    "notFoundResponseFormattingErrorCorrectedBeforeMutation": true,
+    "oversizedLocalReplyReadBackInUtf8WithoutRerunningTests": true,
+    "testsRerunForSynchronization": false
+  },
+  "timezone": "Asia/Shanghai"
+}
