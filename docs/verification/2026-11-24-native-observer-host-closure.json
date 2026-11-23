@@ -1,0 +1,114 @@
+{
+  "authorization": {
+    "identicalNativeRetryPerformed": false,
+    "multipleSshAllowed": true,
+    "nativeMaximumLocalSeconds": 950,
+    "originalNativeMaximumTemporaryObjects": 6,
+    "resumedByActualUser": true,
+    "sshConnectionsUsed": 3
+  },
+  "businessGrantChanges": false,
+  "credentialChanges": false,
+  "date": "2026-11-24",
+  "diagnosis": {
+    "actualPackagedLauncherSha256": "6aa7298eeac5a16cadd4aee6e5a8a5d1f4ac9705edd4f592ac555f10908aa238",
+    "observerPinnedLauncherSha256": "37d0eb1654a7139546aa1108961f5a10c2eb80b4b43fff8f0b53d4537d7a9309",
+    "originalFailClosedCheckPreserved": true,
+    "reproducedOffline": true
+  },
+  "dnsChanges": false,
+  "existingServicesRestarted": false,
+  "externalAgentCalls": 0,
+  "inactiveCandidate": {
+    "approvalFalse": true,
+    "attemptCreated": false,
+    "bindingSha256": "44e141b81f3dc520ca2688d531e63ad20798da2f779e1f2f11e47d270a6afe2a",
+    "boundInputCount": 13,
+    "executableCoordinatorWritten": false,
+    "fileCount": 15,
+    "newNativeExecutionPending": true,
+    "packetMembers": 170,
+    "packetSha256": "d75349430530df4072e3d78862e7c94305f23036469de0710834c132e937c6a0"
+  },
+  "independentPostAttemptSshObservation": {
+    "allFourActive": true,
+    "errorMessagesNotPublished": true,
+    "fixedTemporaryObserverUnitLoadState": "not-found",
+    "fixedTemporaryObserverUnitMainPidZero": true,
+    "fourProtectedServiceRecordsExactBeforeAndAfterEntireRun": true,
+    "newUnits": 0,
+    "remoteWrites": 0,
+    "sshCleanupConfirmed": true
+  },
+  "limitations": [
+    "Native attempt failed; local checks are not native compatibility or production acceptance.",
+    "No fresh independent-review pass is claimed.",
+    "SDK socket error 10038 was observed and retained; it was not classified as harmless.",
+    "Previously prepared bilingual product changes still need final source/package rebinding and production gates.",
+    "Muse Suhua and independent Xuanji task conversation routing remain unaccepted."
+  ],
+  "localRepair": {
+    "admissionAstChanges": [
+      "DRIVER_PIN",
+      "MANAGER_PIN"
+    ],
+    "canonicalAssetAndInstallReadbackVerified": true,
+    "driverLogicUnchangedExceptFixedDerivedHelperDigests": true,
+    "independentReviewPassClaimed": false,
+    "nativeRunAfterRepair": false,
+    "observerProfileAstChange": "HOST_SHA literal only",
+    "scope": "private-inactive-canonical-package-only",
+    "sourceSha256": {
+      "admission.py": "5ff79e2fc690962160f69bdd33d70b904294cc7e5adb042d55a92cee5ce94dff",
+      "candidate.py": "3f18d2d35bd7a058d60c764df718cda27ebc33e1f2db491d49cac835f086c749",
+      "test_closure.py": "9a8df2d57ae7ea98d32252f0d44adb09a5d20112f026dec93b1788d5d568b558"
+    },
+    "uidCapabilitiesNnpResourceAndTimePolicyUnchanged": true,
+    "watchAssetPinsVerified": true
+  },
+  "localVerification": {
+    "actualObserverRequestAndWireArgumentsExecutedOffline": true,
+    "canonicalAssetForgeryRejected": true,
+    "changedSourceAndPropertiesRejected": true,
+    "failed": 0,
+    "finalTests": 12,
+    "fullProductSuiteRun": false,
+    "initialExtendedSuite": {
+      "cause": "test fixture omitted canonical store dependency",
+      "errors": 1,
+      "passed": 11,
+      "resolvedBy": "stage existing packaged store file; assertions unchanged",
+      "tests": 12
+    },
+    "initialTwoRedCasesRetained": true,
+    "originalFailureRecordsRetained": true,
+    "passed": 12,
+    "seconds": 41.04623920004815,
+    "skipped": 0,
+    "unapprovedActualChildRejectedBeforeSdk": true
+  },
+  "nativeAttempt": {
+    "actualCreatedObjectCountIndependentlyEstablished": false,
+    "compatibilityVerified": false,
+    "elapsedSeconds": 20.560590900015086,
+    "lastObserverPhase": "start",
+    "observerErrorCode": "observe_actor_source_pin",
+    "observerInitialCleanupConfirmed": false,
+    "passed": false,
+    "preflightPassed": true,
+    "processExitCode": 1,
+    "proofCreated": false,
+    "receiverPassed": true,
+    "rollbackVerified": false,
+    "setupPassed": true,
+    "setupScopeEmptyConfirmed": true,
+    "successSwitchVerified": false
+  },
+  "nextCriticalGate": "A separate fresh native window for the repaired inactive package; preserve the original max6 objects/950s resource and safety constraints. Multiple SSH permission remains available for bounded read-only follow-up.",
+  "overallProductionDeliveryComplete": false,
+  "productionPublished": false,
+  "publicPortChanges": false,
+  "realModelCalls": 0,
+  "relayChanges": false,
+  "scope": "native-isolation-failure-followed-by-local-transitive-source-binding-repair"
+}
