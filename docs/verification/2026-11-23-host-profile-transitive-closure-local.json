@@ -1,0 +1,106 @@
+{
+  "bindings": {
+    "admissionSha256": "c38fedb8c37ca9f9a15204024d32d7ffcdc158bb320596da2ffbf08daeb5d42d",
+    "driverSha256": "1a6c22959e11fd83933ee9270abb7b51564fec8097deac5c34f124832e04e98c",
+    "fullFourteenTestReceiptSha256": "dc50700d46229db35a06ba476562526ef7f5a61641ae7f0caaaf85fea86b7b1d",
+    "greenLogSha256": "76d9f76d49940f63411700b14cc7d09b0f7b9c846516becfb6980e6b22cb4535",
+    "launcherProfileSha256": "6aa7298eeac5a16cadd4aee6e5a8a5d1f4ac9705edd4f592ac555f10908aa238",
+    "managerSha256": "d98c0b937fc6d7127b77cc15ef40e8d9ed810f60d6069e2f2c7893ef6b5d7104",
+    "packagedRootProfileSha256": "6dd37026bf65a8800f9dc633972f4659c4802f4e2d094f4a49da31bf82fdf547",
+    "packetSha256": "0e2ae4b08798469354e908409a45341a0739836aa8722fa957c835b7fe55e611",
+    "pendingProposalSha256": "57756a7025930e9976228612a8674d71e7f7c7ae2e9cd7dcce3cf70470396420",
+    "producerSha256": "4b90dcd9d0e963f2f3bdd90d586801a06a0ad918571b0f658c7e85cec57c733f",
+    "prospectiveCoordinatorSha256": "263bec7115dcb0236aa293cc9fe6f89a126a7d59adf3239392b2d73d7f9d6b7b",
+    "testSourceSha256": "bc2548313c85d899b9ba2e8738af396a1d0b3874aeb868844335174dbd8b5d94",
+    "verifyOnlyReceiptSha256": "77e76e88e0c7a235524948a316d2fc0aeffb76b83b0ae0728e01e40a861a79ef",
+    "watchSha256": "ebc8886f2140a2e46e0e676fbe7abfc36b28d4bba320d0d631ea8a2750b946b5"
+  },
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "cause": {
+    "failedNativeWindowRetained": true,
+    "finalPackagedRootProfileSha256": "6dd37026bf65a8800f9dc633972f4659c4802f4e2d094f4a49da31bf82fdf547",
+    "missedBindingAtFinalHostComposition": true,
+    "oldLauncherExpectedRootProfileSha256": "229164e4118422fc312cfc656789fdafd6dcfe6a3990f669684c3d32b4cc9e2b",
+    "remoteFileBytesNotRequeried": true
+  },
+  "date": "2026-11-23",
+  "limitations": [
+    "Local constructor/encoder and package tests do not prove Linux native compatibility, successful switching, rollback or production readiness.",
+    "The old native window remains consumed and its watch cleanup remains unconfirmed; no remote cleanup/absence claim is made.",
+    "No new independent review pass is claimed. Private fixture source, archives, correlation values, raw logs and candidate paths stay local.",
+    "The bilingual manual drafts remain unapplied; separate final product rebinding and delivery acceptance remain required."
+  ],
+  "localVerification": {
+    "actualRequestConstructorAndArgumentEncoderCalled": true,
+    "allPriorFailedCandidateBytesUnchanged": true,
+    "errors": 0,
+    "failures": 0,
+    "finalRelatedTests": 14,
+    "intermediateFourteenTestFixtureFailure": {
+      "errors": 1,
+      "reason": "codec fixture looked in host-support map instead of final packaged file map",
+      "recordRetained": true,
+      "tests": 14
+    },
+    "passed": 14,
+    "priorAdmissionRed": {
+      "expectedErrorCode": "host_profile_closure_admission_not_yet_bound",
+      "expectedErrorType": "ValueError",
+      "runtimeErrors": 1,
+      "tests": 1
+    },
+    "priorCoreRed": {
+      "assertionFailures": 1,
+      "expectedRuntimeError": "host_launch_root_profile_pin",
+      "runtimeErrors": 1,
+      "tests": 2
+    },
+    "seconds": 30.961204499937594,
+    "staleOldRootProfileLiteralReferencesInNewPacket": 0,
+    "systemBusAndBusctlNotInvoked": true,
+    "wholeProductSuiteRerun": false
+  },
+  "newInactiveCandidate": {
+    "actualUnapprovedChildExitCode": 1,
+    "actualUnapprovedChildRefusedBeforeSdk": true,
+    "allBytesReadBack": true,
+    "allowanceWritten": false,
+    "approvalFalse": true,
+    "attemptWritten": false,
+    "boundInputCount": 13,
+    "coordinatorAstExactExceptSixProspectiveConstants": true,
+    "executableCoordinatorWritten": false,
+    "fileCount": 15,
+    "freshUserGrantPending": true,
+    "maximumCommandBytes": 65482,
+    "packetMembers": 170,
+    "positiveThirteenInputValidationInMemoryOnly": true,
+    "receiverStdinMaximumBytes": 33554432,
+    "sixCommandShapesUnderExisting65536ByteLimit": true
+  },
+  "nextAction": "Seek a fresh scoped native grant only after this sanitized local record is synchronized; never run a pending approval or reuse the consumed attempt.",
+  "repair": {
+    "admissionOnlyTwoFixedDigestLiteralsChanged": true,
+    "allOriginalBudgetsAndResourcePoliciesRetained": true,
+    "canonicalPackagerReused": true,
+    "driverLogicAstUnchangedExceptFixedHelperHashes": true,
+    "finalRootProfileBytesUnchanged": true,
+    "launcherOnlyBaseShaLiteralChanged": true,
+    "loaderGuardRetained": true,
+    "workerCatalogPrivatePayloadAndOriginalSourceSnapshotUnchanged": true
+  },
+  "schemaVersion": 1,
+  "scope": "private-package-integration-only-no-product-code-change",
+  "status": "local-transitive-profile-binding-repaired-native-not-verified",
+  "timezone": "Asia/Shanghai"
+}
