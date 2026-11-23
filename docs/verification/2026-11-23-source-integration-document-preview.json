@@ -1,0 +1,127 @@
+{
+  "bindings": {
+    "capturedInputReceiptSha256": "2c1d567723239fade3403157e8a9b5c483b3a189f3d74ada74d09adec17f4d5c",
+    "pendingNativeProposalSha256": "57756a7025930e9976228612a8674d71e7f7c7ae2e9cd7dcce3cf70470396420",
+    "previewBuilderSha256": "b1699fd5bc8ae7d4c7fbf223c69b14a6e56d5b9ef0ef8ebbf19c90f420a6c35a",
+    "previewReceiptSha256": "5776038f7a49a6efdb3fbae60df3121551f7336ac669c5a39cc667e3a1558cab",
+    "previewVerificationSha256": "0cdd4c9940c696b1e8774c3fb14d21b53753be335394f96b7422a8da4c04055d",
+    "privatePatchSha256": "10a3c5adc20afbde5cb9be735215463e383c2736d3bf99d69b90699f33415085"
+  },
+  "boundaries": {
+    "actualMergePerformed": false,
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "pendingNativeCandidateUnchangedAndUnapproved": true,
+    "productionPublished": false,
+    "pullRequestCreated": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "remoteSourceBranchesChanged": false,
+    "repositoryConflictDocumentsApplied": false
+  },
+  "date": "2026-11-23",
+  "diagnosticCorrection": {
+    "allActualMainIntroducedLinesStillPreserved": true,
+    "initialWholeFileSubsequenceGuardWasTooBroadForThreeWayMerge": true,
+    "mainAndDevelopmentConflictBytesAndAutomaticNonConflictBytesStillExact": true,
+    "noProductOrPermissionAssertionChanged": true,
+    "originalFailedBuilderAndPartialPreviewRetained": true,
+    "twoUnchangedBaseParagraphsAlreadySupersededByDevelopmentWereNotResurrected": true
+  },
+  "documents": {
+    "PROJECT_CONTEXT.md": {
+      "allRelativeLinks": 20,
+      "bothConflictSidesKeptByteExact": true,
+      "branchChangePreservation": {
+        "development": {
+          "allIntroducedLinesPreservedInOrder": true,
+          "introducedOrReplacementLines": 155
+        },
+        "main": {
+          "allIntroducedLinesPreservedInOrder": true,
+          "introducedOrReplacementLines": 2
+        }
+      },
+      "conflictBlocksResolved": 1,
+      "missingRelativeLinks": 0,
+      "newCheckpointLinks": 5,
+      "nonConflictBytesUnchanged": true,
+      "originalAutomaticConflictFileReconstructedExactly": true,
+      "previewBytes": 35797,
+      "previewSha256": "6b6f0f9930ea240465e9755dd8f442c28f41f8371888d7157d91dd83391d4866",
+      "repositoryFileApplied": false,
+      "wholeVersionLineSubsequenceDiagnostics": {
+        "base": true,
+        "development": true,
+        "local-dirty": true,
+        "main": true
+      }
+    },
+    "docs/MUSE_DOTS_INTEGRATION.zh-CN.md": {
+      "allRelativeLinks": 20,
+      "bothConflictSidesKeptByteExact": true,
+      "branchChangePreservation": {
+        "development": {
+          "allIntroducedLinesPreservedInOrder": true,
+          "introducedOrReplacementLines": 64
+        },
+        "main": {
+          "allIntroducedLinesPreservedInOrder": true,
+          "introducedOrReplacementLines": 23
+        }
+      },
+      "conflictBlocksResolved": 1,
+      "missingRelativeLinks": 0,
+      "newCheckpointLinks": 3,
+      "nonConflictBytesUnchanged": true,
+      "originalAutomaticConflictFileReconstructedExactly": true,
+      "previewBytes": 21865,
+      "previewSha256": "467bb5dd03fe28e2cf6f265b4b8bd4dca8352d3c37adf7bdc863191965698c50",
+      "repositoryFileApplied": false,
+      "wholeVersionLineSubsequenceDiagnostics": {
+        "base": false,
+        "development": true,
+        "local-dirty": true,
+        "main": false
+      }
+    }
+  },
+  "editorialChoices": {
+    "chuxinRemainsUserForwardingSignatureNotAgent": true,
+    "historicalDatesAndGrantCountsRemainDateScoped": true,
+    "latestEvidencePlacedBeforeHistoricalSnapshots": true,
+    "localUiAndPackagingChecksNotMisrepresentedAsNativeOrProductionAcceptance": true,
+    "originalFailedNativeWindowAndUnconfirmedWatchCleanupStillDisclosed": true,
+    "suhuaIsDistinctFromHistoricalLaozhen": true,
+    "xuanjiDailyConversationNotAFallbackDestination": true
+  },
+  "fixedInputs": {
+    "automaticUnresolvedTreeOid": "32785f013dfdb030f32db5150e6f599c7395d88b",
+    "baseCommit": "08d1d1dd944581a38a5b1be00b299f41ff947537",
+    "branchHeadsNotRefreshedOrChanged": true,
+    "developmentCommit": "1ea71ce48d0a44abc6c79407eb4ed8d05ce49d6c",
+    "mainCommit": "27866b15f32ffbeac157eac6a0363dcdea7e71a6"
+  },
+  "limitations": [
+    "This is a private documentation preview against fixed older Git snapshots; future integration must refresh branch heads and preserve intervening records.",
+    "Original base and main snapshots remain captured; the preview does not resurrect obsolete unchanged-base statements that the development branch had already superseded.",
+    "No new application test, native acceptance, production release or independent-review pass is claimed.",
+    "The already-issued native isolation request remains pending and its consumed predecessors cannot be reused."
+  ],
+  "preservation": {
+    "all464MainOnlyPathChangesExact": true,
+    "all66ProductSourceBlobsUnchanged": true,
+    "allLocalDirtyLinesForTheTwoDocumentsPresentInPreview": true,
+    "allRelativeDocumentLinksResolveInFixedVirtualTree": true,
+    "allThreeDirtyLocalFilesPreservedInPrivateBackupAndUntouched": true,
+    "bothBranchesIntroducedAndReplacementLinesPreserved": true,
+    "onlyVirtualTreeChangesAreTwoConflictedDocuments": true
+  },
+  "schemaVersion": 1,
+  "status": "private-documentation-conflict-resolution-preview-verified-not-applied",
+  "timezone": "Asia/Shanghai"
+}
