@@ -1,5 +1,8 @@
 # ChunLACK 交付状态与接入清单
 
+> 2026-11-23 已补齐[本地真实浏览器显示检查](verification/2026-11-23-bilingual-real-browser-local.json)：中文／英文工作区、帮助及完整手册可见，草稿和账号语言偏好隔离得到实际观察；65 个运行文件与新产品副本一致。测试页已关闭，夹具及应用子进程已退出并复核。本轮使用合成账号、回环 HTTP 和模拟模型，不是 TLS／Pocket ID／真实模型、VPS 或生产验收；新的原生窗口申请仍待确认。
+>
+
 > 2026-11-23 手册产品副本已完成[66 文件核对及 35 项原有回归](verification/2026-11-23-help-product-copy-local.json)，两份已测手册已更新到开发分支（[中文](https://github.com/dongchun2008/chunlack/blob/1ea71ce48d0a44abc6c79407eb4ed8d05ce49d6c/docs/USER_GUIDE.zh-CN.md)、[English](https://github.com/dongchun2008/chunlack/blob/1ea71ce48d0a44abc6c79407eb4ed8d05ce49d6c/docs/USER_GUIDE.en.md)）。当前本地产品源码仅这两份手册与旧冻结版不同，其余 64 文件一致；原生候选保持原字节，尚未授权或执行。不合并 main、不代表生产已启用；后续正式包必须重新绑定新手册清单。
 >
 
