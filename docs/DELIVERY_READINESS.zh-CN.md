@@ -1,5 +1,8 @@
 # ChunLACK 交付状态与接入清单
 
+> 2026-11-23 手册产品副本已完成[66 文件核对及 35 项原有回归](verification/2026-11-23-help-product-copy-local.json)，两份已测手册已更新到开发分支（[中文](https://github.com/dongchun2008/chunlack/blob/1ea71ce48d0a44abc6c79407eb4ed8d05ce49d6c/docs/USER_GUIDE.zh-CN.md)、[English](https://github.com/dongchun2008/chunlack/blob/1ea71ce48d0a44abc6c79407eb4ed8d05ce49d6c/docs/USER_GUIDE.en.md)）。当前本地产品源码仅这两份手册与旧冻结版不同，其余 64 文件一致；原生候选保持原字节，尚未授权或执行。不合并 main、不代表生产已启用；后续正式包必须重新绑定新手册清单。
+>
+
 > 2026-11-23 后续本地修复：已补齐启动配置的内部摘要引用，[14 项相关回归及未授权入口检查通过](verification/2026-11-23-host-profile-transitive-closure-local.json)。新候选未授权、未执行；此前原生失败与清理未确认记录保留。本地通过不代表生产或原生验收通过。
 >
 
