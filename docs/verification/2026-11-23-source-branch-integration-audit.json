@@ -1,0 +1,92 @@
+{
+  "bindings": {
+    "comparedProductManifestSha256": "4c47bc2174c73c9a6f7399da1f9eb14f4ebd907aacada8eeb8cb0e2d28abc6e7",
+    "fullObjectAuditReceiptSha256": "2c6637636bc0bb81c819ca6723897d675acb0ec15fb645af3181144f5ea094e5",
+    "mergeTreeStderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "mergeTreeStdoutSha256": "ac44aee5a0b8ebf9842fd189868a39f3bdb2f4c3197acbe21d66610c6f001fbd",
+    "mergedProductAuditReceiptSha256": "f3d00275e2bb7fa178a2107a2b061a762da4f84c43171d4f37eb6b043f6e8eaa",
+    "objectAuditSourceSha256": "6f5d674fb7e94b170ecf445872d725acb2ab520034f665a9b4af3e5c328418d2",
+    "pendingNativeProposalSha256": "57756a7025930e9976228612a8674d71e7f7c7ae2e9cd7dcce3cf70470396420"
+  },
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "pendingNativeCandidateUnchangedAndUnapproved": true,
+    "productionPublished": false,
+    "pullRequestCreated": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "remoteGitRefsChanged": false
+  },
+  "date": "2026-11-23",
+  "fixedCommits": {
+    "development": "1ea71ce48d0a44abc6c79407eb4ed8d05ce49d6c",
+    "main": "27866b15f32ffbeac157eac6a0363dcdea7e71a6",
+    "mergeBase": "08d1d1dd944581a38a5b1be00b299f41ff947537",
+    "snapshotOnlyNotAnAssertionAboutFutureBranchHeads": true
+  },
+  "history": {
+    "connectorReturnedFileRows": 300,
+    "developmentOnlyCommits": 268,
+    "fullGitNoRenameDevelopmentPathChanges": 533,
+    "fullGitNoRenameMainPathChanges": 466,
+    "mainOnlyCommits": 505,
+    "mainOnlyPathChanges": 464,
+    "samePathsChangedOnBothSides": [
+      "PROJECT_CONTEXT.md",
+      "docs/MUSE_DOTS_INTEGRATION.zh-CN.md"
+    ]
+  },
+  "limitations": [
+    "All branch counts and results refer to the fixed commits, not branch heads after later evidence synchronization.",
+    "The unreferenced tree is unresolved and must not be deployed, committed as accepted integration, or treated as a successful merge.",
+    "Source-byte equality does not replace application regression, native isolation or production acceptance.",
+    "The native request remains pending and the previous failed watch cleanup remains unconfirmed. No new independent-review pass is claimed."
+  ],
+  "localInvocationDiagnostic": {
+    "checkoutHooksSubmodulesAndAutomaticMaintenanceNotRun": true,
+    "credentialHelperDisabledForPublicFetch": true,
+    "globalGitConfigurationUnchanged": true,
+    "initialPowerShellArgumentGroupingFailureBeforeGitInitialization": true,
+    "sameExistingGitBinaryUsedAfterGroupingCorrection": true
+  },
+  "nextLocalIntegrationStep": "Prepare a private three-way resolution preview for the two documentation conflicts while preserving main-only evidence and protecting existing dirty local files; recheck source manifest before any proposed main integration.",
+  "privateMergeSimulation": {
+    "actualMergeCommitOrBranchCreated": false,
+    "conflictPaths": [
+      "PROJECT_CONTEXT.md",
+      "docs/MUSE_DOTS_INTEGRATION.zh-CN.md"
+    ],
+    "containsUnresolvedDocumentationConflicts": true,
+    "exitCode": 1,
+    "mainOnlyPathChangesExactlyPreserved": 464,
+    "notAReleaseOrIntegrationCommit": true,
+    "primaryWorktreeCheckoutOrMergePerformed": false,
+    "refsInPrivateBareRepositoryStillEmpty": true,
+    "unreferencedTreeOid": "32785f013dfdb030f32db5150e6f599c7395d88b"
+  },
+  "productSourceVerification": {
+    "actualSourceBlobOid": "d89dd1947e57cad4cc34c5b60608baf4aa872900",
+    "automaticMergeChangesToTheseProductSources": 0,
+    "desiredProductFiles": 66,
+    "developmentFilesExactlyMatchLocallyVerifiedProductBytes": 66,
+    "different": 0,
+    "lineEndingEquivalentButNotExact": 0,
+    "missing": 0,
+    "newProductTestsOrNativeProofFromThisAudit": false
+  },
+  "schemaVersion": 1,
+  "scope": "remote-read-only-public-git-fetch-and-private-bare-object-analysis",
+  "status": "fixed-commit-source-integration-audit-two-documentation-conflicts-no-merge",
+  "timezone": "Asia/Shanghai",
+  "workflowInspection": {
+    "externalWebhooksOrRepositorySettingsInspected": false,
+    "trackedWorkflowFilesFound": 0,
+    "workflowDispatched": false,
+    "workflowPathsAcrossBaseMainAndDevelopment": []
+  }
+}
