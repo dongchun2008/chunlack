@@ -1,0 +1,82 @@
+{
+  "bindings": {
+    "assemblerSha256": "c71fd685b1747fded0b91a08c6d44120629cc66b6ed6c564d406ec54ae24c496",
+    "assemblyReceiptSha256": "5447ba676990092aa602c0d35dc05f28d21e77e40be8b4cc6a3b7a45c46360a5",
+    "readbackReceiptSha256": "1b7f7850ddcb234f2c6e43d75dcb113de667272899e4b7144db37c1700e84749",
+    "verifierSha256": "a306dd0d500e09afbe2fd41835e9f28cd791751ae0f9d05aa276b424d7b647e7"
+  },
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "productionServicesChanged": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "remoteGitWritesBeforeEvidenceSynchronization": 0,
+    "vpsSshConnections": 0
+  },
+  "date": "2026-11-24",
+  "fixedSourceHeads": {
+    "refs/heads/cloud-agent-pilot-foundation": "1ea71ce48d0a44abc6c79407eb4ed8d05ce49d6c",
+    "refs/heads/main": "73e10836181d64ad386532f061869c58023a37bb"
+  },
+  "limitations": [
+    "Unreferenced source tree is not a branch merge, accepted PR or release.",
+    "The previously failed native window remains failed; its consumed allowance was not reused.",
+    "The repaired inactive native framework package and this bilingual product packet remain separate artifacts; final release composition must bind and validate the actual selected sources.",
+    "Fresh database-copy compatibility, release-controller/source/configuration/dependency binding and an approved maintenance window remain necessary before production.",
+    "Muse Suhua and independent Xuanji task destination remain unaccepted."
+  ],
+  "previousTestEvidence": {
+    "date": "2026-11-23",
+    "failed": 0,
+    "passed": 35,
+    "rerunThisTurn": false,
+    "scope": "bilingual materialization/help/assets; not full product or native acceptance",
+    "skipped": 0,
+    "tapSha256": "fc2f921d6f438e3e848ebe3bed5922a98ff3e6ccb9bbe7d27a28272e7f99cf06",
+    "testSourcesHelpersInstallerAndMaterializerStillByteExact": [
+      "scripts/materialize.py",
+      "lack.py",
+      "tests/helpers/workspace-document.cjs",
+      "tests/i18n-materialize.test.cjs",
+      "tests/i18n-help.test.cjs",
+      "tests/i18n-assets.test.cjs"
+    ]
+  },
+  "product": {
+    "archiveSha256": "58cc9b0f0046f00bc74429821ec635d2756075e6f37add5b7961f12e807990da",
+    "bindingSha256": "a606550132be9d82cf979c22ebbd6fcf7720fca4c7e754b87d021bb2ef9c7026",
+    "byteExactToPreviousVerifiedBilingualProduct": true,
+    "configurationOrBusinessDatabaseIncluded": false,
+    "files": 66,
+    "independentArchiveReadbackExact": true,
+    "manifestSha256": "4c47bc2174c73c9a6f7399da1f9eb14f4ebd907aacada8eeb8cb0e2d28abc6e7",
+    "nativeOrProductionProofAttached": false,
+    "onlyNewArchiveMember": "source-product-binding.json",
+    "packetMembers": 68,
+    "releaseControllerHasNotConsumedThisPacket": true
+  },
+  "scope": "prospective-final-source-and-product-binding-local-only",
+  "sourceIntegration": {
+    "actualMergePerformed": false,
+    "bothBranchInputsStillExactToPreviouslyVerifiedPreviews": true,
+    "branchRefsChanged": false,
+    "conflictDocumentsResolvedInPrivateTree": [
+      "PROJECT_CONTEXT.md",
+      "docs/MUSE_DOTS_INTEGRATION.zh-CN.md"
+    ],
+    "mainOnlyPathChangesPreserved": 468,
+    "missingRelativeLinks": 0,
+    "priorPreviewBytesPreserved": true,
+    "pullRequestCreated": false,
+    "relativeLinksChecked": 44,
+    "unreviewedLocalResearchDocumentNotAddedToVirtualTree": true,
+    "workingSourceFilesUnchanged": true
+  },
+  "status": "prepared-and-independently-read-back-not-merged-or-published",
+  "unreferencedSourceTree": "007f3c335ae1caa96df5f3e14bf61d0b6b772c71"
+}
