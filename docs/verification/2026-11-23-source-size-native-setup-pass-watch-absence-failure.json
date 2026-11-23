@@ -1,0 +1,124 @@
+{
+  "approvedWindow": {
+    "automaticRetry": false,
+    "cpuWeight": 10,
+    "maximumLocalSeconds": 950,
+    "maximumSshAttempts": 1,
+    "maximumUnitObjects": 6,
+    "nice": 10,
+    "observerCpuPercentOfOneCore": 10,
+    "observerMemoryMiB": 96,
+    "observerTasksMax": 16,
+    "privateNetworkRequired": true,
+    "productionAllowed": false,
+    "swapAllowed": false,
+    "workGroupCpuPercentOfOneCore": 20,
+    "workGroupMemoryMiB": 192,
+    "workGroupTasksMax": 32
+  },
+  "bindings": {
+    "coordinatorSha256": "f42d5a5db32806b32d8410f74eae0800f5850ce09c030a386bcd0d78ee3a20e2",
+    "driverSha256": "08e12be21a8dc19df8d8e991649a8e76f96edbec088c4728a9715437a7bdc2b1",
+    "managerSha256": "2f4801fce797a306d20a5df96881ebcfc6229459d43cd3ad14383b32ba99e05f",
+    "observerProfileSha256": "f5938267c484e1a6b9f6acde0d9b90e4bd3d60cf4a35beb197cbe68b8c6b98bb",
+    "outcomeReceiptSha256": "6de4dcb09279959ee1ad38500df08fe2172b89dbed5d1b1f146a807bc04efcd6",
+    "setupReplySha256": "0b6487c3670d132d8b2ead9575df2c3a91a3af56b652a7431e4df3f555441891",
+    "terminalReceiptSha256": "c19a016965843d54a9b741e3988b1452bc8fa265614008b3c29036f34577042e",
+    "watchReplySha256": "5514f786bbdb155675f02d26a75fa3d1b8bdeef8d9c99b3202b025d5035766c7"
+  },
+  "boundaries": {
+    "automaticRetry": false,
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "dnsChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "productionPublished": false,
+    "publicPortsChanged": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "date": "2026-11-23",
+  "execution": {
+    "cleanupErrors": [],
+    "completedPhases": [
+      "after",
+      "before",
+      "receiver",
+      "setup"
+    ],
+    "elapsedSeconds": 20.953370600007474,
+    "ownedProcessExitCode": 1,
+    "primaryError": {
+      "code": "bridge_driver_transport_receipt",
+      "type": "RuntimeError"
+    },
+    "protectedFourServiceBaselinesEqual": true,
+    "sdkDiagnostics": {
+      "classifiedHarmless": false,
+      "events": [
+        {
+          "level": 40,
+          "socket10038Observed": true
+        }
+      ],
+      "omitted": 0,
+      "rawMessagesRecorded": false
+    },
+    "sdkThreadExitConfirmed": true,
+    "setupFailureEvidenceAttempted": false,
+    "setupTransportExitCode": 0,
+    "sharedParentChildDeadlineVerified": true,
+    "sshAllowanceConsumed": 1,
+    "sshAllowanceMaximum": 1,
+    "totalCreatedUnitObjectCountIndependentlyVerified": false,
+    "transportCleanupConfirmed": true,
+    "watchError": {
+      "code": "observe_actor_manager_absence",
+      "type": "RuntimeError"
+    },
+    "watchLastPhase": "start",
+    "watchTransportChannelClosedObserved": false,
+    "watchTransportExitCode": 1
+  },
+  "limitations": [
+    "Native setup completion is not database-copy compatibility, a successful switch, rollback or production acceptance.",
+    "The failing watch raw unit row was not captured; no specific predicate value is claimed as the actual cause.",
+    "Watch channel-closed observation was false, while final transport/SDK cleanup were confirmed; this is retained without a harmlessness claim.",
+    "No new independent review pass is claimed; raw correlation values and evidence remain private."
+  ],
+  "nativeSetupPartialEvidence": {
+    "childCleanupConfirmed": true,
+    "childCompleted": true,
+    "completed": true,
+    "exactTransportAndChildFrameValidationPassed": true,
+    "fullNativeCompatibilityVerified": false,
+    "independentBootMarkerMountInspectionPerformed": false,
+    "managerCleanupConfirmed": true,
+    "preCleanupState": {
+      "activeState": "active",
+      "subState": "exited"
+    },
+    "realActivatingStartObserved": true,
+    "realLiveGenerationWitnessed": true,
+    "retainedNormalExitVerified": true,
+    "setupScopeEmptyConfirmed": true,
+    "startingSamples": 1
+  },
+  "nextLocalAction": "Replay the current observer absence contract against prior captured native defaults, preserve the failed run, and make only a regression-proven closed compatibility change before new package/hash integration.",
+  "schemaVersion": 1,
+  "status": "native-setup-completed-watch-start-absence-contract-failed-no-production-acceptance",
+  "timezone": "Asia/Shanghai",
+  "watchPartialEvidence": {
+    "cleanupConfirmed": true,
+    "cleanupErrors": [],
+    "completed": false,
+    "initialUnitStateNotRequeriedAfterConnectionClosed": true,
+    "innerResultValidated": false,
+    "managerAbsenceContractRejected": true,
+    "observerNormalExitVerified": false,
+    "observerStartCallNotReachedFromValidatedWatchCodePath": true,
+    "rawFailingUnitRowRetained": false
+  }
+}
