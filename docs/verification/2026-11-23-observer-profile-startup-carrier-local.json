@@ -1,0 +1,171 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsReadOrChanged": false,
+    "dnsChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "productionPublished": false,
+    "publicPortsChanged": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "candidate": {
+    "admissionSourceSha256": "061d698106698c23d05777026b22b5187beefd4df3eb95fc8a196c448706e87f",
+    "approvalReferencePresent": false,
+    "attemptPresent": false,
+    "bindingSha256": "9289eb15ac3496e1176f2fe2d238dc4a15da726e15abc2acd95a69670ecbfa83",
+    "boundFileCount": 13,
+    "candidateBuilderSha256": "70dcf0cc3833f0bfb9b9f0aa27afda624fa8c6b7da51105bdbc5c93c9eb2715d",
+    "driverSha256": "2e07bff613abcc253573c8f90398e9cff090e2e9e92edd128b469ce928b1504e",
+    "fileCount": 15,
+    "freshAclUserAndSystemOnlyAfterOwnedFileNormalization": true,
+    "managerSha256": "62810b8dddce8f1ac64f2ba47386526d016728cacdf90e82040393e15f440402",
+    "nativeVerified": false,
+    "packetMembers": 170,
+    "productionReady": false,
+    "profileDerivationSha256": "73e5af4b230119b7c8b2b0c832fb130c3c79814ab3bea86af2a7c2fcb7f1d34c",
+    "savedFilesReadBackAndHashVerified": true,
+    "startupDerivationSha256": "7f2fac564b2e708822cd829c0e7c9f993eaed5bbec59abe71fb4dd9d8b9a07dc",
+    "userApproved": false
+  },
+  "changes": {
+    "absenceDescriptionEmptyOrExactUnitOnly": true,
+    "businessAndHostPayloadBytesExact": true,
+    "canonicalAssetReadbackAndTamperRejection": true,
+    "disappearanceReplacementRegressionAndTerminalBeforeLiveRefused": true,
+    "driverAstChangesLimitedToActualWatchAndPacketFixedDigests": true,
+    "formatterAstRecursiveCodeAndInstructionLineRangesVerified": true,
+    "formatterDiagnosticColumnsMayDiffer": true,
+    "frozenSourcesOverwritten": false,
+    "managerOnlyTransitiveDigestReferencesChange": true,
+    "originalReadySeconds": 5,
+    "pendingStatesExact": [
+      "activating/start-pre",
+      "activating/start",
+      "activating/start-post"
+    ],
+    "pollSeconds": 0.25,
+    "startupBusinessUserResourceAndRequestPoliciesUnchanged": true,
+    "startupIdentityPinnedWhenPresent": [
+      "Id",
+      "InvocationID",
+      "ExecMainPID",
+      "MainPID",
+      "ExecMainStartTimestampMonotonic"
+    ],
+    "unchangedLiveKernelScopeNormalExitAndCleanupChecks": true
+  },
+  "commandAdmission": {
+    "accepted": true,
+    "allOriginalSourceAndBudgetGuardsRetained": true,
+    "executionAuthorized": false,
+    "maximumCommandBytes": 65536,
+    "maximumSshAttempts": 0,
+    "nativeVerified": false,
+    "newLinuxUnits": 0,
+    "productionReady": false,
+    "receiverStdinMaximumBytes": 33554432,
+    "sourceManagerSha256": "62810b8dddce8f1ac64f2ba47386526d016728cacdf90e82040393e15f440402",
+    "stages": {
+      "preflight": {
+        "maximumCommandBytes": 9065,
+        "minimumCommandBytes": 9065,
+        "sourceSha256": "81b94134fd94f0b77b3630bb702222f0d1fcfaaeb6f5958351b8062c623eba5d"
+      },
+      "proof_reader": {
+        "maximumCommandBytes": 21601,
+        "minimumCommandBytes": 21553,
+        "sourceSha256": "0ec80238ee5d4689326274c760d945222e21f6ac6c7c5c2f8ae314c4d7439595"
+      },
+      "receiver": {
+        "maximumCommandBytes": 19709,
+        "minimumCommandBytes": 19709,
+        "sourceSha256": "9f7bf19526ca4d61e432efe710a2a7594ba4a1d106549329c4687e364bcc56ae"
+      },
+      "setup_failure": {
+        "maximumCommandBytes": 17877,
+        "minimumCommandBytes": 17649,
+        "sourceSha256": "a81c6ebe1041cc0a5e487590e846c4580648e3ed8f857fdf195c10598028b26d"
+      },
+      "setup_manager": {
+        "maximumCommandBytes": 65482,
+        "minimumCommandBytes": 65254,
+        "sourceSha256": "62810b8dddce8f1ac64f2ba47386526d016728cacdf90e82040393e15f440402"
+      },
+      "watch": {
+        "maximumCommandBytes": 49974,
+        "minimumCommandBytes": 49822,
+        "sourceSha256": "58a5caff335508b72280067dcbee0b095b9a9a8d8d825e9f6d1ebca01dfed3e7"
+      }
+    }
+  },
+  "date": "2026-11-23",
+  "limitations": [
+    "The prior native failing absence row is missing; a historical compatibility replay does not prove its actual property value.",
+    "These are local targeted and integration regressions, not a fresh full-product suite or Linux/native lifecycle acceptance.",
+    "Startup wait logic is in the combined candidate, but kernel/live/cleanup branches remain unchanged. Interrupted/stuck-start cleanup still needs local end-to-end audit before a new native proposal.",
+    "No fresh independent review pass is claimed. Existing used grants, attempts, failed directories and locks remain preserved."
+  ],
+  "nextAction": "Audit the unchanged failure/cleanup path against the new bounded startup states locally, then prepare the exact next native invocation. Do not reuse the consumed remote grant or execute the false-approved candidate.",
+  "priorNativeWindow": {
+    "actualAbsencePredicateCauseProven": false,
+    "failedRawWatchRowRetained": false,
+    "originalEvidencePreserved": true,
+    "priorSetupCompleted": true,
+    "priorWholeChainFailed": true,
+    "sshAllowanceConsumed": true
+  },
+  "scope": "local closed observer profile and bounded startup carrier integration; not a release or native acceptance",
+  "validation": {
+    "actualUnapprovedChildCode": "bridge_driver_approval_reference",
+    "actualUnapprovedChildExitCode": 1,
+    "fullRepositorySuiteRerun": false,
+    "groups": [
+      {
+        "errors": 0,
+        "failed": 0,
+        "name": "profile-contract",
+        "passed": 16,
+        "receiptSha256": "e67f7afee5174ca09468adacf4584c0c1c14692c19cc0cdfe370184c653f7f28",
+        "seconds": 1.1723672000225633
+      },
+      {
+        "errors": 0,
+        "failed": 0,
+        "name": "profile-only-carrier",
+        "passed": 13,
+        "receiptSha256": "1e0b9c0d3be828561ff7aa87022118ce67daf02d6d2e9c119ea961c54a3dd258",
+        "seconds": 30.36443980014883
+      },
+      {
+        "errors": 0,
+        "failed": 0,
+        "name": "startup-both-role-wait-loops",
+        "passed": 13,
+        "receiptSha256": "de952e78cf4db528bb6685e385af6916c6cde6ff266906f986f76c89ff5d88c8",
+        "seconds": 10.069591999985278
+      },
+      {
+        "errors": 0,
+        "failed": 0,
+        "name": "combined-carrier",
+        "passed": 9,
+        "receiptSha256": "c7fec56922d76909a88a33d0ac6e622b633a135e2ba8d351abd1af2a39a728e0",
+        "seconds": 51.04673289996572
+      }
+    ],
+    "initialRedResultsAndFixtureFailuresPreserved": true,
+    "newIndependentReviewPassClaimed": false,
+    "oldReadinessDiagnosticTests": {
+      "currentNativeStateEvidence": false,
+      "passed": 5,
+      "receiptSha256": "008c36d9466362c2a05da4cf63ca210cc6657ed10884518d98011c7d279293a8"
+    },
+    "sdkOrSshReachedByThatChild": false,
+    "targetedAndIntegrationTestsPassed": 51
+  }
+}
