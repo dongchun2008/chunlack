@@ -1,0 +1,73 @@
+{
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsReadOrChanged": false,
+    "externalAgentCalls": 0,
+    "fullDeliveryComplete": false,
+    "newLinuxUnits": 0,
+    "newSshAttempts": 0,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false
+  },
+  "change": {
+    "acceptsEmptyOrExactRequestedUnitIdOnly": true,
+    "allOtherAbsencePredicatesRetained": true,
+    "allOtherTopLevelAstNodesExact": true,
+    "baseProfileSha256": "f5938267c484e1a6b9f6acde0d9b90e4bd3d60cf4a35beb197cbe68b8c6b98bb",
+    "derivedProfileSha256": "82716c3cfd5d07265a936529a3f1a3e529792ca3860b3172038e5868bdfba7ad",
+    "foreignDescriptionsStillRefused": true,
+    "loadedServiceAndRequestPoliciesUnchanged": true,
+    "onlyDescriptionAbsenceComparisonChanged": true,
+    "originalSourceOverwritten": false
+  },
+  "date": "2026-11-23",
+  "integration": {
+    "carrierIntegrated": false,
+    "nativeVerified": false,
+    "newAllPhaseCommandAdmissionPassed": false,
+    "previous78TestsNotClaimedForNewProfile": true,
+    "productionReady": false,
+    "transitiveHashClosureVerified": false
+  },
+  "limitations": [
+    "Past native default replay proves a local compatibility defect, not the specific current native predicate value.",
+    "This is a parser-only local correction; no new full carrier, neighboring lifecycle change or native acceptance is claimed.",
+    "Fresh integration/source bindings/command-size admission and related regressions are required before any new remote proposal.",
+    "Private sources and raw evidence stay local."
+  ],
+  "localDefectEvidence": {
+    "actualCurrentFailingWatchRowRetained": false,
+    "currentNativeSpecificPredicateProven": false,
+    "oldProfileRejectsThoseDefaults": true,
+    "priorCapturedNativeFixtureSha256": "94d1547af71010cdaaa644ac97e0a76d9093403c6deffa136e7e141ffe89ea60",
+    "priorFixtureDescriptionEqualsId": true,
+    "priorFixtureLoadStateNotFound": true,
+    "replayOnlyRemapsExpectedUnitIdentity": true
+  },
+  "plan": "docs/superpowers/plans/2026-11-23-observer-absence-metadata.md",
+  "relatedNativeResult": "docs/verification/2026-11-23-source-size-native-setup-pass-watch-absence-failure.json",
+  "review": {
+    "authorSourceBoundaryInspectionPerformed": true,
+    "newIndependentReviewCompleted": false
+  },
+  "schemaVersion": 1,
+  "status": "closed-observer-absence-profile-local16-passed-not-carrier-integrated",
+  "timezone": "Asia/Shanghai",
+  "verification": {
+    "bothObserveAndHostRolesCovered": true,
+    "errors": 0,
+    "exitCode": 0,
+    "failures": 0,
+    "loadedPrivilegeResourceTimeoutDriftRefused": true,
+    "parserRedResultRetained": true,
+    "receiptSha256": "80a2db30c77336be65bfac4bf1fd77f5e5e1f59746c944e850874a7a2f3fea89",
+    "scopedLocalTests": 16,
+    "seconds": 1.3191275999415666,
+    "sourceHashes": {
+      "candidate.py": "73e5af4b230119b7c8b2b0c832fb130c3c79814ab3bea86af2a7c2fcb7f1d34c",
+      "test_profile.py": "1710efa4b01cd81d227c73ec34446da411d905f6a2a836b2c4d7d459714ba146"
+    },
+    "sourcesRechecked": true
+  }
+}
