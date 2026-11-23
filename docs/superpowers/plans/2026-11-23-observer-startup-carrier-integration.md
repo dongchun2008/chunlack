@@ -1,5 +1,7 @@
 # Observer absence and bounded startup: local integration
 
+Cleanup update (2026-11-23): interrupted-start behavior has now been replayed, minimally corrected in new private sources and included in a separately closed candidate. Thirty-seven new targeted/integration tests and local pending-entry validation passed. See [cleanup evidence and the next approval boundary](2026-11-23-observer-startup-cleanup.md). The remaining-audit paragraph below describes the earlier checkpoint; no fresh native window or publication has occurred.
+
 Status: local targeted/integration checks passed; combined candidate remains unapproved and unexecuted. No new VPS connection, Linux unit or publication.
 
 The preceding native window completed setup, then rejected watch's initial absence contract. Its raw failing unit row was not retained, so the specific current predicate cause is still unknown. The one-SSH allowance is consumed and its evidence remains intact.
