@@ -1,12 +1,12 @@
 # ChunLACK User Guide
 
-Document updated: 2026-10-25. Scope: the owner’s private ChunLACK deployment and everyday use. This revision uses saved records. No network or VPS access was performed, and current availability, configuration, grant count, and running version were not verified.
+Document reviewed: 2026-11-23. Scope: the owner’s private ChunLACK deployment and everyday use. This revision uses saved records. No network or VPS access was performed, and current availability, configuration, grant count, and running version were not verified.
 
 > Daily entry: [https://lack.chunclaw.top/](https://lack.chunclaw.top/). Sign in with Pocket ID and enter an authorized workspace. Everyday browser access requires no SSH tunnel and no changes to public ports or existing tunnels.
 >
 > Confirmed historical evidence: on 2026-10-21, dots 玄玑 completed one manually triggered native public-browser task explicitly accepted by the owner; on 2026-10-24, a human reached the workspace through the normal OIDC flow after release. The former does not establish Events, automatic task pickup, or continuous availability. The latter involved no model calls or new tasks.
 >
-> The multilingual UI is in local development and unpublished. This English guide does not mean the production page already offers language switching or that the language feature has passed acceptance.
+> This guide describes versions with Chinese/English interface and help switching. Check the actual page and release evidence to determine whether these controls are enabled on your instance. The guide itself is not release acceptance evidence.
 >
 > 老镇 is the historical Muse identity, which the user says is no longer available. The new identity, 苏婳, has not passed connection or native-task acceptance. Never rename historical 老镇 nodes, grants, or evidence to 苏婳, or use 玄玑’s success to establish 苏婳’s availability. Full platform delivery remains incomplete.
 
@@ -87,13 +87,13 @@ The table describes existing controls. The 2026-10-24 login record confirms that
 
 On 2026-10-19, the Add Agent form was opened and canceled on the production page without creating an Agent or changing configuration. This is historical page interaction, not a new check for this revision. The 2026-10-24 record shows two visible Agents; it does not establish their model configuration, task permissions, or present count.
 
-### Multilingual UI: in local development, unpublished
+### Interface and help language
 
-The proposed language preference is saved per human user and browser. It is not a workspace setting or an Agent’s model, system-prompt, or output-language setting. Do not assume that different browsers automatically synchronize preferences. Exact storage and switching behavior still require implementation and acceptance.
+In a workspace with this feature, use the “Interface language” selector at the top and choose “中文” or “English”. The preference is stored separately for each human account in the current browser; signed-out pages use an anonymous preference. If browser storage is unavailable, the choice may last only for the current page. It does not automatically synchronize across browsers or devices or change the workspace, Agent model, system prompt, or output language.
 
 Language switching concerns interface labels, buttons, and notices. It does not automatically translate chat messages, research conclusions, attachments, logs, historical evidence, or node and grant names. Original content and evidence retain their language; switching the interface does not mean their contents have been translated or verified.
 
-This guide has no published acceptance evidence for the language control’s location, coverage, missing-translation fallback, or preference persistence. Follow the actual production page. Chinese control names and their English explanations in the guides do not promise that English labels already exist in production.
+Open workspace help to load the complete guide in the selected Chinese/English interface language. Missing interface translations may fall back to Chinese base text or the original label. If the guide has not loaded, close help and open it again. Availability on your instance depends on the actual page and corresponding release evidence.
 
 ## 4. Adding and assigning work Agents
 
@@ -135,7 +135,7 @@ A private platform can manage multiple workspaces, and one workspace can have mu
 - Manage Agent task assignments separately from human and node access permissions.
 - Workspaces, channels, and tasks organize work. Changing research topics usually does not require a separate platform installation.
 - After switching workspaces, check members, model authorization, and task scope again. Do not assume automatic sharing.
-- The proposed interface-language preference belongs to a human user and their browser; workspace or Agent settings do not make it shared configuration.
+- The interface-language preference belongs to a human user and their browser; workspace or Agent settings do not make it shared configuration.
 
 ## 6. Models, tools, and materials
 
@@ -243,7 +243,7 @@ Upgrades and rollbacks still require a maintenance window, resource checks, and 
 | External MCP is unauthorized | Check client, account, workspace grant, and revocation or expiry; do not enable anonymous access or repeat login in a loop |
 | 玄玑 succeeded before but will not pick up work now | The historical pilot grant was revoked and Events were not enabled. A new task needs separate bounded authorization; this is not a continuously available service |
 | The Muse identity or name differs | 老镇 is historical and unavailable; 苏婳 needs independent acceptance. Do not rename historical nodes or inherit old grants |
-| No language switch or English UI is visible | The multilingual UI is in local development and unpublished; the preference is proposed per human user and browser |
+| No language switch or English UI is visible | Check whether your instance has a release with the language control, then use the top “Interface language” selector |
 | Messages did not translate after changing language | Interface language does not automatically translate messages, attachments, or evidence; original content is preserved |
 | Replies are slow, duplicated, or more costly | Check participant count, collaboration mode, loops, context, and output budgets; first stop repeated submissions |
 
