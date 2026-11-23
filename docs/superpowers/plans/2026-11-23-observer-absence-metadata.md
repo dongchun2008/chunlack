@@ -1,5 +1,7 @@
 # Closed observer-absence metadata compatibility
 
+Integration update (2026-11-23): the profile comparison and separately regression-proven bounded startup handling have now been combined in a new unapproved local carrier. See [integration status and remaining cleanup audit](2026-11-23-observer-startup-carrier-integration.md). The parser-only scope and next-step description below are the earlier checkpoint, not the latest combined-package state. No new native execution or publication occurred.
+
 ## Native evidence and limitation
 
 The [latest native window](../../verification/2026-11-23-source-size-native-setup-pass-watch-absence-failure.json) completed setup: an initial activating/start sample, real live generation, retained normal exit, child/manager cleanup and empty setup scope were verified. Watch then failed at its start-phase unit-absence contract. Its cleanup and the four protected service baselines passed; the whole chain did not. The one-SSH allowance is consumed, without retry or publication.
