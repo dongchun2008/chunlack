@@ -1,0 +1,29 @@
+{
+  "accepted": true,
+  "checks": 4,
+  "errors": 0,
+  "failures": 0,
+  "frozenOldAndNewFilesUnchanged": true,
+  "nativeFixVerified": false,
+  "newLinuxUnits": 0,
+  "newNetworkCalls": 0,
+  "originalObserverMaskMeasured": false,
+  "productionPublished": false,
+  "realChildProcesses": 0,
+  "recordSha256": "65b99bbe790850cf8a86e12981b6b0cc46214fd925663e0cba4a632000032078",
+  "scope": "offline-observed-mask-replay-with-synthetic-process-and-journal-identity",
+  "testLogSha256": "374ccc8ab0d52e7b6081ed8f09172d8e68f7a18afec3e47b94c853bc3b7e08bb",
+  "testSourceSha256": "e9fa6b87136c1089bb4dda2d8fbb4c869beccb3560068717995c0d9f8a896f0f",
+  "date": "2026-11-24",
+  "checksCovered": [
+    "Actual failed-package guard rejects observed CAP_SETUID deficit before downstream reads.",
+    "Candidate runtime preserves the observed masks while completing diagnostic-only cleanup.",
+    "Forged producer policy pass is rejected without skipping cleanup.",
+    "Client recomputes mismatch and rejects forged policy summary."
+  ],
+  "limitations": [
+    "Only capability values are replayed. Process, journal, cgroup and service identities are synthetic; this is not a new native execution.",
+    "This does not prove the proposed no-setuid change restores capabilities on the installed systemd build.",
+    "Previous one-SSH/one-unit allowance remains consumed; no new execution approval is created."
+  ]
+}
