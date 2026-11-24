@@ -1,0 +1,37 @@
+{
+  "accepted": true,
+  "changedProductFiles": [
+    "product/identity/help/en.md",
+    "product/identity/help/zh-CN.md"
+  ],
+  "controlFilesUnchanged": 8,
+  "dependencyLockUnchanged": true,
+  "externalAgentCalls": 0,
+  "frozenPacketsUnchanged": true,
+  "fullDeliveryComplete": false,
+  "limitations": [
+    "Rebind the exact selected 75-file composition through the native package hash closure.",
+    "Bind current production configuration and installed dependencies in the approved preparation scope.",
+    "Obtain fresh compatibility and native switch/rollback evidence for the selected composition before maintenance."
+  ],
+  "linuxUnits": 0,
+  "nativeAcceptanceForSelectedComposition": false,
+  "preparationHelpersUnchanged": 1,
+  "productFiles": 66,
+  "productOrControllerSourceModified": false,
+  "productionPublished": false,
+  "realModelCalls": 0,
+  "referenceManifestVerified": true,
+  "releasePacketConsumable": false,
+  "scope": "inactive-final-product-control-source-selection-not-a-release-packet",
+  "selectedManifestSha256": "cc08facbda34991605d6dfd02d4fc93bf369c0d5586ee53d13f010c016db2732",
+  "selectionReadbackExact": true,
+  "sourceProductBindingVerified": true,
+  "sourceSha256": "3cebfae9ac4f08086847a68e2abcd608f7880fc8f9312b63f9ae212b980a750a",
+  "sshConnections": 0,
+  "totalSelectedFiles": 75,
+  "unchangedProductFiles": 64,
+  "date": "2026-11-24",
+  "auditMeaning": "Structural source selection and actual archive/manifest byte checks, not an application test suite or native acceptance.",
+  "testsRerun": false
+}
