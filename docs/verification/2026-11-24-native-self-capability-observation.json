@@ -1,0 +1,101 @@
+{
+  "automaticRetry": false,
+  "bindings": {
+    "approvalSha256": "cd255eb5870986bf9ba591ebd71d4eb73b04efaa868c44db68946efabefa91d4",
+    "entryReceiptSha256": "289e4a186216942de452a5e9a3b813fed805fbb2125d402e2128e215fcfd2899",
+    "remoteReceiptSha256": "1865768e21b3d9746e33013fa6b4816f90955c57594418b159204ac1ceb6e46c",
+    "sourceManifestSha256": "56c2c8fee4693090061ddf839ee5efb4db4e1aa22aa838a35fa21099dafdabdf",
+    "terminalReceiptSha256": "113d683e25378459029fe240dc47238b3bab9332629ec84a7195789be8f89663"
+  },
+  "businessAuthorizationChanged": false,
+  "capabilityPolicyMatched": false,
+  "cgroupMatchesRequestedUnit": true,
+  "credentialsChanged": false,
+  "date": "2026-11-24",
+  "dedicatedCgroupAbsent": true,
+  "diagnosticEvidenceCollected": true,
+  "expectedCapabilities": {
+    "CapAmb": 0,
+    "CapBnd": 235,
+    "CapEff": 235,
+    "CapInh": 0,
+    "CapPrm": 235
+  },
+  "externalAgentCalls": 0,
+  "fullDeliveryComplete": false,
+  "identityPolicyMatches": true,
+  "limitations": [
+    "The diagnostic completed; matching the original capability policy failed and is not a native release acceptance.",
+    "The exited original observer was not sampled; the diagnostic intentionally has different host-control mounts.",
+    "Upstream systemd v255 exec-invoke.c has a matching CAP_SETUID-drop branch for credential switching with seccomp and empty ambient capabilities. Applicability to the exact installed Ubuntu build and a minimal flag change require a separate single-variable validation.",
+    "Do not relax the capability guard, disable NNP or seccomp, add ambient capabilities, change production units, or reuse this consumed attempt."
+  ],
+  "localInvocationElapsedSeconds": 3.7447751,
+  "localLimitSeconds": 35,
+  "managerObservedCapabilities": {
+    "CapAmb": 0,
+    "CapBnd": 235,
+    "CapEff": 235,
+    "CapInh": 0,
+    "CapPrm": 235
+  },
+  "missingBit128Name": "CAP_SETUID",
+  "missingCapabilityBits": {
+    "CapAmb": 0,
+    "CapBnd": 0,
+    "CapEff": 128,
+    "CapInh": 0,
+    "CapPrm": 128
+  },
+  "nativeCompatibilityVerified": false,
+  "newUnitsStarted": 1,
+  "preparationIssue": {
+    "correctedOnlyNewDirectoryDacl": true,
+    "localAclCommandFailedBeforeSsh": true,
+    "privateDirectoryRestrictedToUserAndSystem": true,
+    "remoteAttemptRepeated": false
+  },
+  "primarySourceReferences": [
+    {
+      "relevance": "CAP_SETUID is capability number 7, mask 128.",
+      "url": "https://raw.githubusercontent.com/torvalds/linux/v6.8/include/uapi/linux/capability.h"
+    },
+    {
+      "relevance": "Inspect context_has_seccomp, needs_setuid and keep_seccomp_privileges CAP_SETUID-drop branch; mechanistic lead, not proof of the installed build.",
+      "url": "https://raw.githubusercontent.com/systemd/systemd/v255/src/core/exec-invoke.c"
+    }
+  ],
+  "productionPublished": false,
+  "productionReady": false,
+  "protectedServicesBeforeAfterExact": true,
+  "realModelCalls": 0,
+  "relayChanged": false,
+  "remoteLimitSeconds": 20,
+  "resourceLimits": {
+    "capabilityBoundingSet": 235,
+    "cpuPercentOfOneCore": 10,
+    "cpuWeight": 10,
+    "memoryBytes": 100663296,
+    "nice": 10,
+    "noNewPrivileges": true,
+    "privateNetwork": true,
+    "swapBytes": 0,
+    "tasks": 16
+  },
+  "scope": "single-authorized-systemd-self-capability-observation",
+  "sdkSocket10038ClassifiedHarmless": false,
+  "sdkSocket10038Observed": true,
+  "sshConnections": 1,
+  "sshSdkCleanupConfirmed": true,
+  "unitCleanupConfirmed": true,
+  "unitElapsedSeconds": 1.461272357031703,
+  "unitFinalLoadState": "not-found",
+  "unitLimitSeconds": 10,
+  "unitObservedCapabilities": {
+    "CapAmb": 0,
+    "CapBnd": 235,
+    "CapEff": 107,
+    "CapInh": 0,
+    "CapPrm": 107
+  }
+}
