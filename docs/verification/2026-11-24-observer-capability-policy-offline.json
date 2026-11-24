@@ -1,0 +1,163 @@
+{
+  "accepted": true,
+  "actualObserverCapabilityTupleMeasured": false,
+  "caseResults": [
+    {
+      "expectedPolicyMatch": true,
+      "guardAccepted": true,
+      "guardErrorCode": null,
+      "name": "expected",
+      "probeErrorCode": null,
+      "probePolicyMatched": true
+    },
+    {
+      "expectedPolicyMatch": true,
+      "guardAccepted": true,
+      "guardErrorCode": null,
+      "name": "uppercase_hex",
+      "probeErrorCode": null,
+      "probePolicyMatched": true
+    },
+    {
+      "expectedPolicyMatch": false,
+      "guardAccepted": false,
+      "guardErrorCode": "root_dispatch_kernel_caps",
+      "name": "CapEff_mismatch",
+      "probeErrorCode": null,
+      "probePolicyMatched": false
+    },
+    {
+      "expectedPolicyMatch": false,
+      "guardAccepted": false,
+      "guardErrorCode": "root_dispatch_kernel_caps",
+      "name": "CapEff_malformed",
+      "probeErrorCode": "self_probe_capability",
+      "probePolicyMatched": false
+    },
+    {
+      "expectedPolicyMatch": false,
+      "guardAccepted": false,
+      "guardErrorCode": "root_dispatch_kernel_caps",
+      "name": "CapPrm_mismatch",
+      "probeErrorCode": null,
+      "probePolicyMatched": false
+    },
+    {
+      "expectedPolicyMatch": false,
+      "guardAccepted": false,
+      "guardErrorCode": "root_dispatch_kernel_caps",
+      "name": "CapPrm_malformed",
+      "probeErrorCode": "self_probe_capability",
+      "probePolicyMatched": false
+    },
+    {
+      "expectedPolicyMatch": false,
+      "guardAccepted": false,
+      "guardErrorCode": "root_dispatch_kernel_caps",
+      "name": "CapBnd_mismatch",
+      "probeErrorCode": null,
+      "probePolicyMatched": false
+    },
+    {
+      "expectedPolicyMatch": false,
+      "guardAccepted": false,
+      "guardErrorCode": "root_dispatch_kernel_caps",
+      "name": "CapBnd_malformed",
+      "probeErrorCode": "self_probe_capability",
+      "probePolicyMatched": false
+    },
+    {
+      "expectedPolicyMatch": false,
+      "guardAccepted": false,
+      "guardErrorCode": "root_dispatch_kernel_caps",
+      "name": "CapInh_mismatch",
+      "probeErrorCode": null,
+      "probePolicyMatched": false
+    },
+    {
+      "expectedPolicyMatch": false,
+      "guardAccepted": false,
+      "guardErrorCode": "root_dispatch_kernel_caps",
+      "name": "CapInh_malformed",
+      "probeErrorCode": "self_probe_capability",
+      "probePolicyMatched": false
+    },
+    {
+      "expectedPolicyMatch": false,
+      "guardAccepted": false,
+      "guardErrorCode": "root_dispatch_kernel_caps",
+      "name": "CapAmb_mismatch",
+      "probeErrorCode": null,
+      "probePolicyMatched": false
+    },
+    {
+      "expectedPolicyMatch": false,
+      "guardAccepted": false,
+      "guardErrorCode": "root_dispatch_kernel_caps",
+      "name": "CapAmb_malformed",
+      "probeErrorCode": "self_probe_capability",
+      "probePolicyMatched": false
+    },
+    {
+      "expectedPolicyMatch": false,
+      "guardAccepted": false,
+      "guardErrorCode": "root_dispatch_kernel_duplicate",
+      "name": "duplicate",
+      "probeErrorCode": "self_probe_duplicate",
+      "probePolicyMatched": false
+    },
+    {
+      "expectedPolicyMatch": false,
+      "guardAccepted": false,
+      "guardErrorCode": "root_dispatch_kernel_fields",
+      "name": "missing",
+      "probeErrorCode": "self_probe_fields",
+      "probePolicyMatched": false
+    },
+    {
+      "expectedPolicyMatch": false,
+      "guardAccepted": false,
+      "guardErrorCode": "root_dispatch_kernel_caps",
+      "name": "oversized_hex",
+      "probeErrorCode": "self_probe_capability",
+      "probePolicyMatched": false
+    },
+    {
+      "expectedPolicyMatch": false,
+      "guardAccepted": false,
+      "guardErrorCode": "root_dispatch_kernel_identity",
+      "name": "wrong_uid",
+      "probeErrorCode": null,
+      "probePolicyMatched": false
+    },
+    {
+      "expectedPolicyMatch": false,
+      "guardAccepted": false,
+      "guardErrorCode": "root_dispatch_kernel_identity",
+      "name": "nnp_disabled",
+      "probeErrorCode": null,
+      "probePolicyMatched": false
+    }
+  ],
+  "checksPassed": 17,
+  "dispatchMemberSha256": "3d89994da5f83e244d86e96d0f1f1d5a4ba018a1bc634622b159db3db260b950",
+  "frozenInputsUnchanged": true,
+  "guardSamplesSelfStatus": true,
+  "limitations": [
+    "Synthetic policy inputs only; original low-level file reader and Linux/systemd were not executed.",
+    "Matching guard/probe decisions do not determine which actual capability caused the original rejection."
+  ],
+  "linuxUnits": 0,
+  "nativeCompatibilityVerified": false,
+  "networkCalls": 0,
+  "packetSha256": "d75349430530df4072e3d78862e7c94305f23036469de0710834c132e937c6a0",
+  "probeSha256": "37fd888d0da962196aab7f698bdd8d6fab370379646d14f26b78c1935dce66a4",
+  "productionPublished": false,
+  "rootCauseProven": false,
+  "scope": "offline-frozen-guard-probe-policy-comparison",
+  "snapshotAstSha256": "069c8f779575659bbe3ceb35d442ef4d4c14b5ba9af24f4bbae52253aef0f74b",
+  "date": "2026-11-24",
+  "auditSourceSha256": "5da93372cb5689821a59c62e76c08cf297e4681877de017be02026bc9baa02e2",
+  "sourceModified": false,
+  "testsRerunFromPreviousSuite": false
+}
