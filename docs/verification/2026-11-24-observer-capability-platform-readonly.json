@@ -1,0 +1,92 @@
+{
+  "allFourServicesActive": true,
+  "authorization": "standing multiple-SSH permission; no new Linux unit requested or started",
+  "binaries": {
+    "/usr/bin/busctl": {
+      "fileCapabilitiesPresent": false,
+      "mode": 493,
+      "ownerRoot": true,
+      "realPath": "/usr/bin/busctl"
+    },
+    "/usr/bin/journalctl": {
+      "fileCapabilitiesPresent": false,
+      "mode": 493,
+      "ownerRoot": true,
+      "realPath": "/usr/bin/journalctl"
+    },
+    "/usr/bin/python3": {
+      "fileCapabilitiesPresent": false,
+      "mode": 493,
+      "ownerRoot": true,
+      "realPath": "/usr/bin/python3.12"
+    },
+    "/usr/bin/systemctl": {
+      "fileCapabilitiesPresent": false,
+      "mode": 493,
+      "ownerRoot": true,
+      "realPath": "/usr/bin/systemctl"
+    }
+  },
+  "bindings": {
+    "exactPrerequisiteRemoteSourceSha256": "9b922554a417f4c191089a85dd012a8d0c08ad7f9d4b0b52d15636416f80e9b9",
+    "firstReceiptSha256": "4909ab5170169366464febfc7eaa5656d9ccfc7c0e8430c6f743cb1542382c9a",
+    "prerequisiteReceiptSha256": "56ad66f8bd8e0bf7915d804f7ae2497fcecf8b07a9f27a0250074ffa83e61ee7",
+    "readonlyWrapperSourceSha256": "c83e75c2d7f58022124d37587272716a437dcde78b123a513610db49b4b60473"
+  },
+  "bothSshCleanupConfirmed": true,
+  "contextMeasured": "SSH child restricted by the previously used nice/setpriv wrapper; not the exited systemd observer",
+  "date": "2026-11-24",
+  "existingAncestorSlicesActive": [
+    "chunlack.slice",
+    "chunlack-owned.slice",
+    "chunlack-owned-rehearsal.slice"
+  ],
+  "fourProtectedServiceRecordsExactAcrossBothConnections": true,
+  "fullDeliveryComplete": false,
+  "journalHelpFeatures": {
+    "noPager": true,
+    "outputFields": true
+  },
+  "limitations": [
+    "Both queries were read-only and created no unit; the proposed ten-second systemd diagnostic still needs a fresh key execution confirmation.",
+    "Passing capability checks in an SSH management process does not establish the capabilities of the exited observer.",
+    "No production publication, credential, business authorization, DNS, public port or Relay changes; no real model or external Agent calls.",
+    "SDK socket 10038 was observed and not classified as harmless."
+  ],
+  "localElapsedSeconds": [
+    2.358303900109604,
+    1.719488900154829
+  ],
+  "localLimitSecondsPerConnection": 35,
+  "managementKernel": {
+    "capabilities": {
+      "CapAmb": 0,
+      "CapBnd": 235,
+      "CapEff": 235,
+      "CapInh": 0,
+      "CapPrm": 235
+    },
+    "gidAllZero": true,
+    "nice": 10,
+    "noNewPrivileges": true,
+    "uidAllZero": true
+  },
+  "newLinuxUnits": 0,
+  "observationMeaning": {
+    "exitedObserverCapabilityTupleMeasured": false,
+    "managementContextMeetsExpectedCapabilityTuple": true,
+    "nativeCompatibilityVerified": false,
+    "originalRootCauseProven": false,
+    "pythonFileCapabilityTagCauseObserved": false,
+    "systemdUnitContextEquivalentToSshClaimed": false
+  },
+  "productionPublished": false,
+  "remoteFilesWritten": 0,
+  "remoteLimitSecondsPerConnection": 20,
+  "scope": "authorized-readonly-ssh-platform-and-diagnostic-prerequisites",
+  "sshConnections": 2,
+  "systemdVersions": {
+    "/usr/bin/journalctl": "systemd 255 (255.4-1ubuntu8.8)",
+    "/usr/bin/systemctl": "systemd 255 (255.4-1ubuntu8.8)"
+  }
+}
