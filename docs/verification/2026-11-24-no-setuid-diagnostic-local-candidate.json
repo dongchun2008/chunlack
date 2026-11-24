@@ -1,0 +1,102 @@
+{
+  "actualLocalCliChecks": [
+    {
+      "accepted": true,
+      "exitCode": 0,
+      "name": "verify-only",
+      "sdkLoaded": false,
+      "stderrBytes": 0
+    },
+    {
+      "accepted": true,
+      "exitCode": 1,
+      "name": "unapproved-execute",
+      "sdkLoaded": false,
+      "stderrBytes": 0
+    },
+    {
+      "accepted": true,
+      "exitCode": 1,
+      "name": "unknown-argument",
+      "sdkLoaded": false,
+      "stderrBytes": 0
+    }
+  ],
+  "binding": {
+    "clientSha256": "d7b645be58aa253ebb3e8aa83afc987c4201bdba55b9247d2cfd69e38f6e01a5",
+    "combinedRemoteSha256": "dd5c18ace9aed62b3aa8106dc689325e23fe52d47ea6761c37344e94fedadb72",
+    "commandBytes": 52009,
+    "currentAssemblerSha256": "9b3af4f616ab15f62f92420a3562a6425c130afb59a2de1f9954844a40abee5e",
+    "entrySha256": "e504089b18bbbc9e5d96d0763ff67cab87b0da38b4eb1616b935287a9012e190",
+    "filesBound": 21,
+    "manifestSha256": "b43960c82b1e5c89536bfb848af54f6bd525ef6072a696132068343b41fbcd4b",
+    "planSha256": "f1b7c5eef28619c03113f35331139750578c931ad3700a0c2e57fdd82fea2671",
+    "probeSha256": "37fd888d0da962196aab7f698bdd8d6fab370379646d14f26b78c1935dce66a4",
+    "testLogSha256": "45e7df0400fbdebe45b414c6e2b4c4e09302f808629e9219393c7153e830521d"
+  },
+  "boundaries": {
+    "businessAuthorizationChanged": false,
+    "credentialsChanged": false,
+    "externalAgentCalls": 0,
+    "newUnits": 0,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "sshConnections": 0
+  },
+  "correctionPreserved": {
+    "assertionsPreserved": true,
+    "cause": "two raw fixture digests still referenced the previous request",
+    "initialRunnerFailures": 1,
+    "onlyTestDigestLiteralsUpdated": 2
+  },
+  "date": "2026-11-24",
+  "fullDeliveryComplete": false,
+  "limitations": [
+    "This is a single-variable hypothesis candidate, not a demonstrated installed-systemd fix.",
+    "Root User/Group 0 is fixed; no-setuid must not be applied to arbitrary non-root jobs.",
+    "The prior one-SSH/one-unit observation is consumed. This record creates no new execution grant.",
+    "The selected final product/control composition still requires full native binding and production acceptance."
+  ],
+  "limitsUnchanged": {
+    "ambientCapabilities": 0,
+    "automaticRetry": false,
+    "capabilityBoundingSet": 235,
+    "cpuPercentOfOneCore": 10,
+    "localSeconds": 35,
+    "maximumSshAttempts": 1,
+    "maximumUnits": 1,
+    "memoryBytes": 100663296,
+    "noNewPrivileges": true,
+    "privateNetwork": true,
+    "remoteSeconds": 20,
+    "seccomp": true,
+    "tasks": 16,
+    "unitSeconds": 10,
+    "zeroSwap": true
+  },
+  "redGreen": {
+    "baselineChecks": 4,
+    "expectedBaselineFailures": 1,
+    "finalProbeAndPolicyChecks": 12
+  },
+  "runnerMocks": {
+    "errors": 0,
+    "failures": 0,
+    "networkAndRealChildProcessesForbidden": true,
+    "passed": 46,
+    "seconds": 1.637705400120467,
+    "skipped": 0
+  },
+  "scope": "inactive-root-diagnostic-no-setuid-local-candidate",
+  "sourceReview": {
+    "clientOnlySixPathOrDigestLiteralsChanged": true,
+    "entryOnlyClientPinChanged": true,
+    "frozenBaselineUnchanged": true,
+    "independentReviewPassClaimed": false,
+    "nativeAdapterExact": true,
+    "probeExact": true,
+    "remoteOnlyInputDigestLiteralsChanged": true
+  },
+  "status": "locally-verified-pending-fresh-native-approval"
+}
