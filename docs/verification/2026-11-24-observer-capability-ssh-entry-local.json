@@ -1,0 +1,115 @@
+{
+  "actualLocalEntryChecks": [
+    {
+      "accepted": true,
+      "elapsedSeconds": 0.18370949989184737,
+      "exitCode": 0,
+      "expectedExitCode": 0,
+      "name": "verify-only",
+      "sdkLoaded": false,
+      "stderrBytes": 0
+    },
+    {
+      "accepted": true,
+      "elapsedSeconds": 0.20236280001699924,
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "unapproved-execute",
+      "sdkLoaded": false,
+      "stderrBytes": 0
+    },
+    {
+      "accepted": true,
+      "elapsedSeconds": 0.1223169001750648,
+      "exitCode": 1,
+      "expectedExitCode": 1,
+      "name": "unknown-argument",
+      "sdkLoaded": false,
+      "stderrBytes": 0
+    }
+  ],
+  "boundaries": {
+    "businessGrantsChanged": false,
+    "credentialsChanged": false,
+    "existingServicesChanged": false,
+    "externalAgentCalls": 0,
+    "independentReviewPassClaimed": false,
+    "newLinuxUnits": 0,
+    "productionPublished": false,
+    "realModelCalls": 0,
+    "relayChanged": false,
+    "sshConnections": 0
+  },
+  "date": "2026-11-24",
+  "entryGates": {
+    "atomicOneUseLeaseAndNoRetry": true,
+    "capabilityMismatchCannotBecomeNativeAcceptance": true,
+    "cgroupKernelEvidenceAndExactServiceBaselinesRequiredForCompletedObservation": true,
+    "clientPinnedBeforeCompilation": true,
+    "closeErrorsRetainRemoteResultAndDoNotSkipRootHandleClose": true,
+    "emptyStreamsExplicitlyCountedRatherThanAssumedFiles": true,
+    "grantDirectoryIdentityAndExclusiveHeldDirectoryWrites": true,
+    "leaseWrittenBeforeSdkLoading": true,
+    "partialBytesSavedWithoutTreatingThemAsCompletedReceipt": true,
+    "rawFileAndCanonicalJsonDigestsBothRetained": true,
+    "remoteNativeProbePlanRequestArgumentsTransportAndWriterBound": true,
+    "remoteWire20SecondsWith6SecondCloseAnd2SecondPersistenceReserve": true,
+    "sdkDiagnosticRecordsBoundedTo4WithoutRawMessagesOrHarmlessClassification": true,
+    "sdkLoadConnectExecutionCloseAndPersistenceShare35Seconds": true,
+    "sharedInitialClockPassedToVerifyAndExecute": true,
+    "unapprovedActualEntryRefusesBeforeSdkOrAttempt": true
+  },
+  "frozenSource": {
+    "clientSha256": "a887f5549b8e7470b27a9edfae776dc2219fab97b69aae7c0365e70736e68ae5",
+    "combinedRemoteSha256": "ecd38f2438a75f00c93e44b6f236f1f4cea00a8f119d87ed842acbde76bcd557",
+    "commandBytes": 51977,
+    "entrySha256": "03cad8afdcabff58f2645d63de26e98b31d1668650cacaa69b2f3f3955bd1e94",
+    "filesBound": 13,
+    "manifestSha256": "56c2c8fee4693090061ddf839ee5efb4db4e1aa22aa838a35fa21099dafdabdf"
+  },
+  "fullDeliveryComplete": false,
+  "implementationCorrectionsVerified": [
+    "Malformed transport bytes initially skipped SDK close; rejected before parsing while still closing.",
+    "A diagnostic-handler close error initially skipped held-directory close; errors are now separate and cleanup continues.",
+    "SDK diagnostics initially were not in pre-terminal evidence; a redacted bounded snapshot is now saved."
+  ],
+  "limitations": [
+    "Local mocks and local CLI refusal do not prove native Linux behavior or resolve the actual observer capability mismatch.",
+    "PDEATHSIG, mount, cgroup, journal and native systemd behavior require the proposed controlled diagnostic.",
+    "The diagnostic has intentionally fewer host mounts/control bindings than the original observer; exact mount equivalence is not claimed.",
+    "A completed observation with unexpected capabilities remains diagnostic data, never native or production acceptance.",
+    "The previous native window remains failed/consumed; no new unit is authorized by this record.",
+    "The separate final bilingual product/source composition, release compatibility, production and vendor/device/model gates remain incomplete."
+  ],
+  "mockedTests": {
+    "errors": 0,
+    "failed": 0,
+    "logSha256": "9d997f6700d85ef5f90e33fa228638ae870a61799274dd948eac21f8a4666e34",
+    "networkAndRealChildProcessCreationForbidden": true,
+    "passed": 46,
+    "seconds": 1.8528844001702964,
+    "skipped": 0,
+    "sourceBytesStableAcrossRun": true,
+    "total": 46
+  },
+  "proposedFreshExecution": {
+    "automaticRetry": false,
+    "capabilityBoundingSet": 235,
+    "cpuQuotaPerSecond": 100000,
+    "cpuWeight": 10,
+    "localEntrySeconds": 35,
+    "maximumSshAttempts": 1,
+    "maximumUnits": 1,
+    "memoryBytes": 100663296,
+    "nice": 10,
+    "originalMountTopologyClaimedIdentical": false,
+    "privateNetwork": true,
+    "remoteSeconds": 20,
+    "sameConnectionEvidenceAndCleanup": true,
+    "tasks": 16,
+    "unitSeconds": 10,
+    "zeroSwap": true
+  },
+  "scope": "local-pinned-ssh-entry-and-complete-mocked-diagnostic-regression",
+  "status": "locally-prepared-pending-new-linux-execution-grant"
+}
