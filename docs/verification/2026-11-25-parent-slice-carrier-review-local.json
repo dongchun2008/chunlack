@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-25",
+  "scope": "local-synthetic-carrier-closure-and-independent-ownership-review",
+  "syntheticCarrier": {
+    "entryFiles": 13,
+    "exactStartupMethodsVerified": 3,
+    "largestCommandBytes": 65482,
+    "deterministicByteReadback": true,
+    "activationEligible": false
+  },
+  "independentReview": {
+    "importantFindings": 3,
+    "cleanupOwnershipReacquisitionReproduced": true,
+    "remaining": [
+      "Correlate completed startup with the exact submitted job across missing or changed observations.",
+      "Reject missing or malformed start identity before startup polling."
+    ]
+  },
+  "separateLocalCleanupPrototype": {
+    "targetedTestsPassed": 10,
+    "adoptionOfUnverifiedParentRejected": true,
+    "existingVerifiedCleanupPassed": true,
+    "includedInReportedSyntheticCarrier": false
+  },
+  "remoteExecutionAttempted": false,
+  "productionPublished": false
+}
