@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-25",
+  "scope": "offline-reproduction-using-exact-failed-compatibility-package",
+  "evidence": {
+    "exactFrozenActorAndParserVerified": true,
+    "pendingLoadedSliceRejectedBeforeNextSample": true,
+    "followingActiveSlicePassesOriginalPredicate": true,
+    "productionPredicateConfirmed": false
+  },
+  "systemdReference": {
+    "version": "upstream-v255",
+    "managerSource": "https://github.com/systemd/systemd/blob/v255/src/core/dbus-manager.c#L1025-L1034",
+    "sliceSource": "https://github.com/systemd/systemd/blob/v255/src/core/slice.c#L208-L222",
+    "finding": "The transient start request queues a job. The slice acquires its per-run identity during actual start."
+  },
+  "remoteExecution": {
+    "sshAttempts": 0,
+    "newUnits": 0
+  },
+  "candidateModified": false
+}
