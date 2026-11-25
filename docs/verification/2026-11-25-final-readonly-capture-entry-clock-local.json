@@ -1,0 +1,19 @@
+{
+  "actualLinuxUnitsCreated": 0,
+  "actualNodeTimingChecksPassed": 2,
+  "actualSshConnections": 0,
+  "captureTransportStillRequiresIndependentAudit": true,
+  "date": "2026-11-25",
+  "existingPrecheckRegressionsPassed": 7,
+  "firstTimingCaseReproducedInflatedElapsed": true,
+  "materialEntrySha256": "006dbef243e3ad0cf5776bfff0b71ee6ad4e2a76ebdde747110ad7e1fbdf1e60",
+  "materialEntryTestsPassed": 4,
+  "newLinuxUnitLimit": 0,
+  "originalLocalSeconds": 35,
+  "originalRemoteSeconds": 20,
+  "precheckEntrySha256": "1866f9ad0e17d5e74842aeef571d4e3e1204e05e9e8e6379efc06bfb3110af01",
+  "productionPublished": false,
+  "reservedTimeExcludedFromReportedElapsed": true,
+  "scope": "local-readonly-material-entry-and-measurement-correction",
+  "sshAttemptLimit": 1
+}
