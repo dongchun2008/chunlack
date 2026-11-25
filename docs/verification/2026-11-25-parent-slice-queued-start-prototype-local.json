@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-25",
+  "scope": "private-local-prototype-of-parent-slice-startup-race-fix",
+  "changedPrototypeFiles": 2,
+  "verification": {
+    "targetedTestsPassed": 8,
+    "existingAdmissionAndResourceCallsReached": true,
+    "unrelatedJobAndIdentityDriftRejected": true,
+    "originalFiveSecondStartupBudgetRetained": true,
+    "priorFrozenPackageDigestsVerified": true
+  },
+  "references": [
+    "https://github.com/systemd/systemd/blob/v255/src/systemctl/systemctl-show.c#L1023-L1034"
+  ],
+  "liveQueryAttempted": false,
+  "nativeRegressionPassed": false,
+  "productionPublished": false
+}
