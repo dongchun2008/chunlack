@@ -1,0 +1,18 @@
+{
+  "actualExecutionAuthorized": false,
+  "actualUnapprovedDriverRefused": true,
+  "date": "2026-11-25",
+  "driverInputs": 13,
+  "exclusiveDirectoryVerified": true,
+  "inactiveFixtureFilesVerifiedAfterWrite": 15,
+  "liveMaterialsWritten": false,
+  "localTestsPassed": 4,
+  "nativeUnitsCreated": 0,
+  "nonprivateParentRejected": true,
+  "productionPublished": false,
+  "realWindowsAclReadBeforeAndAfter": true,
+  "scope": "offline-native-carrier-private-persistence",
+  "sshConnections": 0,
+  "windowsAclProbeModuleLoadIssueCorrected": true,
+  "writerSha256": "82b0d94034b3c44f5aa6d4d34180caaf2020387857c0dc36e8c945d2eada14f9"
+}
