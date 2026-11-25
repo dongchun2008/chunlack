@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-25",
+  "scope": "local-parent-slice-job-completion-correlation-adapter",
+  "verification": {
+    "newMockedTestsPassed": 12,
+    "priorStartupAndCleanupTestsPassed": 10,
+    "listensBeforeStart": true,
+    "sharesSingleConnectionIdentity": true,
+    "exactJobPathIdUnitAndSuccessRequired": true,
+    "invalidOrUnrelatedSignalsRejected": true,
+    "duplicateSignalRejected": true,
+    "originalBudgetSeconds": 5
+  },
+  "sourceReference": "https://github.com/systemd/systemd/blob/v255/src/shared/bus-wait-for-jobs.c",
+  "nativeLibraryLoaded": false,
+  "realBusConnected": false,
+  "integratedInFrozenCarrier": false,
+  "sshAttempts": 0,
+  "productionPublished": false
+}
