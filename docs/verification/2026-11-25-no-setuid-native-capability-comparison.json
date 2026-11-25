@@ -1,0 +1,70 @@
+{
+  "automaticRetry": false,
+  "bindings": {
+    "baselinePublicRecordSha256": "65b99bbe790850cf8a86e12981b6b0cc46214fd925663e0cba4a632000032078",
+    "entryReceiptSha256": "ada8a301334794246cb3e771164b4c81b7320a062e4a71ac34451f39755e4c67",
+    "frozenManifestSha256": "b43960c82b1e5c89536bfb848af54f6bd525ef6072a696132068343b41fbcd4b",
+    "remoteReceiptSha256": "5023a268561977543697f0976ab0db63df903c22142d8894f46a3043e4e7bf4e",
+    "terminalReceiptSha256": "5e2d33205670fe10f5f194e6638957467488e4304f58fec4753035ec4ce17057"
+  },
+  "capabilityPolicyMatched": true,
+  "cleanup": {
+    "dedicatedCgroupAbsent": true,
+    "finalUnitLoadState": "not-found",
+    "fourProtectedServiceRecordsUnchanged": true
+  },
+  "comparison": {
+    "currentUnitCapabilities": {
+      "CapAmb": 0,
+      "CapBnd": 235,
+      "CapEff": 235,
+      "CapInh": 0,
+      "CapPrm": 235
+    },
+    "freshUnitIdentityAndDescription": true,
+    "intendedProfileChange": "Add no-setuid to fixed root ExecStartEx flags.",
+    "managerCapabilities": {
+      "CapAmb": 0,
+      "CapBnd": 235,
+      "CapEff": 235,
+      "CapInh": 0,
+      "CapPrm": 235
+    },
+    "otherRequestPropertiesAndProbeBodyIdentical": true,
+    "previousUnitCapabilities": {
+      "CapAmb": 0,
+      "CapBnd": 235,
+      "CapEff": 107,
+      "CapInh": 0,
+      "CapPrm": 107
+    }
+  },
+  "date": "2026-11-25",
+  "diagnosticCompleted": true,
+  "elapsed": {
+    "localInvocationSeconds": 4.1690716,
+    "unitLifecycleSeconds": 0.7968603018671274
+  },
+  "limits": {
+    "cpuPercentOfOneCore": 10,
+    "localSeconds": 35,
+    "memoryBytes": 100663296,
+    "privateNetwork": true,
+    "remoteSeconds": 20,
+    "swapBytes": 0,
+    "tasks": 16,
+    "unitSeconds": 10
+  },
+  "limitsOfEvidence": [
+    "Two diagnostic samples use the same reduced mount profile with fresh identities. The actual full observer and the production release were not run.",
+    "The evidence supports the launch-option hypothesis for this installed platform and this profile. It is not a full-chain or production acceptance."
+  ],
+  "nativeFullChainAccepted": false,
+  "newUnitsStarted": 1,
+  "productionPublished": false,
+  "scope": "single-authorized-native-root-diagnostic-no-setuid-comparison",
+  "sdkCloseConfirmed": true,
+  "sdkSocket10038ClassifiedHarmless": false,
+  "sdkSocket10038Observed": true,
+  "sshConnections": 1
+}
