@@ -1,0 +1,19 @@
+{
+  "combinedLaunchAndCleanupDeadlinePreserved": true,
+  "date": "2026-11-25",
+  "existingRemoteEnvelopeSeconds": 280,
+  "finalSourceBoundToVerifiedReceipt": true,
+  "nativePreparationAccepted": false,
+  "nativePreparationAuthorized": false,
+  "nativeUnitsCreated": 0,
+  "operatorRegressionTestsPassed": 12,
+  "operatorSha256": "13e3b4b5438742a7cf031fe632205c622b33431be08b5b325c2e0e13c3f7d59f",
+  "ownedChildWorkDeadlineSeconds": 309,
+  "productionPublished": false,
+  "scope": "offline-final-preparation-operator-verification",
+  "sharedLauncherDeadlineSeconds": 310,
+  "sshConnections": 0,
+  "terminalSuccessRequiresEvidenceReadback": true,
+  "testSha256": "7035c08731c7b4f5f36eb78ba60bbfb163c3f228ec099ac5e358e35df3cb761d",
+  "unauthorizedCliRejectedBeforeClaim": true
+}
