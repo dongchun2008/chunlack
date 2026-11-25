@@ -1,0 +1,32 @@
+{
+  "approvalRefusedBeforeSdk": true,
+  "archiveReadbackMatchesExactFlagAddition": true,
+  "bindings": {
+    "localTestReceiptSha256": "227eb262aedd5138cb40cdebfc7fe4e7b8f8e66f4d868eb37b8566496daecf16",
+    "nativeDiagnosticRecordSha256": "3602bbfdc2408a786c4485bd6d262f1453ed359527db5ddf05f7f2ad56245430",
+    "newFrameworkBindingSha256": "f222fb3965b24ebbe1cc8585673f2ed2f09a349c29c803383afe019f307fada3",
+    "newFrameworkPacketSha256": "4257f26fef6cd92ce570e597c3b920966de82e450cb332a947ef8bd90f63a05f",
+    "newObserverProfileSha256": "96368fb0ff940211b9bae967f9f4a30dcab31f3b2b9db08f3b51e611d6b0278b",
+    "priorFrameworkPacketSha256": "d75349430530df4072e3d78862e7c94305f23036469de0710834c132e937c6a0"
+  },
+  "date": "2026-11-25",
+  "elapsedLocalTestSeconds": 48.83304599998519,
+  "failures": 0,
+  "final75FileCompositionIntegrated": false,
+  "fullObserverNativeAcceptance": false,
+  "fullProductionDeliveryComplete": false,
+  "initialBaselineExpectedFailures": 2,
+  "maximumCommandBytes": 65482,
+  "newLinuxUnits": 0,
+  "packetMembers": 170,
+  "passedLocalTests": 13,
+  "productionPublished": false,
+  "remaining": [
+    "Bind the selected 75 product and control files into the candidate and its preparation and proof inputs.",
+    "Run native rehearsal with the complete observer and final candidate, including compatibility, switching and rollback.",
+    "Apply the separately scheduled production release only after acceptance."
+  ],
+  "scope": "inactive-complete-observer-launch-profile-integration-local",
+  "sshConnections": 0,
+  "unapprovedCandidateFrozen": true
+}
