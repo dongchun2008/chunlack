@@ -136,6 +136,23 @@
         "remoteConnections": 0,
         "newUnits": 0,
         "productionPublished": false
+      },
+      "savedSetupLifecycleFixture": {
+        "date": "2026-11-26",
+        "testsPassed": 5,
+        "usedSavedNativePacket": true,
+        "usedPriorCapturedSystemdAbsenceRow": true,
+        "candidateSourceUnchanged": true,
+        "activationBeforePidAndNormalExitVerified": true,
+        "heldCgroupUnlinkAndUnitAbsenceVerified": true,
+        "earlyExitWithoutLiveSampleRejected": true,
+        "changedGenerationNeverStopped": true,
+        "originalFiveSecondStartupTimeoutVerified": true,
+        "fixtureDurationAdjustedToPresentLiveSample": true,
+        "kernelAndManagerActivity": "simulated",
+        "remoteConnections": 0,
+        "newUnits": 0,
+        "productionPublished": false
       }
     }
   }
