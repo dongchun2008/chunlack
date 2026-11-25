@@ -1,0 +1,20 @@
+{
+  "activationMarkersCheckedByCollector": 8,
+  "actualOperatorPreparationAccepted": false,
+  "actualReadonlyCollectionAccepted": false,
+  "commandLimitBytes": 65536,
+  "commandSizeGuardPassed": true,
+  "configurationDriftStopsMaterialReads": true,
+  "date": "2026-11-25",
+  "fixedCollectorSources": 5,
+  "nativeUnitsCreated": 0,
+  "preboundMaterialFiles": 5,
+  "previousCollectorRejectedFinalPacket": true,
+  "productionPublished": false,
+  "remoteExecutionAuthorized": false,
+  "scope": "offline-final-preparation-to-material-collection-handoff",
+  "selectionBoundToVerifiedWorkerReceipt": true,
+  "sshConnections": 0,
+  "targetedLocalTestsPassed": 8,
+  "verifierSha256": "659add3a62b0c24b4e2f1c658a05cb2b4c31aa85f9615341a0976e275f6a0fcc"
+}
