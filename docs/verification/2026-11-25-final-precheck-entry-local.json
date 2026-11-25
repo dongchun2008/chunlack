@@ -1,0 +1,17 @@
+{
+  "actualInactiveNodeEntryRefusedBeforeSsh": true,
+  "actualMissingApprovalRefusedBeforeClaim": true,
+  "conditionalHandoffValidatedWithoutStartingPreparation": true,
+  "date": "2026-11-25",
+  "entrySha256": "f42e166e99e3cd456caa58243fbb47acb59e2f3ed8da3813a43113f5519f2ade",
+  "historicalApprovalReused": false,
+  "localRegressionTestsPassed": 7,
+  "nativeUnitsCreated": 0,
+  "precheckLinuxUnitLimit": 0,
+  "precheckLocalSeconds": 35,
+  "precheckRemoteSeconds": 20,
+  "precheckSshLimit": 1,
+  "productionPublished": false,
+  "scope": "local-final-source-precheck-entry-verification",
+  "sshConnections": 0
+}
