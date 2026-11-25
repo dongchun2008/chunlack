@@ -1,0 +1,47 @@
+{
+  "assemblerSha256": "15e490a88030c8833d78786d8a180e72513350f5eab765471294f1fb8abd97e0",
+  "assemblyRegressionPassed": 21,
+  "claims": [
+    "All 66 selected product files correspond to the locally verified source object.",
+    "The worker entry, release gate, launcher and preparation helper differ from the prior assembly only in fixed source references.",
+    "The source commit is present in the private object store and has not moved branch refs.",
+    "The kernel rehearsal carrier and its payload and request provenance still require rebinding."
+  ],
+  "controlAndHelperFingerprints": {
+    "control/formal-entry.py": "d5b5de40c3d8bf9d18dc9de09d8695a8850870512b4524495b1dddcfa4eeb76e",
+    "control/formal-launcher.py": "1c128c20d306bdd0aa2a158e9a36b1c47a745f554e25a0fb0e003a67fab7331e",
+    "control/repo/deploy/public/release-control/2026-10-25/i18n-release-gate.py": "5e790829304c03ed4eb5928471a5b8bba0b2f82ed5da0219c8c7145bde1002f6",
+    "tools/production-config-prepare.py": "0831b8d5781190c882c72f6d7f66736641b39d40e7f8ca91732d4a154c3798b0"
+  },
+  "controlAndHelperOnlyLiteralChanges": [
+    "control/formal-entry.py",
+    "control/formal-launcher.py",
+    "control/repo/deploy/public/release-control/2026-10-25/i18n-release-gate.py",
+    "tools/production-config-prepare.py"
+  ],
+  "date": "2026-11-25",
+  "draftSha256": "625b244b393233e81d142177ca3dd18a18283c964c37cf7c5a210ce29cfc07ec",
+  "firstRegressionFailure": {
+    "count": 13,
+    "fix": "Rebind the configuration preparation helper and preserve strict check.",
+    "gate": "prepare_gate_pin"
+  },
+  "freshCompatibilityProofCreated": false,
+  "gitPushed": false,
+  "gitRefsChanged": false,
+  "nativeCarrierRebound": false,
+  "newLinuxUnits": 0,
+  "originalAssemblyRegressionCount": 21,
+  "payloadFiles": 75,
+  "payloadManifestSha256": "af3e6517f7944b6dbe0f322bb4aeb23d10fd0747dac31e18f1d671458101cf8f",
+  "previousSourceCommitRejectedByEntryAndGate": true,
+  "productBytesMatchSelected": true,
+  "productFilesVerifiedAgainstGitObjects": 66,
+  "productionPublished": false,
+  "receiptSha256": "31bbc46e30ac7b7dc8cf75809142ab9a7014a2f7353457bc0abbe25abb3d2fe4",
+  "scope": "local-product-source-commit-and-formal-control-binding",
+  "sourceCommit": "8ea93dd825913e4e35fb2810472855bb4185c7ed",
+  "sourceCommitInPrivateObjectStore": true,
+  "sourceTree": "007f3c335ae1caa96df5f3e14bf61d0b6b772c71",
+  "sshConnections": 0
+}
