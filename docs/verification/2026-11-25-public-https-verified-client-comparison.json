@@ -1,0 +1,52 @@
+{
+  "date": "2026-11-25",
+  "scope": "public-https-read-only-client-comparison",
+  "comparison": {
+    "windowsSchannelCurlFailedHandshakeOnBothHosts": true,
+    "earlierExternalFetchToolInconclusive": true,
+    "alternativeClient": "Node.js TLS",
+    "certificateVerificationEnabled": true,
+    "bothDefaultDnsAndPinnedPublicAddressVerified": true,
+    "clientDiscrepancyCauseVerified": false
+  },
+  "checks": [
+    {
+      "role": "agent",
+      "addressMode": "dns",
+      "httpStatus": 200,
+      "verified": true,
+      "tls": "TLSv1.3",
+      "resourceMatches": true,
+      "issuerMatches": true
+    },
+    {
+      "role": "agent",
+      "addressMode": "pinned-public-address",
+      "httpStatus": 200,
+      "verified": true,
+      "tls": "TLSv1.3",
+      "resourceMatches": true,
+      "issuerMatches": true
+    },
+    {
+      "role": "main",
+      "addressMode": "dns",
+      "httpStatus": 200,
+      "verified": true,
+      "tls": "TLSv1.3",
+      "healthy": true,
+      "publicVersion": "4.2.2"
+    },
+    {
+      "role": "main",
+      "addressMode": "pinned-public-address",
+      "httpStatus": 200,
+      "verified": true,
+      "tls": "TLSv1.3",
+      "healthy": true,
+      "publicVersion": "4.2.2"
+    }
+  ],
+  "connectedViaSsh": false,
+  "changedProduction": false
+}
