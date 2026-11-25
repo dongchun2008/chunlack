@@ -1,0 +1,19 @@
+{
+  "actualInactiveDriverRefused": true,
+  "assemblySha256": "79037d764ec29b8e54469de8b6743dfef2ee866653d8ebf882024d8517fc99d9",
+  "commandAdmissionStages": 6,
+  "commandLimitBytes": 65536,
+  "compatibilityProofCreated": false,
+  "date": "2026-11-25",
+  "driverInputFiles": 13,
+  "historicalProofReaderRejected": true,
+  "largestFixtureCommandBytes": 65482,
+  "nativeExecutionAuthorized": false,
+  "nativeUnitsCreated": 0,
+  "newProofContextReconstructed": true,
+  "packetSourceAndProofValidatorPinsRebound": true,
+  "productionPublished": false,
+  "scope": "offline-final-carrier-proof-source-closure",
+  "sshConnections": 0,
+  "targetedLocalTestsPassed": 5
+}
