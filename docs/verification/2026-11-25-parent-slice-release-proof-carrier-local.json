@@ -60,5 +60,27 @@
     "commitsReachableAndConnected": true,
     "checkoutRefsAndIndexUnchanged": true,
     "productionPublished": false
+  },
+  "systemdDependencyReview": {
+    "scope": "static-review-and-offline-encoding-check",
+    "systemdReferenceVersion": "255.4",
+    "noLocalNativeGuestVerified": true,
+    "archiveProfileBytesChecked": true,
+    "archivedDependencyDigestsVerified": 2,
+    "localCheckoutFirstProbeRejectedNonmatchingDependency": true,
+    "dependsOnExactObserverUnit": true,
+    "observerAssignedToAncestorSlice": true,
+    "observerRemainsActiveAfterProgramExit": true,
+    "transientStartDependencyArgumentEncodingVerified": true,
+    "upstreamTransientPropertyHandlingReviewed": true,
+    "upstreamStopPropagationReviewed": true,
+    "upstreamSources": [
+      "https://github.com/systemd/systemd-stable/blob/v255.4/src/core/dbus-unit.c",
+      "https://github.com/systemd/systemd-stable/blob/v255.4/src/core/unit-dependency-atom.c",
+      "https://github.com/systemd/systemd-stable/blob/v255.4/src/core/transaction.c"
+    ],
+    "sshConnections": 0,
+    "nativeUnitsCreated": 0,
+    "nativeAcceptance": false
   }
 }
