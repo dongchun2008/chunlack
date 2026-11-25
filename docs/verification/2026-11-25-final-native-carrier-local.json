@@ -1,0 +1,21 @@
+{
+  "actualExecutionAuthorized": false,
+  "bridgeInputMembers": 13,
+  "commandAdmissionStages": 6,
+  "commandLimitBytes": 65536,
+  "date": "2026-11-25",
+  "hostArchiveMembers": 161,
+  "largestCommandBytes": 65482,
+  "liveRequestBound": false,
+  "nativeFullChainAccepted": false,
+  "nativeUnitsCreated": 0,
+  "observerAssetMembers": 6,
+  "observerNoSetuidRetained": true,
+  "oldOrModifiedInputRejections": 5,
+  "outerFilesRehashed": 169,
+  "outerPacketMembers": 170,
+  "productionPublished": false,
+  "scope": "offline-final-carrier-synthetic-input-only",
+  "sshConnections": 0,
+  "verificationScriptSha256": "e11257fad7ce31ea3fe56bf358ae81cabfe2ada855f14fb4e4e93e783476baf4"
+}
