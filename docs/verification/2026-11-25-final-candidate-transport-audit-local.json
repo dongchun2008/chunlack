@@ -1,0 +1,18 @@
+{
+  "auditSha256": "53ad1bf123714f9de4f3e29ff4ff571993fcd1d64cacd23d105eb43527ac5295",
+  "captureTransportVerifiedLive": false,
+  "crossCheckedTerminalEvidenceFiles": 5,
+  "date": "2026-11-25",
+  "exactProtectedServiceCountChecked": 4,
+  "finalReceiverReachedByIntegratedAuditFixture": true,
+  "localDiagnosticStderrCountRetained": true,
+  "materialReceiverTestsPassed": 7,
+  "nativeUnitsCreated": 0,
+  "productionPublished": false,
+  "realCopyRequestIssued": false,
+  "remoteStderrMustBeEmpty": true,
+  "scope": "offline-final-candidate-capture-evidence-audit",
+  "sshConnections": 0,
+  "targetedAuditTestsPassed": 9,
+  "unclassifiedLocalStderrDeclaredHarmless": false
+}
