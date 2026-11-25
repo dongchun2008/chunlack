@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-25",
+  "scope": "offline-integration-of-parent-slice-release-proof-with-observer-lifecycle",
+  "verification": {
+    "observerCleanupWiringTestsPassed": 8,
+    "releaseContractTestsPassed": 8,
+    "managerSenderAndBusCleanupTestsPassed": 18,
+    "namedParentStopRemoved": true,
+    "releaseConfirmationRequiredByDriver": true,
+    "staleActualCapacityEvidenceRejected": true,
+    "earlyUnboundedFixtureStoppedAndCorrected": true,
+    "syntheticCarrierVerified": true,
+    "entryFiles": 13,
+    "maximumCommandBytesObserved": 65482
+  },
+  "independentReview": "pending-at-record-time",
+  "sshAttempts": 0,
+  "newUnits": 0,
+  "nativeAcceptance": false,
+  "productionPublished": false
+}
