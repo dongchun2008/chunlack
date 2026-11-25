@@ -1,0 +1,108 @@
+{
+  "assemblerSha256": "ad1cbb9490974662a3b7b0e236f0bf102e89e0fbecd693aad216c0b1cf65fb66",
+  "assemblyReceiptSha256": "96ca2d5ac2387594ac8cc4a30a67ed9fb4e3e3cf34450fa212aeca21d28af9fc",
+  "assemblyTests": {
+    "errors": 0,
+    "failures": 0,
+    "passed": true,
+    "skipped": 0,
+    "tests": 21
+  },
+  "assemblyVerified": true,
+  "buildSourceSha256": "b9d02c84829ccc3a225cffb8312b4e5010a3a09e9055826c6a2056d4ce5fe609",
+  "changedPayloadFiles": [
+    "product/identity/help/en.md",
+    "product/identity/help/zh-CN.md"
+  ],
+  "currentNativeCarrierReferencesToReplace": [
+    {
+      "member": "input/carrier-manifest.json",
+      "oldBindings": [
+        "payloadManifest",
+        "draft",
+        "assembler"
+      ]
+    },
+    {
+      "member": "input/payload/private/compatibility-inputs.json",
+      "oldBindings": [
+        "payloadManifest",
+        "stageMap"
+      ]
+    },
+    {
+      "member": "input/payload/private/copy-compatibility-request.json",
+      "oldBindings": [
+        "stageMap"
+      ]
+    },
+    {
+      "member": "source/actual-candidate-assembly-20261113-a1/assemble.py",
+      "oldBindings": [
+        "payloadManifest",
+        "draft"
+      ]
+    },
+    {
+      "member": "source/actual-input-producer-reserved-20261113-a1/native_ops.py",
+      "oldBindings": [
+        "assembler"
+      ]
+    },
+    {
+      "member": "source/candidate-materializer-20261113-a1/materialize.py",
+      "oldBindings": [
+        "stageMap"
+      ]
+    },
+    {
+      "member": "source/copy-compatibility-binding-20261114-a1/binding.py",
+      "oldBindings": [
+        "payloadManifest",
+        "assembler"
+      ]
+    },
+    {
+      "member": "source/native-copy-entry-20261116-a1/common.py",
+      "oldBindings": [
+        "draft"
+      ]
+    },
+    {
+      "member": "source/production-input-draft-20261113-a1/draft.py",
+      "oldBindings": [
+        "payloadManifest",
+        "stageMap"
+      ]
+    },
+    {
+      "member": "input/payload/source/native-copy-catalog.json",
+      "oldBindings": [
+        "payloadManifest",
+        "draft",
+        "assembler"
+      ]
+    }
+  ],
+  "date": "2026-11-25",
+  "draftSha256": "9e68d48cdc48d05e9f38e12badcc4b479bca6de2857f94aa6b7ca987d24025e2",
+  "freshDatabaseCompatibilityProofCollected": false,
+  "fullProductionDeliveryComplete": false,
+  "liveConfigObserved": false,
+  "liveDependencyProofCollected": false,
+  "nativeCarrierRebound": false,
+  "newLinuxUnits": 0,
+  "newSshAttempts": 0,
+  "oldHelpFileRejections": 2,
+  "payloadFileCount": 75,
+  "payloadManifestSha256": "704a18580850665527ef96c6b2c79bc57813cdd8684c9e20a7953842d198ee1c",
+  "productionPublished": false,
+  "regressionReceiptSha256": "99d44fc507ec9a34fbe53dd93ee821e81b22618071c5161aa19bc97433c95485",
+  "scope": "local-final-payload-and-production-assembly-inputs",
+  "stageFileCount": 66,
+  "stageMapSha256": "95c5bb17d808190ed32e9b35b73f52e60c129a5db619959dcd76fda97a35bdfd",
+  "syntheticIngressStylesPassed": [
+    "LF",
+    "CRLF"
+  ]
+}
