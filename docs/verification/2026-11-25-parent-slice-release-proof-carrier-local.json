@@ -153,6 +153,24 @@
         "remoteConnections": 0,
         "newUnits": 0,
         "productionPublished": false
+      },
+      "savedObserverHandoffFixture": {
+        "date": "2026-11-26",
+        "testsPassed": 4,
+        "usedSavedNativePacket": true,
+        "receiverPacketMembersVerified": 170,
+        "installerArchiveMembersVerified": 11,
+        "observerRequestFileBindingsVerified": 12,
+        "observerHostFilesVerified": 161,
+        "originalProfileAndCleanupModuleLoaded": true,
+        "missingOrModifiedParentModuleRejected": true,
+        "omittedParentModuleInRequestRejected": true,
+        "allSimulatedFileHandlesClosed": true,
+        "sourceAndLaunchSettingsUnchanged": true,
+        "observerStarted": false,
+        "remoteConnections": 0,
+        "newUnits": 0,
+        "productionPublished": false
       }
     }
   }
