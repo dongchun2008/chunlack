@@ -15,9 +15,23 @@
     "proofInputsVerified": true,
     "largestCommandBytes": 65482
   },
-  "reviewCompletedAtRecord": false,
+  "reviewCompletedAtRecord": true,
   "connectedToRealSystemBus": false,
   "sshAttempts": 0,
   "nativeCandidateActivated": false,
-  "productionPublished": false
+  "productionPublished": false,
+  "independentReview": {
+    "boundUnverifiedParentCleanupRegressionPassed": true,
+    "findings": 3,
+    "pending": [
+      "Verify the unique manager sender of the completion event.",
+      "Close the same-name replacement window in verified parent cleanup."
+    ],
+    "localCloseInterruptionCorrection": {
+      "targetedChecksPassed": 11,
+      "nativeBusCloseAttemptedAfterSlotReleaseInterrupt": true,
+      "includedInSyntheticCarrier": false
+    },
+    "activationEligible": false
+  }
 }
