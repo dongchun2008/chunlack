@@ -1,0 +1,20 @@
+{
+  "basePublicMain": "e3baf683d46c9a092d07c9bf2746421b090ff640",
+  "branchRefsChanged": false,
+  "conflicts": 0,
+  "date": "2026-11-25",
+  "fixedProductFilesRechecked": 66,
+  "frozenSourceCommit": "8ea93dd825913e4e35fb2810472855bb4185c7ed",
+  "localIntegrationCommit": "0fe40ac77e6a28261335397366c9569ccc136006",
+  "localIntegrationTree": "62689a68915448162e09355dcb9532f884cfda7b",
+  "nativeUnitsCreated": 0,
+  "newMainEvidencePathsPreserved": 25,
+  "outgoingObjectsPathAndPatternScanned": 15,
+  "privateArtifactsPushed": false,
+  "productionPublished": false,
+  "publicDevelopment": "1ea71ce48d0a44abc6c79407eb4ed8d05ce49d6c",
+  "scope": "private-source-integration-over-pinned-public-heads",
+  "scriptSha256": "32f744f7c4ea88000fb52be10f8c4342d51910829c8240772a6a11ecf78d8de6",
+  "sourceObjectPublished": false,
+  "sshConnections": 0
+}
