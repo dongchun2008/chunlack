@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-25",
+  "executionMode": "offline-synthetic",
+  "fullNativeAcceptance": false,
+  "historicalObservationReused": false,
+  "hostLauncherAndObserverRebound": false,
+  "hostPayloadMembers": 156,
+  "liveRequestBound": false,
+  "nativeUnitsCreated": 0,
+  "nestedWorkerMembers": 201,
+  "privateReceiptSha256": "125c11b7e82a5cb20d67386357249d9769b1ea30802c350e7677c13136058c21",
+  "productionPublished": false,
+  "rejectedPreviousRequestAndPayload": 2,
+  "scope": "synthetic-host-payload-validation-only",
+  "sshConnections": 0,
+  "verificationScriptSha256": "212248fa2427f0dc576e947a6b70abf8c3d865b7d63c8c061163ff0b3dc6a75c",
+  "verifiedHostBuilderAndStagingUnpacker": true,
+  "workerSourceArchiveSha256": "cf60c833627786393b0716886a491fdd71f8fce06b9aea85f2e2c73729ea42a3"
+}
