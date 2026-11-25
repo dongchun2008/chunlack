@@ -1,0 +1,36 @@
+{
+  "date": "2026-11-25",
+  "scope": "read-only-live-candidate-material-capture-and-offline-compatibility-bundle",
+  "capture": {
+    "accepted": true,
+    "sshAttempts": 1,
+    "unitsStarted": 0,
+    "localElapsedSeconds": 8.669,
+    "limitsSeconds": {
+      "remote": 20,
+      "local": 35
+    },
+    "sshCleanupConfirmed": true,
+    "receiptAuditPassed": true,
+    "capacityAndFixedMaterialsVerified": true,
+    "fixedCandidateFiles": 5,
+    "automaticRetry": false
+  },
+  "offlineCompatibilityBundle": {
+    "built": true,
+    "fileCount": 15,
+    "activated": false,
+    "databaseCopyCompatibilityProofCreated": false
+  },
+  "publicHttpsObservation": {
+    "independentDnsResolversAgreed": 2,
+    "systemDnsDiffered": true,
+    "hostnamePreservedWithPinnedPublicAddress": true,
+    "mainCurlExit": 35,
+    "agentCurlExit": 35,
+    "identityIssuerHttpStatus": 200,
+    "externalFetchToolInconclusive": true,
+    "causeVerified": false
+  },
+  "productionPublished": false
+}
