@@ -1,0 +1,68 @@
+{
+  "actualNativeValidatorLoadedByPinnedPath": true,
+  "candidateFileDigestsChecked": 66,
+  "date": "2026-11-25",
+  "failedFirstLocalAttempt": {
+    "cause": "Windows path length in the local staging tree",
+    "correctiveAction": "Use a short, exclusively created local directory."
+  },
+  "finalSourceCommit": "8ea93dd825913e4e35fb2810472855bb4185c7ed",
+  "freshDatabaseProofCreated": false,
+  "fullCarrierRebuilt": false,
+  "localReceiptSha256": "33f3e048ab042c9ed711ac5efd6a555c9e330d471b04794977989ed60765ae99",
+  "nativeReboundSourceFiles": {
+    "actual-candidate-assembly-20261113-a1/assemble.py": {
+      "after": "bd40430a9e6776261127d77395f8b1400d66cd5180a2a897f56827786288102d",
+      "before": "2281504b4ac72fcaa680055cd81b266974c936fbfc1f56c571e0f43bfdcf2113"
+    },
+    "copy-compatibility-binding-20261114-a1/binding.py": {
+      "after": "79af97558271913af68fba02a08b8bad6f2e3d5df9bf4754955220ab7548490e",
+      "before": "399352c8838e05c828af727aae59e61c65de60d09880b6de85888d0a8240aa2b"
+    },
+    "dual-boot-controller-20261115-a1/checks.py": {
+      "after": "cfa26a6a1bf3f9fb79083c74654b4e52cdb3852309e0336335265c9bd80dd246",
+      "before": "869faee0e4e9c8418643a2acc39bc96c51f64066ae2d2d5ea5e6e04ea877512b"
+    },
+    "native-copy-entry-20261116-a1/common.py": {
+      "after": "c53fe70a147e005274417f6ab34b3fac25373dae921410646c8b04df475b6c9c",
+      "before": "d5abe37676062ab7f949fef2197145a1c0af5085654f63071e1daa1d96fa421d"
+    },
+    "native-copy-entry-20261116-a1/job.py": {
+      "after": "01171680ae1638750d29ed6a1990f0a3d20f33d182667abc0cb0110b88ef2b97",
+      "before": "e97c0c854a17d5ca38931c554e60e293c4f1d00990c3ad8f83ca8ebc10d27d2f"
+    },
+    "production-input-draft-20261113-a1/draft.py": {
+      "after": "0dc27ecd4cd7b0a05da7ce2af2d75f2c88bce73f35b39189b2099d5ba8c17ce6",
+      "before": "97e1e1a67c2354e21e0dd1d679a44403779de4fc7612c805e5ca6ccdf73b4b35"
+    }
+  },
+  "negativeCases": 3,
+  "newLinuxUnits": 0,
+  "preservation": {
+    "archiveMutated": false,
+    "liveDatabaseReadOrCopied": false,
+    "productionObservationReusedAsFresh": false
+  },
+  "priorCarrierInnerWorkerSha256": "da9876bf2c270f4c74984d2ad4efa44960fe0f8ee8125a176f3c4ae23006af8e",
+  "productionPublished": false,
+  "requestsWrittenToDisk": 0,
+  "scope": "local-native-copy-request-and-entry-validation-with-synthetic-inputs",
+  "sshConnections": 0,
+  "syntheticNativeRequestCanonicalSha256": "6151c6843b797067607a6006903408820cc2f839ab2ac1160c304971f2d9d349",
+  "syntheticOnly": true,
+  "unreboundDirectWorkerCodeConsumers": {
+    "actual-input-producer-reserved-20261113-a1/native_ops.py": [
+      "actual-candidate-assembly-20261113-a1/assemble.py"
+    ],
+    "native-copy-entry-20261116-a1/phase.py": [
+      "dual-boot-controller-20261115-a1/checks.py"
+    ],
+    "native-copy-entry-20261116-a1/worker.py": [
+      "native-copy-entry-20261116-a1/job.py"
+    ],
+    "owned-native-worker-20261116-a1/plain_copy.py": [
+      "dual-boot-controller-20261115-a1/checks.py"
+    ]
+  },
+  "verificationScriptSha256": "2e9737d4bbd7612a0a082874772ac156deaa9f9ccf38a68b2f4923abe3d96ffc"
+}
