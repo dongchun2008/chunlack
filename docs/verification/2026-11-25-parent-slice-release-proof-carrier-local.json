@@ -31,5 +31,15 @@
     "revisedSyntheticCarrierVerified": true,
     "latestMaximumCommandBytesObserved": 65482,
     "newNativeApprovalPending": true
+  },
+  "nextScopedOperator": {
+    "localChecksPassed": 7,
+    "checkedPinnedCarrierAndRefreshInputs": true,
+    "missingConsentRejectedBeforeClaim": true,
+    "orderedRefreshAuditNativeTested": true,
+    "failedRefreshOrAuditStopsBeforeNative": true,
+    "evidenceRequiresBoundWatchAndExistingServiceBaseline": true,
+    "locallyPreparedOnly": true,
+    "newNativeApprovalPending": true
   }
 }
