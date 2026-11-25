@@ -1,0 +1,27 @@
+{
+  "date": "2026-11-25",
+  "scope": "local-manager-sender-rebind-and-read-only-parent-release-contract",
+  "managerSender": {
+    "targetedChecksPassed": 18,
+    "exactBrokerMethodsVerified": true,
+    "pidOneRequired": true,
+    "uniqueSenderCheckedInSignal": true,
+    "methodDestinationUsesUniqueManager": true,
+    "closeAttemptAfterSlotInterruption": true,
+    "syntheticCarrierRebound": true,
+    "verifiedChangedLeaves": 2,
+    "maxCommandBytes": 65482
+  },
+  "parentRelease": {
+    "localContractTestsPassed": 8,
+    "guardChecksRetiredObserverAndTerminalParentAndEmptyCgroup": true,
+    "noParentStopOperation": true,
+    "integratedWithObserverLifecycle": false
+  },
+  "references": [
+    "https://dbus.freedesktop.org/doc/dbus-specification.html#bus-messages-get-name-owner",
+    "https://github.com/systemd/systemd/blob/v255/man/systemd.unit.xml#L640-L655"
+  ],
+  "remoteExecutionAttempted": false,
+  "productionPublished": false
+}
