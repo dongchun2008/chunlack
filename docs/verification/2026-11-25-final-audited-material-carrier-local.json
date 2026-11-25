@@ -1,0 +1,19 @@
+{
+  "actualCaptureConsumed": false,
+  "assemblySha256": "13dbe6390581d497669e978d2588c2a96180a28fa8fafb2987b97b92702962ce",
+  "auditedMaterialsToCarrierChecksPassed": true,
+  "commandLimitBytes": 65536,
+  "date": "2026-11-25",
+  "executionAuthorityCreated": false,
+  "fixtureLargestOuterCommandBytes": 65482,
+  "hostPayloadFiles": 156,
+  "nativeUnitsCreated": 0,
+  "outerPacketMembers": 170,
+  "previousCaptureTimestampReissued": false,
+  "productionPublished": false,
+  "scope": "offline-audited-materials-to-inactive-host-and-carrier",
+  "sshConnections": 0,
+  "targetedLocalTestsPassed": 7,
+  "validatedUnchangedCaptureTimeAndRequestDigest": true,
+  "workerSourceFiles": 200
+}
