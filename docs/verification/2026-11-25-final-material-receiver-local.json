@@ -1,0 +1,18 @@
+{
+  "actualCapacityOrCopyAccepted": false,
+  "actualExecutionAuthorized": false,
+  "boundCandidateFiles": 66,
+  "captureTransportVerified": false,
+  "copyControllerReconstructionPassed": true,
+  "date": "2026-11-25",
+  "inactiveRequestOnly": true,
+  "nativeUnitsCreated": 0,
+  "originalCapacityFreshnessAndFilesystemChecksPreserved": true,
+  "privateMaterialsValidated": 5,
+  "productionPublished": false,
+  "receiverSha256": "f00706cfcb6b0f70abb4a96db439d2431687d01f07ad435eb04aa76ea703bfe1",
+  "scope": "offline-final-source-capacity-to-compatibility-receiver",
+  "sourceAssemblyVerifiedAgainstArchive": true,
+  "sshConnections": 0,
+  "targetedLocalTestsPassed": 7
+}
