@@ -51,5 +51,14 @@
       "totalLocalTests": 11,
       "nativeTransport": "simulated"
     }
+  },
+  "frozenSourceRetention": {
+    "frozenSourceCommit": "8ea93dd825913e4e35fb2810472855bb4185c7ed",
+    "historicalIntegrationCommit": "dd9ae60bb6d7415f39ffe6df711d79d65237a877",
+    "privateRefsRetained": 2,
+    "productFilesByteVerified": 66,
+    "commitsReachableAndConnected": true,
+    "checkoutRefsAndIndexUnchanged": true,
+    "productionPublished": false
   }
 }
