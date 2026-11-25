@@ -40,6 +40,16 @@
     "failedRefreshOrAuditStopsBeforeNative": true,
     "evidenceRequiresBoundWatchAndExistingServiceBaseline": true,
     "locallyPreparedOnly": true,
-    "newNativeApprovalPending": true
+    "newNativeApprovalPending": true,
+    "runnableLocalFixture": {
+      "actualPackagePersistenceAndApprovalPath": true,
+      "positiveExactReceipt": true,
+      "wrongDigestRejected": true,
+      "falseCleanupProofRejected": true,
+      "nonzeroExitRejected": true,
+      "newFixtureCount": 4,
+      "totalLocalTests": 11,
+      "nativeTransport": "simulated"
+    }
   }
 }
