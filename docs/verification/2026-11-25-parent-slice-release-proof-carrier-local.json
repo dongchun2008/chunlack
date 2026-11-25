@@ -173,5 +173,22 @@
         "productionPublished": false
       }
     }
+  },
+  "publicFrozenAssetBaseline": {
+    "date": "2026-11-26",
+    "checkedAt": "+08:00 07:14:45",
+    "scope": "unauthenticated-read-only-public-asset-comparison",
+    "expectedFilesDigestChecked": 7,
+    "expectedFrozenPayloadManifestSha256": "af3e6517f7944b6dbe0f322bb4aeb23d10fd0747dac31e18f1d671458101cf8f",
+    "localScenarioChecksPassed": 7,
+    "publicRequests": 28,
+    "allTlsCertificatesVerified": true,
+    "humanGetAndHeadReturned404": 14,
+    "agentGetAndHeadReturned404": 14,
+    "publicAssetsMatchFrozenRelease": false,
+    "authenticatedBehaviorNotChecked": true,
+    "sshConnections": 0,
+    "newUnits": 0,
+    "productionPublished": false
   }
 }
