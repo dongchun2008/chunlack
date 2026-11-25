@@ -121,7 +121,22 @@
       "commandLimitBytes": 65536,
       "reboundDriverAndProof": true,
       "nextLauncherVerifiedInactive": true,
-      "newWindowPending": true
+      "newWindowPending": true,
+      "completeAdmissionFixture": {
+        "date": "2026-11-26",
+        "totalFocusedTestsPassed": 12,
+        "addedTestsPassed": 3,
+        "usedSavedNativePacket": true,
+        "realSetupProfileAndCodecLoadedFromArchive": true,
+        "serializedStartRequestVerified": true,
+        "originalResourceAndIdentityControlsVerified": true,
+        "wrongCodecDigestRejectedBeforeManagerCheck": true,
+        "wrongCapEffRejectedBeforeRunnerCreation": true,
+        "kernelAndServiceObservations": "simulated",
+        "remoteConnections": 0,
+        "newUnits": 0,
+        "productionPublished": false
+      }
     }
   }
 }
