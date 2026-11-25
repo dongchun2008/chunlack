@@ -1,0 +1,21 @@
+{
+  "date": "2026-11-25",
+  "scope": "local-only-parent-slice-readonly-probe-preparation",
+  "evidence": {
+    "priorObserverReceiptRevalidated": true,
+    "exactObserverGenerationAndTerminalWindowBound": true,
+    "classificationTestsPassed": 6,
+    "collectorSimulationTestsPassed": 3,
+    "absentParentYieldsNoFailedPredicate": true,
+    "changedGenerationAndServiceBaselineRejected": true,
+    "onlyCurrentPropertiesInProbe": true
+  },
+  "remoteExecution": {
+    "sshAttempts": 0,
+    "unitActions": 0,
+    "writes": 0,
+    "journalRead": false
+  },
+  "parentPredicateIdentifiedOnVps": false,
+  "productionPublished": false
+}
