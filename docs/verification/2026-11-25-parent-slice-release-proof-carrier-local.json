@@ -13,9 +13,23 @@
     "entryFiles": 13,
     "maximumCommandBytesObserved": 65482
   },
-  "independentReview": "pending-at-record-time",
+  "independentReview": {
+    "completed": true,
+    "carrierPathP0OrP1Found": false,
+    "directParentStopEliminated": true,
+    "confirmedTerminalRemovalRechecked": true,
+    "observerAndParentCommandBudgetSeparatedWithinOriginalAllowance": true,
+    "standaloneMethodTemplateNonExecutable": true
+  },
   "sshAttempts": 0,
   "newUnits": 0,
   "nativeAcceptance": false,
-  "productionPublished": false
+  "productionPublished": false,
+  "reviewFollowUp": {
+    "releaseObservationChecksPassed": 10,
+    "observerWiringChecksPassed": 10,
+    "revisedSyntheticCarrierVerified": true,
+    "latestMaximumCommandBytesObserved": 65482,
+    "newNativeApprovalPending": true
+  }
 }
