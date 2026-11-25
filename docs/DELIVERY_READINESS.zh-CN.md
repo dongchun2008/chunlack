@@ -8,6 +8,8 @@
 
 本机对公开 HTTPS 首页和健康接口的请求均在 TLS 握手阶段结束，未收到 HTTP 响应。Google 与 Cloudflare 的公开 DNS 返回相同的 A 记录。保留域名和证书校验、指定该公开地址后，本机握手仍失败。这个结果需要在下一次获准的 VPS 只读预检中与现网服务记录对照。[公开健康接口](https://lack.chunclaw.top/health)
 
+北京时间 21:49 补充检查，同一公网 VPS 的 TCP 443 可建立连接，Agent 域名的公开发现接口也在 TLS 握手阶段中断。独立部署的 Pocket ID 发现接口返回 HTTP 200。两个 ChunLACK 域名的公开 A 记录指向同一 VPS。本次观察尚无法定位握手在网络路径还是 VPS HTTPS 入口中断。[Agent 发现接口](https://agents.chunclaw.top/.well-known/oauth-protected-resource/mcp) · [Pocket ID 发现接口](https://pockid.chunclaw.top/.well-known/openid-configuration)
+
 | 阶段 | 已有证据与下一步 |
 | --- | --- |
 | 最终产品源码 | 66 项产品文件与冻结候选一致。1,080 项 Windows 全量测试无失败、取消或跳过。真实 Caddy 的七项入口测试及模拟双模型烟雾测试通过。[源码整合核对](verification/2026-11-25-current-main-frozen-source-bridge-local.json) · [全量回归](verification/2026-11-25-exact-source-product-regression-local.json) |
