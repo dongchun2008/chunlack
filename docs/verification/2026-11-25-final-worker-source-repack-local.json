@@ -1,0 +1,135 @@
+{
+  "archiveMembers": 200,
+  "candidateProductFiles": 66,
+  "changedMemberCount": 22,
+  "changedMembers": {
+    "product/identity/help/en.md": {
+      "after": "f0498faf658ca48cee3a59cc4e3f2a9b19f9743d39e9108725c7fb311591bf5e",
+      "before": "ac7eb188ddc76435448135e05c9531eb876ecc328938d0601968d3e2bb4e500c"
+    },
+    "product/identity/help/zh-CN.md": {
+      "after": "25951b02a06a9c10fd78e134f15146582af8bc7fc9a19525b5136d3f196dcc38",
+      "before": "34a0555416a5accf1be5d37bba34ee8e93b9f710b67d68557864876f61d1dc6c"
+    },
+    "source-manifest.json": {
+      "after": "f73db1d0ca3f58f1bdd696691a8ade7668b9098cfaa4b0d0c4576126913defd8",
+      "before": "34d89378f273c4fd34af080c2f25bd695e2b35002fb86ad623f29018607bd3d3"
+    },
+    "source/.superpowers/sdd/actual-candidate-assembly-20261113-a1/assemble.py": {
+      "after": "bd40430a9e6776261127d77395f8b1400d66cd5180a2a897f56827786288102d",
+      "before": "2281504b4ac72fcaa680055cd81b266974c936fbfc1f56c571e0f43bfdcf2113"
+    },
+    "source/.superpowers/sdd/actual-input-producer-reserved-20261113-a1/entry.py": {
+      "after": "1b920fd4b0f171958c5545781e1baf290afaa4034756631a2f71fddac282f144",
+      "before": "0c71e6646a41633a40cd537a1716caacb2125e29a48d05457c2ca9a3d2d080af"
+    },
+    "source/.superpowers/sdd/actual-input-producer-reserved-20261113-a1/native_ops.py": {
+      "after": "75cab0dcead97735590c7490cc378515d4e999160f340fdecfaf67c0cd591e32",
+      "before": "c094304f26ad7a3552b78162de7b4ad3d71f793d4f10de53e6448ff344e7b194"
+    },
+    "source/.superpowers/sdd/candidate-materializer-20261113-a1/materialize.py": {
+      "after": "e7dda2cfd731966e82c7ccc837fd2a33cb7e5202441db64f87043b2d2b574347",
+      "before": "8ed15ae686e1d77df0a534305ca0caf5e89e7a61f9493bdf4e4445e5c54a05fa"
+    },
+    "source/.superpowers/sdd/copy-compatibility-binding-20261114-a1/binding.py": {
+      "after": "7d9c54bfd3c1075439303e4eb50aa6797a9dd21e2f1898871bc4fbffde1bf713",
+      "before": "399352c8838e05c828af727aae59e61c65de60d09880b6de85888d0a8240aa2b"
+    },
+    "source/.superpowers/sdd/dual-boot-controller-20261115-a1/checks.py": {
+      "after": "cfa26a6a1bf3f9fb79083c74654b4e52cdb3852309e0336335265c9bd80dd246",
+      "before": "869faee0e4e9c8418643a2acc39bc96c51f64066ae2d2d5ea5e6e04ea877512b"
+    },
+    "source/.superpowers/sdd/native-copy-entry-20261116-a1/common.py": {
+      "after": "59898a08114a58f1411ebd360f2018b85004c1ac0ff23f461315450c45975c87",
+      "before": "d5abe37676062ab7f949fef2197145a1c0af5085654f63071e1daa1d96fa421d"
+    },
+    "source/.superpowers/sdd/native-copy-entry-20261116-a1/job.py": {
+      "after": "fa07ba347a43f14004c33530e29b646feaeaf3c4643fc809b13883d900445743",
+      "before": "e97c0c854a17d5ca38931c554e60e293c4f1d00990c3ad8f83ca8ebc10d27d2f"
+    },
+    "source/.superpowers/sdd/native-copy-entry-20261116-a1/phase.py": {
+      "after": "abbe992cd725e2ce69e124b181da8ebb5d8bb1a936c5a1f27d5b66f9d2dbaa22",
+      "before": "0bd162167d1a239eb09e381d9d8e2f7d104b5872d2f2aa1c8c19ebcd9e8fc6d2"
+    },
+    "source/.superpowers/sdd/native-copy-entry-20261116-a1/worker.py": {
+      "after": "8e5b387002c3fb1e3882d8e2d38411c1973d21e4e097afe6f456d97c6b8e7f3e",
+      "before": "8c6a18c849da7fd5826875bb3e90b48f845403f38b9fb7e82a323bdb4b619e03"
+    },
+    "source/.superpowers/sdd/owned-native-worker-20261116-a1/plain_copy.py": {
+      "after": "307cb508df38421877caeff4c51b9d14cb90b7aced9f37afd7ee4bccf7d1e383",
+      "before": "bdca7e98b467e69940c1832e59bdaa0a1c7d62eba9371a47bd273e64c42c49be"
+    },
+    "source/.superpowers/sdd/production-control-alignment-20261113-a1/candidate/control/formal-entry.py": {
+      "after": "d5b5de40c3d8bf9d18dc9de09d8695a8850870512b4524495b1dddcfa4eeb76e",
+      "before": "90b4e09c06eaa757f93a7edc5fb6d5031b0ddff2dd1b98890adedf3b53dc8226"
+    },
+    "source/.superpowers/sdd/production-control-alignment-20261113-a1/candidate/control/formal-launcher.py": {
+      "after": "1c128c20d306bdd0aa2a158e9a36b1c47a745f554e25a0fb0e003a67fab7331e",
+      "before": "755a8e97bdb486025e06ae8a96cd1b36c54fb34741c057b461a167263ddb7fbd"
+    },
+    "source/.superpowers/sdd/production-control-alignment-20261113-a1/candidate/control/repo/deploy/public/release-control/2026-10-25/i18n-release-gate.py": {
+      "after": "5e790829304c03ed4eb5928471a5b8bba0b2f82ed5da0219c8c7145bde1002f6",
+      "before": "95ab206d9f0dcf1bbcb208e600e7c24a94de4218a1025738a1844e67d8cb7af3"
+    },
+    "source/.superpowers/sdd/production-control-alignment-20261113-a1/candidate/payload-manifest.json": {
+      "after": "af3e6517f7944b6dbe0f322bb4aeb23d10fd0747dac31e18f1d671458101cf8f",
+      "before": "ae7c5db14c5e4ba9886b7ea878a417f53648c3cc1e11aa558db1c81fdadd02ef"
+    },
+    "source/.superpowers/sdd/production-control-alignment-20261113-a1/candidate/product/identity/help/en.md": {
+      "after": "f0498faf658ca48cee3a59cc4e3f2a9b19f9743d39e9108725c7fb311591bf5e",
+      "before": "ac7eb188ddc76435448135e05c9531eb876ecc328938d0601968d3e2bb4e500c"
+    },
+    "source/.superpowers/sdd/production-control-alignment-20261113-a1/candidate/product/identity/help/zh-CN.md": {
+      "after": "25951b02a06a9c10fd78e134f15146582af8bc7fc9a19525b5136d3f196dcc38",
+      "before": "34a0555416a5accf1be5d37bba34ee8e93b9f710b67d68557864876f61d1dc6c"
+    },
+    "source/.superpowers/sdd/production-control-alignment-20261113-a1/candidate/tools/production-config-prepare.py": {
+      "after": "0831b8d5781190c882c72f6d7f66736641b39d40e7f8ca91732d4a154c3798b0",
+      "before": "ab1729aaecc2dd748e4c9f38f9e68b4b31cc2366d6b8cf5fafaac3454d66516b"
+    },
+    "source/.superpowers/sdd/production-input-draft-20261113-a1/draft.py": {
+      "after": "0dc27ecd4cd7b0a05da7ce2af2d75f2c88bce73f35b39189b2099d5ba8c17ce6",
+      "before": "97e1e1a67c2354e21e0dd1d679a44403779de4fc7612c805e5ca6ccdf73b4b35"
+    }
+  },
+  "date": "2026-11-25",
+  "hostAndOuterCarrierRebuilt": false,
+  "newLinuxUnits": 0,
+  "newRequestProvenanceValidated": false,
+  "oldCatalogueAttached": false,
+  "oldWorkerSha256": "da9876bf2c270f4c74984d2ad4efa44960fe0f8ee8125a176f3c4ae23006af8e",
+  "onlyDigestLiteralsChangedInSixTransitiveConsumers": true,
+  "pending": [
+    "Build catalogue from the final source archive and fresh bound request evidence.",
+    "Rebind host launcher, observer assets and outer admission to the final worker archive.",
+    "Run native isolation acceptance and verify compatible boot and rollback before production."
+  ],
+  "productionPublished": false,
+  "retiredFirstAssembly": {
+    "cause": "One generated dependent pin referred to an intermediate dependency digest.",
+    "correction": "Resolve dependency digests in topological order and check the real producer loader."
+  },
+  "scope": "local-worker-source-repack-and-checked-preparation-pipeline",
+  "sourceManifestFiles": 93,
+  "sourceManifestSha256": "f73db1d0ca3f58f1bdd696691a8ade7668b9098cfaa4b0d0c4576126913defd8",
+  "sourceRepackReceiptSha256": "3faacc8a6164937652af7d305cecbaa19981f4a0b8bca244506a01d4f818dcb4",
+  "sshConnections": 0,
+  "validation": {
+    "actualNativeValidatorLoadedByPinnedPath": true,
+    "candidateFileDigestsChecked": 66,
+    "liveSystemdUsed": false,
+    "materializerCheckedSpecPassed": true,
+    "nativeOpsLoadsAssemblerMaterializerAndFormalEntry": true,
+    "negativeCases": 3,
+    "producerEntryLoadsNativeOps": true,
+    "productionPublished": false,
+    "requestReferencesRebuiltSourceManifest": true,
+    "requestsWrittenToDisk": 0,
+    "syntheticNativeRequestCanonicalSha256": "787569f68ffc07d8ba904ab39e7214435ee015e9b8577ab69b4508cfd8048118",
+    "syntheticOnly": true,
+    "verifiedArchiveSha256": "cf60c833627786393b0716886a491fdd71f8fce06b9aea85f2e2c73729ea42a3"
+  },
+  "validationReceiptSha256": "c1863bd3afdc13a8d1bcc3886e67542e5f33274a5d00238759a7e92dc4bcd590",
+  "workerSourceArchiveSha256": "cf60c833627786393b0716886a491fdd71f8fce06b9aea85f2e2c73729ea42a3",
+  "workerSourcesRepacked": true
+}
