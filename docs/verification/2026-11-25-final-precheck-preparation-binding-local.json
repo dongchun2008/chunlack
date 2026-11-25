@@ -1,0 +1,23 @@
+{
+  "activationAuthorized": false,
+  "actualPreparationAuthorized": false,
+  "actualReadonlyCaptureFresh": false,
+  "date": "2026-11-25",
+  "freshnessSeconds": 300,
+  "historicalCaptureReissued": false,
+  "maximumPreflightSshAttempts": 1,
+  "maximumPreflightUnits": 0,
+  "nativeUnitsCreated": 0,
+  "newPreparationBindingVerified": true,
+  "offlineHistoricalTransportReplayPassed": true,
+  "precheckPackageFiles": 8,
+  "preflightLocalSeconds": 35,
+  "preflightRemoteSeconds": 20,
+  "prepareSourceManifestSha256": "f73db1d0ca3f58f1bdd696691a8ade7668b9098cfaa4b0d0c4576126913defd8",
+  "productionPublished": false,
+  "rejectionChecks": 7,
+  "scope": "offline-final-precheck-to-preparation-binding",
+  "sshConnections": 0,
+  "verifierSha256": "225aa50382afd8c57d0341b812fdf245099652630407f335dce184e987b4576c",
+  "wirePayloadByteIdentical": true
+}
