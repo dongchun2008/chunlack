@@ -1,0 +1,35 @@
+{
+  "date": "2026-11-25",
+  "scope": "fixed-failed-observer-read-only-follow-up",
+  "collection": {
+    "accepted": true,
+    "sshAttempts": 1,
+    "localElapsedSeconds": 2.801,
+    "remoteLimitSeconds": 20,
+    "localLimitSeconds": 35,
+    "linuxUnitsStarted": 0,
+    "unitActions": 0,
+    "remoteWrites": 0,
+    "protectedServiceBaselinesUnchanged": true,
+    "observerCgroupEmpty": true,
+    "journalRead": false,
+    "stdoutBytes": 499,
+    "stderrBytes": 0
+  },
+  "observation": {
+    "unitResult": "exit-code",
+    "unitExitStatus": 1,
+    "observerPhase": "create_parent",
+    "observerError": "observe_actor_parent_policy",
+    "requestBindingVerified": true
+  },
+  "offlineReproduction": {
+    "exactFrozenProfileVerified": true,
+    "syntheticControlAccepted": true,
+    "syntheticVariationsWithSameError": 6,
+    "failedProductionPredicateIdentified": false
+  },
+  "compatibilityProofCreated": false,
+  "productionPublished": false,
+  "automaticRetry": false
+}
