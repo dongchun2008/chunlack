@@ -1,5 +1,22 @@
 # ChunLACK 交付状态与接入清单
 
+## 当前交付状态
+
+### 2026-11-25 21:47（北京时间）
+
+**新版尚未发布。** 本地冻结候选和发布准备链已验证。生产验收需要新的 VPS 证据。
+
+本机对公开 HTTPS 首页和健康接口的请求均在 TLS 握手阶段结束，未收到 HTTP 响应。Google 与 Cloudflare 的公开 DNS 返回相同的 A 记录。保留域名和证书校验、指定该公开地址后，本机握手仍失败。这个结果需要在下一次获准的 VPS 只读预检中与现网服务记录对照。[公开健康接口](https://lack.chunclaw.top/health)
+
+| 阶段 | 已有证据与下一步 |
+| --- | --- |
+| 最终产品源码 | 66 项产品文件与冻结候选一致。1,080 项 Windows 全量测试无失败、取消或跳过。真实 Caddy 的七项入口测试及模拟双模型烟雾测试通过。[源码整合核对](verification/2026-11-25-current-main-frozen-source-bridge-local.json) · [全量回归](verification/2026-11-25-exact-source-product-regression-local.json) |
+| VPS 只读预检与准备 | 本地入口已通过测试，且不复用用完的诊断额度。先取得新的只读回执，核对四项现有服务与部署基线。回执和公开入口基线均确认后，才考虑获准的一次原生准备。[预检与采集入口](verification/2026-11-25-final-readonly-capture-entry-clock-local.json) |
+| 实际材料与 Linux 隔离验收 | 候选可绑定五份材料、采样时间、独立证明读取器和归档摘要。仍需在 VPS 上采集本次实际材料，并验证数据库副本兼容、新旧运行时切换、回滚保留新写入及临时单元清理。[证明读取器](verification/2026-11-25-final-proof-carrier-source-closure-local.json) · [私有落盘](verification/2026-11-25-native-carrier-private-persistence-local.json) |
+| 生产发布与验收 | 发布前取得当前兼容性证明及一致性备份，核对正式发布和回滚门禁。受控切换后核对公开 TLS、Pocket ID 回调、工作区权限和中英文界面。真实模型协作与外部 Agent 能力继续按各自的验收证据记录。 |
+
+以下为各阶段的历史记录。
+
 > 2026-11-25 只读材料采集的退出证据审计已接入最终接收器。九项审计和七项接收本地回归通过，核对了一次尝试、完整传输、三类 SSH 句柄关闭及四项服务前后记录。保留本机诊断 stderr 的字节数，未据此判断其原因。真实材料采集和复制仍待执行。[传输证据审计](verification/2026-11-25-final-candidate-transport-audit-local.json)
 
 > 2026-11-25 已用最终源码归档中的原始容量校验器和复制控制器验证五份材料及 66 项产品文件。七项本地回归通过，保留对过期采样、跨文件系统、容量漂移、材料或保留记录变更的拒绝。离线请求保留未启用状态，实际采集传输和原生复制仍待验收。[材料与容量接收复验](verification/2026-11-25-final-material-receiver-local.json)
