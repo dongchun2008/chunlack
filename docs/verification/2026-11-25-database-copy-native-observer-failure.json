@@ -1,0 +1,39 @@
+{
+  "date": "2026-11-25",
+  "scope": "read-only-refresh-and-native-database-copy-compatibility",
+  "refresh": {
+    "accepted": true,
+    "sshAttempts": 1,
+    "linuxUnitsStarted": 0,
+    "localElapsedSeconds": 6.632,
+    "reboundFileCount": 15
+  },
+  "nativeRun": {
+    "accepted": false,
+    "sshAttempts": 1,
+    "localElapsedSeconds": 28.052,
+    "exitCode": 1,
+    "automaticRetry": false,
+    "completedPhaseReceipts": [
+      "after",
+      "before",
+      "receiver",
+      "setup"
+    ],
+    "failure": {
+      "phase": "observer-wait",
+      "remoteExitCode": 1,
+      "observerError": "observe_actor_normal_exit",
+      "bridgeError": "bridge_driver_transport_receipt",
+      "immediateGuardLocated": true,
+      "underlyingCauseVerified": false
+    },
+    "protectedServiceBaselinesUnchanged": true,
+    "observerCleanupConfirmed": true,
+    "transportCleanupConfirmed": true,
+    "sdkThreadExitConfirmed": true,
+    "localCleanupErrors": 0
+  },
+  "compatibilityProofCreated": false,
+  "productionPublished": false
+}
