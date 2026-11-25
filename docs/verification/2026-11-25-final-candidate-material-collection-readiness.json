@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-25",
+  "scope": "offline-readiness-for-one-shot-candidate-material-collection",
+  "preparedCandidateEvidence": {
+    "verifiedPriorNativeTerminal": true,
+    "offlineHandoffReproducedByteForByte": true,
+    "pinnedEntryHelpersVerified": 4
+  },
+  "offlineChecks": {
+    "passed": 44,
+    "failed": 0,
+    "byArea": {
+      "captureEntry": 4,
+      "preparedMaterialHandoff": 8,
+      "materialAudit": 9,
+      "materialReceiver": 7,
+      "hostBundle": 7,
+      "proofCarrierBuild": 5,
+      "proofCarrierPersistence": 4
+    },
+    "runnerCorrection": "Used targeted unittest discovery for the two suites that import sibling fixtures."
+  },
+  "publicHttpsObservation": {
+    "main": "tls-handshake-failed",
+    "agent": "tls-handshake-failed",
+    "identityIssuerHttpStatus": 200,
+    "causeVerified": false
+  },
+  "materialCollection": {
+    "performed": false,
+    "maximumSshAttemptsForProposedCollection": 1,
+    "maximumNewUnitsForProposedCollection": 0,
+    "remoteSeconds": 20,
+    "localSeconds": 35
+  },
+  "databaseCopyCompatibilityVerifiedInThisPass": false,
+  "productionPublished": false
+}
