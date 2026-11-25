@@ -1,0 +1,23 @@
+{
+  "date": "2026-11-25",
+  "scope": "offline-parent-job-completion-observer-wiring-and-carrier",
+  "tests": {
+    "observerWiringPassed": 12,
+    "jobAdapterPassed": 12,
+    "pinnedLibraryDescriptorAndCloseTestedWithFixtures": true,
+    "onlyVerifiedActiveParentCanBeBound": true,
+    "cleanupNoUnverifiedOwnershipAdoption": true
+  },
+  "syntheticCarrier": {
+    "sourceEntryFiles": 13,
+    "newRuntimeSourceFiles": 4,
+    "exactPackagedModuleLoadingVerified": true,
+    "proofInputsVerified": true,
+    "largestCommandBytes": 65482
+  },
+  "reviewCompletedAtRecord": false,
+  "connectedToRealSystemBus": false,
+  "sshAttempts": 0,
+  "nativeCandidateActivated": false,
+  "productionPublished": false
+}
