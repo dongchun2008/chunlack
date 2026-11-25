@@ -2,6 +2,10 @@
 
 ## 当前交付状态
 
+### 2026-11-25 23:35（北京时间）
+
+从本机以 Node.js 发起公网只读请求并校验证书。主站 `/health` 返回 HTTP 200，报告版本 `4.2.2`。Agent 域的 OAuth 资源发现端点返回 HTTP 200，资源标识匹配。主站的中英文切换脚本、中文帮助和英文帮助三个精确路径，GET 与 HEAD 均返回 HTTP 404。记录仅覆盖公开路径和当前客户端。真人登录、工作区功能、新版发布和 Linux 隔离验收仍需各自的证据。[公开健康接口](https://lack.chunclaw.top/health) · [Agent 发现接口](https://agents.chunclaw.top/.well-known/oauth-protected-resource/mcp)
+
 ### 2026-11-25 21:47（北京时间）
 
 **新版尚未发布。** 本地冻结候选和发布准备链已验证。生产验收需要新的 VPS 证据。
