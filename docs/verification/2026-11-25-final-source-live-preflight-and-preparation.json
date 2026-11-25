@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-25",
+  "scope": "live-read-only-preflight-and-isolated-inactive-candidate-preparation",
+  "preflight": {
+    "accepted": true,
+    "sshAttempts": 1,
+    "unitsStarted": 0,
+    "localElapsedSeconds": 7.74,
+    "remoteWorkElapsedSeconds": 3.19,
+    "limitsSeconds": {
+      "remote": 20,
+      "local": 35
+    },
+    "protectedServiceAndConfigurationBaselineUnchanged": true
+  },
+  "preparation": {
+    "accepted": true,
+    "sshAttempts": 1,
+    "unitsAttempted": 1,
+    "localElapsedSeconds": 152.268,
+    "remoteElapsedSeconds": 148.818,
+    "nativeExitStatus": 0,
+    "unitEmptyVerified": true,
+    "protectedBaselineUnchanged": true,
+    "limitsSeconds": {
+      "unit": 240,
+      "remote": 280,
+      "local": 310
+    },
+    "memoryMiB": 192,
+    "cpuPercentOfSingleCore": 20,
+    "tasksMax": 32,
+    "swapAllowed": false,
+    "isolatedNetwork": true
+  },
+  "candidate": {
+    "state": "prepared-inactive",
+    "productFileCount": 66,
+    "sourceManifestSha256": "f73db1d0ca3f58f1bdd696691a8ade7668b9098cfaa4b0d0c4576126913defd8",
+    "prewriteCapacityPassed": true,
+    "localHandoffDerivedAndVerified": true,
+    "settingsSealed": false,
+    "compatibilityProofCreated": false,
+    "productionReady": false
+  },
+  "publicHttpsObservation": {
+    "phase": "before-ssh-preflight",
+    "httpsHandshakeSucceeded": false,
+    "curlExitCode": 35,
+    "httpResponseReceived": false,
+    "causeVerified": false
+  },
+  "productionPublished": false,
+  "realModelCalls": 0,
+  "externalAgentCalls": 0,
+  "automaticRetry": false
+}
