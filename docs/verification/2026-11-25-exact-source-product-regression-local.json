@@ -1,0 +1,40 @@
+{
+  "caddyTestBinaryVerified": true,
+  "counts": {
+    "cancelled": 0,
+    "fail": 0,
+    "pass": 1080,
+    "skipped": 0,
+    "suites": 0,
+    "tests": 1080,
+    "todo": 0
+  },
+  "date": "2026-11-25",
+  "directCaddyTlsTestsPassed": 7,
+  "exactDependencyLockVerified": true,
+  "exportedGitBlobsVerified": 1100,
+  "firstExportNewlineMismatchCorrected": true,
+  "nativeLinuxAcceptance": false,
+  "nodeVersion": "v24.22.1",
+  "originalTestAssertionsAndPerTestDeadlinePreserved": true,
+  "productionPublished": false,
+  "protectedWorkingFilesUnchanged": true,
+  "scope": "isolated-windows-product-regression-on-exact-local-source",
+  "smoke": {
+    "elapsedSeconds": 3.8320712000131607,
+    "exitCode": 0,
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdoutSha256": "2682a8ad10a54d082e60a99229d562b855cb7c1eb9e01c2760f6d470d286e02e"
+  },
+  "smokeMockProviders": true,
+  "sourceCommit": "dd9ae60bb6d7415f39ffe6df711d79d65237a877",
+  "sourceTree": "3d1aa3db8883d8174e761154f8369dc9034e79ca",
+  "sshConnections": 0,
+  "suite": {
+    "elapsedSeconds": 402.04297720012255,
+    "exitCode": 0,
+    "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdoutSha256": "2bfe894106f712688fd5957c77c5bb383766eafe66c9d74e5c2c47647e803913"
+  },
+  "testFileCount": 129
+}
