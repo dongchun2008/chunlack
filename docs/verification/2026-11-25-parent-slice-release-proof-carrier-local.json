@@ -244,6 +244,39 @@
         "sshAttempts": 0,
         "remoteCommandsDispatched": 0
       }
+    },
+    "readOnlyFollowUpAttempt": {
+      "date": "2026-11-27",
+      "scope": "one-fixed-read-only-observer-and-parent-status-capture",
+      "continuationSignal": "manual-goal-resume",
+      "sshAttempts": 1,
+      "elapsedSeconds": 5.56,
+      "remoteExitStatus": 1,
+      "accepted": false,
+      "observedObserverExitStatus": 1,
+      "observerCgroupAbsent": true,
+      "protectedServiceBaselinesUnchanged": true,
+      "transportHandlesClosed": true,
+      "localSocketCloseDiagnostic10038": true,
+      "parentIdentityRejected": true,
+      "parentSliceReleaseVerified": false,
+      "observerLogFilesRead": false,
+      "observerInternalCauseKnown": false,
+      "newLinuxUnits": 0,
+      "remoteWrites": 0,
+      "unitActions": 0,
+      "automaticRetry": false,
+      "productionPublished": false,
+      "localFollowUp": {
+        "testsPassed": 5,
+        "reproducedObservedCaptureOrderingFailure": true,
+        "observerLogsCanBeRetainedOnParentRejection": true,
+        "observerRevalidatedAfterRead": true,
+        "baselineDriftOrCleanupErrorStillDropsOutputs": true,
+        "parentRejectionStillFailsOverall": true,
+        "freshEntryVerifiedInactive": true,
+        "sshAttempts": 0
+      }
     }
   }
 }
