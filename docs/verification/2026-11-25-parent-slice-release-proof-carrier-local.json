@@ -230,7 +230,20 @@
       "automaticRetry": false,
       "approved": false,
       "sshAttempts": 0,
-      "productionPublished": false
+      "productionPublished": false,
+      "fixedLauncher": {
+        "date": "2026-11-26",
+        "localTestsPassed": 5,
+        "verifiedPinnedExistingTransport": true,
+        "verifiedPrivateOneShotScope": true,
+        "verifiedFixedRemoteSourceAndUnusedClaim": true,
+        "localBudgetSeconds": 35,
+        "remoteBudgetSeconds": 20,
+        "cleanupReserveSeconds": 8,
+        "localDigestTypoCorrectedAgainstSavedBinding": true,
+        "sshAttempts": 0,
+        "remoteCommandsDispatched": 0
+      }
     }
   }
 }
