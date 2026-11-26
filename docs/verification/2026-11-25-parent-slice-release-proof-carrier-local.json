@@ -275,7 +275,20 @@
         "baselineDriftOrCleanupErrorStillDropsOutputs": true,
         "parentRejectionStillFailsOverall": true,
         "freshEntryVerifiedInactive": true,
-        "sshAttempts": 0
+        "sshAttempts": 0,
+        "identityDiagnostics": {
+          "date": "2026-11-27",
+          "localTestsPassed": 5,
+          "readOnlyParentCommandAndFieldsUnchanged": true,
+          "rejectionFlagsRetainedWithoutRawValues": true,
+          "unverifiedParentCgroupReadsDenied": true,
+          "observerEvidenceIndependentlyRetained": true,
+          "serviceBaselineDriftStillWithholdsEvidence": true,
+          "refreshedEntryVerifiedInactive": true,
+          "newConnections": 0,
+          "newUnits": 0,
+          "productionPublished": false
+        }
       }
     }
   }
