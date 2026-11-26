@@ -214,6 +214,23 @@
     "compatibilityProofCreated": false,
     "productionPublished": false,
     "retried": false,
-    "followupRequiresNewReadOnlyScope": true
+    "followupRequiresNewReadOnlyScope": true,
+    "readOnlyFollowUpPrepared": {
+      "date": "2026-11-26",
+      "boundToExactSavedSetupAndObserverReceipts": true,
+      "observerLogPathsBound": 2,
+      "fixedUnitTargets": 2,
+      "parentPopulationCheckedThroughCgroupEvents": true,
+      "testsPassed": 5,
+      "maximumSshAttempts": 1,
+      "maximumRemoteSeconds": 20,
+      "maximumLocalSeconds": 35,
+      "maximumNewUnits": 0,
+      "unitActionsAllowed": false,
+      "automaticRetry": false,
+      "approved": false,
+      "sshAttempts": 0,
+      "productionPublished": false
+    }
   }
 }
