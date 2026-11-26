@@ -190,5 +190,30 @@
     "sshConnections": 0,
     "newUnits": 0,
     "productionPublished": false
+  },
+  "nativeSetupAssetCorrectionRehearsal": {
+    "date": "2026-11-26",
+    "scope": "explicitly-approved-one-shot-capacity-refresh-and-isolated-rehearsal",
+    "sshAttempts": 2,
+    "capacityRefreshPassed": true,
+    "verifiedBoundFiles": 15,
+    "driverElapsedSeconds": 27.256,
+    "setupNativeAccepted": true,
+    "setupObservedActivatingAndLiveStates": true,
+    "setupNormalExitVerified": true,
+    "setupEmptyScopeConfirmed": true,
+    "observerPhase": "wait",
+    "observerExitCode": 1,
+    "observerPrimaryError": "observe_actor_normal_exit",
+    "observerCleanupError": "watch_parent_release_unbound",
+    "observerInnerCauseKnown": false,
+    "parentSliceReleaseVerified": false,
+    "rawSetupAndWatchCorrelationVerified": true,
+    "protectedServiceBaselinesUnchanged": true,
+    "transportAndSdkExitConfirmed": true,
+    "compatibilityProofCreated": false,
+    "productionPublished": false,
+    "retried": false,
+    "followupRequiresNewReadOnlyScope": true
   }
 }
