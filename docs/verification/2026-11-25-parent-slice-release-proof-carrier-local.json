@@ -290,6 +290,46 @@
           "productionPublished": false
         }
       }
+    },
+    "independentObserverCapture": {
+      "date": "2026-11-27",
+      "scope": "fixed-observer-output-and-parent-unit-read-only",
+      "sshAttempts": 1,
+      "localElapsedSeconds": 6.207,
+      "remoteExitStatus": 1,
+      "transportHandlesClosed": true,
+      "localSocketCloseDiagnostic10038": true,
+      "observerAndWatchCorrelationVerified": true,
+      "observerOutputBytes": 499,
+      "observerErrorOutputBytes": 0,
+      "observerPhase": "create_parent",
+      "observerError": "observe_actor_parent_policy",
+      "observerCgroupAbsent": true,
+      "parentUnitNameMatched": true,
+      "parentLoadState": "loaded",
+      "parentDescriptionMatched": false,
+      "parentTransient": false,
+      "parentControlGroupBlank": true,
+      "parentGenerationBlank": true,
+      "parentIdentityAccepted": false,
+      "parentSliceReleaseVerified": false,
+      "protectedServicesUnchanged": true,
+      "newUnits": 0,
+      "unitActions": 0,
+      "remoteFileWrites": 0,
+      "productionPublished": false,
+      "localNoLoadPrototype": {
+        "testsPassed": 7,
+        "sourceProfileMatchedSavedArchive": true,
+        "existingLoadOnLookupFailureReproduced": true,
+        "requiresExactManagerGetUnitAbsence": true,
+        "verifiesManagerBeforeAndAfterLookup": true,
+        "preexistingNameRefused": true,
+        "postStartOwnershipChecksPreserved": true,
+        "fullBundleRebindingPending": true,
+        "outerReleaseProbeNoLoadAdaptationPending": true,
+        "nativeTestRun": false
+      }
     }
   }
 }
