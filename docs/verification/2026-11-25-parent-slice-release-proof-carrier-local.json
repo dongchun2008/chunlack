@@ -329,6 +329,31 @@
         "fullBundleRebindingPending": true,
         "outerReleaseProbeNoLoadAdaptationPending": true,
         "nativeTestRun": false
+      },
+      "noLoadReleaseIntegrated": {
+        "date": "2026-11-27",
+        "newFocusedTestsPassed": 8,
+        "usesOnlyGenerationAddressedProperties": true,
+        "usesNonLoadingManagerLookupForAbsence": true,
+        "staleAliasAndInvalidJobRejected": true,
+        "rechecksNameAfterGenerationDisappears": true,
+        "protectedManagerOwnershipRechecked": true,
+        "originalCgroupVerificationRetained": true,
+        "fixedLibraryAndConnectionClosedByOwner": true,
+        "boundedParentSamples": 13,
+        "boundProofInputsVerified": true,
+        "bridgeInputFiles": 13,
+        "hostFiles": 161,
+        "observerAssetFiles": 11,
+        "observerAssetBytes": 10803200,
+        "packetMembers": 170,
+        "maximumCommandBytes": 65338,
+        "commandLimitBytes": 65536,
+        "conditionalLauncherReadyButInactive": true,
+        "sshAttempts": 0,
+        "nativeUnitsCreated": 0,
+        "nativeProofCreated": false,
+        "productionPublished": false
       }
     }
   }
