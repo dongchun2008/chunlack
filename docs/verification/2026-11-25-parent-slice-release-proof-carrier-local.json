@@ -412,7 +412,21 @@
           "sdkThreadExitConfirmed": true,
           "observerInnerCauseEstablished": false,
           "automaticRetry": false,
-          "productionPublished": false
+          "productionPublished": false,
+          "readOnlyFollowupCandidate": {
+            "localFixtureTestsPassed": 7,
+            "localEntryVerificationPassed": true,
+            "priorReceiptFilesBound": 5,
+            "exactLoadedTablePatternOnlyForParent": true,
+            "maximumSshAttempts": 1,
+            "remoteSeconds": 20,
+            "localSeconds": 35,
+            "maximumNewUnits": 0,
+            "automaticRetry": false,
+            "remoteDispatched": false,
+            "productionPublished": false,
+            "systemdSource": "https://github.com/systemd/systemd-stable/blob/v255.4/src/core/dbus-manager.c"
+          }
         }
       }
     }
