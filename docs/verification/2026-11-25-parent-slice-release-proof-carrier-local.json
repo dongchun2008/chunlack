@@ -353,7 +353,23 @@
         "sshAttempts": 0,
         "nativeUnitsCreated": 0,
         "nativeProofCreated": false,
-        "productionPublished": false
+        "productionPublished": false,
+        "sliceInterfaceCorrection": {
+          "date": "2026-11-27",
+          "failureReproducedWithStrictPropertyInterfaceFixture": true,
+          "controlGroupQueriedOnSliceInterface": true,
+          "otherPropertiesRemainOnUnitInterface": true,
+          "sameGenerationAndNameChecksPreserved": true,
+          "boundFullProofInputsVerified": true,
+          "priorInactiveCandidatePreserved": true,
+          "newInactiveLauncherVerified": true,
+          "maximumCommandBytes": 65338,
+          "commandLimitBytes": 65536,
+          "sshAttempts": 0,
+          "nativeUnitsCreated": 0,
+          "productionPublished": false,
+          "systemdSource": "https://github.com/systemd/systemd-stable/blob/v255.4/src/core/dbus.c#L491-L498"
+        }
       }
     }
   }
