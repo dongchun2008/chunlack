@@ -369,6 +369,19 @@
           "nativeUnitsCreated": 0,
           "productionPublished": false,
           "systemdSource": "https://github.com/systemd/systemd-stable/blob/v255.4/src/core/dbus.c#L491-L498"
+        },
+        "heldReaderWiringFixture": {
+          "date": "2026-11-27",
+          "testsPassed": 4,
+          "readAllFourPinnedModulesFromPackedCandidate": true,
+          "loaderReceivedHeldDescriptorPath": true,
+          "managerBindingFailureClosedBusAndDescriptor": true,
+          "libraryDigestMismatchRefused": true,
+          "descriptorClosedDespiteBusCloseFailure": true,
+          "usedSimulatedSystemBusAndLibrary": true,
+          "sshAttempts": 0,
+          "nativeUnitsCreated": 0,
+          "productionPublished": false
         }
       }
     }
