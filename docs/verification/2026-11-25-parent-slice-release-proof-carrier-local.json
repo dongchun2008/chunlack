@@ -382,6 +382,37 @@
           "sshAttempts": 0,
           "nativeUnitsCreated": 0,
           "productionPublished": false
+        },
+        "nativeRehearsal": {
+          "date": "2026-11-27",
+          "readOnlyRefreshSshAttempts": 1,
+          "readOnlyRefreshSucceeded": true,
+          "verifiedInputFiles": 15,
+          "nativeSshAttempts": 1,
+          "nativeMaximumUnits": 6,
+          "nativeLocalLimitSeconds": 950,
+          "nativeExitCode": 1,
+          "nativeLocalElapsedSeconds": 36.206,
+          "setupCompleted": true,
+          "setupNormalExitVerified": true,
+          "setupCleanupConfirmed": true,
+          "setupScopeEmptyConfirmed": true,
+          "watchLastPhase": "wait",
+          "watchExitCode": 1,
+          "watchResponseBytes": 615,
+          "watchTransportErrorBytes": 0,
+          "watchPrimaryError": "observe_actor_normal_exit",
+          "watchCleanupError": "watch_parent_release_unbound",
+          "parentReleaseVerified": false,
+          "nativeCompatibilityVerified": false,
+          "proofCreated": false,
+          "protectedServiceRecordsCompared": 4,
+          "protectedServicesUnchanged": true,
+          "transportCleanupConfirmed": true,
+          "sdkThreadExitConfirmed": true,
+          "observerInnerCauseEstablished": false,
+          "automaticRetry": false,
+          "productionPublished": false
         }
       }
     }
