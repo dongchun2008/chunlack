@@ -426,6 +426,37 @@
             "remoteDispatched": false,
             "productionPublished": false,
             "systemdSource": "https://github.com/systemd/systemd-stable/blob/v255.4/src/core/dbus-manager.c"
+          },
+          "readOnlyFollowupResult": {
+            "date": "2026-11-28",
+            "sshAttempts": 1,
+            "remoteLimitSeconds": 20,
+            "localLimitSeconds": 35,
+            "localElapsedSeconds": 3.734,
+            "remoteExitCode": 0,
+            "protectedServiceRecordsCompared": 4,
+            "protectedServicesUnchanged": true,
+            "actorLastPhase": "create_parent",
+            "actorPrimaryError": "parent_job_deadline",
+            "actorCleanupErrors": [
+              "observe_actor_cleanup_parent_origin"
+            ],
+            "actorCleanupConfirmed": false,
+            "actorStdoutBytes": 560,
+            "actorStderrBytes": 0,
+            "observerUnitState": "failed",
+            "observerUnitExitCode": 1,
+            "observerCgroupAbsent": true,
+            "parentUnlisted": true,
+            "parentCgroupAbsent": true,
+            "parentStartCompletionStageIdentified": false,
+            "localSocketCloseWarningObserved": true,
+            "transportCloseConfirmed": true,
+            "newLinuxUnits": 0,
+            "remoteWrites": 0,
+            "unitActions": 0,
+            "automaticRetry": false,
+            "productionPublished": false
           }
         }
       }
