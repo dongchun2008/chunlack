@@ -566,6 +566,25 @@
                     "guardBehaviorChanged": false,
                     "exactRuntimeFieldUnconfirmed": true,
                     "remoteAttempts": 0
+                  },
+                  "metadataProbeCandidate": {
+                    "date": "2026-11-28",
+                    "packedTestsPassed": 8,
+                    "localEntryVerifiedInactive": true,
+                    "inspectorScope": "isolated_setup_only",
+                    "originalSharedDispatchBytesPreserved": true,
+                    "originalInspectorAndObserverBytesPreserved": true,
+                    "comparedMetadataFields": 9,
+                    "pathClassesCovered": 5,
+                    "descriptorAndPathComparisonIdentified": true,
+                    "rawMetadataValuesExcluded": true,
+                    "originalRejectionPreserved": true,
+                    "extraKernelReads": 0,
+                    "packetInputsBound": 13,
+                    "maximumCommandBytes": 65338,
+                    "proofInputsVerified": true,
+                    "remoteDispatched": false,
+                    "productionPublished": false
                   }
                 }
               }
