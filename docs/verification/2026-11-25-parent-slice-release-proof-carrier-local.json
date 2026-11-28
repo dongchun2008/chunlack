@@ -513,6 +513,24 @@
                 "sshAttempts": 0,
                 "temporaryUnitsCreated": 0,
                 "productionPublished": false
+              },
+              "sameConnectionCandidate": {
+                "date": "2026-11-28",
+                "packagedFlowTestsPassed": 7,
+                "operatorScopeTestsPassed": 4,
+                "operatorInactiveVerified": true,
+                "phaseSpecificDeadlineCodesPreserved": true,
+                "rawLogContentExcluded": true,
+                "onlyBoundObserverWaitFailureCanTrigger": true,
+                "oneReadOnlySupplementalChannelOnExistingConnection": true,
+                "diagnosticsSkippedWithoutFinalizationReserve": true,
+                "failedRehearsalRemainsFailed": true,
+                "maximumSupplementalRemoteSeconds": 20,
+                "maximumCaptureBytesPerLog": 8192,
+                "newUnitsAllowedForCapture": 0,
+                "maximumBridgeCommandBytes": 65338,
+                "remoteDispatched": false,
+                "productionPublished": false
               }
             }
           }
