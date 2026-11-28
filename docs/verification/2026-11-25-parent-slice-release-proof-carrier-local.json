@@ -557,7 +557,16 @@
                   "sdkThreadExited": true,
                   "kernelMetadataFieldIdentified": false,
                   "nativeCompatibilityVerified": false,
-                  "productionPublished": false
+                  "productionPublished": false,
+                  "packedKernelGuardLocal": {
+                    "targetedTestsPassed": 3,
+                    "fileMetadataFieldsCovered": 9,
+                    "heldDescriptorAndAliasDriftCases": 18,
+                    "singleFailureCodeForAllDriftCases": true,
+                    "guardBehaviorChanged": false,
+                    "exactRuntimeFieldUnconfirmed": true,
+                    "remoteAttempts": 0
+                  }
                 }
               }
             }
