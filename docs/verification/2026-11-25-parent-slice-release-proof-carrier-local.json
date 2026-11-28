@@ -617,7 +617,27 @@
                       "sdkThreadExited": true,
                       "proofCreated": false,
                       "nativeCompatibilityVerified": false,
-                      "productionPublished": false
+                      "productionPublished": false,
+                      "latestParentJobCaptureCandidate": {
+                        "date": "2026-11-28",
+                        "fixtureTestsPassed": 6,
+                        "entryVerifiedInactive": true,
+                        "boundLatestReceiptFiles": 5,
+                        "oneShot": true,
+                        "maximumSshAttempts": 1,
+                        "remoteSeconds": 20,
+                        "localSeconds": 35,
+                        "maximumLines": 12,
+                        "maximumJournalBytes": 16384,
+                        "maximumNewUnits": 0,
+                        "managerPidAndExactParentOnly": true,
+                        "jobIdentifierKeptPrivate": true,
+                        "checksParentPresenceWithoutLoading": true,
+                        "checksSameObserverProcessWindow": true,
+                        "checksProtectedBaselines": true,
+                        "remoteDispatched": false,
+                        "productionPublished": false
+                      }
                     }
                   }
                 }
