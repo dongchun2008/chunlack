@@ -478,6 +478,28 @@
               "exactObserverGenerationAndParentBound": true,
               "zeroNewUnits": true,
               "remoteDispatched": false
+            },
+            "parentJournalResult": {
+              "date": "2026-11-28",
+              "sshAttempts": 1,
+              "localElapsedSeconds": 4.504,
+              "remoteExitCode": 0,
+              "linesExamined": 2,
+              "windowMatchedLines": 1,
+              "parentSliceCreated": true,
+              "managerJobType": "start",
+              "managerJobResult": "done",
+              "offsetFromObserverProcessStartMicroseconds": 5679598,
+              "offsetFromParentDeadlineStartKnown": false,
+              "observerReceiptOfJobSignalKnown": false,
+              "protectedServicesUnchanged": true,
+              "observerGenerationVerified": true,
+              "transportCloseConfirmed": true,
+              "localSocketCloseWarningObserved": true,
+              "newLinuxUnits": 0,
+              "remoteWrites": 0,
+              "unitActions": 0,
+              "productionPublished": false
             }
           }
         }
