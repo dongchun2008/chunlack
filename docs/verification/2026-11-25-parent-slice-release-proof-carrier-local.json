@@ -499,7 +499,21 @@
               "newLinuxUnits": 0,
               "remoteWrites": 0,
               "unitActions": 0,
-              "productionPublished": false
+              "productionPublished": false,
+              "diagnosticCandidate": {
+                "packedLocalTestsPassed": 8,
+                "changedObserverAssets": 2,
+                "phaseSpecificDeadlineCodes": true,
+                "deadlineAndIdentityChecksPreserved": true,
+                "fullProofBindingsVerified": true,
+                "bridgeInputFiles": 13,
+                "maximumCommandBytes": 65338,
+                "commandLimitBytes": 65536,
+                "nativeExecutionAuthorized": false,
+                "sshAttempts": 0,
+                "temporaryUnitsCreated": 0,
+                "productionPublished": false
+              }
             }
           }
         }
