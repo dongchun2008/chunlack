@@ -584,7 +584,41 @@
                     "maximumCommandBytes": 65338,
                     "proofInputsVerified": true,
                     "remoteDispatched": false,
-                    "productionPublished": false
+                    "productionPublished": false,
+                    "nativeResult": {
+                      "date": "2026-11-28",
+                      "capacityRefreshAccepted": true,
+                      "readOnlyRefreshSshAttempts": 1,
+                      "nativeSshAttempts": 1,
+                      "automaticRetry": false,
+                      "nativeExitCode": 1,
+                      "nativeElapsedSeconds": 32.404,
+                      "completedPhases": [
+                        "after",
+                        "before",
+                        "receiver",
+                        "setup"
+                      ],
+                      "setupCompleted": true,
+                      "setupCleanupConfirmed": true,
+                      "setupScopeEmptyConfirmed": true,
+                      "metadataDriftReproduced": false,
+                      "watchExitCode": 1,
+                      "watchPrimaryError": "observe_actor_normal_exit",
+                      "watchCleanupError": "watch_parent_release_unbound",
+                      "observerDeadlineCode": "parent_job_job_result_deadline",
+                      "observerFailureCaptureAccepted": true,
+                      "observerEvidenceReadOnSameConnection": true,
+                      "observerCgroupEmptyVerified": true,
+                      "parentReleaseVerified": false,
+                      "protectedServiceRecordsCompared": 4,
+                      "protectedServicesUnchanged": true,
+                      "transportClosed": true,
+                      "sdkThreadExited": true,
+                      "proofCreated": false,
+                      "nativeCompatibilityVerified": false,
+                      "productionPublished": false
+                    }
                   }
                 }
               }
