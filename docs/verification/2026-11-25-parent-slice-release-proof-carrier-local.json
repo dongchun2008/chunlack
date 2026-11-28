@@ -456,7 +456,29 @@
             "remoteWrites": 0,
             "unitActions": 0,
             "automaticRetry": false,
-            "productionPublished": false
+            "productionPublished": false,
+            "localDeadlineScopeReproduction": {
+              "packedControlTestsPassed": 4,
+              "sharedDeadlineReproducedFor": [
+                "after_start_response",
+                "after_job_completion",
+                "after_active_snapshot"
+              ],
+              "managerStartAcceptedByNativeEvidence": null
+            },
+            "parentJournalCandidate": {
+              "fixtureTestsPassed": 7,
+              "entryVerificationPassed": true,
+              "oneShot": true,
+              "maximumSshAttempts": 1,
+              "remoteSeconds": 20,
+              "localSeconds": 35,
+              "maximumLines": 12,
+              "maximumJournalBytes": 16384,
+              "exactObserverGenerationAndParentBound": true,
+              "zeroNewUnits": true,
+              "remoteDispatched": false
+            }
           }
         }
       }
