@@ -530,7 +530,35 @@
                 "newUnitsAllowedForCapture": 0,
                 "maximumBridgeCommandBytes": 65338,
                 "remoteDispatched": false,
-                "productionPublished": false
+                "productionPublished": false,
+                "nativeResult": {
+                  "date": "2026-11-28",
+                  "capacityRefreshAccepted": true,
+                  "nativeSshAttempts": 1,
+                  "automaticRetry": false,
+                  "nativeExitCode": 1,
+                  "nativeElapsedSeconds": 9.838,
+                  "completedPhases": [
+                    "after",
+                    "before",
+                    "receiver"
+                  ],
+                  "setupExitCode": 1,
+                  "setupManagerError": "bridge_setup_manager_normal_exit",
+                  "setupChildError": "root_dispatch_kernel_changed",
+                  "setupFailureCaptureAccepted": true,
+                  "setupEvidenceReadOnSameConnection": true,
+                  "setupCgroupEmpty": true,
+                  "observerStarted": false,
+                  "observerFailureCaptureDispatched": false,
+                  "protectedServiceRecordsCompared": 4,
+                  "protectedServicesUnchanged": true,
+                  "transportClosed": true,
+                  "sdkThreadExited": true,
+                  "kernelMetadataFieldIdentified": false,
+                  "nativeCompatibilityVerified": false,
+                  "productionPublished": false
+                }
               }
             }
           }
